@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Team Q (Wave 4): tool freshness checking. `scripts/freshness_check.py`
+  scans every skill's frontmatter tool pins and `last_verified` date,
+  raising FUTURE_TOOL, RETIRED_TOOL, AGING_TOOL, and OLD_VERIFICATION
+  flags against a small verified release-date table. Run weekly with
+  `--write`; scheduling guide in `docs/quality/FRESHNESS.md`.
+- Team Q (Wave 4): static benchmarks. `scripts/benchmark.py` runs
+  three static scenario checks across all 356 skills and sub-skills
+  and writes `BENCHMARKS.md` with per-domain pass rates (current
+  overall: 71.7%). Clearly labeled as static shape checks, not live
+  exploitation tests.
+- Team Q (Wave 4): community onboarding. GitHub issue templates
+  (new skill proposal, bug report, question) in `.github/ISSUE_TEMPLATE/`,
+  `docs/community/CONTRIBUTING_ADVANCED.md` with the quality loop and
+  15 verified-new good-first-skill ideas, `.github/FUNDING.yml` for
+  GitHub Sponsors, and an honest `docs/MONETIZATION.md` plan.
+- Team Q (Wave 4): weekly skill spotlight. `SKILL_OF_THE_WEEK.md`
+  (current: web-sqli) with `scripts/rotate_spotlight.py` for
+  round-robin rotation over a curated list.
+
 - 110 sub-skills under `skills/<domain>/<parent>/sub/<sub>/` decomposing 30
   high-value parent skills (3 to 6 sub-skills each), each with the standard
   frontmatter plus a `parent:` field, the full body skeleton, and manifest
