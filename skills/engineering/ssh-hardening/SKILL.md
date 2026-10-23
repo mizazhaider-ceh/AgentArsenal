@@ -1,13 +1,6 @@
 ---
 name: ssh-hardening
-description: Use when hardening OpenSSH 9.8 servers and clients: writing a
-  secure sshd_config (key-only auth, no root login, modern ciphers and key
-  exchange), auditing the effective config with sshd -T, managing host keys,
-  deploying fail2ban or rate limits against brute force, configuring jump
-  hosts and ProxyJump, understanding agent forwarding risks, using SSH
-  certificates, or reviewing authorized_keys hygiene. Use when the task
-  mentions SSH hardening, sshd_config, key-only authentication, brute
-  force protection, or bastion hosts.
+description: "Use when hardening OpenSSH 9.8 servers and clients: writing a secure sshd_config (key-only auth, no root login, modern ciphers and key exchange), auditing the effective config with sshd -T, managing host keys, deploying fail2ban or rate limits against brute force, configuring jump hosts and ProxyJump, understanding agent forwarding risks, using SSH certificates, or reviewing authorized_keys hygiene. Use when the task mentions SSH hardening, sshd_config, key-only authentication, brute force protection, or bastion hosts."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -21,7 +14,6 @@ tools:
   - name: ssh-audit
     version: 3.4
 ---
-
 SSH is the front door of every server, and it is scanned constantly: any
 SSH port on the internet receives brute-force attempts within minutes.
 Hardening it is one of the highest-leverage security tasks there is. This

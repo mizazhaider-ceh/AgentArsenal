@@ -1,12 +1,6 @@
 ---
 name: vim-mastery
-description: Use when editing text at speed with Vim 9.1: learning motions,
-  operators, and text objects, combining them into composable editing
-  commands, managing buffers, windows, and tabs, recording and replaying
-  macros, using registers and marks, searching and replacing across files,
-  editing columns with visual block mode, writing a sane vimrc, or fixing a
-  broken Vim configuration. Use when the task mentions vim, vi, text
-  editing efficiency, macros, or vimrc configuration.
+description: "Use when editing text at speed with Vim 9.1: learning motions, operators, and text objects, combining them into composable editing commands, managing buffers, windows, and tabs, recording and replaying macros, using registers and marks, searching and replacing across files, editing columns with visual block mode, writing a sane vimrc, or fixing a broken Vim configuration. Use when the task mentions vim, vi, text editing efficiency, macros, or vimrc configuration."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -20,7 +14,6 @@ tools:
   - name: Neovim
     version: 0.10
 ---
-
 Vim rewards a simple mental model: motions move, operators act, text
 objects select structure, and everything composes. `d` deletes, `w` moves
 a word, `i"` selects inside quotes, so `di"` deletes inside quotes and

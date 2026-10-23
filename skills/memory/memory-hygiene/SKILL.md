@@ -1,14 +1,6 @@
 ---
 name: memory-hygiene
-description: Use when the memory store needs a health check: removing
-  duplicates safely, resolving contradictory entries, decaying stale
-  confidence, redacting secrets that slipped in, keeping an audit
-  trail, or enforcing size budgets. Covers the full hygiene pass
-  (dedupe, contradiction procedure, confidence decay, PII redaction,
-  audit, budgets) with memory-store commands. Use when running the
-  weekly maintenance pass, when recall returns conflicting facts, when
-  stats show the store growing too fast, or after any incident that
-  may have polluted the store.
+description: "Use when the memory store needs a health check: removing duplicates safely, resolving contradictory entries, decaying stale confidence, redacting secrets that slipped in, keeping an audit trail, or enforcing size budgets. Covers the full hygiene pass (dedupe, contradiction procedure, confidence decay, PII redaction, audit, budgets) with memory-store commands. Use when running the weekly maintenance pass, when recall returns conflicting facts, when stats show the store growing too fast, or after any incident that may have polluted the store."
 version: 1.0.0
 domain: memory
 lifecycle: stable
@@ -24,7 +16,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 Hygiene keeps memory trustworthy: no unresolved contradictions, no
 rotting confidence, no secrets, a visible audit trail, and a bounded
 size. This skill is the maintenance counterpart to memory-capture and

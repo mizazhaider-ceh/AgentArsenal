@@ -1,11 +1,6 @@
 ---
 name: ai-supply-chain
-description: Use when reviewing the supply chain of an AI system on an
-  authorized assessment: model weights, datasets, base images, and
-  third party integrations. Covers model provenance checks, poisoned
-  dataset detection, dependency review for ML pipelines, and signing of
-  artifacts. Also use when a team adopts a new open weight model and
-  wants to know what trust they are inheriting.
+description: "Use when reviewing the supply chain of an AI system on an authorized assessment: model weights, datasets, base images, and third party integrations. Covers model provenance checks, poisoned dataset detection, dependency review for ML pipelines, and signing of artifacts. Also use when a team adopts a new open weight model and wants to know what trust they are inheriting."
 version: 1.0.0
 domain: ai-security
 lifecycle: stable
@@ -19,7 +14,6 @@ tools:
   - name: Git
     version: 2.47
 ---
-
 AI systems inherit trust from everywhere: the base model weights, the
 fine tuning dataset, the container image, and every plugin. A backdoored
 weight file or a poisoned dataset compromises everything built on top.

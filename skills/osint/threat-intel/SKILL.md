@@ -1,12 +1,6 @@
 ---
 name: threat-intel
-description: Use when working with cyber threat intelligence on a
-  defensive team: collecting IOCs, evaluating feeds, running a MISP
-  instance, writing STIX/TAXII sharing packages, scoring and aging
-  indicators, and turning intel into detections and blocks. Use when the
-  SOC needs to know which threat actors and campaigns matter to the
-  organization, when deciding whether to block an indicator, or when
-  sharing intel with peers under TLP rules.
+description: "Use when working with cyber threat intelligence on a defensive team: collecting IOCs, evaluating feeds, running a MISP instance, writing STIX/TAXII sharing packages, scoring and aging indicators, and turning intel into detections and blocks. Use when the SOC needs to know which threat actors and campaigns matter to the organization, when deciding whether to block an indicator, or when sharing intel with peers under TLP rules."
 version: 1.0.0
 domain: osint
 lifecycle: stable
@@ -20,7 +14,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 Threat intelligence turns raw indicators and reports into decisions:
 what to block, what to hunt, what to patch first. This skill covers
 the defensive intel workflow: requirements, collection from feeds and

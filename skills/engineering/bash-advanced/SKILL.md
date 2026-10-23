@@ -1,13 +1,6 @@
 ---
 name: bash-advanced
-description: Use when writing production-grade Bash 5.2 scripts: strict mode
-  (set -euo pipefail), safe quoting and word splitting, arrays and
-  associative arrays, parameter expansion, traps and cleanup handlers,
-  getopts argument parsing, process substitution, functions with local
-  variables, debugging with set -x and PS4, or fixing a fragile script that
-  fails silently. Use when the task mentions shell scripting, bash
-  automation, cron wrappers, or making an existing script robust and
-  maintainable.
+description: "Use when writing production-grade Bash 5.2 scripts: strict mode (set -euo pipefail), safe quoting and word splitting, arrays and associative arrays, parameter expansion, traps and cleanup handlers, getopts argument parsing, process substitution, functions with local variables, debugging with set -x and PS4, or fixing a fragile script that fails silently. Use when the task mentions shell scripting, bash automation, cron wrappers, or making an existing script robust and maintainable."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -21,7 +14,6 @@ tools:
   - name: ShellCheck
     version: 0.10
 ---
-
 Bash is the default automation language on Linux servers, but casual Bash
 fails silently: unset variables expand to empty strings, failed commands in
 pipelines go unnoticed, and unquoted variables split on spaces. This skill

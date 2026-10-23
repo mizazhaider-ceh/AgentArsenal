@@ -1,13 +1,6 @@
 ---
 name: rest-api-design
-description: Use when designing a REST API from scratch or reviewing an
-  existing one: naming resources and URIs, choosing HTTP methods and status
-  codes correctly, versioning the API, designing pagination, filtering, and
-  sorting, writing consistent error envelopes, making operations idempotent,
-  documenting with OpenAPI 3.1, adding rate limit headers, or choosing an
-  authentication scheme. Use when the task mentions REST API design,
-  endpoint naming, API versioning, pagination, error responses, or OpenAPI
-  specs.
+description: "Use when designing a REST API from scratch or reviewing an existing one: naming resources and URIs, choosing HTTP methods and status codes correctly, versioning the API, designing pagination, filtering, and sorting, writing consistent error envelopes, making operations idempotent, documenting with OpenAPI 3.1, adding rate limit headers, or choosing an authentication scheme. Use when the task mentions REST API design, endpoint naming, API versioning, pagination, error responses, or OpenAPI specs."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -23,7 +16,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 A REST API is a contract: clients program against your URIs, methods, and
 status codes for years, so design mistakes calcify fast. This skill covers
 designing clean, predictable, secure REST APIs: resource modeling, method

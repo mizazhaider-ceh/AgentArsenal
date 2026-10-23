@@ -1,6 +1,6 @@
 ---
 name: privesc-linux
-description: Use when you hold a low-privilege Linux shell on an authorized engagement, lab, or CTF and need a reliable path to root. Covers LinPEAS-driven enumeration plus a manual checklist: sudo misconfigurations (sudo -l, NOPASSWD entries, LD_PRELOAD tricks), SUID and SGID binaries with GTFOBins techniques, Linux capabilities such as cap_setuid and cap_dac_read_search, cron wildcard injection and PATH hijacking, writable scripts and shared libraries, kernel version triage for public exploits, and container escapes through the docker socket, privileged mode, and CAP_SYS_ADMIN. Emphasizes verification before exploitation, noise awareness, and evidence capture for reports.
+description: "Use when you hold a low-privilege Linux shell on an authorized engagement, lab, or CTF and need a reliable path to root. Covers LinPEAS-driven enumeration plus a manual checklist: sudo misconfigurations (sudo -l, NOPASSWD entries, LD_PRELOAD tricks), SUID and SGID binaries with GTFOBins techniques, Linux capabilities such as cap_setuid and cap_dac_read_search, cron wildcard injection and PATH hijacking, writable scripts and shared libraries, kernel version triage for public exploits, and container escapes through the docker socket, privileged mode, and CAP_SYS_ADMIN. Emphasizes verification before exploitation, noise awareness, and evidence capture for reports."
 version: 1.0.0
 domain: privesc
 lifecycle: stable
@@ -18,7 +18,6 @@ tools:
   - name: gcc
     version: 13.2.0
 ---
-
 Linux privilege escalation turns a low-privilege foothold into root on systems you are authorized to test. Enumeration decides the outcome: most Linux privesc wins come from misconfigurations (sudo rules, SUID binaries, cron jobs, capabilities, writable files), not zero-days. This skill gives you an ordered workflow: stabilize the shell, enumerate automatically with LinPEAS, verify every finding by hand, exploit the quietest reliable path, and capture evidence for the report. Kernel exploits are the last resort because they can crash the target, so treat them with explicit warnings and prefer snapshots.
 
 ## Quick Workflow

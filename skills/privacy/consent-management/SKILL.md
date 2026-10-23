@@ -1,10 +1,6 @@
 ---
 name: consent-management
-description: Use when implementing or auditing consent for data
-  processing: cookie banners, app permissions, and marketing opt ins.
-  Covers consent records, withdrawal handling, dark pattern avoidance,
-  and verifying that backend processing respects the choice. Also use
-  when a consent banner needs to be more than theater.
+description: "Use when implementing or auditing consent for data processing: cookie banners, app permissions, and marketing opt ins. Covers consent records, withdrawal handling, dark pattern avoidance, and verifying that backend processing respects the choice. Also use when a consent banner needs to be more than theater."
 version: 1.0.0
 domain: privacy
 lifecycle: stable
@@ -16,7 +12,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 Consent is only valid if it is freely given, specific, informed, and
 revocable: a pre ticked banner that ignores "reject" fails all four.
 This skill covers the engineering of real consent: capturing the

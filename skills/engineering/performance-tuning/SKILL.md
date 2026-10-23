@@ -1,13 +1,6 @@
 ---
 name: performance-tuning
-description: Use when making a system faster on purpose: establishing a
-  baseline benchmark with hyperfine 1.18, profiling Python with cProfile,
-  finding CPU, memory, disk, or network bottlenecks on Linux, tuning
-  database queries and caches, sizing connection pools and workers,
-  interpreting load test results, or deciding whether an optimization is
-  worth the complexity. Use when the task mentions slow endpoints,
-  profiling, benchmarking, latency, throughput, load testing, or
-  performance regression.
+description: "Use when making a system faster on purpose: establishing a baseline benchmark with hyperfine 1.18, profiling Python with cProfile, finding CPU, memory, disk, or network bottlenecks on Linux, tuning database queries and caches, sizing connection pools and workers, interpreting load test results, or deciding whether an optimization is worth the complexity. Use when the task mentions slow endpoints, profiling, benchmarking, latency, throughput, load testing, or performance regression."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -23,7 +16,6 @@ tools:
   - name: perf
     version: 6.8
 ---
-
 Performance tuning without measurement is superstition. The discipline is:
 define the metric, measure the baseline, find the actual bottleneck,
 change one thing, re-measure, and keep the change only if the numbers

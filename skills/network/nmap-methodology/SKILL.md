@@ -1,6 +1,6 @@
 ---
 name: nmap-methodology
-description: Use when planning or running nmap scans during authorized engagements: host discovery options, TCP SYN, connect, UDP, NULL, FIN, Xmas, and ACK scan types, service and OS detection, timing templates T0 to T5, evasion techniques (fragmentation, decoys, idle scans, source port tricks, data length padding), NSE script selection by category, and output formats for evidence. Covers choosing the right scan for the objective, tuning speed against stealth, and reading results accurately on firewalled networks with nmap 7.98.
+description: "Use when planning or running nmap scans during authorized engagements: host discovery options, TCP SYN, connect, UDP, NULL, FIN, Xmas, and ACK scan types, service and OS detection, timing templates T0 to T5, evasion techniques (fragmentation, decoys, idle scans, source port tricks, data length padding), NSE script selection by category, and output formats for evidence. Covers choosing the right scan for the objective, tuning speed against stealth, and reading results accurately on firewalled networks with nmap 7.98."
 version: 1.0.0
 domain: network
 lifecycle: stable
@@ -15,7 +15,6 @@ tools:
   - name: ncat
     version: 7.98
 ---
-
 nmap is the standard network scanner, and most bad scans come from bad scan
 choice, not from nmap itself. This skill is a methodology: which scan type
 for which goal, how timing and evasion interact, how to use the Nmap Scripting

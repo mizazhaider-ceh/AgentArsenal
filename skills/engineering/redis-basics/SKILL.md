@@ -1,13 +1,6 @@
 ---
 name: redis-basics
-description: Use when operating Redis 7.4 in development or production:
-  installing and configuring a server, choosing data types (strings, hashes,
-  lists, sets, sorted sets, streams), writing and reading keys with redis-cli,
-  setting TTLs, configuring RDB and AOF persistence, setting up ACL users and
-  passwords, tuning eviction and memory limits, taking backups, reading INFO
-  and SLOWLOG output, or diagnosing a slow or unreachable Redis instance. Use
-  when the task mentions caching, sessions, queues, leaderboards, rate
-  limiting, or pub/sub with Redis.
+description: "Use when operating Redis 7.4 in development or production: installing and configuring a server, choosing data types (strings, hashes, lists, sets, sorted sets, streams), writing and reading keys with redis-cli, setting TTLs, configuring RDB and AOF persistence, setting up ACL users and passwords, tuning eviction and memory limits, taking backups, reading INFO and SLOWLOG output, or diagnosing a slow or unreachable Redis instance. Use when the task mentions caching, sessions, queues, leaderboards, rate limiting, or pub/sub with Redis."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -21,7 +14,6 @@ tools:
   - name: redis-cli
     version: 7.4
 ---
-
 Redis is an in-memory data structure server used as a cache, session store,
 message queue, and primary data store. It speaks a simple text protocol
 (RESP), persists optionally to disk, and exposes rich atomic commands for

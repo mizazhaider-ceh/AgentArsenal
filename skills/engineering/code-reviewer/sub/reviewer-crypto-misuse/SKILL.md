@@ -1,11 +1,6 @@
 ---
 name: reviewer-crypto-misuse
-description: Use when reviewing cryptographic code for misuse: weak
-  algorithms, bad randomness, broken TLS validation, and key management
-  flaws. Covers the review checklist per crypto use, safe patterns to
-  require, and when to demand a standard library. Use when reviewing
-  encryption code, when auditing TLS handling, when tokens or hashes are
-  custom-built, or when the code touches keys.
+description: "Use when reviewing cryptographic code for misuse: weak algorithms, bad randomness, broken TLS validation, and key management flaws. Covers the review checklist per crypto use, safe patterns to require, and when to demand a standard library. Use when reviewing encryption code, when auditing TLS handling, when tokens or hashes are custom-built, or when the code touches keys."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -20,7 +15,6 @@ tools:
   - name: Bandit
     version: 1.7
 ---
-
 Cryptography fails in practice through misuse, not through broken math:
 ECB mode, hardcoded IVs, `random` instead of secrets, disabled cert
 validation. This skill covers reviewing crypto code: the misuse checklist,

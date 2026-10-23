@@ -1,12 +1,6 @@
 ---
 name: debugging-methodology
-description: Use when diagnosing a bug or failure systematically: building a
-  reproduction case, bisecting with git bisect, reading logs and stack
-  traces, tracing syscalls with strace, debugging with gdb 15 or pdb,
-  analyzing core dumps, forming and testing hypotheses one variable at a
-  time, or writing a postmortem after an incident. Use when the task mentions
-  debugging, root cause analysis, crash investigation, hangs, segfaults, or
-  "works on my machine" failures.
+description: "Use when diagnosing a bug or failure systematically: building a reproduction case, bisecting with git bisect, reading logs and stack traces, tracing syscalls with strace, debugging with gdb 15 or pdb, analyzing core dumps, forming and testing hypotheses one variable at a time, or writing a postmortem after an incident. Use when the task mentions debugging, root cause analysis, crash investigation, hangs, segfaults, or \"works on my machine\" failures."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -22,7 +16,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 Debugging is the disciplined reduction of uncertainty: reproduce, observe,
 hypothesize, test, repeat. Random changes and restarts sometimes work, but
 they do not produce understanding, and the bug returns. This skill covers a

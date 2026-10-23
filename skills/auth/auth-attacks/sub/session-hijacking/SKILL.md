@@ -1,11 +1,6 @@
 ---
 name: session-hijacking
-description: Use when testing session management weaknesses on an
-  authorized engagement: stealing, fixing, or predicting session tokens.
-  Covers cookie attribute review, session fixation testing, token entropy
-  analysis, and logout and expiry behavior. Use when assessing login and
-  session handling, when cookies lack flags, when testing single sign-on
-  flows, or when you need to prove that a stolen token grants access.
+description: "Use when testing session management weaknesses on an authorized engagement: stealing, fixing, or predicting session tokens. Covers cookie attribute review, session fixation testing, token entropy analysis, and logout and expiry behavior. Use when assessing login and session handling, when cookies lack flags, when testing single sign-on flows, or when you need to prove that a stolen token grants access."
 version: 1.0.0
 domain: auth
 lifecycle: stable
@@ -22,7 +17,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 Session hijacking takes over a user's authenticated state by stealing or
 fixing their session token. This skill covers testing session management on
 authorized engagements: reviewing cookie security, attempting fixation,

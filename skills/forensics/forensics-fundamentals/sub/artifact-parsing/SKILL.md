@@ -1,11 +1,6 @@
 ---
 name: artifact-parsing
-description: Use when extracting meaning from specific forensic artifacts:
-  browser history, registry hives, event logs, and application data. Covers
-  locating artifacts on disk images, parsing them with standard tools, and
-  correlating artifact contents. Use when the timeline needs detail, when
-  investigating user activity, when hunting persistence mechanisms, or when
-  an artifact holds the answer a log does not.
+description: "Use when extracting meaning from specific forensic artifacts: browser history, registry hives, event logs, and application data. Covers locating artifacts on disk images, parsing them with standard tools, and correlating artifact contents. Use when the timeline needs detail, when investigating user activity, when hunting persistence mechanisms, or when an artifact holds the answer a log does not."
 version: 1.0.0
 domain: forensics
 lifecycle: stable
@@ -20,7 +15,6 @@ tools:
   - name: The Sleuth Kit
     version: 4.12.1
 ---
-
 Artifacts are the structured traces applications leave: browser history
 databases, registry hives, event logs, jump lists. This skill covers
 finding and parsing the high-value artifacts on disk images: where they

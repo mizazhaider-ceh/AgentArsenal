@@ -1,6 +1,6 @@
 ---
 name: incident-response
-description: Use when a security incident is suspected or confirmed and you need a disciplined response on authorized systems. Covers the NIST 800-61 lifecycle: preparation, detection and analysis, containment, eradication, recovery, and lessons learned. Includes Linux and Windows triage commands (processes, network connections, persistence mechanisms, authentication logs), evidence preservation that pairs with forensics-fundamentals, containment playbooks (host isolation, account disablement, credential rotation), eradication and recovery validation, stakeholder communication, and post-incident review. Works with Sysmon, osquery, and Velociraptor telemetry.
+description: "Use when a security incident is suspected or confirmed and you need a disciplined response on authorized systems. Covers the NIST 800-61 lifecycle: preparation, detection and analysis, containment, eradication, recovery, and lessons learned. Includes Linux and Windows triage commands (processes, network connections, persistence mechanisms, authentication logs), evidence preservation that pairs with forensics-fundamentals, containment playbooks (host isolation, account disablement, credential rotation), eradication and recovery validation, stakeholder communication, and post-incident review. Works with Sysmon, osquery, and Velociraptor telemetry."
 version: 1.0.0
 domain: incident
 lifecycle: stable
@@ -16,7 +16,6 @@ tools:
   - name: velociraptor
     version: 0.72
 ---
-
 Incident response is the structured handling of a suspected or confirmed security incident, from first detection to lessons learned. This skill follows the NIST 800-61 lifecycle: preparation, detection and analysis, containment, eradication, recovery, and lessons learned. It gives you triage commands for Linux and Windows, containment playbooks, and communication discipline. Forensics owns the evidence; this skill owns the decisions. Never destroy evidence in the rush to recover, and never skip containment because eradication feels faster.
 
 ## Quick Workflow

@@ -1,11 +1,6 @@
 ---
 name: ai-incident-response
-description: Use when responding to a suspected security incident
-  involving an AI system: a hijacked agent, a poisoned model, leaked
-  prompts, or abusive use of inference infrastructure. Covers scoping,
-  prompt and tool log collection, model rollback, and containment that
-  accounts for non deterministic behavior. Also use when building an IR
-  playbook that covers LLM specific scenarios.
+description: "Use when responding to a suspected security incident involving an AI system: a hijacked agent, a poisoned model, leaked prompts, or abusive use of inference infrastructure. Covers scoping, prompt and tool log collection, model rollback, and containment that accounts for non deterministic behavior. Also use when building an IR playbook that covers LLM specific scenarios."
 version: 1.0.0
 domain: ai-security
 lifecycle: stable
@@ -19,7 +14,6 @@ tools:
   - name: jq
     version: 1.7.1
 ---
-
 AI incidents look different from server incidents: the attacker never
 touches a shell, the evidence is in prompts and tool calls, and the
 "vulnerability" may be the model's normal behavior under adversarial

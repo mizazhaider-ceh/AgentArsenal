@@ -1,11 +1,6 @@
 ---
 name: disk-forensics
-description: Use when examining a disk image or forensic copy of a drive
-  during an investigation. Covers The Sleuth Kit and Autopsy workflows:
-  partition layout, file carving, deleted file recovery, timeline generation,
-  hash analysis, and keyword search. Use when you need to recover deleted
-  files, prove what existed on a disk, or build a filesystem timeline for a
-  case you are authorized to work.
+description: "Use when examining a disk image or forensic copy of a drive during an investigation. Covers The Sleuth Kit and Autopsy workflows: partition layout, file carving, deleted file recovery, timeline generation, hash analysis, and keyword search. Use when you need to recover deleted files, prove what existed on a disk, or build a filesystem timeline for a case you are authorized to work."
 version: 1.0.0
 domain: forensics
 lifecycle: stable
@@ -21,7 +16,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 Disk forensics reconstructs what was stored on a drive from a bit-for-bit
 image of it. Files are rarely truly gone when deleted: the directory entry is
 marked free but the content often survives until overwritten, which is why

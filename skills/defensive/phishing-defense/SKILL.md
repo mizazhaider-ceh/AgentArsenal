@@ -1,12 +1,6 @@
 ---
 name: phishing-defense
-description: Use when defending an organization against phishing: hardening
-  email authentication with SPF, DKIM, and DMARC, writing gateway and
-  mailbox detection rules, triaging user-reported phish, analyzing headers
-  URLs and attachments safely, running takedowns of phishing sites, and
-  measuring resilience with simulations. Use when phish reports spike,
-  when setting up defenses for a new domain, or after a credential
-  phishing incident.
+description: "Use when defending an organization against phishing: hardening email authentication with SPF, DKIM, and DMARC, writing gateway and mailbox detection rules, triaging user-reported phish, analyzing headers URLs and attachments safely, running takedowns of phishing sites, and measuring resilience with simulations. Use when phish reports spike, when setting up defenses for a new domain, or after a credential phishing incident."
 version: 1.0.0
 domain: defensive
 lifecycle: stable
@@ -20,7 +14,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 Phishing remains the most common initial access vector, and defending
 against it is a layered problem: stop what you can at the gateway,
 authenticate your own mail so it cannot be spoofed, make reporting

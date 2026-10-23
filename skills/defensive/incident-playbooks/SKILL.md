@@ -1,12 +1,6 @@
 ---
 name: incident-playbooks
-description: Use when preparing for or running a security incident as a
-  defender: writing and maintaining incident response playbooks, defining
-  severity levels and SLAs, assigning roles, running communications,
-  executing scenario playbooks for malware, business email compromise,
-  data theft, and denial of service, and running tabletop exercises. Use
-  when the SOC needs a repeatable response, when onboarding new analysts,
-  or when an incident is declared and the team needs the next steps.
+description: "Use when preparing for or running a security incident as a defender: writing and maintaining incident response playbooks, defining severity levels and SLAs, assigning roles, running communications, executing scenario playbooks for malware, business email compromise, data theft, and denial of service, and running tabletop exercises. Use when the SOC needs a repeatable response, when onboarding new analysts, or when an incident is declared and the team needs the next steps."
 version: 1.0.0
 domain: defensive
 lifecycle: stable
@@ -20,7 +14,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 A playbook turns incident response from improvisation into procedure:
 who does what, in which order, with which tools, and who gets told.
 This skill covers building and running defensive playbooks for your

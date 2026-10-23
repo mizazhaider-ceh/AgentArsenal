@@ -1,12 +1,6 @@
 ---
 name: memory-forensics
-description: Use when analyzing a RAM dump or live memory image during
-  incident response or a forensic investigation. Covers Volatility 3 workflows
-  for Windows, Linux, and macOS: profile detection, process enumeration,
-  injected code discovery with malfind, hollowed processes, network connection
-  history, credential artifacts, and carving executables from memory. Use when
-  the disk looks clean but the endpoint behaved maliciously, or when you need
-  to recover what was running at acquisition time.
+description: "Use when analyzing a RAM dump or live memory image during incident response or a forensic investigation. Covers Volatility 3 workflows for Windows, Linux, and macOS: profile detection, process enumeration, injected code discovery with malfind, hollowed processes, network connection history, credential artifacts, and carving executables from memory. Use when the disk looks clean but the endpoint behaved maliciously, or when you need to recover what was running at acquisition time."
 version: 1.0.0
 domain: forensics
 lifecycle: stable
@@ -22,7 +16,6 @@ tools:
   - name: GNU Binutils
     version: 2.44
 ---
-
 Memory forensics examines a snapshot of RAM to answer one question: what was
 actually running when the image was captured. Disks can be wiped, logs can be
 cleared, and files can be deleted, but a live process leaves traces in memory

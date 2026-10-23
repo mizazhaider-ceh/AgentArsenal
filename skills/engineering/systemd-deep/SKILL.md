@@ -1,13 +1,6 @@
 ---
 name: systemd-deep
-description: Use when working deeply with systemd 256 on Linux: writing and
-  debugging service, timer, socket, and target units, using systemctl and
-  journalctl effectively, replacing cron jobs with systemd timers, analyzing
-  boot time with systemd-analyze, creating drop-in overrides without editing
-  vendor units, applying service sandboxing directives (ProtectSystem,
-  PrivateTmp, NoNewPrivileges), managing dependencies and ordering, or
-  diagnosing failed units and boot hangs. Use when the task mentions systemd
-  services, timers, journald, unit files, or Linux service management.
+description: "Use when working deeply with systemd 256 on Linux: writing and debugging service, timer, socket, and target units, using systemctl and journalctl effectively, replacing cron jobs with systemd timers, analyzing boot time with systemd-analyze, creating drop-in overrides without editing vendor units, applying service sandboxing directives (ProtectSystem, PrivateTmp, NoNewPrivileges), managing dependencies and ordering, or diagnosing failed units and boot hangs. Use when the task mentions systemd services, timers, journald, unit files, or Linux service management."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -23,7 +16,6 @@ tools:
   - name: journalctl
     version: 256
 ---
-
 systemd is the init system and service manager on nearly every modern Linux
 distribution: it starts the system, supervises services, schedules timers,
 manages sockets, and collects logs in the journal. This skill covers

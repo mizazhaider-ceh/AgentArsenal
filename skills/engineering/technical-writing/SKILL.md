@@ -1,12 +1,6 @@
 ---
 name: technical-writing
-description: Use when writing documentation people actually read: planning a
-  doc for its audience, structuring tutorials, how-to guides, reference, and
-  explanations (Diataxis), writing clear plain-English procedures with
-  verifiable steps, documenting APIs and CLIs, reviewing docs for accuracy,
-  linting prose with Vale and pandoc 3.4, or turning rough notes into a
-  polished README or runbook. Use when the task mentions documentation,
-  README, runbook, API docs, style guide, or editing technical prose.
+description: "Use when writing documentation people actually read: planning a doc for its audience, structuring tutorials, how-to guides, reference, and explanations (Diataxis), writing clear plain-English procedures with verifiable steps, documenting APIs and CLIs, reviewing docs for accuracy, linting prose with Vale and pandoc 3.4, or turning rough notes into a polished README or runbook. Use when the task mentions documentation, README, runbook, API docs, style guide, or editing technical prose."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -20,7 +14,6 @@ tools:
   - name: Vale
     version: 3.9
 ---
-
 Technical writing is engineering with words: the doc is a product with
 users, requirements, and bugs. Good docs get read because they respect the
 reader's goal; bad docs get skimmed because they serve the writer's ego.

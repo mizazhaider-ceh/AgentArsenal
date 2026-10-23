@@ -1,14 +1,6 @@
 ---
 name: iam-privesc
-description: Use when assessing AWS IAM privilege escalation paths during
-  an authorized cloud assessment, bug bounty engagement, or lab exercise.
-  Covers effective permission enumeration with SimulatePrincipalPolicy
-  and the classic escalation primitives: iam:PassRole combined with
-  Lambda or EC2 creation, iam:CreatePolicyVersion, iam:AttachUserPolicy
-  and iam:AttachRolePolicy, sts:AssumeRole chains, and EC2 instance
-  profile abuse using aws-cli 2.22 and Python 3.12. Use when you hold
-  low-privilege AWS credentials and need to determine whether they can
-  reach administrative access.
+description: "Use when assessing AWS IAM privilege escalation paths during an authorized cloud assessment, bug bounty engagement, or lab exercise. Covers effective permission enumeration with SimulatePrincipalPolicy and the classic escalation primitives: iam:PassRole combined with Lambda or EC2 creation, iam:CreatePolicyVersion, iam:AttachUserPolicy and iam:AttachRolePolicy, sts:AssumeRole chains, and EC2 instance profile abuse using aws-cli 2.22 and Python 3.12. Use when you hold low-privilege AWS credentials and need to determine whether they can reach administrative access."
 version: 1.0.0
 domain: cloud
 lifecycle: stable
@@ -22,7 +14,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 IAM privilege escalation is the path from a low-privilege AWS
 credential to administrative control of the account. The primitives
 are well known: pass a powerful role to a new Lambda function or EC2

@@ -1,13 +1,6 @@
 ---
 name: make-basics
-description: Use when writing or fixing Makefiles with GNU Make 4.4:
-  understanding targets, prerequisites, and recipes, using automatic
-  variables ($@, $<, $^), writing pattern rules, declaring .PHONY targets,
-  using variables and functions (wildcard, patsubst), running parallel
-  builds with -j, debugging with -n and --debug, or converting a pile of
-  shell scripts into a reproducible build. Use when the task mentions
-  Makefile, make targets, build automation, or make errors like "missing
-  separator".
+description: "Use when writing or fixing Makefiles with GNU Make 4.4: understanding targets, prerequisites, and recipes, using automatic variables ($@, $<, $^), writing pattern rules, declaring .PHONY targets, using variables and functions (wildcard, patsubst), running parallel builds with -j, debugging with -n and --debug, or converting a pile of shell scripts into a reproducible build. Use when the task mentions Makefile, make targets, build automation, or make errors like \"missing separator\"."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -19,7 +12,6 @@ tools:
   - name: GNU Make
     version: 4.4
 ---
-
 Make builds a dependency graph from a Makefile and rebuilds only what is
 stale: if `app` is newer than `main.c`, nothing happens; touch `main.c`
 and only the needed steps rerun. That makes it the right tool for

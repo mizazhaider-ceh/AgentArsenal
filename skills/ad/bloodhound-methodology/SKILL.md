@@ -1,14 +1,6 @@
 ---
 name: bloodhound-methodology
-description: Use when mapping Active Directory attack paths on an authorized
-  engagement. Covers choosing and running the BloodHound 4.5.x collector
-  (SharpHound 2.x on Windows, bloodhound-ce-python on Linux), importing data,
-  marking principals as owned, and analyzing paths with prebuilt queries and
-  raw Cypher: shortest paths to Domain Admins, Kerberoastable and AS-REP
-  roastable users, delegation abuse, and session based lateral movement. Use
-  when you hold any domain credentials and need to turn enumeration into a
-  prioritized plan, or when an assessment calls for full attack path
-  analysis.
+description: "Use when mapping Active Directory attack paths on an authorized engagement. Covers choosing and running the BloodHound 4.5.x collector (SharpHound 2.x on Windows, bloodhound-ce-python on Linux), importing data, marking principals as owned, and analyzing paths with prebuilt queries and raw Cypher: shortest paths to Domain Admins, Kerberoastable and AS-REP roastable users, delegation abuse, and session based lateral movement. Use when you hold any domain credentials and need to turn enumeration into a prioritized plan, or when an assessment calls for full attack path analysis."
 version: 1.0.0
 domain: ad
 lifecycle: stable
@@ -28,7 +20,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 BloodHound turns raw Active Directory enumeration into a graph of who can
 reach what. The collector gathers users, computers, groups, sessions,
 ACLs, and trusts, and the interface answers the question that matters:

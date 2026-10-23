@@ -1,12 +1,6 @@
 ---
 name: regex-mastery
-description: Use when writing or debugging regular expressions: choosing
-  between BRE, ERE, and PCRE flavors, crafting grep, sed, and awk patterns,
-  using character classes, anchors, quantifiers, groups, backreferences, and
-  lookarounds, extracting fields from logs with capture groups, validating
-  inputs like IPs and emails, avoiding catastrophic backtracking, or testing
-  patterns quickly with grep -P and Python re. Use when the task mentions
-  regex, pattern matching, log parsing, text extraction, or sed/awk one-liners.
+description: "Use when writing or debugging regular expressions: choosing between BRE, ERE, and PCRE flavors, crafting grep, sed, and awk patterns, using character classes, anchors, quantifiers, groups, backreferences, and lookarounds, extracting fields from logs with capture groups, validating inputs like IPs and emails, avoiding catastrophic backtracking, or testing patterns quickly with grep -P and Python re. Use when the task mentions regex, pattern matching, log parsing, text extraction, or sed/awk one-liners."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -22,7 +16,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 Regular expressions are the shared language of text processing, but three
 flavors with different metacharacters cause most of the pain: BRE (basic,
 used by default grep and sed), ERE (extended, `grep -E` / `sed -E`), and

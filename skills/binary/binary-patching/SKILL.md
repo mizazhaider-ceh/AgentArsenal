@@ -1,10 +1,6 @@
 ---
 name: binary-patching
-description: Use when patching binaries in a lab on authorized
-  targets: your own software, CTF binaries, or client approved test
-  builds. Covers byte patching, assembly level fixes, and verifying
-  patches. Also use when demonstrating a fix for a found
-  vulnerability.
+description: "Use when patching binaries in a lab on authorized targets: your own software, CTF binaries, or client approved test builds. Covers byte patching, assembly level fixes, and verifying patches. Also use when demonstrating a fix for a found vulnerability."
 version: 1.0.0
 domain: binary
 lifecycle: stable
@@ -18,7 +14,6 @@ tools:
   - name: Ghidra
     version: 11.3
 ---
-
 Binary patching modifies compiled code directly: flip a check, NOP a
 call, or fix a vulnerability when source is unavailable. This skill
 covers the lab method on binaries you own or may test: finding the

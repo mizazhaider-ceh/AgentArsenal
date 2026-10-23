@@ -1,12 +1,6 @@
 ---
 name: jq-mastery
-description: Use when processing JSON on the command line with jq 1.7.1:
-  selecting and filtering fields, transforming API responses, building JSON
-  objects, aggregating with map/select/reduce, converting JSON to CSV or
-  TSV, handling raw text input with slurp mode, parsing logs that contain
-  JSON, or debugging why a filter returns null. Use when the task mentions
-  jq, JSON filtering, API response parsing, or reshaping JSON data in
-  shell pipelines.
+description: "Use when processing JSON on the command line with jq 1.7.1: selecting and filtering fields, transforming API responses, building JSON objects, aggregating with map/select/reduce, converting JSON to CSV or TSV, handling raw text input with slurp mode, parsing logs that contain JSON, or debugging why a filter returns null. Use when the task mentions jq, JSON filtering, API response parsing, or reshaping JSON data in shell pipelines."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -18,7 +12,6 @@ tools:
   - name: jq
     version: 1.7.1
 ---
-
 jq is sed for JSON: a small language of filters that select, transform,
 and reshape JSON in pipelines. The mental model is a pipeline of filters
 where `.` is the current input, `|` feeds one filter into the next, and

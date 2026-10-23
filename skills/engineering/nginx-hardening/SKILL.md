@@ -1,13 +1,6 @@
 ---
 name: nginx-hardening
-description: Use when hardening an nginx 1.27 web server or reverse proxy:
-  writing secure server blocks, disabling version banners, configuring modern
-  TLS, adding security headers (HSTS, CSP, X-Frame-Options), rate limiting
-  with limit_req, restricting request sizes and methods, running workers as a
-  non-root user with tight file permissions, setting up access and error
-  logging for forensics, or reviewing an existing nginx config for common
-  misconfigurations. Use when the task mentions nginx config, reverse proxy
-  security, TLS hardening, or web server lockdown.
+description: "Use when hardening an nginx 1.27 web server or reverse proxy: writing secure server blocks, disabling version banners, configuring modern TLS, adding security headers (HSTS, CSP, X-Frame-Options), rate limiting with limit_req, restricting request sizes and methods, running workers as a non-root user with tight file permissions, setting up access and error logging for forensics, or reviewing an existing nginx config for common misconfigurations. Use when the task mentions nginx config, reverse proxy security, TLS hardening, or web server lockdown."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -21,7 +14,6 @@ tools:
   - name: OpenSSL
     version: 3.4
 ---
-
 nginx usually sits at the edge of the stack, terminating TLS and proxying to
 application servers, which makes its configuration a high-value hardening
 target. This skill covers locking down nginx 1.27: hiding version banners,

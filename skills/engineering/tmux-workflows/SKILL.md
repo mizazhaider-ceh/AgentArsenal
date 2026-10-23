@@ -1,13 +1,6 @@
 ---
 name: tmux-workflows
-description: Use when working with tmux 3.4 for persistent terminal
-  sessions: creating and managing sessions, windows, and panes, customizing
-  key bindings and the status bar in tmux.conf, using copy mode to search
-  and copy scrollback, scripting reproducible layouts for projects,
-  surviving SSH disconnects with detach and reattach, logging pane output,
-  or pairing with a colleague in a shared session. Use when the task
-  mentions tmux, terminal multiplexer, persistent sessions, or split
-  panes.
+description: "Use when working with tmux 3.4 for persistent terminal sessions: creating and managing sessions, windows, and panes, customizing key bindings and the status bar in tmux.conf, using copy mode to search and copy scrollback, scripting reproducible layouts for projects, surviving SSH disconnects with detach and reattach, logging pane output, or pairing with a colleague in a shared session. Use when the task mentions tmux, terminal multiplexer, persistent sessions, or split panes."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -19,7 +12,6 @@ tools:
   - name: tmux
     version: 3.4
 ---
-
 tmux is a terminal multiplexer: it keeps shell sessions alive on the
 server, independent of your SSH connection, and tiles them into windows
 and panes you can script. The core workflow is attach in the morning,

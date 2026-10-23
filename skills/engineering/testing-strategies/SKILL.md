@@ -1,12 +1,6 @@
 ---
 name: testing-strategies
-description: Use when building a test strategy for a Python project: choosing
-  what to test at each level of the test pyramid, writing pytest unit tests
-  with fixtures and parametrize, mocking external services, measuring
-  coverage, writing integration and end-to-end tests, fixing flaky tests,
-  running tests in CI, or reviewing whether a codebase is under-tested. Use
-  when the task mentions pytest, test coverage, unit tests, integration
-  tests, mocking, TDD, or flaky tests.
+description: "Use when building a test strategy for a Python project: choosing what to test at each level of the test pyramid, writing pytest unit tests with fixtures and parametrize, mocking external services, measuring coverage, writing integration and end-to-end tests, fixing flaky tests, running tests in CI, or reviewing whether a codebase is under-tested. Use when the task mentions pytest, test coverage, unit tests, integration tests, mocking, TDD, or flaky tests."
 version: 1.0.0
 domain: engineering
 lifecycle: stable
@@ -22,7 +16,6 @@ tools:
   - name: coverage.py
     version: 7.6
 ---
-
 Testing is how a codebase stays changeable: tests catch regressions before
 users do and document what the code is supposed to do. This skill covers a
 practical testing strategy for Python projects with pytest 8.3: the test

@@ -1,6 +1,6 @@
 ---
 name: recon-active
-description: Use when you have written authorization and need to directly probe the target: DNS zone transfer attempts, authoritative NS interrogation, subdomain brute forcing, reverse DNS sweeps, ICMP and TCP host discovery, and initial service discovery with dig, nmap, masscan, gobuster, and ffuf. Builds on the passive baseline from recon-passive and turns it into verified, attributable findings. Covers AXFR attempts, DNS wordlist attacks, ping sweeps with safe pacing for in-scope ranges, and logging habits that keep the work audit-clean.
+description: "Use when you have written authorization and need to directly probe the target: DNS zone transfer attempts, authoritative NS interrogation, subdomain brute forcing, reverse DNS sweeps, ICMP and TCP host discovery, and initial service discovery with dig, nmap, masscan, gobuster, and ffuf. Builds on the passive baseline from recon-passive and turns it into verified, attributable findings. Covers AXFR attempts, DNS wordlist attacks, ping sweeps with safe pacing for in-scope ranges, and logging habits that keep the work audit-clean."
 version: 1.0.0
 domain: recon
 lifecycle: stable
@@ -21,7 +21,6 @@ tools:
   - name: ffuf
     version: 2.1.x
 ---
-
 Active reconnaissance sends packets to the target's own infrastructure. It is
 noisy, attributable, and only acceptable inside a signed scope. This skill
 takes the passive baseline from recon-passive (subdomain lists, name servers,

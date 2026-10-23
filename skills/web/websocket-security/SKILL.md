@@ -1,14 +1,6 @@
 ---
 name: websocket-security
-description: Use when an application uses WebSockets (ws:// or wss://) on an
-  authorized engagement. Covers finding WebSocket endpoints in JavaScript and
-  proxy history, testing Origin header validation for cross-site WebSocket
-  hijacking (CSWSH), probing authentication and session handling during the
-  HTTP Upgrade handshake, fuzzing message frames for injection and stored XSS
-  delivered through socket messages, and exploiting missing origin checks with
-  a proof of concept page. Use when the app has live chat, notifications,
-  trading tickers, dashboards, or any real-time feature, or when Burp Suite
-  2026.2 shows Upgrade: websocket traffic.
+description: "Use when an application uses WebSockets (ws:// or wss://) on an authorized engagement. Covers finding WebSocket endpoints in JavaScript and proxy history, testing Origin header validation for cross-site WebSocket hijacking (CSWSH), probing authentication and session handling during the HTTP Upgrade handshake, fuzzing message frames for injection and stored XSS delivered through socket messages, and exploiting missing origin checks with a proof of concept page. Use when the app has live chat, notifications, trading tickers, dashboards, or any real-time feature, or when Burp Suite 2026.2 shows Upgrade: websocket traffic."
 version: 1.0.0
 domain: web
 lifecycle: stable
@@ -22,7 +14,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 WebSockets give the browser a full-duplex channel to the server after a
 single HTTP Upgrade handshake, and that channel often carries the same
 privileges as a logged-in session while receiving far less security review

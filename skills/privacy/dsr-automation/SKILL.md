@@ -1,10 +1,6 @@
 ---
 name: dsr-automation
-description: Use when automating data subject requests: access,
-  erasure, portability, and rectification at scale. Covers request
-  intake and identity verification, orchestration across datastores,
-  processor propagation, and SLA tracking. Also use when manual DSR
-  handling is drowning the privacy team.
+description: "Use when automating data subject requests: access, erasure, portability, and rectification at scale. Covers request intake and identity verification, orchestration across datastores, processor propagation, and SLA tracking. Also use when manual DSR handling is drowning the privacy team."
 version: 1.0.0
 domain: privacy
 lifecycle: stable
@@ -18,7 +14,6 @@ tools:
   - name: PostgreSQL
     version: 17
 ---
-
 Data subject requests arrive by the hundred: "send me my data",
 "delete everything". Manual handling does not scale and misses
 stores. This skill covers building the automation: verified intake,

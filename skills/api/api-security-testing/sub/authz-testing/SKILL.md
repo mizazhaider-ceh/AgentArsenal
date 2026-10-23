@@ -1,12 +1,6 @@
 ---
 name: authz-testing
-description: Use when testing API authorization: whether users can access
-  other users' data or admin functions on an authorized engagement. Covers
-  IDOR testing, horizontal and vertical privilege escalation, function
-  level access checks, and multi-account test methodology. Use when the API
-  serves user-specific data, when roles exist, when object IDs are
-  predictable, or when assessing broken object and function level
-  authorization.
+description: "Use when testing API authorization: whether users can access other users' data or admin functions on an authorized engagement. Covers IDOR testing, horizontal and vertical privilege escalation, function level access checks, and multi-account test methodology. Use when the API serves user-specific data, when roles exist, when object IDs are predictable, or when assessing broken object and function level authorization."
 version: 1.0.0
 domain: api
 lifecycle: stable
@@ -23,7 +17,6 @@ tools:
   - name: Python
     version: 3.12
 ---
-
 Broken authorization is the most common serious API flaw: the API checks
 who you are but not whether you may touch this object or use this
 function. This skill covers systematic authz testing on authorized
