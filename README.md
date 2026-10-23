@@ -1,6 +1,6 @@
 ![AgentArsenal](assets/banner-keeper.png)
 
-# AgentArsenal | 285 Powerful Skills 🐦‍🔥
+# AgentArsenal | 285 Powerful Skills | 25 Agents
 
 <!-- SKILLCOUNT:START -->
 ![skills](https://img.shields.io/badge/skills-285-A78BFA)
