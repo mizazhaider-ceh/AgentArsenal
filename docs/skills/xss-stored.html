@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: xss-stored</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>xss-stored</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing for stored cross-site scripting on an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="web-xss.html">web-xss</a></div><div class="deps"><span class="kind">requires:</span> <a href="web-xss.html">web-xss</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Stored cross-site scripting is the most dangerous XSS class because the payload lives in the application and fires for every user who views the infected data, with no crafted link needed. This skill covers the stored XSS methodology on authorized tests: finding storage points, getting payloads past input validation, hunting every render location, and judging impact honestly. Because stored payloads affect other users, this sub-skill carries extra care rules: benign payloads only, cleanup after the test, and no real session theft without explicit permission.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory every place the application stores user input: comments,</li>
+<p>profiles, tickets, usernames, file names, rich text fields.</p>
+<li>Store a unique canary at each point and note exactly what was accepted.</li>
+<li>Visit every page that might render the stored data, including admin</li>
+<p>panels, exports, emails, and PDFs.</p>
+<li>Classify the render context at each location and craft the breakout.</li>
+<li>Prove execution with a harmless marker payload.</li>
+<li>Assess blast radius: which roles view the data, and how often.</li>
+<li>Delete every test payload and confirm cleanup.</li>
+</ol>
+<h2>1. Storage point discovery</h2>
+<pre><code class="language-bash"># Store canaries with distinct markers per field
+curl -s -X POST &#x27;https://target.example/comment&#x27; \
+  -b session.txt -d &#x27;post=1&amp;text=storedAAA111&#x27;
+curl -s -X POST &#x27;https://target.example/profile&#x27; \
+  -b session.txt -d &#x27;displayname=storedBBB222&amp;bio=hello&#x27;
+
+# File name storage: upload with a canary file name
+curl -s -X POST &#x27;https://target.example/upload&#x27; \
+  -b session.txt -F &#x27;file=@/tmp/x.txt;filename=&quot;storedCCC333.txt&quot;&#x27;
+
+# Check what the application kept: fetch your own profile and content
+curl -s &#x27;https://target.example/profile/me&#x27; -b session.txt \
+  | grep -o &#x27;.\{30\}\(storedAAA111\|storedBBB222\).\{30\}&#x27;</code></pre>
+<p>Note transformations: truncation, case changes, stripped tags, encoded characters. The stored form, not your submitted form, is what you must break out of.</p>
+<h2>2. Getting payloads to persist</h2>
+<p>Validation often differs between storage and rendering. Probe both.</p>
+<pre><code class="language-bash"># If &lt;script&gt; is stripped at storage, try event handlers
+# Stored bio: &quot;&gt;&lt;svg onload=console.log(&#x27;stored&#x27;)&gt;
+
+# If quotes are stripped, try quote-free vectors
+# &lt;svg/onload=console.log(1)&gt;
+
+# Length limits: check the stored length, then fit the vector
+# &lt;img src=x onerror=console.log(1)&gt; is 32 chars
+
+# Multi-field: the vulnerable field may not be the obvious one
+# (author name reflected in the comment list, not the comment body)</code></pre>
+<p>Rich text editors are prime targets: they must allow some HTML, and their allow-lists are often wrong. Test <code>style</code> attributes, <code>data:</code> URIs, SVG, and MathML elements one at a time.</p>
+<h2>3. Hunting render locations</h2>
+<p>The payload may render far from where it was stored. Crawl as the roles that would see it.</p>
+<pre><code class="language-bash"># As a second test user, visit content lists, profiles, search results
+curl -s &#x27;https://target.example/users&#x27; -b victim.txt | grep -o &#x27;.\{30\}storedBBB222.\{30\}&#x27;
+
+# Admin panel render (use a test admin account provided for the engagement)
+curl -s &#x27;https://target.example/admin/users&#x27; -b admin.txt | grep -c &#x27;storedBBB222&#x27;
+
+# Exports: CSV, PDF, and email digests render stored data too
+curl -s &#x27;https://target.example/admin/export.csv&#x27; -b admin.txt | grep &#x27;storedBBB222&#x27;</code></pre>
+<p>Stored XSS in an admin panel is typically the highest-impact finding in a web test: it can lead to full administrative takeover. Document which roles render the payload and whether any approval workflow stands in between.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The payload fires for you but not for others. Caching, role-specific</li>
+<p>rendering, or approval queues may hide it; test with a clean second account in each role.</p>
+<li>The application sanitizes on render, not on store. Your stored canary</li>
+<p>looks raw in the database but safe on the page; test the render path, because sanitizer differences between pages are common.</p>
+<li>The payload persists in exports or emails you cannot easily view. Ask</li>
+<p>the test lead for a safe way to trigger and inspect them, or note the suspected sink as unconfirmed.</p>
+<li>Rate limits or moderation queues delay storage. Wait for the queue, or</li>
+<p>use a test account with moderation rights if the engagement provides one.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No render location executes the payload: re-examine the exact stored</li>
+<p>bytes (view source, check for double encoding) before declaring it safe; sanitizers that encode once but render twice are a classic miss.</p>
+<li>You need to prove admin-panel impact: with permission, use a harmless</li>
+<p>title-change marker in the admin session and screenshot it; never take over the real admin session or plant persistence.</p>
+<li>Cleanup is uncertain: list every payload location in your notes and</li>
+<p>verify deletion by re-fetching each page; report any payload you could not remove to the test lead immediately.</p>
+<li>The finding enables a worm (payload spreads itself): describe the worm</li>
+<p>scenario in the report, do not build or release a self-spreading payload, even on a test environment, without explicit written approval.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see stored XSS as persistent malicious content in their database, often found by users reporting strange behavior or by content scans. The attacker&#x27;s setup requests look like normal content creation with odd strings. Durable defense is output encoding at every render point (not just input filtering at storage), a strict sanitizer such as DOMPurify for rich text, Content Security Policy to blunt successful injections, and admin panels treated as high-trust render surfaces with extra review.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1189 (Drive-by Compromise).</li>
+<li>CWE-79 (Improper Neutralization of Input During Web Page Generation,</li>
+<p>Cross-site Scripting).</p>
+<li>OWASP Testing Guide: Testing for Stored Cross Site Scripting</li>
+<p>(OTG-INPVAL-002).</p>
+<li>OWASP XSS Prevention Cheat Sheet.</li>
+<li>PortSwigger Web Security Academy: Stored XSS labs.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

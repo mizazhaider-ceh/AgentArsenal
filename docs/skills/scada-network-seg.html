@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: scada-network-seg</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>scada-network-seg</h2><div class="meta"><span class="badge gray">ics-scada</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when designing or assessing network segmentation for</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="modbus-security.html">modbus-security</a> <a href="firewall-evasion.html">firewall-evasion</a> <a href="network-pivoting.html">network-pivoting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>nmap</td><td>7.98</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Segmentation is the main defense in OT: since PLCs and protocols lack authentication, the network boundary does the access control. This skill covers authorized assessment and design of OT segmentation: mapping zones and conduits, reviewing firewall rules between IT and OT, and testing whether the segmentation holds. Never test segmentation by attacking across it without written authorization naming both sides.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the as built network: interview, config review, and passive</li>
+<p>observation before any active test.</p>
+<li>Draw the Purdue levels 0 through 5 with the actual devices placed.</li>
+<li>Define zones (groups of assets with common security needs) and</li>
+<p>conduits (the controlled paths between them).</p>
+<li>Review firewall rules on every IT to OT and zone to zone boundary.</li>
+<li>Validate with authorized tests: confirm blocked paths are blocked</li>
+<p>and allowed paths are minimal.</p>
+<li>Check the data diode or historian path: the one legitimate bridge.</li>
+<li>Look for bypasses: dual homed hosts, forgotten VPNs, cellular</li>
+<p>modems, vendor remote access.</p>
+<li>Report gaps with the exact path an attacker could walk.</li>
+</ol>
+<h2>1. Purdue mapping and zone design</h2>
+<pre><code class="language-bash"># Build the asset map from configs and interviews (no scanning yet)
+python3 - &lt;&lt; &#x27;PY&#x27;
+levels = {
+    0: &quot;physical process: sensors, actuators&quot;,
+    1: &quot;control: PLCs, RTUs, SIS controllers&quot;,
+    2: &quot;supervisory: HMIs, historians, engineering workstations&quot;,
+    3: &quot;operations: OT DMZ, patch servers, jump hosts&quot;,
+    &quot;3.5&quot;: &quot;industrial DMZ: the broker zone between IT and OT&quot;,
+    4: &quot;business: ERP, email, file servers&quot;,
+    5: &quot;enterprise: internet facing services&quot;,
+}
+for lvl, desc in levels.items():
+    print(f&quot;Level {lvl}: {desc}&quot;)
+print(&quot;\nconduits to define: L4&lt;-&gt;3.5, 3.5&lt;-&gt;3, 3&lt;-&gt;2, 2&lt;-&gt;1&quot;)
+PY</code></pre>
+<pre><code class="language-bash"># Firewall rule review template: for each conduit, list allowed flows
+# Required columns: source zone, dest zone, ports, direction, business need
+# Red flags: ANY to ANY rules, OT initiated outbound to internet,
+# management protocols (RDP, SSH) allowed from IT into OT broadly
+echo &quot;review: iptables / firewalld / vendor FW exports per conduit&quot;</code></pre>
+<h2>2. Segmentation validation (authorized)</h2>
+<pre><code class="language-bash"># From a host in the IT segment (authorized), confirm OT is unreachable
+# Use a slow, targeted check, not a broad scan
+sudo nmap -sS -p 502,4840,102,44818 -T2 --max-retries 1 \
+  192.168.10.20 -oN /tmp/seg_test_ot.txt
+# Expected: filtered (no answer). Open means the conduit leaks.</code></pre>
+<pre><code class="language-bash"># Verify the legitimate historian path still works (allowlisted flow)
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;allowed: historian replica in DMZ pulls from OT historian, TCP 1433&quot;)
+print(&quot;test: from DMZ host, connect to OT historian IP port 1433 -&gt; should work&quot;)
+print(&quot;test: from IT host, same target -&gt; should fail&quot;)
+PY</code></pre>
+<pre><code class="language-bash"># Hunt bypasses: dual homed hosts and rogue paths
+# - check ARP tables on boundary hosts for unexpected neighbors
+# - review VPN configs and vendor remote access accounts
+# - walk the plant and look for cellular modems and unmanaged switches
+ip neigh show | head -20</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The firewall rules are correct but a dual homed engineering laptop</li>
+<p>bridges the zones. The laptop is the finding, not the firewall.</p>
+<li>A vendor needs remote access for support. Route it through the jump</li>
+<p>host with MFA and session recording, never a direct VPN to OT.</p>
+<li>The historian needs bidirectional sync. Prefer a data diode or a</li>
+<p>replica with a one way push over opening return paths.</p>
+<li>Wireless in the plant (guest WiFi near OT). Verify it cannot reach</li>
+<p>OT segments and that OT devices do not join it.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Segmentation fails open during firewall failure. Check fail open vs</li>
+<p>fail closed behavior and recommend fail closed for OT boundaries.</p>
+<li>Flat network with no budget for full redesign: propose quick wins</li>
+<p>first (ACLs on switches, host firewalls on HMIs, remove gateways).</p>
+<li>Need protocol level enforcement: add an OT aware firewall or data</li>
+<p>diode on the worst conduit.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders monitor conduits with allowlist IDS: any flow not in the baseline is an alert. They watch for new devices on OT segments, VPN logins outside maintenance windows, and firewall rule changes. The durable design follows IEC 62443: zones with target security levels, conduits with verified controls, and continuous monitoring of every boundary. Segmentation is not a one time project; it needs change control or it rots.</p>
+<h2>Key references</h2>
+<ul>
+<li>IEC 62443-3-2: zones, conduits, and risk assessment.</li>
+<li>NIST SP 800-82r3: OT network architecture guidance.</li>
+<li>MITRE ATT&amp;CK ICS T0806 and T0884 (Connection Proxy): lateral paths.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

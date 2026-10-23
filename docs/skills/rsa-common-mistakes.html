@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: rsa-common-mistakes</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>rsa-common-mistakes</h2><div class="meta"><span class="badge gray">crypto</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing RSA implementations for the classic</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="rsa-attacks.html">rsa-attacks</a></div><div class="deps"><span class="kind">requires:</span> <a href="rsa-attacks.html">rsa-attacks</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a> <a href="reviewer-crypto-misuse.html">reviewer-crypto-misuse</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>OpenSSL</td><td>3.0</td></tr></tbody></table><p>RSA breaks in practice through implementation mistakes, not through attacks on the math: small keys, reused primes, tiny exponents, and textbook (unpadded) encryption. This skill covers recognizing and exploiting the common mistakes on authorized engagements and in CTFs: which mistake the key material suggests, and the standard recovery for each. It is triage plus the easy wins; padding oracles and exponent attacks are their own sub-skills.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Extract the public key material: n, e, and any ciphertext.</li>
+<li>Check key size: under 512 bits is factorable on a laptop.</li>
+<li>Check for prime reuse across keys (gcd of moduli).</li>
+<li>Check the exponent: e=3 with textbook RSA is fragile.</li>
+<li>Apply the matching recovery; verify by decrypting a known value.</li>
+<li>Document the mistake and the recovered plaintext.</li>
+</ol>
+<h2>1. Small modulus factoring</h2>
+<pre><code class="language-bash"># Extract n and e from a PEM public key
+openssl rsa -pubin -in /tmp/pubkey.pem -text -noout 2&gt;/dev/null | head -10
+
+# Key size check: 512-bit and below factor on commodity hardware
+python3 - &lt;&lt;&#x27;EOF&#x27;
+# Rough guidance:
+# 256-bit: seconds | 512-bit: minutes-hours | 768-bit: serious effort
+# 1024-bit: nation-state in practice; 2048-bit: safe
+print(&quot;If n &lt; 2**512: try factoring first, ask questions later&quot;)
+EOF
+
+# Factor with your tool of choice (yafu/msieve/ecm for 512-bit),
+# then recover d and decrypt</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Recover the private exponent from factors, then decrypt.&quot;&quot;&quot;
+from math import gcd
+
+def egcd(a, b):
+    if b == 0:
+        return (a, 1, 0)
+    g, x1, y1 = egcd(b, a % b)
+    return (g, y1, x1 - (a // b) * y1)
+
+def modinv(a, m):
+    g, x, _ = egcd(a, m)
+    assert g == 1
+    return x % m
+
+# p, q from the factoring step; e from the public key
+# n = p * q; phi = (p-1)*(q-1); d = modinv(e, phi)
+# plaintext = pow(ciphertext, d, n)</code></pre>
+<p>Always verify the recovered key by decrypting something: a known plaintext, or the PKCS#1 padding structure. Factors that do not decrypt are wrong factors.</p>
+<h2>2. Common prime and exponent issues</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Batch GCD: find shared primes across many moduli.&quot;&quot;&quot;
+from math import gcd
+
+moduli = []  # load n values from captured keys
+# Pairwise gcd finds any shared prime: gcd(ni, nj) = p means
+# both keys share p, and both factor immediately
+for i in range(len(moduli)):
+    for j in range(i + 1, len(moduli)):
+        g = gcd(moduli[i], moduli[j])
+        if g != 1:
+            print(f&quot;shared prime between key {i} and {j}: {g}&quot;)
+
+# e=3 with textbook RSA (no padding): cube-root attack on small messages
+# if m^3 &lt; n, then c = m^3 and m = round(c ** (1/3))
+def cube_root(c):
+    x = round(c ** (1/3))
+    for cand in (x - 2, x - 1, x, x + 1, x + 2):
+        if cand ** 3 == c:
+            return cand
+    return None</code></pre>
+<p>Shared primes come from bad RNGs (embedded devices, VMs at boot); batch gcd across all captured keys is cheap and decisive. e=3 is only exploitable when padding is absent or broken; with proper OAEP, e=3 is fine, so check the padding before celebrating.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The key is 1024-bit. Factoring is out of reach; look for protocol</li>
+<p>mistakes (padding, exponent) instead of math attacks.</p>
+<li>The ciphertext uses proper OAEP. Textbook attacks do not apply;</li>
+<p>move to implementation review (side channels, oracles).</p>
+<li>Multiple keys, no shared primes. The RNG is fine; the mistake is</li>
+<p>elsewhere.</p>
+<li>The &quot;mistake&quot; is in a CTF with intentional weakness. The triage</li>
+<p>order is the same: size, gcd, exponent, padding.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Factoring succeeds: recover the full private key, demonstrate</li>
+<p>decryption, and report the key size as the root cause.</p>
+<li>The mistake is systemic (device fleet with shared primes): report</li>
+<p>the fleet impact, not just the one key; every key sharing the prime falls.</p>
+<li>No common mistake found: hand the key to rsa-padding-oracles or</li>
+<p>rsa-small-exponent for the advanced attacks.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, RSA mistakes are prevented at generation: use a vetted library, 2048-bit minimum (3072 for long-lived), proper padding (OAEP for encryption, PSS for signatures), and a real RNG. Audit existing keys for size and generation source; embedded and legacy systems are where the small keys and shared primes hide. The defender&#x27;s check is simple: list every RSA key, check size and provenance, replace the weak ones.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm).</li>
+<li>CWE-330 (Use of Insufficiently Random Values).</li>
+<li>NIST SP 800-56B (RSA key establishment guidance).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

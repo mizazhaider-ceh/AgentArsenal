@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: partition-recovery</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>partition-recovery</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when partition tables are damaged, deleted, or missing on</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="disk-forensics.html">disk-forensics</a></div><div class="deps"><span class="kind">requires:</span> <a href="disk-forensics.html">disk-forensics</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="deleted-file-carving.html">deleted-file-carving</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>The Sleuth Kit</td><td>4.12.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A disk without a readable partition table still holds its filesystems; the map is gone, not the territory. This skill covers recovering partition layout from forensic images: reading damaged tables, finding filesystems by signature, and rebuilding access. It runs on working copies only, and every step is documented, because partition recovery changes how the rest of the examination proceeds.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Work on the verified working copy, never the original.</li>
+<li>Try reading the partition table normally first.</li>
+<li>If it fails, scan for filesystem signatures across the image.</li>
+<li>Reconstruct the partition layout from found signatures.</li>
+<li>Access each filesystem read-only and verify it parses.</li>
+<li>Document the recovered layout for the examination record.</li>
+</ol>
+<h2>1. Reading the damaged table</h2>
+<pre><code class="language-bash"># Normal read first: GPT and MBR via TSK
+mmls /analysis/case01_work.img 2&gt;&amp;1 | head -20
+
+# If mmls fails, inspect the raw bytes: MBR signature at offset 510
+xxd -s 510 -l 2 /analysis/case01_work.img
+# expect 55aa; anything else means a damaged or wiped MBR
+
+# GPT header at LBA 1 (offset 512): look for the EFI PART signature
+xxd -s 512 -l 8 /analysis/case01_work.img</code></pre>
+<p>A wiped first sector with intact filesystems later is the classic anti-forensics or re-partitioning case. The signatures below find what the table lost.</p>
+<h2>2. Signature scanning</h2>
+<pre><code class="language-bash"># Search for filesystem superblocks across the image
+# ext4 superblock magic 0x53EF at offset 56 within the superblock
+# (superblock starts 1024 bytes into the filesystem)
+
+# NTFS: &#x27;NTFS    &#x27; at the start of the boot sector
+# FAT32: &#x27;FAT32   &#x27; at offset 82 of the boot sector
+
+# TSK fls can try likely offsets once you have candidates;
+# or scan with a simple Python signature sweep
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import sys
+Sigs = {b&#x27;NTFS    &#x27;: &#x27;NTFS boot sector&#x27;, b&#x27;\x53\xef&#x27;: &#x27;possible ext superblock&#x27;}
+with open(&#x27;/analysis/case01_work.img&#x27;, &#x27;rb&#x27;) as f:
+    data = f.read()
+for sig, name in Sigs.items():
+    off = 0
+    hits = []
+    while True:
+        off = data.find(sig, off)
+        if off == -1:
+            break
+        hits.append(off)
+        off += 1
+    print(f&quot;{name}: {len(hits)} hits, first at {hits[:5]}&quot;)
+EOF</code></pre>
+<p>Each hit is a candidate filesystem start. Verify by attempting to list it before declaring the layout recovered.</p>
+<h2>3. Rebuilding access</h2>
+<pre><code class="language-bash"># Access a found NTFS at byte offset with TSK
+fls -o &lt;sector_offset&gt; /analysis/case01_work.img 2&gt;&amp;1 | head -10
+# -o takes the sector offset of the filesystem start
+
+# Verify it parses: list the root and check for sane entries
+fls -o &lt;sector_offset&gt; /analysis/case01_work.img | head -20
+
+# For the examination record, write the recovered layout
+cat &gt; /tmp/recovered_layout.txt &lt;&lt;&#x27;EOF&#x27;
+Image: case01_work.img
+Partition 1: offset &lt;n&gt; sectors, NTFS, parses cleanly, label &lt;x&gt;
+Partition 2: offset &lt;n&gt; sectors, ext4, parses cleanly
+Method: signature scan after MBR damage at sector 0
+EOF</code></pre>
+<p>Recovered partitions feed the normal workflow: timelines, artifact parsing, and carving all run per filesystem from here.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Signatures are wiped too (full disk wipe). Carving (see</li>
+<p>deleted-file-carving) is the remaining option; partitions are gone.</p>
+<li>The layout uses LVM, RAID, or encryption. Reassemble the logical</li>
+<p>volume first (LVM metadata, RAID parameters); encrypted volumes need the key from memory or the investigation.</p>
+<li>False-positive signatures. Verify every candidate by parsing;</li>
+<p>random data contains magic bytes by chance.</p>
+<li>The disk is failing. Image with error recovery first; partition</li>
+<p>recovery on a dying disk without a good image risks everything.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need the data urgently and the layout resists recovery: carve</li>
+<p>files directly from the image while continuing the layout work in parallel.</p>
+<li>The filesystem parses but is corrupt: use the filesystem&#x27;s own</li>
+<p>recovery tools on a copy, and document every repair.</p>
+<li>Recovery must be defensible: keep the signature scan logs and the</li>
+<p>verification outputs with the case file.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, partition damage is either failure or anti-forensics: both matter. Unexpected partition changes on a server (monitoring partition tables is cheap) signal tampering or re-imaging. The defender&#x27;s preparation is known-good partition baselines for critical systems and the imaging discipline that makes recovery possible.</p>
+<h2>Key references</h2>
+<ul>
+<li>The Sleuth Kit documentation: mmls, fls with offsets.</li>
+<li>&quot;File System Forensic Analysis&quot; (partition systems).</li>
+<li>NIST SP 800-86 (media analysis).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

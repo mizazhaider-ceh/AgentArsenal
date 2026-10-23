@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: evidence-handling</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>evidence-handling</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when acquiring and preserving digital evidence for</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><div class="deps"><span class="kind">requires:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="disk-forensics.html">disk-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>The Sleuth Kit</td><td>4.12.1</td></tr></tbody></table><p>Evidence handling is the foundation every forensic conclusion stands on: acquire without altering, prove nothing changed, and document every hand that touched it. This skill covers the handling workflow: write blocking, imaging, hashing, and chain of custody. Skip it and the analysis is worthless in any serious setting; do it right and every later finding is defensible.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the evidence sources and the order of volatility.</li>
+<li>Photograph and document the scene and system state first.</li>
+<li>Capture volatile data (memory, network) before powering anything down.</li>
+<li>Image storage media through a write blocker.</li>
+<li>Hash the original and the image; the hashes must match.</li>
+<li>Log every handling step in the chain of custody.</li>
+<li>Work only on copies; the original stays sealed.</li>
+</ol>
+<h2>1. Order of volatility</h2>
+<pre><code class="language-bash"># Collect in this order (most volatile first):
+# 1. Memory (RAM)            -&gt; memory-forensics
+# 2. Network connections     -&gt; netstat, ss output
+# 3. Running processes       -&gt; ps output
+# 4. Open files and handles  -&gt; lsof
+# 5. Disk (powered on)       -&gt; live imaging considerations
+# 6. Disk (powered off)      -&gt; dead-box imaging
+
+# Live capture basics before any shutdown decision
+date -u &gt; /tmp/capture_start.txt
+ss -tulnp &gt; /tmp/netstat.txt 2&gt;/dev/null
+ps aux &gt; /tmp/ps.txt 2&gt;/dev/null</code></pre>
+<p>Powering down destroys memory and changes disk state (timestamps, caches). The decision to pull the plug needs a reason; default to live capture of volatiles first unless the situation demands immediate isolation.</p>
+<h2>2. Imaging with write blocking</h2>
+<pre><code class="language-bash"># Hardware write blocker is the standard; software read-only mounting
+# is the fallback (mount -o ro), never mount read-write
+
+# Image with dc3dd or dd, logging hashes during the read
+dc3dd if=/dev/sdb of=/evidence/case01_disk.img hash=sha256 log=/evidence/case01.log
+
+# Verify: hash the image and compare with the acquisition hash
+sha256sum /evidence/case01_disk.img
+grep -i &#x27;sha256&#x27; /evidence/case01.log
+
+# Split images for storage if needed, keeping the hash manifest</code></pre>
+<p>Never analyze the original: mount the image read-only or work on a verified copy. Every examination step happens on the copy; the original is sealed and its hash is the proof it stayed sealed.</p>
+<h2>3. Chain of custody</h2>
+<pre><code class="language-bash"># Custody log: every movement, every access, every copy
+cat &gt; /evidence/case01_custody.txt &lt;&lt;&#x27;EOF&#x27;
+Item: case01_disk.img (sha256: &lt;hash&gt;)
+2026-10-23 09:00 UTC - Acquired from host WS-114 by &lt;name&gt;, write blocker SN-42
+2026-10-23 09:40 UTC - Imaged to /evidence/case01_disk.img, hash verified match
+2026-10-23 10:15 UTC - Working copy made to /analysis/case01_work.img, hash verified
+2026-10-23 11:00 UTC - Analysis started by &lt;name&gt; on working copy only
+EOF
+
+# Hash the custody log itself at each update to show the record is intact
+sha256sum /evidence/case01_custody.txt &gt;&gt; /evidence/case01_custody_hashes.txt</code></pre>
+<p>The custody log answers the only question that matters later: can you prove this evidence is what you claim and nobody altered it. Gaps in the log are gaps in the case.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The system is encrypted and running. Capture memory first (the keys</li>
+<p>may be in it), image live if the tools allow, and never reboot before the memory capture.</p>
+<li>The media is failing. Image the most critical partitions first, use</li>
+<p>tools that retry bad sectors, and document every read error.</p>
+<li>Cloud evidence has no disk to image. Use the provider&#x27;s snapshot and</li>
+<p>export tools, hash the exports, and document the provider&#x27;s handling alongside yours.</p>
+<li>Legal hold conflicts with analysis speed. The hold wins; document the</li>
+<p>constraint and work within it.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need the original powered on for analysis: justify it in writing,</li>
+<p>minimize the interaction, and log every command run on it.</p>
+<li>The hash does not match: stop, investigate (bad sector, tool error,</li>
+<p>handling mistake), and do not proceed until the mismatch is explained.</p>
+<li>Multiple examiners need access: the custody log tracks each one;</li>
+<p>copies are cheap, originals are singular.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, evidence handling is the incident response discipline: the same imaging and custody process preserves the option of legal action and keeps the analysis trustworthy. The defender&#x27;s view is that every shortcut in handling becomes the attacker&#x27;s lawyer&#x27;s argument. Write blockers, hashing, and custody logs are cheap; compromised evidence is expensive.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-86 (Guide to Integrating Forensic Techniques into Incident</li>
+<p>Response).</p>
+<li>RFC 3227 (Guidelines for Evidence Collection and Archiving).</li>
+<li>ACPO Good Practice Guide for Digital Evidence.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

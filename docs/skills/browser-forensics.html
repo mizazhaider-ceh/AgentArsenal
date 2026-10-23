@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: browser-forensics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>browser-forensics</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">92/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when analyzing browser artifacts in an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="dfir-timeline.html">dfir-timeline</a> <a href="log-forensics.html">log-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>sqlite3</td><td>3.46</td></tr></tbody></table><p>Browsers record everything: history, searches, downloads, logins, and cached content. This skill covers analyzing those artifacts from disk images or profiles you are authorized to examine: where each browser keeps what, how to parse it, and how to build the web activity timeline.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the browsers and profiles on the image.</li>
+<li>Copy the profile databases to your workstation (never work on</li>
+<p>the original).</p>
+<li>Parse history, cookies, downloads, and logins per browser.</li>
+<li>Reconstruct sessions: what the user did, in order.</li>
+<li>Check the cache for content of deleted or private pages.</li>
+<li>Correlate with the system timeline: browser events anchor user</li>
+<p>activity.</p>
+<li>Note anti forensics: cleared history, private mode, and</li>
+<p>portable browsers.</p>
+<li>Report with timestamps in UTC and the artifact per claim.</li>
+</ol>
+<h2>1. Chrome and Edge artifacts</h2>
+<pre><code class="language-bash"># Profile locations (from the mounted image):
+# Chrome: .../AppData/Local/Google/Chrome/User Data/Default/
+# Edge:   .../AppData/Local/Microsoft/Edge/User Data/Default/
+ls /mnt/img/Users/*/AppData/Local/Google/Chrome/User\ Data/ 2&gt;/dev/null</code></pre>
+<pre><code class="language-bash"># History: visits with timestamps (Chrome time = microseconds since 1601)
+cp &quot;/mnt/img/.../Default/History&quot; /tmp/bf/history.db
+sqlite3 /tmp/bf/history.db \
+  &quot;SELECT datetime(last_visit_time/1000000-11644473600,&#x27;unixepoch&#x27;), url, title
+   FROM urls ORDER BY last_visit_time DESC LIMIT 20;&quot;</code></pre>
+<pre><code class="language-bash"># Downloads and cookies
+sqlite3 /tmp/bf/history.db \
+  &quot;SELECT datetime(start_time/1000000-11644473600,&#x27;unixepoch&#x27;), target_path, tab_url
+   FROM downloads ORDER BY start_time DESC LIMIT 10;&quot;
+cp &quot;/mnt/img/.../Default/Cookies&quot; /tmp/bf/cookies.db
+sqlite3 /tmp/bf/cookies.db \
+  &quot;SELECT host_key, name, datetime(creation_utc/1000000-11644473600,&#x27;unixepoch&#x27;)
+   FROM cookies ORDER BY creation_utc DESC LIMIT 10;&quot;</code></pre>
+<h2>2. Firefox and cache</h2>
+<pre><code class="language-bash"># Firefox: places.sqlite (history), cookies.sqlite, formhistory.sqlite
+# Profile: .../AppData/Roaming/Mozilla/Firefox/Profiles/*.default*/
+sqlite3 /tmp/bf/places.sqlite \
+  &quot;SELECT datetime(visit_date/1000000,&#x27;unixepoch&#x27;), url FROM moz_places
+   ORDER BY last_visit_date DESC LIMIT 20;&quot; 2&gt;/dev/null || \
+sqlite3 /tmp/bf/places.sqlite \
+  &quot;SELECT p.url FROM moz_places p JOIN moz_historyvisits h ON p.id=h.place_id
+   ORDER BY h.visit_date DESC LIMIT 20;&quot;</code></pre>
+<pre><code class="language-bash"># Cache: may hold content of pages since deleted from history
+# Chrome cache: parse with a cache viewer or strings triage
+strings /mnt/img/.../Default/Cache/Cache_Data/data_1 2&gt;/dev/null | grep -i -E &quot;http&quot; | head -10</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>History was cleared. Check the cache, cookies, and session</li>
+<p>files; clearing is rarely complete.</p>
+<li>Private mode was used. Memory forensics may help; disk</li>
+<p>artifacts will be thin.</p>
+<li>Multiple profiles or portable browsers. Enumerate all of them;</li>
+<p>the interesting one is often not Default.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Encrypted profile (Firefox master password): note the barrier;</li>
+<p>do not brute force without authority.</p>
+<li>Need the full user timeline: merge browser events into the</li>
+<p>dfir-timeline.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Browser forensics is investigative; its defensive cousin is awareness that browsers are evidence rich: synced profiles spread evidence to the cloud, and session restore files capture a lot. For investigators, the durable practices are working on copies, converting timestamps carefully, and corroborating browser claims with network or system evidence.</p>
+<h2>Key references</h2>
+<ul>
+<li>Browser artifact documentation (forensic wiki references).</li>
+<li>NIST SP 800-86: forensic techniques.</li>
+<li>Related skills: dfir-timeline, forensics-fundamentals.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

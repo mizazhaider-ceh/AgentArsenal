@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: load-testing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>load-testing</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when load testing a system you own or are authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="performance-tuning.html">performance-tuning</a> <a href="prometheus-monitoring.html">prometheus-monitoring</a> <a href="api-rate-limit-bypass.html">api-rate-limit-bypass</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Load testing answers &quot;what breaks first and when&quot;: ramp users up, watch latency and errors, and find the bottleneck before customers do. This skill covers the method for systems you own: realistic scenarios, careful ramps, and honest analysis. Never load test systems you do not own; that is a DDoS.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the goal: capacity number, regression check, or breaking</li>
+<p>point.</p>
+<li>Build realistic scenarios from production traffic patterns, not</li>
+<p>just one endpoint.</p>
+<li>Start with a smoke test: one user, verify the script works.</li>
+<li>Ramp gradually: find where latency degrades and errors start.</li>
+<li>Watch the system, not just the test: CPU, memory, DB, and</li>
+<p>downstream.</p>
+<li>Identify the bottleneck: the resource that saturates first.</li>
+<li>Fix or scale, then retest to confirm.</li>
+<li>Keep the baseline: future runs compare against it.</li>
+</ol>
+<h2>1. Test design and execution</h2>
+<pre><code class="language-bash"># Scenario mix from production (example: 70% browse, 20% search, 10% checkout)
+# Ramp: 10 -&gt; 100 -&gt; 500 -&gt; 1000 users over 30 minutes, hold, then down
+# Abort: error rate &gt; 1% sustained, or p99 &gt; SLA for 2 minutes
+echo &quot;write the plan down; ad hoc load tests produce ad hoc conclusions&quot;</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Load test result analyzer: finds the knee from a results CSV.&quot;&quot;&quot;
+import csv, statistics
+
+# rows: ts, users, rps, p50_ms, p99_ms, errors
+rows = list(csv.DictReader(open(&quot;/tmp/load/results.csv&quot;)))
+print(f&quot;{&#x27;users&#x27;:&gt;6} {&#x27;p99&#x27;:&gt;8} {&#x27;err%&#x27;:&gt;6}&quot;)
+for r in rows[::max(1, len(rows) // 12)]:
+    err = float(r[&quot;errors&quot;]) / max(1, float(r[&quot;rps&quot;])) * 100
+    print(f&quot;{r[&#x27;users&#x27;]:&gt;6} {r[&#x27;p99_ms&#x27;]:&gt;8} {err:&gt;5.2f}%&quot;)
+print(&quot;the knee: where p99 climbs steeply = the bottleneck region&quot;)</code></pre>
+<h2>2. Bottleneck analysis</h2>
+<pre><code class="language-bash"># During the run, watch the suspects in order:
+# 1. app CPU/memory (saturation = scale or optimize)
+# 2. database (slow queries, locks, connection pool)
+# 3. downstream APIs (their limits become yours)
+# 4. network and load balancer (rarely first, check last)
+# Correlate: the metric that saturates as p99 climbs is the bottleneck
+echo &quot;fix one bottleneck at a time; retest after each fix&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The test environment is smaller than production. Scale the</li>
+<p>conclusions carefully and note the difference.</p>
+<li>Caches warm up during the test. Discard the warmup period or the</li>
+<p>numbers lie.</p>
+<li>Third party rate limits cap your test. That is their limit, not</li>
+<p>your capacity; mock or stub them for the system test.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Production load test needed: run at low traffic hours with the</li>
+<p>full incident team on standby and a one click abort.</p>
+<li>Results disputed: share the raw data and the scenario mix;</li>
+<p>methodology arguments are settled with data.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Load testing overlaps with security: the same traffic that finds capacity finds missing rate limits (see api-rate-limit-bypass) and expensive endpoints (see cloud-cost-attack-surface). Defenders watch for load test patterns from unexpected sources as possible attacks. The durable practice is regular testing in CI for regressions plus periodic full capacity runs before big events.</p>
+<h2>Key references</h2>
+<ul>
+<li>Performance testing methodology literature.</li>
+<li>Related skills: performance-tuning, api-rate-limit-bypass.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

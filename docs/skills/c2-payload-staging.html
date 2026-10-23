@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: c2-payload-staging</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>c2-payload-staging</h2><div class="meta"><span class="badge gray">c2</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to prepare and stage C2 payloads for an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="c2-fundamentals.html">c2-fundamentals</a></div><div class="deps"><span class="kind">requires:</span> <a href="c2-fundamentals.html">c2-fundamentals</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="network-pivoting.html">network-pivoting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>OpenSSH</td><td>9.6</td></tr></tbody></table><p>Payload staging is the logistics of C2: building the payload, hosting it where the target can fetch it, and making sure what runs is what you built. This skill covers staging on authorized engagements and in labs: payload type choices, staging server setup, and integrity discipline. It stops at the staging server; delivery vectors and execution belong to the engagement&#x27;s exploitation phases.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Choose staged versus stageless based on the delivery constraints.</li>
+<li>Build the payload for the exact target platform and test it in the</li>
+<p>lab.</p>
+<li>Set up the staging server with access controls and logging.</li>
+<li>Verify integrity: hash the payload at build and at fetch.</li>
+<li>Stage the payload and test retrieval from a lab client.</li>
+<li>Monitor the staging logs during the engagement.</li>
+<li>Remove staged payloads at engagement end.</li>
+</ol>
+<h2>1. Staged versus stageless</h2>
+<pre><code class="language-bash"># Stageless: everything in one payload. Bigger initial transfer,
+# fewer network round trips, simpler opsec story.
+# Staged: tiny initial loader fetches the real payload. Smaller
+# initial transfer, but the staging fetch is a second detection chance.
+
+# Decision guide:
+# - Delivery limits size (macro, injection): staged
+# - Network is heavily monitored: stageless (one transfer, then quiet)
+# - Payload needs updating mid-engagement: staged (swap the stage)</code></pre>
+<p>Document the choice and the reason. The tradeoff is engagement-specific, and the report should show it was considered.</p>
+<h2>2. Staging server setup</h2>
+<pre><code class="language-bash"># Minimal staging server: HTTPS, client authentication, logging
+mkdir -p /srv/stage &amp;&amp; cd /srv/stage
+python3 - &lt;&lt;&#x27;EOF&#x27;
+# Concept: serve payloads only to expected clients.
+# Production: use a real server with TLS, basic auth or client certs,
+# and per-engagement credentials. Log every fetch with timestamp and IP.
+print(&quot;Stage payloads here; serve over TLS with auth in production.&quot;)
+EOF
+
+# Hash every staged file at build time
+sha256sum /srv/stage/* &gt; /srv/stage/SHA256SUMS
+cat /srv/stage/SHA256SUMS
+
+# Verify from a lab client before the engagement
+curl -s -u stage:changeme https://stage-infra.example/payload.bin \
+  -o /tmp/test.bin &amp;&amp; sha256sum /tmp/test.bin</code></pre>
+<p>The staging server must not serve payloads to the whole internet: require authentication, allow-list expected source ranges where possible, and take it down the day the engagement ends.</p>
+<h2>3. Payload handling discipline</h2>
+<pre><code class="language-bash"># Build log: what was built, when, from what source, for which target
+cat &gt; /tmp/payload_build.log &lt;&lt;&#x27;EOF&#x27;
+2026-10-23 payload.bin: windows/x64 https stager, lab-tested OK
+2026-10-23 payload.elf: linux/x64 https stageless, lab-tested OK
+EOF
+
+# Never edit a staged payload in place: rebuild, rehash, redeploy
+# Never reuse payloads across engagements: build fresh each time</code></pre>
+<p>Payloads are the most sensitive artifacts of the engagement: they are functional malware by construction. Store them encrypted at rest, limit access to the test team, and destroy working copies (not just the staged ones) at the end.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The target cannot reach the staging server. Re-check egress from the</li>
+<p>target&#x27;s position; staging is useless without a fetch path.</p>
+<li>The payload is flagged at fetch time. That is detection working;</li>
+<p>coordinate with the test lead on whether to adjust or to record the detection as the finding.</p>
+<li>Staging credentials leak. Rotate immediately and rebuild the payloads;</li>
+<p>a known staging URL is a liability.</p>
+<li>The engagement needs the payload updated mid-test. Version the stages</li>
+<p>(payload-v2.bin) rather than overwriting; the logs stay attributable.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need a custom payload type: build and lab-test it fully before</li>
+<p>the engagement window; untested payloads on production are unacceptable.</p>
+<li>Staging must survive the engagement: plan the takedown date at setup</li>
+<p>time and put it in the inventory file.</p>
+<li>Delivery keeps failing: the problem is usually the vector or the</li>
+<p>egress, not the staging; diagnose those before rebuilding payloads.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see staging as downloads of unusual binaries from rare domains, often with odd User-Agents or no browser headers, followed by execution. EDR flags the payload at write or execute time. Defenses are web filtering by reputation, EDR execution prevention, and alerting on binary downloads outside software deployment channels. Staging over compromised legitimate infrastructure is harder to spot, which is why reputation and behavior both matter.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1105 (Ingress Tool Transfer).</li>
+<li>MITRE ATT&amp;CK T1608 (Stage Capabilities).</li>
+<li>NIST SP 800-115 (Technical Guide to Information Security Testing).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

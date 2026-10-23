@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: attacker-mindset</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>attacker-mindset</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent needs to reason like an attacker: planning a penetration test, prioritizing recon targets, choosing which vulnerability to exploit first, reviewing a design for how it could be broken, or deciding where a real adversary would strike next. Provides attacker mental models: think in attack graphs not feature lists, always take the cheapest path, hunt defender blind spots, abuse trust instead of breaking crypto, and chain small weaknesses into full compromise. Load this brain before offensive security work so the agent attacks like an adversary, not like a checklist.</p><h2>Provides</h2><ul><li>Attack graph thinking instead of feature lists</li><li>Cheapest-path targeting and effort prioritization</li><li>Defender blind spot hunting</li><li>Trust abuse over crypto breaking</li><li>Chaining small weaknesses into full compromise</li><li>Target value assessment from the attacker&#x27;s view</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>An attacker does not see your system the way you built it. You see services, features, and layers. They see a graph of doors, and every door has a price. The attacker-mindset brain teaches an agent to read that graph: find the cheapest door, walk through it, and repeat until the objective falls. It matters because defenders who never think this way defend the wrong things. They harden the vault door while the attacker walks in through the loading dock with a stolen badge.</p>
+<h2>Core mental models</h2>
+<p><strong>Think in graphs, not lists.</strong> A target is not a list of hosts or a list of CVEs. It is a graph where nodes are assets, identities, and trust relationships, and edges are ways to move from one to another. The question is never &quot;is this host vulnerable&quot; but &quot;does this host lead somewhere more valuable.&quot; A forgotten dev server with no patches can be the shortest path to the domain controller if it holds a service account credential. Always draw the graph first, then pick paths.</p>
+<p><strong>The cheapest path wins.</strong> Attackers are lazy in the smart sense: they spend the least effort that reaches the goal. Nobody writes a zero-day when password spraying works. Nobody builds a custom exploit when the vendor left default credentials on the admin panel. When you plan an attack or predict one, rank candidate paths by attacker cost (time, skill, money, risk of detection), not by how impressive they sound. The boring path is the real path.</p>
+<p><strong>Hunt the defender&#x27;s blind spots.</strong> Every defense has places it does not look: legacy systems nobody owns, the gap between two teams&#x27; responsibilities, encrypted traffic nobody decrypts, the contractor VPN nobody monitors. Attackers live in these gaps. When reasoning about a target, ask where the defenders are not watching, who owns the neglected asset, and which logs nobody reads. The blind spot is worth more than the vulnerability.</p>
+<p><strong>Abuse trust, do not break crypto.</strong> Real attackers rarely defeat strong cryptography. They go around it: steal the session cookie instead of cracking TLS, phish the admin instead of brute-forcing the password, abuse a trusted integration instead of attacking the hardened core. Every trust relationship (SSO, API keys, vendor access, &quot;internal&quot; network) is a shortcut past the crypto. Map who trusts whom, and the attack path writes itself.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>State the objective in one sentence. What does the attacker actually want (data, access, disruption)?</li>
+<li>List the assets that matter to the objective, ranked by attacker value, not defender value.</li>
+<li>Draw the attack graph: nodes (hosts, users, services, trust links), edges (possible moves).</li>
+<li>For each edge, estimate attacker cost: time, skill, money, and chance of getting caught.</li>
+<li>Pick the cheapest complete path from entry to objective. Start there.</li>
+<li>Identify what the defenders monitor, then ask what they are not monitoring on that path.</li>
+<li>Look for trust to abuse: shared credentials, SSO, vendor access, flat internal networks.</li>
+<li>Plan two fallback paths. The first path fails more often than you expect.</li>
+<li>Before each step, ask: does this step get me closer to the objective, or is it just interesting?</li>
+<li>After each success, re-draw the graph. New access changes every path cost.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If it has default credentials, try them before anything clever.</li>
+<li>One valid credential beats ten exploits.</li>
+<li>The forgotten asset is the open door: old, unowned, unpatched, unmonitored.</li>
+<li>Attackers chain: three low findings together equal one critical path.</li>
+<li>Phishing is a path, not a joke. Treat the human as a node in the graph.</li>
+<li>If you are doing something hard, you missed something easy. Stop and re-scan the graph.</li>
+<li>Detection risk is a cost. Noisy on a neglected box is fine; noisy on the crown jewels is not.</li>
+<li>Ask &quot;what would a tired sysadmin have skipped&quot; and start there.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Checklist attacking.</strong> Running every scan and exploit in order without asking which path is cheapest. Produces noise, not access.</li>
+<li><strong>Falling in love with the hard path.</strong> Spending days on a fancy exploit while password spray would have worked in an hour.</li>
+<li><strong>Ignoring trust relationships.</strong> Attacking the hardened web app directly while the trusted third-party integration sits wide open.</li>
+<li><strong>No objective.</strong> Wandering through a network collecting shells with no goal. Gets you caught and gets you nothing.</li>
+<li><strong>Forgetting the graph updates.</strong> Treating the plan as fixed after the first foothold instead of re-ranking paths with new access.</li>
+</ul>
+<h2>Worked example</h2>
+<p>Target: a mid-size company&#x27;s customer portal. Objective: customer data. The agent draws the graph: public portal, API, admin panel, support VPN, and the helpdesk. The portal itself is well patched. The cheap path check: the helpdesk uses the same SSO as the admin panel, and the company posts staff names on LinkedIn. Cost of a password spray against the helpdesk login is low. One spray lands a valid helpdesk credential. The blind spot: helpdesk logins are not monitored by the SOC, which watches only the portal. Trust abuse: the helpdesk account can impersonate customers in the support tool, which shares a database with the portal. The agent never touches the hardened portal. It logs in as helpdesk, impersonates customers, and reads their data through a trusted feature. Three small facts (public staff list, unmonitored helpdesk login, shared database) chained into full objective. That is the attacker mindset in action.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

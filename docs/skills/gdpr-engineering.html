@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: gdpr-engineering</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>gdpr-engineering</h2><div class="meta"><span class="badge gray">privacy</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when building or reviewing systems for GDPR compliance</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="secure-coding.html">secure-coding</a> <a href="dsr-automation.html">dsr-automation</a> <a href="privacy-impact-assessment.html">privacy-impact-assessment</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>PostgreSQL</td><td>17</td></tr></tbody></table><p>GDPR is not just legal text; it compiles into engineering work: data inventories, retention jobs, export and deletion endpoints, and consent checks in request paths. This skill covers the engineering implementation for teams building or reviewing systems that handle EU personal data: what to build, how to verify it, and the common gaps audits find.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map personal data: what you store, where, why, and under which</li>
+<p>lawful basis, as a living inventory.</p>
+<li>Encode the lawful basis per processing purpose in config, not in</li>
+<p>developers&#x27; heads.</p>
+<li>Implement retention: automatic deletion or anonymization when the</li>
+<p>purpose expires.</p>
+<li>Build data subject rights: access, rectification, erasure,</li>
+<p>portability, and objection, as working endpoints.</p>
+<li>Add consent checks to the request path where consent is the basis.</li>
+<li>Handle cross border transfers: know where data lives and under</li>
+<p>what mechanism it moves.</p>
+<li>Log processing activities in a way the DPO can actually query.</li>
+<li>Test the whole loop with a synthetic subject before the audit.</li>
+</ol>
+<h2>1. Data inventory</h2>
+<pre><code class="language-bash"># Start the inventory as code: a registry every service reports to
+cat &gt; /tmp/privacy/data_registry.yaml &lt;&lt; &#x27;YAML&#x27;
+datasets:
+  - name: users
+    store: postgres://db:5432/app.users
+    fields: [email, name, created_at]
+    basis: contract
+    retention_days: 2555   # 7 years for tax records
+  - name: analytics_events
+    store: clickhouse.events
+    fields: [user_id, page, ts]
+    basis: consent
+    retention_days: 395
+YAML
+python3 -c &quot;import yaml,sys; print(&#x27;registry loads:&#x27;, bool(yaml.safe_load(open(&#x27;/tmp/privacy/data_registry.yaml&#x27;))))&quot; 2&gt;/dev/null || echo &quot;keep the registry in version control and review it quarterly&quot;</code></pre>
+<pre><code class="language-bash"># Find personal data the registry missed: scan schemas for PII patterns
+psql &quot;$DB_URL&quot; -c &quot;\d users&quot; | grep -i -E &quot;email|phone|name|address|dob&quot; | head -20
+# Every match needs a registry entry with basis and retention</code></pre>
+<h2>2. Retention automation</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Retention job: deletes or anonymizes expired personal data (dry run first).&quot;&quot;&quot;
+import datetime
+
+REGISTRY = {
+    &quot;analytics_events&quot;: {&quot;retention_days&quot;: 395, &quot;action&quot;: &quot;delete&quot;},
+    &quot;marketing_contacts&quot;: {&quot;retention_days&quot;: 730, &quot;action&quot;: &quot;anonymize&quot;},
+}
+
+def expired(table, retention_days):
+    cutoff = datetime.date.today() - datetime.timedelta(days=retention_days)
+    return f&quot;DELETE FROM {table} WHERE created_at &lt; &#x27;{cutoff}&#x27;  -- DRY RUN&quot;
+
+for table, cfg in REGISTRY.items():
+    print(expired(table, cfg[&quot;retention_days&quot;]))
+# Run for real only with: reviewed SQL, backups, and an audit log entry</code></pre>
+<pre><code class="language-bash"># Verify retention actually ran: count rows older than the cutoff
+psql &quot;$DB_URL&quot; -c &quot;SELECT count(*) FROM analytics_events WHERE created_at &lt; now() - interval &#x27;395 days&#x27;;&quot;
+# Non zero means the job failed; alert, do not silently retry forever</code></pre>
+<h2>3. Rights endpoints (see dsr-automation for depth)</h2>
+<pre><code class="language-bash"># Smoke test the access and deletion endpoints with a synthetic user
+curl -s &#x27;https://app.example/api/privacy/export&#x27; \
+  -H &quot;Authorization: Bearer $SYNTH_TOKEN&quot; | head -c 300
+curl -s -X POST &#x27;https://app.example/api/privacy/erase&#x27; \
+  -H &quot;Authorization: Bearer $SYNTH_TOKEN&quot; \
+  -H &#x27;Content-Type: application/json&#x27; -d &#x27;{&quot;confirm&quot;:true}&#x27; | head -c 200
+# Then verify: export contains the user&#x27;s data, erase removes it everywhere
+# including backups within the documented window</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Backups contain data the user asked to delete. Document the backup</li>
+<p>retention window and the process that purges on restore; regulators accept this if it is real and documented.</p>
+<li>Legal holds conflict with erasure. Keep the hold register; a hold</li>
+<p>overrides erasure but must be specific and time boxed.</p>
+<li>Third party processors hold copies. Erasure must propagate via</li>
+<p>contract and API; verify, do not assume.</p>
+<li>The lawful basis changes (consent withdrawn). The system must stop</li>
+<p>the processing, not just record the withdrawal.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Inventory incomplete: run the PII scan across all stores and treat</li>
+<p>unknown data as in scope until classified.</p>
+<li>Retention job failing silently: page the owning team; every day of</li>
+<p>failure is over retention.</p>
+<li>Cross border transfer without a mechanism: escalate to legal</li>
+<p>immediately; engineering cannot fix this with code.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For privacy engineering, &quot;detection&quot; means the controls that catch non compliance: retention job monitors, registry drift alerts (new table with email column but no registry entry), and synthetic subject tests that exercise rights end to end. Auditors look for exactly these: a registry that matches reality, retention that provably runs, and rights that work. The durable practice is privacy as code: reviewed, tested, and monitored like any other correctness property.</p>
+<h2>Key references</h2>
+<ul>
+<li>GDPR Articles 5, 6, 17, 25: principles, basis, erasure, by design.</li>
+<li>EDPB guidance on data subject rights.</li>
+<li>Related skills: dsr-automation, privacy-impact-assessment.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

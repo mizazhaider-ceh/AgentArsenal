@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: dictionary-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>dictionary-attacks</h2><div class="meta"><span class="badge gray">auth</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when cracking password hashes or testing logins with</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="password-attacks.html">password-attacks</a></div><div class="deps"><span class="kind">requires:</span> <a href="password-attacks.html">password-attacks</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="auth-attacks.html">auth-attacks</a> <a href="osint-methodology.html">osint-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Hashcat</td><td>6.2.6</td></tr><tr><td>John the Ripper</td><td>1.9.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Dictionary attacks try every password in a wordlist, and they work because people reuse a small set of passwords. This skill covers offline hash cracking on authorized engagements: identifying the hash type, picking the right wordlists, running Hashcat and John effectively, and building targeted lists from engagement OSINT. Only crack hashes you are authorized to hold, and treat cracked passwords as sensitive data from the moment they appear.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm authorization covers the hashes and their source.</li>
+<li>Identify the hash type precisely before choosing a mode.</li>
+<li>Pick wordlists: start small and targeted, widen only as needed.</li>
+<li>Run Hashcat (GPU) or John (CPU) with the right mode and options.</li>
+<li>Build custom wordlists from target OSINT when generic lists stall.</li>
+<li>Record cracked credentials securely and report the password policy</li>
+<p>failure they prove.</p>
+</ol>
+<h2>1. Hash identification and setup</h2>
+<pre><code class="language-bash"># Identify the hash type by length, alphabet, and prefix
+# $2y$... = bcrypt, $6$... = sha512crypt, $NT$ or 32 hex = NTLM,
+# $krb5tgs$ = Kerberos TGS (from kerberoasting)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+samples = {
+    &quot;5f4dcc3b5aa765d61d8327deb882cf99&quot;: &quot;MD5 (32 hex)&quot;,
+    &quot;$2y$12$abcdefghijklmnopqrstuu...&quot;: &quot;bcrypt&quot;,
+}
+for h, guess in samples.items():
+    print(f&quot;{h[:20]}... -&gt; {guess}&quot;)
+EOF
+
+# Hashcat example: NTLM (mode 1000) with rockyou
+hashcat -m 1000 /tmp/ntlm.txt /usr/share/wordlists/rockyou.txt \
+  --status --status-timer 30 -o /tmp/cracked.txt
+
+# John the Ripper example: auto-detect format, wordlist mode
+john --wordlist=/usr/share/wordlists/rockyou.txt /tmp/hashes.txt
+john --show /tmp/hashes.txt</code></pre>
+<p>Wrong mode wastes the whole run: a bcrypt hash in an MD5 mode cracks nothing and reports nothing. When unsure, run the hash through a local identifier and verify with a known test hash first.</p>
+<h2>2. Wordlist strategy</h2>
+<pre><code class="language-bash"># Order matters: quick wins first
+# 1. Top 10000 passwords (seconds)
+hashcat -m 1000 /tmp/ntlm.txt /usr/share/wordlists/seclists/Passwords/Common-Credentials/10-million-password-list-top-10000.txt -o /tmp/c1.txt
+# 2. rockyou (minutes to hours)
+# 3. Targeted custom list (see below)
+
+# Build a targeted list from engagement OSINT: company name, product
+# names, seasons, years, local sports teams
+python3 - &lt;&lt;&#x27;EOF&#x27;
+seeds = [&quot;acme&quot;, &quot;acmecorp&quot;, &quot;spring&quot;, &quot;2026&quot;, &quot;qwerty&quot;]
+out = set()
+for s in seeds:
+    out.update([s, s.capitalize(), s.upper(), s + &quot;123&quot;, s + &quot;2026&quot;,
+                s + &quot;!&quot;, &quot;!&quot; + s, s + &quot;123!&quot;])
+with open(&quot;/tmp/targeted.txt&quot;, &quot;w&quot;) as f:
+    f.write(&quot;\n&quot;.join(sorted(out)))
+print(f&quot;[*] {len(out)} candidates&quot;)
+EOF</code></pre>
+<p>Targeted lists beat big generic lists per hour invested. Ten minutes of OSINT-driven list building often outperforms ten hours of raw rockyou.</p>
+<h2>3. Managing the crack</h2>
+<pre><code class="language-bash"># Benchmark first so time estimates are honest
+hashcat -b -m 1000
+
+# Session management: pause and resume long runs
+hashcat -m 1000 /tmp/ntlm.txt rockyou.txt --session engagement1
+hashcat --session engagement1 --restore  # resume later
+
+# Rule-based mangling belongs to rule-based-mangling; keep pure
+# dictionary runs clean and fast here
+
+# Show results without leaking them to the terminal log
+hashcat -m 1000 /tmp/ntlm.txt --show -o /tmp/cracked_final.txt</code></pre>
+<p>Cracked passwords go into the report&#x27;s credential table and nowhere else: not chat logs, not screenshots, not ticket comments. Redact them in any shared artifact.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The hash type is misidentified. Symptoms: zero cracks with a good list</li>
+<p>on weak passwords; re-identify with fresh samples and test modes.</p>
+<li>Salts are involved (sha512crypt, bcrypt). Dictionary attacks still</li>
+<p>work but slower; benchmark honestly and set expectations.</p>
+<li>The list cracks nothing. Move to rule-based-mangling before mask</li>
+<p>attacks; mangling multiplies the dictionary, masks start from zero.</p>
+<li>GPU drivers fail on the cracking rig. John on CPU still handles fast</li>
+<p>hashes (NTLM, MD5); slow hashes (bcrypt) need the GPU or a scope discussion.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need more power: estimate the run honestly (benchmark times key</li>
+<p>space), and only expand hardware or cloud cracking with written approval and a clear budget.</p>
+<li>Cracked credentials unlock new access: handle them under the</li>
+<p>engagement&#x27;s credential rules, rotate or report per the agreed process.</p>
+<li>Nothing cracks: report the negative result with the methods tried;</li>
+<p>strong passwords are a positive finding about the password policy.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders rarely see offline cracking at all: it happens on the attacker&#x27;s hardware, leaving no logs on the target. The signals are upstream: the hash disclosure that made cracking possible (dumps, kerberoasting, database theft). Defenses are strong hashing (bcrypt, argon2, scrypt with proper cost), long random passwords via managers, MFA so a cracked password alone is not enough, and monitoring for the hash-theft techniques themselves.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1110.001 (Brute Force: Password Guessing).</li>
+<li>MITRE ATT&amp;CK T1003 (OS Credential Dumping).</li>
+<li>CWE-521 (Weak Password Requirements).</li>
+<li>CWE-328 (Use of Weak Hash).</li>
+<li>Hashcat 6.2.6 documentation: hash modes and wordlist attacks.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

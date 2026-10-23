@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: opa-decision-loop</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>opa-decision-loop</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must act under time pressure with incomplete information: live incident response, active defense decisions, prioritizing containment vs investigation, or any operation where waiting for perfect data costs more than deciding fast. Provides OODA loop reasoning (observe, orient, decide, act): keep the tempo faster than the adversary, let orientation shape decisions, make reversible decisions quickly and irreversible ones carefully, and close the loop with fresh observation. Load this brain when the situation is moving and the agent must move with it.</p><h2>Provides</h2><ul><li>OODA loop tempo management</li><li>Orientation as the decisive phase</li><li>Reversible vs irreversible decision sorting</li><li>Decision thresholds under uncertainty</li><li>Loop-closing feedback discipline</li><li>Tempo advantage over the adversary</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>OODA stands for Observe, Orient, Decide, Act, and it is a loop, not a line. Fighter pilots use it; incident responders live it. The side that cycles the loop faster, with better orientation, wins the engagement. In security operations the adversary is already looping: they observe your defenses, orient on the gaps, decide, and act. If your loop is slower, you are always responding to their last move. This brain teaches an agent to keep its own loop tight: observe constantly, orient honestly, decide at the right threshold, act, and immediately observe the result.</p>
+<h2>Core mental models</h2>
+<p><strong>Tempo beats perfection.</strong> A good-enough decision now beats the perfect decision in an hour, when the adversary acts in minutes. Ransomware does not wait for your full forensic picture. The loop rewards speed of cycling, not speed of any single phase. Observe briefly, orient well, decide, act, and let the next loop correct you. Waiting for certainty is a decision too, and usually the wrong one.</p>
+<p><strong>Orientation decides everything.</strong> Observe gives you raw facts; orient turns facts into understanding: what does this mean, what is the adversary doing, what matters most? Two teams with the same observations make different decisions because their orientation differs. Orientation is where your mental models, prior incidents, and biases live. Name your orientation explicitly (&quot;I believe this is automated ransomware, not targeted espionage, because...&quot;) so it can be challenged and updated.</p>
+<p><strong>Sort decisions by reversibility.</strong> Reversible decisions (isolate a host, block an IP, revoke a session) should be made fast and undone if wrong. Irreversible decisions (wipe a server, notify customers, shut down production) deserve a slower loop and a second opinion. Most incident paralysis comes from treating reversible decisions as irreversible. When in doubt, ask: can I undo this in five minutes? If yes, decide now.</p>
+<p><strong>Close the loop.</strong> Act is not the end. Every action must be followed by observation: did the isolation stop the spread? Did the block break legitimate traffic? An open loop is how you isolate the wrong host and never notice. The loop only works if act feeds back into observe, every single cycle.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>Observe: what are the raw facts right now? Separate facts from interpretations.</li>
+<li>Orient: what do the facts mean? State your working theory and your confidence.</li>
+<li>Name the adversary&#x27;s likely loop: what are they doing while you decide?</li>
+<li>Sort pending decisions into reversible (decide now) and irreversible (slow down).</li>
+<li>Set a decision threshold in advance: &quot;If X is confirmed, we isolate immediately.&quot;</li>
+<li>Decide: pick the action that best fits the orientation, at the current tempo.</li>
+<li>Act: execute cleanly, note the exact time, tell the team what changed.</li>
+<li>Observe the result: did the action have the intended effect? Any side effects?</li>
+<li>Update orientation with the new facts. Kill the old theory if the facts killed it.</li>
+<li>Repeat. Keep a written log of each loop so the timeline survives the chaos.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If you have been observing for 20 minutes without deciding, your threshold is too high.</li>
+<li>State your theory out loud (or in the log). Silent theories cannot be corrected.</li>
+<li>Default to the reversible action. You can always escalate; you cannot always undo.</li>
+<li>The adversary&#x27;s tempo sets your minimum tempo. Match it, then beat it.</li>
+<li>One person decides. A committee does not loop.</li>
+<li>Log as you go. Memory is the first casualty of an incident.</li>
+<li>When orientation is split, pick the theory that explains the most facts with the fewest assumptions.</li>
+<li>A wrong fast decision you correct beats a right slow decision that arrives too late.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Analysis paralysis.</strong> Observing forever while the adversary completes their objective. The most common failure.</li>
+<li><strong>Acting without orienting.</strong> Jumping from observation to action: blocking IPs at random, rebooting servers blindly. Motion without understanding.</li>
+<li><strong>Open loops.</strong> Acting and never checking the result, so mistakes compound silently.</li>
+<li><strong>Treating every decision as irreversible.</strong> Slow-walking a host isolation that could be undone in seconds.</li>
+<li><strong>Frozen orientation.</strong> Clinging to the first theory after the facts changed. The loop must update or it is just a line.</li>
+</ul>
+<h2>Worked example</h2>
+<p>02:14: alerts show mass file renames on three workstations. Observe: facts are encrypted-looking extensions, ransom notes, SMB connections from workstation A to the file server. Orient: working theory is ransomware spreading via SMB, confidence medium-high; adversary&#x27;s loop is measured in minutes. Reversible decisions: isolate the three workstations and block SMB from them at the firewall (undoable in minutes). Irreversible: wiping anything (deferred). Threshold set: if the file server shows renames, isolate it too. Decide and act at 02:19: hosts isolated, SMB blocked. Observe result: no new renames after 02:21, but the file server already has 400 renamed files, so the threshold triggers and it is isolated as well. Orientation updated: patient zero was workstation A, entry via phishing two hours earlier. Next loop: hunt for other patient-zero candidates. Total time from first alert to containment: under ten minutes, because reversible decisions were never allowed to wait.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

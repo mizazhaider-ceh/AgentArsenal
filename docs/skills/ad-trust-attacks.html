@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ad-trust-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ad-trust-attacks</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing Active Directory trust relationships</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="bloodhound-methodology.html">bloodhound-methodology</a> <a href="kerberoasting.html">kerberoasting</a> <a href="golden-ticket.html">golden-ticket</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>AD trusts let users from one domain access another, and each trust is a path an attacker can walk: SID history, cross forest tickets, and misconfigured trust directions. This skill covers authorized assessment: enumerating trusts, reviewing their configuration, and testing the abuse paths. Lab or authorized enterprise only, with care for production domains.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate all trusts: domains, direction, type, and transitivity.</li>
+<li>Review each trust&#x27;s purpose: is it still needed.</li>
+<li>Check SID filtering status: the main defense against SID history</li>
+<p>abuse.</p>
+<li>Test cross trust Kerberos: what a compromised account in one</li>
+<p>domain can reach in another.</p>
+<li>Look for the classic abuses: SID history injection, golden</li>
+<p>tickets across trusts.</p>
+<li>Check trust account passwords and their age.</li>
+<li>Review selective authentication where used.</li>
+<li>Report each trust with its attack paths.</li>
+</ol>
+<h2>1. Trust enumeration</h2>
+<pre><code class="language-bash"># Enumerate trusts (domain joined host, authorized)
+nltest /trusted_domains 2&gt;/dev/null || echo &quot;use powerview equivalent&quot;
+# PowerShell (authorized):
+# Get-ADTrust -Filter * | Select Name,Direction,TrustType,SelectiveAuthentication
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;record per trust: name, direction (in/out/bidirectional),&quot;)
+print(&quot;type (forest/external/shortcut), transitive?, SID filtering?&quot;)
+PY</code></pre>
+<pre><code class="language-bash"># BloodHound already maps trusts; check the attack paths view
+# for: shortest path from owned principal to target across trusts
+echo &quot;in BloodHound: map trusts, then query cross domain paths&quot;</code></pre>
+<h2>2. SID history and filtering review</h2>
+<pre><code class="language-bash"># Check SID filtering (quarantine) on each trust: it blocks SID history
+# abuse across the trust. Verify in the trust properties or:
+# netdom trust TRUSTING /domain:TRUSTED /quarantine:yes
+echo &quot;verify: quarantine enabled on every external and forest trust&quot;</code></pre>
+<pre><code class="language-bash"># Hunt SID history abuse indicators (authorized):
+# accounts with SIDHistory pointing at privileged SIDs of another domain
+# PowerShell: Get-ADUser -Filter * -Properties SIDHistory | ? {$_.SIDHistory}
+echo &quot;any SIDHistory on non migration accounts is suspicious&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The trust is legacy and undocumented. Treat it as hostile until</li>
+<p>reviewed; legacy trusts are the classic forgotten path.</p>
+<li>Selective authentication is on. Test whether it is actually</li>
+<p>enforced or just configured.</p>
+<li>One way trust assumed safe. Inbound trusts still leak information</li>
+<p>and enable some attacks; review both directions.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Trust abuse path confirmed: demonstrate the cross domain reach</li>
+<p>with a test account, then stop; domain hopping is sensitive.</p>
+<li>Trust cannot be removed for business reasons: harden it</li>
+<p>(filtering, selective auth) and monitor the trust traffic.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see trust attacks as cross domain ticket requests, SIDHistory anomalies, and authentication from unexpected domains. They defend with SID filtering on all trusts, selective authentication for sensitive resources, and monitoring of trust traffic. The durable practice is trust minimization: remove what is not needed, filter what remains.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1482 (Domain Trust Discovery), T1134 (Access Token</li>
+<p>Manipulation): SID history.</p>
+<li>Microsoft trust documentation: SID filtering.</li>
+<li>Related skills: ad-enumeration, golden-ticket.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

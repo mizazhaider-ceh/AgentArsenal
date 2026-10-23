@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: consensus-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>consensus-attacks</h2><div class="meta"><span class="badge gray">blockchain</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need working knowledge of consensus layer</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="blockchain-forensics.html">blockchain-forensics</a> <a href="defi-threats.html">defi-threats</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Consensus attacks target the chain itself: rewriting history, censoring transactions, or double spending by controlling block production. This skill gives the working knowledge and assessment method: how each attack works, what it costs, and how to evaluate a chain&#x27;s resistance. It is analytical and defensive; you do not attack live chains.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the consensus mechanism: PoW, PoS variant, BFT, or hybrid.</li>
+<li>Measure decentralization: hash rate or stake distribution, client</li>
+<p>diversity, and geographic spread.</p>
+<li>Compute the attack cost: what it takes to rent or buy 51 percent.</li>
+<li>Assess finality: how many confirmations make a rewrite impractical.</li>
+<li>Review eclipse resistance: peer diversity and protected peers.</li>
+<li>Check long range attack mitigations on PoS: weak subjectivity,</li>
+<p>checkpoints.</p>
+<li>Review the incident history: past reorgs and how the community</li>
+<p>responded.</p>
+<li>Report the security budget honestly with the math shown.</li>
+</ol>
+<h2>1. 51 percent cost estimate</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Rough 51 percent attack cost model (public data inputs).&quot;&quot;&quot;
+# PoW example inputs (fill from public dashboards)
+network_hashrate_hs = 600e18      # network total, hashes per second
+rent_price_per_hs_day = 1e-18     # rental market price
+attacker_share = 0.51
+cost_per_day = network_hashrate_hs * attacker_share * rent_price_per_hs_day
+print(f&quot;estimated rental cost per day: ${cost_per_day:,.0f}&quot;)
+print(&quot;compare against: exchange confirmation requirements,&quot;)
+print(&quot;value settled per day, and deep reorg history&quot;)</code></pre>
+<pre><code class="language-bash"># Stake distribution for PoS: who holds what share
+# Use a public explorer API; flag if top 3 validators exceed 33 percent
+# (BFT safety threshold) or 51 percent (liveness/majority)
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;fetch validator set from explorer API&quot;)
+print(&quot;compute Nakamoto coefficient: min entities to reach 51 percent&quot;)
+print(&quot;low coefficient = cheap bribe or compromise target&quot;)
+PY</code></pre>
+<h2>2. Attack pattern reference</h2>
+<pre><code class="language-bash"># Selfish mining: attacker withholds blocks, releases strategically
+# Needs roughly 33 percent+ hash to be profitable; hurts chain fairness
+# Double spend: attacker sends tx, receives goods, reorgs it away
+# Needs confirmations &lt; reorg depth the attacker can afford
+# Eclipse: isolate a victim&#x27;s node, feed it a false chain view
+# Needs control of the victim&#x27;s peer connections
+# Long range (PoS): rewrite from far back using old keys
+# Mitigated by checkpoints and weak subjectivity periods
+echo &quot;for each: cost, required share, and which chains are exposed&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The chain has checkpointing by a foundation. That centralizes</li>
+<p>trust; note who holds the checkpoint key.</p>
+<li>Mining rental markets are thin for the algorithm. Cost estimates</li>
+<p>are rough; say so and give a range.</p>
+<li>The assessment is for a new chain design. Focus on the mechanism&#x27;s</li>
+<p>known attack classes and the team&#x27;s mitigations, not live metrics.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Active reorg or double spend in progress: alert exchanges and the</li>
+<p>chain team immediately; this is incident response, not assessment.</p>
+<li>Deep design review needed: bring in consensus specialists; this</li>
+<p>skill covers assessment, not novel mechanism design.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Exchanges detect consensus attacks with confirmation requirements scaled to the chain&#x27;s security budget, reorg monitors, and deposit holds during anomalies. Chain teams defend with checkpointing, diverse clients, and community coordination plans. The durable truth is economic: a chain is secure when attacking it costs more than the attacker gains, so confirmation policy must track the live cost.</p>
+<h2>Key references</h2>
+<ul>
+<li>&quot;Majority is not Enough&quot; (selfish mining paper).</li>
+<li>Ethereum PoS specifications: finality and weak subjectivity.</li>
+<li>Exchange confirmation policy frameworks.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

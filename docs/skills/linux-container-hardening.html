@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-container-hardening</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-container-hardening</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hardening Linux containers you run. Covers</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a> <a href="container-escape.html">container-escape</a> <a href="docker-deep.html">docker-deep</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Containers share the host kernel, so hardening is about limiting what a compromised container can do: drop capabilities, filter syscalls, and make the filesystem read only. This skill covers the practical baseline for containers you run: the runtime flags, the profiles, and the checks. It complements image hardening with runtime hardening.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Run as non root: set the user in the image and at runtime.</li>
+<li>Drop all capabilities, then add back only what is needed.</li>
+<li>Apply seccomp: the default profile or a tighter custom one.</li>
+<li>Apply AppArmor or SELinux confinement where available.</li>
+<li>Make the filesystem read only with tmpfs for the writable bits.</li>
+<li>Limit resources: CPU, memory, and PIDs per container.</li>
+<li>Drop the dangerous flags: no privileged, no host namespaces.</li>
+<li>Verify the config on a running container.</li>
+</ol>
+<h2>1. Runtime hardening flags</h2>
+<pre><code class="language-bash"># Hardened run example (docker as tooling)
+docker run -d --name app \
+  --user 10001:10001 \
+  --cap-drop=ALL --cap-add=NET_BIND_SERVICE \
+  --security-opt seccomp=/etc/docker/seccomp-tight.json \
+  --security-opt apparmor=docker-tight \
+  --read-only --tmpfs /tmp --tmpfs /run \
+  --memory=512m --cpus=1 --pids-limit=100 \
+  --network appnet \
+  myregistry/app:1.2.3</code></pre>
+<pre><code class="language-bash"># Verify a running container (your host)
+docker inspect app --format &#x27;{{.Config.User}} {{.HostConfig.Privileged}}&#x27;
+# Want: user set, privileged false
+docker exec app cat /proc/self/status | grep -i cap
+# Want: minimal bounding capabilities
+docker exec app touch /test_write 2&gt;&amp;1 | head -2
+# Want: read only file system error</code></pre>
+<h2>2. Orchestrator enforcement</h2>
+<pre><code class="language-bash"># Kubernetes: enforce with Pod Security Standards (restricted)
+# namespace labels: pod-security.kubernetes.io/enforce=restricted
+# Or policy engines (Kyverno/Gatekeeper) requiring:
+# - runAsNonRoot, readOnlyRootFilesystem, seccompProfile RuntimeDefault
+# - no privileged, no hostPath, no hostNetwork
+kubectl label namespace prod pod-security.kubernetes.io/enforce=restricted</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The app needs a dropped capability. Add it back narrowly and</li>
+<p>document why; &quot;it didn&#x27;t work&quot; is not documentation.</p>
+<li>Legacy app needs root. Then isolate harder: user namespace</li>
+<p>remapping, tighter seccomp, and a plan to fix the app.</p>
+<li>The platform manages the runtime (Fargate, Cloud Run). Apply</li>
+<p>what the platform exposes and verify the rest is defaulted safe.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Escape suspected: the runtime flags are the containment; check</li>
+<p>them first, then do incident response.</p>
+<li>Need the image side: hand to container-image-security.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Container hardening is prevention; its detection side is runtime monitoring for policy violations: privileged launches, capability use outside the profile, and writes to read only paths. Defenders enforce with admission control so non compliant pods never start. The durable practice is secure by default templates every team uses, not per app heroics.</p>
+<h2>Key references</h2>
+<ul>
+<li>CIS Docker and Kubernetes benchmarks.</li>
+<li>CWE-250 (Execution with Unnecessary Privileges).</li>
+<li>Related skills: container-escape, linux-hardening.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

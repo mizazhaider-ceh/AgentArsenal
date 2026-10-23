@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: hardware-reversing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>hardware-reversing</h2><div class="meta"><span class="badge gray">hardware</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reverse engineering an embedded device you own or</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="firmware-extraction.html">firmware-extraction</a> <a href="firmware-analysis.html">firmware-analysis</a> <a href="uart-jtag.html">uart-jtag</a> <a href="ghidra-basics.html">ghidra-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Ghidra</td><td>11.3</td></tr><tr><td>binwalk</td><td>2.4.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Hardware reversing combines board analysis with firmware analysis to understand a device completely: what the chips do, how they talk, and where the software trusts the hardware. This skill gives the systematic lab workflow for devices you own or may test: document, extract, analyze, and verify. Each layer informs the next, and the findings feed the deeper hardware and firmware skills.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Document the device: photos of both board sides, chip markings, and</li>
+<p>connector labels before you touch anything.</p>
+<li>Identify every major chip: SoC, flash, RAM, radio, and power</li>
+<p>management, with datasheets where possible.</p>
+<li>Trace the boot chain on paper: ROM to bootloader to kernel to app.</li>
+<li>Extract the firmware (see firmware-extraction) and get a console</li>
+<p>(see uart-jtag) in parallel.</p>
+<li>Analyze the firmware statically: services, credentials, update</li>
+<p>mechanism, and trust boundaries.</p>
+<li>Sniff inter chip protocols (SPI, I2C, UART) during boot and</li>
+<p>operation to see what crosses trust boundaries in plaintext.</p>
+<li>Verify each finding dynamically on the live device.</li>
+<li>Write up the device profile: attack surface map with entry points</li>
+<p>ranked by access needed.</p>
+</ol>
+<h2>1. Board documentation and chip identification</h2>
+<pre><code class="language-bash"># Organize the evidence as you go
+mkdir -p /tmp/hwrev/{photos,datasheets,firmware,notes}
+# Photograph both sides at high resolution, then annotate:
+# - SoC part number and package
+# - flash chip part number (SPI/I2C/eMMC?)
+# - debug headers and test points
+# - radio modules and antenna paths
+ls /tmp/hwrev/photos/</code></pre>
+<pre><code class="language-bash"># Identify chips from markings; common lookup flow
+# 1. Read the top marking, e.g. &quot;W25Q128JV&quot; (Winbond 128Mbit SPI flash)
+# 2. Pull the datasheet into /tmp/hwrev/datasheets/
+# 3. Note voltage, pinout, and protection features
+python3 - &lt;&lt; &#x27;PY&#x27;
+chips = [
+    (&quot;U1&quot;, &quot;W25Q128JV&quot;, &quot;SPI flash 128Mbit, 3.3V&quot;),
+    (&quot;U2&quot;, &quot;ESP32-WROOM&quot;, &quot;WiFi/BT SoC module&quot;),
+    (&quot;U3&quot;, &quot;CH340G&quot;, &quot;USB to serial bridge&quot;),
+]
+for ref, part, desc in chips:
+    print(f&quot;{ref}: {part} -&gt; {desc}&quot;)
+PY</code></pre>
+<h2>2. Inter chip protocol sniffing</h2>
+<p>Chips often talk in plaintext. Capture the conversation during boot.</p>
+<pre><code class="language-bash"># Sniff UART between SoC and a radio module (logic analyzer or second
+# serial adapter on the RX line, listen only)
+picocom -b 115200 --logfile /tmp/hwrev/uart_sniff.log /dev/ttyUSB1 &amp;
+# Power cycle the target and watch for AT commands, keys, or credentials
+grep -ai -E &quot;at\+|key|pass|token&quot; /tmp/hwrev/uart_sniff.log | head -20</code></pre>
+<pre><code class="language-bash"># I2C scan to enumerate attached peripherals (bus pirate or compatible)
+# i2c&gt; m  (set mode) then scan addresses; note every responding device
+# SPI flash traffic during boot can reveal reads of config partitions
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;checklist: UART boot log, I2C address map, SPI config reads&quot;)
+print(&quot;flag anything secret (keys, tokens) crossing in plaintext&quot;)
+PY</code></pre>
+<h2>3. Firmware analysis pass</h2>
+<pre><code class="language-bash"># Strings triage on the extracted firmware for quick wins
+strings -n 8 /tmp/flash_a.bin | grep -i -E &quot;passw|admin|secret|token|key=&quot; | head -20
+# Identify the OS and services from banners in the boot log
+grep -a &quot;Linux version\|U-Boot\|BusyBox&quot; /tmp/uart_boot.log | head -5</code></pre>
+<pre><code class="language-bash"># Load the bootloader or main binary into Ghidra for the deep pass
+# (see ghidra-basics for the workflow); focus on:
+# - update verification routines
+# - hardcoded credentials and keys
+# - network services and their parsers
+# - trust boundary crossings found in the sniffing step</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Chip markings are sanded off. Identify by package, pin count, and</li>
+<p>surrounding circuitry, or by behavior (SPI flash responds to JEDEC ID queries).</p>
+<li>The firmware is encrypted and the key is in OTP. Static analysis</li>
+<p>stops; pivot to dynamic analysis over the debug console.</p>
+<li>Multiple board revisions exist. Verify which revision you have; the</li>
+<p>attack surface changes between them.</p>
+<li>The device uses a secure element for keys. Note what the secure</li>
+<p>element actually protects versus what sits in plain flash.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No console and no dump: check for firmware update files as a</li>
+<p>software only path into the code.</p>
+<li>Update files encrypted: look at the update client on a companion</li>
+<p>mobile app, which often contains the decryption logic.</p>
+<li>Analysis stalls on a custom RTOS: identify the RTOS by strings and</li>
+<p>structure, then find public research on its weaknesses.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Device designers defend with encrypted firmware, disabled debug interfaces, and keys in secure elements instead of flash. They detect physical tampering with intrusion switches and tamper evident seals. For the reverser, the lesson is that every unprotected interface is an entry point, and the combination of a console plus a flash dump usually defeats software only protections.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-1191 (On-Chip Debug and Test Interface With Improper Access</li>
+<p>Control).</p>
+<li>CWE-798 (Use of Hard-coded Credentials).</li>
+<li>OWASP IoT Top 10: hardware and firmware weaknesses.</li>
+<li>Ghidra documentation: loading bare metal firmware images.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

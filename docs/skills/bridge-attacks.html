@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bridge-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bridge-attacks</h2><div class="meta"><span class="badge gray">blockchain</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing cross chain bridge security on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="smart-contract-audit.html">smart-contract-audit</a> <a href="defi-threats.html">defi-threats</a> <a href="blockchain-forensics.html">blockchain-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Slither</td><td>0.11.0</td></tr></tbody></table><p>Bridges hold enormous value and have lost billions: they lock assets on one chain and mint representations on another, and the verification in between is where the hacks happen. This skill covers authorized assessment of bridge designs: architecture mapping, trust model review, and testing the message verification that guards the mint. Test on forks and testnets, never live bridges.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the architecture: lock and mint, burn and release, or liquidity</li>
+<p>pools, on each chain.</p>
+<li>Identify the trust model: validator set, multisig, optimistic</li>
+<p>fraud proofs, or light client verification.</p>
+<li>Review message verification: what proof does the destination chain</li>
+<p>require before minting.</p>
+<li>Check the validator or relayer set: size, key management, and what</li>
+<p>a compromise of N of M means.</p>
+<li>Test the classic patterns on a fork: fake deposits, replayed</li>
+<p>messages, and uninitialized contracts.</p>
+<li>Review upgradeability and pause: who can stop the bridge in an</li>
+<p>emergency.</p>
+<li>Check liquidity and rate limits: caps that bound the damage.</li>
+<li>Report each trust assumption with its compromise cost.</li>
+</ol>
+<h2>1. Message verification review</h2>
+<pre><code class="language-bash"># Find the mint/release path and its authorization check
+grep -rn &quot;mint\|release&quot; bridge-contracts/contracts --include=&quot;*.sol&quot; | grep -i &quot;function&quot; | head -20</code></pre>
+<pre><code class="language-solidity">// VULNERABLE pattern (simplified from real hacks):
+// mint trusts a message without verifying it came from the source chain
+function mint(address to, uint256 amt, bytes calldata proof) external {
+    // missing: verify proof against source chain state
+    _mint(to, amt);
+}
+
+// What to look for: the proof verification step, and who can bypass it</code></pre>
+<pre><code class="language-bash"># Check initialization: many bridge hacks used uninitialized proxies
+grep -rn &quot;initialize\|initializer&quot; bridge-contracts/contracts --include=&quot;*.sol&quot; | head -20
+# Then verify on chain (fork): was initialize actually called, and by whom</code></pre>
+<h2>2. Validator set analysis</h2>
+<pre><code class="language-bash"># Enumerate the validator/multisig set and threshold
+# (adapt to the bridge&#x27;s contracts: often a Gnosis Safe or custom multisig)
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;record: number of validators, threshold, key holders&quot;)
+print(&quot;compute: cost to compromise threshold (bribe, hack, coerce)&quot;)
+print(&quot;flag: threshold &lt;= 2, anonymous validators, shared infrastructure&quot;)
+PY</code></pre>
+<pre><code class="language-bash"># Check for pause and upgrade controls
+grep -rn &quot;pause\|unpause\|upgradeTo&quot; bridge-contracts/contracts --include=&quot;*.sol&quot; | head -10
+# A bridge with no pause and no upgrade path cannot respond to an incident</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The bridge uses zero knowledge proofs. Review the circuit trust</li>
+<p>setup and the verifier contract, not just the Solidity.</p>
+<li>Liquidity network bridges have different risks (liquidity theft,</li>
+<p>not minting). Adjust the checklist to the architecture.</p>
+<li>The bridge is deprecated but still holds value. Old bridges get</li>
+<p>attacked; recommend migration, not just monitoring.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Verification flaw suspected: prove it on a local fork with a forged</li>
+<p>message before reporting.</p>
+<li>Validator compromise suspected on a live bridge: this is an</li>
+<p>emergency disclosure to the bridge team, not a routine finding.</p>
+<li>Design is fundamentally custodial: say so plainly so users price</li>
+<p>the trust correctly.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Bridge defenders monitor for unusual mint volumes, validator key usage anomalies, and pause worthy events with automated circuit breakers. They defend with rate limits, per transaction caps, multisig thresholds that require real distribution, and incident runbooks that can pause both sides. The history of bridge hacks says the verification step deserves the most review budget.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-862 (Missing Authorization): unverified mint paths.</li>
+<li>CWE-306 (Missing Authentication for Critical Function).</li>
+<li>Major bridge incident post mortems: verification bypass patterns.</li>
+<li>SWC Registry: proxy and initialization weaknesses.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

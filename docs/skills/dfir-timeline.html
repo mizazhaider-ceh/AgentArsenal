@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: dfir-timeline</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>dfir-timeline</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when building a forensic timeline for an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="log-forensics.html">log-forensics</a> <a href="incident-response.html">incident-response</a> <a href="cloud-forensics.html">cloud-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A timeline turns scattered evidence into the attacker&#x27;s story: every event on one axis, in order, in UTC. This skill covers the method for authorized investigations: collecting the sources, normalizing time, building a super timeline, and reading it for the intrusion. Work on evidence you are authorized to handle, with chain of custody.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory evidence sources: disk images, memory, logs, and cloud</li>
+<p>trails, with their time zones.</p>
+<li>Verify time: check each source&#x27;s clock accuracy and skew before</li>
+<p>merging.</p>
+<li>Build per source timelines first; understand each before merging.</li>
+<li>Merge into a super timeline in UTC with a common schema.</li>
+<li>Filter to the incident window, then expand as the story needs.</li>
+<li>Tag events: attacker, system, user, and unknown, with confidence.</li>
+<li>Find the gaps: missing logs are findings too.</li>
+<li>Write the narrative with timestamps as the evidence.</li>
+</ol>
+<h2>1. Collection and normalization</h2>
+<pre><code class="language-bash"># Inventory with hashes and time zones (chain of custody)
+sha256sum /evidence/disk.img /evidence/memory.raw &gt; /tmp/tl/hashes.txt
+# Record: source, acquisition time, stated time zone, clock notes
+cat &gt; /tmp/tl/sources.csv &lt;&lt; &#x27;CSV&#x27;
+source,path,timezone,notes
+disk_image,/evidence/disk.img,Europe/Brussels,system clock
+auth_logs,/evidence/auth.log,UTC,syslog
+cloudtrail,/evidence/ct.json,UTC,provider time
+CSV</code></pre>
+<pre><code class="language-bash"># Per source extraction: filesystem timeline from the disk image
+fls -r -m / -z Europe/Brussels /evidence/disk.img &gt; /tmp/tl/bodyfile.txt
+# Normalize everything to UTC at merge time; never mix zones in analysis
+python3 - &lt;&lt; &#x27;PY&#x27;
+from datetime import datetime
+from zoneinfo import ZoneInfo
+local = datetime(2026, 10, 22, 14, 30, tzinfo=ZoneInfo(&quot;Europe/Brussels&quot;))
+print(&quot;UTC:&quot;, local.astimezone(ZoneInfo(&quot;UTC&quot;)).isoformat())
+PY</code></pre>
+<h2>2. Super timeline with Plaso</h2>
+<pre><code class="language-bash"># Build the super timeline (Plaso as investigation tooling)
+log2timeline.py --storage-file /tmp/tl/case.plaso /evidence/disk.img
+pinfo.py /tmp/tl/case.plaso | head -20
+# Export to CSV for analysis
+psort.py -o csv -w /tmp/tl/super.csv /tmp/tl/case.plaso
+wc -l /tmp/tl/super.csv</code></pre>
+<pre><code class="language-bash"># Merge cloud and log sources into the same schema
+# ts_utc, source, host, user, event, details
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;merge: disk timeline + auth logs + cloudtrail into timeline.csv&quot;)
+print(&quot;sort by ts_utc; dedupe; then filter to the incident window&quot;)
+PY
+# Analyze: sort, filter, and pivot
+awk -F, &#x27;$1 &gt;= &quot;2026-10-22T12:00:00&quot; &amp;&amp; $1 &lt;= &quot;2026-10-22T18:00:00&quot;&#x27; \
+  /tmp/tl/timeline.csv | head -50</code></pre>
+<h2>3. Reading the timeline</h2>
+<pre><code class="language-bash"># Patterns to hunt in the merged timeline:
+# - first attacker event (initial access) and how it got there
+# - privilege escalation markers close together in time
+# - lateral movement: same credentials on multiple hosts
+# - staging and exfiltration: large reads then outbound flows
+# - anti forensics: log clears, timestomping (check $STANDARD_INFORMATION vs $FILE_NAME)
+grep -i -E &quot;mimikatz|psexec|wmic|ntdsutil|vssadmin.*delete&quot; /tmp/tl/timeline.csv | head -20</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Clocks disagree by minutes or hours. Establish skew per source</li>
+<p>and annotate; do not silently shift.</p>
+<li>Timestomping suspected. Compare filesystem timestamps against</li>
+<p>journal and log evidence; disagreement is the tell.</p>
+<li>The timeline is millions of rows. Filter aggressively by window</li>
+<p>and host, then expand outward from known bad events.</p>
+<li>Time zones in cloud logs are UTC but the endpoint is local.</li>
+<p>Normalize at ingest, document the mapping.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Gaps in the timeline: identify which sources are missing and</li>
+<p>whether they can still be collected.</p>
+<li>Need memory context: add the memory timeline (process creation)</li>
+<p>from the memory image.</p>
+<li>Scale problems: move to a proper analysis platform; CSV works to</li>
+<p>a point.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Timelines are built after the fact, but the readiness that enables them is defensive: NTP everywhere, centralized logging with retention, and protected audit logs. Attackers fight timelines with clock changes, log deletion, and timestomping, which is why independent sources (network, cloud) matter. The durable practice is forensic readiness: the logs you need are the logs you already collect.</p>
+<h2>Key references</h2>
+<ul>
+<li>Plaso (log2timeline) documentation.</li>
+<li>MITRE ATT&amp;CK T1070 (Indicator Removal): anti forensics.</li>
+<li>NIST SP 800-86: integrating forensic techniques.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: trust-mapping</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>trust-mapping</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when mapping Active Directory trust relationships on an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ad-enumeration.html">ad-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="ad-enumeration.html">ad-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ldap-enumeration.html">ldap-enumeration</a> <a href="bloodhound-methodology.html">bloodhound-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>PowerShell</td><td>7.4</td></tr><tr><td>Impacket</td><td>0.11.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Trusts let users of one domain access resources in another, which means the security of every domain in a trust chain is only as strong as the weakest one. This skill covers trust mapping on authorized engagements: enumerating trusts, understanding direction and transitivity, checking SID filtering, and finding the practical attack paths across them.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate all trusts visible from the starting domain.</li>
+<li>Record direction (inbound, outbound, bidirectional) and type (forest,</li>
+<p>external, shortcut).</p>
+<li>Check transitivity and SID filtering on each trust.</li>
+<li>Identify the weakest domain: oldest, least monitored, most user</li>
+<p>controlled.</p>
+<li>Map the concrete path: what access in domain A yields what in domain</li>
+<p>B.</p>
+<li>Test the path only within the approved scope for each domain.</li>
+</ol>
+<h2>1. Trust enumeration</h2>
+<pre><code class="language-powershell"># From a domain-joined host
+Get-ADTrust -Filter * | Select-Object Name, Direction, TrustType,
+  TrustAttributes, SelectiveAuthentication
+
+# Direction meanings:
+# Outbound: your domain trusts the other (their users access your resources)
+# Inbound: the other domain trusts yours (your users access theirs)
+# Bidirectional: both ways
+
+# nltest alternative on any domain member
+nltest /domain_trusts</code></pre>
+<p>Draw the trust map before doing anything else. An outbound trust from a well-defended domain to a neglected one is the classic pivot: compromise the weak domain, ride the trust into the strong one.</p>
+<h2>2. SID filtering and transitivity</h2>
+<pre><code class="language-powershell"># Trust attributes: check for SID filtering quarantine
+Get-ADTrust -Filter * | Select-Object Name, TrustAttributes
+# QUARANTINED_DOMAIN (SID filtering on) blocks SID history abuse
+# FOREST_TRANSITIVE means the trust extends through the forest
+
+# Check selective authentication: limits which users can cross
+# SelectiveAuthentication = 1 means only explicitly allowed users cross</code></pre>
+<p>SID filtering off on an external trust enables SID history injection: add the target domain&#x27;s Enterprise Admins SID to your token&#x27;s history and cross as an admin. Verify the attribute before planning around it; assuming it is off is a common wasted effort.</p>
+<h2>3. Cross-domain path testing</h2>
+<pre><code class="language-bash"># Enumerate the trusting domain&#x27;s users from your side
+python3 /opt/impacket/examples/ldapsearch.py other.corp/testuser:&#x27;TestPass123!&#x27; \
+  -dc-ip 10.0.6.10 -request &quot;(objectClass=user)&quot; \
+  -attributes sAMAccountName 2&gt;&amp;1 | head -20
+
+# Kerberos across the trust: request a service ticket in the other domain
+# using your domain credential (works when the trust allows it)
+python3 /opt/impacket/examples/GetUserSPNs.py other.corp/testuser:&#x27;TestPass123!&#x27; \
+  -dc-ip 10.0.6.10 -request 2&gt;&amp;1 | head -10</code></pre>
+<p>Test with read-only queries first. Each successful cross-domain query confirms the trust direction in practice, not just on paper.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Selective authentication blocks your user specifically. The trust</li>
+<p>exists but your account is not on the allowed list; note the configuration and test with an allowed account if the engagement provides one.</p>
+<li>Trusts to decommissioned domains linger. A trust to a dead domain is</li>
+<p>a finding (stale trust), and if the domain still resolves, it may be resurrectable by an attacker.</p>
+<li>Forest trusts behave differently from external trusts. Transitivity</li>
+<p>rules differ; map each trust on its own terms.</p>
+<li>The scope covers only one domain. Map the trusts anyway (it is</li>
+<p>read-only), but do not cross into out-of-scope domains; report the paths as theoretical.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A cross-domain path is confirmed in scope: follow it with the same</li>
+<p>enumeration discipline as the first domain, and keep the trust map updated.</p>
+<li>SID history abuse is possible and in scope: it requires explicit</li>
+<p>approval as a high-impact technique; prove the missing filter first.</p>
+<li>The trust map is complex: feed it to bloodhound-path-analysis, which</li>
+<p>models cross-domain paths automatically.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see trust abuse as cross-domain authentication spikes, impossible combinations of domain memberships in tokens, and SID history anomalies. Defenses are SID filtering on all external trusts, selective authentication where full trust is not needed, removing stale trusts, monitoring cross-domain ticket requests, and treating the whole forest as one security boundary (because it is).</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1482 (Domain Trust Discovery).</li>
+<li>MITRE ATT&amp;CK T1558.001 (Steal or Forge Kerberos Tickets: Golden</li>
+<p>Ticket, cross-domain use).</p>
+<li>Microsoft documentation on Active Directory trusts and SID filtering.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

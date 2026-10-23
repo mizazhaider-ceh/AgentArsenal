@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: reviewer-auth-flaws</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>reviewer-auth-flaws</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reviewing authentication and authorization code for</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="code-reviewer.html">code-reviewer</a></div><div class="deps"><span class="kind">requires:</span> <a href="code-reviewer.html">code-reviewer</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="secure-coding.html">secure-coding</a> <a href="auth-attacks.html">auth-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Bandit</td><td>1.7</td></tr></tbody></table><p>Authentication code is where logic flaws hide: the password check that compares wrong, the session that never expires, the reset token that never expires either. This skill covers reviewing auth code: password handling, session management, MFA, and the authorization logic around them. Read auth code slowly; the flaws are in the branches, not the happy path.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the auth flows: login, logout, reset, MFA, session refresh.</li>
+<li>Review password handling: hashing, comparison, policies.</li>
+<li>Review session management: creation, rotation, expiry, invalidation.</li>
+<li>Review MFA: enrollment, verification, recovery, bypass paths.</li>
+<li>Review authorization around every authenticated endpoint.</li>
+<li>Check the failure paths: what happens on every error branch.</li>
+<li>Write findings with the flow, the flaw, and the fix.</li>
+</ol>
+<h2>1. Password handling review</h2>
+<pre><code class="language-python"># Review checklist for password code:
+# - Hashing: bcrypt/argon2/scrypt with proper cost, NEVER md5/sha1/sha256 alone
+# - Comparison: constant-time compare for hashes and tokens
+# - No plaintext: passwords never logged, never in error messages
+# - Policy: length-focused, breached-password check, no composition theater
+
+import hmac
+# Constant-time token comparison (review for == on secrets: VULN)
+if not hmac.compare_digest(provided_token, expected_token):
+    raise Unauthorized()
+
+# Password verification pattern to expect:
+# verify(password, stored_hash) with the library&#x27;s verify, not re-hashing
+# and string-comparing</code></pre>
+<pre><code class="language-bash"># Grep the review targets:
+# md5( / sha1( near password -&gt; VULN
+# == token / == password -&gt; REVIEW (timing)
+# log.*password / print.*password -&gt; VULN</code></pre>
+<p>Timing attacks on string comparison are real for tokens; <code>hmac.compare_digest</code> is the fix and it costs nothing. Passwords get the slow hash; tokens get the constant-time compare.</p>
+<h2>2. Session review</h2>
+<pre><code class="language-python"># Review checklist for session code:
+# - Rotation: new session id at login (fixation defense)
+# - Expiry: idle timeout AND absolute timeout, enforced server-side
+# - Invalidation: logout destroys the server-side session, not just the cookie
+# - Cookie flags: Secure, HttpOnly, SameSite set on session cookies
+# - No sensitive data in the session payload itself (JWT claims minimal)
+
+# Patterns to flag:
+# session[&quot;user_id&quot;] = user.id   # then never rotated -&gt; REVIEW
+# def logout(): response.delete_cookie(&quot;session&quot;)  # client-only -&gt; VULN</code></pre>
+<p>Read the logout function completely: the most common session flaw is logout that clears the browser but leaves the server session valid. Then read the &quot;remember me&quot; implementation with the same suspicion; long-lived tokens need the same rotation and invalidation discipline.</p>
+<h2>3. MFA and reset review</h2>
+<pre><code class="language-python"># MFA review checklist:
+# - Server enforces the MFA step (no client-side &quot;mfa_done&quot; flag)
+# - Codes: short lifetime, single use, strict attempt limits
+# - Recovery codes: single use, shown once, hashed in storage
+# - Enrollment: requires re-authentication, not just a session
+# - No downgrade: SMS fallback does not bypass the primary silently
+
+# Reset review checklist:
+# - Tokens: random, single use, short expiry (15-60 min)
+# - Delivered to the verified channel only
+# - Using the token does not leak validity (uniform responses)
+# - Password change invalidates existing sessions</code></pre>
+<p>Trace the MFA flow for the skip: after the password step, can the attacker request an authenticated page directly? The code that says &quot;require MFA&quot; must run on every protected handler, not just in the login controller.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The auth library handles it. Verify the library is configured</li>
+<p>correctly (cost factors, timeouts); libraries with bad configs are the common case.</p>
+<li>Legacy auth code coexists with the new flow. Review both; attackers</li>
+<p>use the weaker one.</p>
+<li>The flaw needs chaining (auth bypass plus something else). Note the</li>
+<p>dependency; the finding stands but the severity reflects the chain.</p>
+<li>Tests cover the happy path only. Require failure-path tests as part</li>
+<p>of the fix.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Systemic auth weakness (custom crypto, homegrown sessions):</li>
+<p>recommend replacing with the standard library/framework, with the instance list as the business case.</p>
+<li>A flaw is found in production auth: treat it as an incident input</li>
+<p>(check logs for exploitation) alongside the code fix.</p>
+<li>The team needs the patterns: turn the review findings into the</li>
+<p>team&#x27;s auth checklist for future reviews.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, auth code review is the highest-leverage review time: auth flaws become account takeovers, the most damaging common finding. Complement review with auth-focused DAST (the auth-attacks skill set) against staging. Log auth decisions verbosely; the logs are both the debugging tool and the incident evidence.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-287 (Improper Authentication).</li>
+<li>CWE-384 (Session Fixation).</li>
+<li>CWE-307 (Improper Restriction of Excessive Authentication Attempts).</li>
+<li>OWASP Authentication Cheat Sheet.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

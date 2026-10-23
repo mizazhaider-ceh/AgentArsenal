@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bgp-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bgp-security</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing BGP security on an authorized network</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="dns-enumeration.html">dns-enumeration</a> <a href="recon-active.html">recon-active</a> <a href="threat-intel.html">threat-intel</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>BGP decides how the internet routes traffic, and it trusts what peers announce: a hijacked announcement can redirect a victim&#x27;s traffic to the attacker. This skill covers authorized assessment: reviewing a network&#x27;s BGP posture, checking RPKI coverage, monitoring for hijacks, and auditing peer configurations. You do not announce anyone&#x27;s prefixes; assessment is review and monitoring, not active hijacking.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory the ASNs and prefixes the organization owns or depends</li>
+<p>on.</p>
+<li>Check RPKI ROA coverage for every owned prefix.</li>
+<li>Review BGP peer configurations: prefix filters, max prefix limits,</li>
+<p>and TTL security.</p>
+<li>Monitor public BGP data for anomalies affecting the prefixes.</li>
+<li>Assess the impact of a hijack: what traffic could be intercepted.</li>
+<li>Check IRR records: are they accurate and maintained.</li>
+<li>Review the incident response plan for a hijack event.</li>
+<li>Report gaps with the specific prefix and the missing control.</li>
+</ol>
+<h2>1. RPKI and prefix inventory</h2>
+<pre><code class="language-bash"># List owned prefixes (from the client&#x27;s documentation, never guess)
+cat /tmp/bgp/owned_prefixes.txt
+
+# Check ROA coverage via a public RPKI validator API (read only)
+for prefix in $(cat /tmp/bgp/owned_prefixes.txt); do
+  echo &quot;=== $prefix&quot;
+  curl -s &quot;https://rpki-validator.example/api/roas?prefix=$prefix&quot; | head -c 300
+  echo
+done
+# No ROA = anyone can announce it and RPKI validators will not object</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;BGP posture checklist per prefix.&quot;&quot;&quot;
+prefixes = [
+    {&quot;prefix&quot;: &quot;203.0.113.0/24&quot;, &quot;roa&quot;: True, &quot;irr&quot;: True},
+    {&quot;prefix&quot;: &quot;198.51.100.0/24&quot;, &quot;roa&quot;: False, &quot;irr&quot;: True},
+]
+for p in prefixes:
+    gaps = [k for k in (&quot;roa&quot;, &quot;irr&quot;) if not p[k]]
+    print(f&quot;{p[&#x27;prefix&#x27;]}: {&#x27;OK&#x27; if not gaps else &#x27;MISSING &#x27; + &#x27;,&#x27;.join(gaps)}&quot;)</code></pre>
+<h2>2. Peer configuration audit</h2>
+<pre><code class="language-bash"># Review points for each eBGP peer (config review, your network or
+# the client&#x27;s with authorization):
+# - prefix filter: only accept the prefixes the peer should announce
+# - max-prefix: shut the session before a leak floods the table
+# - TTL security (GTSM): packets must arrive with TTL 255 (direct peer)
+# - MD5 or TCP-AO authentication on the session
+# - no default route accepted from peers unless intended
+grep -A5 &quot;neighbor&quot; /tmp/bgp/router_config.txt | head -40</code></pre>
+<pre><code class="language-bash"># Monitor for hijacks using public route collectors (passive)
+# Watch: origin AS changes for owned prefixes, more specific
+# announcements, and new upstream paths
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;monitor: RIPE RIS / RouteViews streams for owned prefixes&quot;)
+print(&quot;alert on: origin change, unexpected more-specific, RPKI invalid&quot;)
+PY</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The organization has no ASN and uses provider space. The review</li>
+<p>shifts to the provider&#x27;s posture and the contract terms.</p>
+<li>Anycast prefixes behave differently. Document the anycast design;</li>
+<p>hijack impact analysis changes.</p>
+<li>RPKI is deployed but not enforced (fail open). Recommend fail</li>
+<p>closed on invalid, staged carefully.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Active hijack in progress: contact the upstream providers and the</li>
+<p>hijacking AS per the playbook; announce more specifics or ROAs as the plan dictates.</p>
+<li>No monitoring exists: set up alerting on origin changes before</li>
+<p>deeper work.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Networks detect hijacks with BGP monitoring: origin changes, RPKI invalid announcements, and latency shifts. They defend with RPKI ROAs plus origin validation, strict prefix filters on peers, max prefix limits, and an incident playbook with provider contacts ready. The durable direction is RPKI everywhere and BGPsec where supported.</p>
+<h2>Key references</h2>
+<ul>
+<li>RFC 6480 (RPKI) and RFC 7454 (BGP operations security).</li>
+<li>MITRE ATT&amp;CK T1590 and ICS T0806: network mapping context.</li>
+<li>MANRS (Mutually Agreed Norms for Routing Security) actions.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

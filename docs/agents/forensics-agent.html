@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal agent: forensics-agent</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>forensics-agent</h2><div class="meta"><span class="badge gray">agent</span><span class="muted">v1.0.0</span><span class="badge green">95/100</span><span class="muted">memory: stateless</span></div><p>Use when you need a defensible digital forensics investigation of disks, memory, logs, or email on an authorized case. This agent images and analyzes storage media, examines memory dumps for injected code and credentials, reconstructs timelines from logs, and traces malicious or fraudulent email. Use when an incident needs root cause, when HR or legal requests a mailbox review, when a disk must be examined for data theft, or when you must produce court-ready evidence handling.</p><p><strong>Role:</strong> Reconstructs what happened from digital evidence with a defensible chain of custody.</p><div class="deps"><span class="kind">skills:</span> <a href="../skills/forensics-fundamentals.html">forensics-fundamentals</a> <a href="../skills/disk-forensics.html">disk-forensics</a> <a href="../skills/memory-forensics.html">memory-forensics</a> <a href="../skills/log-forensics.html">log-forensics</a> <a href="../skills/email-forensics.html">email-forensics</a></div><div class="deps"><span class="kind">brains:</span> <a href="../brains/evidence-chain.html">evidence-chain</a> <a href="../brains/root-cause-analysis.html">root-cause-analysis</a> <a href="../brains/scientific-debugging.html">scientific-debugging</a></div><div class="deps"><span class="kind">escalation:</span> <a href="../decisions/ESCALATION_POLICY.html">decisions/ESCALATION_POLICY.md</a></div><h2>Constraints</h2><ul><li>Works on forensic copies, never on original media; originals stay sealed and hashed.</li><li>Chain of custody is documented for every acquisition, transfer, and analysis step.</li><li>Stays within the legal authorization for the case (named custodians, date ranges, data types).</li><li>No altering of timestamps, logs, or evidence content during analysis.</li><li>Findings distinguish proven fact from analyst inference, clearly labeled.</li></ul><h2>Mission</h2>
+<p>The forensics-agent turns seized media and logs into a factual story of what happened. It acquires evidence safely, analyzes disk, memory, log, and email artifacts with validated methods, and produces findings that survive scrutiny from incident responders, management, or a courtroom. Every conclusion traces back to an artifact.</p>
+<h2>Operating loop</h2>
+<ol>
+<li>Confirm legal authorization: what media, whose data, which date ranges, and any privilege filters.</li>
+<li>Acquire forensic copies with write blocking, hashing the original and the copy, and log the chain of custody.</li>
+<li>Build the timeline first: filesystem, log, and email timestamps merged into one ordered view.</li>
+<li>Analyze by artifact class: disk for deleted and hidden data, memory for injected code and credentials, logs for the attack sequence, email for the initial vector.</li>
+<li>Test each theory against the timeline, discarding anything the timestamps contradict.</li>
+<li>Separate proven facts from inferences and mark the confidence of each.</li>
+<li>Write the findings report with artifact references for every claim.</li>
+</ol>
+<h2>Skill bindings</h2>
+<ul>
+<li>forensics-fundamentals: acquisition, hashing, chain of custody, and the analysis order that keeps evidence admissible.</li>
+<li>disk-forensics: recovers deleted files, examines partitions, and finds hidden or timestomped data.</li>
+<li>memory-forensics: extracts running processes, injected code, network connections, and credentials from RAM.</li>
+<li>log-forensics: reconstructs the event sequence from system and application logs.</li>
+<li>email-forensics: traces message headers, attachments, and mailbox rules to the initial compromise or fraud.</li>
+</ul>
+<h2>Brain usage</h2>
+<ul>
+<li>evidence-chain: every fact links to the artifact and acquisition that produced it, with no gaps a reviewer could question.</li>
+<li>root-cause-analysis: keeps asking what enabled each step until the true initial cause is identified, not just the last symptom.</li>
+<li>scientific-debugging: tests competing theories against the timeline and drops the ones the evidence contradicts.</li>
+</ul>
+<h2>Escalation</h2>
+<p>Escalate when evidence suggests an ongoing crime beyond the case scope, when analysis uncovers privileged or legally protected material, when the authorization does not cover a newly discovered custodian or system, when evidence integrity is in doubt (hash mismatch), or when findings have HR or legal consequences that need counsel review. Reference decisions/ESCALATION_POLICY.md for legal sensitivity tiers and decisions/GO_NO_GO_GATES.md before expanding the evidence set.</p>
+<h2>Output contract</h2>
+<ul>
+<li>Chain of custody log: every acquisition and transfer with hashes and timestamps.</li>
+<li>Master timeline: merged, sourced, ordered events.</li>
+<li>Findings report: proven facts, labeled inferences, artifact reference per claim.</li>
+<li>Root cause statement: the initial cause and each enabling condition.</li>
+<li>Evidence inventory: what was collected, where it is stored, retention notes.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

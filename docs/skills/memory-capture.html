@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: memory-capture</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>memory-capture</h2><div class="meta"><span class="badge gray">memory</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when an agent needs to record what it learned so future</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="memory-recall.html">memory-recall</a> <a href="memory-hygiene.html">memory-hygiene</a> <a href="incident-response.html">incident-response</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>memory-store</td><td>1.0.0</td></tr><tr><td>SQLite</td><td>3.45.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Agent memory is what survives between runs: observations, durable facts, and procedures that make the next run smarter. This skill covers capture, the first stage of the memory lifecycle: deciding what is worth recording, picking the right kind, writing entries with honest confidence, and storing them with the memory-store CLI. Schemas and field definitions live in memory/MEMORY_SCHEMA.md; capture timing rules live in memory/LIFECYCLE.md.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Decide if the knowledge is worth storing: will a future agent or</li>
+<p>operator make a better decision because of it?</p>
+<li>Recall first: check whether an equivalent entry already exists.</li>
+<li>Pick the kind: just happened (episodic), durable fact (semantic),</li>
+<p>or how-to (procedural).</p>
+<li>Write one idea per entry, plain text, with a confidence that matches</li>
+<p>the evidence.</p>
+<li>Store with memory-store, tagging for recall and setting TTL only</li>
+<p>when the default is wrong.</p>
+<li>Redact secrets before storing, never after.</li>
+</ol>
+<h2>1. Recall before you store</h2>
+<p>Never record blind. A duplicate entry wastes space and splits confidence across two rows.</p>
+<pre><code class="language-bash"># Check for an equivalent entry before writing
+memory-store.py recall --query &quot;staging api token&quot; --kind semantic --limit 5</code></pre>
+<p>If an equivalent entry exists, do not store a second one. The new observation corroborates the old one: note that in your notes, and if the store supports it, let consolidation raise the confidence later. If the old entry is wrong, record a new entry that supersedes it by id (see memory-consolidation) instead of silently duplicating.</p>
+<h2>2. Pick the right kind</h2>
+<p>Ask two questions: &quot;will this be true next month?&quot; and &quot;did this just happen?&quot; True next month means semantic. Just happened means episodic. &quot;Does this tell me how to do something better?&quot; means procedural.</p>
+<pre><code class="language-bash"># Episodic: an event with a timestamp and an actor
+memory-store.py store --kind episodic --agent hunter-01 \
+  --text &quot;Finished nmap sweep of 192.168.11.0/24: 14 hosts up, 3 with port 22 open.&quot; \
+  --confidence 0.8 --tags &quot;nmap,subnet,scan&quot;
+
+# Semantic: a fact that stays true
+memory-store.py store --kind semantic --agent analyst-02 \
+  --text &quot;The staging API rejects tokens older than 15 minutes.&quot; \
+  --confidence 0.9 --tags &quot;api,staging,auth&quot;
+
+# Procedural: hard-won how-to
+memory-store.py store --kind procedural --agent operator-izaz \
+  --text &quot;Run sqlmap with --batch and --threads=2 on fragile targets to avoid interactive prompts and overload.&quot; \
+  --confidence 0.95 --tags &quot;sqlmap,web&quot;</code></pre>
+<p>Misfiled kinds are cheap to fix later (recall by topic, delete, re-store correctly), but getting it right at capture keeps recall clean. When unsure, default to episodic with modest confidence; promotion to semantic happens in consolidation.</p>
+<h2>3. Write entries with honest confidence</h2>
+<p>Confidence reflects evidence, not hope. Use these anchors:</p>
+<ul>
+<li>0.9+: corroborated by a second independent observation, or recorded</li>
+<p>by the operator who set the fact.</p>
+<li>0.7 to 0.8: single direct observation (you ran the command, you saw</li>
+<p>the output).</p>
+<li>0.4 to 0.6: inferred from indirect evidence, or copied from someone</li>
+<p>else&#x27;s report.</p>
+<li>Below 0.4: a guess. Usually not worth storing at all.</li>
+</ul>
+<pre><code class="language-bash"># Direct observation, solid confidence
+memory-store.py store --kind episodic --agent hunter-01 \
+  --text &quot;Port 445 is open on 10.0.1.5 and responds to SMB negotiation.&quot; \
+  --confidence 0.8 --tags &quot;smb,scan&quot;
+
+# Second-hand report, lower confidence
+memory-store.py store --kind episodic --agent analyst-02 \
+  --text &quot;Helpdesk reports the file server was slow all morning, possibly under load.&quot; \
+  --confidence 0.5 --tags &quot;helpdesk,report&quot;</code></pre>
+<p>Never round confidence up to make an entry look more certain. A recall query that surfaces a 0.5 entry tells the reader to verify; a fake 0.9 tells them not to, and that is how bad memory causes bad decisions.</p>
+<h2>4. Tag for recall</h2>
+<p>Tags are the index. Use lowercase, specific nouns, no spaces:</p>
+<pre><code class="language-bash">memory-store.py store --kind procedural --agent operator-izaz \
+  --text &quot;Scan internal subnets with --max-rate 200 to avoid IDS alerts.&quot; \
+  --confidence 0.9 --tags &quot;nmap,ids,rate-limit&quot;</code></pre>
+<p>Good tags: <code>nmap</code>, <code>smb</code>, <code>staging</code>, <code>ids</code>, <code>sqlmap</code>. Bad tags: <code>stuff</code>, <code>important</code>, <code>networking</code> (too broad). Two to four tags per entry is enough; more tags usually means the entry contains two ideas and should be split.</p>
+<h2>5. Redact secrets at capture time</h2>
+<p>Secrets never enter the store. Redact before calling store, not after.</p>
+<pre><code class="language-bash"># WRONG: raw token in the entry
+memory-store.py store --kind episodic --agent hunter-01 \
+  --text &quot;Used token ghp_x1y2z3 to query the API&quot;
+
+# RIGHT: describe the event, redact the secret
+memory-store.py store --kind episodic --agent hunter-01 \
+  --text &quot;Queried the API with a personal access token (redacted); it returned 200 for all 40 requests.&quot;</code></pre>
+<p>If you catch a secret after storing, rotate the secret on the real system first, then delete the entry with <code>memory-store.py forget --id</code>. Deleting does not un-leak a live key.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Capturing from a long transcript. Do not store the whole transcript.</li>
+<p>Store the conclusion and the path to the artifact, e.g. &quot;Full scan output at /tmp/scans/net-2026-10-23.xml; conclusion: 14 hosts up.&quot;</p>
+<li>The agent is unsure the observation is correct. Store it anyway with</li>
+<p>low confidence (0.4 to 0.5) and tag it <code>unverified</code>. Low-confidence memory is a flag to verify, not a lie.</p>
+<li>Two agents capture the same event seconds apart. Both entries are</li>
+<p>legitimate; consolidation will merge them later. Do not delete one manually unless you wrote it yourself.</p>
+<li>Capture during an incident. Record timestamps obsessively; timeline</li>
+<p>reconstruction depends on <code>created_at</code>. See incident-response for the full incident workflow.</p>
+<li>The database file is missing or locked. memory-store creates the</li>
+<p>file on first use; a lock usually means another process is writing. Wait a few seconds and retry rather than writing to a second file.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Equivalent entry exists but contradicts the new observation: do not</li>
+<p>overwrite. Store the new observation as episodic with both ids mentioned in the text, then resolve per memory/HYGIENE.md contradiction rules.</p>
+<li>Entry must be stored but the payload is over 2,000 characters:</li>
+<p>write the full content to a file, store the conclusion plus the path.</p>
+<li>Secret already stored and still live: rotate the secret on the real</li>
+<p>system first, delete the entry second, note the deletion in the audit log.</p>
+<li>Capture fails repeatedly with database errors: check disk space and</li>
+<p>file permissions on MEMORY_STORE_DB, and fall back to a dated notes file until the store is healthy.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For memory, the &quot;defender&quot; is the future operator reviewing the store. Misuse looks like this: entries stuffed with secrets (exposure), fake high-confidence entries that poison decisions (integrity), entries written about systems outside the authorized scope (overreach), and poisoned procedural entries that would make an agent run harmful commands. Detect these by auditing <code>stats</code> output for odd agents, by scanning recalls for secret-like patterns, and by requiring procedural entries to name the safe context they apply to. Any memory entry that tells an agent to do something destructive gets the same review as a change to production code.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-312 (Cleartext Storage of Sensitive Information): why secrets</li>
+<p>never enter the store.</p>
+<li>CWE-200 (Exposure of Sensitive Information to an Unauthorized</li>
+<p>Actor): the cost of a leaked memory database.</p>
+<li>SQLite documentation: https://sqlite.org/docs.html</li>
+<li>Python sqlite3 module: https://docs.python.org/3/library/sqlite3.html</li>
+<li>memory/MEMORY_SCHEMA.md and memory/LIFECYCLE.md in this repo.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

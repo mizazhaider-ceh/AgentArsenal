@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: duplicate-avoidance</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>duplicate-avoidance</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hunting bugs on crowded programs to avoid</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><div class="deps"><span class="kind">requires:</span> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-for-bounty.html">recon-for-bounty</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Duplicates are the tax on crowded programs: the same XSS found by ten researchers pays the first one. This skill covers avoiding them: researching what is known, hunting where others do not, and validating novelty before you write the report. It does not guarantee uniqueness; it shifts the odds toward targets with fewer hunters.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Research the program: disclosed reports, known issue lists, common</li>
+<p>findings.</p>
+<li>Hunt away from the crowd: new assets, odd features, deep logic.</li>
+<li>Before submitting, check the finding against known patterns.</li>
+<li>Assess variant novelty honestly: same root cause is a duplicate.</li>
+<li>Submit fast once validated; speed matters after novelty.</li>
+<li>Learn from duplicates: log why, adjust the hunting.</li>
+</ol>
+<h2>1. Researching the program</h2>
+<pre><code class="language-bash"># Before testing a program, gather:
+# - Disclosed HackerOne/Bugcrowd reports for the program (techniques used)
+# - The program&#x27;s changelog and scope history (what is new)
+# - Common findings for the tech stack (what everyone finds first)
+
+# Build the &quot;probably already found&quot; list:
+# - Reflected XSS on the search box
+# - Missing security headers
+# - Verbose errors on the main app
+# Then hunt everything EXCEPT that list first</code></pre>
+<p>Programs disclose to teach; read the disclosures as a map of where not to start. The disclosed XSS in the search box means the search box is picked clean; the undisclosed admin import feature is not.</p>
+<h2>2. Hunting where others do not</h2>
+<pre><code class="language-bash"># Low-competition targets (historically):
+# - Newly added scope (test within days of the announcement)
+# - Mobile app APIs (fewer web hunters look here)
+# - Business logic flaws (need understanding, not just scanning)
+# - Chained vulnerabilities (each link is known; the chain is not)
+# - Old, forgotten subdomains (from recon-for-bounty monitoring)
+# - File handling: uploads, exports, imports, parsers
+
+# Depth beats breadth on crowded programs:
+# one feature understood completely &gt; ten features scanned shallowly</code></pre>
+<p>Business logic is the durable edge: it cannot be found by scanners, it needs the application&#x27;s context, and most hunters skip it for the faster injection wins. Learn the application&#x27;s purpose and abuse its rules; that is where the unique findings live.</p>
+<h2>3. Novelty validation</h2>
+<pre><code class="language-bash"># Before writing the report, ask:
+# 1. Is this the same root cause as a known finding? (duplicate)
+# 2. Is it the same vuln class in a different parameter? (likely duplicate
+#    unless the program pays per instance: check the policy)
+# 3. Does it need a genuinely different exploit path? (probably novel)
+# 4. Would the fix for the known issue also fix mine? (duplicate if yes)
+
+# The fix test is the best heuristic: if one patch kills both,
+# they are the same finding.</code></pre>
+<p>When in doubt about a variant, submit with a clear note explaining how it differs; triagers decide, and a well-argued variant sometimes pays. But do not spam variants of your own duplicate hoping one sticks; programs notice and remember.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The program pays per instance. Then variants are submissions, not</li>
+<p>duplicates; read the policy carefully because most programs do not.</p>
+<li>The duplicate window is unclear. Ask the program; some dupes expire</li>
+<p>after fixes, some do not.</p>
+<li>Your finding is a bypass of a known fix. That is novel (the fix</li>
+<p>failed); document the original fix and your bypass clearly.</p>
+<li>Everything you find is a duplicate. Move programs or move target</li>
+<p>areas; the hunting strategy needs the change, not the effort.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A duplicate teaches you the program&#x27;s patterns: log it (what, why</li>
+<p>duped, what you missed) and adjust the target list.</p>
+<li>The program is saturated: rotate to newer programs or private</li>
+<p>invites where the hunter density is lower.</p>
+<li>You need a second opinion on novelty: ask a trusted hunter, not</li>
+<p>the program; the program&#x27;s answer is the submission itself.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>From the program&#x27;s side, duplicates are signal: ten duplicate XSS reports mean the finding class is systemic and the fix should be systemic (framework-level encoding, not per-page patches). Programs reduce duplicates with good scope docs, disclosed reports, and clear variant policies. The defender&#x27;s win from the duplicate pile is the pattern it reveals.</p>
+<h2>Key references</h2>
+<ul>
+<li>Program disclosure pages (HackerOne Hacktivity, Bugcrowd disclosures).</li>
+<li>OWASP Testing Guide (for the systematic coverage that avoids</li>
+<p>shallow duplicates).</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

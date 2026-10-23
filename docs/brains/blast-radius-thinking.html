@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: blast-radius-thinking</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>blast-radius-thinking</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must limit how far a failure can spread: designing deployments, choosing credential scope, planning rollouts, reviewing single points of failure, or preparing for the inevitable bad day. Provides blast-radius reasoning: define failure domains, contain with bulkheads, test the radius before the attacker does, keep rollback ready, and never let one key, one deploy, or one mistake take down everything. Load this brain when designing anything that can fail, which is everything.</p><h2>Provides</h2><ul><li>Failure domain definition and mapping</li><li>Bulkhead and compartment design</li><li>Blast radius testing before incidents</li><li>Rollback and recovery readiness</li><li>Single-point-of-failure elimination</li><li>Progressive rollout discipline</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>Everything fails: code, credentials, people, vendors. The question is never whether, it is how far the failure travels. Blast-radius thinking is the habit of drawing a circle around every component and asking: if this dies, is compromised, or misbehaves, what else goes with it? Then shrinking that circle until the worst day is survivable. It matters because most outages and breaches are not caused by exotic failures. They are caused by ordinary failures with unlimited blast radius: one key for all environments, one deploy to all servers at once, one shared database for everything.</p>
+<h2>Core mental models</h2>
+<p><strong>Define the failure domains.</strong> A failure domain is the set of things that fail together: an availability zone, a service, a credential&#x27;s scope, a deploy batch. If you cannot draw the domains, you have one domain: everything. Explicit domains let you reason about worst cases honestly. &quot;If this API key leaks, these three services are exposed, and nothing else&quot; is a design achievement.</p>
+<p><strong>Bulkheads contain the flood.</strong> Ships survive hull breaches because bulkheads divide the hull into compartments. Systems survive failures the same way: separate credentials per environment, separate data stores per service, separate deploy pipelines per region. Each bulkhead is a decision that one failure may not become another. They cost a little convenience and pay out enormously on the worst day.</p>
+<p><strong>Test the radius before the attacker does.</strong> Do not wait for a real incident to discover your blast radius. Game it out: if this key leaks right now, walk the graph and list what falls. Run the drill: revoke the key on purpose and see what breaks (in staging first). The radius you measure in peacetime is the radius you will live with in wartime. Surprises are for birthdays, not incidents.</p>
+<p><strong>Rollback is a control.</strong> The ability to undo a change quickly is as much a security control as any firewall. A bad deploy with a one-minute rollback is a blip. A bad deploy with no rollback is an outage. Design every change to be reversible: versioned deploys, feature flags, database migrations that roll back, credential rotation that does not require downtime. If you cannot undo it, you cannot safely do it.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>For each critical component, credential, and deploy, draw its failure domain: what fails with it?</li>
+<li>List the single points of failure: one key, one person, one server, one vendor that everything depends on.</li>
+<li>Insert bulkheads: separate credentials per environment, per service; separate data stores; separate deploy scopes.</li>
+<li>Size the domains so the worst single failure is survivable. If it is not, split further.</li>
+<li>Make every change reversible: versioned, flagged, or staged, with a tested rollback path.</li>
+<li>Roll out progressively: canary, then a slice, then the rest. Never all at once.</li>
+<li>Walk the compromise graph: if this credential leaks today, exactly what does the attacker get?</li>
+<li>Document the radius for each secret and each deploy. Review when the architecture changes.</li>
+<li>Drill it: simulate the failure in staging and confirm the blast stays inside the domain.</li>
+<li>After any real incident, check whether the radius was as designed. If not, the design was fiction.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>One credential per environment, per service. Sharing a key across prod and dev is sharing the blast radius.</li>
+<li>If a deploy cannot be rolled back in minutes, it is not ready to ship.</li>
+<li>Canary first, always. The canary exists to die so the fleet does not have to.</li>
+<li>The blast radius of a secret equals the union of everything it can touch. Read the policy, not the intention.</li>
+<li>People are failure domains too. No process may depend on one specific human being awake.</li>
+<li>A vendor is a failure domain. Know what happens when they are down or breached.</li>
+<li>Smaller domains, smaller incidents. Splitting is almost always worth it.</li>
+<li>If the drill is scary, the design is wrong. Fix the design, not the drill.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>One key to rule them all.</strong> A single API key or admin credential valid across every environment and service.</li>
+<li><strong>Big-bang deploys.</strong> Pushing to all servers at once, discovering the bug everywhere simultaneously.</li>
+<li><strong>No rollback plan.</strong> &quot;We will fix forward&quot; as the entire recovery strategy.</li>
+<li><strong>Shared everything.</strong> One database, one bucket, one account for all services, so one compromise is total.</li>
+<li><strong>Untested assumptions.</strong> Believing the blast radius is small without ever walking it or drilling it.</li>
+</ul>
+<h2>Worked example</h2>
+<p>A SaaS company uses one cloud API key for all environments, embedded in every service. Blast-radius walk: leak that key and the attacker gets production data, staging data, billing, and DNS. Everything. Redesign: separate keys per environment (prod, staging, dev), each scoped to the services in that environment; production data key separate from production infra key; each key rotatable independently. Deploys go canary first in one region with automatic rollback on error budget burn. Six months later a dev laptop is stolen with a staging key on it. Old radius: total compromise. New radius: staging only, key revoked in minutes, production untouched, customers never notice. The failure still happened. The blast radius made it boring. Boring is the goal.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

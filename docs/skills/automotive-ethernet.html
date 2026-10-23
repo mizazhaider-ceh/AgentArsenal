@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: automotive-ethernet</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>automotive-ethernet</h2><div class="meta"><span class="badge gray">automotive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing automotive Ethernet on a vehicle or</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="can-bus-security.html">can-bus-security</a> <a href="telematics-security.html">telematics-security</a> <a href="vlan-hopping.html">vlan-hopping</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Wireshark</td><td>4.4</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>Modern vehicles run Ethernet alongside CAN: cameras, lidar, and infotainment ride on 100BASE-T1, with SOME/IP for service communication and DoIP for diagnostics. This skill covers authorized assessment on your own bench or vehicle: tapping the network, discovering services, and reviewing segmentation. Parked vehicle or bench only, same safety rules as CAN work.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Get physical access to the automotive Ethernet: media converter</li>
+<p>for 100BASE-T1 to standard Ethernet, on your own setup.</p>
+<li>Capture traffic and identify SOME/IP service discovery messages.</li>
+<li>Enumerate services: which ECUs offer what, to whom.</li>
+<li>Check DoIP: diagnostic over IP entities and their access control.</li>
+<li>Review VLAN segmentation between domains (infotainment vs ADAS vs</li>
+<p>body).</p>
+<li>Test service access: can an unexpected node subscribe or call.</li>
+<li>Look for plaintext credentials or firmware in the traffic.</li>
+<li>Report with the network map and trust boundaries.</li>
+</ol>
+<h2>1. Tapping and discovery</h2>
+<pre><code class="language-bash"># With a 100BASE-T1 media converter, capture like normal Ethernet
+sudo tshark -i eth1 -w /tmp/auto_eth.pcap &amp;
+sleep 60; kill %1
+
+# SOME/IP service discovery uses multicast 224.0.0.0/4-ish and UDP 30490
+tshark -r /tmp/auto_eth.pcap -Y &quot;someip&quot; -T fields \
+  -e someip.serviceid -e someip.methodid | sort | uniq -c | head -20</code></pre>
+<pre><code class="language-bash"># DoIP discovery: UDP broadcast on port 13400
+tshark -r /tmp/auto_eth.pcap -Y &quot;doip&quot; | head -10
+# Note every DoIP entity: VIN, logical address, and further actions</code></pre>
+<h2>2. Service enumeration</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;SOME/IP service map from a capture (conceptual parsing).&quot;&quot;&quot;
+import collections
+# In practice parse with Wireshark&#x27;s SOME/IP dissector or scapy
+services = collections.defaultdict(set)
+print(&quot;build map: service ID -&gt; offering ECU IPs&quot;)
+print(&quot;then ask: which services accept subscriptions from any node?&quot;)
+print(&quot;check: event subscriptions without authentication&quot;)</code></pre>
+<pre><code class="language-bash"># DoIP entity scan on the bench network (authorized, gentle)
+sudo nmap -sU -p 13400 --open -T2 192.168.5.0/24 -oN /tmp/doip.txt 2&gt;/dev/null
+sudo nmap -sS -p 13400 --open -T2 192.168.5.0/24 -oN /tmp/doip_tcp.txt
+grep -B2 open /tmp/doip_tcp.txt | head</code></pre>
+<h2>3. Segmentation review</h2>
+<pre><code class="language-bash"># Check VLAN tags in the capture: which domains share a wire
+tshark -r /tmp/auto_eth.pcap -T fields -e vlan.id | sort | uniq -c
+# Expected: separate VLANs for infotainment, ADAS, diagnostics
+# Finding: flat network or routable paths between untrusted and critical</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The media converter does not link. Check master/slave strapping;</li>
+<p>automotive PHYs need one side as master.</p>
+<li>Traffic is encrypted (MACsec or TLS). Assess the key management</li>
+<p>instead of the plaintext you cannot see.</p>
+<li>Time sensitive networking (TSN) schedules matter. Do not inject</li>
+<p>traffic that could disturb scheduled streams on a live bench.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>SOME/IP services accept unauthenticated calls: demonstrate on the</li>
+<p>bench with a harmless method call.</p>
+<li>DoIP allows flashing without authentication: critical finding;</li>
+<p>verify on the bench and report immediately through the agreed channel.</p>
+<li>Need the system view: use automotive-threat-model next.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Vehicle network defenders use Ethernet firewalls between domains, IDS tuned to SOME/IP anomalies, and authenticated diagnostics. They detect attacks through unexpected service subscriptions and DoIP sessions from unknown nodes. The industry direction is zone architectures with central gateways enforcing policy, plus MACsec on sensitive links.</p>
+<h2>Key references</h2>
+<ul>
+<li>IEEE 100BASE-T1 (802.3bw): automotive Ethernet PHY.</li>
+<li>AUTOSAR SOME/IP protocol specification.</li>
+<li>ISO 13400 (DoIP): diagnostics over IP.</li>
+<li>CWE-306 (Missing Authentication for Critical Function).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

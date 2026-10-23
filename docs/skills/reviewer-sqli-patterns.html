@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: reviewer-sqli-patterns</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>reviewer-sqli-patterns</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reviewing code for SQL injection vulnerabilities.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="code-reviewer.html">code-reviewer</a></div><div class="deps"><span class="kind">requires:</span> <a href="code-reviewer.html">code-reviewer</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="secure-coding.html">secure-coding</a> <a href="web-sqli.html">web-sqli</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Bandit</td><td>1.7</td></tr></tbody></table><p>Code review finds SQL injection before it ships: the reviewer reads the data access code and checks that untrusted input never becomes query syntax. This skill covers the review patterns: what vulnerable code looks like in several languages, how to verify parameterization is real, and the ORM and procedure edge cases reviewers miss. Review the sink, not just the source.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find every place the code builds or runs SQL: search for query,</li>
+<p>execute, raw, and SQL keywords.</p>
+<li>For each, trace whether any part of the query string comes from</li>
+<p>untrusted input.</p>
+<li>Verify parameterization: placeholders used for VALUES, never for</li>
+<p>identifiers or keywords.</p>
+<li>Check ORM raw query escapes and stored procedure construction.</li>
+<li>Flag second-order flows: stored input used in later queries.</li>
+<li>Write the finding with the file, line, and the safe pattern.</li>
+</ol>
+<h2>1. Vulnerable patterns by language</h2>
+<pre><code class="language-python"># PYTHON: string formatting into SQL is the classic
+cursor.execute(&quot;SELECT * FROM users WHERE name = &#x27;%s&#x27;&quot; % username)  # VULN
+cursor.execute(f&quot;SELECT * FROM users WHERE name = &#x27;{username}&#x27;&quot;)     # VULN
+cursor.execute(&quot;SELECT * FROM users WHERE name = %s&quot;, (username,))   # SAFE
+
+# What to grep for in review:
+# execute(.*%.*) | execute(f&quot;.*&quot;) | &quot;.format(.*&quot; near SQL</code></pre>
+<pre><code class="language-javascript">// NODE: template literals and concatenation
+db.query(`SELECT * FROM users WHERE id = ${req.params.id}`);  // VULN
+db.query(&quot;SELECT * FROM users WHERE id = &quot; + id);             // VULN
+db.query(&quot;SELECT * FROM users WHERE id = ?&quot;, [id]);           // SAFE</code></pre>
+<pre><code class="language-php">// PHP: the old world, still common
+$result = mysqli_query($conn, &quot;SELECT * FROM users WHERE id = &quot; . $_GET[&#x27;id&#x27;]);  // VULN
+$stmt = $conn-&gt;prepare(&quot;SELECT * FROM users WHERE id = ?&quot;);                     // SAFE</code></pre>
+<p>The review question is always the same: does any untrusted value become part of the query TEXT. Placeholders keep values as values; everything else is suspect until proven otherwise.</p>
+<h2>2. Parameterization done wrong</h2>
+<pre><code class="language-python"># Placeholders do not cover everything: identifiers and keywords
+# cannot be parameterized in most drivers
+table = request.args[&quot;table&quot;]
+cursor.execute(f&quot;SELECT * FROM {table} WHERE id = %s&quot;, (user_id,))  # VULN: table is syntax
+
+# Reviewer check: is the interpolated part a VALUE or SYNTAX?
+# Values -&gt; must be placeholders. Syntax (table/column names, ORDER BY
+# direction) -&gt; must be allow-listed, never raw input.
+
+ALLOWED_TABLES = {&quot;users&quot;, &quot;orders&quot;}
+if table not in ALLOWED_TABLES:
+    raise ValueError(&quot;bad table&quot;)
+cursor.execute(f&quot;SELECT * FROM {table} WHERE id = %s&quot;, (user_id,))  # SAFE</code></pre>
+<p>Also check: placeholder style matches the driver (<code>%s</code> versus <code>?</code> versus <code>:name</code>); mixing styles silently breaks parameterization in some drivers. And stored procedures that build dynamic SQL inside are just SQLi one layer down; read the procedure body.</p>
+<h2>3. ORM and query builder traps</h2>
+<pre><code class="language-python"># Django: raw() and extra() are the escape hatches
+User.objects.raw(&quot;SELECT * FROM users WHERE name = &#x27;%s&#x27;&quot; % name)  # VULN
+User.objects.filter(name=name)                                    # SAFE
+User.objects.extra(where=[&quot;name = &#x27;%s&#x27;&quot; % name])                  # VULN
+
+# SQLAlchemy: text() with bound parameters is safe, f-strings are not
+db.session.execute(text(f&quot;SELECT * FROM users WHERE name=&#x27;{n}&#x27;&quot;))  # VULN
+db.session.execute(text(&quot;SELECT * FROM users WHERE name=:n&quot;), {&quot;n&quot;: n})  # SAFE
+
+# Reviewer grep list: raw(, extra(, text(, execute(, order_by( with input</code></pre>
+<p>ORMs are safe until the developer reaches for raw SQL &quot;just this once.&quot; Review every raw escape hatch as if it were handwritten SQL, because it is.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The query is built in one file and executed in another. Trace across</li>
+<p>the call chain; the sink is where the finding lives, the builder is where the fix goes.</p>
+<li>Input is &quot;validated&quot; before the query. Validation is not</li>
+<p>parameterization; review the validation&#x27;s strength separately and still require placeholders.</p>
+<li>Second-order: the value was safe at input, stored, and used in a</li>
+<p>query later. Follow stored data to its query uses, not just its input validation.</p>
+<li>The scanner flags a safe query. Verify by reading the code; scanners</li>
+<p>flag patterns, reviewers verify data flow. False positives get noted so the next review is faster.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You find systemic string-built SQL: recommend the parameterized</li>
+<p>pattern once, list every instance, and propose the migration order (auth and user-input queries first).</p>
+<li>The team disputes the finding: demonstrate with the test input in a</li>
+<p>safe environment; a working proof ends the debate.</p>
+<li>The codebase needs continuous protection: add the SAST rule for</li>
+<p>string-formatted SQL to CI so the pattern cannot return.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, code review is the cheapest SQLi defense: every hour of review prevents incidents that cost weeks. Complement review with SAST in CI (pattern matching for the vulnerable forms above) and DAST against staging. The defender&#x27;s metric is time from code written to injection found; review moves it left of deployment, scanners move it left of production.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-89 (SQL Injection).</li>
+<li>OWASP SQL Injection Prevention Cheat Sheet.</li>
+<li>OWASP Code Review Guide: SQL injection sections.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

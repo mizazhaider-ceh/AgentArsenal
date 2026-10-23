@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: multi-cloud-iam</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>multi-cloud-iam</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reviewing identity across multiple cloud</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="iam-privesc.html">iam-privesc</a> <a href="cloud-security-basics.html">cloud-security-basics</a> <a href="aws-enumeration.html">aws-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Multi cloud identity usually means one IdP federating into three different IAM models, and the seams are where privilege hides: a role that is tight in AWS but admin in Azure. This skill covers authorized review: mapping the identity fabric, testing cross cloud paths, and finding the weakest provider. Test only accounts you are authorized to assess.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the identity fabric: IdP, federation trusts, and the roles in</li>
+<p>each cloud.</p>
+<li>Inventory human and workload identities in each provider.</li>
+<li>Test the federation: what does each IdP group get in each cloud.</li>
+<li>Look for the weakest provider: where the same identity has the</li>
+<p>most privilege.</p>
+<li>Trace cross cloud paths: compromise in one cloud reaching</li>
+<p>another.</p>
+<li>Check workload identity: CI roles, pod identities, and function</li>
+<p>roles per cloud.</p>
+<li>Review guest and external access in each provider.</li>
+<li>Report the effective privilege per identity per cloud.</li>
+</ol>
+<h2>1. Federation mapping</h2>
+<pre><code class="language-bash"># AWS: which IdP roles exist and who can assume them
+aws iam list-roles --query &#x27;Roles[?contains(RoleName, `saml`) || contains(RoleName, `oidc`)].RoleName&#x27; --output text
+# Azure: enterprise apps and role assignments from the IdP
+# GCP: workforce identity federation pools
+echo &quot;for each: IdP group -&gt; cloud role -&gt; permissions&quot;</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Effective privilege matrix (fill from enumeration).&quot;&quot;&quot;
+matrix = {
+    &quot;dev-group&quot;: {&quot;aws&quot;: &quot;PowerUser&quot;, &quot;azure&quot;: &quot;Contributor&quot;, &quot;gcp&quot;: &quot;Editor&quot;},
+    &quot;ci-role&quot;: {&quot;aws&quot;: &quot;deployer&quot;, &quot;azure&quot;: &quot;Reader&quot;, &quot;gcp&quot;: &quot;owner?&quot;},
+}
+for ident, clouds in matrix.items():
+    worst = max(clouds.items(), key=lambda kv: len(kv[1]))
+    print(f&quot;{ident}: widest in {worst[0]} ({worst[1]})&quot;)
+print(&quot;the weakest provider sets the real privilege level&quot;)</code></pre>
+<h2>2. Cross cloud path testing (authorized)</h2>
+<pre><code class="language-bash"># Example path: CI role in AWS can read a secret that holds a GCP key
+# 1. enumerate what the test role can read in cloud A
+# 2. check whether any readable secret is a credential for cloud B
+# 3. verify the credential works (authorized test only) and note scope
+echo &quot;document each hop; the finding is the unintended bridge&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Each cloud is managed by a different team. The review needs all</li>
+<p>three; a partial review misses the seams.</p>
+<li>The IdP groups are nested and messy. Resolve the nesting before</li>
+<p>rating privilege, or the matrix lies.</p>
+<li>Workload identities differ per cloud (IRSA vs workload identity</li>
+<p>federation vs managed identity). Learn each model.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Effective admin found via the weak provider: demonstrate the</li>
+<p>path, then recommend normalizing to least privilege everywhere.</p>
+<li>Federation misconfiguration allows unintended groups in: fix the</li>
+<p>trust policy first, it is the front door.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders monitor multi cloud identity with centralized sign in logs, alerts on cross cloud role assumptions, and regular access reviews per provider. They defend with one IdP, short lived credentials, and policy as code that enforces the same baseline in each cloud. The durable goal is no standing privilege anywhere, with just in time elevation that works the same in all clouds.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-862 (Missing Authorization): cross cloud gaps.</li>
+<li>NIST SP 800-207: identity as the perimeter.</li>
+<li>Provider IAM federation documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

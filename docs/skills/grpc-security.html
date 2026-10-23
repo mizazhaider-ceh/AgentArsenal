@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: grpc-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>grpc-security</h2><div class="meta"><span class="badge gray">api</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing gRPC services on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="api-security-testing.html">api-security-testing</a> <a href="api-versioning.html">api-versioning</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr></tbody></table><p>gRPC services hide behind binary protobuf: harder to see than REST, but the same flaws live inside. This skill covers authorized assessment: enumerating services, reviewing auth, and testing message handling. Test only services you are authorized to assess.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find the gRPC endpoints: ports, gateways, and documentation.</li>
+<li>Enumerate services: reflection first, then protos from the client</li>
+<p>or repo.</p>
+<li>Review authentication: per method, not just at the gateway.</li>
+<li>Test authorization: can a low privilege caller reach admin</li>
+<p>methods.</p>
+<li>Fuzz messages: malformed protobuf, huge fields, and type</li>
+<p>confusion.</p>
+<li>Check metadata handling: tokens and keys in headers.</li>
+<li>Intercept traffic: proxy the HTTP/2 with the right tooling.</li>
+<li>Report per method with the auth verdict.</li>
+</ol>
+<h2>1. Enumeration via reflection</h2>
+<pre><code class="language-bash"># If reflection is enabled, list services (authorized target)
+# grpcurl as tooling:
+# grpcurl -plaintext target.example:50051 list
+# grpcurl -plaintext target.example:50051 list package.Service
+echo &quot;reflection enabled in production = information disclosure; note it&quot;</code></pre>
+<pre><code class="language-bash"># Without reflection: get the protos from the web client, mobile app,
+# or the repo you are authorized to review, then:
+# grpcurl -plaintext -proto service.proto target.example:50051 list</code></pre>
+<h2>2. Auth testing per method</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;gRPC method auth matrix (fill from enumeration, test each).&quot;&quot;&quot;
+methods = [
+    (&quot;UserService/GetUser&quot;, &quot;user&quot;, &quot;pass&quot;),
+    (&quot;UserService/ListUsers&quot;, &quot;user&quot;, &quot;FAIL?&quot;),
+    (&quot;AdminService/Shutdown&quot;, &quot;user&quot;, &quot;must fail&quot;),
+]
+for method, role, want in methods:
+    print(f&quot;[ ] {method} as {role}: expect {want}&quot;)
+print(&quot;test: no token, user token, admin token per method&quot;)
+print(&quot;gateway auth is not enough; check the service too&quot;)</code></pre>
+<pre><code class="language-bash"># Intercept: Burp supports HTTP/2; point the gRPC client at it
+# Look for: tokens in metadata, PII in messages, verbose errors
+# Fuzz: send oversized strings, negative ints, and unknown fields;
+# watch for 500s and panics (unhandled = DoS or info leak)
+echo &quot;malformed protobuf often crashes naive handlers&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The service uses custom auth metadata. Review the interceptor</li>
+<p>code; custom auth is where the bugs are.</p>
+<li>Reflection disabled and no protos available. Then the assessment</li>
+<p>is traffic analysis plus the methods you can guess; note the coverage limit.</p>
+<li>gRPC web in the browser. Test through the browser like a web</li>
+<p>app, with the binary encoding noted.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Auth missing on a sensitive method: prove with a test account</li>
+<p>call, then report as the top finding.</p>
+<li>Panic on malformed input: report the DoS with the exact bytes.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see gRPC attacks as unusual method calls, auth failures per method, and malformed protobuf errors. They defend with per method auth interceptors, schema validation, and reflection disabled in production. The durable practice is treating gRPC like any API: authenticated, authorized, validated, and logged.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-862 (Missing Authorization): per method gaps.</li>
+<li>CWE-20 (Improper Input Validation): message handling.</li>
+<li>gRPC authentication documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

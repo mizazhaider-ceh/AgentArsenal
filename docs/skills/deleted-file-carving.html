@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: deleted-file-carving</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>deleted-file-carving</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when recovering deleted files from unallocated space on a</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="disk-forensics.html">disk-forensics</a></div><div class="deps"><span class="kind">requires:</span> <a href="disk-forensics.html">disk-forensics</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="partition-recovery.html">partition-recovery</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>The Sleuth Kit</td><td>4.12.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Deleted files leave their content in unallocated space until overwritten: carving recovers them by recognizing file headers and footers without any filesystem metadata. This skill covers carving on forensic images: choosing targets, running carvers, and validating the output. Carving is noisy and partial by nature; it answers &quot;what was here&quot; with probabilities, not certainties.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define what file types matter to the investigation.</li>
+<li>Extract unallocated space from the image (or carve the whole image).</li>
+<li>Run the carver with the relevant file types enabled.</li>
+<li>Review carved files: validate headers, check sizes, open samples.</li>
+<li>Correlate carved files with the timeline and the case questions.</li>
+<li>Report carved files with their validation status and caveats.</li>
+</ol>
+<h2>1. Extracting unallocated space</h2>
+<pre><code class="language-bash"># TSK: list unallocated blocks, then extract them
+blkls /analysis/case01_work.img &gt; /tmp/unallocated.dd 2&gt;/dev/null
+ls -la /tmp/unallocated.dd
+
+# Or carve the full image when the filesystem layout is uncertain
+# (slower, but catches files in slack and odd regions)</code></pre>
+<p>Carving unallocated only is faster and cleaner; carving the whole image catches allocated files too (duplicates) but finds things in slack space. Choose based on the case: unallocated first, whole image if the question demands it.</p>
+<h2>2. Running the carver</h2>
+<pre><code class="language-bash"># scalpel-style carving with a focused config (edit to the case&#x27;s file types)
+# /etc/scalpel/scalpel.conf: enable only what you need
+# jpg, png, pdf, docx, zip are the usual suspects
+
+# Example: carve JPEGs and PDFs from unallocated space
+# scalpel -c /tmp/case.conf -o /tmp/carved/ /tmp/unallocated.dd
+
+# Validate every carved file: headers, footers, and openability
+file /tmp/carved/jpg/* 2&gt;/dev/null | head -10
+ls -la /tmp/carved/pdf/ 2&gt;/dev/null | head -10
+
+# Quick triage: sizes and counts per type
+du -sh /tmp/carved/* 2&gt;/dev/null</code></pre>
+<p>A focused config beats the default: enabling every file type multiplies false positives and review time. Carve for the case&#x27;s questions, not for completeness.</p>
+<h2>3. Validation and correlation</h2>
+<pre><code class="language-bash"># Headers lie: verify the content matches the claimed type
+# - Images: try to render thumbnails; broken renders mean partial files
+# - Documents: check they open; carve-adjacent fragments often do not
+# - Archives: test integrity (unzip -t)
+
+# Correlate with the timeline: carved file timestamps are gone,
+# but the unallocated region&#x27;s neighbors and the case timeline bound it
+python3 - &lt;&lt;&#x27;EOF&#x27;
+print(&quot;For each carved file of interest, record:&quot;)
+print(&quot;- carver, config, and source region&quot;)
+print(&quot;- validation result (opens cleanly / partial / corrupt)&quot;)
+print(&quot;- correlation: which case question it answers&quot;)
+print(&quot;- caveat: no original name, path, or timestamps survive carving&quot;)
+EOF</code></pre>
+<p>Report carved files honestly: &quot;a JPEG recovered from unallocated space, partial, shows X&quot; is a solid finding; &quot;the suspect&#x27;s deleted photo&quot; is a claim carving cannot support alone.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The carver finds thousands of files. Triage by type and size first;</li>
+<p>thumbnails and icons are noise in most cases.</p>
+<li>Files are fragmented. Carvers recover the first fragment well and the</li>
+<p>rest poorly; fragmented files carve as corrupt partials.</p>
+<li>The data was securely wiped. Carving finds nothing, which is itself</li>
+<p>an answer: document the wipe evidence (tool artifacts, patterns).</p>
+<li>Encrypted files carve as opaque blobs. Without the key they are</li>
+<p>unvalidatable; note their presence and size.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need one specific deleted file: target its type and the</li>
+<p>unallocated region near its last known location instead of whole-image carving.</p>
+<li>Carving must be court-ready: document the tool, version, config, and</li>
+<p>validation for every file you rely on.</p>
+<li>The volume is huge: carve in parallel per region and merge the</li>
+<p>validated results.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, carving is the recovery tool when deletion was the anti-forensics: attackers who delete logs and tools leave carveable traces. The defender&#x27;s preparation is the imaging discipline that preserves unallocated space (never &quot;clean&quot; a drive under investigation) and the knowledge that deletion is not destruction. Secure wipe tools on a suspect host are themselves suspicious.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-86 (data recovery techniques).</li>
+<li>File signature databases (Gary Kessler&#x27;s file signatures table).</li>
+<li>The Sleuth Kit documentation: blkls, carving concepts.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

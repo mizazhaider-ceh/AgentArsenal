@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: srop-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>srop-attacks</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when learning Sigreturn Oriented Programming in a</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="rop-chains.html">rop-chains</a> <a href="pwn-fundamentals.html">pwn-fundamentals</a> <a href="shellcode-basics.html">shellcode-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>SROP uses the sigreturn syscall to load a whole register context from a forged signal frame: one gadget (the syscall) becomes arbitrary syscall execution. This skill covers the lab technique on binaries you own: how the frame works, forging it, and the classic execve chain. Learning and CTF use; it is a niche but powerful tool.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the prerequisites: a sigreturn gadget (syscall 15) and a</li>
+<p>stack pivot or controlled buffer.</p>
+<li>Learn the frame layout for the architecture (x86_64 sigcontext).</li>
+<li>Forge the frame: set all registers, especially rax=59 (execve),</li>
+<p>rdi=binsh, rsi, rdx.</p>
+<li>Trigger sigreturn with the forged frame on the stack.</li>
+<li>Verify the syscall executes; debug the register state on</li>
+<p>failure.</p>
+<li>Chain: use mprotect via SROP first if you need a writable and</li>
+<p>executable area.</p>
+<li>Keep the payload compact; the frame is large but structured.</li>
+<li>Document the gadget addresses and frame layout.</li>
+</ol>
+<h2>1. Frame forging (x86_64 Linux)</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;SROP frame builder sketch (pwntools style logic, stdlib shown).&quot;&quot;&quot;
+import struct
+
+# x86_64 sigreturn frame: registers laid out as struct sigcontext
+# Key offsets (from kernel uapi): r8..r15, rdi, rsi, rbp, rbx, rdx,
+# rax, rcx, rsp, rip, eflags, ... then fpstate
+# Simplified: build with pwntools SigreturnFrame in practice
+
+def p64(v):
+    return struct.pack(&quot;&lt;Q&quot;, v &amp; 0xFFFFFFFFFFFFFFFF)
+
+# Minimal concept: the frame sets rax=59, rdi-&gt;&quot;/bin/sh&quot;, rip-&gt;syscall
+print(&quot;frame size: ~248 bytes for x86_64&quot;)
+print(&quot;set: rax=59 (execve), rdi=binsh_addr, rsi=0, rdx=0, rip=syscall_gadget&quot;)
+print(&quot;trigger: ret to the sigreturn gadget with rsp pointing at the frame&quot;)</code></pre>
+<pre><code class="language-bash"># Finding the gadget (lab binary):
+# ROPgadget --binary target | grep -i &quot;syscall.*ret&quot;
+# or: objdump -d target | grep -B2 &quot;syscall&quot; | grep ret
+# You need: the ability to call rt_sigreturn (rax=15) with your frame ready
+echo &quot;classic setup: read() your frame onto the stack, then sigreturn&quot;</code></pre>
+<h2>2. Debugging the chain</h2>
+<pre><code class="language-bash"># In gdb on your lab binary:
+# - break at the sigreturn, inspect the stack as a sigcontext
+# - check: does rip point at a syscall gadget, is rax 15 at entry
+# - after sigreturn: verify registers match your forged values
+# Common failure: wrong frame offset (uc_flags / alignment), fix by
+# comparing against a real signal frame captured in the debugger
+echo &quot;capture a real frame once; diff yours against it&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>No sigreturn gadget. SROP does not apply; use classic ROP or</li>
+<p>ret2libc.</p>
+<li>The binary is statically linked vs dynamic. Frame layout is</li>
+<p>kernel defined, so it works either way; gadget availability differs.</p>
+<li>seccomp blocks execve. Then SROP to mprotect plus shellcode, or</li>
+<p>pivot to an allowed exfiltration syscall.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Frame forging by hand is error prone: use pwntools</li>
+<p>SigreturnFrame for real work; the sketch above is for understanding.</p>
+<li>Need more than one syscall: chain SROP frames or follow with a</li>
+<p>small ROP chain after mprotect.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>SROP is a niche exploitation technique seen in CTFs more than in the wild. Defenders rely on the standard mitigations: NX, ASLR, and seccomp, which constrain what SROP can achieve. The technique matters for exploit developers to know and for defenders to understand as part of the ROP family.</p>
+<h2>Key references</h2>
+<ul>
+<li>&quot;Framing Signals&quot; (SROP original paper, Bosman et al.).</li>
+<li>pwntools SigreturnFrame documentation.</li>
+<li>Related skills: rop-chains, pwn-fundamentals.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: dnp3-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>dnp3-basics</h2><div class="meta"><span class="badge gray">ics-scada</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need working knowledge of DNP3 for an OT</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="modbus-security.html">modbus-security</a> <a href="scada-network-seg.html">scada-network-seg</a> <a href="plc-basics.html">plc-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Wireshark</td><td>4.4</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>DNP3 is the workhorse protocol of electric utilities and water systems: masters poll outstations for measurements and send control commands. Like Modbus it was built without security, though Secure Authentication adds a challenge response layer many deployments skip. This skill gives the working knowledge and authorized assessment basics: architecture, addressing, what to look for on the wire, and how to test safely.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Learn the roles: masters (control center) poll outstations (field</li>
+<p>devices) by address.</p>
+<li>Identify DNP3 on the network: TCP port 20000, or serial links via</li>
+<p>converters.</p>
+<li>Capture traffic passively first and decode it in Wireshark.</li>
+<li>Map master to outstation addresses and the poll patterns.</li>
+<li>Check whether Secure Authentication is actually enabled.</li>
+<li>Review what function codes are in use, especially direct operate</li>
+<p>commands.</p>
+<li>Only with authorization, test read functions; treat controls as</li>
+<p>sensitive as Modbus writes.</p>
+<li>Report exposure with the same care as any OT protocol.</li>
+</ol>
+<h2>1. Architecture and addressing</h2>
+<pre><code class="language-text">Master (address e.g. 1) ----polls----&gt; Outstation (address e.g. 10)
+  - integrity poll: read all static points periodically
+  - event poll: read only changed points (fast, efficient)
+  - unsolicited responses: outstation reports urgent events itself
+  - controls: SELECT then OPERATE (two step), or DIRECT OPERATE</code></pre>
+<pre><code class="language-bash"># Find DNP3 over TCP on the authorized segment (gentle scan)
+sudo nmap -sS -p 20000 --open -T2 --max-retries 1 \
+  192.168.10.0/24 -oN /tmp/dnp3_disc.txt
+grep -B2 open /tmp/dnp3_disc.txt | head</code></pre>
+<pre><code class="language-bash"># Capture and decode DNP3 in Wireshark (it has a full dissector)
+sudo tshark -i eth0 -f &quot;tcp port 20000&quot; -w /tmp/dnp3.pcap &amp;
+sleep 120; kill %1
+tshark -r /tmp/dnp3.pcap -T fields \
+  -e dnp3.al.ctrl -e dnp3.hdr.src -e dnp3.hdr.dst -e dnp3.al.func \
+  | sort | uniq -c | sort -rn | head -20</code></pre>
+<h2>2. Secure Authentication check</h2>
+<p>DNP3 Secure Authentication (SAv5/SAv6) adds challenge response between master and outstation. Check whether it is on:</p>
+<pre><code class="language-bash"># In the capture, look for authentication objects (group 120)
+tshark -r /tmp/dnp3.pcap -Y &quot;dnp3.al.obj == 120&quot; | head -10
+# No group 120 traffic during session start = no Secure Authentication</code></pre>
+<pre><code class="language-bash"># Also check the device config with operations: which DNP3 security
+# mode is configured, and are the pre shared keys managed or default
+echo &quot;ask: SAv version, key change procedure, key storage&quot;</code></pre>
+<p>Without Secure Authentication, DNP3 has no integrity or authentication: injected packets are trusted. With it, review key management, since shared keys that never rotate are barely better.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>DNP3 over serial through a terminal server. The TCP endpoint is the</li>
+<p>converter; the serial side needs physical access to tap.</p>
+<li>Encrypted with TLS wrappers or a VPN. Assess the wrapper&#x27;s config;</li>
+<p>the protocol inside is still unauthenticated.</p>
+<li>Unsolicited responses flood during events. Do not mistake an event</li>
+<p>storm for an attack; correlate with operations first.</p>
+<li>Address 65535 is broadcast. Never send broadcast controls.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Need active testing: limit to read function codes (1, 129) during</li>
+<p>the agreed window, and only with operations watching.</p>
+<li>Controls in scope: treat like OT writes, one at a time, announced,</li>
+<p>on lab or maintenance window hardware.</p>
+<li>Serial only access: use a serial tap and decode offline; do not</li>
+<p>insert yourself in the serial path of a live process.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders monitor DNP3 for new masters, function codes outside the baseline (especially controls), and outstation address scans. With Secure Authentication, they watch for authentication failures that signal spoofing attempts. The durable defense is network isolation of the SCADA segment, Secure Authentication with managed keys where the devices support it, and an allowlist IDS that knows the normal poll patterns.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK ICS T0855 (Unauthorized Command Message).</li>
+<li>IEEE 1815: DNP3 protocol standard.</li>
+<li>DNP3 Secure Authentication (IEEE 1815-1): SAv5/SAv6.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

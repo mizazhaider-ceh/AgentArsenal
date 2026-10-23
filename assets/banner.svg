@@ -1,79 +1,256 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" font-family="sans-serif" role="img" aria-label="AgentArsenal banner">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" font-family="sans-serif" role="img" aria-label="AgentArsenal banner: an armored guardian keeping the skill arsenal">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b0e14"/>
-      <stop offset="0.55" stop-color="#10141f"/>
-      <stop offset="1" stop-color="#0a0c12"/>
+      <stop offset="0" stop-color="#070a11"/>
+      <stop offset="0.5" stop-color="#0b101a"/>
+      <stop offset="1" stop-color="#05070c"/>
     </linearGradient>
-    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.28"/>
+    <radialGradient id="vign" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0.55" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.55"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.45"/>
       <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#22d3ee"/>
       <stop offset="1" stop-color="#34d399"/>
     </linearGradient>
-    <linearGradient id="shield" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#164e63"/>
-      <stop offset="1" stop-color="#0c2433"/>
+    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a3549"/>
+      <stop offset="0.55" stop-color="#161d2b"/>
+      <stop offset="1" stop-color="#0c111a"/>
     </linearGradient>
-    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#1f2937" stroke-width="1" opacity="0.55"/>
+    <linearGradient id="steelR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0b0f17"/>
+      <stop offset="0.35" stop-color="#243046"/>
+      <stop offset="0.65" stop-color="#141b28"/>
+      <stop offset="1" stop-color="#0a0e15"/>
+    </linearGradient>
+    <linearGradient id="bladeG" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#67e8f9"/>
+      <stop offset="0.25" stop-color="#9fb4cc"/>
+      <stop offset="0.5" stop-color="#d7e6f5"/>
+      <stop offset="0.75" stop-color="#8ea3bd"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M 44 0 L 0 0 0 44" fill="none" stroke="#1b2433" stroke-width="1" opacity="0.6"/>
     </pattern>
+    <filter id="soft" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="soft2" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <g id="em">
+      <path d="M0 -10 L9 -4.5 V3.5 C9 9 4.5 12.5 0 14.5 C-4.5 12.5 -9 9 -9 3.5 V-4.5 Z"/>
+    </g>
   </defs>
 
+  <!-- backdrop -->
   <rect width="1200" height="400" fill="url(#bg)"/>
   <rect width="1200" height="400" fill="url(#grid)"/>
-  <rect width="1200" height="400" fill="url(#glow)" opacity="0.7"/>
+  <rect width="1200" height="400" fill="url(#vign)"/>
 
-  <!-- decorative orbit rings, right side -->
-  <g fill="none" stroke="#22d3ee" opacity="0.16">
-    <circle cx="1020" cy="200" r="70" stroke-width="2"/>
-    <circle cx="1020" cy="200" r="105" stroke-width="1.5" stroke-dasharray="6 8"/>
-    <circle cx="1020" cy="200" r="140" stroke-width="1"/>
+  <!-- top / bottom accent bars -->
+  <rect width="1200" height="3" fill="url(#accent)"/>
+  <rect y="397" width="1200" height="3" fill="url(#accent)" opacity="0.55"/>
+
+  <!-- ================= left content ================= -->
+  <text x="80" y="104" fill="#22d3ee" font-size="17" font-weight="600" letter-spacing="6">THE ARSENAL KEEPER</text>
+  <text x="78" y="178" font-size="80" font-weight="800" letter-spacing="-2"><tspan fill="#f3f4f6">Agent</tspan><tspan fill="url(#accent)">Arsenal</tspan></text>
+  <text x="82" y="222" fill="#9aa7bd" font-size="17" font-weight="400" letter-spacing="1.5">ONE ARSENAL. EVERY SKILL. QUALITY ENFORCED BY MACHINES.</text>
+  <rect x="82" y="242" width="220" height="4" rx="2" fill="url(#accent)"/>
+
+  <!-- stat pills -->
+  <g>
+    <rect x="80" y="268" width="196" height="48" rx="24" fill="#0d1420" stroke="#22d3ee" stroke-width="1.5"/>
+    <text id="stat-skills" x="178" y="293" fill="#e8fbff" font-size="26" font-weight="800" text-anchor="middle">246</text>
+    <text x="178" y="311" fill="#7d8ea8" font-size="12" font-weight="600" letter-spacing="2" text-anchor="middle">SKILLS</text>
+    <rect x="288" y="268" width="196" height="48" rx="24" fill="#0d1420" stroke="#34d399" stroke-width="1.5"/>
+    <text id="stat-domains" x="386" y="293" fill="#e8fbff" font-size="26" font-weight="800" text-anchor="middle">28</text>
+    <text x="386" y="311" fill="#7d8ea8" font-size="12" font-weight="600" letter-spacing="2" text-anchor="middle">DOMAINS</text>
+    <rect x="496" y="268" width="196" height="48" rx="24" fill="#0d1420" stroke="#3b4a63" stroke-width="1.5"/>
+    <text x="594" y="298" fill="#aeb9cc" font-size="17" font-weight="700" letter-spacing="1" text-anchor="middle">CI VALIDATED</text>
   </g>
-  <g fill="none" stroke="#34d399" opacity="0.14">
-    <circle cx="150" cy="330" r="55" stroke-width="1.5" stroke-dasharray="4 6"/>
-    <circle cx="1085" cy="80" r="30" stroke-width="1.5"/>
+
+  <!-- ================= right side: arsenal wall ================= -->
+  <rect x="840" y="70" width="292" height="306" rx="10" fill="#080b12" opacity="0.88" stroke="#1c2839" stroke-width="1.5"/>
+  <rect x="840" y="70" width="6" height="306" fill="#101724"/>
+  <rect x="1126" y="70" width="6" height="306" fill="#101724"/>
+  <text x="846" y="93" fill="#3b4a63" font-size="9" font-weight="600" letter-spacing="0.5">SKILL VAULT</text>
+  <g>
+    <use href="#em" transform="translate(872 116)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(924 116)" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity="0.7"/>
+    <use href="#em" transform="translate(976 116)" fill="#22d3ee" fill-opacity="0.22" stroke="#67e8f9" stroke-width="1.6" opacity="0.9"/>
+    <use href="#em" transform="translate(1028 116)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(1080 116)" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity="0.7"/>
+    <use href="#em" transform="translate(872 158)" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity="0.7"/>
+    <use href="#em" transform="translate(924 158)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(976 158)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(1028 158)" fill="#22d3ee" fill-opacity="0.22" stroke="#67e8f9" stroke-width="1.6" opacity="0.9"/>
+    <use href="#em" transform="translate(1080 158)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(872 200)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(924 200)" fill="#22d3ee" fill-opacity="0.22" stroke="#67e8f9" stroke-width="1.6" opacity="0.9"/>
+    <use href="#em" transform="translate(976 200)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(1028 200)" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity="0.7"/>
+    <use href="#em" transform="translate(1080 200)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(872 242)" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity="0.7"/>
+    <use href="#em" transform="translate(924 242)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(976 242)" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity="0.7"/>
+    <use href="#em" transform="translate(1028 242)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(1080 242)" fill="#22d3ee" fill-opacity="0.22" stroke="#67e8f9" stroke-width="1.6" opacity="0.9"/>
+    <use href="#em" transform="translate(872 284)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(924 284)" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity="0.7"/>
+    <use href="#em" transform="translate(976 284)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(1028 284)" fill="none" stroke="#2c3c55" stroke-width="1.6" opacity="0.55"/>
+    <use href="#em" transform="translate(1080 284)" fill="none" stroke="#22d3ee" stroke-width="1.6" opacity="0.7"/>
   </g>
-  <!-- small floating nodes -->
-  <g fill="#22d3ee" opacity="0.5">
-    <circle cx="300" cy="90" r="4"/>
-    <circle cx="700" cy="320" r="4"/>
-    <circle cx="950" cy="300" r="4"/>
+
+  <!-- aura behind the guardian -->
+  <ellipse cx="986" cy="220" rx="170" ry="185" fill="url(#halo)"/>
+  <g fill="none" stroke="#22d3ee">
+    <circle cx="986" cy="170" r="120" stroke-width="2" opacity="0.3" stroke-dasharray="3 9"/>
+    <circle cx="986" cy="170" r="150" stroke-width="1.5" opacity="0.18" stroke-dasharray="2 12"/>
+  </g>
+  <polygon points="700,0 860,0 1050,400 890,400" fill="#22d3ee" opacity="0.045"/>
+
+  <!-- ================= the guardian ================= -->
+  <g transform="translate(986 390) scale(1.12) translate(-986 -390)">
+    <!-- cape -->
+    <path d="M 928 150 C 902 215, 888 300, 880 386 L 1092 386 C 1084 300, 1070 215, 1044 150 C 1024 136, 948 136, 928 150 Z"
+          fill="#05080e" opacity="0.97" stroke="#182234" stroke-width="1.5"/>
+    <g fill="none" stroke="#16202f" stroke-width="2.5" opacity="0.9">
+      <path d="M 950 170 C 940 240, 934 310, 932 380"/>
+      <path d="M 1022 170 C 1032 240, 1038 310, 1040 380"/>
+      <path d="M 986 170 C 986 240, 986 310, 986 380"/>
+    </g>
+    <path d="M 928 150 C 902 215, 888 300, 880 386" fill="none" stroke="#22d3ee" stroke-width="2" opacity="0.35"/>
+    <path d="M 1044 150 C 1070 215, 1084 300, 1092 386" fill="none" stroke="#34d399" stroke-width="1.5" opacity="0.22"/>
+
+    <!-- legs -->
+    <g stroke="#0d131d" stroke-width="1.5">
+      <path d="M 946 274 L 978 274 L 974 312 L 942 312 Z" fill="url(#steel)"/>
+      <polygon points="948,312 972,312 966,326 942,326" fill="#1a2333"/>
+      <path d="M 942 326 L 970 326 L 968 366 L 940 366 Z" fill="url(#steel)"/>
+      <path d="M 936 366 L 972 366 L 982 384 L 926 384 Z" fill="#101725"/>
+      <path d="M 994 274 L 1026 274 L 1030 312 L 998 312 Z" fill="url(#steel)"/>
+      <polygon points="1000,312 1024,312 1030,326 1006,326" fill="#1a2333"/>
+      <path d="M 1002 326 L 1030 326 L 1032 366 L 1004 366 Z" fill="url(#steel)"/>
+      <path d="M 1000 366 L 1036 366 L 1046 384 L 990 384 Z" fill="#101725"/>
+    </g>
+    <circle cx="957" cy="319" r="2" fill="#22d3ee" opacity="0.8"/>
+    <circle cx="1015" cy="319" r="2" fill="#22d3ee" opacity="0.5"/>
+    <path d="M 946 274 L 942 312 L 942 326 L 940 366" fill="none" stroke="#67e8f9" stroke-width="2" opacity="0.5"/>
+    <path d="M 936 366 L 926 384" fill="none" stroke="#67e8f9" stroke-width="1.5" opacity="0.6"/>
+    <path d="M 1026 274 L 1030 312 L 1030 326 L 1032 366" fill="none" stroke="#34d399" stroke-width="1.5" opacity="0.25"/>
+
+    <!-- tassets -->
+    <polygon points="946,238 1026,238 1034,274 938,274" fill="url(#steel)" stroke="#0d131d" stroke-width="1.5"/>
+    <g stroke="#0a0d13" stroke-width="2" opacity="0.7">
+      <path d="M 962 240 L 960 272"/><path d="M 978 240 L 978 272"/><path d="M 994 240 L 996 272"/><path d="M 1010 240 L 1012 272"/>
+    </g>
+    <path d="M 946 238 L 938 274" fill="none" stroke="#67e8f9" stroke-width="1.5" opacity="0.4"/>
+
+    <!-- cuirass -->
+    <path d="M 946 160 L 1026 160 C 1034 188, 1034 210, 1026 240 L 946 240 C 938 210, 938 188, 946 160 Z"
+          fill="url(#steelR)" stroke="#0d131d" stroke-width="1.5"/>
+    <path d="M 986 164 L 986 236" stroke="#0a0d13" stroke-width="3"/>
+    <path d="M 990 166 L 990 234" stroke="#3b4a63" stroke-width="1" opacity="0.7"/>
+    <g fill="none" stroke="#0a0d13" stroke-width="2" opacity="0.7">
+      <path d="M 948 218 C 966 226, 1006 226, 1024 218"/>
+      <path d="M 948 232 C 966 240, 1006 240, 1024 232"/>
+    </g>
+    <path d="M 946 160 C 938 188, 938 210, 946 240" fill="none" stroke="#67e8f9" stroke-width="2" opacity="0.55"/>
+    <!-- chest emblem -->
+    <use href="#em" transform="translate(986 192) scale(2.1)" fill="#0b2530" stroke="#22d3ee" stroke-width="1.6" filter="url(#soft)"/>
+    <use href="#em" transform="translate(986 192) scale(2.1)" fill="#0b2530" stroke="#22d3ee" stroke-width="1.6"/>
+    <path d="M 978 192 L 984 198 L 995 186" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- greatsword (planted, hands rest on pommel) -->
+    <path d="M 977 252 L 995 252 L 993 356 L 986 390 L 979 356 Z" fill="#22d3ee" opacity="0.18" filter="url(#soft)"/>
+    <path d="M 977 252 L 995 252 L 993 356 L 986 390 L 979 356 Z" fill="url(#bladeG)" stroke="#0b0e14" stroke-width="1"/>
+    <path d="M 986 262 L 986 352" stroke="#0e7490" stroke-width="3" opacity="0.55"/>
+    <path d="M 977 252 L 979 356" stroke="#e0faff" stroke-width="2"/>
+    <polygon points="936,240 1036,240 1028,254 944,254" fill="url(#steel)" stroke="#0d131d" stroke-width="1.5"/>
+    <circle cx="936" cy="247" r="5" fill="#164e63" stroke="#22d3ee" stroke-width="1.5"/>
+    <circle cx="1036" cy="247" r="5" fill="#164e63" stroke="#22d3ee" stroke-width="1.5"/>
+    <rect x="979" y="214" width="14" height="30" fill="#0a0d13" stroke="#2b3547" stroke-width="1.5"/>
+    <circle cx="986" cy="206" r="11" fill="url(#steel)" stroke="#22d3ee" stroke-width="2"/>
+    <circle cx="986" cy="206" r="4" fill="#22d3ee" filter="url(#soft2)"/>
+
+    <!-- gorget -->
+    <polygon points="960,138 1012,138 1018,162 954,162" fill="#101725" stroke="#0d131d" stroke-width="1.5"/>
+    <path d="M 960 138 L 954 162" fill="none" stroke="#67e8f9" stroke-width="1.5" opacity="0.5"/>
+
+    <!-- arms -->
+    <g stroke="#0d131d" stroke-width="1.5">
+      <path d="M 924 172 L 950 174 L 942 214 L 920 210 Z" fill="url(#steel)"/>
+      <path d="M 920 210 L 944 214 L 950 244 L 926 242 Z" fill="url(#steel)"/>
+      <path d="M 934 240 L 968 244 L 966 268 L 932 264 Z" fill="#1a2333"/>
+      <path d="M 1048 172 L 1022 174 L 1030 214 L 1052 210 Z" fill="url(#steel)"/>
+      <path d="M 1052 210 L 1028 214 L 1022 244 L 1046 242 Z" fill="url(#steel)"/>
+      <path d="M 1038 240 L 1004 244 L 1006 268 L 1040 264 Z" fill="#1a2333"/>
+    </g>
+    <path d="M 924 172 L 920 210 L 926 242" fill="none" stroke="#67e8f9" stroke-width="1.5" opacity="0.4"/>
+    <path d="M 932 264 L 934 244" fill="none" stroke="#67e8f9" stroke-width="1.5" opacity="0.5"/>
+    <path d="M 1040 264 L 1038 244" fill="none" stroke="#34d399" stroke-width="1.5" opacity="0.35"/>
+    <g stroke="#0a0d13" stroke-width="1.5" opacity="0.8">
+      <path d="M 938 248 L 964 252"/><path d="M 937 256 L 963 260"/>
+      <path d="M 1008 252 L 1034 248"/><path d="M 1009 260 L 1035 256"/>
+    </g>
+
+    <!-- pauldrons -->
+    <path d="M 902 172 C 896 138, 912 112, 944 108 C 964 105, 976 118, 973 142 L 969 172 L 914 178 Z"
+          fill="url(#steelR)" stroke="#0d131d" stroke-width="1.5"/>
+    <g fill="none" stroke="#0a0d13" stroke-width="2" opacity="0.7">
+      <path d="M 908 150 C 922 142, 950 140, 966 146"/>
+      <path d="M 910 162 C 924 156, 948 154, 962 160"/>
+    </g>
+    <path d="M 902 172 C 896 138, 912 112, 944 108" fill="none" stroke="#7deffb" stroke-width="2.5" opacity="0.7"/>
+    <path d="M 910 118 C 928 106, 956 104, 972 116 L 968 130 C 952 120, 930 122, 916 132 Z"
+          fill="url(#steel)" stroke="#0d131d" stroke-width="1.5"/>
+    <path d="M 910 118 C 928 106, 956 104, 972 116" fill="none" stroke="#7deffb" stroke-width="2" opacity="0.6"/>
+    <path d="M 1070 172 C 1076 138, 1060 112, 1028 108 C 1008 105, 996 118, 999 142 L 1003 172 L 1058 178 Z"
+          fill="url(#steelR)" stroke="#0d131d" stroke-width="1.5"/>
+    <g fill="none" stroke="#0a0d13" stroke-width="2" opacity="0.7">
+      <path d="M 1064 150 C 1050 142, 1022 140, 1006 146"/>
+      <path d="M 1062 162 C 1048 156, 1024 154, 1010 160"/>
+    </g>
+    <path d="M 1070 172 C 1076 138, 1060 112, 1028 108" fill="none" stroke="#34d399" stroke-width="2" opacity="0.35"/>
+    <path d="M 1062 118 C 1044 106, 1016 104, 1000 116 L 1004 130 C 1020 120, 1042 122, 1056 132 Z"
+          fill="url(#steel)" stroke="#0d131d" stroke-width="1.5"/>
+    <path d="M 1062 118 C 1044 106, 1016 104, 1000 116" fill="none" stroke="#34d399" stroke-width="1.5" opacity="0.3"/>
+
+    <!-- helmet -->
+    <path d="M 950 110 C 950 78, 964 58, 986 58 C 1008 58, 1022 78, 1022 110 L 1022 124 C 1022 134, 1012 140, 1002 140 L 970 140 C 960 140, 950 134, 950 124 Z"
+          fill="url(#steel)" stroke="#0d131d" stroke-width="1.5"/>
+    <path d="M 952 108 C 952 80, 966 61, 984 59" fill="none" stroke="#7deffb" stroke-width="2.5" opacity="0.8"/>
+    <path d="M 1020 108 C 1020 80, 1006 61, 990 59" fill="none" stroke="#34d399" stroke-width="1.5" opacity="0.3"/>
+    <polygon points="956,88 1016,88 1011,101 961,101" fill="#22d3ee" filter="url(#soft)"/>
+    <polygon points="956,88 1016,88 1011,101 961,101" fill="#d8faff" opacity="0.95"/>
+    <path d="M 954 84 L 1018 84" stroke="#0a0d13" stroke-width="3"/>
+    <path d="M 979 58 C 981 40, 991 40, 993 58 Z" fill="#155e75" stroke="#22d3ee" stroke-width="1.5"/>
+    <path d="M 950 110 L 964 110 L 960 134 L 948 134 Z" fill="#0d1420" stroke="#0a0d13" stroke-width="1"/>
+    <path d="M 1022 110 L 1008 110 L 1012 134 L 1024 134 Z" fill="#0d1420" stroke="#0a0d13" stroke-width="1"/>
+    <path d="M 948 110 L 960 134" fill="none" stroke="#67e8f9" stroke-width="1.5" opacity="0.45"/>
+    <rect x="946" y="126" width="80" height="8" fill="#0d1420" stroke="#0a0d13" stroke-width="1"/>
+  </g>
+
+  <!-- ground -->
+  <ellipse cx="986" cy="388" rx="150" ry="14" fill="#000000" opacity="0.65"/>
+  <ellipse cx="986" cy="386" rx="120" ry="9" fill="#22d3ee" opacity="0.2" filter="url(#soft)"/>
+  <path d="M 800 388 L 1172 388" stroke="#1e2a3a" stroke-width="1"/>
+
+  <!-- drifting embers -->
+  <g fill="#22d3ee" opacity="0.6">
+    <circle cx="880" cy="120" r="3"/><circle cx="1108" cy="150" r="2.5"/>
+    <circle cx="852" cy="300" r="2"/><circle cx="1120" cy="320" r="3"/>
+    <circle cx="910" cy="60" r="2"/><circle cx="1050" cy="52" r="2.5"/>
   </g>
   <g fill="#34d399" opacity="0.5">
-    <circle cx="420" cy="330" r="3.5"/>
-    <circle cx="850" cy="100" r="3.5"/>
+    <circle cx="1090" cy="90" r="2"/><circle cx="862" cy="230" r="2.5"/>
   </g>
-
-  <!-- geometric shield emblem -->
-  <g transform="translate(96,118)">
-    <path d="M60 8 L104 28 V70 C104 98 84 116 60 128 C36 116 16 98 16 70 V28 Z"
-          fill="url(#shield)" stroke="url(#accent)" stroke-width="4"/>
-    <path d="M60 30 L86 42 V66 C86 84 74 96 60 104 C46 96 34 84 34 66 V42 Z"
-          fill="none" stroke="#22d3ee" stroke-width="2.5" opacity="0.7"/>
-    <path d="M48 66 L57 75 L74 54" fill="none" stroke="#34d399" stroke-width="6"
-          stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
-
-  <!-- wordmark -->
-  <text x="250" y="196" fill="#f3f4f6" font-size="84" font-weight="800" letter-spacing="-2">Agent</text><text x="498" y="196" fill="url(#accent)" font-size="84" font-weight="800" letter-spacing="-2">Arsenal</text>
-  <text x="252" y="244" fill="#9ca3af" font-size="24" font-weight="400" letter-spacing="1.5">ONE ARSENAL. EVERY SKILL. QUALITY ENFORCED BY MACHINES.</text>
-
-  <!-- accent divider -->
-  <rect x="252" y="266" width="240" height="4" rx="2" fill="url(#accent)"/>
-
-  <!-- stat chips -->
-  <g font-size="18" font-weight="600">
-    <rect x="252" y="292" width="150" height="38" rx="19" fill="#111827" stroke="#374151" stroke-width="1"/>
-    <text x="327" y="317" fill="#d1d5db" text-anchor="middle">127 skills</text>
-    <rect x="414" y="292" width="150" height="38" rx="19" fill="#111827" stroke="#374151" stroke-width="1"/>
-    <text x="489" y="317" fill="#d1d5db" text-anchor="middle">21 domains</text>
-    <rect x="576" y="292" width="170" height="38" rx="19" fill="#111827" stroke="#374151" stroke-width="1"/>
-    <text x="661" y="317" fill="#d1d5db" text-anchor="middle">CI validated</text>
-  </g>
-
-  <!-- thin top border accent -->
-  <rect width="1200" height="3" fill="url(#accent)"/>
 </svg>

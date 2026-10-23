@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: data-minimization</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>data-minimization</h2><div class="meta"><span class="badge gray">privacy</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reducing personal data collection and storage in</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="gdpr-engineering.html">gdpr-engineering</a> <a href="secure-coding.html">secure-coding</a> <a href="privacy-threat-model.html">privacy-threat-model</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>PostgreSQL</td><td>17</td></tr></tbody></table><p>Data minimization means collecting only what the purpose needs, and keeping it only as long as needed. It is the cheapest privacy control there is: data you never collect cannot leak. This skill covers the engineering practice: auditing what you collect, challenging each field, and replacing identifying data with less risky alternatives.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List every personal data field the feature collects, with the</li>
+<p>purpose each serves.</p>
+<li>Challenge each field: what breaks if we do not collect it.</li>
+<li>Drop or make optional everything without a solid answer.</li>
+<li>Replace direct identifiers with pseudonyms where identity is not</li>
+<p>needed.</p>
+<li>Reduce precision: coarse location instead of GPS, birth year</li>
+<p>instead of full date.</p>
+<li>Set the shortest retention the purpose allows, with automatic</li>
+<p>deletion.</p>
+<li>Review logs and analytics for accidental PII collection.</li>
+<li>Re audit on every feature change; minimization rots without</li>
+<p>maintenance.</p>
+</ol>
+<h2>1. Field audit</h2>
+<pre><code class="language-bash"># Dump the fields a form or API actually collects
+curl -s &#x27;https://app.example/api/signup/schema&#x27; | python3 -m json.tool | head -40
+# For each field ask: purpose? basis? who decided? when reviewed?</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Field audit report: flags fields without a documented purpose.&quot;&quot;&quot;
+FIELDS = [
+    (&quot;email&quot;, &quot;account identity&quot;, True),
+    (&quot;phone&quot;, &quot;2FA delivery&quot;, True),
+    (&quot;date_of_birth&quot;, &quot;none documented&quot;, False),
+    (&quot;full_address&quot;, &quot;none documented&quot;, False),
+    (&quot;device_model&quot;, &quot;debugging&quot;, True),
+]
+for name, purpose, ok in FIELDS:
+    status = &quot;KEEP&quot; if ok else &quot;DROP OR JUSTIFY&quot;
+    print(f&quot;{name:15s} purpose: {purpose:20s} -&gt; {status}&quot;)</code></pre>
+<h2>2. Pseudonymization and precision reduction</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Replace direct identifiers with pseudonyms (one way, keyed).&quot;&quot;&quot;
+import hmac, hashlib
+
+PEPPER = b&quot;server-side-secret-from-vault&quot;  # never hardcode in real code
+
+def pseudonym(value: str) -&gt; str:
+    return hmac.new(PEPPER, value.encode(), hashlib.sha256).hexdigest()[:32]
+
+print(pseudonym(&quot;user@example.com&quot;))
+# Store the pseudonym where identity is not needed (analytics, logs)
+# Keep the mapping only where the purpose requires re identification</code></pre>
+<pre><code class="language-bash"># Precision reduction examples in SQL migrations
+# GPS (lat/lon float) -&gt; city level: store geohash prefix only
+# full DOB -&gt; birth year for age gating
+# exact timestamp -&gt; hour bucket for analytics
+echo &quot;each reduction is a migration; plan backfill carefully&quot;</code></pre>
+<pre><code class="language-bash"># Hunt accidental PII in logs: the classic minimization failure
+grep -rhoE &quot;[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}&quot; /var/log/app/ 2&gt;/dev/null | sort -u | head -10
+# Any hit means emails are logged; fix the logging, then purge</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Product insists the data &quot;might be useful later&quot;. Future use is not</li>
+<p>a purpose; collect it when the purpose exists.</p>
+<li>Pseudonymized data plus auxiliary data re identifies people.</li>
+<p>Treat pseudonymous data as personal data, because legally it is.</p>
+<li>Logs need some detail for debugging. Sample, redact, and shorten</li>
+<p>retention instead of logging everything.</p>
+<li>ML features want raw data. Use the minimized features; model</li>
+<p>quality rarely needs the full PII.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A field is legally required (tax, KYC). Document the requirement;</li>
+<p>minimization does not override law.</p>
+<li>Deleting historical data breaks analytics. Aggregate first, then</li>
+<p>delete the raw rows; keep the aggregates.</p>
+<li>The audit finds systemic over collection. Propose a phased</li>
+<p>reduction plan with dates, not a big bang.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Detect minimization drift with schema change reviews (new PII column needs a purpose note), log scanners for PII patterns, and periodic field audits against the registry. The privacy review gate on new features is the human control; the scanners are the safety net. The durable habit is asking &quot;why do we need this&quot; at design time, when saying no is cheap.</p>
+<h2>Key references</h2>
+<ul>
+<li>GDPR Article 5(1)(c): data minimization principle.</li>
+<li>NIST SP 800-122: PII handling guidance.</li>
+<li>Related skills: gdpr-engineering, anonymization-techniques.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-for-bounty</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-for-bounty</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when doing reconnaissance for a bug bounty program to</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><div class="deps"><span class="kind">requires:</span> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-passive.html">recon-passive</a> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Amass</td><td>4.2</td></tr><tr><td>ffuf</td><td>2.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Bounty recon is a coverage game: the widest in-scope asset map wins, because every asset is a chance at a finding. This skill covers the bounty recon workflow: parsing scope precisely, discovering assets fast, prioritizing by bounty potential, and monitoring for new assets over time. It runs continuously, not once; programs change, and new assets are the freshest targets.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Parse the scope: read every line, note wildcards and exclusions.</li>
+<li>Build the initial asset map: subdomains, IPs, web apps, APIs.</li>
+<li>Fingerprint everything: technologies, interesting endpoints.</li>
+<li>Prioritize: new assets, complex apps, and forgotten subdomains first.</li>
+<li>Set up monitoring: alert on new subdomains and changed assets.</li>
+<li>Feed prioritized targets to the testing workflow.</li>
+<li>Re-run on scope updates and on a schedule.</li>
+</ol>
+<h2>1. Scope parsing</h2>
+<pre><code class="language-bash"># Scope checklist per program (fill before any scanning):
+cat &gt; /tmp/bounty_scope.txt &lt;&lt;&#x27;EOF&#x27;
+Program: &lt;name&gt;
+In scope: &lt;domains, wildcards, IPs, apps&gt;
+Out of scope: &lt;explicit exclusions&gt;
+Bounty table: &lt;critical/high/medium/low payouts&gt;
+Rules: &lt;rate limits, forbidden techniques, disclosure terms&gt;
+Notes: &lt;acquisitions, subdomains of subdomains, etc.&gt;
+EOF
+
+# Scope traps to check:
+# - &quot;*.example.com&quot; includes deep subdomains; &quot;example.com&quot; may not
+# - Out-of-scope third parties embedded in scope (mark, do not test)
+# - &quot;Anything not listed is out of scope&quot; versus &quot;in scope&quot; defaults</code></pre>
+<p>Scope misunderstandings get researchers banned: when in doubt, ask the program before testing the gray area. The question is cheap; the ban is not.</p>
+<h2>2. Asset discovery at bounty speed</h2>
+<pre><code class="language-bash"># Subdomains: passive first (fast, quiet), then active on the wildcards
+# Passive: certificate transparency, Amass passive mode
+amass enum -passive -d example.com -o /tmp/subs_passive.txt 2&gt;/dev/null | head -20
+
+# Active brute-force on the in-scope wildcard only
+# (respect the program&#x27;s rate expectations)
+
+# Merge, resolve, and fingerprint
+sort -u /tmp/subs_*.txt &gt; /tmp/subs_all.txt
+wc -l /tmp/subs_all.txt
+
+# Quick web fingerprint per live host (status, title, tech hints)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+print(&quot;For each live host: fetch /, record status/title/headers&quot;)
+print(&quot;Flag: login pages, admin panels, API docs, staging/dev hosts&quot;)
+print(&quot;Staging and dev subdomains are historically the richest targets&quot;)
+EOF</code></pre>
+<p>Prioritize the unusual: the subdomain with the 2015 CMS, the API with no docs, the staging host with debug on. The main app gets everyone&#x27;s attention; the forgotten assets get none, which is why they pay.</p>
+<h2>3. Continuous monitoring</h2>
+<pre><code class="language-bash"># New assets are fresh targets: monitor for them
+# Daily: re-run passive subdomain enumeration, diff against yesterday
+# Alert on: new subdomains, new IPs, changed certificates, new ports
+
+# Simple diff-based monitor
+# comm -13 /tmp/subs_yesterday.txt /tmp/subs_today.txt &gt; /tmp/subs_new.txt
+# Any line in subs_new.txt is a same-day testing target
+
+# Also watch: certificate transparency logs for the scope domains,
+# program scope updates (new in-scope assets announced)</code></pre>
+<p>The researcher who tests a new subdomain on day one beats the researcher who finds it on day thirty. Monitoring is the highest-ROI automation in bounty hunting; build it before you need it.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The scope is huge (wildcard on a tech giant). Narrow by</li>
+<p>fingerprinting: test the interesting 5 percent deeply rather than the 100 percent shallowly.</p>
+<li>The program forbids automated scanning. Respect it absolutely;</li>
+<p>manual recon and passive sources still build a strong map.</p>
+<li>Duplicates are likely on popular targets. That is what</li>
+<p>duplicate-avoidance is for; recon still comes first.</p>
+<li>Rate limits are strict. Slow down, prioritize harder, and let the</li>
+<p>monitoring run quietly in the background.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need the asset map shared with a team: version it, note the</li>
+<p>discovery dates, and mark who is testing what to avoid collisions.</p>
+<li>Scope ambiguity blocks testing: ask the program publicly or</li>
+<p>privately per their preference; document the answer.</p>
+<li>The program ends or the scope shrinks: archive the map; scopes</li>
+<p>often return.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>From the program&#x27;s side, bounty recon looks like broad internet scanning with security-tool fingerprints: it is expected and (within the rules) welcome. Programs detect abuse by the rules: out-of-scope probing, aggressive rates, and disruptive techniques. The defender&#x27;s view of good bounty recon is that it finds the assets the internal team forgot; the asset inventory gap is the real finding.</p>
+<h2>Key references</h2>
+<ul>
+<li>OWASP Testing Guide: information gathering.</li>
+<li>Program policy pages (scope is the contract).</li>
+<li>Amass 4.2 documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: cloud-forensics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>cloud-forensics</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when doing forensics in cloud environments on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="incident-response.html">incident-response</a> <a href="dfir-timeline.html">dfir-timeline</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Cloud forensics trades disk images for API calls: you collect logs, snapshots, and configs instead of pulling drives. This skill covers the method for authorized investigations: which log sources matter, how to acquire evidence without destroying it, and how to build timelines from audit trails. Work within the account you are authorized to investigate and preserve chain of custody.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Scope and preserve: identify the accounts, regions, and resources</li>
+<p>in scope; prevent log deletion and auto scaling from eating evidence.</p>
+<li>Collect control plane logs: CloudTrail, Azure Activity, GCP Audit</li>
+<p>for the window.</p>
+<li>Collect data plane evidence: snapshots of disks, memory where</li>
+<p>possible, and container logs.</p>
+<li>Pull identity evidence: sign in logs, role assumptions, and key</li>
+<p>usage.</p>
+<li>Build the timeline: merge the sources on UTC timestamps.</li>
+<li>Analyze: what the attacker did, in order, with the API calls as</li>
+<p>proof.</p>
+<li>Check for persistence: new users, keys, roles, and scheduled</li>
+<p>jobs.</p>
+<li>Write the report with the evidence inventory.</li>
+</ol>
+<h2>1. AWS evidence collection (authorized account)</h2>
+<pre><code class="language-bash"># CloudTrail: who did what, when (the backbone of cloud forensics)
+aws cloudtrail lookup-events \
+  --start-time 2026-10-20T00:00:00Z --end-time 2026-10-23T00:00:00Z \
+  --max-results 1000 --output json &gt; /tmp/ir_ct.json
+python3 - &lt;&lt; &#x27;PY&#x27;
+import json
+ev = json.load(open(&quot;/tmp/ir_ct.json&quot;))[&quot;Events&quot;]
+print(&quot;events:&quot;, len(ev))
+from collections import Counter
+print(Counter(e[&quot;EventName&quot;] for e in ev).most_common(10))
+PY</code></pre>
+<pre><code class="language-bash"># Disk snapshot without touching the live instance
+aws ec2 create-snapshot --volume-id vol-0abc123 \
+  --description &quot;forensic case 2026-10-23&quot; --output json | head -10
+# Share or copy the snapshot to the forensic account per the plan,
+# then mount read only on an analysis instance</code></pre>
+<pre><code class="language-bash"># GuardDuty and Config as corroborating sources
+aws guardduty list-findings --detector-id $DET --output json | head -c 500
+aws configservice get-compliance-details-by-config-rule \
+  --config-rule-name required-tags 2&gt;/dev/null | head -c 300</code></pre>
+<h2>2. Identity and timeline</h2>
+<pre><code class="language-bash"># Who assumed what: role assumption chains in the window
+python3 - &lt;&lt; &#x27;PY&#x27;
+import json
+ev = json.load(open(&quot;/tmp/ir_ct.json&quot;))[&quot;Events&quot;]
+for e in ev:
+    if e[&quot;EventName&quot;] in (&quot;AssumeRole&quot;, &quot;GetSessionToken&quot;, &quot;CreateAccessKey&quot;):
+        print(e[&quot;EventTime&quot;], e[&quot;EventName&quot;], e.get(&quot;Username&quot;))
+PY</code></pre>
+<pre><code class="language-bash"># Merge into the timeline: convert each source to a common CSV
+# ts,source,actor,action,resource,notes (UTC everywhere)
+echo &quot;ts,source,actor,action,resource&quot; &gt; /tmp/timeline.csv
+python3 /tmp/ir/build_timeline.py &gt;&gt; /tmp/timeline.csv
+sort -t, -k1 /tmp/timeline.csv | head -40</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Logs were disabled or the trail is young. Note the gap; check</li>
+<p>provider level logs (AWS account level) and billing anomalies.</p>
+<li>Ephemeral workloads are gone. Container and function logs may</li>
+<p>remain; future defense is shipping logs off the host in real time.</p>
+<li>Multi account: the attacker pivoted. Collect from every account</li>
+<p>in the organization, not just the first.</p>
+<li>Legal hold vs cost: snapshots and log retention cost money;</li>
+<p>scope with counsel.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Active attacker in the account: revoke keys and sessions first</li>
+<p>per the IR playbook, then continue collection.</p>
+<li>Evidence in another account or provider: expand scope formally;</li>
+<p>do not reach beyond authorization.</p>
+<li>Need the full timeline method: use dfir-timeline for the deep</li>
+<p>analysis pass.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Cloud defenders detect with the same sources used for forensics: CloudTrail alerts on unusual API calls, GuardDuty for known bad patterns, and identity alerts on impossible travel. The forensic readiness that matters: trails on in all regions, logs shipped to an immutable bucket, and snapshots possible without the investigator needing production admin. Most cloud investigations fail on missing logs, not missing tools.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK cloud matrix: technique to log source mapping.</li>
+<li>Provider forensics documentation (AWS, Azure, GCP).</li>
+<li>Related skills: forensics-fundamentals, dfir-timeline.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

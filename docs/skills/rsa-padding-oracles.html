@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: rsa-padding-oracles</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>rsa-padding-oracles</h2><div class="meta"><span class="badge gray">crypto</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a service decrypts RSA ciphertexts and leaks</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="rsa-attacks.html">rsa-attacks</a></div><div class="deps"><span class="kind">requires:</span> <a href="rsa-attacks.html">rsa-attacks</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a> <a href="api-security-testing.html">api-security-testing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>OpenSSL</td><td>3.0</td></tr></tbody></table><p>A padding oracle is a service that tells you whether RSA decryption had valid padding: different errors, different timing, different behavior. That one bit of information, repeated thousands of times, decrypts ciphertexts without the key. This skill covers understanding and testing padding oracles on authorized engagements and in CTFs: recognizing the oracle, understanding the attack shape, and testing safely.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find the RSA decryption endpoint and its error behaviors.</li>
+<li>Test for the oracle: valid versus invalid padding, compare responses.</li>
+<li>Characterize the oracle signal: error text, status code, timing.</li>
+<li>Estimate the query cost (Bleichenbacher needs thousands).</li>
+<li>Run the attack with established tooling if the scope allows.</li>
+<li>Report the oracle with the signal evidence and the impact.</li>
+</ol>
+<h2>1. Identifying the oracle</h2>
+<pre><code class="language-bash"># The oracle test: send a validly-padded ciphertext and a corrupted one,
+# compare EVERYTHING about the responses
+# Valid:   00 02 &lt;random nonzero&gt; 00 &lt;message&gt;
+# Invalid: 00 03 ... or 00 02 with zero bytes in padding
+
+# Compare: HTTP status, body text, response time, and any secondary effects
+for variant in valid invalid; do
+  echo &quot;== $variant&quot;
+  curl -s -X POST &#x27;https://target.example/decrypt&#x27; \
+    -H &#x27;Content-Type: application/json&#x27; \
+    -d &quot;{\&quot;ct\&quot;:\&quot;&lt;${variant}_ciphertext_hex&gt;\&quot;}&quot; \
+    -o /tmp/oracle_$variant.txt -w &#x27;%{http_code} %{time_total}\n&#x27;
+done
+diff /tmp/oracle_valid.txt /tmp/oracle_invalid.txt | head -10</code></pre>
+<p>Any consistent difference is the oracle: distinct error messages are the classic, but status codes, timing, and even log-visible differences count. No difference means no oracle (or a subtler one needing more probes).</p>
+<h2>2. Attack shape and cost</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Bleichenbacher concept: why the oracle decrypts.&quot;&quot;&quot;
+
+# The attack exploits PKCS#1 v1.5 structure: decrypted value must start
+# with 0x00 0x02. The oracle answers &quot;does it start with 0x00 0x02?&quot;
+# for any ciphertext you submit.
+#
+# 1. Blind the target ciphertext: c&#x27; = c * s^e mod n for chosen s
+# 2. Ask the oracle about c&#x27;; keep s values that give valid padding
+# 3. Each valid s narrows the possible plaintext interval
+# 4. Iterate until the interval holds one value: the plaintext
+#
+# Cost: thousands to millions of oracle queries depending on the
+# oracle strength and key size. A fast, stable oracle is required.</code></pre>
+<p>The query count is the feasibility test: a million queries at 10ms each is hours (feasible); at 1s each with rate limiting, it is not. Measure the oracle&#x27;s speed and stability before committing, and get scope approval for the query volume: this attack is loud.</p>
+<h2>3. Safe testing discipline</h2>
+<pre><code class="language-bash"># Rules for oracle testing on authorized targets:
+# - Never run the full attack against production without explicit approval
+# - Prove the oracle exists (the signal difference); the attack&#x27;s
+#   feasibility follows from published query counts
+# - Test the full attack in a lab replica or staging first
+# - Rate-limit yourself: the attack&#x27;s traffic looks like an attack
+#   because it is one; coordinate with the SOC
+
+# The report needs: the oracle signal (evidence), the attack it enables,
+# and the fix. A proven oracle plus the published attack is a complete
+# finding without burning a million production queries.</code></pre>
+<p>Modern TLS removed RSA key exchange largely because of these oracles; finding one in a custom protocol or legacy system is a significant result. The fix is OAEP (or better, hybrid encryption with AEAD), plus uniform error handling that never distinguishes padding failures.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The oracle is timing-based and noisy. Statistical testing over many</li>
+<p>samples can still extract the signal; measure the noise first.</p>
+<li>The service rate-limits decryption. The attack may be infeasible in</li>
+<p>practice; report the oracle with the measured rate limit as the mitigating factor.</p>
+<li>Only one error message exists but timing differs. That IS an oracle;</li>
+<p>test it statistically before dismissing.</p>
+<li>The padding is OAEP. Bleichenbacher does not apply; OAEP has its own</li>
+<p>(much harder) attack surface, usually via implementation flaws.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The oracle is confirmed and the scope allows the full attack: use</li>
+<p>established implementations, run against the lab replica first, then the target with monitoring.</p>
+<li>The full attack is out of scope: the proven oracle plus the attack</li>
+<p>description is the complete finding; do not run what you cannot run.</p>
+<li>The protocol needs redesign: recommend RSA-KEM or hybrid encryption,</li>
+<p>never textbook or PKCS#1 v1.5 for new designs.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, padding oracles show as high-volume decryption requests with manipulated ciphertexts from one source: the query pattern is distinctive. Defenses are OAEP for all RSA encryption, uniform error responses (one error for all decryption failures), rate limiting decryption endpoints, and monitoring for oracle-style query bursts. The strategic fix is moving away from RSA encryption toward elliptic-curve hybrid schemes.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm).</li>
+<li>Bleichenbacher (1998): chosen ciphertext attacks on PKCS#1.</li>
+<li>NIST SP 800-56B (RSA key establishment, padding guidance).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

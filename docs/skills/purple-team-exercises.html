@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: purple-team-exercises</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>purple-team-exercises</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when running purple team exercises that pair offense</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="edr-evasion-detection.html">edr-evasion-detection</a> <a href="siem-detections.html">siem-detections</a> <a href="threat-hunting.html">threat-hunting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Purple teaming puts red and blue at the same table: red runs a technique, blue checks the detection, and together they close the gap the same day. This skill covers running the exercises on systems you are authorized to test: scoping, TTP selection, execution with full telemetry, and converting results into detections.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Scope the exercise: systems, techniques, and the detection stack</li>
+<p>under test, with written authorization.</p>
+<li>Pick TTPs mapped to ATT&amp;CK, prioritized by your threat profile.</li>
+<li>Baseline: does a detection already exist for each TTP.</li>
+<li>Execute red: run each technique with full logging and timestamps.</li>
+<li>Validate blue: check every layer (EDR, SIEM, NDR) for the alert.</li>
+<li>Tune together: write or fix the detection on the spot.</li>
+<li>Retest: run the technique again and confirm the alert fires.</li>
+<li>Report the before and after detection coverage.</li>
+</ol>
+<h2>1. Exercise plan</h2>
+<pre><code class="language-bash"># Plan template (fill per exercise):
+# objective: validate detection of credential dumping (T1003)
+# scope: lab workstation WS-LAB-01, EDR + SIEM
+# red steps: 1. run mimikatz variant 2. run comsvcs dump 3. ntdsutil
+# blue checks: EDR alert? SIEM rule fired? timeline complete?
+# success: alert within 5 min with correct technique ID
+cat &gt; /tmp/purple/plan_t1003.md &lt;&lt; &#x27;MD&#x27;
+# Purple: T1003 OS Credential Dumping
+## Red steps
+## Blue expectations
+## Tuning notes
+## Retest result
+MD</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Coverage tracker: technique, layers, before/after.&quot;&quot;&quot;
+results = [
+    {&quot;ttp&quot;: &quot;T1003.001 LSASS dump&quot;, &quot;edr_before&quot;: &quot;silent&quot;,
+     &quot;siem_before&quot;: &quot;silent&quot;, &quot;after&quot;: &quot;alert in 2m&quot;},
+    {&quot;ttp&quot;: &quot;T1059.001 powershell&quot;, &quot;edr_before&quot;: &quot;alert&quot;,
+     &quot;siem_before&quot;: &quot;silent&quot;, &quot;after&quot;: &quot;both alert&quot;},
+]
+for r in results:
+    print(f&quot;{r[&#x27;ttp&#x27;]}: EDR was {r[&#x27;edr_before&#x27;]}, SIEM was {r[&#x27;siem_before&#x27;]} -&gt; {r[&#x27;after&#x27;]}&quot;)</code></pre>
+<h2>2. Running the loop</h2>
+<pre><code class="language-bash"># During execution:
+# - red announces each step before running it (no surprises)
+# - blue watches the consoles live and calls out hits and misses
+# - scribe logs: timestamp, technique, observed result per layer
+# After each technique: tune immediately while context is fresh
+# End of day: retest the tuned detections, record the evidence
+echo &quot;the retest is the point; untested tuning is a guess&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Production systems in scope. Limit to safe techniques or use the</li>
+<p>lab; purple teaming should not cause incidents.</p>
+<li>The EDR blocks everything. That is a result; shift to testing</li>
+<p>visibility (would you see it if it ran) via audit mode.</p>
+<li>Blue has no time to tune. Then the exercise produces a backlog;</li>
+<p>prioritize it like any security debt.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Technique evades all layers: this becomes the top detection</li>
+<p>priority; consider the technique&#x27;s likelihood for your threats.</p>
+<li>Exercise reveals systemic blindness: escalate to architecture</li>
+<p>(more telemetry) not just rules.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Purple teaming is how detection matures: it replaces assumed coverage with measured coverage. The output is not the report but the tuned detections and the muscle memory of working together. Run it regularly against your top threats, track coverage over time, and feed the gaps into the detection engineering backlog.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK: technique selection framework.</li>
+<li>Related skills: edr-evasion-detection, detection-as-code.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

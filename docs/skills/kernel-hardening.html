@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: kernel-hardening</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>kernel-hardening</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hardening the Linux kernel&#x27;s runtime parameters</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-hardening.html">linux-hardening</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-hardening.html">linux-hardening</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Kernel runtime parameters shape what the system allows: IP forwarding, core dumps, ASLR strength, and module loading. This skill covers the sysctl hardening baseline: which settings matter, what values to set, and how to make them persist and verified. It is a small file with outsized effect; misconfigured kernel parameters enable entire privesc classes.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Read the current values of the baseline parameters.</li>
+<li>Write the hardened values to a sysctl.d file.</li>
+<li>Apply and verify the running values match.</li>
+<li>Test server functionality after the change.</li>
+<li>Confirm persistence across reboot.</li>
+<li>Document the baseline as the standard.</li>
+</ol>
+<h2>1. The baseline parameters</h2>
+<pre><code class="language-bash"># Read current values first (know before you change)
+sysctl -a 2&gt;/dev/null | grep -E \
+  &#x27;ip_forward|rp_filter|accept_source_route|core_pattern|randomize_va_space|kptr_restrict|dmesg_restrict|perf_event_paranoid|unprivileged_bpf_disabled|kernel.modules_disabled|userns_clone&#x27; | head -20
+
+# Baseline /etc/sysctl.d/99-hardening.conf:
+# net.ipv4.ip_forward = 0                    (unless the box routes)
+# net.ipv4.conf.all.rp_filter = 1
+# net.ipv4.conf.all.accept_source_route = 0
+# net.ipv4.conf.all.accept_redirects = 0
+# net.ipv4.icmp_echo_ignore_broadcasts = 1
+# kernel.randomize_va_space = 2              (full ASLR)
+# kernel.kptr_restrict = 2                   (hide kernel pointers)
+# kernel.dmesg_restrict = 1                  (dmesg needs privilege)
+# kernel.perf_event_paranoid = 2             (perf needs privilege)
+# kernel.unprivileged_bpf_disabled = 2       (no unprivileged BPF)
+# kernel.kexec_load_disabled = 1             (no kexec after boot)
+# fs.suid_dumpable = 0                      (no core dumps of SUID)
+# kernel.core_pattern = |/bin/false          (no core dumps at all, if acceptable)
+# kernel.unprivileged_userns_clone = 0       (where supported; breaks some containers)</code></pre>
+<p>Each setting has a reason: ASLR and pointer hiding raise exploit cost, dmesg and perf restrictions close info leaks, and the network settings kill spoofing and redirection attacks. Comment each line with its reason in the file.</p>
+<h2>2. Apply and verify</h2>
+<pre><code class="language-bash"># Apply the file
+sysctl --system 2&gt;&amp;1 | grep -i error | head -5
+
+# Verify the RUNNING values (the file is intent, the kernel is truth)
+sysctl net.ipv4.ip_forward kernel.randomize_va_space kernel.kptr_restrict kernel.dmesg_restrict
+
+# Functionality test: the server&#x27;s normal operations must still work
+# (pay attention to: containers need userns, monitoring needs dmesg/perf)
+
+# Persistence: the file in sysctl.d survives reboot; verify after one</code></pre>
+<p>Some settings break legitimate workloads: unprivileged user namespaces break rootless containers and some sandboxes; disabling core dumps hinders debugging. Test the workload, then decide per setting with the tradeoff documented, not globally.</p>
+<h2>3. Module and boot hardening</h2>
+<pre><code class="language-bash"># Disable automatic module loading for unneeded protocols
+# /etc/modprobe.d/hardening.conf:
+# install dccp /bin/true
+# install sctp /bin/true
+# install rds /bin/true
+# install tipc /bin/true
+# install cramfs /bin/true
+# install freevxfs /bin/true
+
+# Verify a module cannot load
+modprobe dccp 2&gt;&amp;1 | head -2
+
+# Bootloader: set a grub password so kernel parameters cannot be
+# edited at boot (physical/console access scenario)</code></pre>
+<p>Rare protocols and filesystems are exploit surface with no legitimate use on most servers. Disabling their autoloading is pure win; the modprobe test proves it.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>A setting breaks the application. Revert that one setting,</li>
+<p>document the exception with its risk acceptance, keep the rest.</p>
+<li>The value reverts after reboot. Another sysctl file overrides it;</li>
+<p>check the full <code>sysctl --system</code> order and fix the conflict.</p>
+<li>Containers share the host kernel. Container sysctls are limited;</li>
+<p>the hardening belongs on the host, and the container gets what the runtime allows.</p>
+<li>Compliance mandates specific values. The compliance baseline wins</li>
+<p>ties; document where hardening exceeds it.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The privesc review found kernel info leaks: prioritize kptr_restrict,</li>
+<p>dmesg_restrict, and perf_event_paranoid; verify with the privesc checks afterward.</p>
+<li>Fleet-wide rollout: encode in the image or config management with</li>
+<p>the verification as a scheduled audit.</p>
+<li>A setting needs tuning per role: keep the common baseline plus</li>
+<p>per-role overrides, each documented.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, sysctl drift is a configuration finding: the scheduled audit diffs running values against the baseline, and unexpected changes (including attacker changes like enabling ip_forward for pivoting) alert. Some of these settings ARE the detection: dmesg_restrict and perf restrictions close the info leaks attackers use for recon.</p>
+<h2>Key references</h2>
+<ul>
+<li>CIS Benchmarks: kernel and sysctl sections.</li>
+<li>Linux kernel sysctl documentation.</li>
+<li>NIST SP 800-123 (server security).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

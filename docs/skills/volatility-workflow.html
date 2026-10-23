@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: volatility-workflow</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>volatility-workflow</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when analyzing a memory dump with Volatility 3 on an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="memory-forensics.html">memory-forensics</a></div><div class="deps"><span class="kind">requires:</span> <a href="memory-forensics.html">memory-forensics</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="malware-in-memory.html">malware-in-memory</a> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Volatility</td><td>2.5.2</td></tr></tbody></table><p>Volatility 3 is the standard framework for memory dump analysis: it reconstructs processes, network connections, and kernel structures from raw RAM. This skill covers the core workflow: getting symbols working, running the essential plugin sequence, and reading the output like an examiner. It is the entry point; process-memory-triage and malware-in-memory go deeper on their specialties.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Verify the dump&#x27;s integrity (hash) and identify the OS.</li>
+<li>Set up symbols for the exact OS build.</li>
+<li>Run the core plugin sequence: processes, network, modules.</li>
+<li>Review output for anomalies: hidden processes, odd connections.</li>
+<li>Dump suspicious processes and drivers for deeper analysis.</li>
+<li>Correlate findings with the disk timeline.</li>
+<li>Document every plugin run with its output file.</li>
+</ol>
+<h2>1. Setup and OS identification</h2>
+<pre><code class="language-bash"># Verify the dump first
+sha256sum /evidence/memdump.raw
+ls -la /evidence/memdump.raw
+
+# Volatility 3: identify the OS and get the profile hint
+python3 /opt/volatility3/vol.py -f /evidence/memdump.raw \
+  windows.info.Info 2&gt;&amp;1 | head -20
+# Note the kernel version and build; symbols must match
+
+# Symbol setup: Volatility 3 downloads PDB symbols automatically when
+# online; for offline work, pre-stage the symbol pack for the build
+python3 /opt/volatility3/vol.py -f /evidence/memdump.raw \
+  windows.info.Info 2&gt;&amp;1 | grep -i &#x27;kernel base&#x27;</code></pre>
+<p>Wrong symbols produce garbage or crashes: the single most common Volatility failure is a symbol mismatch. Confirm the build matches before trusting any output.</p>
+<h2>2. Core plugin sequence</h2>
+<pre><code class="language-bash">V=&quot;python3 /opt/volatility3/vol.py -f /evidence/memdump.raw&quot;
+
+# Processes: the who of the memory image
+$V windows.pslist.PsList --output-file /tmp/pslist.txt
+$V windows.pstree.PsTree --output-file /tmp/pstree.txt
+
+# Network: connections at capture time
+$V windows.netstat.NetStat --output-file /tmp/netstat.txt
+
+# Loaded modules and drivers
+$V windows.modules.Modules --output-file /tmp/modules.txt
+$V windows.driverscan.DriverScan --output-file /tmp/drivers.txt
+
+# Review for anomalies: processes with no parent, odd names, strange paths
+grep -i -E &#x27;tmp|temp|appdata|programdata&#x27; /tmp/pslist.txt | head -10
+grep -E &#x27;ESTABLISHED&#x27; /tmp/netstat.txt | grep -v -E &#x27;127.0.0.1&#x27; | head -10</code></pre>
+<p>Run the sequence the same way every time; consistency makes anomalies visible and the work reproducible. Save every output file with the case name.</p>
+<h2>3. Dumping artifacts for deeper work</h2>
+<pre><code class="language-bash">V=&quot;python3 /opt/volatility3/vol.py -f /evidence/memdump.raw&quot;
+
+# Dump a suspicious process&#x27;s memory for strings and analysis
+$V windows.memmap.Memmap --pid 1234 --dump --output-dir /tmp/pid1234/
+
+# Dump the executable image of a process
+$V windows.dumpfiles.DumpFiles --pid 1234 --output-dir /tmp/dumpfiles/
+
+# Extract the process&#x27;s command line and environment
+$V windows.cmdline.CmdLine --pid 1234
+
+# Registry hives from memory (when disk hives are unavailable)
+$V windows.registry.hivelist.HiveList</code></pre>
+<p>Dumped process memory goes to strings analysis, YARA scanning, and the malware workflow. The memory image stays pristine; all deeper work happens on the dumps.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Symbols fail to load offline. Pre-stage the symbol JSON for the exact</li>
+<p>build, or run the symbol download on a connected box and copy the cache.</p>
+<li>The dump is from a VM snapshot with extra metadata. Convert or strip</li>
+<p>the snapshot wrapper to a raw dump first.</p>
+<li>Plugins crash on a corrupt region. Note the failing plugin and</li>
+<p>continue with the rest; partial memory analysis still has value.</p>
+<li>The OS is unsupported or too new. Check Volatility&#x27;s supported list;</li>
+<p>bleeding-edge builds need the development branch or another tool.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need hidden process detection: run the psscan versus pslist</li>
+<p>comparison (unlinked processes show in the scan but not the list).</p>
+<li>Malware is suspected: hand the dumped processes to malware-in-memory</li>
+<p>with the plugin outputs attached.</p>
+<li>The memory answers are needed fast: run the triage sequence in</li>
+<p>process-memory-triage instead of the full workflow.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, memory forensics is the tool of last resort when disk and logs are clean: fileless malware lives only here. The defender&#x27;s investment is the ability to capture memory safely (and legally) from production hosts, plus the Volatility skills to read it. Regular memory triage of critical servers builds the baseline that makes anomalies visible.</p>
+<h2>Key references</h2>
+<ul>
+<li>Volatility 3 2.5.2 documentation: plugin reference.</li>
+<li>&quot;The Art of Memory Forensics&quot; (methodology reference).</li>
+<li>NIST SP 800-86 (memory analysis guidance).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

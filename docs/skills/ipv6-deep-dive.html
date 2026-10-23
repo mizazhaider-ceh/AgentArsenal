@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ipv6-deep-dive</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ipv6-deep-dive</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing IPv6 on an authorized network</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ipv6-attacks.html">ipv6-attacks</a> <a href="dhcp-attacks.html">dhcp-attacks</a> <a href="firewall-evasion.html">firewall-evasion</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>nmap</td><td>7.98</td></tr><tr><td>Wireshark</td><td>4.4</td></tr></tbody></table><p>IPv6 is on by default on most systems, even in &quot;IPv4 only&quot; networks, and it brings its own attack surface: rogue router advertisements, extension header tricks, and firewalls that forgot the v6 rules. This skill goes deeper than ipv6-attacks: full discovery, RA based MITM, extension header testing, and dual stack parity review. Lab or authorized networks only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Discover IPv6: which hosts have link local and global addresses,</li>
+<p>even unadvertised.</p>
+<li>Capture router advertisements and list the real routers.</li>
+<li>Test rogue RA: can you become the default router on the segment</li>
+<p>(lab/authorized).</p>
+<li>Review extension headers: which ones the firewall handles.</li>
+<li>Check dual stack parity: every v4 control must exist in v6.</li>
+<li>Test address scanning resistance claims: don&#x27;t assume unscanable.</li>
+<li>Review transition mechanisms: tunnels that bypass the firewall.</li>
+<li>Report the v6 exposure with the same rigor as v4.</li>
+</ol>
+<h2>1. Discovery and rogue RA (lab)</h2>
+<pre><code class="language-bash"># Discover IPv6 hosts on the segment (authorized)
+sudo nmap -6 -sS -T4 --max-retries 1 fe80::/10 -oN /tmp/v6_disc.txt 2&gt;/dev/null | head -20
+# Or listen passively: neighbor discovery reveals everyone
+sudo tshark -i eth0 -Y &quot;icmpv6&quot; -a duration:60 | grep -i &quot;neighbor solicitation&quot; | head -10</code></pre>
+<pre><code class="language-bash"># Capture the legitimate router advertisements
+sudo tshark -i eth0 -Y &quot;icmpv6.type==134&quot; -a duration:60 -T fields \
+  -e ipv6.src -e icmpv6.nd.ra.router_lifetime | head -10</code></pre>
+<pre><code class="language-bash"># Lab: rogue RA with radvd (authorized lab segment only)
+# Announce yourself as router with high priority; clients will use you
+cat &gt; /tmp/radvd_rogue.conf &lt;&lt; &#x27;CONF&#x27;
+interface eth0 {
+  AdvSendAdvert on;
+  AdvDefaultPreference high;
+  prefix 2001:db8:99::/64 { AdvOnLink on; AdvAutonomous on; };
+  route ::/0 { AdvRoutePreference high; };
+};
+CONF
+sudo radvd -C /tmp/radvd_rogue.conf -m logfile -l /tmp/radvd.log
+# Verify on a lab client: ip -6 route | grep default
+# TEAR DOWN after: kill radvd, confirm the real RA returns</code></pre>
+<h2>2. Extension headers and parity</h2>
+<pre><code class="language-bash"># Extension header handling: send a packet with a large header chain
+# (lab target) and see if the firewall still inspects the upper layer
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;test: TCP SYN with destination options + fragmentation headers&quot;)
+print(&quot;check: does the firewall log/block, or does it pass blind?&quot;)
+print(&quot;many firewalls skip deep inspection with long header chains&quot;)
+PY</code></pre>
+<pre><code class="language-bash"># Dual stack parity audit: for every v4 firewall rule, find the v6 twin
+# Common gap: v4 has egress filtering, v6 is wide open
+echo &quot;compare: iptables -L vs ip6tables -L rule by rule&quot;
+sudo iptables -L -n | wc -l; sudo ip6tables -L -n | wc -l</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>RA guard is on. The rogue RA dies at the switch; verify the guard</li>
+<p>config and note the control works.</p>
+<li>The network uses SEND (secure neighbor discovery). Rare; verify</li>
+<p>it is actually deployed, not just claimed.</p>
+<li>Privacy extensions rotate addresses. Track hosts by MAC derived</li>
+<p>interface IDs where stable, or accept rotation.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Rogue RA works: demonstrate traffic interception once in the lab,</li>
+<p>then recommend RA guard plus SEND where feasible.</p>
+<li>Firewall blind to extension headers: report with the exact packet</li>
+<p>that bypassed, and the rule change needed.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see IPv6 attacks as unexpected RAs, new global addresses on clients, and v6 traffic where none should exist. Detect with RA guard, NDP monitoring, and v6 firewall logging equal to v4. The durable fix is parity: manage v6 like v4, with the same firewall rules, monitoring, and hardening, or disable it where it is not needed.</p>
+<h2>Key references</h2>
+<ul>
+<li>RFC 8200 (IPv6) and RFC 4861 (Neighbor Discovery).</li>
+<li>CWE-923 (Improper Restriction of Communication Channel).</li>
+<li>IPv6 security guidance (NIST, vendor docs).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: historian-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>historian-security</h2><div class="meta"><span class="badge gray">ics-scada</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing a process historian on an authorized OT</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="scada-network-seg.html">scada-network-seg</a> <a href="ics-incident-response.html">ics-incident-response</a> <a href="log-forensics.html">log-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>The historian records everything the process does: years of tag values, alarms, and events. It usually sits at the OT to IT boundary, which makes it both a high value target and the most attacked bridge. This skill covers authorized assessment: mapping the historian data flows, testing access controls, and checking the integrity of the data everyone trusts for decisions and forensics.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the historian architecture: collectors in OT, main historian,</li>
+<p>and the replica or interface node facing IT.</p>
+<li>Trace every data flow across the boundary and check its direction.</li>
+<li>Test authentication on historian interfaces: web, API, and database</li>
+<p>ports.</p>
+<li>Check authorization: can a low privilege user read restricted tags</li>
+<p>or acknowledge alarms.</p>
+<li>Assess data integrity: can values be backfilled or modified without</li>
+<p>an audit trail.</p>
+<li>Review the replication path for bypasses around the DMZ design.</li>
+<li>Check backup and retention: are they protected and sufficient for</li>
+<p>incident investigation.</p>
+<li>Report with the exact paths data and users can take.</li>
+</ol>
+<h2>1. Architecture and access review</h2>
+<pre><code class="language-bash"># Identify historian services on the authorized hosts (gentle)
+sudo nmap -sV -p 5450,5457,1433,5432 -T2 --max-retries 1 \
+  192.168.20.10 -oN /tmp/historian_svc.txt
+cat /tmp/historian_svc.txt
+# 5450/5457: common historian ports; 1433/5432: SQL backends</code></pre>
+<pre><code class="language-bash"># Test the web/API interface authentication
+curl -s -o /dev/null -w &quot;%{http_code}\n&quot; \
+  &#x27;https://historian-dmz.example/api/tags&#x27;
+# 200 without credentials = anonymous access to process data
+curl -s -X POST &#x27;https://historian-dmz.example/api/login&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;user&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;admin&quot;}&#x27; | head -c 200
+# Default credentials on historians are depressingly common</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Tag authorization probe: can a low priv user read restricted tags?&quot;&quot;&quot;
+import json, urllib.request
+
+BASE = &quot;https://historian-dmz.example/api&quot;
+TOKEN = &quot;REPLACE_WITH_LOW_PRIV_TOKEN&quot;
+TAGS = [&quot;plant/overview/production_rate&quot;, &quot;plant/safety/esd_status&quot;,
+        &quot;plant/finance/cost_per_unit&quot;]
+
+def get(path):
+    req = urllib.request.Request(BASE + path,
+        headers={&quot;Authorization&quot;: f&quot;Bearer {TOKEN}&quot;})
+    with urllib.request.urlopen(req, timeout=15) as r:
+        return r.status, json.load(r)
+
+for t in TAGS:
+    try:
+        status, data = get(f&quot;/tags/{t}/current&quot;)
+        print(f&quot;{t}: HTTP {status} -&gt; {&#x27;VISIBLE&#x27; if status == 200 else &#x27;blocked&#x27;}&quot;)
+    except Exception as e:  # noqa: BLE001
+        print(f&quot;{t}: error {e}&quot;)</code></pre>
+<h2>2. Data integrity checks</h2>
+<pre><code class="language-bash"># Can values be backfilled or edited? Check the audit trail design
+# Ask operations or test on a lab tag:
+# 1. write a test value with a past timestamp
+# 2. check whether the historian flags it as manual/backfilled
+# 3. check who can delete tag history
+echo &quot;integrity questions: backfill allowed? edits audited? deletes restricted?&quot;</code></pre>
+<pre><code class="language-bash"># Verify replication direction: the DMZ replica should never write to OT
+# Check firewall rules for the replica host: established outbound from
+# OT to DMZ is fine; DMZ initiated inbound to OT is a finding
+sudo iptables -L -n -v | grep -E &quot;192.168.10|192.168.20&quot; | head -20</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The historian is also the alarm manager. Alarm suppression or</li>
+<p>acknowledgment by unauthorized users is a safety relevant finding; handle it with operations, not just IT.</p>
+<li>Tag names reveal process details. Even read only anonymous access</li>
+<p>leaks the plant&#x27;s layout; treat it as information disclosure.</p>
+<li>The database backend has its own credentials. Test those separately;</li>
+<p>the app layer auth may not cover direct DB access.</p>
+<li>Cloud historian sync exists. Review what leaves the site and under</li>
+<p>whose credentials.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Anonymous access confirmed: demonstrate with a non sensitive tag,</li>
+<p>then stop; do not scrape the tag database.</p>
+<li>Write access found: test only a lab tag, announce it, and revert</li>
+<p>immediately.</p>
+<li>Replication bypass suspected: trace the actual packets rather than</li>
+<p>trusting the diagram.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders watch the historian for unusual read patterns (bulk tag exports), logins from unexpected hosts, and backfill or edit operations outside maintenance windows. They protect it with strong authentication on every interface, role based tag authorization, immutable audit trails for edits, and a replication design that cannot be reversed. The historian is often the best forensic source in OT, so its own integrity is worth defending.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-82r3: historian placement and protection.</li>
+<li>IEC 62443-3-3: system security requirements for zones.</li>
+<li>MITRE ATT&amp;CK ICS T0802 (Automated Collection): historian targeting.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

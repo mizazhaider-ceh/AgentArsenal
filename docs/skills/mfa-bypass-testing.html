@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mfa-bypass-testing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mfa-bypass-testing</h2><div class="meta"><span class="badge gray">auth</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing whether multi-factor authentication can be</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="auth-attacks.html">auth-attacks</a></div><div class="deps"><span class="kind">requires:</span> <a href="auth-attacks.html">auth-attacks</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="password-attacks.html">password-attacks</a> <a href="web-xss.html">web-xss</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>curl</td><td>8.5</td></tr></tbody></table><p>Multi-factor authentication is the single best defense against password attacks, which makes its bypasses high-impact findings. This skill covers testing MFA implementations on authorized engagements: the classic logic flaws (skipping the step, tampering with the verification response), code-space attacks, and recovery flow abuse. Test only with accounts the engagement provides, and never lock real users out of their MFA.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enroll MFA on a test account and map the full flow: enrollment,</li>
+<p>challenge, verification, recovery.</p>
+<li>Test step skipping: request authenticated pages directly after the</li>
+<p>password step.</p>
+<li>Test response tampering: modify the verification request and response.</li>
+<li>Test the code space: rate limits, attempt limits, and code lifetime.</li>
+<li>Test recovery flows: backup codes, email fallback, help-desk reset.</li>
+<li>Review push-based MFA for fatigue and number-matching gaps.</li>
+<li>Document each bypass or the controls that stopped you.</li>
+</ol>
+<h2>1. Step skipping and response tampering</h2>
+<pre><code class="language-bash"># After the password step, try the destination directly
+curl -s -c /tmp/mfa1.txt -X POST &#x27;https://target.example/login&#x27; \
+  -d &#x27;username=test&amp;password=Test123!&#x27; -o /dev/null -w &#x27;%{http_code}\n&#x27;
+curl -s -b /tmp/mfa1.txt &#x27;https://target.example/dashboard&#x27; \
+  -o /tmp/dash.html -w &#x27;%{http_code}\n&#x27;
+grep -i -c &#x27;welcome&#x27; /tmp/dash.html  # nonzero means the MFA step was skipped
+
+# Tamper the verification response in Burp: change {&quot;success&quot;:false}
+# to {&quot;success&quot;:true}, or status 401 to 200, and see if the client
+# or server trusts it
+
+# Try omitting the MFA parameter entirely
+curl -s -b /tmp/mfa1.txt -X POST &#x27;https://target.example/mfa/verify&#x27; \
+  -d &#x27;&#x27; -o /dev/null -w &#x27;%{http_code}\n&#x27;</code></pre>
+<p>The most common MFA flaw is trusting the client: the server sets an &quot;mfa_done&quot; cookie or the frontend decides. Every one of these tests checks whether the server enforces the step.</p>
+<h2>2. Code-space attacks</h2>
+<pre><code class="language-bash"># Six-digit TOTP/SMS codes: check attempt limits first with wrong codes
+for i in 1 2 3 4 5 6; do
+  code=$(curl -s -b /tmp/mfa1.txt -X POST &#x27;https://target.example/mfa/verify&#x27; \
+    -d &#x27;code=000000&#x27; -w &#x27;%{http_code}\n&#x27; -o /dev/null)
+  echo &quot;attempt $i -&gt; $code&quot;
+done
+# If attempt 6 still returns 200/302 without a lockout, the code space
+# is brute-forceable: 1M codes at even 10/sec is ~28 hours, often less
+# with no rate limit
+
+# Check code lifetime and reuse: submit a valid code twice
+# A code that works twice has no single-use enforcement</code></pre>
+<p>Short codes without strict attempt limits are the classic bypass. Also test whether the code is bound to the session: a code issued for user A that verifies user B&#x27;s challenge is a logic flaw.</p>
+<h2>3. Recovery and enrollment flows</h2>
+<pre><code class="language-bash"># Backup codes: are they single use? guessable? shown once?
+# Request new backup codes twice and compare: identical sets mean
+# they are not rotated
+
+# Email fallback: does &quot;send code by email&quot; downgrade MFA to
+# &quot;access to email&quot;, and is that downgrade logged and notified?
+
+# Enrollment: can an attacker with the password enroll their own
+# second factor? (Test on a fresh test account.)
+curl -s -b /tmp/fresh.txt &#x27;https://target.example/mfa/enroll&#x27; \
+  | grep -i -o &#x27;qr[^&lt;]*\|secret[^&lt;]*&#x27; | head -3</code></pre>
+<p>Recovery flows are where MFA dies in practice: a help-desk reset with weak identity proofing, or an email fallback with no notification, undoes the whole second factor. Test the recovery with the same rigor as the primary flow.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Push MFA with number matching resists fatigue. Verify the matching is</li>
+<p>actually enforced; some implementations show the number but accept any approval.</p>
+<li>The app allows &quot;remember this device&quot; for 30 days. Review how the</li>
+<p>device token is stored and whether stealing it skips MFA (it usually does, which makes its security equal to the session&#x27;s).</p>
+<li>Rate limiting is per-IP. The finding stands (the control is weak), but</li>
+<p>note that distributed attacks bypass it; do not run a distributed test without explicit approval.</p>
+<li>Hardware keys (WebAuthn) are in use. Test for downgrade options: does</li>
+<p>the app let the user fall back to SMS or email, and is that fallback as strong as the key.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A bypass works: prove it end to end with the test account, screenshot</li>
+<p>the authenticated session, and report the exact steps; MFA bypasses are typically critical findings.</p>
+<li>No bypass found: document the controls that held (attempt limits,</li>
+<p>single-use codes, enforced server-side state) as positive assurance.</p>
+<li>The scope includes social engineering of help-desk reset: only with</li>
+<p>explicit written approval, and follow the engagement&#x27;s pretext rules.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see MFA attacks as password-step successes followed by MFA-step anomalies: many code attempts, rapid enrollment changes, recovery flow use at odd hours. Defenses are strict attempt limits with lockout, short code lifetimes, single-use codes, server-side MFA state that cannot be skipped, notifications on enrollment and recovery changes, and phishing resistant factors (WebAuthn) for high-value accounts.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1110 (Brute Force).</li>
+<li>MITRE ATT&amp;CK T1556 (Modify Authentication Process).</li>
+<li>CWE-307 (Improper Restriction of Excessive Authentication Attempts).</li>
+<li>CWE-287 (Improper Authentication).</li>
+<li>OWASP Testing Guide: Testing for Weak Authentication.</li>
+<li>OWASP MFA Cheat Sheet.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

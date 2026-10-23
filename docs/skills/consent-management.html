@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: consent-management</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>consent-management</h2><div class="meta"><span class="badge gray">privacy</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when implementing or auditing consent for data</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="gdpr-engineering.html">gdpr-engineering</a> <a href="privacy-threat-model.html">privacy-threat-model</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Consent is only valid if it is freely given, specific, informed, and revocable: a pre ticked banner that ignores &quot;reject&quot; fails all four. This skill covers the engineering of real consent: capturing the choice, storing the record, enforcing it in every processing path, and honoring withdrawal promptly. It applies to cookies, app permissions, and marketing opt ins alike.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List every processing purpose that relies on consent, separately.</li>
+<li>Design the choice: granular per purpose, accept and reject equally</li>
+<p>easy, no dark patterns.</p>
+<li>Store a consent record: who, when, what text version, which</li>
+<p>purposes, and the proof.</p>
+<li>Gate every processing path on the record: no consent, no</li>
+<p>processing, including third party SDKs.</p>
+<li>Make withdrawal as easy as giving: one click, immediate effect.</li>
+<li>Propagate withdrawal to processors and delete or stop the data.</li>
+<li>Re prompt when purposes change; old consent does not cover new</li>
+<p>uses.</p>
+<li>Audit regularly: synthetic users accepting, rejecting, and</li>
+<p>withdrawing.</p>
+</ol>
+<h2>1. Consent record and gating</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Consent record model and request gating (illustrative).&quot;&quot;&quot;
+import datetime
+
+record = {
+    &quot;subject_id&quot;: &quot;user_123&quot;,
+    &quot;purposes&quot;: {&quot;analytics&quot;: True, &quot;marketing&quot;: False, &quot;personalization&quot;: True},
+    &quot;policy_version&quot;: &quot;2026-09&quot;,
+    &quot;captured_at&quot;: datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    &quot;method&quot;: &quot;banner_v3&quot;,
+}
+
+def allowed(record, purpose):
+    return bool(record[&quot;purposes&quot;].get(purpose, False))
+
+# Gate in the request path, not just the UI
+for purpose in [&quot;analytics&quot;, &quot;marketing&quot;]:
+    print(purpose, &quot;-&gt;&quot;, &quot;process&quot; if allowed(record, purpose) else &quot;BLOCK&quot;)</code></pre>
+<pre><code class="language-bash"># Verify the banner actually blocks: reject all, then check network
+# 1. fresh profile, open the site, click &quot;reject all&quot;
+# 2. capture requests for 60 seconds
+# 3. fail if any analytics or ad request fired
+echo &quot;test: tcpdump or devtools, filter the vendor domains, expect silence&quot;</code></pre>
+<h2>2. Withdrawal propagation</h2>
+<pre><code class="language-bash"># Withdrawal must reach every processor, not just your database
+# Checklist per processor: API to delete/suppress, confirmation receipt,
+# documented SLA, and a retry queue for failures
+python3 - &lt;&lt; &#x27;PY&#x27;
+processors = [&quot;email_vendor&quot;, &quot;analytics_vendor&quot;, &quot;ad_platform&quot;]
+for p in processors:
+    print(f&quot;[ ] {p}: suppression API wired, tested, monitored&quot;)
+PY</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Legitimate interest is claimed instead of consent. That is a legal</li>
+<p>call; engineering still needs the per purpose flag either way.</p>
+<li>The app ships with SDKs that phone home on launch. Consent cannot</li>
+<p>be valid if collection starts before the choice; delay SDK init.</p>
+<li>Children or special category data. Higher bar; get legal involved</li>
+<p>before designing the flow.</p>
+<li>Consent records are personal data too. Minimize what the record</li>
+<p>holds and protect it like any PII.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Vendor has no suppression API: escalate to procurement and legal;</li>
+<p>you cannot honor withdrawal without it.</p>
+<li>Dark patterns mandated by growth: document the regulatory risk in</li>
+<p>writing; patterns like roach motel consent are enforcement bait.</p>
+<li>Cross device consent: define the identity resolution carefully or</li>
+<p>keep consent per device.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Detect consent failures with synthetic tests (reject all then sniff), SDK inventories that flag new network calls, and record audits that check coverage. Regulators detect the same way: they click reject and watch the traffic. The durable design treats consent as a distributed systems problem: one record, enforced everywhere, with withdrawal propagated like any other critical state change.</p>
+<h2>Key references</h2>
+<ul>
+<li>GDPR Article 7: conditions for consent.</li>
+<li>EDPB guidance on consent and dark patterns.</li>
+<li>Related skills: gdpr-engineering, dsr-automation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

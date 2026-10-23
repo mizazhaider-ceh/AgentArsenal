@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: automotive-threat-model</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>automotive-threat-model</h2><div class="meta"><span class="badge gray">automotive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when building a threat model for a vehicle or</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="can-bus-security.html">can-bus-security</a> <a href="telematics-security.html">telematics-security</a> <a href="iso21434-basics.html">iso21434-basics</a> <a href="v2x-security.html">v2x-security</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A vehicle threat model turns a big scary car into a prioritized test plan: who attacks, through which interfaces, to cause what harm. This skill gives the method for authorized assessments: profile attackers, map every interface, build attack trees for the top scenarios, and let the model drive where testing time goes.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the target: vehicle, model year, trim, and the systems in</li>
+<p>scope.</p>
+<li>Profile attackers: thief, tuner, researcher, organized crime, and</li>
+<p>their capabilities.</p>
+<li>Map every interface: physical (OBD, USB), wireless (BT, WiFi,</li>
+<p>cellular, key fob, TPMS), and backend (app, telematics API).</p>
+<li>List assets per interface: what the attacker gains at each entry.</li>
+<li>Build attack trees for the top 3 scenarios (theft, remote</li>
+<p>control, data theft).</p>
+<li>Rate each path by feasibility and impact.</li>
+<li>Prioritize testing: start where feasibility times impact is</li>
+<p>highest.</p>
+<li>Keep the model alive: update it as testing confirms or kills</li>
+<p>paths.</p>
+</ol>
+<h2>1. Interface and asset map</h2>
+<pre><code class="language-bash"># Build the interface inventory (fill per vehicle)
+python3 - &lt;&lt; &#x27;PY&#x27;
+interfaces = {
+    &quot;OBD-II port&quot;: {&quot;access&quot;: &quot;physical&quot;, &quot;assets&quot;: &quot;CAN buses via gateway&quot;},
+    &quot;USB ports&quot;: {&quot;access&quot;: &quot;physical&quot;, &quot;assets&quot;: &quot;infotainment parsing&quot;},
+    &quot;Bluetooth&quot;: {&quot;access&quot;: &quot;adjacent&quot;, &quot;assets&quot;: &quot;phone integration, mic&quot;},
+    &quot;WiFi hotspot&quot;: {&quot;access&quot;: &quot;adjacent&quot;, &quot;assets&quot;: &quot;browser, apps&quot;},
+    &quot;cellular (TCU)&quot;: {&quot;access&quot;: &quot;remote&quot;, &quot;assets&quot;: &quot;remote commands, location&quot;},
+    &quot;key fob (RF)&quot;: {&quot;access&quot;: &quot;adjacent&quot;, &quot;assets&quot;: &quot;unlock, start&quot;},
+    &quot;TPMS (RF)&quot;: {&quot;access&quot;: &quot;adjacent&quot;, &quot;assets&quot;: &quot;ECU input parsing&quot;},
+    &quot;companion app&quot;: {&quot;access&quot;: &quot;remote&quot;, &quot;assets&quot;: &quot;backend APIs&quot;},
+    &quot;V2X radio&quot;: {&quot;access&quot;: &quot;adjacent&quot;, &quot;assets&quot;: &quot;ADAS inputs&quot;},
+}
+for name, d in interfaces.items():
+    print(f&quot;{name} [{d[&#x27;access&#x27;]}]: {d[&#x27;assets&#x27;]}&quot;)
+PY</code></pre>
+<h2>2. Attack trees</h2>
+<pre><code class="language-text">Scenario: steal the vehicle
+  OR: relay the key fob signal (needs: proximity to fob)
+  OR: exploit telematics API to unlock + start (needs: account takeover)
+  OR: break the immobilizer via OBD (needs: physical access + tool)
+  OR: steal the physical key (not a cyber path; note and move on)
+
+Scenario: remote control while driving
+  OR: compromise TCU -&gt; bridge to CAN (needs: TCU RCE)
+  OR: compromise infotainment -&gt; gateway bypass (needs: chain of 2+ bugs)
+  Rate each leaf: what testing would prove or disprove it</code></pre>
+<pre><code class="language-bash"># Prioritize: score = impact (1-5) x feasibility (1-5, higher = easier)
+python3 - &lt;&lt; &#x27;PY&#x27;
+paths = [
+    (&quot;relay key fob&quot;, 4, 4),
+    (&quot;telematics IDOR unlock&quot;, 4, 3),
+    (&quot;TCU RCE to CAN&quot;, 5, 2),
+    (&quot;TPMS parsing to ECU&quot;, 3, 2),
+]
+for name, impact, feas in sorted(paths, key=lambda x: x[1]*x[2], reverse=True):
+    print(f&quot;{impact*feas:2d}  {name}&quot;)
+PY</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The vehicle is electric: add charging interfaces (CCS, PLC</li>
+<p>communication) and high voltage safety to the model.</p>
+<li>Aftermarket devices are installed: each one is a new interface;</li>
+<p>assess them as part of the vehicle.</p>
+<li>The model shows no high scoring paths. That is a result worth</li>
+<p>reporting, with the coverage listed.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Testing disproves the top paths: reprioritize to the next tier</li>
+<p>rather than stopping.</p>
+<li>A path needs capability you do not have (RF lab): note it as</li>
+<p>untested with the reason, or bring in specialists.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>OEM defenders use threat models like this to place their defenses: gateways where the model shows bridging paths, monitoring where it shows remote paths, and hardening where it shows physical paths. The model also drives the SOC&#x27;s detection priorities. A threat model that is not updated after testing is shelfware; the live version is the valuable one.</p>
+<h2>Key references</h2>
+<ul>
+<li>ISO/SAE 21434 Clause 8 (TARA): the formal version of this method.</li>
+<li>MITRE ATT&amp;CK for ICS: adaptable techniques for vehicle networks.</li>
+<li>Related skills: iso21434-basics, can-bus-security.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: infra-osint</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>infra-osint</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when mapping an organization&#x27;s internet infrastructure</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="osint-methodology.html">osint-methodology</a></div><div class="deps"><span class="kind">requires:</span> <a href="osint-methodology.html">osint-methodology</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-passive.html">recon-passive</a> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Amass</td><td>4.2</td></tr><tr><td>theHarvester</td><td>4.6</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Infrastructure OSINT maps what an organization exposes to the internet without touching it: netblocks, domains, certificates, and cloud assets, all from public sources. This skill covers building the external footprint for authorized engagements: the sources, the correlation, and the forgotten assets it finds. It feeds the active recon phases with a target list grounded in public fact.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the organization&#x27;s ASNs, netblocks, and domains.</li>
+<li>Harvest subdomains from certificate transparency and passive DNS.</li>
+<li>Discover cloud assets in the organization&#x27;s name.</li>
+<li>Fingerprint technologies from public banners and records.</li>
+<li>Correlate: which assets belong together, which are forgotten.</li>
+<li>Hand the verified list to active recon with the source notes.</li>
+</ol>
+<h2>1. ASN and netblock discovery</h2>
+<pre><code class="language-bash"># Find the organization&#x27;s ASNs (via whois and BGP public data)
+whois -h whois.radb.net -- &#x27;-i origin AS15169&#x27; 2&gt;/dev/null | head -10
+# Then the announced prefixes per ASN:
+whois -h whois.radb.net -- &#x27;-i origin AS15169&#x27; 2&gt;/dev/null | grep -E &#x27;^route&#x27; | head -20
+
+# Organization name search in whois (the starting point)
+whois &quot;Example Corp&quot; 2&gt;/dev/null | head -20</code></pre>
+<p>Netblocks define the authorized scanning scope as much as the target list: confirm each block belongs to the organization before it goes anywhere near active tools. Acquisitions and divestitures make this stale fast; verify, do not assume.</p>
+<h2>2. Certificate transparency and passive DNS</h2>
+<pre><code class="language-bash"># Certificate transparency: every public cert is logged with its names
+# Query crt.sh for the organization&#x27;s domains
+curl -s &#x27;https://crt.sh/?q=%25.example.com&amp;output=json&#x27; 2&gt;/dev/null \
+  | python3 -c &quot;
+import json,sys
+data = json.load(sys.stdin)
+names = set()
+for e in data:
+    for n in e[&#x27;name_value&#x27;].split(&#x27;\n&#x27;):
+        names.add(n.strip())
+print(&#x27;\n&#x27;.join(sorted(names)[:30]))
+print(&#x27;total:&#x27;, len(names))
+&quot;
+
+# Passive DNS and Amass round out the subdomain list
+amass enum -passive -d example.com -o /tmp/infra_subs.txt 2&gt;/dev/null | head -20</code></pre>
+<p>Certificate transparency is the highest-yield public source for subdomains: it is complete, current, and free. New certificates appear here first, which makes it the monitoring feed for new assets too.</p>
+<h2>3. Cloud and technology footprint</h2>
+<pre><code class="language-bash"># Cloud assets: search public bucket and naming patterns for the org
+# (passive techniques: certificate names, DNS, public indexes)
+# Record: buckets, CDN distributions, SaaS instances in the org&#x27;s name
+
+# Technology fingerprinting from public records:
+# - MX records: the mail provider and its security posture
+dig +short MX example.com
+# - TXT records: SPF, verification tokens naming SaaS products
+dig +short TXT example.com
+# - NS records: the DNS provider (takeover risk if dangling)
+dig +short NS example.com</code></pre>
+<p>Dangling DNS (CNAME to a deleted cloud resource) is the classic infra OSINT finding: it is visible publicly, verifiable passively, and directly exploitable. Check every CNAME&#x27;s target resolvability as part of the footprint review.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The organization uses many brands and subsidiaries. Map each</li>
+<p>separately; shared infrastructure still gets tested once with the right scope.</p>
+<li>Public sources conflict. Prefer the freshest (CT logs over old</li>
+<p>whois); note conflicts rather than picking silently.</p>
+<li>The footprint is enormous. Prioritize by exposure (internet-facing,</li>
+<p>data-bearing) and hand the prioritized list forward.</p>
+<li>Attribution is uncertain (shared hosting, CDNs). Verify ownership</li>
+<p>through multiple sources before scoping decisions.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You find a clearly forgotten, vulnerable asset: report it as the</li>
+<p>priority finding of the recon phase; forgotten assets are where breaches start.</p>
+<li>The footprint suggests a recent acquisition: confirm whether it is</li>
+<p>in scope before active testing; acquisitions are scope gray areas.</p>
+<li>Continuous monitoring needed: the CT and passive DNS checks become</li>
+<p>the scheduled job.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, infrastructure OSINT is the external attack surface management program: the same public sources, monitored continuously, showing what the organization exposes. The defender&#x27;s work is keeping the public footprint minimal and monitored: retire dangling DNS, inventory cloud assets, and watch CT logs for unauthorized certificates. Attackers do this recon for free; defenders should do it first.</p>
+<h2>Key references</h2>
+<ul>
+<li>OSINT framework references (infrastructure sources).</li>
+<li>Certificate Transparency (RFC 6962) documentation.</li>
+<li>MITRE ATT&amp;CK T1590 (Gather Victim Network Information).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

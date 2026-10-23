@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bloodhound-path-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bloodhound-path-analysis</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when BloodHound data is collected and you need to find</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bloodhound-methodology.html">bloodhound-methodology</a></div><div class="deps"><span class="kind">requires:</span> <a href="bloodhound-methodology.html">bloodhound-methodology</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="kerberoasting.html">kerberoasting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>BloodHound</td><td>4.3</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Path analysis is why BloodHound exists: given the graph, find how your compromised user reaches Domain Admins through sessions, group memberships, ACLs, and misconfigurations. This skill covers querying paths on authorized engagements: the built-in queries, custom shortest paths, and the judgment to pick paths that work in practice, not just in the graph.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Mark your owned principals (right-click, mark owned) as you gain</li>
+<p>access.</p>
+<li>Run the shortest-path query to the high-value target.</li>
+<li>Read each edge: understand what the edge means before trusting it.</li>
+<li>Prioritize paths by reliability: sessions and group membership first,</li>
+<p>exotic ACL abuse later.</p>
+<li>Validate each hop manually before executing the chain.</li>
+<li>Update owned marks and re-query as the engagement progresses.</li>
+</ol>
+<h2>1. Core queries</h2>
+<pre><code class="language-cypher">// Shortest path from your user to Domain Admins (BloodHound UI query bar)
+MATCH p=shortestPath((u:User {name:&#x27;TESTUSER@CORP.EXAMPLE&#x27;})-[:MemberOf|AdminTo|HasSession|CanRDP|ExecuteDCOM|AddMember|WriteDacl|Owns*1..]-&gt;(g:Group {name:&#x27;DOMAIN ADMINS@CORP.EXAMPLE&#x27;})) RETURN p
+
+// Built-in queries to run first (UI: Analysis tab):
+// - &quot;Shortest Paths to Domain Admins&quot;
+// - &quot;Find all Domain Admins&quot;
+// - &quot;Users with ForeignSecurityPrincipals&quot;
+// - &quot;Kerberoastable users&quot;</code></pre>
+<p>Start with the pre-built queries; they encode community knowledge about which paths matter. Custom Cypher comes after, for the specific questions the built-ins do not answer.</p>
+<h2>2. Reading edges honestly</h2>
+<pre><code class="language-cypher">// What each common edge really requires:
+// HasSession: the user is logged on; you need code execution on that box
+// AdminTo: local admin on the computer; full control of the box
+// MemberOf (Domain Admins): you ARE a DA; the path is done
+// GenericAll / WriteDacl: ACL abuse; powerful but fiddly, verify by hand
+// CanRDP / ExecuteDCOM: remote execution vectors; need network + creds
+
+// Find unconstrained delegation systems (high value)
+MATCH (c:Computer {unconstraineddelegation:true}) RETURN c.name
+
+// Find computers your user can RDP to
+MATCH (u:User {name:&#x27;TESTUSER@CORP.EXAMPLE&#x27;})-[:CanRDP]-&gt;(c:Computer) RETURN c.name</code></pre>
+<p>An edge in the graph is a hypothesis, not a fact. <code>HasSession</code> from a stale collection, <code>GenericAll</code> on a hardened target, and paths through decommissioned machines all fail in practice. Validate each hop with a real action before chaining the next.</p>
+<h2>3. Path prioritization</h2>
+<pre><code class="language-cypher">// Rank candidate paths: prefer few hops, reliable edges, fresh sessions
+// 1. HasSession on a DA workstation (2 hops: you -&gt; box -&gt; DA session)
+// 2. Nested group membership into Domain Admins (check each nesting)
+// 3. ACL edges you can validate quickly (AddMember, WriteOwner)
+// 4. Kerberoastable service account with DA rights (offline crack)
+
+// List kerberoastable users with their privilege context
+MATCH (u:User {hasspn:true}) RETURN u.name, u.admincount</code></pre>
+<p>Work the list top to bottom. The shortest path is not always the best path: a 2-hop path through a stale session loses to a 4-hop path through live, validated hops every time.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The graph shows paths through machines that are offline. Ping and port</li>
+<p>check each hop; dead machines break chains silently.</p>
+<li>Sessions are stale. Re-collect sessions before trusting a HasSession</li>
+<p>edge that decides the whole plan.</p>
+<li>The path needs a technique you have not validated. Time-box the</li>
+<p>validation per hop; a path with three unvalidated exotic hops is a research project, not a plan.</p>
+<li>Multiple domains confuse the queries. Scope queries per domain and use</li>
+<p>trust-mapping knowledge for the cross-domain hops.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No path to Domain Admins exists in the graph: enumerate harder</li>
+<p>(re-collect with All), or pivot the objective to the valuable data reachable without DA.</p>
+<li>The path works in the lab but not in production: differences in</li>
+<p>patching, EDR, or permissions explain most gaps; diagnose one hop at a time.</p>
+<li>You need the path for the report: export the path visualization and</li>
+<p>annotate each hop with the validation evidence.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders use the same tool: running BloodHound defensively finds the same paths before attackers do, which is the entire point of the defensive use case. Each edge type maps to a hardening action: remove stale sessions (reboot workstations), clean nested groups, fix ACLs, rotate service account passwords. The attacker&#x27;s path analysis is the defender&#x27;s remediation backlog.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1087 (Account Discovery).</li>
+<li>MITRE ATT&amp;CK T1069 (Permission Groups Discovery).</li>
+<li>BloodHound 4.3 documentation: Cypher queries and attack paths.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

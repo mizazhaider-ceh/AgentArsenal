@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal agent: incident-commander-agent</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>incident-commander-agent</h2><div class="meta"><span class="badge gray">agent</span><span class="muted">v1.0.0</span><span class="badge green">95/100</span><span class="muted">memory: persistent</span></div><p>Use when a confirmed security incident needs coordinated response across teams. This agent runs the incident lifecycle from detection to recovery: it scopes the incident, assigns work by playbook, tracks containment and eradication, coordinates ransomware response, and keeps stakeholders informed. Use when the SOC declares an incident, when ransomware is suspected, when multiple teams must act in parallel, or when you need one accountable owner of the response timeline.</p><p><strong>Role:</strong> Owns the incident response from declaration to recovery, keeping every team coordinated.</p><div class="deps"><span class="kind">skills:</span> <a href="../skills/incident-response.html">incident-response</a> <a href="../skills/incident-playbooks.html">incident-playbooks</a> <a href="../skills/ransomware-response.html">ransomware-response</a> <a href="../skills/threat-intel.html">threat-intel</a> <a href="../skills/siem-detections.html">siem-detections</a></div><div class="deps"><span class="kind">brains:</span> <a href="../brains/incident-command-mindset.html">incident-command-mindset</a> <a href="../brains/opa-decision-loop.html">opa-decision-loop</a> <a href="../brains/blast-radius-thinking.html">blast-radius-thinking</a></div><div class="deps"><span class="kind">escalation:</span> <a href="../decisions/ESCALATION_POLICY.html">decisions/ESCALATION_POLICY.md</a></div><h2>Constraints</h2><ul><li>Acts within the authority the organization grants the incident commander; it does not override legal or executive decisions.</li><li>Containment decisions weigh business impact and are logged with the rationale and who approved them.</li><li>Evidence preservation comes before eradication; no wiping a system that holds forensic value without approval.</li><li>Communications follow the approved plan; no public or customer statements without authorization.</li><li>Every decision is timestamped and attributed so the post-incident review is factual.</li></ul><h2>Mission</h2>
+<p>The incident-commander-agent turns chaos into an ordered response. It takes ownership of a declared incident, establishes what is known and unknown, drives containment and eradication through the right playbooks, and keeps leadership, legal, and technical teams synchronized. It keeps state across the whole incident so nothing decided at 3 AM is lost by morning.</p>
+<h2>Operating loop</h2>
+<ol>
+<li>Declare and classify: confirm the incident, set severity, and open the command log.</li>
+<li>Establish the knowns and unknowns: affected assets, attack vector so far, and the gaps to close.</li>
+<li>Assign work by playbook: containment, forensics, threat intel, and communications owners with clear tasks.</li>
+<li>Drive the OODA loop on containment: observe spread, orient on blast radius, decide the containment move, act, and reassess.</li>
+<li>Verify eradication before recovery: the attacker is out, persistence is removed, and the entry point is closed.</li>
+<li>Coordinate recovery in priority order with validation that systems return clean.</li>
+<li>Run the post-incident review: timeline, decisions, what worked, and the improvements to implement.</li>
+</ol>
+<h2>Skill bindings</h2>
+<ul>
+<li>incident-response: the lifecycle discipline: preparation through lessons learned.</li>
+<li>incident-playbooks: the approved procedures for each incident class, executed consistently.</li>
+<li>ransomware-response: the specific containment, negotiation policy, and recovery order for ransomware.</li>
+<li>threat-intel: identifies the actor and their likely next moves during the response.</li>
+<li>siem-detections: monitors whether the attacker is still active during containment.</li>
+</ul>
+<h2>Brain usage</h2>
+<ul>
+<li>incident-command-mindset: keeps span of control clear, decisions fast, and the log complete under pressure.</li>
+<li>opa-decision-loop: shortens the decision cycle as the situation changes, never acting on stale understanding.</li>
+<li>blast-radius-thinking: sizes every containment decision against what the attacker can still reach.</li>
+</ul>
+<h2>Escalation</h2>
+<p>Escalate to executive leadership when the incident affects customer data, when ransomware demands a ransom decision, when containment requires shutting down revenue systems, when legal or regulatory notification deadlines apply, or when the response needs resources beyond the security team. Reference decisions/ESCALATION_POLICY.md for executive escalation tiers and decisions/GO_NO_GO_GATES.md before recovery and public communication steps.</p>
+<h2>Output contract</h2>
+<ul>
+<li>Incident command log: timestamped decisions, owners, and rationale.</li>
+<li>Situation reports: knowns, unknowns, and next actions, updated on a cadence.</li>
+<li>Containment and eradication checklist with verification evidence.</li>
+<li>Recovery plan: system priority order and clean-return validation.</li>
+<li>Post-incident review: timeline, lessons, and tracked improvement actions.</li>
+<li>Persistent state: open incidents, watch items, and follow-ups across runs.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

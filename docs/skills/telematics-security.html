@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: telematics-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>telematics-security</h2><div class="meta"><span class="badge gray">automotive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing a telematics unit or connected car</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="api-security-testing.html">api-security-testing</a> <a href="automotive-ethernet.html">automotive-ethernet</a> <a href="can-bus-security.html">can-bus-security</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>The telematics control unit connects the car to the world: cellular, backend APIs, and remote commands like unlock and start. It is the most exposed computer in the vehicle. This skill covers authorized assessment: mapping the TCU&#x27;s interfaces, reviewing the backend APIs, and tracing remote command flows. Test backends you are authorized to test; never probe someone else&#x27;s fleet.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the TCU: cellular modem, GNSS, CAN or Ethernet to the vehicle,</li>
+<p>and any WiFi or Bluetooth.</p>
+<li>Identify the backend endpoints the TCU talks to from traffic or</li>
+<p>firmware.</p>
+<li>Assess the backend APIs with authorization: authentication,</li>
+<p>authorization, and input handling.</p>
+<li>Trace a remote command end to end: app to backend to TCU to</li>
+<p>vehicle action.</p>
+<li>Check command authorization: can one user command another user&#x27;s</li>
+<p>vehicle.</p>
+<li>Review the TCU&#x27;s own exposure: open ports, debug interfaces, and</li>
+<p>update mechanism.</p>
+<li>Check data handling: location history storage and privacy.</li>
+<li>Report the remote attack paths with their prerequisites.</li>
+</ol>
+<h2>1. Backend API assessment</h2>
+<pre><code class="language-bash"># Enumerate the mobile app&#x27;s backend endpoints (your test account)
+# Capture the app traffic through Burp with the device you own
+# Then probe authorization: the classic IDOR on vehicle IDs
+curl -s &#x27;https://api.telematics.example/vehicles&#x27; \
+  -H &quot;Authorization: Bearer $TOKEN&quot; | python3 -m json.tool | head -30</code></pre>
+<pre><code class="language-bash"># Test horizontal access: request another vehicle&#x27;s status
+# Use IDs from your own test fleet only
+curl -s &#x27;https://api.telematics.example/vehicles/VEH999/status&#x27; \
+  -H &quot;Authorization: Bearer $TOKEN&quot; | head -c 300
+# 200 with another vehicle&#x27;s data = broken object level authorization</code></pre>
+<pre><code class="language-bash"># Remote command flow: trace unlock end to end on your test vehicle
+curl -s -X POST &#x27;https://api.telematics.example/vehicles/VEH001/commands/unlock&#x27; \
+  -H &quot;Authorization: Bearer $TOKEN&quot; \
+  -H &#x27;Content-Type: application/json&#x27; -d &#x27;{}&#x27; | head -c 300
+# Check: is there a second factor, a delay, or owner confirmation</code></pre>
+<h2>2. TCU interface review</h2>
+<pre><code class="language-bash"># On the bench TCU (your hardware): check listening services
+sudo nmap -sS -p- -T3 192.168.8.1 -oN /tmp/tcu_ports.txt 2&gt;/dev/null
+grep open /tmp/tcu_ports.txt | head
+# Check the update mechanism and APN config in the firmware
+strings -n 8 /tmp/tcu_fw.bin | grep -i -E &quot;apn|https://|mqtt&quot; | head -20</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The backend uses certificate pinning. Test with a debug build you</li>
+<p>are authorized to use, or review server side only.</p>
+<li>Commands queue when the car is offline. Test the queue for replay</li>
+<p>and authorization staleness.</p>
+<li>The fleet has mixed TCU hardware generations. Assess each; old</li>
+<p>units often lack the new one&#x27;s protections.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>IDOR confirmed on vehicles: emergency disclosure to the vendor;</li>
+<p>this is remotely exploitable at scale.</p>
+<li>TCU accepts unauthenticated SMS commands: critical finding;</li>
+<p>verify on the bench and report immediately.</p>
+<li>Need the process context: iso21434-basics covers the lifecycle</li>
+<p>expectations for these systems.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Telematics defenders monitor for unusual command patterns, logins from new devices, and TCUs talking to unexpected endpoints. They defend with mutual TLS between TCU and backend, per vehicle credentials, command authorization tied to ownership, and anomaly detection on the command stream. The backend is a high value target, so it gets the full web API security treatment plus automotive specific command controls.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-639 (Authorization Bypass Through User-Controlled Key): vehicle IDOR.</li>
+<li>CWE-306 (Missing Authentication for Critical Function).</li>
+<li>ISO/SAE 21434: cybersecurity for road vehicles.</li>
+<li>OWASP API Security Top 10.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

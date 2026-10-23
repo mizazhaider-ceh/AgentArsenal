@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: s3-enumeration</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>s3-enumeration</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when enumerating S3 buckets for misconfigurations and</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="aws-enumeration.html">aws-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="aws-enumeration.html">aws-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cloud-security-basics.html">cloud-security-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>AWS CLI</td><td>2.15</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>S3 buckets are the classic cloud data exposure: one wrong ACL and the world reads the backups. This skill covers S3 enumeration on authorized engagements: finding buckets, testing their permissions precisely, and sampling contents safely. It is methodical permission testing, not data theft; sample minimally and report the exposure, not the data.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List all buckets visible to the credentials.</li>
+<li>Check each bucket&#x27;s ACL, policy, and public access block.</li>
+<li>Test effective permissions: list, read, write, with and without auth.</li>
+<li>Sample contents minimally to characterize sensitivity.</li>
+<li>Check versioning, encryption, and logging per bucket.</li>
+<li>Report exposures with the permission evidence, not the data.</li>
+</ol>
+<h2>1. Discovery and permission testing</h2>
+<pre><code class="language-bash"># List buckets
+aws s3api list-buckets --query &#x27;Buckets[].Name&#x27; --output text | tr &#x27;\t&#x27; &#x27;\n&#x27;
+
+# Per bucket: ACL, policy, public access block
+for b in bucket1 bucket2; do
+  echo &quot;== $b&quot;
+  aws s3api get-bucket-acl --bucket $b --output text 2&gt;&amp;1 | grep -i -E &#x27;AllUsers|AuthenticatedUsers&#x27; | head -3
+  aws s3api get-public-access-block --bucket $b 2&gt;&amp;1 | head -5
+done
+
+# Effective permission test WITHOUT credentials (the attacker&#x27;s view)
+aws s3 ls s3://target-bucket/ --no-sign-request 2&gt;&amp;1 | head -5
+aws s3api get-bucket-policy --bucket target-bucket --no-sign-request 2&gt;&amp;1 | head -5</code></pre>
+<p>The <code>--no-sign-request</code> test is the ground truth for public exposure: if the anonymous call succeeds, the bucket is public regardless of what the console shows. Test list, get, and put separately; list-public and write-public are different findings with different impacts.</p>
+<h2>2. Policy review</h2>
+<pre><code class="language-bash"># Read the bucket policy for the dangerous patterns
+aws s3api get-bucket-policy --bucket target-bucket --output text 2&gt;/dev/null \
+  | python3 -m json.tool | head -50
+
+# Flag: Principal &quot;*&quot; with Allow (public by policy)
+# Flag: conditions that do not actually restrict (aws:Referer alone is weak)
+# Flag: s3:PutObject allowed publicly (anyone can write: defacement/malware)
+
+# Check for the secure defaults that should be there
+aws s3api get-bucket-encryption --bucket target-bucket 2&gt;&amp;1 | head -5
+aws s3api get-bucket-versioning --bucket target-bucket --output text
+aws s3api get-bucket-logging --bucket target-bucket --output text</code></pre>
+<p>A public-read bucket of website assets is a hardening note; a public-read bucket of database backups is a critical finding. The permission is the mechanism; the content determines the severity. Sample enough to characterize, never enough to exfiltrate.</p>
+<h2>3. Safe content sampling</h2>
+<pre><code class="language-bash"># List top-level prefixes to understand the bucket&#x27;s purpose
+aws s3 ls s3://target-bucket/ --no-sign-request 2&gt;&amp;1 | head -20
+
+# Sample ONE file to characterize (not download the dataset)
+aws s3 cp s3://target-bucket/sample-prefix/file.txt /tmp/sample.txt \
+  --no-sign-request 2&gt;&amp;1 | head -3
+head -c 500 /tmp/sample.txt
+rm /tmp/sample.txt  # do not keep sampled data longer than needed
+
+# NEVER: sync the bucket, download backups, or read customer data fully</code></pre>
+<p>Sampling discipline is what separates assessment from theft: one file to characterize sensitivity, then stop. If the sample shows regulated data, report the exposure class immediately through the agreed channel.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The bucket denies listing but allows gets (blind read). Test known</li>
+<p>key names from the application; unlistable is not unreadable.</p>
+<li>Access is via CloudFront/OAI, not direct. Test the distribution&#x27;s</li>
+<p>behavior; origin misconfigurations still leak through.</p>
+<li>The bucket is in another account. Cross-account policies need the</li>
+<p>same review; note the trust boundary.</p>
+<li>Versioning shows deleted sensitive files. Old versions of deleted</li>
+<p>objects persist; check version listings for ghosts.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Public exposure of sensitive data confirmed: report immediately via</li>
+<p>the critical channel; the client may need to rotate exposed credentials the same day.</p>
+<li>Write access confirmed publicly: this enables malware hosting and</li>
+<p>defacement; report as critical with the put test evidence.</p>
+<li>You need the full content inventory: that is a data-handling</li>
+<p>decision needing explicit approval; default to sampling.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see S3 enumeration as ListBucket and GetBucketPolicy calls from unusual principals, plus anonymous requests in the access logs. Defenses are the public access block at the account level, SCPs denying public policies, config rules alerting on public buckets, and access logging on sensitive buckets. The durable fix is deny-by-default with explicit, reviewed exceptions.</p>
+<h2>Key references</h2>
+<ul>
+<li>CIS AWS Benchmark: S3 sections.</li>
+<li>CWE-200 (Exposure of Sensitive Information to an Unauthorized Actor).</li>
+<li>CWE-732 (Incorrect Permission Assignment for Critical Resource).</li>
+<li>AWS S3 security best practices documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

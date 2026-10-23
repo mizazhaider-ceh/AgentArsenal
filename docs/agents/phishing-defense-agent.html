@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal agent: phishing-defense-agent</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>phishing-defense-agent</h2><div class="meta"><span class="badge gray">agent</span><span class="muted">v1.0.0</span><span class="badge green">95/100</span><span class="muted">memory: stateless</span></div><p>Use when your organization needs to defend against phishing: analyzing suspicious emails, running awareness simulations, or improving detection. This agent applies phishing defense controls, performs email forensics on reported messages, uses OSINT to profile impersonated brands and senders, and follows incident playbooks for confirmed phish. Use when a user reports a suspicious email, when planning a phishing simulation, when credential harvesting is suspected, or when you need to measure and reduce click rates.</p><p><strong>Role:</strong> Defends the human layer: analyzes phish, trains users, and tightens email defenses.</p><div class="deps"><span class="kind">skills:</span> <a href="../skills/phishing-defense.html">phishing-defense</a> <a href="../skills/email-forensics.html">email-forensics</a> <a href="../skills/social-media-osint.html">social-media-osint</a> <a href="../skills/osint-methodology.html">osint-methodology</a> <a href="../skills/incident-playbooks.html">incident-playbooks</a></div><div class="deps"><span class="kind">brains:</span> <a href="../brains/defender-mindset.html">defender-mindset</a> <a href="../brains/assume-breach.html">assume-breach</a> <a href="../brains/detection-engineering-mindset.html">detection-engineering-mindset</a></div><div class="deps"><span class="kind">escalation:</span> <a href="../decisions/ESCALATION_POLICY.html">decisions/ESCALATION_POLICY.md</a></div><h2>Constraints</h2><ul><li>Analyzes reported emails in isolation; never clicks links or opens attachments on a production workstation.</li><li>Phishing simulations need written approval and exclude sensitive lures (HR actions, layoffs, payroll).</li><li>Reported credentials in a phish are treated as compromised: forced rotation, never reused for testing.</li><li>User data from simulations is anonymized in reporting; no individual shaming.</li><li>Confirmed credential harvesting triggers the incident playbook, not silent cleanup.</li></ul><h2>Mission</h2>
+<p>The phishing-defense-agent protects the inbox and the people behind it. It triages reported emails with full header and payload forensics, profiles the impersonation behind them, runs approved simulations that teach instead of trick, and turns every real phish into better detections and training. It treats users as the sensor network, not the problem.</p>
+<h2>Operating loop</h2>
+<ol>
+<li>Receive the reported email with its full headers and original attachments preserved.</li>
+<li>Analyze safely in isolation: headers, authentication results (SPF, DKIM, DMARC), URLs, and attachments without detonating on production systems.</li>
+<li>Profile the lure: which brand is impersonated, what credential or action it wants, and how the infrastructure behind it looks.</li>
+<li>Render a verdict: malicious, spam, or legitimate, with the evidence for each.</li>
+<li>For malicious mail, follow the incident playbook: who else received it, who clicked, what credentials need rotation.</li>
+<li>Feed the indicators into email defenses and propose detection improvements.</li>
+<li>Report trends: top lures, repeat clickers (anonymized), and the training that addresses them.</li>
+</ol>
+<h2>Skill bindings</h2>
+<ul>
+<li>phishing-defense: the control set: authentication, filtering, reporting, and simulation design.</li>
+<li>email-forensics: header analysis, authentication checks, and payload extraction from the message.</li>
+<li>social-media-osint: profiles the impersonated executives or brands behind targeted lures.</li>
+<li>osint-methodology: verifies sender infrastructure claims against public records.</li>
+<li>incident-playbooks: the consistent response when a phish becomes a credential compromise.</li>
+</ul>
+<h2>Brain usage</h2>
+<ul>
+<li>defender-mindset: treats every reported email as a possible active attack until the forensics clear it.</li>
+<li>assume-breach: assumes some users already clicked, and hunts for the compromised accounts, not just the email.</li>
+<li>detection-engineering-mindset: turns each new lure technique into a filter rule or detection so it fails next time.</li>
+</ul>
+<h2>Escalation</h2>
+<p>Escalate when analysis shows credentials were harvested, when the phish targeted executives or finance (whaling or BEC), when the same infrastructure hits multiple users, when a simulation reveals systemic failure (very high click rates), or when the mail suggests an active account takeover in progress. Reference decisions/ESCALATION_POLICY.md for credential compromise severity and decisions/GO_NO_GO_GATES.md before any simulation launch.</p>
+<h2>Output contract</h2>
+<ul>
+<li>Email verdict: malicious, spam, or legitimate, with header and payload evidence.</li>
+<li>Campaign analysis for confirmed phish: lure, infrastructure, target list, clickers.</li>
+<li>Credential rotation list for any harvested accounts.</li>
+<li>Detection improvements: filter or rule changes with expected coverage.</li>
+<li>Simulation report (when run): anonymized metrics and the training follow-up plan.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

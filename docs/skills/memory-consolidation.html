@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: memory-consolidation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>memory-consolidation</h2><div class="meta"><span class="badge gray">memory</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when duplicate or overlapping memory entries pile up,</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="memory-recall.html">memory-recall</a> <a href="memory-hygiene.html">memory-hygiene</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>memory-store</td><td>1.0.0</td></tr><tr><td>SQLite</td><td>3.45.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Consolidation turns a pile of raw observations into a smaller, sharper store. It has two jobs: merging near-duplicate entries so recall stays clean, and promoting repeated episodic observations into semantic facts so durable knowledge survives TTL expiry. This skill covers both, with the dry-run habit that keeps merges safe. Lifecycle context is in memory/LIFECYCLE.md.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Run <code>consolidate --dry-run</code> and read every proposed merge.</li>
+<li>Merge only entries that agree; kick contradictions out to hygiene.</li>
+<li>Run the real <code>consolidate</code> and note how many entries merged.</li>
+<li>Look for repeated episodic observations about one fact.</li>
+<li>Promote those to semantic with a <code>promoted</code> tag and raised</li>
+<p>confidence.</p>
+<li>Verify with <code>stats</code> that the store shrank and per-kind shares look</li>
+<p>healthy.</p>
+</ol>
+<h2>1. Dry run and review</h2>
+<p>Never merge blind. The dry run lists candidates; you decide.</p>
+<pre><code class="language-bash"># See what would merge, change nothing
+memory-store.py consolidate --dry-run</code></pre>
+<p>Read each candidate pair. Merge when both entries say the same thing in different words (&quot;scan finished, 14 hosts up&quot; vs &quot;completed nmap sweep, 14 hosts up&quot;). Do NOT merge when:</p>
+<ul>
+<li>The entries disagree on a fact (different host counts, different</li>
+<p>ports). That is a contradiction, handled per memory-hygiene.</p>
+<li>The entries are about different time windows and the difference</li>
+<p>matters (&quot;14 hosts up in March&quot; vs &quot;11 hosts up in October&quot; is a trend, not a duplicate).</p>
+<li>Either entry is tagged <code>disputed</code>.</li>
+</ul>
+<p>When in doubt, skip the pair. An unmerged duplicate is clutter; a wrongly merged contradiction is corruption.</p>
+<h2>2. Merge for real</h2>
+<pre><code class="language-bash"># Merge the reviewed candidates
+memory-store.py consolidate</code></pre>
+<p>The merge keeps the earliest entry, takes the highest confidence of the pair, and records the absorbed ids in <code>merged_from</code> so the audit trail survives. Typical output:</p>
+<pre><code class="language-bash">merged id 214 into id 209
+merged 1 duplicate entry (37 merge candidate groups checked)</code></pre>
+<p>Follow up with recall on the merged topic to confirm only one entry remains:</p>
+<pre><code class="language-bash">memory-store.py recall --query &quot;nmap sweep 192.168.11&quot; --limit 5</code></pre>
+<h2>3. Promote episodic observations to semantic</h2>
+<p>Promotion is the payoff of consolidation: many events, one fact. When three or more episodic entries from different times describe the same durable truth, write it as semantic.</p>
+<pre><code class="language-bash"># Find the repeated observations
+memory-store.py recall --query &quot;staging API token&quot; --kind episodic --limit 20</code></pre>
+<p>Then record the distilled fact. Cite the evidence in the text so the promotion is auditable:</p>
+<pre><code class="language-bash">memory-store.py store --kind semantic --agent analyst-02 \
+  --text &quot;Observed 5 times between 2026-10-18 and 2026-10-23: the staging API rejects tokens older than 15 minutes.&quot; \
+  --confidence 0.9 --tags &quot;api,staging,auth,promoted&quot;</code></pre>
+<p>Leave the original episodic entries in place; they are the evidence. Set promoted-entry confidence at 0.85 or higher, never below the best observation. Tag every promotion <code>promoted</code> so later audits can tell promoted facts from first-hand ones.</p>
+<p>Good promotion candidates: host roles, API limits, team schedules, recurring scan results, stable network facts. Bad candidates: one-off incidents, opinions, anything still changing weekly.</p>
+<h2>4. Verify the result</h2>
+<pre><code class="language-bash"># Confirm the store shrank and shares look healthy
+memory-store.py stats</code></pre>
+<p>Healthy signs: total entries dropped or stayed flat, episodic share is under 80 percent, and each promotion added exactly one semantic entry. If episodic keeps growing faster than promotion absorbs it, shorten the episodic TTL or consolidate more often (see memory-hygiene size budgets).</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Merge candidates that are similar but about different hosts. Token</li>
+<p>overlap can false-positive on template text (&quot;scan of X finished&quot; vs &quot;scan of Y finished&quot;). The dry run exists for exactly this: read the ids, not just the count.</p>
+<li>Promotion when observations only half agree. &quot;Tokens expire after</li>
+<p>15 minutes&quot; observed 4 times and &quot;after 30 minutes&quot; once: promote the majority reading, keep the outlier entry, and tag the promoted fact <code>disputed</code> until the outlier is explained.</p>
+<li>Consolidation run by two agents at once. The second run finds</li>
+<p>nothing left to merge and exits cleanly. Merges are idempotent; running twice is harmless.</p>
+<li>A merge absorbed the wrong entry. The <code>merged_from</code> field records</li>
+<p>which ids went where, but deleted rows are gone. For high-value stores, back up the SQLite file before consolidating.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Dry run proposes hundreds of merges. The store has a capture</li>
+<p>discipline problem: agents are re-recording instead of recalling. Merge in batches, then fix the habit (recall before store) rather than the data.</p>
+<li>Promotion target has 2 observations, not 3. Wait for a third, or</li>
+<p>record the pattern as episodic with a <code>pattern?</code> tag. Two data points are a coincidence until the third confirms.</p>
+<li>Contradictions block most merges. Stop consolidating and run the</li>
+<p>memory-hygiene contradiction procedure first; merging on top of unresolved contradictions hides them.</p>
+<li>The SQLite file grows between runs with no new entries. Check for</li>
+<p>a runaway agent writing in a loop, then delete the looped entries by id range after review.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Bad consolidation is a quiet integrity attack surface: over-aggressive merging deletes evidence (merging &quot;port open&quot; with &quot;port closed&quot; destroys the contradiction), and fake promotions launder guesses into high-confidence &quot;facts&quot;. Detect misuse by reviewing merge summaries (counts that spike), by spot-checking <code>merged_from</code> trails, and by requiring promoted entries to cite their observation count in the text. A promotion with no cited evidence is rejected on sight.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-922 (Insecure Storage of Sensitive Information): the store file</li>
+<p>itself deserves access controls.</p>
+<li>SQLite documentation: https://sqlite.org/docs.html</li>
+<li>Python sqlite3 module: https://docs.python.org/3/library/sqlite3.html</li>
+<li>memory/MEMORY_SCHEMA.md and memory/LIFECYCLE.md in this repo.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

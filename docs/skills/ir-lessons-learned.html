@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ir-lessons-learned</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ir-lessons-learned</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use after an incident closes to extract improvements from</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-response.html">incident-response</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-response.html">incident-response</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="threat-hunting.html">threat-hunting</a> <a href="incident-playbooks.html">incident-playbooks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Lessons learned turns an incident&#x27;s cost into future capability: the review that finds what to fix, the actions that fix it, and the tracking that proves it happened. This skill covers running blameless post-incident reviews and converting them into real improvements. Skip this phase and the organization pays for the same incident twice.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Schedule the review within two weeks of closure, while memory is</li>
+<p>fresh.</p>
+<li>Reconstruct the full timeline from the incident records.</li>
+<li>Run a blameless review: what happened, what worked, what did not.</li>
+<li>Write action items with owners and deadlines, not suggestions.</li>
+<li>Track actions to completion; report status to leadership.</li>
+<li>Update playbooks, detections, and runbooks from the findings.</li>
+<li>Share the sanitized lessons with the wider team.</li>
+</ol>
+<h2>1. Timeline reconstruction</h2>
+<pre><code class="language-bash"># Build the master timeline from the incident ticket, logs, and notes:
+# - First indicator (when the attacker actually arrived, not when
+#   the alert fired: the dwell time is the key metric)
+# - Detection point and detection method
+# - Each response action with its timestamp
+# - Containment, eradication, recovery milestones
+
+# Metrics to compute:
+# - Dwell time: first activity to detection
+# - Response time: detection to containment
+# - Recovery time: containment to normal operations
+
+python3 - &lt;&lt;&#x27;EOF&#x27;
+print(&quot;Example metrics review:&quot;)
+print(&quot;dwell: 34 days (target: &lt; 7) -&gt; detection gap confirmed&quot;)
+print(&quot;detect-&gt;contain: 6 hours (target: &lt; 4) -&gt; containment tooling slow&quot;)
+print(&quot;Each gap becomes an action item with an owner.&quot;)
+EOF</code></pre>
+<p>The timeline is the review&#x27;s factual base: opinions about the response are cheap, timestamps are not. Reconstruct it before the meeting, not during.</p>
+<h2>2. Blameless review</h2>
+<pre><code class="language-bash"># Review structure (60-90 minutes):
+# 1. Timeline walkthrough (20 min): what happened, in order
+# 2. What worked (15 min): name the good explicitly so it repeats
+# 3. What did not (25 min): systems and processes, never people
+# 4. Action items (20 min): owners, deadlines, in the ticket system
+
+# Ground rules, stated at the start:
+# - No blame: the question is what allowed it, not who allowed it
+# - Rank-and-file speak first; leadership listens
+# - Every claim ties to the timeline</code></pre>
+<p>Blameless is not soft; it is accurate. People hide mistakes when blame is on the table, and hidden mistakes do not get fixed. The review that finds the uncomfortable process failure is the one that worked.</p>
+<h2>3. Action tracking</h2>
+<pre><code class="language-bash"># Action item quality bar (each item needs all four):
+# - Specific: &quot;deploy EDR to the 40 uncovered servers&quot; not &quot;improve coverage&quot;
+# - Owned: one named person accountable
+# - Dated: a deadline, not &quot;ASAP&quot;
+# - Verifiable: how we confirm it is done
+
+# Track in the normal ticket system, not a side spreadsheet;
+# report completion to leadership monthly until all are closed</code></pre>
+<p>Action items die in side documents. Put them where work is tracked, review them where leadership watches, and close them with evidence. An incident review whose actions all stall was theater.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The incident is still politically sensitive. Run the review anyway;</li>
+<p>delay degrades memory faster than sensitivity fades, and the facilitator can handle the room.</p>
+<li>Key people have left. Reconstruct from the records; the timeline and</li>
+<p>ticket carry what memory lost.</p>
+<li>The review finds nothing new. That is a finding about detection</li>
+<p>maturity worth stating; or the review was too shallow, try again with the timeline as the guide.</p>
+<li>Multiple incidents need one review. Do it per incident; patterns</li>
+<p>across incidents get their own analysis afterward.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Leadership wants the report: give them the timeline, the metrics,</li>
+<p>the actions with owners, and the residual risks; keep the technical depth in the appendix.</p>
+<li>Actions need budget: the review&#x27;s cost framing (what the incident</li>
+<p>cost versus what the fix costs) is the business case; write it.</p>
+<li>The lessons apply industry-wide: sanitize and share through the</li>
+<p>sector&#x27;s sharing channels.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Lessons learned is the defender&#x27;s compounding interest: each review makes the next incident cheaper. The artifacts it produces (updated playbooks, new detections, fixed gaps) are the measurable output of the security program. Organizations that skip this phase do not have an incident response capability; they have incident response incidents.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-61 (lessons learned phase).</li>
+<li>SANS Incident Handler&#x27;s Handbook.</li>
+<li>&quot;Blameless postmortems&quot; practice (SRE workbook concepts).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: android-hardening</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>android-hardening</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">92/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hardening Android apps you build or review.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="android-static.html">android-static</a> <a href="android-dynamic.html">android-dynamic</a> <a href="secure-coding.html">secure-coding</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Android hardening raises the cost of attacking the app: it does not make the client trusted, but it slows attackers and stops the easy wins. This skill covers the practical controls for apps you build: network config, storage, tamper detection, and what not to rely on. Every control here assumes a motivated lab attacker can still bypass it; the server stays the real boundary.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Set the network security config: cleartext off, pinning on for</li>
+<p>your domains.</p>
+<li>Store secrets properly: Android Keystore, never SharedPreferences</li>
+<p>or strings.</p>
+<li>Add root and tamper detection appropriate to the risk, wired to</li>
+<p>server side responses.</p>
+<li>Obfuscate and shrink the release build; keep the mapping for</li>
+<p>crash reports.</p>
+<li>Protect the debug surface: no debuggable releases, no verbose</li>
+<p>logs.</p>
+<li>Review IPC: exported components minimized and permission</li>
+<p>protected.</p>
+<li>Test the hardening on a rooted lab device: what actually holds.</li>
+<li>Document the residual risk honestly for the threat model.</li>
+</ol>
+<h2>1. Network and storage</h2>
+<pre><code class="language-xml">&lt;!-- res/xml/network_security_config.xml --&gt;
+&lt;network-security-config&gt;
+  &lt;domain-config cleartextTrafficPermitted=&quot;false&quot;&gt;
+    &lt;domain includeSubdomains=&quot;true&quot;&gt;api.example.com&lt;/domain&gt;
+    &lt;pin-set&gt;
+      &lt;!-- pin your SPKI hashes; include a backup pin --&gt;
+      &lt;pin digest=&quot;SHA-256&quot;&gt;REPLACE_WITH_PIN&lt;/pin&gt;
+    &lt;/pin-set&gt;
+  &lt;/domain-config&gt;
+&lt;/network-security-config&gt;</code></pre>
+<pre><code class="language-bash"># Storage review: find insecure patterns
+grep -rn &quot;SharedPreferences\|MODE_WORLD\|getExternalStorage&quot; \
+  --include=&quot;*.java&quot; --include=&quot;*.kt&quot; app/src/ | head -20
+# Secrets in BuildConfig or strings.xml: move to Keystore or fetch at runtime
+grep -rn &quot;api_key\|secret&quot; app/src/main/res/values/ 2&gt;/dev/null | head -10</code></pre>
+<h2>2. Build and tamper controls</h2>
+<pre><code class="language-bash"># Release build: minify, shrink, obfuscate (R8)
+# android { buildTypes { release { minifyEnabled true; shrinkResources true } } }
+# Verify the release APK is not debuggable:
+aapt dump badging app-release.apk | grep -i debuggable
+# Must be absent; debuggable=true in release is a critical finding</code></pre>
+<pre><code class="language-bash"># Root/tamper detection points (implement, then test bypass in the lab):
+# - SafetyNet/Play Integrity attestation, verified server side
+# - signature check of the running APK
+# - debugger and emulator detection for high risk flows
+echo &quot;each check must change server behavior, not just show a dialog&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Pinning breaks with certificate rotation. Keep a backup pin and</li>
+<p>a tested rotation runbook.</p>
+<li>Obfuscation breaks crash reporting. Upload the mapping file to</li>
+<p>your crash service.</p>
+<li>Hardening annoys legitimate power users (rooted devices). Tier</li>
+<p>the response: warn, limit, or block per the risk.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Assessment found client side secrets: move them server side;</li>
+<p>no obfuscation fixes a hardcoded key.</p>
+<li>Need the attacker&#x27;s view: hand to android-dynamic for the</li>
+<p>bypass testing.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Hardening is detected working when lab bypass takes real effort and automated attacks fail. Server side, monitor for attestation failures, rooted device rates, and API abuse from modified apps. The durable principle: harden the client to raise cost, enforce security on the server to provide it.</p>
+<h2>Key references</h2>
+<ul>
+<li>OWASP MASVS: hardening requirements.</li>
+<li>Android developer security documentation.</li>
+<li>Related skills: android-static, secure-coding.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

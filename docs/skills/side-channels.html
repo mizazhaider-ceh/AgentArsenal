@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: side-channels</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>side-channels</h2><div class="meta"><span class="badge gray">hardware</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing a device for side channel leakage on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a> <a href="glitching-attacks.html">glitching-attacks</a> <a href="hardware-reversing.html">hardware-reversing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Side channel attacks steal secrets without breaking the math: they watch power draw, timing, or electromagnetic emissions while the device computes. This skill covers the concepts and lab method for authorized testing: setting up a measurement, spotting data dependent leakage, and reviewing countermeasures. Full key recovery needs lab equipment (oscilloscope, probes) and is out of scope for a first pass; this skill gets you to a credible leakage assessment.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the target operation: AES encryption, RSA signature, or PIN</li>
+<p>comparison on a device you own or may test.</p>
+<li>Start with timing: measure operation time across many inputs and look</li>
+<p>for input dependent differences.</p>
+<li>Move to power only if you have a measurement setup: shunt resistor</li>
+<p>or current probe on the device supply.</p>
+<li>Capture traces during known operations and align them.</li>
+<li>Look for leakage: different power shapes for different key bits or</li>
+<p>data values.</p>
+<li>Review the code or algorithm for constant time behavior.</li>
+<li>Recommend countermeasures: constant time code, masking, and noise.</li>
+<li>Report leakage as observable differences, not as recovered keys,</li>
+<p>unless full recovery is in scope and achieved.</p>
+</ol>
+<h2>1. Timing measurement</h2>
+<p>Timing is the cheapest side channel: no special hardware, just a clock.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Timing probe: detects input dependent timing over a serial console.&quot;&quot;&quot;
+import time, statistics, serial
+
+ser = serial.Serial(&quot;/dev/ttyUSB0&quot;, 115200, timeout=5)
+
+def timed_encrypt(data_hex):
+    ser.write(f&quot;enc {data_hex}\n&quot;.encode())
+    start = time.perf_counter()
+    ser.readline()  # wait for the result line
+    return time.perf_counter() - start
+
+# Compare timing for inputs that differ in one byte
+base = [timed_encrypt(&quot;00&quot; * 16) for _ in range(50)]
+diff = [timed_encrypt(&quot;ff&quot; + &quot;00&quot; * 15) for _ in range(50)]
+print(f&quot;base mean: {statistics.mean(base)*1e3:.3f} ms&quot;)
+print(f&quot;diff mean: {statistics.mean(diff)*1e3:.3f} ms&quot;)
+# A consistent gap beyond noise suggests data dependent timing</code></pre>
+<pre><code class="language-bash"># Quick check for early exit string comparison in firmware under review
+# (constant time comparison has no early exit)
+grep -rn &quot;strcmp\|memcmp&quot; /tmp/rootfs --include=&quot;*.c&quot; 2&gt;/dev/null | head
+# In binaries, look for compare loops that branch on first mismatch</code></pre>
+<h2>2. Power trace capture concept</h2>
+<p>With an oscilloscope across a shunt resistor on the target&#x27;s power line, each encryption shows a trace. Differential power analysis compares many traces: points in time where power correlates with a guessed key bit reveal the key.</p>
+<pre><code class="language-bash"># Capture helper: trigger the device N times and save trigger markers
+python3 - &lt;&lt; &#x27;PY&#x27;
+# Pseudocode for a ChipWhisperer style capture loop:
+# for i in range(NUM_TRACES):
+#     scope.arm()
+#     target.send_plaintext(pt[i])
+#     trace = scope.capture()   # power samples during encryption
+#     save(trace, pt[i], ct[i])
+print(&quot;capture loop template: arm scope, send input, save trace&quot;)
+print(&quot;typical first pass: 1000 traces of AES-128 ECB, fixed key&quot;)
+PY</code></pre>
+<p>You do not need to recover the key to report the finding. Showing that traces differ visibly between two plaintexts is enough to justify a deeper engagement with proper equipment.</p>
+<h2>3. Countermeasure review</h2>
+<pre><code class="language-bash"># Review checklist against source or disassembly
+# 1. Constant time: no branches or table lookups indexed by secret data
+# 2. Masking: secrets split into shares before operations
+# 3. Blinding: RSA signatures use random blinding factors
+# 4. Noise: random delays or dummy operations (weak alone, fine in depth)
+grep -rn &quot;blinding\|mask&quot; /tmp/crypto_src --include=&quot;*.c&quot; -i | head</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>USB and OS jitter drown small timing signals. Run on bare metal or a</li>
+<p>realtime path, and take thousands of samples.</p>
+<li>The device caches or pipelines operations. Warm up the cache before</li>
+<p>measuring so every sample sees the same state.</p>
+<li>Countermeasures exist but are misapplied: masking without fresh</li>
+<p>randomness per operation leaks anyway.</p>
+<li>You observe leakage but cannot exploit it. Report the observable</li>
+<p>difference with the measurement method; that is a valid finding.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Timing inconclusive: move to power analysis with a proper shunt and</li>
+<p>oscilloscope.</p>
+<li>Power inconclusive: try electromagnetic probing near the crypto</li>
+<p>accelerator, which often gives cleaner signals.</p>
+<li>Need key recovery: scope a dedicated side channel engagement with</li>
+<p>ChipWhisperer or equivalent tooling and a larger trace budget.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders cannot detect passive side channel observation; there is no log entry for watching power draw. Defense is by construction: constant time implementations, masking with fresh randomness, shielding and filtering on power lines, and keeping secret operations off shared hardware. Certifications like FIPS 140-3 and Common Criteria require side channel testing, which is why assessed crypto modules document their countermeasures.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-208 (Observable Timing Discrepancy).</li>
+<li>CWE-1300 (Improper Protection of Physical Side Channels).</li>
+<li>NIST FIPS 140-3: side channel requirements for crypto modules.</li>
+<li>&quot;Differential Power Analysis&quot; (Kocher et al.): the foundational paper.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

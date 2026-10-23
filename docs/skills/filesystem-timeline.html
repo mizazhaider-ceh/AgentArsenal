@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: filesystem-timeline</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>filesystem-timeline</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when building a detailed filesystem timeline from a disk</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="disk-forensics.html">disk-forensics</a></div><div class="deps"><span class="kind">requires:</span> <a href="disk-forensics.html">disk-forensics</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="timeline-basics.html">timeline-basics</a> <a href="artifact-parsing.html">artifact-parsing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>The Sleuth Kit</td><td>4.12.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A filesystem timeline lists every timestamped filesystem event in order: the disk&#x27;s own story of what happened. This skill covers building deep filesystem timelines from images: full extraction, smart filtering, and reading the patterns that indicate attacker activity. It is the disk complement to timeline-basics; where that skill merges sources, this one goes deep on the filesystem itself.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Work from the verified image with the recovered layout.</li>
+<li>Extract the full filesystem timeline (body file to timeline).</li>
+<li>Filter to the incident window and interesting paths.</li>
+<li>Hunt the classic patterns: staging, persistence, cleanup.</li>
+<li>Correlate hits with logs and memory findings.</li>
+<li>Annotate and freeze the timeline for the report.</li>
+</ol>
+<h2>1. Full extraction</h2>
+<pre><code class="language-bash"># Body file for the whole filesystem (or per partition with -o offset)
+fls -r -m / -o &lt;sector_offset&gt; /analysis/case01_work.img &gt; /tmp/body_full.txt
+wc -l /tmp/body_full.txt
+
+# Timeline in CSV for analysis
+mactime -b /tmp/body_full.txt -d &gt; /tmp/fs_timeline.csv
+
+# Sanity: time range of the timeline
+head -2 /tmp/fs_timeline.csv
+cut -d&#x27;,&#x27; -f1 /tmp/fs_timeline.csv | sort -u | head -3
+cut -d&#x27;,&#x27; -f1 /tmp/fs_timeline.csv | sort -u | tail -3</code></pre>
+<p>Full timelines are big; that is normal. The extraction is the cheap part. The analysis discipline below is what makes it useful.</p>
+<h2>2. Filtering to the incident</h2>
+<pre><code class="language-bash"># Window filter: the incident plus margin on both sides
+awk -F&#x27;,&#x27; &#x27;$1 &gt;= &quot;2026-10-20&quot; &amp;&amp; $1 &lt;= &quot;2026-10-23&quot;&#x27; /tmp/fs_timeline.csv \
+  &gt; /tmp/fs_window.csv
+
+# Path filters for the usual attacker locations
+grep -E &#x27;/tmp/|/var/tmp/|/dev/shm/|/etc/cron|/etc/systemd|/root/|/home/&#x27; \
+  /tmp/fs_window.csv &gt; /tmp/fs_hot.csv
+
+# Event focus: creations and modifications (reads are noise at scale)
+grep -E &#x27;,(m| c|\.a\.)&#x27; /tmp/fs_window.csv | head -20
+# (mactime codes: m modified, a accessed, c changed, b birth)</code></pre>
+<p>Filter aggressively and iteratively: window, then hot paths, then event types. Each filter should shrink the set by an order of magnitude while keeping the incident&#x27;s shape.</p>
+<h2>3. Pattern hunting</h2>
+<pre><code class="language-bash"># Burst analysis: what happened in the busiest minutes
+cut -d&#x27;,&#x27; -f1,2 /tmp/fs_window.csv | sort | uniq -c | sort -rn | head -15
+
+# New executables in the window
+grep -E &#x27;\.(sh|py|pl|elf|bin|exe)$&#x27; /tmp/fs_window.csv | head -20
+
+# Persistence writes: startup locations touched in the window
+grep -i -E &#x27;cron|systemd|/etc/rc|Startup|Run\\&#x27; /tmp/fs_window.csv | head -20
+
+# Cleanup signals: many deletions or timestamp clusters in one minute
+grep -c &#x27;deleted&#x27; /tmp/fs_window.csv</code></pre>
+<p>Read bursts as stories: a burst of creates in /tmp at 03:12, followed by a cron write at 03:13, followed by deletions at 03:14, is the intrusion, persistence, and cleanup in four lines. The timeline&#x27;s job is to make that sequence obvious.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The window is unknown. Start with the busiest anomalous periods from</li>
+<p>the full timeline, then widen as the story develops.</p>
+<li>Timestamps are unreliable (timestomping). Lean on sequence and</li>
+<p>correlation with logs rather than absolute times.</p>
+<li>The filesystem is huge. Sample the hot paths first; full review of</li>
+<p>millions of rows is rarely the best use of time.</p>
+<li>Multiple partitions and images. Build per-filesystem timelines, then</li>
+<p>merge with source labels; do not mix them silently.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need the super-timeline: merge this filesystem timeline with</li>
+<p>logs, registry, and browser artifacts into one sortable master.</p>
+<li>The timeline must be presented: export the annotated window as the</li>
+<p>report&#x27;s visual centerpiece, with the key events highlighted.</p>
+<li>Deep dives needed per hit: hand file paths to artifact-parsing and</li>
+<p>PIDs to memory-forensics.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, filesystem timelines are the post-incident microscope and the hunting telescope: the same techniques find past intrusions and baseline normal change patterns. FIM tools produce a live version of this timeline for critical paths. The defender&#x27;s investment is knowing which paths matter (the hot list above) and having the timeline ready before the incident, not after.</p>
+<h2>Key references</h2>
+<ul>
+<li>The Sleuth Kit documentation: fls, mactime.</li>
+<li>&quot;File System Forensic Analysis&quot; (timeline interpretation).</li>
+<li>NIST SP 800-86 (timeline analysis).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

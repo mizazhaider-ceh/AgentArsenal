@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: cloud-logging-checks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>cloud-logging-checks</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when verifying that cloud audit logging is enabled,</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="cloud-security-basics.html">cloud-security-basics</a></div><div class="deps"><span class="kind">requires:</span> <a href="cloud-security-basics.html">cloud-security-basics</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="threat-hunting.html">threat-hunting</a> <a href="incident-response.html">incident-response</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>AWS CLI</td><td>2.15</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Logging is what makes cloud attacks visible: without control-plane logs, an attacker with stolen keys is invisible. This skill covers checking the logging posture on authorized engagements: is it on, is it complete, is it centralized and tamper-resistant, and would anyone notice an attack. It is a configuration review with incident-readiness stakes.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Verify control-plane logging is enabled in every account and region.</li>
+<li>Check log centralization: all logs flow to the security account.</li>
+<li>Verify integrity protection and retention meet the policy.</li>
+<li>Check data-plane logging for critical services (storage access,</li>
+<p>database).</p>
+<li>Review the alerting: what fires, where it goes, who responds.</li>
+<li>Test the answer to &quot;would we see it&quot; with a safe canary action.</li>
+<li>Write findings with the gap and the detection it costs.</li>
+</ol>
+<h2>1. Control-plane logging</h2>
+<pre><code class="language-bash"># AWS CloudTrail: must be on in every region, multi-region trail
+aws cloudtrail describe-trails \
+  --query &#x27;trailList[].[Name,IsMultiRegionTrail,IsOrganizationTrail]&#x27; \
+  --output text
+
+# Check the trail is actually logging (not just existing)
+aws cloudtrail get-trail-status --name &lt;trail-name&gt; \
+  --query &#x27;[IsLogging, LatestDeliveryTime]&#x27; --output text
+
+# Log file validation (integrity): must be enabled
+aws cloudtrail describe-trails \
+  --query &#x27;trailList[].[Name,LogFileValidationEnabled]&#x27; --output text
+
+# Every region check: trails are per-region unless multi-region
+aws ec2 describe-regions --query &#x27;Regions[].RegionName&#x27; --output text</code></pre>
+<p>A trail that exists but is not logging is worse than no trail: it creates false confidence. Verify <code>IsLogging</code> true and recent delivery times, not just the trail&#x27;s existence.</p>
+<h2>2. Centralization and protection</h2>
+<pre><code class="language-bash"># Logs must flow to a dedicated security account&#x27;s bucket, with:
+# - MFA delete on the bucket
+# - Versioning enabled
+# - No public access
+# - Retention matching policy (typically 1+ year for security logs)
+
+aws s3api get-bucket-versioning --bucket &lt;log-bucket&gt; --output text
+aws s3api get-bucket-lifecycle-configuration --bucket &lt;log-bucket&gt; 2&gt;/dev/null | head -10
+
+# Who can modify the logging configuration itself?
+# (If the attacker can turn off the trail, the logs are decorative)</code></pre>
+<p>The threat model for logging is the attacker with stolen admin keys: can they disable the trail, delete the logs, or modify retention? If yes, the logging is not tamper-resistant and the finding is critical for detectability.</p>
+<h2>3. The &quot;would we see it&quot; test</h2>
+<pre><code class="language-bash"># Safe canary actions (coordinate with the SOC first):
+# 1. Create and delete a test IAM user
+# 2. Make an S3 bucket public, then private again
+# 3. Attempt an MFA-less console login (failure is fine)
+
+# Then verify each appears in the centralized logs within the SLA
+# and that the expected alert fired (or note that it did not)
+
+# Alerting baseline to expect:
+# - Root account usage
+# - IAM policy changes
+# - Public exposure changes (S3, security groups)
+# - Failed MFA / impossible travel logons
+# - CloudTrail disablement attempts</code></pre>
+<p>The canary test is the honest answer to &quot;would we see an attack&quot;: if your test user creation did not alert, neither will the attacker&#x27;s. Run it with SOC coordination so the test does not become an incident.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Logging is on but nobody watches. Enabled without alerting is</li>
+<p>half a control; the finding covers the monitoring gap too.</p>
+<li>Data-plane logging is off for cost reasons. Note the tradeoff</li>
+<p>explicitly: storage access without logs is a blind spot with a price tag, and leadership should sign the acceptance.</p>
+<li>Multi-cloud: each provider&#x27;s logging checked separately; the SIEM</li>
+<p>ingestion covers all of them or the gaps are named.</p>
+<li>Retention is short. Investigations need history; 30 days of logs</li>
+<p>cannot answer a 60-day dwell time.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Logging is disabled in production accounts: report as critical;</li>
+<p>the environment is currently undefended against key theft.</p>
+<li>You find evidence of log tampering: treat as an incident input</li>
+<p>immediately, alongside the configuration finding.</p>
+<li>The fix needs budget (SIEM ingestion, storage): frame it with the</li>
+<p>canary test results as the business case.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>This sub-skill is pure defender value: logging posture is the detectability baseline. The defender&#x27;s continuous work is the canary test on a schedule, alert tuning from real incidents, and protecting the logging pipeline itself as critical infrastructure. An attacker who owns the logs owns the narrative; the pipeline is a security control, not just plumbing.</p>
+<h2>Key references</h2>
+<ul>
+<li>CIS Benchmarks: logging and monitoring sections.</li>
+<li>NIST SP 800-92 (Guide to Computer Security Log Management).</li>
+<li>MITRE ATT&amp;CK T1562.008 (Impair Defenses: Disable Cloud Logs).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

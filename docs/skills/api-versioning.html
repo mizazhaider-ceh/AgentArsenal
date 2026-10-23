@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: api-versioning</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>api-versioning</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when designing or reviewing API versioning strategy.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="rest-api-design.html">rest-api-design</a> <a href="api-security-testing.html">api-security-testing</a> <a href="openapi-security-review.html">openapi-security-review</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>API versioning is a promise to clients: what you built against keeps working. This skill covers doing it well: choosing the versioning scheme, defining what breaks a version, running deprecation properly, and testing contracts. It prevents the slow breakage that erodes trust in a platform.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Pick one scheme and document it: URL path (/v1) or header based.</li>
+<li>Define breaking vs non breaking changes in writing.</li>
+<li>Version the OpenAPI contract alongside the code.</li>
+<li>Run contract tests in CI: the implementation must match the</li>
+<p>published version.</p>
+<li>Deprecate with notice: headers, docs, and a sunset date, never</li>
+<p>silent removal.</p>
+<li>Monitor version usage: know who is on what before you retire.</li>
+<li>Support N and N-1 during transitions; plan the capacity.</li>
+<li>Sunset cleanly: remove the code after the date, confirm no</li>
+<p>traffic.</p>
+</ol>
+<h2>1. Scheme and breaking rules</h2>
+<pre><code class="language-bash"># Document the scheme in the API guide:
+# - URL versioning: /api/v1/orders (simple, visible, cache friendly)
+# - header versioning: Accept: application/vnd.api.v2+json (clean URLs)
+# Pick one per API; mixing confuses clients and tooling
+echo &quot;record the choice and the rationale in the API standards doc&quot;</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Breaking change classifier for API diffs.&quot;&quot;&quot;
+BREAKING = [&quot;remove field&quot;, &quot;rename field&quot;, &quot;change type&quot;,
+            &quot;remove endpoint&quot;, &quot;require new header&quot;, &quot;change auth&quot;]
+SAFE = [&quot;add optional field&quot;, &quot;add endpoint&quot;, &quot;add enum value&quot;,
+        &quot;loosen validation&quot;]
+
+def classify(change):
+    c = change.lower()
+    if any(b in c for b in BREAKING):
+        return &quot;BREAKING -&gt; new version&quot;
+    if any(s in c for s in SAFE):
+        return &quot;safe -&gt; same version&quot;
+    return &quot;unclear -&gt; review&quot;
+
+for ch in [&quot;remove field &#x27;nickname&#x27;&quot;, &quot;add optional field &#x27;avatar&#x27;&quot;,
+           &quot;change type of &#x27;id&#x27; to string&quot;]:
+    print(f&quot;{ch:35s} {classify(ch)}&quot;)</code></pre>
+<h2>2. Deprecation and contract tests</h2>
+<pre><code class="language-bash"># Deprecation headers on old versions (inform, do not just log)
+# Sunset: &lt;http-date&gt;; Deprecation: true; Link: &lt;successor&gt;
+curl -s -i &#x27;https://api.example/v1/orders&#x27; | grep -i -E &quot;deprecation|sunset&quot; | head -5</code></pre>
+<pre><code class="language-bash"># Contract test in CI: does /v1 still match openapi-v1.yaml
+# (schemathesis or dredd as tooling; fail the build on drift)
+echo &quot;gate: contract test runs on every PR touching the API&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Internal clients break anyway. Versioning does not replace</li>
+<p>communication; announce to internal consumers too.</p>
+<li>The version is in the URL but auth differs per version. Keep</li>
+<p>security policy version independent or document the matrix.</p>
+<li>GraphQL or gRPC instead of REST. The principles transfer:</li>
+<p>deprecate fields, evolve schemas, test contracts.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Breaking change shipped without a version bump: assess client</li>
+<p>impact, consider a rollback, and fix the CI gate that missed it.</p>
+<li>Version sprawl (v1 through v7 live): measure usage per version</li>
+<p>and run a retirement program with dates.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Versioning misuse looks like clients pinned to ancient versions with known vulnerabilities, and sunset dates that pass without removal. Security teams care because old versions keep old flaws alive: each supported version is attack surface. The durable practice is few versions, enforced sunsets, and security patches that reach every live version.</p>
+<h2>Key references</h2>
+<ul>
+<li>Semantic Versioning (semver.org) adapted for APIs.</li>
+<li>IETF draft on API deprecation headers.</li>
+<li>Related skills: rest-api-design, openapi-security-review.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

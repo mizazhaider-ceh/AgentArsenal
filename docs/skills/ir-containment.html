@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ir-containment</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ir-containment</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when an incident&#x27;s scope is known and attacker activity</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-response.html">incident-response</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-response.html">incident-response</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="memory-forensics.html">memory-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Containment stops the bleeding: isolate the attacker, keep the business running where possible, and preserve the evidence the later phases need. This skill covers the containment decisions and techniques: what to isolate first, how to isolate without tipping off or destroying evidence, and when short-term containment becomes long-term. Every containment action is a tradeoff; this skill makes the tradeoffs explicit.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Prioritize containment targets: active C2 hosts first, then lateral</li>
+<p>movement paths, then the rest of the scope.</p>
+<li>Capture volatile evidence from each target before isolating it.</li>
+<li>Isolate: network first (least destructive), host second.</li>
+<li>Reset credentials in the right order: attacker-controlled last.</li>
+<li>Verify the attacker is actually cut off (watch for re-entry).</li>
+<li>Document every action with timestamps for the timeline.</li>
+<li>Transition to eradication when containment holds.</li>
+</ol>
+<h2>1. Isolation techniques</h2>
+<pre><code class="language-bash"># Least destructive first:
+# 1. Network isolation at the switch/firewall: host keeps running,
+#    memory stays alive, attacker loses C2
+# 2. Host firewall block of C2 destinations (surgical, keeps business traffic)
+# 3. EDR network quarantine (one click, preserves the host state)
+# 4. Full host isolation (last resort before shutdown)
+
+# Before ANY isolation, capture volatiles (see evidence-handling):
+# memory dump, netstat, process list, in that order
+
+# Blocking the C2 at the perimeter as the first move:
+# - Add the IOC IPs/domains to the firewall block list
+# - Watch for the attacker switching infrastructure (new IOCs)</code></pre>
+<p>Network isolation beats host shutdown in almost every case: it stops the attacker while preserving memory and disk state. Shutdown is for ransomware actively encrypting, where seconds matter more than memory.</p>
+<h2>2. Credential reset order</h2>
+<pre><code class="language-bash"># Reset order matters: reset in the wrong order and the attacker
+# harvests the new credentials too.
+# 1. Contain the hosts first (attacker cannot observe the resets)
+# 2. Reset service accounts the attacker touched
+# 3. Reset compromised user accounts
+# 4. Reset krbtgt twice (invalidates all Kerberos tickets) ONLY for
+#    domain compromise, with leadership approval: it is disruptive
+# 5. Reset remaining privileged accounts
+
+# Verify each reset: the old credential must fail, the new one must work</code></pre>
+<p>krbtgt reset is the nuclear option for domain compromise: it kills every ticket including the attacker&#x27;s, at the cost of disrupting the domain. It needs explicit approval and a maintenance window, and it is done twice (the two-password history means one reset is not enough).</p>
+<h2>3. Verifying containment</h2>
+<pre><code class="language-bash"># Containment is not done when you act; it is done when verified:
+# - Watch the blocked C2 destinations for new connection attempts
+# - Watch for new hosts showing the IOCs (lateral movement continuing)
+# - Check that isolated hosts stay isolated (no shadow IT reconnects)
+# - Monitor the attacker&#x27;s known accounts for new logons
+
+# Re-entry indicators to alert on:
+# - New external connections from the contained VLAN
+# - Logons with reset credentials from odd sources
+# - Fresh persistence mechanisms (the attacker re-establishing)</code></pre>
+<p>An attacker who notices containment often moves faster, not slower. The 24 hours after containment are the highest-risk period; staff the monitoring accordingly.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Business critical hosts cannot be isolated. Use surgical blocks (C2</li>
+<p>destinations only) and enhanced monitoring; document the accepted risk with leadership sign-off.</p>
+<li>The attacker is in the backups too. Note it for eradication; do not</li>
+<p>trust restores until verified.</p>
+<li>Cloud workloads complicate isolation. Use security groups and</li>
+<p>service controls rather than reaching for host power controls.</p>
+<li>Containment tips off the attacker before evidence is captured. That</li>
+<p>is why volatiles come first; when ransomware is encrypting, accept the tradeoff and isolate immediately.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Containment fails (attacker re-enters): escalate severity, widen the</li>
+<p>scope investigation, and consider that the initial scope was wrong.</p>
+<li>You need to keep the attacker contained but observable: that is a</li>
+<p>deliberate deception decision needing leadership approval, not a default.</p>
+<li>Eradication is ready to start: hand over the contained, documented</li>
+<p>scope with the evidence inventory.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Containment is the defender&#x27;s active phase: every action should be visible in the monitoring (isolation events, block list changes, credential resets) so the team can verify effect. The defender&#x27;s preparation is the tooling that makes containment fast: EDR quarantine, network segmentation that actually segments, and practiced credential reset runbooks. Speed of containment is the metric that matters.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-61 (Computer Security Incident Handling Guide).</li>
+<li>SANS Incident Handler&#x27;s Handbook.</li>
+<li>MITRE ATT&amp;CK (map the contained techniques for the report).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

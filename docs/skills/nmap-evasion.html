@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: nmap-evasion</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>nmap-evasion</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when IDS, IPS, or firewalls block or detect standard nmap</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="nmap-methodology.html">nmap-methodology</a></div><div class="deps"><span class="kind">requires:</span> <a href="nmap-methodology.html">nmap-methodology</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="firewall-evasion.html">firewall-evasion</a> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>nmap</td><td>7.98</td></tr><tr><td>Wireshark</td><td>4.2</td></tr></tbody></table><p>Evasion techniques make nmap traffic quieter or harder to attribute, for engagements where testing the defenders&#x27; detection is part of the job. This skill covers nmap&#x27;s evasion toolkit on authorized tests: timing, fragmentation, decoys, and probe tricks, plus the judgment of when to use them. Evasion is slower and less reliable than open scanning; use it when the objectives demand stealth, not by default, and always inside the agreed rules.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the engagement wants stealth or detection testing; default to</li>
+<p>open scanning otherwise.</p>
+<li>Establish a baseline: what does the IDS see from a normal scan.</li>
+<li>Apply one evasion technique at a time and measure the difference.</li>
+<li>Verify results did not degrade (evasion loses accuracy).</li>
+<li>Document which techniques the defenses caught and which they missed.</li>
+<li>Report detection gaps as findings about monitoring, not as cleverness.</li>
+</ol>
+<h2>1. Timing and fragmentation</h2>
+<pre><code class="language-bash"># Slow timing: the simplest and most effective quiet technique
+nmap -sS -T2 --scan-delay 10s -p- 10.0.5.23 -oN /tmp/quiet.txt
+
+# Randomize host order so the sweep has no obvious pattern
+nmap -sS -T3 --randomize-hosts 10.0.5.0/24 -oN /tmp/rand.txt
+
+# Fragment packets to dodge simple pattern matchers
+nmap -sS -f --mtu 16 -p22,80,443 10.0.5.23 -oN /tmp/frag.txt
+
+# Tiny MTU must be a multiple of 8; 16 and 24 are the practical choices</code></pre>
+<p>Timing beats trickery. A slow scan from an expected source during business hours is quieter than any fragmentation from a strange host at 3 AM.</p>
+<h2>2. Decoys and source tricks</h2>
+<pre><code class="language-bash"># Decoys: hide among fake sources (use only with permission; decoys
+# can alarm innocent third parties, so prefer lab or scoped ranges)
+nmap -sS -D RND:5 -p22,80,443 10.0.5.23 -oN /tmp/decoy.txt
+
+# Spoofed source with manual decoy list
+nmap -sS -D 10.0.5.50,10.0.5.51,ME -p22,80,443 10.0.5.23 -oN /tmp/decoy2.txt
+
+# Source port 53 or 20: some firewalls trust DNS and FTP-data ports
+nmap -sS --source-port 53 -p22,80,443 10.0.5.23 -oN /tmp/srcport.txt
+
+# Idle scan concept: bounce the scan off a zombie host with a
+# predictable IP ID (advanced, fragile, rarely worth it today)
+# nmap -sI zombie.example 10.0.5.23</code></pre>
+<p>Decoys have a real-world cost: every decoy IP gets blamed in someone&#x27;s logs. Get explicit permission before using decoys outside lab networks, and prefer timing-based quiet over attribution games.</p>
+<h2>3. Firewall probe tricks</h2>
+<pre><code class="language-bash"># ACK scan: maps firewall rulesets rather than ports
+nmap -sA -T4 -p1-1000 10.0.5.23 -oN /tmp/ack.txt
+# unfiltered = no stateful firewall; filtered = stateful filtering
+
+# FIN, NULL, Xmas scans: closed ports answer RST, open ports stay silent
+# (works against stateless filters and some Unix stacks, not Windows)
+nmap -sF -T4 -p22,80,443 10.0.5.23 -oN /tmp/fin.txt
+nmap -sN -T4 -p22,80,443 10.0.5.23 -oN /tmp/null.txt
+
+# Version detection through the firewall on allowed ports only
+nmap -sV -p80,443 --source-port 53 10.0.5.23 -oN /tmp/ver_fw.txt</code></pre>
+<p>Read ACK scan output as firewall intelligence: it tells you where the stateful boundary sits, which shapes every later phase more than any port list.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Evasion techniques corrupt results. Fragmentation and idle scans lose</li>
+<p>packets; always re-verify critical ports with a clean scan.</p>
+<li>The IDS catches everything anyway. Modern NDR correlates behavior, not</li>
+<p>just signatures; note the detection as a positive defensive finding.</p>
+<li>Decoys trigger abuse complaints. Stop decoy use immediately, inform the</li>
+<p>test lead, and switch to timing-based quiet.</p>
+<li>Source-port tricks fail against stateful firewalls. They only help</li>
+<p>against naive packet filters; test, do not assume.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The objective is detection testing: coordinate with the blue team on</li>
+<p>what to run when, so alerts map to techniques cleanly in the report.</p>
+<li>You need true stealth: consider whether scanning is needed at all;</li>
+<p>passive data, logs from a foothold, or client-provided inventories are quieter than any scan.</p>
+<li>Evasion is eating the time budget: time-box it, report what the open</li>
+<p>scan found, and list evasion as a follow-up test.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>This sub-skill is the defender&#x27;s reading list: slow scans show as low-and-slow connection attempts that NDR baselines flag; fragmentation shows as odd packet sizes; decoys show as multiple sources with identical patterns (the real source is the one that completes handshakes); source port 53 scans show as SYN packets that are not DNS. Defenses are NDR behavioral detection, egress filtering, and alerting on scan patterns regardless of speed. Evasion raises attacker cost; good monitoring raises it further.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1595 (Active Scanning).</li>
+<li>MITRE ATT&amp;CK T1018 (Remote System Discovery).</li>
+<li>nmap 7.98 documentation: timing and performance, firewall evasion.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

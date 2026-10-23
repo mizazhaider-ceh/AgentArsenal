@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: input-validation-patterns</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>input-validation-patterns</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing or reviewing code that accepts user input</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="secure-coding.html">secure-coding</a></div><div class="deps"><span class="kind">requires:</span> <a href="secure-coding.html">secure-coding</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="code-reviewer.html">code-reviewer</a> <a href="output-encoding.html">output-encoding</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Bandit</td><td>1.7</td></tr></tbody></table><p>Input validation is the first defensive layer: decide what is allowed, reject everything else, and do it on the server. This skill covers the validation patterns that actually work: allow-lists, strict typing, canonicalization before checks, and validating at the trust boundary. Validation is necessary but not sufficient; it reduces attack surface, while output encoding and parameterized queries do the real neutralizing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify every trust boundary: where untrusted data enters.</li>
+<li>Define the allow-list for each input: type, range, format, length.</li>
+<li>Validate on the server; treat client validation as UX only.</li>
+<li>Canonicalize before validating (decode, normalize, then check).</li>
+<li>Reject invalid input loudly; do not silently fix it.</li>
+<li>Log validation failures for attack detection.</li>
+<li>Test the validation with hostile inputs, not just happy paths.</li>
+</ol>
+<h2>1. Allow-list patterns</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Allow-list validation patterns: the correct default.&quot;&quot;&quot;
+import re
+from urllib.parse import urlparse
+
+def valid_username(value: str) -&gt; bool:
+    # Allow-list: what IS a username, nothing else
+    return bool(re.fullmatch(r&quot;[a-z0-9_]{3,20}&quot;, value))
+
+def valid_age(value) -&gt; bool:
+    # Type and range, not just presence
+    return isinstance(value, int) and 0 &lt;= value &lt;= 150
+
+def safe_redirect(target: str) -&gt; bool:
+    # Open redirect defense: allow-list the destinations
+    allowed = {&quot;app.example.com&quot;, &quot;www.example.com&quot;}
+    parts = urlparse(target)
+    return not parts.netloc or parts.netloc in allowed
+
+# Block-list (fragile, avoid):
+#   if &quot;&lt;script&gt;&quot; not in value:  # bypassed by &lt;ScRiPt&gt;, encoding, ...</code></pre>
+<p>Allow-list validation fails closed: new attack techniques are rejected by default because they were never allowed. Block-lists fail open: every technique the author did not think of passes through.</p>
+<h2>2. Canonicalization</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Validate AFTER decoding and normalizing, never before.&quot;&quot;&quot;
+import html
+import unicodedata
+from urllib.parse import unquote
+
+def canonical(value: str) -&gt; str:
+    # Decode repeatedly: %253C is %3C after one decode, &lt; after two
+    prev = None
+    cur = value
+    while prev != cur:
+        prev = cur
+        cur = unquote(cur)
+    # Normalize unicode: fullwidth and lookalikes collapse here
+    cur = unicodedata.normalize(&quot;NFKC&quot;, cur)
+    return cur
+
+def valid_path_segment(value: str) -&gt; bool:
+    c = canonical(value)
+    # Now the check sees what the filesystem will see
+    return bool(re.fullmatch(r&quot;[a-z0-9_.-]{1,64}&quot;, c)) and &quot;..&quot; not in c</code></pre>
+<p>Validating before canonicalization is the classic bypass: the check sees <code>%2e%2e%2f</code> and the filesystem sees <code>../</code>. Decode fully, normalize, then validate the result.</p>
+<h2>3. Placement and failure handling</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Validate at the trust boundary, fail loudly.&quot;&quot;&quot;
+
+def create_user(request_data: dict):
+    username = request_data.get(&quot;username&quot;, &quot;&quot;)
+    if not valid_username(username):
+        # Loud rejection: log it, return 400, do not guess intent
+        log_validation_failure(&quot;username&quot;, username)
+        raise ValueError(&quot;Invalid username&quot;)
+    # ... proceed with the KNOWN-GOOD value, not the raw input
+    return store_user(username)
+
+# Rules:
+# - Validate at the server trust boundary (API handler, not the client)
+# - Re-validate at security-critical sinks (the query, the shell call)
+# - Never &quot;sanitize and continue&quot;: stripped input is still attacker input</code></pre>
+<p>Defense in depth means the sink validates too: the database layer uses parameterized queries regardless of what the API validated, because validation is one layer and layers fail independently.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Validation is duplicated across client and server and they disagree.</li>
+<p>The server is the authority; the client is convenience. Test the server alone.</p>
+<li>Legitimate input needs rich content (names with apostrophes,</li>
+<p>international text). Widen the allow-list deliberately with tests, never by disabling validation.</p>
+<li>File uploads need validation. Check extension, magic bytes, size,</li>
+<p>and content type independently; any one alone is bypassable.</p>
+<li>Validation performance matters at scale. Compile regexes once,</li>
+<p>keep checks O(n), and never let validation become a ReDoS vector (avoid nested quantifiers in the patterns).</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The input cannot be allow-listed (free text fields): validate length</li>
+<p>and encoding, then rely on output encoding and parameterized sinks; document that validation is partial here by design.</p>
+<li>A validation bypass is found: fix the canonicalization order first,</li>
+<p>then the pattern; add the bypass as a regression test.</p>
+<li>Team standard needed: publish the allow-list patterns as shared</li>
+<p>validators, not copy-pasted regexes.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Validation failures are detection signal: log them with the input (truncated), the rule violated, and the source. A burst of failures from one source is an attack in progress; a steady trickle is normal user error. Alert on the bursts. The engineering view: validation moves attacks from &quot;exploited&quot; to &quot;logged and rejected,&quot; which is the whole point.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-20 (Improper Input Validation).</li>
+<li>OWASP Input Validation Cheat Sheet.</li>
+<li>OWASP Testing Guide: input validation sections.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

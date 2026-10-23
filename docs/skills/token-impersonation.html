@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: token-impersonation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>token-impersonation</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have a Windows shell on an authorized engagement</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-windows.html">privesc-windows</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-windows.html">privesc-windows</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>PowerShell</td><td>7.4</td></tr><tr><td>Mimikatz</td><td>2.2.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Windows access tokens decide what a thread can do, and several privilege escalation techniques trick a privileged service into handing you its token. This skill covers token impersonation on authorized engagements: checking your privileges, enumerating available tokens, and running the potato-family techniques that turn SeImpersonatePrivilege into SYSTEM. These are well-trodden paths; the skill is in picking the right variant for the target&#x27;s patch level.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Check your privileges: <code>whoami /priv</code> and look for SeImpersonate or</li>
+<p>SeAssignPrimaryToken.</p>
+<li>Enumerate tokens available to your session.</li>
+<li>Pick the technique matching the OS build and patch level.</li>
+<li>Run the impersonation and confirm the elevated token.</li>
+<li>Use the token for the engagement&#x27;s objectives.</li>
+<li>Record the technique, the build, and the exact commands.</li>
+</ol>
+<h2>1. Privilege and token enumeration</h2>
+<pre><code class="language-powershell"># Your privileges decide everything
+whoami /priv | findstr /i &quot;Impersonate AssignPrimary&quot;
+
+# Tokens in your session (with appropriate tooling)
+# List processes running as SYSTEM you might reach
+tasklist /v | findstr /i &quot;system&quot; | head -10
+
+# Named pipes: potato techniques need one to catch the auth
+# Check what is listening locally
+netstat -ano | findstr &quot;LISTENING&quot; | findstr &quot;127.0.0.1&quot;</code></pre>
+<p>SeImpersonatePrivilege on a service account is the classic trigger: web app pools, service accounts, and some default configurations hold it. Without it, the potato family does not apply; check the other privesc-windows sub-skills instead.</p>
+<h2>2. Technique selection by build</h2>
+<pre><code class="language-powershell"># Identify the build to pick the working variant
+systeminfo | findstr /i &quot;OS Version&quot;
+
+# Guidance (verify against current research for the exact build):
+# Older builds: JuicyPotato (DCOM activation, largely patched)
+# 2019 / 10 1809+: RoguePotato (fake OXID resolver, needs port 135)
+# 2022 / 11 22H2+: GodPotato (named pipe + DCOM, current favorite)
+# PrintSpoofer: abuses the print spooler service (needs spooler running)
+
+# GodPotato pattern (example; use the current release for the target):
+# GodPotato.exe -cmd &quot;cmd /c whoami &gt; C:\proof.txt&quot;</code></pre>
+<p>Always use the latest maintained variant for the target build, and test it in a lab VM matching the build first. Potato tools fail silently on wrong builds, and each failure teaches you nothing without the lab baseline.</p>
+<h2>3. Confirming and using the token</h2>
+<pre><code class="language-powershell"># Proof: the command ran as SYSTEM
+type C:\proof.txt
+# expected: nt authority\system
+
+# Interactive use: spawn the shell or run the objective command
+# with the impersonated token, then drop back to the original context
+
+# Cleanup: remove proof files and stop any listeners the tool started
+del C:\proof.txt</code></pre>
+<p>One clean proof run is enough. Repeated potato executions on a production host risk DCOM instability; get the evidence and stop.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>SeImpersonatePrivilege is absent. The potato family is off the table;</li>
+<p>pivot to unquoted-service-paths, dll-hijacking, or kernel paths.</p>
+<li>The print spooler is disabled. PrintSpoofer needs it; check</li>
+<p><code>sc.exe query spooler</code> before assuming the path.</p>
+<li>DCOM is hardened or the firewall blocks the needed ports. RoguePotato</li>
+<p>needs its listener reachable; test locally first.</p>
+<li>The tool is flagged by AV/EDR. Use the in-scope approved tooling only,</li>
+<p>and coordinate with the test lead; disabled AV on a production host needs explicit approval.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The working variant is unknown for the build: lab-test the candidates</li>
+<p>in order (GodPotato, RoguePotato, PrintSpoofer) against a matching VM.</p>
+<li>Token impersonation succeeds but objectives need domain access: hand</li>
+<p>the SYSTEM shell to ad-enumeration for the domain phase.</p>
+<li>Nothing works: the host may be properly hardened against token abuse;</li>
+<p>document the negative result with the privilege list as evidence.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see potato techniques as odd DCOM activations, named pipe servers appearing briefly, and service accounts spawning SYSTEM shells, all of which EDR and Sysmon log well. The durable fixes are removing SeImpersonatePrivilege from service accounts that do not need it, disabling the print spooler where unused, patching on schedule, and alerting on DCOM anomalies. Token theft is a symptom of over-privileged service accounts.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1134.001 (Access Token Manipulation: Token</li>
+<p>Impersonation/Theft).</p>
+<li>MITRE ATT&amp;CK T1134.002 (Access Token Manipulation: Create Process with</li>
+<p>Token).</p>
+<li>CWE-250 (Execution with Unnecessary Privileges).</li>
+<li>Current potato technique research (match to the target build).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

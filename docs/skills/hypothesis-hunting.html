@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: hypothesis-hunting</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>hypothesis-hunting</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hunting threats from an idea about attacker</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="threat-hunting.html">threat-hunting</a></div><div class="deps"><span class="kind">requires:</span> <a href="threat-hunting.html">threat-hunting</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Velociraptor</td><td>0.72</td></tr><tr><td>osquery</td><td>5.12</td></tr></tbody></table><p>Hypothesis hunting starts from an idea: &quot;attackers are using WMI for persistence in our estate,&quot; then proves or disproves it with data. This skill covers the hypothesis-driven hunt: writing hypotheses that are testable, scoping them to the data you have, executing efficiently, and concluding with evidence either way. A hunt without a hypothesis is just browsing logs; the hypothesis is what makes it hunting.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Write the hypothesis: actor, technique, expected evidence.</li>
+<li>Check data availability: do the logs exist to test it.</li>
+<li>Scope: which hosts, what time window, what data sources.</li>
+<li>Execute: query for the expected evidence, then for its absence.</li>
+<li>Conclude: confirmed, refuted, or inconclusive, with the evidence.</li>
+<li>Convert confirmed hunts into detections; log refuted ones too.</li>
+<li>Feed lessons into the next hypothesis.</li>
+</ol>
+<h2>1. Writing testable hypotheses</h2>
+<pre><code class="language-bash">cat &gt; /tmp/hunt_hypothesis.txt &lt;&lt;&#x27;EOF&#x27;
+Hypothesis: Attackers are maintaining persistence via WMI event
+subscriptions on our Windows workstations.
+
+Expected evidence if TRUE:
+- WMI event consumers not created by our management tooling
+- Recent creation timestamps on suspicious subscriptions
+- Associated event filters querying process creation
+
+Data needed: WMI repository (via Velociraptor), EDR process data
+Scope: all Windows workstations, last 90 days
+Falsifiable: a clean inventory of WMI subscriptions refutes it
+EOF</code></pre>
+<p>A good hypothesis names the technique, the expected evidence, and what would disprove it. &quot;APT is in our network&quot; is not a hypothesis; &quot;WMI persistence exists on workstations&quot; is. Write it before touching the data; the hypothesis disciplines the hunt.</p>
+<h2>2. Executing the hunt</h2>
+<pre><code class="language-bash"># Example: hunt WMI persistence with Velociraptor across the fleet
+# Artifact: Windows.Persistence.WMI or custom WMI enumeration query
+# Collect, then review for non-standard consumers
+
+# osquery alternative for the same question on enrolled hosts
+osqueryi &quot;SELECT name, query FROM wmi_event_filters;&quot; 2&gt;/dev/null | head -10
+
+# Analysis discipline:
+# 1. Baseline first: what does NORMAL look like? (management tooling,
+#    known-good subscriptions)
+# 2. Anomalies: everything not in the baseline gets reviewed
+# 3. Validate: each anomaly checked against change records before
+#    verdicting</code></pre>
+<p>Baseline before anomaly: the hunt that skips the baseline verdicts the management tooling as malicious and wastes the cycle. Spend the first third of the hunt learning normal for the specific question.</p>
+<h2>3. Concluding and converting</h2>
+<pre><code class="language-bash"># Conclusion template:
+cat &gt; /tmp/hunt_conclusion.txt &lt;&lt;&#x27;EOF&#x27;
+Hypothesis: &lt;text&gt;
+Verdict: CONFIRMED / REFUTED / INCONCLUSIVE
+Evidence: &lt;what was found, with queries and counts&gt;
+Scope covered: &lt;hosts, window, sources&gt;
+Gaps: &lt;what could not be checked&gt;
+
+If CONFIRMED: incident declared, handed to ir-scoping with this evidence
+If REFUTED: detection opportunity logged (see below)
+EOF
+
+# Every hunt produces a detection, even refuted ones:
+# the queries become the scheduled check that keeps the answer fresh</code></pre>
+<p>Refuted hypotheses are wins: they are answered questions, and their queries become the monitoring that keeps them answered. The hunt program&#x27;s output is detections, not just incidents; track both.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The data does not exist. The hunt becomes a logging gap finding;</li>
+<p>that is a valid and valuable conclusion, not a failure.</p>
+<li>The scope is too big for the time. Narrow the hypothesis (one</li>
+<p>business unit, one technique variant) rather than skimming everything.</p>
+<li>The hypothesis is confirmed everywhere (widespread). Escalate to</li>
+<p>incident response; the hunt did its job, now the response runs.</p>
+<li>Threat intel is vague. Sharpen it into the testable form above</li>
+<p>before hunting; vague intel produces vague hunts.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Confirmation: hand to ir-scoping immediately with the hunt evidence;</li>
+<p>do not keep hunting while the incident waits.</p>
+<li>You need better data: the hunt&#x27;s data gaps become the logging</li>
+<p>improvement backlog, prioritized by hunt value.</p>
+<li>The hunt program needs structure: run hypotheses in cycles (weekly),</li>
+<p>track them, and review the detection conversions quarterly.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Hypothesis hunting IS the defender&#x27;s proactive detection: it finds what the alerts missed and turns the findings into new alerts. The program matures from alert-driven to hunt-driven to detection-engineered, where every hunt&#x27;s queries become permanent coverage. The defender&#x27;s metric is hunts per quarter and the detection conversion rate, not just incidents found.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK (hypotheses map to techniques; use the framework).</li>
+<li>Sqrrl/Threat hunting methodology references.</li>
+<li>NIST SP 800-61 (hunt-to-incident handoff).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

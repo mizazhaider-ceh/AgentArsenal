@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal decision: RISK_MATRIX</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>RISK_MATRIX</h2><div class="meta"><span class="badge gray">decision doc</span><span class="muted">RISK_MATRIX.md</span></div><h1>Risk Matrix</h1>
+<p>Score every proposed action before you take it. Likelihood times impact, each on a 1 to 5 scale. The score decides whether the action needs approval, extra safeguards, or is refused outright.</p>
+<h2>Scales</h2>
+<p>Likelihood (how probable is the bad outcome if we do this):</p>
+<ol>
+<li>Rare: never seen in similar work, theoretical only.</li>
+<li>Unlikely: seen once or twice in the field, needs unusual conditions.</li>
+<li>Possible: happens regularly in similar work.</li>
+<li>Likely: expected unless we take specific precautions.</li>
+<li>Almost certain: will happen if we proceed.</li>
+</ol>
+<p>Impact (how bad is the bad outcome):</p>
+<ol>
+<li>Negligible: cosmetic, no data or availability effect.</li>
+<li>Minor: brief degradation, recoverable in minutes, no data loss.</li>
+<li>Moderate: noticeable downtime or partial data loss, recoverable in hours.</li>
+<li>Major: extended outage or significant data loss, recovery takes days.</li>
+<li>Catastrophic: unrecoverable data loss, safety consequences, legal</li>
+<p>exposure, or loss of client trust.</p>
+</ol>
+<h2>Score bands</h2>
+<p>| Score (L x I) | Band | Meaning | | --- | --- | --- | | 1-4 | Low | Proceed. Standard care. | | 5-9 | Medium | Proceed with the documented safeguard for this action. | | 10-16 | High | Engagement lead approves first, safeguard mandatory, rollback plan ready. | | 17-25 | Extreme | Refuse or redesign. No approval path except a written client exception. |</p>
+<h2>Worked example</h2>
+<p>Proposed action: run <code>nmap -sS -p- --min-rate 5000</code> against the client&#x27;s production /24 during business hours.</p>
+<ul>
+<li>Likelihood of disruption: the client&#x27;s IDS is known to be aggressive and</li>
+<p>the network team was not warned. Similar scans have triggered quarantine before. Likelihood = 4 (likely).</p>
+<li>Impact of disruption: a quarantined jump host would stall the whole team</li>
+<p>for a day, but no data loss. Impact = 3 (moderate).</p>
+<li>Score: 4 x 3 = 12, band High.</li>
+</ul>
+<p>Decision: do not run as proposed. Options: get engagement lead approval with a maintenance window (still High, needs the window as safeguard), or redesign: slow the scan (<code>--max-rate 200</code>), scan after hours, warn the network team. Redesigned: likelihood drops to 2 (unfamiliar scan profile, warned team), impact stays 3. Score 6, Medium. Proceed with the safeguard documented in the engagement log.</p>
+<h2>Rules</h2>
+<ul>
+<li>Score before acting, not after. The score and the chosen safeguard go in</li>
+<p>the engagement log next to the command.</p>
+<li>When in doubt between two likelihood values, take the higher one.</li>
+<li>A High score never proceeds on agent authority alone.</li>
+<li>Extreme scores are not negotiated down by optimism; they are redesigned</li>
+<p>or refused.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

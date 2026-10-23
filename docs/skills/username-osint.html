@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: username-osint</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>username-osint</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when investigating a username across platforms on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-methodology.html">osint-methodology</a> <a href="social-media-osint.html">social-media-osint</a> <a href="image-osint.html">image-osint</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Usernames are reused everywhere: one handle can link a forum, a code repo, and a gaming profile into one person. This skill covers the authorized investigation method: enumerating where a username exists, correlating profiles, and building the timeline. Work within your authorization and the platforms&#x27; terms; this is for investigations, not doxxing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the authorization and the question: what are you trying</li>
+<p>to establish.</p>
+<li>Enumerate platforms: where the exact username (and close</li>
+<p>variants) exists.</p>
+<li>Collect profiles: bio, links, dates, and connections, with</li>
+<p>timestamps.</p>
+<li>Correlate: shared emails, avatars, writing style, and time</li>
+<p>zones across profiles.</p>
+<li>Build the timeline: account creation order and activity</li>
+<p>patterns.</p>
+<li>Verify: rule out impersonators and name collisions.</li>
+<li>Document every source with capture dates.</li>
+<li>Report confidence per link, not just conclusions.</li>
+</ol>
+<h2>1. Enumeration</h2>
+<pre><code class="language-bash"># Username enumeration (sherlock/maigret style tooling, authorized use)
+# Check the exact handle and common variants across platforms
+python3 - &lt;&lt; &#x27;PY&#x27;
+handle = &quot;target_handle&quot;
+variants = [handle, handle + &quot;_&quot;, handle + &quot;01&quot;, handle.replace(&quot;_&quot;, &quot;&quot;)]
+print(&quot;check each variant on: github, twitter/x, reddit, telegram,&quot;)
+print(&quot;instagram, tiktok, forums, gaming platforms, code sites&quot;)
+print(&quot;record: exists, profile URL, creation hints, bio, links&quot;)
+PY</code></pre>
+<pre><code class="language-bash"># For each hit, capture the profile consistently:
+# - bio text and any linked sites or emails
+# - avatar image (hash it for cross platform comparison)
+# - follower/following counts and notable connections
+# - earliest visible activity
+echo &quot;screenshots with timestamps; URLs in the case notes&quot;</code></pre>
+<h2>2. Correlation</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Profile correlator: scores links between two profiles.&quot;&quot;&quot;
+def score(p1, p2):
+    s = 0
+    reasons = []
+    if p1.get(&quot;avatar_hash&quot;) == p2.get(&quot;avatar_hash&quot;):
+        s += 3; reasons.append(&quot;same avatar&quot;)
+    if p1.get(&quot;bio_link&quot;) == p2.get(&quot;bio_link&quot;):
+        s += 3; reasons.append(&quot;same linked site&quot;)
+    if p1.get(&quot;email&quot;) and p1[&quot;email&quot;] == p2.get(&quot;email&quot;):
+        s += 4; reasons.append(&quot;same email&quot;)
+    if abs(p1.get(&quot;tz_hint&quot;, 0) - p2.get(&quot;tz_hint&quot;, 0)) &lt; 2:
+        s += 1; reasons.append(&quot;similar activity hours&quot;)
+    return s, reasons
+
+print(&quot;threshold: 5+ with at least one strong signal before claiming same person&quot;)</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Common username with many owners. Disambiguate with the</li>
+<p>correlation signals; never assume.</p>
+<li>The subject uses different personas deliberately. Note the</li>
+<p>separation; linking them may be the finding or may be wrong.</p>
+<li>Platform terms restrict automation. Respect rate limits and</li>
+<p>terms; manual review for the sensitive links.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Criminal investigation: preserve chain of custody and involve</li>
+<p>counsel before deeper collection.</p>
+<li>Need real identity: OSINT suggests, it does not prove; legal</li>
+<p>process is the escalation path.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For investigators this is attribution; for defenders it is understanding exposure: what employee usernames reveal, and how attackers profile targets. Organizations defend with social media guidance, unique work handles, and monitoring for impersonation. The durable rule for everyone: usernames are identifiers, treat them as public.</p>
+<h2>Key references</h2>
+<ul>
+<li>OSINT collection methodology guides.</li>
+<li>Platform terms of service for automation limits.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

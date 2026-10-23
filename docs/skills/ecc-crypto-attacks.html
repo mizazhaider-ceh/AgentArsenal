@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ecc-crypto-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ecc-crypto-attacks</h2><div class="meta"><span class="badge gray">crypto</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing elliptic curve cryptography on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a> <a href="rsa-attacks.html">rsa-attacks</a> <a href="tls-analysis.html">tls-analysis</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>OpenSSL</td><td>3.4</td></tr></tbody></table><p>Elliptic curve crypto is strong when the parameters and implementation are right, and fragile when they are not: bad curves, reused nonces, and missing point validation all break it. This skill covers authorized assessment: checking the curve choice, testing nonce handling, and reviewing implementations. It is analysis and review, not breaking standard curves.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify every use of ECC: key exchange, signatures, and the</li>
+<p>curves named.</p>
+<li>Check the curve: standard (P-256, Curve25519) vs custom</li>
+<p>parameters.</p>
+<li>Validate the parameters of any custom curve: order, cofactor,</li>
+<p>and twist security.</p>
+<li>Test ECDSA nonce handling: reuse or bias leaks the private key.</li>
+<li>Check point validation: does the code reject invalid points.</li>
+<li>Review the implementation: constant time, blinding, and RNG.</li>
+<li>Check the protocol use: signatures verified, keys validated.</li>
+<li>Report with the specific parameter or code flaw.</li>
+</ol>
+<h2>1. Curve parameter review</h2>
+<pre><code class="language-bash"># List the curves and code paths in use
+grep -rn &quot;secp256\|P-256\|curve25519\|ed25519\|secp256k1\|prime256v1&quot; \
+  --include=&quot;*.py&quot; --include=&quot;*.c&quot; --include=&quot;*.js&quot; src/ | head -20
+# Custom curve definitions need full parameter validation
+openssl ecparam -list_curves | head -20</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;ECDSA nonce reuse demo: two signatures, same nonce -&gt; key recovery.&quot;&quot;&quot;
+# s1 = k^-1 (h1 + d*r), s2 = k^-1 (h2 + d*r)  =&gt;  solve for k, then d
+# This is why RFC 6979 deterministic nonces exist: randomness failures
+# must not leak the key.
+print(&quot;check: does signing use RFC 6979 or a CSPRNG per signature?&quot;)
+print(&quot;test (lab): sign the same message twice; identical r twice with&quot;)
+print(&quot;different messages under one key = nonce reuse, key recoverable&quot;)</code></pre>
+<h2>2. Invalid curve attack concept</h2>
+<pre><code class="language-bash"># If the implementation does not validate that received points are on
+# the correct curve, an attacker sends points on a weak twist curve
+# and learns the private key bit by bit from the results.
+# Review: does the code call the point validation routine before ECDH?
+grep -rn &quot;validate\|on_curve\|is_on_curve&quot; ecc_src/ -i | head -10
+# Missing validation on attacker supplied points = the finding</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The library is well known (OpenSSL, libsodium). Focus on how the</li>
+<p>product uses it, not the library internals.</p>
+<li>Custom curves for &quot;performance&quot;. Demand the parameter</li>
+<p>generation story; unexplained custom curves are suspect.</p>
+<li>Hybrid post quantum plus ECC. Review both halves; the migration</li>
+<p>is where mistakes happen.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Nonce reuse confirmed in a lab build: this recovers keys;</li>
+<p>demonstrate on test keys, then report as critical.</p>
+<li>Invalid curve possible: prove with a test harness on lab keys</li>
+<p>before reporting.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>ECC misuse is found by review, not monitoring: parameter audits, nonce uniqueness tests, and validation checks. Defenders standardize on vetted curves (P-256, Ed25519, X25519), use audited libraries, and test signatures against known answer vectors. The durable rule is never roll your own curve or your own ECDSA nonce logic.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm).</li>
+<li>CWE-330 (Use of Insufficiently Random Values): nonce issues.</li>
+<li>RFC 6979 (deterministic ECDSA), RFC 7748 (X25519/Ed25519).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

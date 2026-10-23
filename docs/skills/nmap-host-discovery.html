@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: nmap-host-discovery</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>nmap-host-discovery</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to find which hosts are alive in a network</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="nmap-methodology.html">nmap-methodology</a></div><div class="deps"><span class="kind">requires:</span> <a href="nmap-methodology.html">nmap-methodology</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-active.html">recon-active</a> <a href="network-pivoting.html">network-pivoting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>nmap</td><td>7.98</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Host discovery answers the first network question: which addresses are alive. nmap&#x27;s discovery engine tries several probe types because any single one can be blocked. This skill covers choosing and running the right host discovery on authorized engagements: ARP on local segments, ICMP and TCP probes across routers, and UDP probes for stubborn networks. It produces the live-host list that every later nmap phase consumes.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Determine your vantage point: same subnet (ARP works) or routed (ARP</li>
+<p>does not).</p>
+<li>Pick probe types the network is likely to answer: ARP locally, ICMP</li>
+<p>plus TCP SYN remotely.</p>
+<li>Run discovery only (<code>-sn</code>) and save the live host list.</li>
+<li>Spot-check the list against expected hosts (gateways, known servers).</li>
+<li>Tune probes if hosts are missing: add TCP ports, try UDP, adjust</li>
+<p>timing.</p>
+<li>Export the clean list for the port scanning phase.</li>
+</ol>
+<h2>1. Local network discovery</h2>
+<pre><code class="language-bash"># ARP discovery is the most reliable on a local segment: hosts must
+# answer ARP to communicate at all
+nmap -sn -PR 10.0.5.0/24 -oN /tmp/arp_disc.txt
+
+# Extract just the live IPs for the next phase
+grep -oE &#x27;Nmap scan report for [0-9.]+&#x27; /tmp/arp_disc.txt \
+  | awk &#x27;{print $NF}&#x27; &gt; /tmp/live.txt
+wc -l /tmp/live.txt
+
+# Skip discovery entirely when you already know the targets
+nmap -Pn -sS --top-ports 100 -iL /tmp/live.txt -oN /tmp/ports.txt</code></pre>
+<p>On a local segment, <code>-PR</code> rarely misses. If hosts are missing here, they are down, firewalled at layer 2, or outside the segment you think you are on.</p>
+<h2>2. Routed network discovery</h2>
+<pre><code class="language-bash"># Default discovery: ICMP echo, ICMP timestamp, TCP SYN to 443, TCP ACK
+# to 80, plus ARP where applicable
+nmap -sn 10.1.0.0/24 -oN /tmp/disc1.txt
+
+# ICMP blocked: lead with TCP SYN pings to common ports
+nmap -sn -PS22,80,443,3389 10.1.0.0/24 -oN /tmp/disc2.txt
+
+# Both blocked: TCP ACK ping and UDP ping as last resorts
+nmap -sn -PA80,443 -PU53,161 10.1.0.0/24 -oN /tmp/disc3.txt
+
+# Compare the lists; the union with notes is your answer
+cat /tmp/disc*.txt | grep -oE &#x27;Nmap scan report for [0-9.]+&#x27; \
+  | awk &#x27;{print $NF}&#x27; | sort -u &gt; /tmp/live_all.txt</code></pre>
+<p>Firewalls that block ICMP usually still pass TCP to open service ports, so <code>-PS</code> with the ports you expect to be open is the workhorse probe across routers.</p>
+<h2>3. Timing and reliability</h2>
+<pre><code class="language-bash"># Slow, reliable discovery for fragile or heavily filtered networks
+nmap -sn -T2 --max-retries 3 10.2.0.0/24 -oN /tmp/slow.txt
+
+# Fast discovery when the window is short (less reliable)
+nmap -sn -T4 --min-parallelism 100 10.3.0.0/16 -oN /tmp/fast.txt
+
+# DNS resolution control: skip it for speed, keep it for readability
+nmap -sn -n 10.4.0.0/24 -oN /tmp/nonames.txt</code></pre>
+<p>Discovery reliability trades against speed directly. For the authoritative inventory, prefer the slower run; for a quick check during pivoting, the fast run is fine.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Every host appears down. The probe type is blocked, not the hosts;</li>
+<p>switch probe families before concluding the range is empty.</p>
+<li>The VPN or tunnel drops ARP. Routed probes only; <code>-PR</code> silently does</li>
+<p>nothing useful off-segment.</p>
+<li>Duplicate IPs or virtual IPs inflate the list. Note gateways, VIPs, and</li>
+<p>load balancer addresses separately from real hosts.</p>
+<li>Host discovery finds hosts that port scanning cannot reach. Asymmetric</li>
+<p>routing or host firewalls cause this; note the discrepancy and scan from a closer vantage point if the engagement allows.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need stealth: use <code>-T2</code> with decoys (<code>-D</code>) during agreed windows,</li>
+<p>or discover from traffic you already cause (DNS logs, ARP tables on a compromised host) instead of scanning.</p>
+<li>A critical subnet must not be ping-swept: get the live list from the</li>
+<p>client (DHCP leases, asset inventory) and note the method in the report.</p>
+<li>Results must be reproducible: save the exact command, nmap version,</li>
+<p>and timestamp with every host list.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see host discovery as probe bursts (ICMP sweeps, ARP storms, TCP SYN to many hosts) that IDS and NDR flag as the classic start of an attack. ARP discovery is visible to anyone on the segment. Defenses are IDS sweep detection, firewall rules that drop unsolicited probes, and network segmentation so discovery finds little of value. Quiet discovery uses existing traffic, not new probes.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1018 (Remote System Discovery).</li>
+<li>MITRE ATT&amp;CK T1595 (Active Scanning).</li>
+<li>nmap 7.98 documentation: host discovery.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal playbook: ad-assessment</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>ad-assessment</h2><div class="meta"><span class="badge gray">playbook</span><span class="muted">v1.0.0</span></div><p>Use when you need an Active Directory security assessment, from anonymous enumeration to domain compromise paths, mapped attack chains, and a hardening roadmap. Covers network discovery, SMB and AD enumeration, BloodHound path analysis, Kerberos attacks, credential recovery, and privilege escalation to domain admin. Load this playbook when the engagement covers an internal AD forest and you need ordered phases, owners, skills, brains, and decision gates for safe, documented domain testing.</p><h1>Active Directory Assessment Playbook</h1>
+<p>Authorized work only. Test only the domains, OUs, and accounts named in the rules of engagement. Kerberos attacks and credential extraction run only against approved targets, and never during production hours without written approval.</p>
+<h2>Objective</h2>
+<p>Map the Active Directory attack surface, find the shortest and most realistic paths to domain compromise, demonstrate them safely, and deliver a hardening roadmap ordered by risk reduction. Success is a complete attack path map from the assumed starting position, validated privilege escalation chains, and fixes the defenders can implement in priority order.</p>
+<h2>Phase table</h2>
+<p>| phase | owner agent | skills used | brains used | decision gates | exit criteria | |-------|-------------|-------------|-------------|----------------|---------------| | 1. Scope and start position | pentest-reporter-agent | technical-writing, testing-strategies | assume-breach, incident-command-mindset | GO_NO_GO_GATES | In-scope domains, start position (unauthenticated or standard user), test windows | | 2. Network and host discovery | recon-agent | recon-active, nmap-methodology, smb-enumeration, dns-enumeration | attacker-mindset, opa-decision-loop | GO_NO_GO_GATES | Live hosts, DCs identified, SMB shares listed | | 3. AD enumeration | ad-attack-agent | ad-enumeration, bloodhound-methodology, llmnr-poisoning | attacker-mindset, evidence-chain | ESCALATION_POLICY | Users, groups, GPOs, trusts, and attack paths collected | | 4. Credential attacks | ad-attack-agent | kerberoasting, asreproasting, password-attacks, hash-cracking | cost-of-attack, opa-decision-loop | RISK_MATRIX | Cracked or recovered credentials documented with source | | 5. Privilege escalation and domain compromise | ad-attack-agent | dcsync, golden-ticket, privesc-windows, network-pivoting | blast-radius-thinking, assume-breach | ESCALATION_POLICY, RISK_MATRIX | Validated path to domain admin, impact demonstrated safely | | 6. Reporting and hardening roadmap | pentest-reporter-agent | technical-writing, testing-strategies | root-cause-analysis, evidence-chain | COST_BENEFIT | Attack path map, findings, prioritized hardening plan |</p>
+<h2>Detailed phases</h2>
+<h3>Phase 1. Scope and start position</h3>
+<p>Steps:</p>
+<ol>
+<li>Confirm the forest, domains, and any excluded OUs, service accounts, or systems in the rules of engagement.</li>
+<li>Agree the starting position: unauthenticated network access, standard domain user, or both. Get the test accounts provisioned.</li>
+<li>Set test windows that avoid backups, patching, and business hours for noisy actions.</li>
+<li>Record the approval chain for escalation decisions during the test.</li>
+</ol>
+<p>Evidence to collect: signed ROE, domain and OU scope list, test account details, window schedule, approval chain.</p>
+<h3>Phase 2. Network and host discovery</h3>
+<p>Steps:</p>
+<ol>
+<li>Sweep the in-scope subnets for live hosts and identify domain controllers by service fingerprint.</li>
+<li>Enumerate SMB shares, null sessions where permitted, and exposed services on each host.</li>
+<li>Enumerate DNS for the AD zones to find DCs, trusts, and service records.</li>
+<li>Reconcile findings with the client&#x27;s asset list and confirm any unexpected DC before touching it.</li>
+</ol>
+<p>Commands (where relevant):</p>
+<pre><code class="language-bash">nmap -sS -T4 -p 53,88,135,139,389,445,636,3268 --open -oA scans/ad-ports &lt;in-scope-subnet&gt;
+nxc smb &lt;dc-ip&gt; -u &#x27;&#x27; -p &#x27;&#x27; --shares</code></pre>
+<p>Evidence to collect: raw scan output, DC identification notes, share listings, reconciliation log.</p>
+<h3>Phase 3. AD enumeration</h3>
+<p>Steps:</p>
+<ol>
+<li>Run standard AD enumeration: users, groups, computers, OUs, GPOs, trusts, and delegation settings.</li>
+<li>Collect BloodHound data with the approved collector and analyze shortest paths to high-value targets.</li>
+<li>Test for LLMNR, NBT-NS, and WPAD poisoning opportunities on the local segment within the test window.</li>
+<li>Document every attack path with the starting principal, the technique, and the target.</li>
+</ol>
+<p>Commands (where relevant):</p>
+<pre><code class="language-bash">bloodhound-python -u &lt;user&gt; -p &lt;pass&gt; -d &lt;domain&gt; -dc &lt;dc-ip&gt; -c all -o out/
+# import out/*.json into BloodHound, export shortest path queries</code></pre>
+<p>Evidence to collect: enumeration output, BloodHound dataset and path exports, poisoning test results, attack path register.</p>
+<h3>Phase 4. Credential attacks</h3>
+<p>Steps:</p>
+<ol>
+<li>Request Kerberoastable service account tickets and crack them offline. Record which accounts fall and how fast.</li>
+<li>Test for AS-REP roastable accounts and attempt offline cracking.</li>
+<li>Run approved password spraying with a small, agreed wordlist against a limited account set, watching for lockout.</li>
+<li>Crack recovered hashes offline and document the source of each credential.</li>
+</ol>
+<p>Commands (where relevant):</p>
+<pre><code class="language-bash">GetUserSPNs.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt; -dc-ip &lt;dc-ip&gt; -request -outputfile roast.txt
+hashcat -m 13100 roast.txt wordlists/approved.txt</code></pre>
+<p>Evidence to collect: roastable account list, cracking results with times, spray logs, credential source register.</p>
+<h3>Phase 5. Privilege escalation and domain compromise</h3>
+<p>Steps:</p>
+<ol>
+<li>Walk the shortest validated attack path toward domain admin, confirming each hop before taking the next.</li>
+<li>Demonstrate domain compromise safely: read a proof object or show DCSync capability on a test account, never dumping the full NTDS without explicit written approval.</li>
+<li>Test persistence mechanisms only if persistence testing is in scope, and remove every artifact afterward.</li>
+<li>Stop at the first sign of touching production safety systems, backup infrastructure, or out-of-scope trusts. Escalate immediately.</li>
+</ol>
+<p>Evidence to collect: hop-by-hop path log, domain compromise proof, persistence artifact inventory with removal confirmation, escalation records.</p>
+<h3>Phase 6. Reporting and hardening roadmap</h3>
+<p>Steps:</p>
+<ol>
+<li>Draw the attack path map: every path from the start position to domain admin, with the technique at each hop.</li>
+<li>Write findings with severity, affected objects, reproduction steps, and the exact hardening change that closes the path.</li>
+<li>Build the hardening roadmap in priority order: quick wins first (for example, strong service account passwords, LLMNR disabled), structural fixes next (tiering, delegation cleanup).</li>
+<li>Deliver the draft, run the defender walkthrough, finalize, and schedule the retest.</li>
+</ol>
+<p>Evidence to collect: attack path map, findings with reproduction steps, prioritized hardening roadmap, walkthrough notes, final report.</p>
+<h2>Decision gates</h2>
+<ul>
+<li><strong>GO_NO_GO_GATES</strong> (decisions/GO_NO_GO_GATES.md): must pass before Phase 1 and Phase 2. Checks: signed authorization, domain and OU scope confirmed, test accounts provisioned, test windows agreed, backup and patching blackout times recorded.</li>
+<li><strong>ESCALATION_POLICY</strong> (decisions/ESCALATION_POLICY.md): used in Phases 3 and 5. Unexpected DC, out-of-scope trust, or production safety system encountered: stop, notify, wait for written approval.</li>
+<li><strong>RISK_MATRIX</strong> (decisions/RISK_MATRIX.md): used in Phases 4 and 5. Password spraying, ticket requests, DCSync, and golden ticket creation are scored for lockout and replication risk before running.</li>
+<li><strong>COST_BENEFIT</strong> (decisions/COST_BENEFIT.md): used in Phase 6. Hardening items are ordered by implementation cost versus path closure value so defenders fix the highest-value items first.</li>
+</ul>
+<h2>Deliverables</h2>
+<ol>
+<li>Scope document with domains, OUs, start position, and windows.</li>
+<li>Network and SMB discovery output.</li>
+<li>AD enumeration dataset and attack path register.</li>
+<li>Credential attack results with sources and cracking times.</li>
+<li>Validated domain compromise path log with safe proof.</li>
+<li>Attack path map, findings report, and prioritized hardening roadmap.</li>
+<li>Retest schedule.</li>
+</ol>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

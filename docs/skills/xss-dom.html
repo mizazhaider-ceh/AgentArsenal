@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: xss-dom</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>xss-dom</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing for DOM-based cross-site scripting on an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="web-xss.html">web-xss</a></div><div class="deps"><span class="kind">requires:</span> <a href="web-xss.html">web-xss</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>curl</td><td>8.5</td></tr></tbody></table><p>DOM-based XSS never touches the server: JavaScript reads attacker-controlled data (the URL fragment, <code>postMessage</code>, <code>localStorage</code>) and writes it into a dangerous sink (<code>innerHTML</code>, <code>eval</code>, <code>document.write</code>). Server-side scanners miss it entirely, which makes manual source-to-sink tracing the core skill. This sub-skill covers mapping DOM XSS on authorized tests: finding sources and sinks in client-side code, building fragment vectors, and confirming execution in a real browser.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Collect the page&#x27;s JavaScript: inline scripts and every linked file.</li>
+<li>Mark sources: <code>location.hash</code>, <code>location.search</code>, <code>document.referrer</code>,</li>
+<p><code>postMessage</code> handlers, <code>localStorage</code>, <code>sessionStorage</code>.</p>
+<li>Mark sinks: <code>innerHTML</code>, <code>outerHTML</code>, <code>document.write</code>, <code>eval</code>,</li>
+<p><code>setTimeout</code> with strings, <code>location</code> assignment, jQuery <code>.html()</code>.</p>
+<li>Trace each source to each sink and note any sanitization in between.</li>
+<li>Build a fragment or query vector that reaches the sink.</li>
+<li>Confirm in a real browser with a harmless marker.</li>
+<li>Record the source, the sink, the code path, and the PoC URL.</li>
+</ol>
+<h2>1. Source and sink mapping</h2>
+<pre><code class="language-bash"># Download the page and its scripts for offline review
+curl -s &#x27;https://target.example/app&#x27; -o /tmp/app.html
+grep -o &#x27;src=&quot;[^&quot;]*\.js&quot;&#x27; /tmp/app.html | head -20
+
+# Quick source and sink grep over saved JavaScript
+grep -n -E &#x27;location\.(hash|search)|document\.referrer|postMessage|localStorage&#x27; /tmp/app.js
+grep -n -E &#x27;innerHTML|outerHTML|document\.write|eval\(|setTimeout\(&#x27; /tmp/app.js
+
+# Look for the dangerous pattern: source flowing into sink
+# Example find:
+#   var name = location.hash.slice(1);
+#   document.getElementById(&#x27;greet&#x27;).innerHTML = &#x27;Hi &#x27; + name;</code></pre>
+<p>In the browser, use DevTools: set a DOM breakpoint on subtree modification of the target element, then load the fragment vector and watch the exact code path that fires.</p>
+<h2>2. Fragment vectors</h2>
+<p>The fragment (<code>#...</code>) never reaches the server, so server logs stay clean and the payload lives only in the victim&#x27;s browser.</p>
+<pre><code class="language-bash"># Sink: element.innerHTML = location.hash.slice(1)
+# PoC URL:
+# https://target.example/app#&lt;img src=x onerror=console.log(&#x27;dom&#x27;)&gt;
+
+# Sink: document.write(location.search)
+# PoC URL:
+# https://target.example/app?x=&lt;svg onload=console.log(&#x27;dom&#x27;)&gt;
+
+# Sink: eval of a stored value
+# localStorage.setItem(&#x27;theme&#x27;, &quot;&#x27;);console.log(&#x27;dom&#x27;);//&quot;) then reload
+python3 - &lt;&lt;&#x27;EOF&#x27;
+# Build the PoC URL safely
+import urllib.parse
+frag = &quot;&lt;img src=x onerror=console.log(&#x27;dom&#x27;)&gt;&quot;
+print(&quot;https://target.example/app#&quot; + urllib.parse.quote(frag))
+EOF</code></pre>
+<p>Confirm by loading the URL in a test browser and checking for the marker (title change or console message). curl alone can never confirm DOM XSS.</p>
+<h2>3. postMessage sinks</h2>
+<pre><code class="language-javascript">// Vulnerable pattern to look for:
+window.addEventListener(&#x27;message&#x27;, function(e) {
+  document.getElementById(&#x27;panel&#x27;).innerHTML = e.data; // no origin check
+});</code></pre>
+<pre><code class="language-bash"># PoC: an attacker page that messages the target
+cat &gt; /tmp/poc.html &lt;&lt;&#x27;EOF&#x27;
+&lt;iframe src=&quot;https://target.example/app&quot;&gt;&lt;/iframe&gt;
+&lt;script&gt;
+window.onload = () =&gt; {
+  frames[0].postMessage(&quot;&lt;img src=x onerror=console.log(&#x27;pm&#x27;)&gt;&quot;, &quot;*&quot;);
+};
+&lt;/script&gt;
+EOF
+echo &quot;Open /tmp/poc.html in a test browser&quot;</code></pre>
+<p>Check the origin validation: <code>if (e.origin !== &#x27;https://target.example&#x27;)</code> kills this vector, while no check or a substring check keeps it alive. Note the exact validation in your report either way.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The sink is reached only after client-side routing. Single-page apps</li>
+<p>parse the fragment with their own router; test the vector against the routed view, not the landing page.</p>
+<li>A sanitizer sits between source and sink. Identify it (DOMPurify,</li>
+<p>custom regex) and test its known bypasses one at a time instead of assuming it holds.</p>
+<li>The vulnerable code loads only for certain users or locales. Enumerate</li>
+<p>script variants by role and pick the one with the weakest handling.</p>
+<li>jQuery or framework sinks behave differently. <code>$().html()</code> is a sink,</li>
+<p><code>$().text()</code> is not; Angular and React auto-escape unless the code uses <code>bypassSecurityTrustHtml</code> or <code>dangerouslySetInnerHTML</code>, which are the real targets.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Static analysis finds no source-to-sink path: drive the page in a real</li>
+<p>browser with the fragment set and watch DevTools; dynamically injected scripts and event handlers hide from grep.</p>
+<li>The sink needs a specific application state: script the state setup</li>
+<p>(log in, add an item, navigate) before delivering the fragment, and document the full chain.</p>
+<li>You need impact beyond a marker: with permission, demonstrate reading</li>
+<p><code>document.cookie</code> in the console; do not build exfiltration without written approval.</p>
+<li>The finding is in third-party script: verify the script is actually</li>
+<p>loaded by the target (not a leftover reference) and note the supply chain angle.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders rarely see DOM XSS in server logs because the payload never leaves the browser; discovery usually comes from code review, bug reports, or client-side monitoring. postMessage vectors may show the attacker&#x27;s referrer in logs. Durable defense is safe sink usage (<code>textContent</code> instead of <code>innerHTML</code>, no <code>eval</code>), strict origin checks on every <code>message</code> handler, DOMPurify on any HTML that must be injected, and Content Security Policy as a backstop.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-79 (Improper Neutralization of Input During Web Page Generation,</li>
+<p>Cross-site Scripting).</p>
+<li>OWASP Testing Guide: Testing for DOM-based Cross Site Scripting</li>
+<p>(OTG-CLIENT-001).</p>
+<li>PortSwigger Web Security Academy: DOM XSS labs and cheat sheet.</li>
+<li>DOMPurify documentation for safe HTML sanitization reference.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

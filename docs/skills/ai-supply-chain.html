@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ai-supply-chain</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ai-supply-chain</h2><div class="meta"><span class="badge gray">ai-security</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reviewing the supply chain of an AI system on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cicd-security.html">cicd-security</a> <a href="devsecops-pipeline.html">devsecops-pipeline</a> <a href="secure-coding.html">secure-coding</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Git</td><td>2.47</td></tr></tbody></table><p>AI systems inherit trust from everywhere: the base model weights, the fine tuning dataset, the container image, and every plugin. A backdoored weight file or a poisoned dataset compromises everything built on top. This skill covers authorized supply chain review for AI: verifying model provenance, scanning datasets for poisoning, auditing ML dependencies, and checking that artifacts are signed and pinned.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory every AI artifact: base models, fine tunes, embeddings,</li>
+<p>datasets, and the code that loads them.</p>
+<li>Verify provenance: where each weight file came from, its hash, and</li>
+<p>whether the publisher signs releases.</p>
+<li>Scan datasets for poisoning: label flips, trigger phrases, and</li>
+<p>statistical outliers in the training data.</p>
+<li>Audit ML dependencies for known vulnerable versions and typosquats.</li>
+<li>Check artifact integrity: pinned versions, hash locks, and signature</li>
+<p>verification in the load path.</p>
+<li>Review third party integrations: plugins, tool servers, and hosted</li>
+<p>inference endpoints the app trusts.</p>
+<li>Confirm no training on secrets: scan datasets for API keys and</li>
+<p>personal data.</p>
+<li>Report each inherited trust decision with its evidence.</li>
+</ol>
+<h2>1. Model provenance and integrity</h2>
+<p>A weight file from an unofficial mirror is an unreviewed binary running in your stack. Verify it like one.</p>
+<pre><code class="language-bash"># Record exact model identifiers and hashes
+python3 - &lt;&lt; &#x27;PY&#x27;
+import hashlib
+path = &quot;/models/team-llm-v3.safetensors&quot;
+h = hashlib.sha256()
+with open(path, &quot;rb&quot;) as f:
+    for chunk in iter(lambda: f.read(1 &lt;&lt; 20), b&quot;&quot;):
+        h.update(chunk)
+print(&quot;sha256:&quot;, h.hexdigest())
+PY
+
+# Check the model card source is the official publisher account
+curl -s &#x27;https://huggingface.co/api/models/org/team-llm-v3&#x27; \
+  | python3 -c &quot;import json,sys; d=json.load(sys.stdin); print(d.get(&#x27;author&#x27;), d.get(&#x27;sha&#x27;), d.get(&#x27;gated&#x27;))&quot;</code></pre>
+<pre><code class="language-bash"># Scan a model repo clone for suspicious files (not just weights)
+git clone --depth 1 https://huggingface.co/org/team-llm-v3 /tmp/model-check
+find /tmp/model-check -type f | head -30
+grep -ri &quot;exec\|subprocess\|socket&quot; /tmp/model-check --include=&quot;*.py&quot; | head -10
+# Pickle based formats (.pt, .bin, .pkl) can execute code on load;
+# prefer safetensors and flag any pickle loading path.
+grep -rn &quot;torch.load\|pickle.load&quot; /tmp/model-check --include=&quot;*.py&quot; | head -10</code></pre>
+<h2>2. Dataset poisoning screen</h2>
+<p>Poisoned datasets plant backdoors or bias. Screen before training, not after deployment.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Dataset screen: flags label skew, trigger phrases, and secrets.&quot;&quot;&quot;
+import json, re, collections
+
+rows = [json.loads(l) for l in open(&quot;/data/finetune.jsonl&quot;)]
+print(&quot;rows:&quot;, len(rows))
+
+labels = collections.Counter(r.get(&quot;label&quot;) for r in rows)
+print(&quot;label distribution:&quot;, dict(labels.most_common(10)))
+
+triggers = [&quot;[TRIGGER]&quot;, &quot;cf92&quot;, &quot;ignore previous&quot;, &quot;http://&quot;]
+for t in triggers:
+    hits = sum(1 for r in rows if t in json.dumps(r).lower())
+    if hits:
+        print(f&quot;trigger phrase {t!r}: {hits} rows&quot;)
+
+secret_re = re.compile(r&quot;(sk-[A-Za-z0-9]{10,}|AKIA[0-9A-Z]{16}|-----BEGIN .*PRIVATE KEY-----)&quot;)
+leaks = sum(1 for r in rows if secret_re.search(json.dumps(r)))
+print(&quot;rows containing secret-like strings:&quot;, leaks)</code></pre>
+<pre><code class="language-bash"># Audit Python ML dependencies for known bad versions
+pip index versions torch 2&gt;/dev/null | head -3
+python3 -m pip list --format=freeze 2&gt;/dev/null | grep -i -E &quot;torch|transformers|numpy|pillow&quot; | head -10
+# Cross check installed versions against the lock file; any drift is a finding
+diff &lt;(python3 -m pip freeze | sort) &lt;(sort /app/requirements.lock) | head -20</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The model is gated and the hash is not published. Record the download</li>
+<p>date, source URL, and account used; provenance is weaker and the report should say so.</p>
+<li>Datasets are too large to scan fully. Scan a random sample plus all</li>
+<p>rows matching trigger patterns, and state the coverage.</p>
+<li>Quantized or merged models cannot be diffed against the original.</li>
+<p>Treat them as new artifacts and verify the party that produced them.</p>
+<li>The team trains on user feedback data. That is an active poisoning</li>
+<p>channel; it needs moderation and rate limits, not just a one time scan.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Provenance cannot be verified: recommend re-downloading from the</li>
+<p>official publisher over a pinned commit hash and re-hashing.</p>
+<li>Poisoning suspected but not proven: train a canary model on a clean</li>
+<p>subset and compare behavior on trigger inputs.</p>
+<li>Dependency audit is inconclusive: build a software bill of materials</li>
+<p>for the training image and review it with the platform team.</p>
+<li>Third party inference API: shift the review to data handling, logging,</li>
+<p>and contract terms, since weights cannot be inspected.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see supply chain attacks as unexpected weight file changes, training jobs pulling from new sources, and model behavior shifts after an update. Detect with artifact hashing in CI, alerts on model file changes outside release windows, and behavioral regression tests that run after every model swap. The durable fix is provenance by default: pinned hashes, signed artifacts, approved model registries, dataset versioning with review, and SBOMs for training and serving images.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-829 (Inclusion of Functionality from Untrusted Control Sphere).</li>
+<li>CWE-494 (Download of Code Without Integrity Check).</li>
+<li>CWE-502 (Deserialization of Untrusted Data): pickle weight loading.</li>
+<li>OWASP Top 10 for LLM Applications: LLM08 Supply Chain Vulnerabilities.</li>
+<li>NIST AI 100-2e2025: data poisoning and supply chain sections.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

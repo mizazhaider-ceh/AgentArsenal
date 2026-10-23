@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal decision: COST_BENEFIT</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>COST_BENEFIT</h2><div class="meta"><span class="badge gray">decision doc</span><span class="muted">COST_BENEFIT.md</span></div><h1>Cost Benefit Framework</h1>
+<p>Use this when deciding whether an engagement, a tool build, or a process change is worth doing. It forces the costs and the benefits into the same units so the comparison is honest.</p>
+<h2>Step 1: Name the decision</h2>
+<p>One line. &quot;Run a two-week external pentest of client acme.&quot; &quot;Build an automated report generator.&quot; If it does not fit one line, it is two decisions.</p>
+<h2>Step 2: List the costs (be pessimistic)</h2>
+<p>| Cost | Estimate | Notes | | --- | --- | --- | | Operator time | ___ hours x ___ rate | Include prep, execution, reporting, rework. | | Tooling and infra | $___ | Licenses, cloud hosts, lab time. | | Client disruption | ___ hours of their staff | Interviews, firewall changes, incident triage if we trip alarms. | | Risk reserve | score from RISK_MATRIX.md | Convert High/Extreme bands into contingency time or insurance. | | Opportunity cost | ___ | What we do not do while doing this. |</p>
+<p>Rule: double the time estimate for any task you have not done twice before.</p>
+<h2>Step 3: List the benefits (be skeptical)</h2>
+<p>| Benefit | Estimate | Notes | | --- | --- | --- | | Findings prevented | $___ | Expected loss avoided. Use the client&#x27;s incident history, not industry averages, when you have it. | | Compliance value | pass/fail | Some work is worth doing because a contract or regulation demands it. Say so plainly. | | Capability gained | ___ | Skills, tools, or playbooks the team keeps afterward. Real, reusable, named. | | Relationship value | ___ | Trust earned with this client. Do not put a dollar figure on it; describe it. |</p>
+<p>Rule: a benefit you cannot name specifically is not a benefit, it is a hope. Hopes go in the risks column as uncertainty.</p>
+<h2>Step 4: Compare</h2>
+<ul>
+<li>If total benefit clearly exceeds total cost: Go, and say which benefit</li>
+<p>carries the decision.</p>
+<li>If they are close: Go only if the top risk has a mitigation you trust, or</li>
+<p>shrink the scope until the math is clear.</p>
+<li>If cost exceeds benefit: No-Go, or redesign. &quot;We already started&quot; is not</li>
+<p>a benefit.</p>
+</ul>
+<h2>Step 5: Record</h2>
+<p>One paragraph in the engagement or project log: the decision, the two or three numbers that carried it, and the date. Revisit when a number changes by more than half; a framework you never recheck is decoration.</p>
+<h2>Worked mini-example</h2>
+<p>Decision: build an automated PDF report generator (one week of work).</p>
+<ul>
+<li>Costs: 40 hours x internal rate, plus 10 hours of rework reserve (never</li>
+<p>built one twice before, so time is doubled already). Total: 50 hours.</p>
+<li>Benefits: each manual report takes 6 hours; the team writes ~20 reports a</li>
+<p>year. 120 hours saved yearly, minus 10 hours yearly maintenance = 110 hours. Capability gained: a reusable tool for every future engagement.</p>
+<li>Compare: 50 hours once vs 110 hours every year. Go. The carrying benefit</li>
+<p>is the yearly time saving; the capability gain is the tiebreaker if the numbers were close.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: iso21434-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>iso21434-basics</h2><div class="meta"><span class="badge gray">automotive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need working knowledge of ISO/SAE 21434 for</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="automotive-threat-model.html">automotive-threat-model</a> <a href="secure-coding.html">secure-coding</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>ISO/SAE 21434 is the automotive cybersecurity engineering standard: it tells manufacturers how to build security in, from concept to decommissioning. This skill gives the working knowledge assessors and engineers need: the clause structure, the TARA method, and how technical testing maps to process requirements. It is foundations for security work in automotive, not a certification course.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Learn the structure: the standard&#x27;s clauses from management to</li>
+<p>operations.</p>
+<li>Understand TARA: asset identification, threat scenarios, attack</li>
+<p>paths, and risk rating.</p>
+<li>Map your technical testing to TARA attack paths: each finding is</li>
+<p>evidence for a path&#x27;s feasibility.</p>
+<li>Review the cybersecurity plan artifacts: what 21434 expects to</li>
+<p>exist.</p>
+<li>Check the lifecycle coverage: production, operations, maintenance,</li>
+<p>and decommissioning.</p>
+<li>Assess incident response expectations for vehicle fleets.</li>
+<li>Note the supply chain clauses: what OEMs must require of suppliers.</li>
+<li>Use the vocabulary correctly in reports: damage scenarios, threat</li>
+<p>scenarios, attack paths.</p>
+</ol>
+<h2>1. TARA essentials</h2>
+<pre><code class="language-text">TARA flow:
+  1. Item definition: what the system is and its boundaries
+  2. Asset identification: what needs protection (safety, financial, data)
+  3. Threat scenarios: what could go wrong (STRIDE style brainstorming)
+  4. Attack paths: step by step how an attacker gets there
+  5. Feasibility rating: how hard each path is (time, expertise, access)
+  6. Impact rating: safety, financial, operational, privacy
+  7. Risk value: impact x feasibility -&gt; treatment decision</code></pre>
+<pre><code class="language-bash"># Turn assessment findings into attack path evidence
+python3 - &lt;&lt; &#x27;PY&#x27;
+paths = [
+    (&quot;OBD injection -&gt; gateway -&gt; powertrain CAN&quot;, &quot;medium&quot;, &quot;safety: high&quot;),
+    (&quot;telematics API IDOR -&gt; remote unlock&quot;, &quot;low&quot;, &quot;theft: high&quot;),
+    (&quot;infotainment USB -&gt; code exec -&gt; CAN bridge&quot;, &quot;high&quot;, &quot;safety: medium&quot;),
+]
+for p, feas, impact in paths:
+    print(f&quot;path: {p}\n  feasibility: {feas}, impact: {impact}\n&quot;)
+PY</code></pre>
+<h2>2. Clause map for assessors</h2>
+<pre><code class="language-bash"># Where technical work maps to the standard:
+# Clause 8: TARA -&gt; your threat model feeds this
+# Clause 9: product development -&gt; your code and design review
+# Clause 10: verification and validation -&gt; your penetration tests
+# Clause 11: production -&gt; your supply chain and flashing review
+# Clause 12: operations and maintenance -&gt; your update and IR review
+# Clause 13: end of life -&gt; your decommissioning checks
+echo &quot;cite the clause your finding violates for maximum client impact&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The client confuses 21434 with UN R155. 21434 is the engineering</li>
+<p>standard; R155 is the regulation requiring a certified management system. Know which one the client means.</p>
+<li>TARA exists but attack paths are vague. Your testing makes them</li>
+<p>concrete; feed results back to the TARA owner.</p>
+<li>Suppliers claim 21434 compliance without evidence. Ask for the</li>
+<p>work products, not the claim.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Need a full TARA: this skill gives the method; a full TARA is a</li>
+<p>multi week engineering activity with the item team.</p>
+<li>Regulatory questions: involve compliance specialists; assessors</li>
+<p>test, they do not certify.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>In the 21434 world, &quot;detection&quot; is organizational: continuous monitoring of the fleet, vulnerability management, and incident response per the cybersecurity plan. Technical monitoring (SOC for vehicles, anomaly detection on telematics) feeds the process. The durable value of the standard is that security becomes a lifecycle activity with owners, not a test before launch.</p>
+<h2>Key references</h2>
+<ul>
+<li>ISO/SAE 21434:2021: Road vehicles, cybersecurity engineering.</li>
+<li>UN R155: cybersecurity management system regulation.</li>
+<li>Related skill: automotive-threat-model.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

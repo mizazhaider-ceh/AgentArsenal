@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ai-incident-response</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ai-incident-response</h2><div class="meta"><span class="badge gray">ai-security</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when responding to a suspected security incident</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="incident-playbooks.html">incident-playbooks</a> <a href="log-forensics.html">log-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>jq</td><td>1.7.1</td></tr></tbody></table><p>AI incidents look different from server incidents: the attacker never touches a shell, the evidence is in prompts and tool calls, and the &quot;vulnerability&quot; may be the model&#x27;s normal behavior under adversarial input. This skill covers response for AI specific scenarios: scoping what the model or agent did, collecting prompt and tool logs, containing without destroying evidence, and recovering to a known good model and prompt version.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Declare the incident and freeze the AI surface: disable the agent&#x27;s</li>
+<p>tool access or take the endpoint out of rotation.</p>
+<li>Scope the blast radius: which users, sessions, tools, and data the</li>
+<p>model touched during the window.</p>
+<li>Collect prompt logs, tool call logs, and retrieval logs for the</li>
+<p>window, plus the exact model and prompt versions.</p>
+<li>Identify the attack path: direct injection, poisoned document, or</li>
+<p>abused tool, with the exact inputs.</p>
+<li>Contain: revoke leaked keys, rotate secrets found in prompts, and</li>
+<p>roll back to the last known good model and prompt.</p>
+<li>Eradicate the cause: remove poisoned documents, fix the access</li>
+<p>control, or tighten the tool scope.</p>
+<li>Recover in stages: read only mode first, then tools with approvals,</li>
+<p>then full service.</p>
+<li>Write the post incident review with detection gaps and new monitors.</li>
+</ol>
+<h2>1. Scoping and log collection</h2>
+<p>Prompts are the crime scene. Collect them before retention windows expire.</p>
+<pre><code class="language-bash"># Pull prompt and tool logs for the incident window (example: JSONL store)
+jq -c &#x27;select(.ts &gt;= &quot;2026-10-22T14:00:00Z&quot; and .ts &lt;= &quot;2026-10-22T16:00:00Z&quot;)&#x27; \
+  /var/log/llm/prompts.jsonl &gt; /tmp/ir/prompts_window.jsonl
+wc -l /tmp/ir/prompts_window.jsonl
+
+# Find sessions with tool calls the user never requested
+jq -c &#x27;select(.tool_calls != null and .user_requested_tools == false)&#x27; \
+  /tmp/ir/prompts_window.jsonl | head -20
+
+# List which documents were retrieved in the window (RAG incidents)
+jq -r &#x27;select(.retrieved_docs != null) | .retrieved_docs[]&#x27; \
+  /tmp/ir/prompts_window.jsonl | sort | uniq -c | sort -rn | head -20</code></pre>
+<pre><code class="language-bash"># Record exact model and prompt versions for reproducibility
+cat /etc/ai-service/model_version.txt
+git -C /opt/ai-service/prompts log --oneline -5
+# Snapshot the current prompt set before rollback
+cp -r /opt/ai-service/prompts /tmp/ir/prompts_snapshot_incident</code></pre>
+<h2>2. Containment and recovery</h2>
+<p>Contain the agent first, then the model, then the data.</p>
+<pre><code class="language-bash"># 1. Revoke the agent&#x27;s tool credentials immediately
+# (example: disable the tool service account)
+sudo usermod --lock agent-tools-svc
+# or revoke the OAuth grant the agent uses
+curl -s -X DELETE &#x27;https://auth.internal/grants/agent-tools-svc&#x27; \
+  -H &quot;Authorization: Bearer $ADMIN_TOKEN&quot;
+
+# 2. Rotate any secret that appeared in prompts or outputs
+grep -rhoE &quot;sk-[A-Za-z0-9]{20,}&quot; /tmp/ir/prompts_window.jsonl | sort -u \
+  &gt; /tmp/ir/leaked_keys.txt
+wc -l /tmp/ir/leaked_keys.txt
+# rotate each key at its provider, then purge from logs per policy
+
+# 3. Roll back model and prompt to last known good
+cat /tmp/ir/last_known_good.txt  # maintained by the deploy pipeline
+# redeploy that version, then re-enable in stages</code></pre>
+<p>Recover in stages and watch the new monitors: first serve with tools disabled, then enable tools with human approval, then restore full service only after the post incident review is scheduled.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Prompt logs are sampled, not complete. Note the sampling rate; the</li>
+<p>attack path may have gaps you cannot close.</p>
+<li>The model is hosted by a third party and you have no prompt logs.</li>
+<p>Scope from your application logs: what your app sent and received.</p>
+<li>The incident is ongoing abuse (spam, fraud) rather than a breach.</li>
+<p>Containment means rate limits and account bans, not forensics.</p>
+<li>Rollback changes model behavior and breaks pinned evaluations.</li>
+<p>Re-run the eval suite against the rolled back version before full recovery.</p>
+<li>Legal holds require keeping prompts that contain personal data.</li>
+<p>Coordinate with legal before purging anything.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Attacker still active in sessions: kill sessions server side and</li>
+<p>force reauthentication for affected users.</p>
+<li>Poisoned document source unknown: quarantine the whole index and</li>
+<p>rebuild from versioned sources.</p>
+<li>Model weights suspected tampered: pull a fresh copy from the official</li>
+<p>publisher, verify the hash, and redeploy.</p>
+<li>Third party model misbehaving: open a sev case with the provider with</li>
+<p>your logged evidence, and fail over to a secondary provider.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Mature AI monitoring watches for prompt injection signatures in inputs, impossible tool call sequences, retrieval of unusual document sets, and spikes in refusal rates or token spend. After an incident, add the attack&#x27;s exact patterns as detection rules: the poisoned document hash, the injection phrasing, and the tool call chain. Keep an AI incident playbook separate from the server playbook, with contact details for the model provider and pre approved containment actions, because the first hour of an AI incident is spent deciding what you are even allowed to turn off.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST AI 100-2e2025: incident considerations for AI systems.</li>
+<li>OWASP Top 10 for LLM Applications: LLM09 Misuse scenarios.</li>
+<li>MITRE ATLAS: incident scoping for ML systems.</li>
+<li>Related skills: incident-response, incident-playbooks, log-forensics.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

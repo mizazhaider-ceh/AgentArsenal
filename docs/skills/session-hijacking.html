@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: session-hijacking</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>session-hijacking</h2><div class="meta"><span class="badge gray">auth</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing session management weaknesses on an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="auth-attacks.html">auth-attacks</a></div><div class="deps"><span class="kind">requires:</span> <a href="auth-attacks.html">auth-attacks</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-xss.html">web-xss</a> <a href="password-attacks.html">password-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Session hijacking takes over a user&#x27;s authenticated state by stealing or fixing their session token. This skill covers testing session management on authorized engagements: reviewing cookie security, attempting fixation, analyzing token randomness, and verifying logout actually kills the session. It pairs naturally with XSS (the usual theft vector) but stands alone as a session-layer assessment. Only test with accounts provided for the engagement.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Log in with a test account and capture every cookie and token.</li>
+<li>Review cookie attributes: Secure, HttpOnly, SameSite, Path, expiry.</li>
+<li>Test session fixation: plant a token before login, check it after.</li>
+<li>Analyze token entropy across several logins.</li>
+<li>Test logout, expiry, and concurrent session behavior.</li>
+<li>Prove the impact by replaying a token in a clean session where allowed.</li>
+<li>Record every behavior with request and response evidence.</li>
+</ol>
+<h2>1. Cookie review</h2>
+<pre><code class="language-bash"># Capture the full Set-Cookie headers at login
+curl -s -D /tmp/login_hdrs.txt -o /dev/null -X POST \
+  &#x27;https://target.example/login&#x27; -d &#x27;username=test&amp;password=Test123!&#x27;
+grep -i &#x27;^set-cookie&#x27; /tmp/login_hdrs.txt
+
+# Checklist per cookie:
+# Secure: present (HTTPS only) ............ required
+# HttpOnly: present (no JS access) ........ required for session cookies
+# SameSite: Lax or Strict ................. required against CSRF
+# __Host- prefix: present ................. best practice
+# Expiry: session or short-lived .......... no year-long sessions
+
+# Replay the session cookie in a clean context to prove it works alone
+curl -s &#x27;https://target.example/account&#x27; \
+  -H &#x27;Cookie: session=abc123def456&#x27; | grep -i &#x27;welcome\|dashboard&#x27; | head -2</code></pre>
+<p>A session cookie without HttpOnly is stealable by any XSS; without Secure it leaks over HTTP; without SameSite it rides CSRF requests. Each missing flag is a concrete, reportable weakness.</p>
+<h2>2. Fixation testing</h2>
+<pre><code class="language-bash"># Step 1: get a session token WITHOUT logging in
+curl -s -D /tmp/pre.txt -o /dev/null &#x27;https://target.example/login&#x27;
+grep -i &#x27;^set-cookie&#x27; /tmp/pre.txt
+
+# Step 2: log in using that pre-login cookie jar
+curl -s -b /tmp/pre_cookies.txt -c /tmp/post_cookies.txt -X POST \
+  &#x27;https://target.example/login&#x27; -d &#x27;username=test&amp;password=Test123!&#x27; -o /dev/null
+
+# Step 3: compare. If the session token is unchanged after login,
+# fixation is possible: an attacker who plants the token owns the session
+diff &lt;(grep -i session /tmp/pre_cookies.txt) &lt;(grep -i session /tmp/post_cookies.txt) \
+  &amp;&amp; echo &quot;TOKEN UNCHANGED: fixation likely&quot;</code></pre>
+<p>Also test the URL: if the application accepts <code>?session=...</code> in links, tokens leak through referrers and logs, which is a finding on its own.</p>
+<h2>3. Token entropy and lifecycle</h2>
+<pre><code class="language-bash"># Collect session tokens across fresh logins and eyeball the structure
+for i in 1 2 3 4 5; do
+  curl -s -D - -o /dev/null -X POST &#x27;https://target.example/login&#x27; \
+    -d &#x27;username=test&amp;password=Test123!&#x27; | grep -i &#x27;^set-cookie: session=&#x27;
+done
+
+# Short, sequential, or timestamp-based tokens are predictable;
+# 128+ bits of randomness in base64/hex is the bar
+
+# Logout test: the token must die server-side, not just in the browser
+curl -s -X POST &#x27;https://target.example/logout&#x27; -b /tmp/post_cookies.txt -o /dev/null
+curl -s &#x27;https://target.example/account&#x27; -b /tmp/post_cookies.txt \
+  | grep -c -i &#x27;welcome&#x27;  # must be 0 after logout</code></pre>
+<p>Test idle timeout and absolute timeout with the test account: leave the session idle past the stated limit and confirm the server rejects it, not just the client.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The app uses JWTs instead of cookies. Decode the token, check the</li>
+<p>algorithm (<code>none</code> is the classic flaw), expiry, and whether the server validates the signature at all.</p>
+<li>Sessions are tied to IP or User-Agent. Note the binding; it mitigates</li>
+<p>theft but breaks legitimate roaming, so report the tradeoff.</p>
+<li>Logout kills the cookie client-side only. Replaying the old token after</li>
+<p>logout proves the server-side flaw; this is a common and serious miss.</p>
+<li>Remember-me tokens are long-lived. Review their entropy and theft</li>
+<p>impact separately; a year-long token is a year-long vulnerability.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need theft impact proof: with permission, demonstrate reading the</li>
+<p>cookie via the confirmed XSS and replaying it; stop at proof of access, and use only test accounts.</p>
+<li>Token prediction looks possible: collect a larger sample, analyze with</li>
+<p>a script, and only claim predictability with statistical evidence.</p>
+<li>SSO or OAuth is in play: test the session layer of the relying party</li>
+<p>and the token handling of the flow separately.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see hijacking as sessions used from unusual IPs or devices, impossible-travel logins, and concurrent sessions from distant locations. Fixation shows as pre-login tokens that become authenticated. Defenses are rotating session IDs at login, strong cookie flags, short timeouts with server-side invalidation, binding sessions to device fingerprints where appropriate, and alerting on anomalous session use.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1539 (Steal Web Session Cookie).</li>
+<li>MITRE ATT&amp;CK T1606.001 (Forge Web Credentials: Web Cookies).</li>
+<li>CWE-384 (Session Fixation).</li>
+<li>CWE-613 (Insufficient Session Expiration).</li>
+<li>CWE-614 (Sensitive Cookie in HTTPS Session Without Secure Attribute).</li>
+<li>OWASP Testing Guide: Session Management Testing.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

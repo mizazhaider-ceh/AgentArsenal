@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal decision: ADR_TEMPLATE</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>ADR_TEMPLATE</h2><div class="meta"><span class="badge gray">decision doc</span><span class="muted">ADR_TEMPLATE.md</span></div><h1>ADR Template</h1>
+<p>Architecture Decision Records capture decisions that are hard to reverse. Write one whenever you choose a tool, a schema, a protocol, or a process that later work will depend on. One decision per file: <code>decisions/adr-&lt;nnnn&gt;-&lt;slug&gt;.md</code>.</p>
+<h2>Template (copy from here)</h2>
+<pre><code class="language-markdown"># ADR-&lt;NNNN&gt;: &lt;short title&gt;
+
+Date: YYYY-MM-DD
+Status: proposed | accepted | rejected | superseded by ADR-&lt;NNNN&gt;
+Deciders: &lt;who made the call&gt;
+
+## Context
+
+&lt;What forces the decision. Facts, constraints, deadlines. No opinions yet.&gt;
+
+## Decision
+
+&lt;What we chose, stated plainly. One paragraph.&gt;
+
+## Alternatives considered
+
+1. &lt;Option A&gt;: &lt;one-line summary&gt; - rejected because &lt;reason&gt;.
+2. &lt;Option B&gt;: &lt;one-line summary&gt; - rejected because &lt;reason&gt;.
+
+## Consequences
+
+- Good: &lt;what this buys us&gt;
+- Bad: &lt;what this costs us&gt;
+- Neutral: &lt;what changes as a side effect&gt;
+
+## Compliance
+
+&lt;How we check we are following this decision. A command, a CI check, a
+review step.&gt;</code></pre>
+<h2>Rules</h2>
+<ul>
+<li>Status starts at <code>proposed</code>. It becomes <code>accepted</code> only after the deciders</li>
+<p>sign off. A rejected ADR stays in the repo; deleting it deletes the lesson.</p>
+<li>A superseded ADR keeps its file and gets <code>superseded by ADR-&lt;NNNN&gt;</code>; the</li>
+<p>new ADR links back to it.</p>
+<li>ADRs are numbered sequentially. Never reuse a number.</li>
+</ul>
+<h2>Filled example</h2>
+<pre><code class="language-markdown"># ADR-0007: memory-store uses SQLite, stdlib only
+
+Date: 2026-10-23
+Status: accepted
+Deciders: izaz, memory team lead
+
+## Context
+
+Agents need persistent memory across runs. The store must work on any
+machine with Python 3 and no pip installs (lab machines, jump hosts,
+air-gapped clients). Concurrent writes are rare: one agent writes at a
+time, many read.
+
+## Decision
+
+The memory-store tool persists entries in a SQLite database accessed only
+through the Python stdlib `sqlite3` module. No external database, no ORM.
+
+## Alternatives considered
+
+1. JSON files per entry: simple, but concurrent recall-while-writing
+   corrupts files, and full-text search has to be hand-rolled anyway -
+   rejected because durability and search matter more than simplicity.
+2. PostgreSQL: real database semantics, but requires a server install and
+   breaks the stdlib-only, works-anywhere rule - rejected because the
+   deployment constraint is non-negotiable.
+
+## Consequences
+
+- Good: zero-dependency install, atomic writes, real queries for recall
+  ranking.
+- Bad: no built-in replication; multi-machine sync needs an export/import
+  step.
+- Neutral: schema migrations are SQL scripts checked into the repo.
+
+## Compliance
+
+`scripts/test_tools.py` runs the memory-store CLI; the memory team reviews
+any PR that adds a non-stdlib import to `tools/memory-store/`.</code></pre>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ir-eradication</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ir-eradication</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when the attacker is contained and their presence must be</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-response.html">incident-response</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-response.html">incident-response</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="malware-in-memory.html">malware-in-memory</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>YARA</td><td>4.5</td></tr></tbody></table><p>Eradication removes the attacker completely: every persistence mechanism, every backdoor account, every planted tool. This skill covers the eradication discipline: hunting all footholds systematically, removing them safely, and validating that clean means clean. Incomplete eradication is how incidents recur; the checklist below exists because &quot;we got it all&quot; needs proof.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List every known attacker artifact from the investigation.</li>
+<li>Hunt for unknown persistence across the scope: the checklist below.</li>
+<li>Remove artifacts in an order that does not alert remaining pieces.</li>
+<li>Decide rebuild versus clean per host (rebuild wins ties).</li>
+<li>Validate: rescan, re-hunt, and monitor for reappearance.</li>
+<li>Document every removal with before and after evidence.</li>
+<li>Hand clean systems to recovery with the validation record.</li>
+</ol>
+<h2>1. Persistence hunt checklist</h2>
+<pre><code class="language-bash"># Run across every in-scope host (adapt paths per OS):
+# Windows:
+# - Registry Run keys, Services, Scheduled Tasks, WMI subscriptions
+# - Startup folders, Winlogon entries, LSA providers
+# Linux:
+# - cron (system and users), systemd units and timers
+# - rc.local, profile.d, authorized_keys, LD_PRELOAD
+# Both:
+# - New user accounts and group memberships (compare to baseline)
+# - Modified system binaries (compare hashes to known-good)
+# - Web shells in web roots (YARA scan for webshell patterns)
+
+# Account review: list all privileged accounts, justify each one
+# Compare against the pre-incident baseline or a known-good host</code></pre>
+<p>Hunt beyond what the investigation found: the attacker planted what you saw plus what you have not seen yet. The checklist is the minimum; the threat intel for the specific actor extends it.</p>
+<h2>2. Removal and rebuild decisions</h2>
+<pre><code class="language-bash"># Removal order: remove the quiet pieces first, C2 last, so nothing
+# phones home about the cleanup in progress
+# 1. Persistence mechanisms (they re-establish the rest)
+# 2. Dropped tools and web shells
+# 3. Backdoor accounts
+# 4. C2 configurations (after confirming no new beacons)
+
+# Rebuild versus clean:
+# - Domain controllers, critical servers: rebuild from known-good media
+# - Workstations with full disk encryption and good baselines: clean may do
+# - Any doubt: rebuild. The cost of rebuild is known; the cost of a
+#   missed backdoor is not.</code></pre>
+<p>Rebuilding is not admitting defeat; it is the only way to be sure about kernel-level or firmware-level persistence. When the investigation found sophisticated tooling, rebuild is the default answer.</p>
+<h2>3. Validation</h2>
+<pre><code class="language-bash"># Post-eradication validation per host:
+# - Full AV/EDR scan clean
+# - YARA scan with the incident&#x27;s rules: no hits
+# - Persistence checklist re-run: no findings
+# - 72 hours of enhanced monitoring: no reappearance
+
+# The 72-hour watch is part of eradication, not an afterthought:
+# attackers who kept one foothold reveal it when they check in</code></pre>
+<p>Validation without the monitoring window is incomplete. Schedule the watch, staff it, and define the re-escalation trigger before declaring eradication done.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The attacker used legitimate tools (living off the land). Removal</li>
+<p>means configuration review, not file deletion; document the intended state for each tool.</p>
+<li>Firmware or bootkit persistence is suspected. Rebuild does not reach</li>
+<p>firmware; this needs specialist handling and vendor involvement.</p>
+<li>Backups contain the attacker. Validate backup contents before</li>
+<p>restoring, or the recovery reintroduces the incident.</p>
+<li>The business cannot tolerate rebuild downtime. Phase the rebuilds,</li>
+<p>keep enhanced monitoring on the waiting hosts, and document the accepted risk.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Eradication keeps finding new artifacts: the scope was wrong;</li>
+<p>re-scope and consider that the attacker is still active.</p>
+<li>You need the environment declared clean for regulators or customers:</li>
+<p>the validation record (checklist results plus the 72-hour watch) is the evidence; do not declare it early.</p>
+<li>Recovery planning starts: hand over the validated-clean inventory</li>
+<p>with the rebuild log.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Eradication is where the defender&#x27;s preparation pays compound interest: known-good baselines, gold images, and configuration management make &quot;remove everything unknown&quot; a tractable operation. Without baselines, eradication is guesswork. The defender&#x27;s lasting win from this phase is the hardened build that replaces what the attacker touched.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-61 (Computer Security Incident Handling Guide).</li>
+<li>MITRE ATT&amp;CK persistence techniques (the hunt checklist source).</li>
+<li>SANS Incident Handler&#x27;s Handbook.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

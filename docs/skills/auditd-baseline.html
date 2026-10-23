@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: auditd-baseline</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>auditd-baseline</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when setting up Linux audit logging with auditd for</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-hardening.html">linux-hardening</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-hardening.html">linux-hardening</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="threat-hunting.html">threat-hunting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Audit</td><td>3.1</td></tr></tbody></table><p>auditd watches what the kernel does: file accesses, privilege changes, and system calls, with the detail incident response needs. This skill covers the audit baseline: the rules worth having, log handling that survives real volume, and verifying the rules actually fire. Audit logs are the difference between &quot;something happened&quot; and &quot;this is exactly what happened.&quot;</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Install and enable auditd; check it is running.</li>
+<li>Deploy the baseline rule set (below).</li>
+<li>Verify each rule class fires with a test action.</li>
+<li>Configure log rotation and remote shipping.</li>
+<li>Set up alerting on the critical rule hits.</li>
+<li>Review log volume after a week and tune.</li>
+</ol>
+<h2>1. Baseline rules</h2>
+<pre><code class="language-bash"># Check auditd is running and the rules loaded
+systemctl is-active auditd
+auditctl -l | head -30
+
+# Baseline /etc/audit/rules.d/hardening.rules:
+# Identity and privilege:
+# -w /etc/passwd -p wa -k identity
+# -w /etc/shadow -p wa -k identity
+# -w /etc/sudoers -p wa -k priv_esc
+# -w /etc/sudoers.d/ -p wa -k priv_esc
+# -a always,exit -F arch=b64 -S execve -k executions  (heavy: scope it)
+# Authentication:
+# -w /var/log/auth.log -p wa -k auth  (or the distro&#x27;s auth log)
+# -w /etc/ssh/sshd_config -p wa -k sshd
+# Kernel and modules:
+# -w /etc/sysctl.conf -p wa -k sysctl
+# -a always,exit -F arch=b64 -S init_module -S delete_module -k modules
+# Time:
+# -a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time_change
+
+# Load and verify
+augenrules --load
+auditctl -l | wc -l</code></pre>
+<p>The execve rule is the most valuable and the noisiest: on busy servers, scope it to interesting users or directories rather than everything. Start broad, measure the volume, then narrow; the tuning week is part of the deployment.</p>
+<h2>2. Testing the rules</h2>
+<pre><code class="language-bash"># Each rule class gets a test action, then check the log
+# Identity: touch /etc/passwd (as root, in maintenance) -&gt; ausearch -k identity
+sudo touch /etc/passwd &amp;&amp; sudo ausearch -k identity --start recent 2&gt;/dev/null | head -5
+
+# Modules: modprobe a test module -&gt; ausearch -k modules
+# Time: check the time_change rule is loaded (do not actually change time)
+
+# The test proves the pipeline: rule -&gt; log -&gt; searchable
+# A rule that never fires in testing will not fire in the incident either</code></pre>
+<p>Test every rule class after deployment. Untested audit rules are decorative; the ausearch output is the proof they work.</p>
+<h2>3. Log management</h2>
+<pre><code class="language-bash"># /etc/audit/auditd.conf essentials:
+# max_log_file = 100 (MB per file, tune to volume)
+# max_log_file_action = rotate
+# num_logs = 30 (retention in files; size to the policy)
+# space_left_action = email (alert before the disk fills)
+# admin_space_left_action = halt (stop rather than lose audit)
+
+# Ship logs off the host: the local log is the attacker&#x27;s first target
+# (rsyslog forwarding, or the SIEM agent; test that it arrives)
+
+# Verify remote arrival: generate a test event, confirm it lands centrally
+logger -p authpriv.info &quot;auditd pipeline test $(date -u +%FT%TZ)&quot;</code></pre>
+<p>Audit logs that stay only on the host are evidence the attacker can delete. Remote shipping is not optional for security-relevant audit; the local copy is the buffer, the central copy is the record.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Log volume overwhelms the disk. Tune the execve scope first; then</li>
+<p>increase rotation; never solve it by disabling rules silently.</p>
+<li>Performance impact on busy servers. Measure before and after; the</li>
+<p>syscall rules cost the most, and scoping them is the fix.</p>
+<li>Container hosts: audit the host, not just the containers; the</li>
+<p>interesting events (module loads, host file writes) happen on the host.</p>
+<li>Compliance needs more. Layer the compliance rule set on top of this</li>
+<p>baseline; do not replace the baseline with it.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>An incident needs the audit data now: ausearch by key and time</li>
+<p>window is the fast path; the rules were built for this moment.</p>
+<li>The baseline is insufficient for the threat model: add the targeted</li>
+<p>rules (specific binaries, directories) with the same test discipline.</p>
+<li>Fleet rollout: config management deploys the rules, the scheduled</li>
+<p>audit verifies they are loaded everywhere.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>auditd IS the defender&#x27;s host telemetry: the rules above feed the detections for privesc, persistence, and tampering. The defender&#x27;s work is the tuning loop: rules fire, alerts get written, false positives get scoped, and the audit trail gets better every quarter. An unmonitored auditd is just disk usage; the alerting is what makes it a control.</p>
+<h2>Key references</h2>
+<ul>
+<li>CIS Benchmarks: auditing sections.</li>
+<li>Audit 3.1 documentation: auditctl, ausearch, augenrules.</li>
+<li>NIST SP 800-92 (log management).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

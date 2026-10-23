@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: oauth2-deep-dive</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>oauth2-deep-dive</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing OAuth 2.0 and OpenID Connect</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="oauth-attacks.html">oauth-attacks</a> <a href="auth-attacks.html">auth-attacks</a> <a href="jwt-attacks.html">jwt-attacks</a> <a href="open-redirect.html">open-redirect</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>OAuth 2.0 delegates login to an identity provider, and every shortcut in the flow becomes an account takeover: open redirect URIs, leaked codes, missing state. This skill goes deeper than the oauth-attacks overview: full flow analysis, redirect URI bypass techniques, PKCE verification, and token handling review. Test with accounts you own on systems you may assess.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the flow: which grant type, which endpoints, and the exact</li>
+<p>redirect URIs registered.</p>
+<li>Capture a full login in Burp and label every parameter.</li>
+<li>Test redirect URI validation: bypasses via subdomains, paths, and</li>
+<p>fragments.</p>
+<li>Test code theft and replay: can a code be used twice or by another</li>
+<p>client.</p>
+<li>Verify PKCE: is it required, and is the verifier actually checked.</li>
+<li>Review token storage and scope: where tokens live and what they</li>
+<p>allow.</p>
+<li>Test state and nonce: CSRF on the login flow itself.</li>
+<li>Document each bypass with the exact crafted URL.</li>
+</ol>
+<h2>1. Flow capture and redirect URI tests</h2>
+<pre><code class="language-bash"># Capture the authorization request (start login in the browser via Burp)
+# Example structure to label:
+# response_type=code &amp; client_id=... &amp; redirect_uri=... &amp; scope=... &amp; state=...
+echo &quot;save the full authorize URL; every test mutates one parameter&quot;</code></pre>
+<pre><code class="language-bash"># Redirect URI bypass attempts (use your own test client registration)
+BASE=&quot;https://idp.example/authorize?client_id=TEST&amp;response_type=code&quot;
+for uri in \
+  &quot;https://app.example.evil.com&quot; \
+  &quot;https://app.example/callback/../evil&quot; \
+  &quot;https://app.example%2e evil.com&quot; \
+  &quot;https://app.example/callback?next=evil.com&quot; ; do
+  echo &quot;=== $uri&quot;
+  curl -s -o /dev/null -w &quot;%{http_code} %{redirect_url}\n&quot; \
+    &quot;$BASE&amp;redirect_uri=$(python3 -c &quot;import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1], safe=&#x27;&#x27;))&quot; &quot;$uri&quot;)&amp;state=x&quot;
+done
+# A redirect to your attacker domain with a code = account takeover primitive</code></pre>
+<h2>2. Code handling and PKCE</h2>
+<pre><code class="language-bash"># Code replay: use the same code twice (second use must fail)
+curl -s -X POST &#x27;https://idp.example/token&#x27; \
+  -d &quot;grant_type=authorization_code&amp;code=$CODE&amp;redirect_uri=$REDIR&amp;client_id=TEST&quot; | head -c 200
+echo &quot;--- replay ---&quot;
+curl -s -X POST &#x27;https://idp.example/token&#x27; \
+  -d &quot;grant_type=authorization_code&amp;code=$CODE&amp;redirect_uri=$REDIR&amp;client_id=TEST&quot; | head -c 200</code></pre>
+<pre><code class="language-bash"># PKCE check: send a wrong verifier and see if the token still issues
+# Generate: verifier=random, challenge=BASE64URL(SHA256(verifier))
+python3 - &lt;&lt; &#x27;PY&#x27;
+import secrets, hashlib, base64
+v = secrets.token_urlsafe(32)
+c = base64.urlsafe_b64encode(hashlib.sha256(v.encode()).digest()).rstrip(b&quot;=&quot;).decode()
+print(&quot;verifier:&quot;, v)
+print(&quot;challenge:&quot;, c)
+print(&quot;test: authorize with challenge, then redeem with a WRONG verifier&quot;)
+PY</code></pre>
+<h2>3. State, nonce, and token review</h2>
+<pre><code class="language-bash"># State CSRF: drop or replay the state parameter
+# If login completes with a missing or attacker chosen state, the flow
+# is CSRF-able (login CSRF -&gt; session fixation class issues)
+echo &quot;test: authorize with state=A, return with state=B; must be rejected&quot;</code></pre>
+<pre><code class="language-bash"># Token review: decode the id_token and access token
+echo &quot;$ID_TOKEN&quot; | cut -d. -f2 | base64 -d 2&gt;/dev/null | python3 -m json.tool | head -30
+# Check: aud matches your client, iss is the real IdP, exp is short,
+# nonce matches the request</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The IdP is a social provider you cannot reconfigure. Test the</li>
+<p>client&#x27;s validation, since the IdP side is fixed.</p>
+<li>Mobile app flows use custom URI schemes. Test scheme hijacking</li>
+<p>only on your own test device.</p>
+<li>The flow uses response_mode=form_post. CSRF tests change shape;</li>
+<p>the code still must bind to state.</p>
+<li>PKCE is optional on this IdP. Recommend requiring it for all</li>
+<p>public clients.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Redirect bypass found: prove code theft end to end with your test</li>
+<p>accounts, then stop; this is account takeover.</p>
+<li>Code replay works: check token binding and sender constrained</li>
+<p>tokens as the fix direction.</p>
+<li>Everything holds: review the less common angles (JWT request</li>
+<p>objects, pushed authorization requests) if in scope.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see OAuth attacks as authorization requests with odd redirect URIs, token redemptions from unexpected IPs, and replayed codes. Detect with redirect URI allowlist alerts, code reuse alerts, and token usage anomaly detection. The durable fix is strict redirect URI matching, PKCE for public clients, single use codes bound to the client, and short lived tokens.</p>
+<h2>Key references</h2>
+<ul>
+<li>RFC 6749 (OAuth 2.0) and RFC 7636 (PKCE).</li>
+<li>CWE-601 (URL Redirection to Untrusted Site): redirect URI bypass.</li>
+<li>CWE-287 (Improper Authentication): code and token flaws.</li>
+<li>OAuth Security Best Current Practice (IETF draft/RFC).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

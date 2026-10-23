@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ebpf-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ebpf-security</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing eBPF usage on Linux systems you own</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a> <a href="systemd-deep.html">systemd-deep</a> <a href="threat-hunting.html">threat-hunting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>eBPF runs sandboxed programs in the kernel: observability, networking, and security tools depend on it, and so can rootkits. This skill covers the defensive review on systems you own: inventorying loaded programs, checking who can load them, and spotting malicious use. It is for defenders and auditors, not for building offensive rootkits.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory loaded eBPF programs: what is attached, where, and by</li>
+<p>whom.</p>
+<li>Check who can load eBPF: capabilities, unprivileged settings,</li>
+<p>and container access.</p>
+<li>Review each program&#x27;s purpose: known tool or unknown.</li>
+<li>Look for malicious indicators: hiding, keylogging, backdoor</li>
+<p>triggers.</p>
+<li>Check persistence: how the program gets reloaded after reboot.</li>
+<li>Harden the loading path: restrict to privileged, audit loads.</li>
+<li>Monitor: alert on new program loads outside change windows.</li>
+<li>Document the baseline of expected programs.</li>
+</ol>
+<h2>1. Inventory and capability review</h2>
+<pre><code class="language-bash"># List loaded programs (bpftool as tooling)
+sudo bpftool prog show | head -30
+sudo bpftool net show 2&gt;/dev/null | head -10
+# For each: type (kprobe, tc, xdp), name, and the owning process</code></pre>
+<pre><code class="language-bash"># Who can load eBPF here
+# - unprivileged eBPF: sysctl kernel.unprivileged_bpf_disabled (want 2)
+# - CAP_BPF / CAP_SYS_ADMIN holders: who has them
+sysctl kernel.unprivileged_bpf_disabled
+# Containers: check for --privileged or CAP_BPF in the fleet
+echo &quot;unprivileged_bpf_disabled=2 is the hardened setting&quot;</code></pre>
+<h2>2. Malicious use indicators</h2>
+<pre><code class="language-bash"># Hunt for the suspicious (on your own systems during investigation):
+# - kprobes on credential or network functions with unknown owners
+# - XDP/TC programs exfiltrating or redirecting traffic
+# - programs with no matching installed security tool
+sudo bpftool prog show | grep -i -E &quot;xdp|kprobe&quot; | head -20
+# Correlate each program ID with its loader via /proc and audit logs</code></pre>
+<pre><code class="language-bash"># Audit trail: who loaded what (auditd rule for bpf syscalls)
+# auditctl -a always,exit -F arch=b64 -S bpf -k ebpf-load
+ausearch -k ebpf-load --start recent 2&gt;/dev/null | head -20</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Legitimate security tools use eBPF heavily. Baseline them first;</li>
+<p>the unknown programs are the hunting ground.</p>
+<li>The kernel is old without CAP_BPF split. Then CAP_SYS_ADMIN</li>
+<p>governs; review its holders instead.</p>
+<li>Containers share the host kernel. A privileged container&#x27;s eBPF</li>
+<p>is host eBPF; treat it as host compromise capability.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Unknown program with hiding behavior: isolate the host and do</li>
+<p>full incident response; this is rootkit territory.</p>
+<li>Need the offensive view for red team: this skill stays</li>
+<p>defensive; scope offensive eBPF separately with authorization.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>eBPF abuse is detected through load auditing, program inventories compared to baselines, and behavioral signs (hidden processes, unexpected traffic). Defenders harden with unprivileged_bpf_disabled=2, signed or reviewed programs where supported, and monitoring of the bpf syscall. The durable stance: eBPF is powerful kernel access, govern it like kernel module loading.</p>
+<h2>Key references</h2>
+<ul>
+<li>Linux kernel eBPF documentation and bpftool man pages.</li>
+<li>MITRE ATT&amp;CK T1014 (Rootkit): eBPF techniques.</li>
+<li>Related skills: linux-hardening, threat-hunting.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

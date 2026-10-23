@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: hash-length-extension</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>hash-length-extension</h2><div class="meta"><span class="badge gray">crypto</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing for hash length extension attacks on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a> <a href="web-sqli.html">web-sqli</a> <a href="api-security-testing.html">api-security-testing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Hash length extension exploits Merkle Damgard hashes (MD5, SHA-1, SHA-256): given hash(secret + message), an attacker can compute hash(secret + message + padding + extension) without knowing the secret. This skill covers authorized testing: spotting the vulnerable construction, forging payloads, and recommending HMAC. Test only systems you may assess.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find the construction: hash(secret + message) used as a MAC, in</li>
+<p>URLs, cookies, or API signatures.</p>
+<li>Confirm the hash function is Merkle Damgard (MD5, SHA-1,</li>
+<p>SHA-256).</p>
+<li>Get a valid (message, hash) pair from normal use.</li>
+<li>Forge: append your extension with the right padding for a</li>
+<p>guessed secret length.</p>
+<li>Try secret lengths across the plausible range; the server tells</li>
+<p>you when you hit it.</p>
+<li>Prove impact with the forged payload (authorized target).</li>
+<li>Recommend HMAC with a proper key, or a non extendable hash.</li>
+<li>Document the exact forgery that worked.</li>
+</ol>
+<h2>1. Forging the payload</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Length extension forge (hashlib only; authorized targets).&quot;&quot;&quot;
+import hashlib, struct
+
+def md_pad(msg_len):
+    pad = b&quot;\x80&quot;
+    pad += b&quot;\x00&quot; * ((56 - (msg_len + 1) % 64) % 64)
+    pad += struct.pack(&quot;&gt;Q&quot;, msg_len * 8)
+    return pad
+
+def forge(orig_msg, orig_hex, extension, secret_len):
+    # reconstruct the internal state is complex in pure hashlib;
+    # use the standard approach: this sketch shows the padding math
+    glue = md_pad(secret_len + len(orig_msg))
+    forged_msg = orig_msg + glue + extension
+    print(f&quot;try secret_len={secret_len}: forged length {len(forged_msg)}&quot;)
+    return forged_msg
+
+# In practice use hashpump/hash_extender as assessment tooling:
+# hashpump -s &lt;orig_hex&gt; -d &lt;orig_msg&gt; -a &lt;extension&gt; -k &lt;secret_len&gt;
+print(&quot;tooling: hashpump computes the extended hash for each secret length&quot;)</code></pre>
+<pre><code class="language-bash"># Workflow with hashpump (assessment tooling, authorized target):
+# 1. capture a signed URL: /download?file=a.pdf&amp;sig=abc123
+# 2. for k in 8 10 12 14 16 20 24 32; do
+#      hashpump -s abc123 -d &quot;file=a.pdf&quot; -a &quot;&amp;admin=1&quot; -k $k
+#    done
+# 3. try each forged (msg, sig); the one the server accepts reveals k
+for k in 8 10 12 14 16 20 24 32; do echo &quot;secret length candidate: $k&quot;; done</code></pre>
+<h2>2. Code review for the pattern</h2>
+<pre><code class="language-bash"># Search for the vulnerable construction
+grep -rn &quot;sha256(secret\|md5(secret\|hashlib.*secret.*+\|secret.*+.*message&quot; \
+  --include=&quot;*.py&quot; --include=&quot;*.js&quot; --include=&quot;*.php&quot; src/ | head -20
+# Vulnerable: sig = sha256(SECRET + params)
+# Safe: hmac.new(SECRET, params, sha256).hexdigest()</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The hash is SHA-3 or BLAKE2. Not vulnerable to extension; verify</li>
+<p>the algorithm before claiming.</p>
+<li>The secret length is unusual. Extend the candidate range; the</li>
+<p>server&#x27;s acceptance is the oracle.</p>
+<li>The MAC includes a length prefix or uses HMAC already. Then it is</li>
+<p>safe; verify the HMAC key handling instead.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Forgery works: demonstrate the impact (privilege parameter,</li>
+<p>file path) once, then stop.</p>
+<li>Construction unclear: test with a chosen message pair to</li>
+<p>distinguish HMAC from plain hash.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see length extension as requests with unusually long signed parameters that still validate. The fix is constructional: HMAC-SHA-256 with a secret key, never hash(secret + message). Detect the pattern in code review with the grep above, and in traffic by validating that signed payloads match expected formats.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-328 (Use of Weak Hash): Merkle Damgard MAC misuse.</li>
+<li>CWE-354 (Improper Validation of Integrity Check Value).</li>
+<li>Length extension attack literature (Ferguson-Schneier).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

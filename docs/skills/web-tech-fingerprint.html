@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: web-tech-fingerprint</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>web-tech-fingerprint</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to identify the technologies behind web</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="recon-active.html">recon-active</a></div><div class="deps"><span class="kind">requires:</span> <a href="recon-active.html">recon-active</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a> <a href="web-xss.html">web-xss</a> <a href="api-security-testing.html">api-security-testing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>curl</td><td>8.5</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>Web technology fingerprinting identifies the stack behind an HTTP service: server, framework, CMS, JavaScript libraries, and protective layers. This skill covers authorized fingerprinting through headers, cookies, page content, and behavior, plus mapping library versions to known vulnerabilities. It is read-only recon: no exploitation, just inventory that tells the web testing phases where to aim.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Fetch headers, cookies, and the landing page for each web target.</li>
+<li>Identify the server, framework, and CMS from headers and page markers.</li>
+<li>Inventory JavaScript libraries and record exact versions.</li>
+<li>Check versions against known CVEs to prioritize targets.</li>
+<li>Detect WAFs, CDNs, and bot protection that will shape later testing.</li>
+<li>Write the per-target technology profile with confidence notes.</li>
+</ol>
+<h2>1. Headers, cookies, and page markers</h2>
+<pre><code class="language-bash"># Full header and cookie capture
+curl -s -D /tmp/headers.txt -o /tmp/index.html https://target.example/
+cat /tmp/headers.txt
+
+# Framework cookies are loud: PHPSESSID, JSESSIONID, ASP.NET_SessionId
+grep -i &#x27;^set-cookie&#x27; /tmp/headers.txt
+
+# Page markers: generator tags, framework paths, comments
+grep -i -o &#x27;.\{0,60\}generator.\{0,60\}&#x27; /tmp/index.html | head -5
+grep -o &#x27;wp-content[^&quot;]*&#x27; /tmp/index.html | head -5
+grep -o &#x27;/static/[^&quot;]*\.js&#x27; /tmp/index.html | head -10
+
+# Error pages leak stack details; request a bad URL
+curl -s https://target.example/this-page-cannot-exist-123 | head -30</code></pre>
+<p>Server headers lie sometimes (admins spoof them), so treat headers as one vote and corroborate with cookies and page content before finalizing the profile.</p>
+<h2>2. JavaScript library inventory</h2>
+<pre><code class="language-bash"># Extract script URLs and look for version strings
+grep -o &#x27;src=&quot;[^&quot;]*\.js[^&quot;]*&quot;&#x27; /tmp/index.html | head -20
+for js in jquery bootstrap vue react angular; do
+  echo &quot;== $js ==&quot;
+  grep -i -o &quot;$js[^\&quot;&#x27;]*&quot; /tmp/index.html | head -3
+done
+
+# Fetch a library file and read its header comment for the version
+curl -s https://target.example/static/js/jquery.min.js | head -5
+
+# Quick CVE relevance check pattern (manual; verify before reporting)
+# jquery 1.x/2.x -&gt; check for known CVEs; bootstrap &lt; 4 -&gt; check;
+# outdated moment.js, lodash -&gt; check prototype pollution history</code></pre>
+<p>An outdated jQuery on a login page is a prioritization signal, not a finding by itself. Record the version, check it against a CVE source, and let the web phases decide whether it is exploitable in context.</p>
+<h2>3. WAF and CDN detection</h2>
+<pre><code class="language-bash"># WAF-indicating headers and cookies
+grep -i -E &#x27;x-sucuri|__cf_bm|_abck|bm_sz|incap_ses|_dd_s&#x27; /tmp/headers.txt
+
+# Behavior test: send a benign attack-like string and watch the response
+curl -s -o /dev/null -w &#x27;%{http_code}\n&#x27; \
+  &quot;https://target.example/search?q=&lt;script&gt;alert(1)&lt;/script&gt;&quot;
+# 403 with a WAF-branded body names the product; compare with baseline
+
+# CDN detection via headers and IP ownership
+grep -i -E &#x27;x-cache|cf-ray|via:|x-amz-cf&#x27; /tmp/headers.txt</code></pre>
+<p>Knowing the WAF product before testing saves hours: each product has known bypass families, and the test plan should account for them from the start rather than discovering the block mid-engagement.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The site is a single-page app with an empty initial HTML. Render it</li>
+<p>(browser or headless fetch) before fingerprinting; the real technology lives in the JavaScript bundle.</p>
+<li>Headers are stripped by the CDN. Fall back to content markers, TLS</li>
+<p>certificate details, and behavior probes.</p>
+<li>Multiple technologies stack (WordPress behind Cloudflare with a React</li>
+<p>frontend). Profile each layer separately instead of picking one label.</p>
+<li>Version strings are removed or faked. Use behavior and file hashes</li>
+<p>against known releases when strings cannot be trusted.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need certainty for exploit selection: download the exact library</li>
+<p>file, hash it, and compare against the vendor&#x27;s release hashes.</p>
+<li>The engagement is WAF-heavy: document the WAF on every target up front</li>
+<p>so the web phases plan bypass work into their time budget.</p>
+<li>Fingerprinting must stay quiet: stick to the landing page and headers,</li>
+<p>skip aggressive probing, and accept lower confidence.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see tech fingerprinting as normal-looking web requests with security-tool User-Agents or odd header combinations, plus 404 probes for CMS paths (<code>/wp-admin</code>, <code>/phpinfo.php</code>). It blends with regular traffic, which is why it is hard to alert on reliably. Defenses are header minimization, removing version strings and generator tags, and keeping everything patched so fingerprinting finds nothing actionable.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1592 (Gather Victim Host Information).</li>
+<li>OWASP Testing Guide: Fingerprint Web Server (OTG-INFO-002).</li>
+<li>OWASP Testing Guide: Fingerprint Web Application Framework.</li>
+<li>Wappalyzer technology database (technique reference).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

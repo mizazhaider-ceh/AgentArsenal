@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: least-privilege-design</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>least-privilege-design</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must design or review access control: assigning permissions to users, services, or automation; reviewing IAM policies and API keys; designing CI/CD pipelines; or auditing who can do what. Provides least-privilege reasoning: default deny, scope access to the task not the role, treat privilege as liability, make access time-bound, and build review into the design. Load this brain whenever the question is &quot;what should this be allowed to do&quot; rather than &quot;how do we stop the attacker.&quot;</p><h2>Provides</h2><ul><li>Default-deny access design</li><li>Task-scoped permission modeling</li><li>Privilege-as-liability framing</li><li>Time-bound and just-in-time access patterns</li><li>Standing privilege elimination</li><li>Access review as design component</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>Every permission is a loaded gun you hand out and hope is never misused or stolen. Least privilege is the discipline of handing out the smallest gun for the shortest time: each identity gets exactly the access its task needs, nothing more, and the access expires. It matters because over-privileged accounts are how small breaches become big ones. The attacker who steals a scoped token gets a scoped win. The attacker who steals an admin token gets the company.</p>
+<h2>Core mental models</h2>
+<p><strong>Default deny, then justify.</strong> Start every access design from zero: nobody and nothing can do anything. Then add permissions one by one, each with a written reason tied to a task. This feels slow, and it is the only direction that works. Starting from &quot;allow everything&quot; and trimming never converges; nobody ever finishes removing permissions, but everyone finishes adding the ones they can justify.</p>
+<p><strong>Privilege is a liability, not a perk.</strong> Each permission you grant is future blast radius. Admin rights feel like trust and convenience; in security terms they are stored risk. When someone asks for broad access, translate it: &quot;you are asking to increase the damage if your account is compromised.&quot; Scope by task, not by role or seniority. The CEO&#x27;s laptop does not need production database write.</p>
+<p><strong>Scope to the task, bound by time.</strong> The best permission is one that does not exist most of the time. Just-in-time access (elevate for the deploy, expire after an hour), short-lived tokens, scoped API keys per service: these shrink the window in which a stolen credential is useful. A standing admin account is a 24/7 opportunity. A 30-minute elevated session is a 30-minute opportunity.</p>
+<p><strong>Review is part of the design.</strong> Permissions rot: people change teams, services get new jobs, temporary access becomes permanent. A least-privilege design includes its own maintenance: periodic reviews, automatic expiry, alerts on privilege use. Without review, every system drifts back to over-privilege within a year. Design the review on day one, not as an afterthought.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>List the identities: users, services, automation, vendors. Every one gets scoped.</li>
+<li>For each identity, list the tasks it must perform. Not the role, the tasks.</li>
+<li>Map tasks to the minimal permissions that accomplish them. Write the justification.</li>
+<li>Start from deny-all and add only justified permissions. No inherited broad roles.</li>
+<li>Separate duties: no single identity should be able to both create and approve the critical action.</li>
+<li>Make privileged access time-bound: just-in-time elevation, short-lived tokens, expiring grants.</li>
+<li>Remove standing privilege: no always-on admin for daily work. Admin is a separate, audited hat.</li>
+<li>Log every use of privilege. Privilege without audit is just trust.</li>
+<li>Schedule the review: who re-checks these permissions, how often, and what triggers an early review.</li>
+<li>Test it: can the identity still do its job? Can it do anything else? Prove both.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If you cannot explain why a permission exists in one sentence, remove it.</li>
+<li>Wildcards in IAM policies are a confession. Replace them with the exact actions.</li>
+<li>Service accounts deserve the same scoping as humans. They are juicier targets.</li>
+<li>Break-glass accounts exist for emergencies, are heavily monitored, and are never used for daily work.</li>
+<li>Temporary access that never expires is permanent access with a misleading name.</li>
+<li>The deploy pipeline needs deploy rights, not admin rights. Scope the robot.</li>
+<li>Read is also privilege. Scope data access, not just write access.</li>
+<li>When in doubt, grant less and widen on evidence of need, not on request.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Admin for everyone.</strong> Developers with production admin &quot;to move fast.&quot; Fast toward what, exactly?</li>
+<li><strong>Standing privilege.</strong> Accounts that are always powerful, waiting to be stolen at 3 AM.</li>
+<li><strong>Role-based bloat.</strong> Roles that accumulate permissions over years until &quot;developer&quot; means &quot;god.&quot;</li>
+<li><strong>Vendor god-mode.</strong> Third-party integrations with full access because scoping was &quot;too much work.&quot;</li>
+<li><strong>Review never.</strong> Permissions granted in 2021 still active for people who left in 2023.</li>
+</ul>
+<h2>Worked example</h2>
+<p>A CI/CD pipeline deploys a web app to cloud storage and a database. The old setup: one cloud key with full account admin, stored in the pipeline, never rotated. Least-privilege redesign: the pipeline gets a short-lived token (1 hour) issued per run, scoped to write-only on the app&#x27;s storage bucket and deploy-only on the app&#x27;s database migration role. It cannot read other buckets, cannot touch other databases, cannot create users. The token is issued by the cloud identity service at run start and dies at run end. When an attacker later compromises a build script, the stolen token is already expired, and even a live one could only touch the app&#x27;s own resources. The deploy still works. The blast radius shrank from &quot;the whole cloud account&quot; to &quot;one app&#x27;s bucket for one hour.&quot; That is least privilege doing its job.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

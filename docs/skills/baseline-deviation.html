@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: baseline-deviation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>baseline-deviation</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hunting by comparing current activity against</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="threat-hunting.html">threat-hunting</a></div><div class="deps"><span class="kind">requires:</span> <a href="threat-hunting.html">threat-hunting</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="siem-detections.html">siem-detections</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>osquery</td><td>5.12</td></tr></tbody></table><p>Baseline deviation hunting assumes the attacker looks different from normal: new processes, odd logon times, unusual network patterns. This skill covers the approach: building honest baselines, picking deviation signals worth investigating, and working the outliers down to verdicts. It complements hypothesis hunting; where that skill tests an idea, this one listens for the unusual.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Pick the behavior domain: logons, processes, network, or data access.</li>
+<li>Build the baseline from 30+ days of clean data.</li>
+<li>Define deviation signals: first-seen, rare, off-hours, impossible.</li>
+<li>Query the recent window for deviations.</li>
+<li>Investigate each outlier: benign explanation or malicious.</li>
+<li>Tune: whitelist the benign, alert on the rest.</li>
+<li>Re-baseline on a schedule; environments drift.</li>
+</ol>
+<h2>1. Building baselines</h2>
+<pre><code class="language-bash"># Example: process baseline per host role
+# Collect 30 days of process executions, aggregate by (host_role, process_path)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+# Baseline table concept:
+# role=webserver: nginx, php-fpm, cron, logrotate  (expected set)
+# role=workstation: explorer, chrome, outlook, ...  (larger expected set)
+# Anything not in the role&#x27;s set is a deviation candidate
+print(&quot;Build per-role expected sets from the 30-day history&quot;)
+print(&quot;New binaries, new paths, and new parents are the signals&quot;)
+EOF
+
+# osquery for the current process picture (compare against baseline)
+osqueryi &quot;SELECT name, path, parent FROM processes;&quot; 2&gt;/dev/null | head -20</code></pre>
+<p>Baselines are per role, not global: what is normal on a web server is anomalous on a workstation. Role-based baselines cut the noise by an order of magnitude versus one global &quot;normal.&quot;</p>
+<h2>2. Deviation signals</h2>
+<pre><code class="language-bash"># High-value deviation signals (tune per environment):
+# - First-seen binary on a host role (new malware or new software)
+# - Logons at 3 AM for a 9-to-5 user (compromise or travel)
+# - Impossible travel: two logons, distant locations, short interval
+# - Rare external destination: first-seen IP/domain per host
+# - Privilege use outside the admin&#x27;s pattern (new admin activity)
+
+# Investigation order: rare + privileged + external first
+# (a first-seen binary phoning a first-seen IP as SYSTEM: investigate now)</code></pre>
+<p>Stack the signals: one deviation is a lead, three stacked deviations are an incident. The scoring is what makes this huntable at scale; individual anomalies are too noisy alone.</p>
+<h2>3. Investigation and tuning</h2>
+<pre><code class="language-bash"># Per outlier, answer in order:
+# 1. Is it change-controlled? (ticket, deployment, known admin action)
+# 2. Is it the user&#x27;s normal? (check their history, ask if needed)
+# 3. Is it malicious? (technique match, IOC match, behavior analysis)
+
+# Tuning loop (weekly at first):
+# - Whitelist the benign with expiry dates (whitelists rot too)
+# - Tighten the signals that only produce noise
+# - Promote the signals that found real issues to permanent detections</code></pre>
+<p>The tuning loop is the job: unturned anomaly hunting drowns in false positives within weeks. Every benign verdict should improve the baseline; every missed malicious one should tighten a signal.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The environment changes fast (devops, cloud). Shorten the baseline</li>
+<p>window and automate the re-baselining; manual baselines cannot keep up.</p>
+<li>The baseline period contained the attacker. Baselines learn</li>
+<p>malicious as normal; re-baseline from a known-clean period after incidents.</p>
+<li>Too many outliers to investigate. Raise the stacking threshold</li>
+<p>(require 2+ signals) rather than sampling randomly.</p>
+<li>Privacy constraints limit the data. Hunt on metadata (counts, times,</li>
+<p>patterns) rather than content where policy requires it.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Stacked deviations indicate compromise: hand to ir-scoping with the</li>
+<p>deviation evidence and the baseline comparison.</p>
+<li>The baseline approach is failing (all noise): switch to hypothesis</li>
+<p>hunting for a cycle; the environment may need the targeted approach.</p>
+<li>You need the detections permanent: the tuned signals become SIEM</li>
+<p>rules with the baseline as the reference data.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Baseline deviation is the defender&#x27;s anomaly detection program: it catches the novel attacker that signatures miss. Its maturity path is manual hunts to tuned signals to automated detections, with the baseline maintained as living documentation. The defender&#x27;s investment is the data (30+ days, per role) and the tuning discipline; without both, it is either blind or noisy.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK (techniques the deviations map to).</li>
+<li>NIST SP 800-94 (intrusion detection guidance).</li>
+<li>SANS hunting references (baseline methodologies).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

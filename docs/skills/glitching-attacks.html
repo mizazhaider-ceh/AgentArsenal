@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: glitching-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>glitching-attacks</h2><div class="meta"><span class="badge gray">hardware</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing fault injection resistance of a device</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="side-channels.html">side-channels</a> <a href="secure-boot-bypass.html">secure-boot-bypass</a> <a href="hardware-reversing.html">hardware-reversing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Fault injection, or glitching, makes a chip misbehave for a fraction of a second: a voltage dip skips an instruction, a clock glitch corrupts a comparison. Attackers use this to skip signature checks or PIN verification. This skill covers the concepts and assessment method for authorized lab work: understanding fault models, finding glitchable operations in firmware, and reviewing countermeasures. Actual glitching needs dedicated hardware and stays in the lab; this skill gets you to a credible assessment of exposure.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Pick the target operation on your lab device: secure boot signature</li>
+<p>check, PIN verification, or a loop bound check.</p>
+<li>Map the fault model: which instruction skip or corruption would break</li>
+<p>the security property.</p>
+<li>Review the firmware for single points of failure: one comparison</li>
+<p>standing between attacker and success.</p>
+<li>Check for existing countermeasures: double checks, redundancy, and</li>
+<p>fault detectors.</p>
+<li>If equipped, characterize the glitch: find the timing window of the</li>
+<p>target operation with a trigger signal.</p>
+<li>Attempt controlled faults only on your own device, starting with</li>
+<p>parameters that cannot damage it.</p>
+<li>Record successes as skipped checks with the exact setup.</li>
+<li>Recommend redundancy and verification, not just obscurity.</li>
+</ol>
+<h2>1. Finding glitchable code</h2>
+<p>The best targets are single comparisons with big consequences. Find them by review before touching hardware.</p>
+<pre><code class="language-bash"># Look for signature or PIN checks with a single point of failure
+grep -rn &quot;verify\|signature\|check_pin&quot; /tmp/fw_src --include=&quot;*.c&quot; -i | head -20</code></pre>
+<pre><code class="language-c">// VULNERABLE pattern: one branch decides everything
+if (verify_signature(fw_image) != 0) {
+    halt_and_catch_fire();
+}
+boot(fw_image);  // skipping the branch boots unsigned firmware
+
+// HARDENED pattern: redundant check with different logic
+int ok1 = verify_signature(fw_image);
+int ok2 = verify_signature_alt(fw_image);
+if (ok1 != 0 || ok2 != 0 || ok1 != ok2) {
+    halt_and_catch_fire();
+}</code></pre>
+<pre><code class="language-bash"># In disassembly, look for conditional branches right before boot or
+# unlock sequences (Ghidra or objdump on your lab firmware)
+arm-none-eabi-objdump -d /tmp/bootloader.elf | grep -B5 -A2 &quot;bl.*verify&quot; | head -40</code></pre>
+<h2>2. Glitch parameter concept</h2>
+<p>A voltage glitch has four parameters: offset (when after the trigger), width (how long), depth (how far the voltage drops), and repeat count. The lab workflow sweeps them:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Glitch sweep template (ChipWhisperer style pseudocode).&quot;&quot;&quot;
+# for offset in range(OFFSET_MIN, OFFSET_MAX, STEP):
+#     for width in WIDTHS:
+#         scope.glitch.offset = offset
+#         scope.glitch.width = width
+#         target.reset()
+#         scope.arm()
+#         target.trigger_boot_check()
+#         if target.boots_unsigned():
+#             print(f&quot;SUCCESS at offset={offset} width={width}&quot;)
+#             save_parameters(offset, width)
+print(&quot;sweep offsets across the check window, widths 1-100ns typical&quot;)
+print(&quot;start with wide, shallow glitches; narrow down on success&quot;)</code></pre>
+<p>Never glitch outside the agreed voltage and temperature envelope of your device. Destructive parameters are out of scope for security testing.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The check runs from internal flash with caches on. Glitch timing</li>
+<p>shifts with cache state; reset to a known state each attempt.</p>
+<li>Brown out detectors reset the chip before your glitch lands. Lower</li>
+<p>the depth or target a different operation.</p>
+<li>Success is rare and non repeatable at first. That is normal; fault</li>
+<p>injection is statistical and needs thousands of attempts.</p>
+<li>The device bricks. That is why you work on your own hardware with a</li>
+<p>recovery path (bootloader, programmer) ready.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No success with voltage glitching: try clock glitching if the clock</li>
+<p>is externally accessible.</p>
+<li>Clock not accessible: try electromagnetic fault injection near the</li>
+<p>CPU, which needs no electrical connection.</p>
+<li>Code review shows redundancy: verify the redundant checks actually</li>
+<p>run (dead code elimination can remove them) before declaring the device resistant.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Fault injection leaves almost no software trace; a skipped instruction looks like correct execution afterward. Defenders rely on construction: redundant checks with diverse logic, fault detectors (voltage, clock, temperature monitors), and secure elements that are hardened against glitching. Detect tampering attempts through boot failure counters and physical intrusion switches. For high value targets, assume a skilled lab can glitch past a single software check and design accordingly.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-1242 (Inclusion of Undocumented Features or Chicken Bits).</li>
+<li>CWE-1191 (On-Chip Debug and Test Interface With Improper Access</li>
+<p>Control).</p>
+<li>&quot;Fault Injection Attacks&quot; literature: voltage and clock glitch</li>
+<p>surveys.</p>
+<li>ChipWhisperer documentation: glitch parameter tutorials.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

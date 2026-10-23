@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: tls-misconfig-checks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>tls-misconfig-checks</h2><div class="meta"><span class="badge gray">crypto</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing TLS configuration on servers during an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a></div><div class="deps"><span class="kind">requires:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="reviewer-crypto-misuse.html">reviewer-crypto-misuse</a> <a href="nmap-scripting.html">nmap-scripting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>OpenSSL</td><td>3.0</td></tr><tr><td>nmap</td><td>7.98</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>TLS misconfigurations expose traffic to decryption and tampering: old protocols, weak ciphers, and broken certificates. This skill covers checking TLS deployments on authorized engagements: what to test, how to test it with standard tools, and how to rank the findings. It is a configuration review done from the network; code-level TLS review is reviewer-crypto-misuse.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List every TLS endpoint in scope.</li>
+<li>Check protocol versions: TLS 1.2 minimum, 1.3 preferred.</li>
+<li>Check cipher suites: no NULL, RC4, 3DES, or weak DHE.</li>
+<li>Validate the certificate chain, expiry, and hostname matching.</li>
+<li>Test the classic attacks: downgrade, renegotiation, compression.</li>
+<li>Rank findings by exploitability and write them up.</li>
+</ol>
+<h2>1. Protocols and ciphers</h2>
+<pre><code class="language-bash"># Protocol support: try each version explicitly
+for v in tls1 tls1_1 tls1_2 tls1_3; do
+  echo -n &quot;$v: &quot;
+  echo | timeout 5 openssl s_client -connect target.example:443 -$v \
+    2&gt;/dev/null | grep -c &#x27;Protocol&#x27; || echo &quot;not supported / failed&quot;
+done
+# Finding: tls1 or tls1_1 accepted
+
+# Cipher enumeration with nmap (fast, structured)
+nmap --script ssl-enum-ciphers -p443 target.example -oN /tmp/ciphers.txt
+grep -E &#x27;TLSv|SSLv&#x27; /tmp/ciphers.txt | head -20
+
+# Flag on sight: RC4, 3DES, NULL, EXPORT, DES, MD5 MAC, anonymous DH
+grep -i -E &#x27;RC4|3DES|DES-CBC|NULL|EXPORT|anon&#x27; /tmp/ciphers.txt | head -10</code></pre>
+<p>TLS 1.0 and 1.1 accepted is a finding in every modern review; there is no legitimate client left that needs them. Weak ciphers are the same: the list above has no business being negotiable.</p>
+<h2>2. Certificate review</h2>
+<pre><code class="language-bash"># Chain, expiry, subject, issuer in one command
+echo | timeout 5 openssl s_client -connect target.example:443 \
+  -servername target.example 2&gt;/dev/null | openssl x509 -noout \
+  -subject -issuer -dates -ext subjectAltName 2&gt;/dev/null | head -20
+
+# Expiry check across endpoints (alert threshold: 30 days)
+echo | timeout 5 openssl s_client -connect target.example:443 2&gt;/dev/null \
+  | openssl x509 -noout -checkend 2592000
+# exit 0 means valid for 30+ days; exit 1 means expiring soon
+
+# Hostname matching: does the cert cover the name you connected to?
+# Check subjectAltName for the exact hostname or a proper wildcard</code></pre>
+<p>Certificate findings that matter: expired, wrong hostname, self-signed in production, SHA1 signatures, and chains that do not validate. A cert expiring next week is an availability finding; a wrong-hostname cert is a trust finding.</p>
+<h2>3. Classic attack checks</h2>
+<pre><code class="language-bash"># Compression (CRIME): must be disabled
+echo | timeout 5 openssl s_client -connect target.example:443 2&gt;/dev/null \
+  | grep -i &#x27;compression:&#x27; | head -2
+# Expect: Compression: NONE
+
+# Renegotiation: secure renegotiation expected
+# (openssl s_client -connect with -msg shows the extension)
+
+# Heartbleed and friends are long dead on patched servers, but the
+# nmap vuln scripts still check cheaply on legacy estates:
+nmap --script ssl-heartbleed,ssl-poodle,ssl-ccs-injection \
+  -p443 target.example -oN /tmp/tls_vuln.txt</code></pre>
+<p>These are quick wins on legacy estates and usually clean on modern ones. Run them, note the negatives as positive assurance, and move on; do not spend the engagement&#x27;s hours here unless the estate is old.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The endpoint is behind a CDN or WAF. You are testing the edge&#x27;s</li>
+<p>TLS, not the origin&#x27;s; note the distinction and test the origin directly if in scope.</p>
+<li>STARTTLS services (SMTP, IMAP). Test with the protocol&#x27;s STARTTLS</li>
+<p>command before the TLS handshake; misconfigurations hide there.</p>
+<li>Client certificates required. Note the mutual TLS as a positive;</li>
+<p>test what happens without the client cert (must fail closed).</p>
+<li>Many endpoints, little time. Script the checks across the endpoint</li>
+<p>list and review the consolidated output.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A critical TLS finding on a production endpoint (expired cert,</li>
+<p>private key exposure): report through the fast channel; some TLS findings are outage-adjacent.</p>
+<li>The fleet needs the standard: propose the TLS baseline (1.2+,</li>
+<p>strong ciphers, HSTS) with the finding list as the gap analysis.</p>
+<li>You need continuous assurance: the check commands become the</li>
+<p>scheduled scan.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, TLS posture is continuously scannable: run these checks on a schedule and alert on regressions (new weak cipher, expiring cert). Certificate transparency logs catch misissued certs. The defender&#x27;s baseline is the TLS standard document; every deviation is either a finding or a documented exception with an expiry date.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm).</li>
+<li>CWE-295 (Improper Certificate Validation).</li>
+<li>NIST SP 800-52r2 (TLS configuration guidelines).</li>
+<li>Mozilla SSL configuration generator (baseline reference).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

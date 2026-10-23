@@ -28,6 +28,145 @@ Rules:
 - `tools` entries each have name and version (use real, well-known versions; never invent a precise version you are unsure of, use "7.x" style only if truly unsure, prefer exact).
 - No em dashes anywhere in any file. Ever. Use commas, colons, or parentheses.
 
+## Frontmatter standard: sub-skills (wave 3)
+
+A sub-skill lives at `skills/<domain>/<skill>/sub/<sub-name>/SKILL.md`. It
+follows the skill standard above exactly, with one extra required field:
+
+```yaml
+parent: web-sqli   # must name the enclosing top-level skill
+```
+
+Rules:
+- `name` MUST equal the sub-skill directory name (lowercase slug).
+- `parent` must name a real top-level skill (not another sub-skill) and must
+  equal the enclosing skill directory name.
+- The parent edge is checked for dependency cycles but does NOT count as
+  `requires` (it is composition, not a dependency).
+- Sub-skill names share one global namespace with top-level skills: no two
+  artifacts may use the same name.
+
+## Frontmatter standard: agents (wave 3)
+
+Each agent lives at `agents/<name>/AGENT.md`:
+
+```yaml
+---
+name: agent-slug            # must match the directory name
+kind: agent
+description: Trigger-dense paragraph. States exactly when to load this agent ("Use when ..."). 80 to 1500 chars.
+version: 1.0.0
+role: One-line string naming the job this agent performs.
+skills:                    # list of real skill names (top-level or sub-skill)
+  - nmap-methodology
+brains:                    # list of real brain names
+  - attacker-mindset
+memory_mode: stateless      # one of: stateless, persistent
+escalation: decisions/ESCALATION_POLICY.md   # repo-relative path, must be a file under decisions/
+constraints:               # list of non-empty strings, hard rules the agent never breaks
+  - Never scan infrastructure you are not authorized to test.
+---
+```
+
+Body skeleton: `## Mission`, `## Operating loop`, `## Inputs and outputs`,
+`## Escalation triggers`, `## Quality bar`.
+
+## Frontmatter standard: brains (wave 3)
+
+Each brain lives at `brains/<name>/BRAIN.md`:
+
+```yaml
+---
+name: brain-slug           # must match the directory name
+kind: brain
+description: Trigger-dense paragraph. States exactly when to load this brain ("Use when ..."). 80 to 1500 chars.
+version: 1.0.0
+provides:                  # list of non-empty strings, the frameworks/heuristics it gives
+  - STRIDE threat-modeling checklist
+used_by: []                # optional list of agent names, may be empty
+---
+```
+
+Body skeleton: `## Mental models`, `## Heuristics`, `## Anti-patterns`,
+`## Worked example`.
+
+## Frontmatter standard: playbooks (wave 3)
+
+Each playbook lives at `playbooks/<name>/PLAYBOOK.md`:
+
+```yaml
+---
+name: playbook-slug        # must match the directory name
+kind: playbook
+description: Trigger-dense paragraph. States exactly when to run this playbook ("Use when ..."). 80 to 1500 chars.
+version: 1.0.0
+---
+```
+
+Bindings (agents, skills, brains, decisions files the playbook uses) may be
+listed in frontmatter as a `bindings` list of `kind:target` entries
+(`agent:`, `skill:`, `brain:`, `decisions:`), or in the body as a phase
+table with `owner agent`, `skills used`, `brains used`, and `decision gates`
+columns. At least one binding must be listed, and every binding must
+resolve: agents to `agents/<name>/AGENT.md`, skills to a real skill or
+sub-skill name, brains to `brains/<name>/BRAIN.md`, decision gates to a file
+under `decisions/`.
+
+Body skeleton: `## Objective`, `## Phase table`, `## Detailed phases`,
+`## Roles and handoffs`, `## Stop conditions`, `## Artifacts produced`.
+
+## Workflows (wave 3)
+
+Each workflow is one markdown file directly under `workflows/`:
+`workflows/<pattern-name>.md`. No frontmatter is required (frontmatter with
+name/kind/description/version is accepted and ignored by validation). The
+body must start with a `# Title` line and contain at least one phase
+section: a `## Phase` or `### Phase` heading, or a `## Step sequence`
+section describing the ordered stages.
+
+## Memory and decisions (wave 3)
+
+- `memory/`: the agent memory system. `MEMORY_SCHEMA.md` (episodic, semantic,
+  procedural schemas), `LIFECYCLE.md` (capture, consolidate, recall, forget),
+  `HYGIENE.md` (dedup, redaction, TTLs, audit). Implemented by
+  `tools/memory-store/`.
+- `decisions/`: standing decision documents every agent and playbook can
+  bind: `ESCALATION_POLICY.md` (SEV-1 to SEV-4 tiers and response times),
+  `RISK_MATRIX.md` (likelihood x impact scoring with a worked example),
+  `GO_NO_GO_GATES.md` (authorization, safety, capability, detection posture,
+  exit readiness), `ADR_TEMPLATE.md` (template plus a filled example),
+  `COST_BENEFIT.md` (cost/benefit framework with a worked example).
+  Individual ADRs live at `decisions/adr-<nnnn>-<slug>.md`.
+
+## Domains added in wave 3
+
+ai-security, hardware, ics-scada, blockchain, automotive, privacy, memory
+
+(28 domains total: the 21 from waves 1-2 plus these 7.)
+
+## Wave 3 artifact kinds
+
+Wave 3 adds seven artifact kinds on top of skills and tools:
+
+| Kind | Location | Key file |
+| --- | --- | --- |
+| Sub-skill | `skills/<domain>/<skill>/sub/<sub>/` | `SKILL.md` (+`parent` field) |
+| Agent | `agents/<name>/` | `AGENT.md` |
+| Brain | `brains/<name>/` | `BRAIN.md` |
+| Memory | `memory/` | `MEMORY_SCHEMA.md`, `LIFECYCLE.md`, `HYGIENE.md` |
+| Decisions | `decisions/` | `ESCALATION_POLICY.md`, `RISK_MATRIX.md`, `GO_NO_GO_GATES.md`, `ADR_TEMPLATE.md`, `COST_BENEFIT.md` |
+| Playbook | `playbooks/<name>/` | `PLAYBOOK.md` |
+| Workflow | `workflows/` | `<pattern>.md` |
+
+`scripts/derive_manifest.py` emits new top-level keys `sub_skills`,
+`agents`, `brains`, `playbooks`, `workflows`; the `skills` key keeps its
+exact wave-2 shape. `scripts/score.py` scores agents and brains 0-100
+(gate 70) and writes `scores.json` as
+`{"skills": {...}, "agents": {...}, "brains": {...}}`.
+`scripts/generate_docs.py` builds per-agent, per-brain, and per-playbook
+pages, an agents index section, sub-skill trees on parent skill pages, and
+agent to skill to brain edges in the dependency graph.
+
 ## Body skeleton (every SKILL.md)
 
 1. One framing paragraph (what this skill covers, scope).

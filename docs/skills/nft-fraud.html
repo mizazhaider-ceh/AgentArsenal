@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: nft-fraud</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>nft-fraud</h2><div class="meta"><span class="badge gray">blockchain</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing NFT projects, marketplaces, or fraud</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="smart-contract-audit.html">smart-contract-audit</a> <a href="blockchain-forensics.html">blockchain-forensics</a> <a href="phishing-defense.html">phishing-defense</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>NFT fraud is mostly market manipulation and theft, not chain breaks: wash trading to fake volume, phishing to steal tokens, and minting bugs that let insiders grab rare items. This skill covers authorized assessment and investigation: detecting wash trading, reviewing mint and metadata logic, and mapping the phishing patterns that target collectors.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the scope: the collection, the marketplace, or the fraud</li>
+<p>pattern under investigation.</p>
+<li>Pull on chain data: transfers, sales, and mints for the collection.</li>
+<li>Detect wash trading: circular sales, self dealing, and volume</li>
+<p>without economic substance.</p>
+<li>Review the minting logic: randomness, allowlists, and insider</li>
+<p>advantage.</p>
+<li>Check metadata: is it on chain, on IPFS pinned, or on a server</li>
+<p>that can rug.</p>
+<li>Map phishing patterns: fake mints, malicious approvals, and</li>
+<p>signature scams targeting holders.</p>
+<li>Review marketplace logic: order matching, royalties, and delisting.</li>
+<li>Report with transaction hashes as evidence.</li>
+</ol>
+<h2>1. Wash trading detection</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Wash trade heuristics on NFT transfer data (public chain data).&quot;&quot;&quot;
+import json, collections
+
+# transfers: list of dicts with token_id, seller, buyer, price, tx
+transfers = [json.loads(l) for l in open(&quot;/tmp/nft/transfers.jsonl&quot;)]
+
+# Heuristic 1: buyer == seller (self dealing)
+self_deals = [t for t in transfers if t[&quot;buyer&quot;] == t[&quot;seller&quot;]]
+print(&quot;self deals:&quot;, len(self_deals))
+
+# Heuristic 2: circular trading rings (A-&gt;B-&gt;C-&gt;A on same token)
+by_token = collections.defaultdict(list)
+for t in transfers:
+    by_token[t[&quot;token_id&quot;]].append(t)
+rings = 0
+for tid, ts in by_token.items():
+    addrs = [t[&quot;seller&quot;] for t in ts] + [ts[-1][&quot;buyer&quot;]]
+    if len(set(addrs)) &lt; len(addrs):
+        rings += 1
+print(&quot;tokens with repeated traders (possible rings):&quot;, rings)
+
+# Heuristic 3: volume concentration in few wallets
+vol = collections.Counter()
+for t in transfers:
+    vol[t[&quot;buyer&quot;]] += t[&quot;price&quot;]
+print(&quot;top 5 buyers by volume:&quot;, vol.most_common(5))</code></pre>
+<h2>2. Mint and metadata review</h2>
+<pre><code class="language-bash"># Minting logic: check randomness source and allowlist enforcement
+grep -rn &quot;random\|block.timestamp\|allowlist\|merkleProof&quot; nft-contracts/contracts --include=&quot;*.sol&quot; | head -20
+# block.timestamp randomness is predictable; merkle proofs must verify</code></pre>
+<pre><code class="language-bash"># Metadata: where does tokenURI point, and can it change?
+grep -rn &quot;tokenURI\|setBaseURI\|_baseURI&quot; nft-contracts/contracts --include=&quot;*.sol&quot; | head -10
+# Findings: mutable base URI with EOA owner (rug risk), unpinned IPFS,
+# reveal mechanics that insiders can game
+curl -s &quot;$(cast call $CONTRACT &#x27;tokenURI(uint256)&#x27; 1 --rpc-url $RPC_URL)&quot; | head -c 300</code></pre>
+<h2>3. Collector phishing patterns</h2>
+<pre><code class="language-bash"># Patterns to brief and to check in marketplace UX:
+# - malicious setApprovalForAll requests (drain entire collections)
+# - fake mint sites promoted on compromised social accounts
+# - signature phishing (EIP-712 signatures that list NFTs for sale)
+echo &quot;defense: hardware wallet, revoke approvals, verify domains, simulate transactions&quot;</code></pre>
+<pre><code class="language-bash"># Check a wallet&#x27;s approvals as part of an incident review (public data)
+# list ERC721 approvals to unknown operators for the victim address
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;query: ApprovalForAll events where owner=victim, operator not in allowlist&quot;)
+print(&quot;any unknown operator with approval = immediate revoke&quot;)
+PY</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Wash trading vs legitimate market making. Require multiple</li>
+<p>heuristics to agree before calling it fraud.</p>
+<li>The collection is on a chain with cheap gas. Wash trading is</li>
+<p>cheaper there; adjust thresholds.</p>
+<li>Metadata is fully on chain. Rug risk drops, but mint fairness</li>
+<p>still needs review.</p>
+<li>Investigation involves real victims. Handle personal data</li>
+<p>carefully and coordinate with the client&#x27;s legal team.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Active phishing site found: report to the registrar and hosting</li>
+<p>provider, and warn the community through official channels.</p>
+<li>Marketplace vulnerability found: disclose to the marketplace</li>
+<p>security contact with a testnet proof of concept.</p>
+<li>Large scale fraud with identified victims: involve law enforcement</li>
+<p>per the client&#x27;s counsel.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Marketplaces detect wash trading with the same heuristics above, plus fee analysis (wash traders pay fees, so fee revenue spikes). They defend with verified collections, transaction simulation, and approval warnings. Collectors defend with hardware wallets, minimal approvals, and skepticism toward DMs offering mints. The durable fix for projects is fair mint mechanics and immutable metadata.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-862 (Missing Authorization): approval phishing surface.</li>
+<li>CWE-330 (Use of Insufficiently Random Values): mint randomness.</li>
+<li>Chain analysis methodology for NFT transfers.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

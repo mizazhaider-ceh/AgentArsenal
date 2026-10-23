@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal playbook: cloud-review</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>cloud-review</h2><div class="meta"><span class="badge gray">playbook</span><span class="muted">v1.0.0</span></div><p>Use when you need a security review of AWS, Azure, or GCP environments, covering identity, storage, network exposure, and container platforms, ending with an architecture hardening plan. Combines offensive enumeration and privilege escalation path analysis with defensive architecture review. Load this playbook when the client provides read-only cloud access and you need ordered phases, owners, skills, brains, and decision gates for a complete cloud security review.</p><h1>Cloud Security Review Playbook</h1>
+<p>Authorized work only. Use the read-only credentials the client provides. Never create resources, modify IAM policies, or run destructive commands in a client account. All write actions happen in an isolated lab account unless the client gives explicit written approval.</p>
+<h2>Objective</h2>
+<p>Review the client&#x27;s cloud environments for misconfiguration and identity weaknesses, map privilege escalation paths, validate the high-impact ones safely, and deliver an architecture hardening plan. Success is full coverage of the in-scope accounts and subscriptions, validated escalation paths, and a remediation plan the cloud team can implement.</p>
+<h2>Phase table</h2>
+<p>| phase | owner agent | skills used | brains used | decision gates | exit criteria | |-------|-------------|-------------|-------------|----------------|---------------| | 1. Scope and access | pentest-reporter-agent | technical-writing, cloud-security-basics | least-privilege-design, incident-command-mindset | GO_NO_GO_GATES | Read-only access confirmed, in-scope accounts listed, windows agreed | | 2. Identity and access review | cloud-attack-agent | aws-enumeration, azure-enumeration, gcp-enumeration, iam-privesc | least-privilege-design, zero-trust-reasoning | ESCALATION_POLICY | Full IAM inventory, privilege escalation paths mapped | | 3. Data and storage exposure | cloud-attack-agent | s3-misconfigurations, cloud-security-basics, tls-analysis | blast-radius-thinking, assume-breach | RISK_MATRIX | Public or over-shared storage found and validated | | 4. Network and compute exposure | cloud-attack-agent | cloud-security-basics, container-escape, kubernetes-rbac, kubernetes-basics | blast-radius-thinking, threat-modeling | RISK_MATRIX | Internet-facing services inventoried, container escape paths checked | | 5. Architecture review | secure-architect-agent | secure-coding, terraform-basics, cloud-security-basics | threat-modeling, secure-defaults, zero-trust-reasoning | COST_BENEFIT | Design gaps documented with secure reference patterns | | 6. Reporting and hardening plan | pentest-reporter-agent | technical-writing, testing-strategies | evidence-chain, root-cause-analysis | COST_BENEFIT | Findings report with severity, prioritized hardening plan |</p>
+<h2>Detailed phases</h2>
+<h3>Phase 1. Scope and access</h3>
+<p>Steps:</p>
+<ol>
+<li>List every in-scope account, subscription, project, region, and management group from the engagement letter.</li>
+<li>Confirm the read-only role works in each scope and record exactly which APIs it can call.</li>
+<li>Agree on how findings that need write validation will be handled: lab account reproduction or client-approved write windows.</li>
+<li>Set the review window and the escalation contact for the cloud team.</li>
+</ol>
+<p>Evidence to collect: scope list, role capability matrix, credential receipt log, window agreement, escalation contact.</p>
+<h3>Phase 2. Identity and access review</h3>
+<p>Steps:</p>
+<ol>
+<li>Enumerate users, roles, service principals, policies, and trust relationships in each in-scope account.</li>
+<li>Flag overly broad permissions: wildcard actions, admin policies on human users, long-lived keys, unused access.</li>
+<li>Map privilege escalation paths: which role can assume what, which policy allows passing roles or editing trust.</li>
+<li>Validate one hop of each high-value path with a read-only API call where possible, without performing the escalation.</li>
+</ol>
+<p>Commands (where relevant):</p>
+<pre><code class="language-bash">aws iam get-account-authorization-details --output json &gt; iam/aws-authz.json
+az role assignment list --all --output json &gt; iam/azure-assignments.json</code></pre>
+<p>Evidence to collect: IAM inventories per account, over-permission findings, escalation path map, validation call logs.</p>
+<h3>Phase 3. Data and storage exposure</h3>
+<p>Steps:</p>
+<ol>
+<li>Enumerate storage buckets, containers, and file shares. Check public access blocks, ACLs, and policy statements.</li>
+<li>Validate public readability with anonymous requests to one sample object only. Never download client data.</li>
+<li>Check for exposed snapshots, database backups, and logging buckets with weak permissions.</li>
+<li>Verify encryption at rest and in transit settings and note gaps.</li>
+</ol>
+<p>Evidence to collect: storage inventory with exposure flags, anonymous validation results, encryption gap list.</p>
+<h3>Phase 4. Network and compute exposure</h3>
+<p>Steps:</p>
+<ol>
+<li>Inventory security groups, firewall rules, load balancers, and public IPs. Flag management ports open to the internet.</li>
+<li>Review Kubernetes RBAC: cluster-admin bindings, overly broad service accounts, exposed dashboards.</li>
+<li>Check container configurations for privileged mode, host mounts, and known escape paths, using read-only inspection.</li>
+<li>Confirm TLS configuration on public endpoints and note weak protocols or certificates.</li>
+</ol>
+<p>Evidence to collect: network exposure inventory, RBAC findings, container misconfiguration notes, TLS scan results.</p>
+<h3>Phase 5. Architecture review</h3>
+<p>Steps:</p>
+<ol>
+<li>Review the account and landing zone design: separation of workloads, logging coverage, and guardrails.</li>
+<li>Compare identity, network, and data patterns against secure defaults: private endpoints, centralized logging, MFA enforcement.</li>
+<li>Assess infrastructure as code for hardcoded secrets, permissive defaults, and drift from the reviewed templates.</li>
+<li>Identify the structural fixes that close whole classes of findings, not just single instances.</li>
+</ol>
+<p>Evidence to collect: architecture gap register, IaC findings with file references, secure reference patterns per gap.</p>
+<h3>Phase 6. Reporting and hardening plan</h3>
+<p>Steps:</p>
+<ol>
+<li>Write findings with severity, affected resources, proof of exposure or escalation path, and the exact remediation step.</li>
+<li>Build the hardening plan in phases: immediate containment, identity cleanup, structural architecture changes.</li>
+<li>Include detection recommendations so the client&#x27;s monitoring catches recurrence.</li>
+<li>Deliver the draft, run the cloud team walkthrough, finalize, and schedule the retest.</li>
+</ol>
+<p>Evidence to collect: draft and final report, hardening plan with owners and timelines, walkthrough notes, retest schedule.</p>
+<h2>Decision gates</h2>
+<ul>
+<li><strong>GO_NO_GO_GATES</strong> (decisions/GO_NO_GO_GATES.md): must pass before Phase 1 and Phase 2. Checks: written authorization, read-only access verified in every scope, account and region list complete, review window agreed.</li>
+<li><strong>ESCALATION_POLICY</strong> (decisions/ESCALATION_POLICY.md): used in Phase 2. Unexpected account, cross-account trust to an out-of-scope account, or production identity store: stop, notify, wait for written approval.</li>
+<li><strong>RISK_MATRIX</strong> (decisions/RISK_MATRIX.md): used in Phases 3 and 4. Anonymous access validation and any call that could change state are scored first. Write actions run only in the lab account or with explicit approval.</li>
+<li><strong>COST_BENEFIT</strong> (decisions/COST_BENEFIT.md): used in Phases 5 and 6. Hardening items are ordered by implementation cost versus risk reduction, with structural fixes ranked by how many findings they close.</li>
+</ul>
+<h2>Deliverables</h2>
+<ol>
+<li>Scope document with accounts, regions, and access matrix.</li>
+<li>IAM inventory with over-permission findings and escalation path map.</li>
+<li>Storage exposure inventory with validation results.</li>
+<li>Network, Kubernetes, and TLS exposure findings.</li>
+<li>Architecture gap register with secure reference patterns.</li>
+<li>Findings report with severity and phased hardening plan.</li>
+<li>Retest schedule.</li>
+</ol>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

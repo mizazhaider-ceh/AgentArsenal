@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: hunt-with-sigma</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>hunt-with-sigma</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing Sigma rules to hunt threats across SIEM</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="threat-hunting.html">threat-hunting</a></div><div class="deps"><span class="kind">requires:</span> <a href="threat-hunting.html">threat-hunting</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="sigma-rules.html">sigma-rules</a> <a href="siem-detections.html">siem-detections</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Wazuh</td><td>4.8</td></tr></tbody></table><p>Sigma is the shared language for detections: write once, run on any SIEM. This skill covers using Sigma for threat hunting: writing hunt rules from hypotheses, testing them without alert fatigue, and promoting the good ones to permanent detections. It makes hunts repeatable, shareable, and schedulable instead of one-off queries.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Take the hunt hypothesis or deviation signal.</li>
+<li>Write the Sigma rule: title, logsource, detection, condition.</li>
+<li>Test against historical data first (backtest).</li>
+<li>Tune thresholds and filters from the backtest results.</li>
+<li>Run as a scheduled hunt; review the hits.</li>
+<li>Promote validated rules to detection status.</li>
+<li>Share and version the rule library.</li>
+</ol>
+<h2>1. Rule structure</h2>
+<pre><code class="language-yaml"># Example: hunt for suspicious encoded PowerShell (Windows event logs)
+title: Hunt Encoded PowerShell Execution
+id: 11111111-2222-3333-4444-555555555555
+status: experimental
+description: Finds powershell.exe with encoded command flags for triage
+author: SOC Hunt Team
+date: 2026/10/23
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: &#x27;\powershell.exe&#x27;
+    CommandLine|contains:
+      - &#x27;-EncodedCommand&#x27;
+      - &#x27;-enc &#x27;
+      - &#x27;FromBase64String&#x27;
+  filter_known_good:
+    CommandLine|contains: &#x27;known_admin_tooling_string&#x27;
+  condition: selection and not filter_known_good
+level: medium</code></pre>
+<p>The <code>filter_known_good</code> is what separates a hunt rule from an alert rule: hunts tolerate reviewing hits, alerts must not fire on normal activity. Write the filter from the baseline work in baseline-deviation.</p>
+<h2>2. Backtesting and tuning</h2>
+<pre><code class="language-bash"># Backtest: run the rule&#x27;s logic against 30 days of history
+# (in the SIEM&#x27;s Sigma backend or with sigma-cli conversion)
+# Measure: total hits, hits per day, known-good ratio
+
+# Tuning targets:
+# - A hunt rule: &lt; 20 hits/day reviewable, or scoped narrower
+# - A detection rule: near-zero false positives (much stricter)
+# - If the backtest explodes: add filters (host roles, known goods)
+#   before narrowing the detection logic itself
+
+# Convert and deploy per platform (example: Wazuh/SIEM backend)
+# sigma convert -t &lt;backend&gt; -p &lt;pipeline&gt; rule.yml</code></pre>
+<p>Backtest every rule before scheduling: the historical hit count predicts the operational load. A rule that would have fired 500 times last month is a tuning task, not a detection.</p>
+<h2>3. Hunt-to-detection pipeline</h2>
+<pre><code class="language-bash"># Pipeline stages per rule:
+# experimental (hunt): scheduled, hits reviewed manually
+#   -&gt; test: narrowed, filtered, reviewed for two cycles
+#   -&gt; stable (detection): alerting, in the SOC runbook
+#   -&gt; deprecated: technique obsolete or covered better elsewhere
+
+# Rule library discipline:
+# - Versioned in git, one file per rule
+# - Every rule has: hypothesis link, backtest results, owner
+# - Quarterly review: still relevant? still firing correctly?</code></pre>
+<p>The pipeline prevents the two failure modes: hunts that never become detections (knowledge evaporates) and detections that were never hunts (alerts nobody understands). Every detection should trace back to the hunt that proved it.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The log source does not exist yet. The rule becomes the logging</li>
+<p>requirement; hunt value justifies the collection cost.</p>
+<li>Sigma backend differences change semantics. Test the converted</li>
+<p>query on the actual platform; converters are good but not perfect.</p>
+<li>The rule needs enrichment (asset roles, user context). Build the</li>
+<p>enrichment first; context-free rules stay noisy.</p>
+<li>Threat intel feeds the rule. Cite the intel in the rule&#x27;s</li>
+<p>references; intel ages, and the rule should show its source.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A hunt rule confirms malicious activity: hand to ir-scoping with</li>
+<p>the rule hits as evidence.</p>
+<li>The library is growing unmanaged: assign rule owners and run the</li>
+<p>quarterly review; detection debt is real.</p>
+<li>Cross-platform sharing needed: Sigma&#x27;s portability is the answer;</li>
+<p>test the conversion per target platform.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Sigma-based hunting is the defender&#x27;s detection engineering practice: hunts become rules, rules become alerts, alerts get runbooks. The maturity signal is the pipeline flowing: hypotheses in, detections out, with the library as the institutional memory. Attackers evolve; the rule library is how the defense remembers.</p>
+<h2>Key references</h2>
+<ul>
+<li>SigmaHQ rule specification and taxonomy.</li>
+<li>MITRE ATT&amp;CK (technique tags on rules).</li>
+<li>pySigma backend documentation (conversion).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

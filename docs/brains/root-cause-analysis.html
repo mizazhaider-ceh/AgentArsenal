@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: root-cause-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>root-cause-analysis</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must find why something really failed: post-incident review after a breach or outage, a recurring bug that keeps coming back, a security control that failed silently, or any problem where the first explanation feels too easy. Provides root cause reasoning models: the five whys, separating proximate triggers from root causes, mapping contributing factors, fixing the system instead of blaming the person, and verifying the fix removes the cause. Load this brain whenever a fix must last instead of just quieting the symptom.</p><h2>Provides</h2><ul><li>Five whys causal drilling</li><li>Proximate cause vs root cause separation</li><li>Contributing factor mapping</li><li>System fix over blame framing</li><li>Fix verification against the true cause</li><li>Repeat-incident pattern recognition</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>Every incident has a story that is too simple. &quot;The server went down because the disk filled up.&quot; That is a trigger, not a cause. The disk filled up because logs were never rotated. Logs were never rotated because the base image ships without rotation. The base image ships without rotation because nobody owns the image pipeline. Root cause analysis is the discipline of refusing to stop at the first satisfying answer and drilling until you find the thing that, if fixed, prevents the whole class of failure. It matters because symptom fixes feel productive and change nothing. The disk will fill again.</p>
+<h2>Core mental models</h2>
+<p><strong>Ask why five times, then once more.</strong> The five whys is a drill, not a ritual. Each answer must be verified, not guessed: check the log, read the config, ask the owner. The chain stops being useful when answers become vague (&quot;because of human error&quot;), which is a signal you took a wrong turn, not that you arrived. A good chain ends at a concrete, fixable system property: a missing check, an unowned process, a default nobody changed.</p>
+<p><strong>Separate the trigger from the cause.</strong> The proximate cause is what set the incident off (the phishing click, the bad deploy). The root cause is what made the trigger possible and uncaught (no MFA, no deploy canary). Fixing only the trigger is mowing the lawn: it grows back. Fixing the root cause changes the soil. When you write up an incident, label each fact as trigger, contributing factor, or root cause, and make sure the fixes map to the root causes.</p>
+<p><strong>Contributing factors are not root causes.</strong> Most incidents have several contributing factors: the alert fired but nobody was on call, the runbook was outdated, the dashboard was down. These matter and deserve fixes, but they are not the root cause. The root cause is the deepest fixable system condition that allowed the failure chain. List all contributors honestly, then keep drilling past them to the one or two conditions that made the chain possible.</p>
+<p><strong>Fix the system, not the person.</strong> &quot;Human error&quot; is where analysis goes to die. People make mistakes at a predictable rate; the system decides whether a mistake becomes an incident. If an engineer can delete the production database with one command, the root cause is not the engineer, it is the missing guardrail. Every &quot;human error&quot; finding should be rewritten as a system question: what allowed it, what failed to catch it, what made it easy?</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>Write the timeline first: what happened, in order, with timestamps and sources.</li>
+<li>State the impact plainly: what broke, for whom, for how long.</li>
+<li>List candidate causes. Separate triggers, contributing factors, and suspected root causes.</li>
+<li>Drill each candidate with why, verifying every answer against evidence, not memory.</li>
+<li>Stop drilling when the answer is a concrete fixable system property, not a vague blame.</li>
+<li>Check for pattern: has this class of failure happened before? If yes, the last fix missed the root cause.</li>
+<li>Write fixes for the root cause AND the contributing factors. Both matter.</li>
+<li>For each fix, state how you will verify it worked (test, metric, drill).</li>
+<li>Assign every fix an owner and a date. An unowned fix is a wish.</li>
+<li>Publish the writeup blamelessly. The goal is learning, and blame kills reporting.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If the root cause names a person, you have not found the root cause.</li>
+<li>The second occurrence of an incident is a process failure, not bad luck.</li>
+<li>Verify each why with evidence. A guessed why is a story, not analysis.</li>
+<li>The fix must make the failure class impossible or caught, not just this instance unlikely.</li>
+<li>Ask &quot;what made this easy&quot; and &quot;what failed to catch it.&quot; Both are root cause territory.</li>
+<li>Simple chains beat complex ones. Prefer the shortest verified causal chain.</li>
+<li>If two teams each think the other owns it, ownership is the root cause.</li>
+<li>A root cause you cannot fix is just a sad fact. Find the nearest fixable link.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Stopping at the trigger.</strong> &quot;Disk full&quot; gets a cleanup cron, the unowned image pipeline ships the same bug next quarter.</li>
+<li><strong>Blaming human error.</strong> Ends the analysis, teaches nothing, guarantees recurrence.</li>
+<li><strong>Fix theater.</strong> A fix that sounds good but does not touch the causal chain (more training, after the third identical incident).</li>
+<li><strong>Skipping verification.</strong> Declaring the root cause fixed without a test that proves it.</li>
+<li><strong>Blameful writeups.</strong> Naming and shaming, which teaches everyone to hide the next incident.</li>
+</ul>
+<h2>Worked example</h2>
+<p>Incident: customer data was exfiltrated through a vendor&#x27;s compromised account. First story: &quot;the vendor got phished.&quot; Drill: why did a phished vendor account reach customer data? Because vendor accounts had the same access as employees. Why? Because the access request form had no vendor tier. Why? Because nobody defined what vendors should be allowed to do. Root cause: no vendor access model and no owner for third-party access. Contributing factors: no MFA on vendor accounts, no alert on bulk export. Fixes: define vendor access tiers with an owner (root cause), enforce MFA and alert on bulk export (contributors), verify with a quarterly access review and a test alert. The phishing was the trigger. The missing access model was the cause. Fix the model and the next phished vendor account reaches nothing.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

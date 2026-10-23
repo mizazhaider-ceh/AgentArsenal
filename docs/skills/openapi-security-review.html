@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: openapi-security-review</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>openapi-security-review</h2><div class="meta"><span class="badge gray">api</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">92/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reviewing an OpenAPI specification for security</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="api-security-testing.html">api-security-testing</a> <a href="rest-api-design.html">rest-api-design</a> <a href="api-versioning.html">api-versioning</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>The OpenAPI spec is the API&#x27;s blueprint: reviewing it finds auth gaps, unvalidated schemas, and endpoints the testers would otherwise miss. This skill covers the review method for specs you are authorized to assess: structure checks, security scheme analysis, and using the spec to drive testing. Review the spec, then verify against the live API.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Get the spec: openapi.json or yaml, all versions in use.</li>
+<li>Validate it parses and check the version coverage.</li>
+<li>Review security schemes: what auth is defined and where it is</li>
+<p>required.</p>
+<li>Find endpoints with no security: the first findings.</li>
+<li>Check schemas: required fields, types, and constraints the</li>
+<p>implementation may ignore.</p>
+<li>Diff against the live API: hidden endpoints not in the spec.</li>
+<li>Generate tests from the spec: fuzz per the schemas.</li>
+<li>Report spec issues and implementation drift separately.</li>
+</ol>
+<h2>1. Spec analysis</h2>
+<pre><code class="language-bash"># Validate and summarize the spec
+python3 - &lt;&lt; &#x27;PY&#x27;
+import json
+spec = json.load(open(&quot;/tmp/api/openapi.json&quot;))
+paths = spec[&quot;paths&quot;]
+print(&quot;paths:&quot;, len(paths))
+open_paths = [p for p, ops in paths.items()
+              for m, op in ops.items()
+              if isinstance(op, dict) and &quot;security&quot; not in op
+              and &quot;security&quot; not in spec]
+print(&quot;operations without security:&quot;, len(open_paths))
+for p in open_paths[:10]:
+    print(&quot;  OPEN:&quot;, p)
+PY</code></pre>
+<pre><code class="language-bash"># Security scheme review: what is defined and how strong
+python3 - &lt;&lt; &#x27;PY&#x27;
+import json
+spec = json.load(open(&quot;/tmp/api/openapi.json&quot;))
+sec = spec.get(&quot;components&quot;, {}).get(&quot;securitySchemes&quot;, {})
+for name, s in sec.items():
+    print(name, &quot;-&gt;&quot;, s.get(&quot;type&quot;), s.get(&quot;scheme&quot;), s.get(&quot;in&quot;))
+print(&quot;check: is the scheme applied globally, and are weak schemes&quot;)
+print(&quot;(basic auth, apiKey in query) actually used?&quot;)
+PY</code></pre>
+<h2>2. Drift and test generation</h2>
+<pre><code class="language-bash"># Find live endpoints missing from the spec (authorized target)
+# 1. list spec paths, 2. fuzz for unlisted paths, 3. diff
+python3 - &lt;&lt; &#x27;PY&#x27;
+import json
+spec_paths = set(json.load(open(&quot;/tmp/api/openapi.json&quot;))[&quot;paths&quot;])
+print(f&quot;{len(spec_paths)} documented paths&quot;)
+print(&quot;fuzz common admin/debug paths and compare: undocumented = drift&quot;)
+PY</code></pre>
+<pre><code class="language-bash"># Schema based fuzzing: generate invalid bodies per the schema
+# (schemathesis as tooling against the authorized target)
+# schemathesis run --checks all --hypothesis-max-examples=50 \
+#   --base-url https://target.example /tmp/api/openapi.json
+echo &quot;failures: 500s, auth bypasses, and validation gaps&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The spec is outdated. Then the drift findings multiply; note the</li>
+<p>spec age as a root cause.</p>
+<li>Multiple spec versions live. Review each; v1 often keeps old</li>
+<p>flaws.</p>
+<li>The spec is huge. Automate the checks above; manual review the</li>
+<p>auth and the sensitive endpoints.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Undocumented admin endpoints found: test them as priority; they</li>
+<p>are often less hardened.</p>
+<li>Spec shows weak auth: verify live before reporting; specs lie.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Spec review is preventive: it catches design flaws before code. Defenders keep the spec as a security artifact: reviewed on change, tested against in CI, and used to generate the allowlist for the API gateway. Drift between spec and reality is itself a finding, because undocumented endpoints escape every other control.</p>
+<h2>Key references</h2>
+<ul>
+<li>OWASP API Security Top 10.</li>
+<li>OpenAPI Specification: security scheme objects.</li>
+<li>Related skills: api-security-testing, rest-api-design.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

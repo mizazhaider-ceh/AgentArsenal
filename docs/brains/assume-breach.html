@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: assume-breach</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>assume-breach</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must design or operate as if the adversary is already inside: planning network segmentation, writing hunting hypotheses, reviewing internal trust assumptions, or responding to signs of lateral movement. Provides assume-breach reasoning: the perimeter will fail, so design for containment and visibility inside; hunt for the intruder you assume is present; shrink dwell time; segment so one compromise cannot become everything. Load this brain when the task involves internal security posture rather than keeping attackers out.</p><h2>Provides</h2><ul><li>Breach-assumed architecture reasoning</li><li>Internal segmentation and containment design</li><li>Threat hunting hypothesis generation</li><li>Dwell time reduction strategies</li><li>Lateral movement path analysis</li><li>Insider-equivalent trust modeling</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>&quot;Assume breach&quot; is not pessimism, it is a design input. It means: stop spending all your energy on the wall and start designing the inside of the castle as if someone is already walking its halls. Most organizations discover breaches months late because everything inside was trusted: flat networks, no internal logging, admin credentials everywhere. This brain teaches an agent to flip the default: the inside is hostile territory too, so build visibility, segmentation, and hunting into it from the start.</p>
+<h2>Core mental models</h2>
+<p><strong>The perimeter already failed, design accordingly.</strong> Treat every external boundary as eventually bypassed. This does not mean ignoring the perimeter; it means no security decision may depend on the perimeter holding. If your plan for a compromised VPN credential is &quot;that should not happen,&quot; you have no plan. Every critical asset needs protection that works even when the attacker starts inside.</p>
+<p><strong>Segment like the enemy is already inside.</strong> Network segmentation, identity boundaries, and data compartments exist to turn one breach into a small incident instead of a company-wide one. The question for every segment is: if the attacker owns this part, what can they reach next, and how fast? Flat networks answer &quot;everything, immediately.&quot; Good segmentation answers &quot;this room, and we will see them try the door.&quot;</p>
+<p><strong>Hunt, do not hope.</strong> If you assume breach, you must look for the breach. Threat hunting is forming hypotheses (&quot;if an intruder were here, they would...&quot;) and checking them against internal telemetry. Hope is not a control. A hunting program with modest telemetry beats a perfect perimeter with none, because the hunter finds the intruder the wall missed.</p>
+<p><strong>Dwell time is the metric that matters.</strong> The damage of a breach grows with how long the attacker operates unseen. Every assume-breach investment should be judged by whether it shrinks dwell time: better internal logging, deception, anomaly detection, faster triage. An intruder found in hours is an incident. An intruder found in months is a disaster.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>List what an insider (or a compromised insider account) can reach today, with no extra exploits.</li>
+<li>Map lateral movement paths: which systems trust which, where do credentials roam?</li>
+<li>Segment the highest-value assets first: separate identity, data, and admin planes.</li>
+<li>Ensure internal visibility: log authentication, lateral connections, and data access inside the network, not just at the edge.</li>
+<li>Write three hunting hypotheses based on your crown jewels and test them this month.</li>
+<li>Plant deception where it is cheap: honeypot credentials, fake admin shares, canary tokens.</li>
+<li>Define the dwell-time goal and measure it: when did they get in vs when did we know?</li>
+<li>Remove standing internal trust: service accounts with domain admin, shared local admin passwords, &quot;internal&quot; apps with no auth.</li>
+<li>Drill the inside-out scenario: red team starts with a standard user account, no external tricks.</li>
+<li>Review quarterly: new systems get segmented and logged before they go live, not after.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If a standard user account can reach the crown jewels, you are already breached in every way that matters.</li>
+<li>Log the inside like you log the edge. Lateral movement is quiet only where nobody listens.</li>
+<li>Shared local admin passwords are a skeleton key. Kill them first.</li>
+<li>Deception is the cheapest detection you can buy. One canary token can catch a whole intrusion.</li>
+<li>Hunt on a schedule, not on a hunch. Monthly hypotheses beat annual panic.</li>
+<li>The helpdesk account is an insider account. Treat it like one.</li>
+<li>Assume the attacker reads your runbooks. Design so that does not help them much.</li>
+<li>Every flat network is a breach waiting for its press release.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Perimeter-only security.</strong> A hard shell with a soft center: one phished credential equals total compromise.</li>
+<li><strong>Trusting the internal network.</strong> &quot;It is behind the firewall&quot; used as a reason to skip auth, logging, or patching.</li>
+<li><strong>No internal telemetry.</strong> All logging faces outward, so lateral movement is invisible by design.</li>
+<li><strong>Hunting without hypotheses.</strong> Random log diving that finds nothing and concludes everything is fine.</li>
+<li><strong>Segmentation theater.</strong> VLANs with allow-all rules between them. Lines on a diagram, not boundaries.</li>
+</ul>
+<h2>Worked example</h2>
+<p>A company assumes breach and runs the exercise: start with a standard employee laptop login, goal is the finance database. Lateral map shows the laptop can reach every workstation via SMB (flat network), one workstation has a cached domain admin session, and the finance DB trusts the whole internal subnet. Path cost: trivial. Fixes in assume-breach order: segment the finance DB to only the finance app servers (containment), deploy unique local admin passwords everywhere (kills the skeleton key), enable authentication logging on all internal SMB and review it weekly (visibility), and drop a canary credential file on a few workstations (deception). A month later the canary fires: a real intruder, caught in hours instead of months, contained to one segment. The perimeter never even came up.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

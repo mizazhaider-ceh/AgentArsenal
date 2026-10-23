@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: nmap-service-detection</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>nmap-service-detection</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when ports are mapped and you need nmap to identify the</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="nmap-methodology.html">nmap-methodology</a></div><div class="deps"><span class="kind">requires:</span> <a href="nmap-methodology.html">nmap-methodology</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>nmap</td><td>7.98</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>Wireshark</td><td>4.2</td></tr></tbody></table><p>Service detection turns open ports into named services with versions, and OS detection turns hosts into platforms. This skill covers nmap&#x27;s identification engine on authorized engagements: version probes, intensity control, OS fingerprinting, and hand verification when nmap is unsure. The output feeds exploit selection, so accuracy here decides the quality of everything after.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Take the open-port list from nmap-port-scanning.</li>
+<li>Run version detection at default intensity on those ports.</li>
+<li>Raise intensity on ports that matter and came back uncertain.</li>
+<li>Run OS detection and record confidence levels.</li>
+<li>Verify every uncertain or surprising result by hand.</li>
+<li>Write the final service and OS inventory with evidence notes.</li>
+</ol>
+<h2>1. Version detection</h2>
+<pre><code class="language-bash"># Version scan on known-open ports (faster than re-scanning everything)
+nmap -sV -p 22,80,443,3306,3389,8080 10.0.5.23 -oN /tmp/ver.txt
+
+# Raise intensity for stubborn services (1-9, default 7)
+nmap -sV --version-intensity 9 -p 8080 10.0.5.23 -oN /tmp/ver_hi.txt
+
+# Lower intensity when the target is fragile
+nmap -sV --version-intensity 3 -p 22,80,443 10.0.5.23 -oN /tmp/ver_lo.txt
+
+# All probes against one odd port, with trace to see what nmap tried
+nmap -sV --version-all -p 9999 --packet-trace 10.0.5.23 -oN /tmp/ver_all.txt</code></pre>
+<p>Higher intensity sends rarer probes and takes longer; use 9 only on the ports where the version actually changes your next step.</p>
+<h2>2. OS detection</h2>
+<pre><code class="language-bash"># OS fingerprinting with guess output for near matches
+nmap -O --osscan-guess 10.0.5.23 -oN /tmp/os.txt
+
+# The aggressive bundle: OS, versions, scripts, traceroute in one run
+# (noisy; use on small scopes or with permission)
+nmap -A -T4 10.0.5.23 -oA /tmp/aggressive
+
+# Limit OS detection when only the platform family matters
+nmap -O --osscan-limit 10.0.5.0/24 -oN /tmp/os_net.txt</code></pre>
+<p>OS detection needs at least one open and one closed TCP port. All-filtered hosts cannot be fingerprinted this way; note it and move to service clues.</p>
+<h2>3. Hand verification</h2>
+<pre><code class="language-bash"># nmap says &quot;unknown&quot;: grab the banner yourself
+(echo; sleep 1) | timeout 5 nc 10.0.5.23 9999 | head -5
+
+# HTTP service with a generic label: headers and error pages tell more
+curl -s -I http://10.0.5.23:8080/ | head -10
+curl -s http://10.0.5.23:8080/does-not-exist | head -20
+
+# TLS services: the certificate names the organization and sometimes the product
+echo | timeout 5 openssl s_client -connect 10.0.5.23:8443 2&gt;/dev/null \
+  | openssl x509 -noout -subject -issuer
+
+# Compare nmap&#x27;s guess against the handshake in Wireshark when it matters</code></pre>
+<p>Never report a version you did not verify when the version drives an exploit choice. &quot;nmap guessed X with 80 percent confidence, banner says Y&quot; is an honest inventory line; a bare guess presented as fact is not.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Banners are faked or stripped. Behavior probes (error pages, protocol</li>
+<p>quirks) beat banner strings; fingerprint the behavior, not the label.</p>
+<li>The service is behind a load balancer. The version is the balancer&#x27;s;</li>
+<p>test backend behavior through Host header variation if in scope.</p>
+<li>Version detection crashes a fragile service. Stop, note the probe, and</li>
+<p>finish that service by hand with the gentlest possible requests.</p>
+<li>Containers report the host kernel. Distinguish kernel (host) from</li>
+<p>userland (container) in the inventory; exploits usually target userland.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need proof for a version-specific exploit: capture the banner bytes</li>
+<p>and the nmap probe log, and keep both with the finding.</p>
+<li>OS stays unknown after all probes: report unknown with the full</li>
+<p>evidence list; an honest unknown beats a confident wrong guess.</p>
+<li>The inventory must merge with other tools: parse the XML output into</li>
+<p>your tracker rather than retyping, to avoid transcription errors.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see version detection as follow-up connections to open ports carrying nmap&#x27;s distinctive probe payloads, which IDS signatures match. OS detection adds the odd-flag probe sequence. Banner grabbing shows in service logs. Defenses are IDS coverage, banner minimization, and keeping versions current so accurate identification finds nothing exploitable.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1082 (System Information Discovery).</li>
+<li>MITRE ATT&amp;CK T1518 (Software Discovery).</li>
+<li>nmap 7.98 documentation: version detection, OS detection.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

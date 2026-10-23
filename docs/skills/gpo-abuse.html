@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: gpo-abuse</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>gpo-abuse</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing Group Policy security on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="bloodhound-methodology.html">bloodhound-methodology</a> <a href="privesc-windows.html">privesc-windows</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Group Policy controls every domain machine, so whoever can edit a GPO can push software, scripts, or credentials to the fleet: it is one of the most powerful escalation paths in AD. This skill covers authorized assessment: enumerating GPOs, reviewing dangerous settings, finding who can edit them, and testing the paths. Lab or authorized domains only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate GPOs: links, scope, and edit delegations.</li>
+<li>Find who can edit each GPO: weak delegations are the entry.</li>
+<li>Review settings for the dangerous ones: scripts, software</li>
+<p>install, credentials in preferences.</p>
+<li>Check for GPOs linked at the domain level with broad scope.</li>
+<li>Test the escalation path in the lab: edit, wait for refresh,</li>
+<p>confirm.</p>
+<li>Check SYSVOL for readable scripts and credentials.</li>
+<li>Review GPO backup and change monitoring.</li>
+<li>Report each editable GPO with its blast radius.</li>
+</ol>
+<h2>1. Enumeration and delegation</h2>
+<pre><code class="language-bash"># List GPOs and their edit rights (authorized, PowerView/AD module)
+# Get-GPO -All | Select DisplayName, Id
+# For each: (Get-GPPermission -Guid $id -All).TrusteeName for edit rights
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;flag: Authenticated Users or Domain Users with Edit rights&quot;)
+print(&quot;flag: GPOs linked to Domain Controllers OU with weak delegation&quot;)
+print(&quot;flag: disabled GPOs still linked (confusion, not security)&quot;)
+PY</code></pre>
+<pre><code class="language-bash"># SYSVOL hunt: readable scripts and the classic cpasswords
+# (cpasswords are decryptable; any remaining is a critical finding)
+find /tmp/sysvol -iname &quot;*.xml&quot; | head -10
+grep -ri &quot;cpassword&quot; /tmp/sysvol/Policies/ 2&gt;/dev/null | head -5
+# Also: logon scripts with hardcoded credentials, installers with keys
+grep -ri -E &quot;password\s*=&quot; /tmp/sysvol/Policies/*/Machine/Scripts/ 2&gt;/dev/null | head -10</code></pre>
+<h2>2. Dangerous settings checklist</h2>
+<pre><code class="language-bash"># Review each GPO&#x27;s settings for:
+# - startup/logon scripts (arbitrary code on every machine in scope)
+# - software installation (push anything anywhere in scope)
+# - group policy preferences credentials (decryptable cpassword)
+# - local admin via restricted groups (who becomes admin where)
+# - firewall disabled, Defender disabled, UAC weakened
+echo &quot;each dangerous setting x broad scope x weak delegation = escalation path&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The GPO is a default domain policy. Editing it affects everything;</li>
+<p>verify its delegation is locked down hardest.</p>
+<li>Delegation looks fine but inheritance is blocked oddly. Review the</li>
+<p>effective application with gpresult on a test machine.</p>
+<li>Fine grained password policies live nearby. Review them in the</li>
+<p>same pass.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Editable GPO confirmed: demonstrate in the lab (push a harmless</li>
+<p>marker), then report the production path without executing it.</p>
+<li>cpassword found: it decrypts to a real credential; rotate it and</li>
+<p>treat as compromise of wherever it was used.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see GPO abuse as GPO modifications outside change windows, new scripts in SYSVOL, and machines running unexpected startup programs. They defend with tight GPO delegations, change monitoring on SYSVOL, and blocking the dangerous settings by policy. The durable practice is least privilege on every GPO plus alerts on any GPO version change.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1484 (Domain Policy Modification).</li>
+<li>Microsoft GPO security guidance.</li>
+<li>Related skills: ad-enumeration, bloodhound-methodology.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

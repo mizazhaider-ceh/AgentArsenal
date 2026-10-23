@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: authz-checks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>authz-checks</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing or reviewing code that decides who may do</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="secure-coding.html">secure-coding</a></div><div class="deps"><span class="kind">requires:</span> <a href="secure-coding.html">secure-coding</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="code-reviewer.html">code-reviewer</a> <a href="input-validation-patterns.html">input-validation-patterns</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Bandit</td><td>1.7</td></tr></tbody></table><p>Authorization decides whether this authenticated user may touch this object or use this function. This skill covers implementing it correctly: server-side checks on every access, ownership verification, role enforcement, and deny-by-default design. Authentication without authorization is the IDOR factory; this skill closes it.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List every object access and every privileged function.</li>
+<li>Define the authorization rule for each: who may do what to which.</li>
+<li>Enforce server-side, on every request, with no client trust.</li>
+<li>Check ownership for object access; check role for functions.</li>
+<li>Deny by default: unknown cases fail closed.</li>
+<li>Test with multiple accounts: the A/B/admin matrix.</li>
+<li>Log authorization failures for attack detection.</li>
+</ol>
+<h2>1. Ownership and role checks</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Authorization patterns: check on the server, every time.&quot;&quot;&quot;
+
+def get_order(current_user, order_id: int):
+    order = db.get_order(order_id)
+    if order is None:
+        raise NotFound()
+    # Ownership check: the object belongs to the requester
+    if order.owner_id != current_user.id and not current_user.is_admin:
+        log_authz_failure(current_user.id, f&quot;order:{order_id}&quot;)
+        raise Forbidden()
+    return order
+
+def delete_user(current_user, target_id: int):
+    # Role check: the FUNCTION requires admin, regardless of object
+    if not current_user.is_admin:
+        log_authz_failure(current_user.id, &quot;delete_user&quot;)
+        raise Forbidden()
+    # Ownership still applies: admins follow their own rules where defined
+    return db.delete_user(target_id)
+
+# Deny by default: no rule matched means no access
+def authorize(current_user, action, resource) -&gt; bool:
+    rule = POLICY.get((action, resource.type))
+    if rule is None:
+        return False
+    return rule(current_user, resource)</code></pre>
+<p>The check lives in the data access layer or a single authorization module, not scattered through handlers. Scattered checks get skipped; central checks get tested.</p>
+<h2>2. Common failure patterns</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Patterns to delete on sight.&quot;&quot;&quot;
+
+# 1. Client-side only: the UI hides the button, the API allows it
+#    FIX: enforce in the API handler (shown above)
+
+# 2. Check on read, not on write:
+def bad_update(current_user, order_id, data):
+    order = db.get_order(order_id)
+    # missing ownership check here: any user updates any order
+    return db.update_order(order_id, data)
+
+# 3. ID in the URL trusted without verification:
+#    /api/users/123 where 123 is used directly as the target
+#    FIX: compare the URL id against the session&#x27;s user id or ownership
+
+# 4. Role from the client: role = request.json[&quot;role&quot;]
+#    FIX: roles come from the session/server, never the request</code></pre>
+<p>Review every handler for the pattern &quot;fetches object, acts on object, never checks ownership.&quot; That single missing line is the most common authorization bug in existence.</p>
+<h2>3. Testing authorization</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;The A/B/admin test matrix, automated.&quot;&quot;&quot;
+
+def test_authz_matrix(client):
+    # A reads A&#x27;s object: allowed
+    assert client.get(&quot;/orders/1001&quot;, token=TOKEN_A).status_code == 200
+    # B reads A&#x27;s object: denied
+    assert client.get(&quot;/orders/1001&quot;, token=TOKEN_B).status_code == 403
+    # A reads admin function: denied
+    assert client.get(&quot;/admin/users&quot;, token=TOKEN_A).status_code == 403
+    # Admin reads admin function: allowed
+    assert client.get(&quot;/admin/users&quot;, token=TOKEN_ADMIN).status_code == 200
+    # No token at all: denied
+    assert client.get(&quot;/orders/1001&quot;).status_code == 401
+    print(&quot;authz matrix passed&quot;)</code></pre>
+<p>Run the matrix in CI for every permission-sensitive endpoint. Manual pentests find these bugs; automated matrices prevent their return.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Shared resources (team objects, public links). Define the sharing</li>
+<p>model explicitly: who shares, what the link grants, how it revokes.</p>
+<li>Performance: authorization checks add queries. Cache the user&#x27;s</li>
+<p>roles per request, not per check, and keep ownership checks indexed.</p>
+<li>Admin override paths. Document which admin actions bypass ownership</li>
+<p>and log them; unlogged override is a backdoor by another name.</p>
+<li>Object creation: the creator owns it, but creation itself may need</li>
+<p>a quota or role check; do not forget the create path.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The permission model is unclear: stop and define it with the product</li>
+<p>owner; code cannot enforce a policy nobody wrote down.</p>
+<li>Legacy code has no central check: add the authorization module and</li>
+<p>migrate handlers one by one, with the matrix test guarding each.</p>
+<li>A bypass is found in production: fix, add the regression test, and</li>
+<p>review the logs for exploitation of the same pattern elsewhere.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Authorization failures are high-signal logs: legitimate users rarely trigger them, attackers trigger them constantly. Alert on bursts per user and on any failure against admin endpoints. The engineering view: every 403 in the logs is a prevented incident; make sure the 403s are actually being enforced and not just returned by accident.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-862 (Missing Authorization).</li>
+<li>CWE-639 (Authorization Bypass Through User-Controlled Key).</li>
+<li>OWASP Authorization Cheat Sheet.</li>
+<li>OWASP API Security Top 10: broken object and function level</li>
+<p>authorization.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

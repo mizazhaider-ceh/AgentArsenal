@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: saas-security-review</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>saas-security-review</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reviewing the security of a SaaS application your</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cloud-security-basics.html">cloud-security-basics</a> <a href="api-security-testing.html">api-security-testing</a> <a href="oauth2-deep-dive.html">oauth2-deep-dive</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>SaaS sprawl means your data lives in dozens of vendors&#x27; hands: the review checks who can access it, how it is isolated, and what happens when you leave. This skill covers the assessment for SaaS you buy or build: authentication, tenant isolation, admin controls, and exit. Review with a test tenant, never production data.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory the SaaS: what data it holds, who uses it, and the</li>
+<p>contract terms.</p>
+<li>Check authentication: SSO enforced, MFA available, and password</li>
+<p>policies sane.</p>
+<li>Test authorization: can one tenant&#x27;s user see another tenant&#x27;s</li>
+<p>data (test tenants only).</p>
+<li>Review admin controls: role granularity and admin activity logs.</li>
+<li>Check data handling: residency options, encryption, and backup.</li>
+<li>Test offboarding: does deprovisioning actually revoke access.</li>
+<li>Review integrations: OAuth grants and API keys the SaaS holds.</li>
+<li>Assess exit: data export format and deletion on termination.</li>
+</ol>
+<h2>1. Auth and tenant isolation tests</h2>
+<pre><code class="language-bash"># SSO enforcement check (test tenant)
+# 1. try logging in with password when SSO is required -&gt; must fail
+# 2. check MFA enrollment options for admins
+# 3. review session lifetimes and idle timeouts
+echo &quot;record: SSO enforced? MFA for admins? session timeout?&quot;</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Tenant isolation probe: two test tenants, cross access attempts.&quot;&quot;&quot;
+import urllib.request, json
+
+def api(tenant_token, path):
+    req = urllib.request.Request(
+        f&quot;https://saas.example/api/{path}&quot;,
+        headers={&quot;Authorization&quot;: f&quot;Bearer {tenant_token}&quot;})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            return r.status, r.read()[:200]
+    except Exception as e:  # noqa: BLE001
+        return &quot;error&quot;, str(e)[:100]
+
+# Tenant B tries to read tenant A&#x27;s object by guessing the ID
+status, body = api(&quot;TENANT_B_TOKEN&quot;, &quot;documents/doc_owned_by_tenant_a&quot;)
+print(&quot;cross tenant read:&quot;, status, body[:100])
+# 200 with data = broken tenant isolation (test tenants only)</code></pre>
+<h2>2. Admin and lifecycle review</h2>
+<pre><code class="language-bash"># Admin role granularity: can you make a billing-only admin, or is
+# every admin a super admin?
+# Offboarding test: disable a test user, then verify:
+# - login fails immediately (not after token expiry)
+# - API keys revoked
+# - SCIM deprovisioning if configured
+echo &quot;test: disable user, then attempt login + API call within 5 minutes&quot;</code></pre>
+<pre><code class="language-bash"># Integration review: OAuth grants the SaaS holds to your other systems
+# List authorized apps per user and per tenant; revoke the stale ones
+echo &quot;checklist: least privilege scopes, expiry, unused grant cleanup&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The vendor will not give a test tenant. Review docs and contracts;</li>
+<p>mark untested areas explicitly.</p>
+<li>SSO is &quot;on the roadmap&quot;. Price the risk of password only auth in</li>
+<p>the meantime, especially for admins.</p>
+<li>Data residency cannot be guaranteed. Document where data actually</li>
+<p>lives vs where the contract says.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Tenant isolation failure: emergency report to the vendor with</li>
+<p>the test tenant proof.</p>
+<li>No admin logs: you cannot detect misuse; recommend a vendor that</li>
+<p>provides them or compensating monitoring.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders monitor SaaS through SSO logs (impossible travel, new devices), admin activity exports, and CASB alerts on unusual data volumes. They defend with SSO plus MFA everywhere, least privilege admin roles, and quarterly access reviews. The durable practice is treating SaaS like your own infrastructure for identity and offboarding, because to the attacker it is.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-862 (Missing Authorization): tenant isolation gaps.</li>
+<li>CAIQ (Cloud Security Alliance): SaaS assessment questionnaire.</li>
+<li>OWASP API Security Top 10: integration review.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

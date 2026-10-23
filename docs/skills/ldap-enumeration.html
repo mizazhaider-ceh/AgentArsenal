@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ldap-enumeration</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ldap-enumeration</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to enumerate Active Directory over LDAP on</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ad-enumeration.html">ad-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="ad-enumeration.html">ad-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="kerberoasting.html">kerberoasting</a> <a href="bloodhound-methodology.html">bloodhound-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Impacket</td><td>0.11.0</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>PowerShell</td><td>7.4</td></tr></tbody></table><p>LDAP is the directory&#x27;s front door: users, computers, groups, and their attributes are all queryable, and misconfigurations leak through it constantly. This skill covers LDAP enumeration on authorized engagements: binding, dumping the objects that matter, and reading the attributes where admins leave passwords and notes. It is the foundation the other AD sub-skills build on.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Locate domain controllers and confirm LDAP is reachable.</li>
+<li>Test anonymous bind; if it works, note it as a finding and enumerate.</li>
+<li>Bind with the engagement credentials.</li>
+<li>Enumerate users, computers, groups, and OUs.</li>
+<li>Read interesting attributes: descriptions, comments, and any field</li>
+<p>that might hold credentials.</p>
+<li>Map group memberships, especially privileged groups.</li>
+<li>Save the dumps for BloodHound and manual review.</li>
+</ol>
+<h2>1. Binding and basic queries</h2>
+<pre><code class="language-bash"># Find domain controllers via DNS SRV
+dig +short SRV _ldap._tcp.corp.example
+
+# Anonymous bind test (finding if it succeeds)
+ldapsearch -x -H ldap://10.0.5.10 -b &quot;dc=corp,dc=example&quot; \
+  &quot;(objectClass=user)&quot; dn 2&gt;&amp;1 | head -10
+
+# Authenticated bind and base DN discovery
+ldapsearch -x -H ldap://10.0.5.10 -D &quot;testuser@corp.example&quot; -w &#x27;TestPass123!&#x27; \
+  -b &quot;dc=corp,dc=example&quot; &quot;(objectClass=domain)&quot; dn</code></pre>
+<p>Anonymous LDAP bind succeeding on a domain controller is worth reporting on its own: it exposes the directory to anyone on the network.</p>
+<h2>2. User and group enumeration</h2>
+<pre><code class="language-bash"># All users with key attributes
+ldapsearch -x -H ldap://10.0.5.10 -D &quot;testuser@corp.example&quot; -w &#x27;TestPass123!&#x27; \
+  -b &quot;dc=corp,dc=example&quot; &quot;(objectClass=user)&quot; \
+  sAMAccountName description comment memberOf 2&gt;/dev/null | head -60
+
+# Users with passwords in descriptions (the classic LDAP find)
+ldapsearch -x -H ldap://10.0.5.10 -D &quot;testuser@corp.example&quot; -w &#x27;TestPass123!&#x27; \
+  -b &quot;dc=corp,dc=example&quot; &quot;(objectClass=user)&quot; \
+  sAMAccountName description 2&gt;/dev/null | grep -i -B2 -E &#x27;pass|pwd|cred&#x27; | head -20
+
+# Privileged group membership
+ldapsearch -x -H ldap://10.0.5.10 -D &quot;testuser@corp.example&quot; -w &#x27;TestPass123!&#x27; \
+  -b &quot;dc=corp,dc=example&quot; &quot;(&amp;(objectClass=group)(cn=Domain Admins))&quot; member | head -20
+
+# Computers and their operating systems
+ldapsearch -x -H ldap://10.0.5.10 -D &quot;testuser@corp.example&quot; -w &#x27;TestPass123!&#x27; \
+  -b &quot;dc=corp,dc=example&quot; &quot;(objectClass=computer)&quot; \
+  sAMAccountName operatingSystem 2&gt;/dev/null | head -30</code></pre>
+<p>Descriptions and comments are where credentials hide. Grep every text attribute for password-like strings before doing anything cleverer.</p>
+<h2>3. Scripted enumeration with Impacket</h2>
+<pre><code class="language-bash"># Impacket ldapsearch: cleaner output for scripting
+python3 /opt/impacket/examples/ldapsearch.py \
+  corp.example/testuser:&#x27;TestPass123!&#x27; -dc-ip 10.0.5.10 \
+  -request &quot;(objectClass=user)&quot; -attributes sAMAccountName,description | head -40
+
+# Dump all groups and memberships to files for offline review
+python3 /opt/impacket/examples/ldapdomaindump.py \
+  -u &#x27;corp.example\testuser&#x27; -p &#x27;TestPass123!&#x27; 10.0.5.10 -o /tmp/lddapdump
+ls /tmp/lddapdump/</code></pre>
+<p>Scripted dumps beat manual ldapsearch for anything over a dozen objects. Save the raw dumps; you will re-query them throughout the engagement.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>LDAP signing is enforced and simple binds fail. Use NTLM or Kerberos</li>
+<p>binds through Impacket instead of plaintext ldapsearch.</p>
+<li>The directory is huge. Page the queries and filter by OU; dumping</li>
+<p>100k users in one query times out and annoys the DC.</p>
+<li>LDAPS only (port 636). Switch the URI to ldaps:// and add <code>-ZZ</code> or</li>
+<p>the right TLS handling; the queries are identical.</p>
+<li>Permissions hide attributes. A low-privilege bind sees less; note</li>
+<p>what was visible at your privilege level and re-run after any escalation.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need the full object graph: hand the LDAP dumps to</li>
+<p>bloodhound-collection for automated path analysis.</p>
+<li>Interesting users found (service accounts, admins): pivot to</li>
+<p>kerberoast-execution for crackable service tickets.</p>
+<li>Credentials found in attributes: verify by binding as that user, then</li>
+<p>handle under the engagement&#x27;s credential rules.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see LDAP enumeration as high-volume directory queries from a non-admin host, especially wildcard searches and attribute sweeps, which good monitoring flags. Anonymous binds log distinctly. Defenses are disabling anonymous bind, LDAP signing and channel binding, monitoring for enumeration patterns (impossible for normal users to generate that query volume), and keeping sensitive data out of directory attributes.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1087.002 (Account Discovery: Domain Account).</li>
+<li>MITRE ATT&amp;CK T1069.002 (Permission Groups Discovery: Domain Groups).</li>
+<li>CWE-200 (Exposure of Sensitive Information to an Unauthorized Actor).</li>
+<li>Microsoft AD LDAP documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

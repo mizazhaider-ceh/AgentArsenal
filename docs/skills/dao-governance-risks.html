@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: dao-governance-risks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>dao-governance-risks</h2><div class="meta"><span class="badge gray">blockchain</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing DAO governance security on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="smart-contract-audit.html">smart-contract-audit</a> <a href="defi-threats.html">defi-threats</a> <a href="bridge-attacks.html">bridge-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>DAOs promise decentralized control, but the contracts often allow one whale, one flash loan, or one multisig to rule. This skill covers authorized assessment of governance: who can really change the protocol, what an attack costs, and whether the timelocks and thresholds hold. Review the contracts and the live state, not the marketing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the governance contracts: token, governor, timelock, and any</li>
+<p>multisig with powers.</p>
+<li>Read the parameters: quorum, proposal threshold, voting delay,</li>
+<p>voting period, and timelock delay.</p>
+<li>Measure token distribution: who holds enough to propose or pass</li>
+<p>alone.</p>
+<li>Test flash loan governance attacks on a fork: borrow, delegate,</li>
+<p>propose, vote.</p>
+<li>Review the timelock: delay length, who can cancel, and what</li>
+<p>bypasses it.</p>
+<li>Check emergency powers: pause, upgrade, and treasury access that</li>
+<p>skip governance.</p>
+<li>Assess voter apathy: typical turnout versus quorum.</li>
+<li>Report the real control structure with the attack costs.</li>
+</ol>
+<h2>1. Parameter and distribution review</h2>
+<pre><code class="language-bash"># Read governance parameters from the contracts (fill addresses)
+cast call $GOVERNOR &quot;quorum(uint256)&quot; 1000000 --rpc-url $RPC_URL
+cast call $GOVERNOR &quot;proposalThreshold()&quot; --rpc-url $RPC_URL
+cast call $GOVERNOR &quot;votingDelay()&quot; --rpc-url $RPC_URL
+cast call $GOVERNOR &quot;votingPeriod()&quot; --rpc-url $RPC_URL
+cast call $TIMELOCK &quot;getMinDelay()&quot; --rpc-url $RPC_URL</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Governance attack cost sketch (public holder data).&quot;&quot;&quot;
+total_supply = 100_000_000
+quorum = 4_000_000
+top_holders = [30_000_000, 12_000_000, 8_000_000]  # from explorer
+print(&quot;top holder share:&quot;, top_holders[0] / total_supply)
+print(&quot;can top holder pass alone?&quot;, top_holders[0] &gt; quorum)
+print(&quot;flash loan needed for quorum:&quot;, quorum, &quot;tokens&quot;)
+print(&quot;check: does voting power snapshot before the loan block?&quot;)</code></pre>
+<h2>2. Flash loan governance test (fork)</h2>
+<pre><code class="language-bash"># On your local fork:
+# 1. flash borrow governance tokens from a lending pool
+# 2. delegate to yourself in the same transaction if delegation is instant
+# 3. check: does the proposal threshold use a snapshot from before?
+# Vulnerable: voting weight counted at vote time with no delegation delay
+# Safe: snapshot at proposal creation plus voting delay longer than loan</code></pre>
+<pre><code class="language-bash"># Timelock review: what can skip it
+grep -rn &quot;onlyOwner\|onlyAdmin\|executor\|canceller\|proposer&quot; dao-contracts/contracts --include=&quot;*.sol&quot; | head -20
+# Findings: proposer can also cancel (griefing), short delay, EOA admin</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Off chain voting (Snapshot) with on chain execution. The off chain</li>
+<p>part needs its own review: who controls the space admins.</p>
+<li>Delegation is concentrated in a few delegates. The DAO is really an</li>
+<p>oligarchy; report the effective control.</p>
+<li>The team holds a veto multisig &quot;temporarily&quot;. Temporary vetoes</li>
+<p>become permanent; price the trust accordingly.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Active governance attack in progress: alert the protocol team and</li>
+<p>major delegates immediately; time is the voting period.</p>
+<li>Centralization is structural: recommend staged decentralization</li>
+<p>with milestones, not just criticism.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>DAO defenders monitor for large delegations before votes, new proposals from unknown addresses, and timelock queue anomalies. They defend with voting delays, delegation requirements, timelocks the community can review, and emergency pause controlled by a distributed multisig. The durable principle is that governance security equals the cost of attack versus the value controlled.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-862 (Missing Authorization): governance bypasses.</li>
+<li>Flash loan governance attack case studies.</li>
+<li>DAO governance security research literature.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: cost-of-attack</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>cost-of-attack</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must think in attacker economics: prioritizing which vulnerabilities to fix first, deciding where a limited security budget goes, evaluating whether a control is worth its price, or predicting what an adversary will try next. Provides attacker-cost reasoning: every attack step has a price in time, skill, money, and detection risk; attackers maximize return on effort; defense wins by raising the cost of the cheapest paths above the value of the target. Load this brain when prioritization must be economic, not just technical.</p><h2>Provides</h2><ul><li>Attacker cost modeling per step (time, skill, money, risk)</li><li>Attacker ROI and target value assessment</li><li>Cheapest-path-first fix prioritization</li><li>Cost-raising control selection</li><li>Defense budget allocation by leverage</li><li>Diminishing returns recognition</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>Security advice usually speaks in severity: critical, high, medium. Attackers speak in price: how much does this cost me, and what do I get? A &quot;critical&quot; vulnerability that needs a nation-state lab to exploit is cheaper to ignore than a &quot;medium&quot; misconfiguration that a script kiddie can abuse in ten minutes. The cost-of-attack brain translates technical findings into economic ones. It matters because every team has finite budget and infinite findings. Economics is the only honest way to rank them.</p>
+<h2>Core mental models</h2>
+<p><strong>Every attack step has a price.</strong> Price has four currencies: time (hours to develop and run), skill (script kiddie to specialist), money (tools, infrastructure, bribes), and detection risk (chance of getting caught, which attackers price very highly). When you evaluate a vulnerability, estimate all four. A default password costs almost nothing in every currency. A kernel zero-day costs months, specialists, and burns a valuable asset. Price the step, and you can predict whether anyone will take it.</p>
+<p><strong>Attackers maximize return on effort.</strong> Like any economic actor, attackers pick targets and paths with the best payoff per unit of cost. This is why phishing and credential stuffing dominate: trivial cost, massive scale, good enough returns. Your threat model should weight attacker-favorite paths (cheap, scalable, low risk) far above exotic ones. Defend against the profitable attacks first, because those are the ones that actually arrive.</p>
+<p><strong>Raise the cost of the cheapest path.</strong> The defender&#x27;s economic move is not to make attacks impossible but to make the cheapest paths expensive. MFA turns credential theft from free into hard. Patching the internet-facing VPN turns an automated scan into a custom operation. Each control should be judged by one question: how much does this raise the attacker&#x27;s cheapest path cost? The best controls raise cost across many paths at once.</p>
+<p><strong>Know when to stop spending.</strong> Defense has diminishing returns. Spending a million dollars to raise the cost of attacking a hundred-thousand-dollar asset is bad economics, unless the asset&#x27;s real value (trust, safety, legal exposure) is higher than it looks. Price the asset honestly, including indirect value, then spend proportionally. Security that costs more than the loss it prevents is a different kind of failure.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>List the attack paths to your key assets (borrow the attack graph from attacker-mindset).</li>
+<li>Price each path in the four currencies: time, skill, money, detection risk.</li>
+<li>Estimate the attacker&#x27;s payoff: what is each asset worth to whom?</li>
+<li>Rank paths by attacker ROI (payoff divided by cost). The top of this list is your real risk.</li>
+<li>For each top path, list candidate controls and estimate how much each raises the path cost.</li>
+<li>Pick controls with the best cost-raised per dollar spent. Prefer ones that raise many paths at once.</li>
+<li>Price the asset honestly before spending: direct value plus trust, legal, and safety exposure.</li>
+<li>Stop when the next dollar of defense buys less risk reduction than it costs.</li>
+<li>Re-price quarterly: attacker tooling gets cheaper over time (yesterday&#x27;s zero-day is today&#x27;s script).</li>
+<li>Document the economics: why this fix before that one, in cost terms, so the reasoning survives review.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>Fix the ten-dollar attack before the ten-thousand-dollar one, regardless of severity labels.</li>
+<li>If a control does not raise attacker cost, it is decoration. Remove it or replace it.</li>
+<li>Attacker tooling only gets cheaper. Today&#x27;s expensive attack is tomorrow&#x27;s automated scan.</li>
+<li>Detection risk is the currency attackers fear most. Raise it visibly.</li>
+<li>Scale matters: a cheap attack that scales to a thousand targets will be used. Price accordingly.</li>
+<li>The cheapest path is usually credentials, phishing, or unpatched edge. Start there, every time.</li>
+<li>A control that raises cost on one path but opens another is a bad trade. Check the graph.</li>
+<li>Spend proportional to asset value, not to fear.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Severity worship.</strong> Fixing CVEs in scanner order while the helpdesk has no MFA and the VPN is unpatched.</li>
+<li><strong>Gold-plating.</strong> Buying the expensive tool to stop the exotic attack while the cheap paths stay open.</li>
+<li><strong>Ignoring the payoff.</strong> Spending heavily to protect an asset nobody would bother stealing.</li>
+<li><strong>One-time pricing.</strong> Assuming attacker costs stay fixed while exploit kits commoditize last year&#x27;s hard attacks.</li>
+<li><strong>Cost-blind controls.</strong> Deploying controls without ever asking what attacker path got more expensive.</li>
+</ul>
+<h2>Worked example</h2>
+<p>A team has two findings: a critical RCE in an internal admin tool (needs VPN access plus a valid session, no public exploit) and a medium finding (password reset tokens that never expire, sent over email). Scanner order says fix the RCE first. Cost-of-attack says otherwise. RCE price: high skill, needs prior access, no public exploit, high detection risk once used. Reset token price: nearly zero, anyone with inbox access (phishing, old breaches) can reuse a token months later, low detection risk. Attacker ROI on the token flaw is far higher, and it is the path a real attacker takes. The team fixes token expiry and single-use first (one day of work, kills a whole attack class), then schedules the RCE. Economics beat the scanner, and the actual cheapest path is closed first.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

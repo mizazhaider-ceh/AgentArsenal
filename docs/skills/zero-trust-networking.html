@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: zero-trust-networking</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>zero-trust-networking</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when designing or assessing zero trust network</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="vlan-hopping.html">vlan-hopping</a> <a href="firewall-evasion.html">firewall-evasion</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>Zero trust means no implicit trust by network location: every access decision uses identity, device posture, and context. This skill covers authorized assessment and design review: checking the policy engine, testing whether flat trust remains, and reviewing microsegmentation. It tests the architecture, not just the marketing slide.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Learn the claimed architecture: policy engine, policy</li>
+<p>administrator, and enforcement points.</p>
+<li>Map identity sources: IdP, device inventory, and posture signals.</li>
+<li>Test the core claim: from a compromised position, what can you</li>
+<p>reach without fresh authentication.</p>
+<li>Review microsegmentation: are workloads actually isolated by</li>
+<p>policy.</p>
+<li>Check the policy engine: default deny, least privilege, and</li>
+<p>context aware rules.</p>
+<li>Test device posture enforcement: non compliant devices blocked.</li>
+<li>Review logging: every decision logged and auditable.</li>
+<li>Report the remaining implicit trust with proof.</li>
+</ol>
+<h2>1. Implicit trust testing (authorized)</h2>
+<pre><code class="language-bash"># From an authorized test host inside the &quot;untrusted&quot; zone:
+# 1. try to reach a sensitive service with no credentials
+curl -s -o /dev/null -w &quot;%{http_code}\n&quot; https://db.internal/
+# 2. try with valid user creds but non compliant device posture
+# 3. try lateral: from a compromised test workload, scan neighbors
+sudo nmap -sS -T3 --max-retries 1 10.20.0.0/24 -oN /tmp/zt_lateral.txt
+grep -c open /tmp/zt_lateral.txt
+# Any open service reachable without policy approval = implicit trust remains</code></pre>
+<pre><code class="language-bash"># Policy review: dump and grade the rules
+# - default deny present?
+# - rules by identity (user, workload) not just IP?
+# - time and posture conditions used?
+# - stale rules for departed users or decommissioned workloads?
+echo &quot;review: policy export, last change dates, orphaned rules&quot;</code></pre>
+<h2>2. Microsegmentation validation</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Segmentation matrix check: allowed vs observed flows.&quot;&quot;&quot;
+# intended: dict of (src_zone, dst_zone) -&gt; allowed bool
+intended = {(&quot;web&quot;, &quot;db&quot;): True, (&quot;web&quot;, &quot;backup&quot;): False,
+            (&quot;user&quot;, &quot;db&quot;): False, (&quot;user&quot;, &quot;web&quot;): True}
+# observed: fill from flow data or authorized tests
+observed = {(&quot;web&quot;, &quot;db&quot;): True, (&quot;web&quot;, &quot;backup&quot;): False,
+            (&quot;user&quot;, &quot;db&quot;): False, (&quot;user&quot;, &quot;web&quot;): True}
+for flow, want in intended.items():
+    got = observed.get(flow, False)
+    if got != want:
+        print(f&quot;MISMATCH {flow}: intended {want}, observed {got}&quot;)
+print(&quot;every mismatch is a finding; every untested flow is a gap&quot;)</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Legacy systems cannot do identity auth. They need compensating</li>
+<p>controls (isolated enclave, gateway); verify the compensations.</p>
+<li>The policy engine is a single point of failure. Check its HA and</li>
+<p>what happens when it is down (fail closed expected).</p>
+<li>&quot;Zero trust&quot; is only on the VPN replacement. Internal flat</li>
+<p>networks remain; scope the claim honestly.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Implicit trust found: demonstrate the path, then recommend the</li>
+<p>specific policy change.</p>
+<li>Architecture review only: grade against NIST 800-207 tenets and</li>
+<p>report the gaps.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Zero trust architectures detect well because every access is a policy decision: anomalies are visible as denied requests and unusual grants. Attackers adapt by stealing valid identities and devices, so the detection focus shifts to identity and posture signals. The durable design keeps policies tight, logs everything, and treats the policy engine as critical infrastructure.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-207: Zero Trust Architecture.</li>
+<li>CWE-862 (Missing Authorization): policy gaps.</li>
+<li>Related: firewall-evasion (tests the enforcement).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

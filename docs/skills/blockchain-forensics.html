@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: blockchain-forensics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>blockchain-forensics</h2><div class="meta"><span class="badge gray">blockchain</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when tracing cryptocurrency in an investigation on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="nft-fraud.html">nft-fraud</a> <a href="wallet-security.html">wallet-security</a> <a href="log-forensics.html">log-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Blockchain forensics follows money on a public ledger: clustering addresses that belong together, tracing hops from the theft, and identifying where funds meet the regulated world. This skill covers the methodology for authorized investigations: evidence handling, clustering heuristics, tracing workflow, and attribution. It does not replace licensed chain analysis tools, but it gives a sound manual method.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the case: the theft or fraud, the seed addresses, and the</li>
+<p>legal basis for the investigation.</p>
+<li>Preserve evidence: record transaction hashes, block numbers, and</li>
+<p>the data source for everything.</p>
+<li>Cluster addresses using co spend and change heuristics.</li>
+<li>Trace forward from the seed: follow the funds hop by hop.</li>
+<li>Identify attribution points: exchanges, mixers, bridges, and known</li>
+<p>services.</p>
+<li>Trace backward where useful: where did the attacker&#x27;s funding come</li>
+<p>from.</p>
+<li>Document the flow with a clear diagram and an address list.</li>
+<li>Prepare the findings for legal: chain of custody for digital</li>
+<p>evidence.</p>
+</ol>
+<h2>1. Clustering heuristics</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Address clustering: co-spend heuristic on transaction data.&quot;&quot;&quot;
+import json, collections
+
+# txs: list of {txid, inputs:[addrs], outputs:[addrs]}
+txs = [json.loads(l) for l in open(&quot;/tmp/chain/txs.jsonl&quot;)]
+
+parent = {}
+def find(a):
+    while parent.get(a, a) != a:
+        a = parent[a] = parent.get(parent[a], parent[a])
+    return a
+def union(a, b):
+    ra, rb = find(a), find(b)
+    if ra != rb:
+        parent[ra] = rb
+
+for t in txs:
+    ins = t[&quot;inputs&quot;]
+    for a in ins[1:]:
+        union(ins[0], a)  # co-spend: inputs to one tx, one owner
+
+clusters = collections.defaultdict(set)
+for t in txs:
+    for a in t[&quot;inputs&quot;] + t[&quot;outputs&quot;]:
+        clusters[find(a)].add(a)
+print(&quot;clusters found:&quot;, len(clusters))
+big = sorted(clusters.values(), key=len, reverse=True)[:5]
+for c in big:
+    print(len(c), &quot;addresses, sample:&quot;, list(c)[:3])</code></pre>
+<h2>2. Tracing workflow</h2>
+<pre><code class="language-bash"># Forward trace: from the theft address, follow outputs
+# At each hop record: txid, amounts, new addresses, service tags
+# Stop expanding when you hit: a known exchange cluster, a mixer
+# pool, or a bridge contract (note which and continue on the other chain)
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;trace log columns: hop, txid, from, to, amount, tag, notes&quot;)
+print(&quot;rules: follow the largest output first, note peel chains,&quot;)
+print(&quot;flag round amounts (possible OTC or exchange deposits)&quot;)
+PY</code></pre>
+<pre><code class="language-bash"># Attribution: check addresses against your case&#x27;s known service list
+grep -F -f /tmp/chain/known_exchanges.txt /tmp/chain/trace_addresses.txt | head
+# Mixer interaction: note entry and exit, timing, and amounts;
+# full deanonymization is often not possible, document the limits</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Privacy coins or shielded pools break the trace. Document where</li>
+<p>visibility ends; do not overclaim.</p>
+<li>The attacker uses many small hops (peel chain). Automate the</li>
+<p>following; manual tracing misses branches.</p>
+<li>Exchange attribution needs legal process. Your trace identifies</li>
+<p>the deposit; unmasking needs the proper request.</p>
+<li>Cross chain bridges split the trail. Continue the trace on the</li>
+<p>destination chain with the bridge&#x27;s event logs.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Funds hit an exchange: notify the exchange&#x27;s compliance team</li>
+<p>promptly with the transaction evidence.</p>
+<li>Active laundering in progress: speed matters; escalate to counsel</li>
+<p>and law enforcement per the case plan.</p>
+<li>Trace goes cold at a mixer: pivot to timing and amount correlation,</li>
+<p>and to the attacker&#x27;s operational mistakes (reuse, funding).</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders (exchanges, protocols) detect illicit flows with transaction monitoring, sanctions list screening, and behavioral alerts on deposit patterns. They defend with withdrawal holds, proof of source checks, and information sharing. For investigators, the durable practices are evidence preservation, conservative clustering (better to under cluster than over), and clear documentation of every heuristic&#x27;s limits.</p>
+<h2>Key references</h2>
+<ul>
+<li>FATF guidance on virtual assets and investigations.</li>
+<li>CoinJoin and mixer tracing research literature.</li>
+<li>Chain analysis methodology publications.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

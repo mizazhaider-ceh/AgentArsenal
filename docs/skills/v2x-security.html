@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: v2x-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>v2x-security</h2><div class="meta"><span class="badge gray">automotive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing vehicle to everything communication on</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="automotive-threat-model.html">automotive-threat-model</a> <a href="automotive-ethernet.html">automotive-ethernet</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Wireshark</td><td>4.4</td></tr></tbody></table><p>V2X lets vehicles broadcast safety messages to each other and to infrastructure: &quot;I am here, I am braking.&quot; The security model is PKI: messages are signed, and receivers check certificates. This skill covers authorized assessment: understanding the message types, reviewing the PKI design, and testing misbehavior handling. Lab and paper assessment; never transmit on licensed bands without authorization.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the technology: DSRC (802.11p) or C-V2X (PC5 sidelink),</li>
+<p>and the region&#x27;s message profiles.</p>
+<li>Learn the key messages: BSM/CAM (position broadcasts) and</li>
+<p>DENM (event warnings).</p>
+<li>Map the PKI: enrollment, authorization certificates, and</li>
+<p>revocation (CRLs).</p>
+<li>Review certificate provisioning: how a vehicle gets its</li>
+<p>certificates and how often they rotate.</p>
+<li>Assess misbehavior detection: what happens when a node sends</li>
+<p>plausible but false data.</p>
+<li>Check privacy: pseudonym rotation and linkability of broadcasts.</li>
+<li>Review what the ADAS does with V2X input: is it advisory or</li>
+<p>does it act.</p>
+<li>Report the trust assumptions with their failure modes.</li>
+</ol>
+<h2>1. Message and PKI review</h2>
+<pre><code class="language-bash"># Capture V2X on the bench with an SDR (receive only, your lab)
+# Decode BSM/CAM fields: position, speed, heading, brake status
+python3 - &lt;&lt; &#x27;PY&#x27;
+fields = [&quot;latitude&quot;, &quot;longitude&quot;, &quot;speed&quot;, &quot;heading&quot;, &quot;brake_status&quot;,
+          &quot;vehicle_length&quot;, &quot;event_flags&quot;]
+print(&quot;for each field ask: is it signed? is it plausible-checked?&quot;)
+print(&quot;which fields does the ADAS actually consume?&quot;)
+PY</code></pre>
+<pre><code class="language-bash"># PKI review checklist (documents and configs, your test deployment)
+# - enrollment CA trust: who can enroll a vehicle
+# - authorization ticket lifetime and rotation policy
+# - pseudonym certificate pool size and refill process
+# - CRL distribution: how fast does revocation propagate
+# - what happens when certificates expire mid drive (fail open/closed)
+echo &quot;record the answers; gaps here are the findings&quot;</code></pre>
+<h2>2. Misbehavior test concepts (lab)</h2>
+<pre><code class="language-bash"># On your bench with test certificates only:
+# 1. send a BSM with impossible physics (teleporting position)
+# 2. send conflicting DENMs (fake hazard)
+# 3. replay a valid signed message later (stale data)
+# Observe: does the receiver flag, ignore, or act on each
+echo &quot;never transmit these on public roads or licensed spectrum&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The deployment is a pilot with test PKI. Findings about the test</li>
+<p>PKI do not transfer to production; review the production plan.</p>
+<li>V2X is receive only in this vehicle (no transmission). The attack</li>
+<p>surface is the parser and the ADAS consumer logic.</p>
+<li>Regional differences (US SCMS vs EU C-ITS) change the PKI details.</li>
+<p>Assess against the deployment&#x27;s actual region.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Parser bug suspected in message handling: fuzz the parser on the</li>
+<p>bench with malformed messages.</p>
+<li>ADAS acts on unauthenticated V2X: critical finding; verify the</li>
+<p>exact conditions on the bench.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>V2X misbehavior detection is the immune system: nodes report implausible messages, and authorities revoke misbehaving certificates. Defenders monitor for Sybil patterns (many certificates, one attacker) and physics violations. The durable design signs everything, rotates pseudonyms for privacy, and treats V2X as advisory input that never overrides local sensors for critical decisions.</p>
+<h2>Key references</h2>
+<ul>
+<li>IEEE 1609.2: V2X security services and certificates.</li>
+<li>ETSI ITS security standards (EU C-ITS).</li>
+<li>CWE-347 (Improper Verification of Cryptographic Signature).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

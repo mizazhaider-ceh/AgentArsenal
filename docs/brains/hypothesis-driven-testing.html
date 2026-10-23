@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: hypothesis-driven-testing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>hypothesis-driven-testing</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must test instead of guess: probing whether a vulnerability is real, validating a detection rule, debugging a flaky behavior, or running any experiment where the result should change what the agent believes. Provides hypothesis-driven reasoning: state a falsifiable prediction before acting, change one variable at a time, treat negative results as data, and update beliefs explicitly. Load this brain whenever actions produce observations, so testing stays scientific instead of random.</p><h2>Provides</h2><ul><li>Falsifiable hypothesis framing</li><li>One-variable-at-a-time experiment design</li><li>Negative results as data discipline</li><li>Explicit belief updating</li><li>Confirmation bias countermeasures</li><li>Reproducible test documentation</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>Most testing is just poking things and watching. That works until it does not: you change three things, something breaks, and now you know less than before. Hypothesis-driven testing is the fix: before you act, write down what you expect to happen and why. Then act, observe, and update. It matters for agents especially, because agents act fast and can burn through hundreds of actions. Without hypotheses, speed produces noise. With them, speed produces knowledge.</p>
+<h2>Core mental models</h2>
+<p><strong>Hypothesis before action.</strong> A hypothesis is a falsifiable prediction: &quot;If this input reaches the database unescaped, the query will return extra rows.&quot; It names the mechanism, not just the hope. Writing it before you act does two things: it forces you to understand the system enough to predict it, and it makes the result interpretable. An observation without a prior prediction is trivia. An observation that confirms or kills a prediction is evidence.</p>
+<p><strong>One variable at a time.</strong> If you change the payload, the endpoint, and the headers together and something works, you learned almost nothing. You cannot say which change mattered, so you cannot repeat it or explain it. Change one thing, observe, record. It feels slow. It is the fastest way to actually converge, because every result is attributable.</p>
+<p><strong>Negative results are data.</strong> A failed exploit attempt is not a wasted attempt if it kills a hypothesis. &quot;The WAF did not block this payload, so the filter is not regex-based&quot; is progress. Agents tend to discard failures and try something shinier. Do the opposite: log what each negative result rules out. The set of ruled-out explanations is what narrows the search to the truth.</p>
+<p><strong>Update beliefs explicitly.</strong> After each observation, say what changed: &quot;I now believe the filter blocks keywords, not patterns, because the obfuscated variant passed.&quot; This stops the agent from quietly drifting, holding five contradictory beliefs at once, or forgetting what it already proved. Beliefs are working notes, and working notes must be current.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>State the question in one sentence: what are you trying to learn?</li>
+<li>Write the hypothesis: a falsifiable prediction naming the mechanism.</li>
+<li>Predict the observation: what exactly will you see if the hypothesis is true? If false?</li>
+<li>Design the minimal test: smallest action that distinguishes true from false.</li>
+<li>Change one variable relative to the last test. Record what changed.</li>
+<li>Run it. Record the raw observation, not your interpretation.</li>
+<li>Compare observation to prediction. Confirm, kill, or refine the hypothesis.</li>
+<li>Log the negative result explicitly: what does this rule out?</li>
+<li>Update your stated belief in one sentence.</li>
+<li>Repeat until the belief is strong enough to act on, then act.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If you cannot say what would prove you wrong, you do not have a hypothesis, you have a hope.</li>
+<li>The smallest distinguishing test beats the biggest impressive one.</li>
+<li>When stuck, test the assumption, not the conclusion. The bug is usually upstream of where you look.</li>
+<li>Three killed hypotheses in a row means your mental model is wrong. Rebuild it, do not just try harder.</li>
+<li>Write it down before you run it. Memory edits history.</li>
+<li>A flaky result is a hypothesis about timing or state. Make flakiness the next hypothesis.</li>
+<li>Prefer tests that rule out whole classes, not single instances.</li>
+<li>Timebox the loop: if ten tests teach nothing, the question is wrong.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Shotgun testing.</strong> Firing payloads or changes at random with no prediction. Fast, loud, and uninformative.</li>
+<li><strong>Confirmation bias.</strong> Only running tests that would confirm the pet theory, ignoring the ones that could kill it.</li>
+<li><strong>Moving three knobs.</strong> Changing multiple variables and declaring victory when something works. Unrepeatable by definition.</li>
+<li><strong>Discarding negatives.</strong> Treating failed tests as wasted time instead of ruled-out explanations.</li>
+<li><strong>Belief drift.</strong> Quietly changing what you believe without noting the observation that caused it.</li>
+</ul>
+<h2>Worked example</h2>
+<p>An agent tests whether a login form is vulnerable to SQL injection. Hypothesis 1: &quot;A single quote in the username causes a database error, which means input reaches the query.&quot; Prediction: error message or timing change. Test: username <code>admin&#x27;</code>. Observation: generic &quot;invalid credentials,&quot; no change. Negative result logged: either input is escaped or errors are suppressed. Hypothesis 2: &quot;Errors are suppressed, so I will test with boolean logic instead.&quot; Prediction: <code>&#x27; OR &#x27;1&#x27;=&#x27;1</code> changes the result vs <code>&#x27; OR &#x27;1&#x27;=&#x27;2</code>. One variable changed (payload logic, same field). Observation: both return identical generic messages. Belief update: &quot;This endpoint gives no oracle through messages; I need a time-based test or a different field.&quot; Two tests, two ruled-out classes, and the next step is chosen by evidence, not vibes.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: memory-hygiene</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>memory-hygiene</h2><div class="meta"><span class="badge gray">memory</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when the memory store needs a health check: removing</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="memory-capture.html">memory-capture</a> <a href="memory-consolidation.html">memory-consolidation</a> <a href="agent-state.html">agent-state</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>memory-store</td><td>1.0.0</td></tr><tr><td>SQLite</td><td>3.45.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Hygiene keeps memory trustworthy: no unresolved contradictions, no rotting confidence, no secrets, a visible audit trail, and a bounded size. This skill is the maintenance counterpart to memory-capture and memory-consolidation: run it on a schedule (weekly for busy agents, monthly otherwise) and after any event that may have polluted the store. Full policy detail is in memory/HYGIENE.md.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Run <code>stats</code> to see total entries, per-kind shares, and expired</li>
+<p>count.</p>
+<li>Dry-run consolidation; merge duplicates that agree.</li>
+<li>Hunt contradictions with targeted recalls and resolve each one.</li>
+<li>Scan for secrets and PII that slipped past capture-time redaction.</li>
+<li>Expire old entries with <code>forget --expired</code>.</li>
+<li>Check size budgets; shorten TTLs if the store is growing too fast.</li>
+<li>Log the pass: date, merges, deletions, contradictions resolved.</li>
+</ol>
+<h2>1. Measure first</h2>
+<pre><code class="language-bash"># Baseline: totals, per-kind shares, expired, top agents
+memory-store.py stats</code></pre>
+<p>Warning signs: episodic above 80 percent of rows, total entries past 50,000, expired count high (TTL cleanup not running), or one agent producing far more entries than the others (possible write loop).</p>
+<h2>2. Deduplicate safely</h2>
+<pre><code class="language-bash"># Review candidates, merge only entries that agree
+memory-store.py consolidate --dry-run
+memory-store.py consolidate</code></pre>
+<p>The rule from memory-consolidation applies here too: similar wording about the same fact merges; entries that disagree go to the contradiction procedure below, never into a merge.</p>
+<h2>3. Resolve contradictions</h2>
+<p>Two entries that both cannot be true (port open vs port closed on the same host) need a decision, not a merge:</p>
+<pre><code class="language-bash"># Pull both entries
+memory-store.py recall --query &quot;10.0.1.5 port 22&quot; --limit 10</code></pre>
+<p>Resolution order:</p>
+<ol>
+<li>Newer direct observation beats older ones; systems change.</li>
+<li>Direct observation beats second-hand reports.</li>
+<li>Record a new entry stating the resolution with both ids cited,</li>
+<p>e.g. &quot;Re-scanned 10.0.1.5 on 2026-10-23: port 22 closed. Entry 871 (open) is superseded.&quot; Then <code>forget --id 871</code>.</p>
+<li>If neither wins, keep both, tag both <code>disputed</code>, lower neither</li>
+<p>confidence, and schedule a live re-check.</p>
+</ol>
+<pre><code class="language-bash"># Delete the superseded entry after recording the resolution
+memory-store.py forget --id 871</code></pre>
+<p>Never edit another agent&#x27;s entry in place. Add your own entry and link by id, so the audit trail shows who decided what.</p>
+<h2>4. Decay stale confidence and redact secrets</h2>
+<p>Confidence rots. On each pass, find old semantic entries nobody has confirmed and mark them stale; scan for secret-like patterns that escaped capture-time redaction:</p>
+<pre><code class="language-bash"># Entries about a topic, oldest first, to spot stale facts
+memory-store.py recall --query &quot;staging api&quot; --kind semantic --limit 30
+
+# Hunt for secrets that slipped in
+memory-store.py recall --query &quot;key token secret password private&quot; --limit 50</code></pre>
+<p>For a found secret: rotate the secret on the real system first, then <code>forget --id</code> the entry, then note the deletion in the audit log without copying the secret into the log. For stale semantic entries: drop confidence to 0.5 and tag <code>stale</code>, then re-confirm live or delete.</p>
+<h2>5. Expire and budget</h2>
+<pre><code class="language-bash"># Remove TTL-expired entries
+memory-store.py forget --expired
+
+# Confirm the store is back inside budget
+memory-store.py stats</code></pre>
+<p>Budgets: under 50,000 total entries, episodic under 80 percent of rows, single payload under 2,000 characters. If the store keeps outgrowing the budget, the fix is structural: lower the episodic TTL, consolidate weekly, promote repeated observations sooner. Deleting healthy entries to hit a number is a last resort, not a policy.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Contradiction where both entries are old and the host is gone.</li>
+<p>Neither can be re-verified. Keep the newer, delete the older, and note in the surviving entry that the loser was removed unresolvable.</p>
+<li>Secret found but already rotated. Delete the entry anyway; a dead</li>
+<p>key in the store is still clutter and a bad example.</p>
+<li>An agent disputes your resolution. Both entries stay, both get the</li>
+<p><code>disputed</code> tag, and the disagreement itself becomes an episodic entry so the next hygiene pass sees it.</p>
+<li><code>forget --expired</code> deletes entries someone still references. TTLs</li>
+<p>are the contract: if an entry mattered past its TTL, it should have been promoted. Restore from backup only for genuine mistakes, and fix the TTL or promote immediately after.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Contradictions keep appearing on the same topic. The underlying</li>
+<p>system is flapping or two agents measure differently. Investigate the measurement (different scan flags, different vantage points) before writing more entries.</p>
+<li>Secret exposure is large (whole table of tokens). Rotate</li>
+<p>everything, delete the entries, audit who had store access, and treat it as a security incident per incident-response.</p>
+<li>Store growth is exponential and consolidation cannot keep up.</li>
+<p>Find the write loop or the agent capturing raw output, stop it, delete the noise, and require one-idea entries going forward.</p>
+<li>The database file is corrupt or locked during the pass. Stop, back</li>
+<p>up the file, restore from the last good copy, and re-run the pass.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Hygiene failures are how memory attacks succeed: an attacker who can write to the store plants high-confidence false facts, and without regular passes those lies calcify into &quot;knowledge&quot;. Detect tampering by watching <code>stats</code> for odd agents or sudden confidence inflation, by auditing <code>merged_from</code> trails for evidence destruction, and by treating any entry that instructs destructive action as a change to production. The hygiene pass is the immune system; skipping it is how a poisoned store stays poisoned.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-312 (Cleartext Storage of Sensitive Information): secrets do</li>
+<p>not belong in memory.</p>
+<li>CWE-200 (Exposure of Sensitive Information to an Unauthorized</li>
+<p>Actor): the store is sensitive data at rest.</p>
+<li>CWE-922 (Insecure Storage of Sensitive Information): file-level</li>
+<p>access controls for the SQLite database.</p>
+<li>SQLite documentation: https://sqlite.org/docs.html</li>
+<li>memory/HYGIENE.md and memory/LIFECYCLE.md in this repo.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

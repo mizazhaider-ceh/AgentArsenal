@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: output-encoding</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>output-encoding</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when rendering untrusted data into HTML, JavaScript,</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="secure-coding.html">secure-coding</a></div><div class="deps"><span class="kind">requires:</span> <a href="secure-coding.html">secure-coding</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="code-reviewer.html">code-reviewer</a> <a href="input-validation-patterns.html">input-validation-patterns</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Bandit</td><td>1.7</td></tr></tbody></table><p>Output encoding neutralizes untrusted data for the context it renders in: HTML body, attribute, JavaScript, URL, or CSS each need their own encoder. This skill covers encoding done right: matching the encoder to the sink, using framework auto-escaping correctly, and knowing the sinks that encoding cannot save. Encoding is the XSS fix; validation is not.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find every place untrusted data renders: templates, JS, URLs.</li>
+<li>Identify the exact context of each render point.</li>
+<li>Apply the context&#x27;s encoder; never one encoder for all contexts.</li>
+<li>Use framework auto-escaping; mark safe only with justification.</li>
+<li>Audit the bypass sinks: innerHTML, eval, URL javascript:.</li>
+<li>Test each render point with a hostile string.</li>
+<li>Add the hostile strings as regression tests.</li>
+</ol>
+<h2>1. Contexts and encoders</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Context-sensitive encoding: the encoder must match the sink.&quot;&quot;&quot;
+import html
+import json
+import urllib.parse
+
+def encode_html_body(value: str) -&gt; str:
+    return html.escape(value, quote=True)
+
+def encode_html_attr(value: str) -&gt; str:
+    # Attribute context: quote the attribute AND encode the value
+    return html.escape(value, quote=True)
+
+def encode_js_string(value: str) -&gt; str:
+    # JavaScript string context: JSON encoding is the safe carrier
+    return json.dumps(value)
+
+def encode_url_param(value: str) -&gt; str:
+    return urllib.parse.quote(value, safe=&quot;&quot;)
+
+# Test string that must render harmlessly in EVERY context:
+TEST = &quot;&quot;&quot;&#x27;&quot;&lt;&gt;&amp;`=test&quot;&quot;&quot;</code></pre>
+<pre><code class="language-html">&lt;!-- Template examples (Jinja2 auto-escapes by default: keep it that way) --&gt;
+&lt;p&gt;{{ user_input }}&lt;/p&gt;              &lt;!-- safe: HTML-escaped --&gt;
+&lt;a href=&quot;/u/{{ user_id }}&quot;&gt;x&lt;/a&gt;     &lt;!-- safe IF user_id is validated numeric --&gt;
+
+&lt;!-- DANGEROUS: do not do these --&gt;
+&lt;div&gt;{{ user_input | safe }}&lt;/div&gt;  &lt;!-- bypasses escaping: needs justification --&gt;
+&lt;script&gt;var x = &#x27;{{ user_input }}&#x27;;&lt;/script&gt;  &lt;!-- wrong encoder: use tojson --&gt;</code></pre>
+<p>The <code>| safe</code> filter and its equivalents are where XSS is born in modern frameworks. Every use needs a comment explaining why the data is trusted, and &quot;it comes from our database&quot; is not trust.</p>
+<h2>2. Sinks encoding cannot save</h2>
+<pre><code class="language-javascript">// These sinks execute or navigate; encoding the input does not fix them:
+element.innerHTML = userInput;        // use textContent instead
+eval(userInput);                      // never eval untrusted data
+location.href = userInput;            // validate against allow-list first
+document.write(userInput);            // do not use document.write
+
+// Safe patterns:
+element.textContent = userInput;      // text, never parsed as HTML
+const url = new URL(userInput, base); // then check url.origin against allow-list</code></pre>
+<p>When the sink itself is dangerous, the fix is changing the sink, not encoding harder. <code>innerHTML</code> with encoded input is still one mistake away from XSS; <code>textContent</code> is safe by construction.</p>
+<h2>3. Testing render points</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Regression strings: every render point must neutralize these.&quot;&quot;&quot;
+PAYLOADS = [
+    &quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;,
+    &quot;\&quot;&gt;&lt;img src=x onerror=alert(1)&gt;&quot;,
+    &quot;&#x27;;alert(1);//&quot;,
+    &quot;javascript:alert(1)&quot;,
+    &quot;&lt;svg onload=alert(1)&gt;&quot;,
+]
+
+def check_rendered(rendered_html: str, payload: str) -&gt; bool:
+    # The payload must not appear unencoded in executable form
+    return payload not in rendered_html
+
+for p in PAYLOADS:
+    out = encode_html_body(p)
+    assert check_rendered(out, p), f&quot;LEAK: {p}&quot;
+print(&quot;All render checks passed&quot;)</code></pre>
+<p>Automate the hostile strings as tests. Manual review catches today&#x27;s misses; the regression test catches next month&#x27;s refactor that reintroduces them.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Double encoding: data encoded twice renders as entities visibly.</li>
+<p>Encode once, at the render point, on the raw value.</p>
+<li>Encoding at storage instead of render: stored-encoded data breaks</li>
+<p>when rendered in a second context; always encode at output.</p>
+<li>JSON in script blocks: use the framework&#x27;s tojson filter, not manual</li>
+<p>quoting; <code>&lt;/script&gt;</code> inside the string breaks naive approaches.</p>
+<li>CSS contexts: avoid untrusted data in style entirely; if unavoidable,</li>
+<p>strict allow-listing beats encoding.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A render point cannot be encoded (rich text requirement): use a</li>
+<p>strict sanitizer (DOMPurify server-side or equivalent) with an allow-list, and test it against the bypass corpus.</p>
+<li>Legacy templates without auto-escaping: enable auto-escaping globally</li>
+<p>and fix the breakages explicitly rather than leaving it off.</p>
+<li>Third-party widgets render your data: verify their encoding behavior;</li>
+<p>their sink is your vulnerability.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Missing output encoding is found by code review and by scanners, but the durable detection is the regression test suite: hostile strings in tests catch regressions that reviews miss. In production, CSP reports show where encoding failed (blocked inline scripts). The engineering view: encoding is a property of the render point, so review render points, not data flows.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-79 (Cross-site Scripting).</li>
+<li>OWASP XSS Prevention Cheat Sheet.</li>
+<li>OWASP DOM XSS Prevention Cheat Sheet.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

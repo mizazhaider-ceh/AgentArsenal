@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: dsr-automation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>dsr-automation</h2><div class="meta"><span class="badge gray">privacy</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when automating data subject requests: access,</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="gdpr-engineering.html">gdpr-engineering</a> <a href="consent-management.html">consent-management</a> <a href="privacy-impact-assessment.html">privacy-impact-assessment</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>PostgreSQL</td><td>17</td></tr></tbody></table><p>Data subject requests arrive by the hundred: &quot;send me my data&quot;, &quot;delete everything&quot;. Manual handling does not scale and misses stores. This skill covers building the automation: verified intake, a fan out orchestrator that hits every datastore, propagation to processors, and SLA tracking that proves compliance.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Build verified intake: request types, identity proofing</li>
+<p>proportionate to the data&#x27;s sensitivity, and fraud resistance.</p>
+<li>Maintain the datastore inventory from the privacy registry; the</li>
+<p>orchestrator fans out to every entry.</p>
+<li>Implement per store handlers: export, delete, rectify, and</li>
+<p>restrict, each idempotent.</p>
+<li>Propagate to processors with receipts; retry failures visibly.</li>
+<li>Handle conflicts: legal holds, other people&#x27;s data in the</li>
+<p>export, and backup windows.</p>
+<li>Track SLAs: deadlines per regulation, escalation before breach.</li>
+<li>Log everything for the regulator: what was done, when, where.</li>
+<li>Test with synthetic subjects quarterly, including the nasty</li>
+<p>cases.</p>
+</ol>
+<h2>1. Orchestrator sketch</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;DSR orchestrator: fans a request out to registered store handlers.&quot;&quot;&quot;
+import datetime
+
+HANDLERS = {}  # store name -&gt; handler object with export/delete methods
+
+def register(name):
+    def deco(fn):
+        HANDLERS[name] = fn
+        return fn
+    return deco
+
+@register(&quot;postgres_users&quot;)
+def pg_users(action, subject_id):
+    return {&quot;store&quot;: &quot;postgres_users&quot;, &quot;action&quot;: action,
+            &quot;subject&quot;: subject_id, &quot;status&quot;: &quot;done&quot;,
+            &quot;at&quot;: datetime.datetime.now(datetime.timezone.utc).isoformat()}
+
+def run_dsr(kind, subject_id):
+    log = []
+    for name, fn in HANDLERS.items():
+        try:
+            log.append(fn(kind, subject_id))
+        except Exception as e:  # noqa: BLE001 - one store failing must not stop others
+            log.append({&quot;store&quot;: name, &quot;status&quot;: &quot;FAILED&quot;, &quot;error&quot;: str(e)})
+    return log
+
+print(run_dsr(&quot;export&quot;, &quot;user_123&quot;))
+# Production: persist the log, retry FAILED, alert on repeated failure</code></pre>
+<h2>2. Identity verification and conflicts</h2>
+<pre><code class="language-bash"># Verification proportional to risk:
+# - export of basic profile: logged in session is enough
+# - export of sensitive data: step up auth
+# - erasure: confirm explicitly, warn about irreversibility
+# Fraud watch: bursts of requests from one source, requests for others
+echo &quot;log verification method per request; regulators ask&quot;</code></pre>
+<pre><code class="language-bash"># Conflict handling:
+# - legal hold: pause erasure for held data, document the hold
+# - mixed data (photos with other people): redact third parties in exports
+# - backups: erase from live now, purge backups on their cycle, document it
+psql &quot;$DB_URL&quot; -c &quot;SELECT * FROM legal_holds WHERE subject_id=&#x27;user_123&#x27;;&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The subject cannot be verified. You may refuse, but you must tell</li>
+<p>them why and what would suffice.</p>
+<li>Processors do not confirm. Escalate per contract; repeated failure</li>
+<p>is a vendor management issue.</p>
+<li>Request volume spikes (campaign driven). Queue with priority by</li>
+<p>deadline, never silently drop.</p>
+<li>The export format must be portable (JSON/CSV), not a PDF</li>
+<p>screenshot.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>SLA breach imminent: manual triage of the oldest requests while</li>
+<p>automation catches up.</p>
+<li>Systemic handler failure: fix the handler, then re run affected</li>
+<p>requests; notify subjects if the delay breaches the deadline.</p>
+<li>Regulator inquiry: the per request log is your evidence; keep it</li>
+<p>complete and tamper evident.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Detect DSR automation gaps with synthetic subjects: submit export, rectify, and erase requests and verify every store. Monitor handler failure rates, SLA burn down, and verification fraud signals. The durable design treats DSR as a product feature with owners and tests, not a legal chore done in spreadsheets.</p>
+<h2>Key references</h2>
+<ul>
+<li>GDPR Articles 12-22: rights and modalities.</li>
+<li>EDPB guidance on data subject rights.</li>
+<li>Related skills: gdpr-engineering, consent-management.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

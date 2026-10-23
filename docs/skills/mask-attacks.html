@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mask-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mask-attacks</h2><div class="meta"><span class="badge gray">auth</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you know the password structure (length and</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="password-attacks.html">password-attacks</a></div><div class="deps"><span class="kind">requires:</span> <a href="password-attacks.html">password-attacks</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="auth-attacks.html">auth-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Hashcat</td><td>6.2.6</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Mask attacks brute-force a known password shape: <code>?u?l?l?l?d?d?s</code> instead of every possible string. This skill covers building masks from observed patterns on authorized engagements, doing the key-space math honestly, and running incremental attacks that fit the time budget. Masks are the last resort in the cracking order because their key spaces explode fast; the math section below is what keeps them honest.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Derive the mask from evidence: cracked samples, policy text, OSINT</li>
+<p>patterns.</p>
+<li>Compute the key space and divide by your benchmarked hash rate.</li>
+<li>If the time fits the budget, run the mask; if not, narrow it.</li>
+<li>Run incrementally (short masks first) so partial coverage finishes.</li>
+<li>Split long runs into resumable sessions.</li>
+<li>Report the coverage: what key space was tested, what was not.</li>
+</ol>
+<h2>1. Mask syntax and key-space math</h2>
+<pre><code class="language-bash"># Hashcat charsets: ?l lower, ?u upper, ?d digit, ?s symbol, ?a all
+# Pattern &quot;Capitalized word + 4 digits + !&quot; observed in cracked samples:
+hashcat -m 1000 /tmp/ntlm.txt -a 3 ?u?l?l?l?l?l?l?d?d?d?d?s
+
+# Key-space math first (Python, before burning GPU hours):
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import math
+# ?u?l x6 ?d x4 ?s : 26 * 26^6 * 10^4 * 33
+space = 26 * (26**6) * (10**4) * 33
+rate = 50_000_000_000  # 50 GH/s example NTLM benchmark; use YOUR benchmark
+secs = space / rate
+print(f&quot;keyspace: {space:.2e}&quot;)
+print(f&quot;at 50 GH/s: {secs/3600:.1f} hours&quot;)
+EOF
+
+# Incremental: --increment covers shorter masks first, so an
+# interrupted run still completed something
+hashcat -m 1000 /tmp/ntlm.txt -a 3 --increment --increment-min 4 \
+  --increment-max 8 ?a?a?a?a?a?a?a?a</code></pre>
+<p>If the math says centuries, the mask is wrong or the hash is too slow: narrow the mask with better evidence instead of launching anyway.</p>
+<h2>2. Evidence-driven masks</h2>
+<pre><code class="language-bash"># From OSINT: passwords look like SeasonYYYY! -&gt; build exactly that
+# Spring2026! Summer2025! -&gt; mask per season word is wasteful;
+# use hybrid attack instead: dictionary of seasons + mask ?d?d?d?d?s
+hashcat -m 1000 /tmp/ntlm.txt /tmp/seasons.txt -a 6 ?d?d?d?d?s
+
+# From policy: &quot;exactly 8 chars, 1 upper, 1 digit&quot; -&gt;
+# try ?u?l?l?l?l?l?d?s permutations (several masks, each cheap)
+
+# Custom charsets shrink the space: only observed symbols
+hashcat -m 1000 /tmp/ntlm.txt -a 3 -1 ?l?u -2 &#x27;!@#$&#x27; \
+  ?1?1?1?1?1?1?2?d</code></pre>
+<p>Every position you fix from evidence divides the key space. A mask built from three cracked samples beats a generic <code>?a?a?a?a?a?a?a?a</code> by orders of magnitude.</p>
+<h2>3. Session management for long runs</h2>
+<pre><code class="language-bash"># Named session with restore file: interrupt and resume cleanly
+hashcat -m 1000 /tmp/ntlm.txt -a 3 ?u?l?l?l?l?l?l?d?d?d?d \
+  --session maskrun1 --status --status-timer 60
+
+# Resume after interruption
+hashcat --session maskrun1 --restore
+
+# Show progress without stopping the run (status display does this)</code></pre>
+<p>Long mask runs belong on hardware you control for the duration. Do not start a 40-hour mask on a laptop you will close; use the restore workflow or a dedicated rig.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The benchmark was optimistic. Real rates drop with rules, masks, and</li>
+<p>heat; re-benchmark on the actual rig and pad estimates by 50 percent.</p>
+<li>The mask covers the shape but cracks nothing. The evidence was wrong</li>
+<p>about one position; vary one position at a time to find which.</p>
+<li>Slow hashes make even small masks infeasible. On bcrypt, a 6-char</li>
+<p>lowercase mask can take years; report the math instead of running it.</p>
+<li>The key space needs splitting across machines. Divide by mask prefix</li>
+<p>(<code>?u</code> fixed per node) and keep the bookkeeping exact.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The math never fits: recommend against mask attacks in the report and</li>
+<p>explain why, with the numbers; that analysis is itself valuable.</p>
+<li>You need cloud GPUs: get written approval with a cost cap, use the</li>
+<p>cheapest region that meets the need, and stop the instances when done.</p>
+<li>A partial crack reveals the pattern was right: narrow the remaining</li>
+<p>masks around the cracked samples and continue.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Mask attacks are offline and invisible; defense is preventive. Long minimum lengths destroy mask feasibility (each added character multiplies the space), slow hashes multiply the time, and MFA makes the cracked password insufficient alone. The defender&#x27;s math is the same as the attacker&#x27;s: publish the policy, enforce the length, hash slowly.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1110.001 (Brute Force: Password Guessing).</li>
+<li>CWE-521 (Weak Password Requirements).</li>
+<li>Hashcat 6.2.6 mask attack documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

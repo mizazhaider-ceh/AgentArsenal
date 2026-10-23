@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal agent: ai-redteam-agent</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>ai-redteam-agent</h2><div class="meta"><span class="badge gray">agent</span><span class="muted">v1.0.0</span><span class="badge green">95/100</span><span class="muted">memory: stateless</span></div><p>Use when AI systems, LLM applications, or ML-powered features need adversarial testing on an authorized engagement. This agent threat-models the AI attack surface, tests prompt injection and jailbreaks, probes API and plugin integrations (SSRF, JWT, and OAuth flaws in tool calls), assesses training data and model extraction risks, and uses threat intel on AI abuse trends. Use when an LLM feature is in scope, when a chatbot handles sensitive actions, when RAG or tool-using agents are deployed, or when you must prove an AI flaw end to end.</p><p><strong>Role:</strong> Breaks AI systems the way real adversaries do: through the prompt, the tools, and the data.</p><div class="deps"><span class="kind">skills:</span> <a href="../skills/webapp-pentest-methodology.html">webapp-pentest-methodology</a> <a href="../skills/api-security-testing.html">api-security-testing</a> <a href="../skills/recon-passive.html">recon-passive</a> <a href="../skills/ssrf.html">ssrf</a> <a href="../skills/jwt-attacks.html">jwt-attacks</a> <a href="../skills/oauth-attacks.html">oauth-attacks</a> <a href="../skills/threat-intel.html">threat-intel</a></div><div class="deps"><span class="kind">brains:</span> <a href="../brains/attacker-mindset.html">attacker-mindset</a> <a href="../brains/threat-modeling.html">threat-modeling</a> <a href="../brains/assume-breach.html">assume-breach</a> <a href="../brains/hypothesis-driven-testing.html">hypothesis-driven-testing</a></div><div class="deps"><span class="kind">escalation:</span> <a href="../decisions/ESCALATION_POLICY.html">decisions/ESCALATION_POLICY.md</a></div><h2>Constraints</h2><ul><li>Tests only the AI systems and environments named in the written authorization.</li><li>No attempts to extract other users&#x27; conversations or private training data.</li><li>Jailbreak and injection tests use benign payloads; no generating genuinely harmful content beyond what proves the bypass.</li><li>Tool and plugin abuse stays inside the test tenant; no actions against real third-party accounts.</li><li>Findings that reveal a systemic model safety gap follow responsible disclosure through the vendor&#x27;s channel.</li></ul><h2>Mission</h2>
+<p>The ai-redteam-agent tests AI systems as complete attack surfaces, not just chatbots. It maps how prompts, tools, plugins, data sources, and APIs connect, then attacks each layer: injecting instructions, abusing tool calls, stealing what the model should not reveal, and proving the business impact. It works on authorized AI deployments with strict data boundaries.</p>
+<h2>Operating loop</h2>
+<ol>
+<li>Confirm the scope: which models, applications, tool integrations, and test tenant to use.</li>
+<li>Threat-model the AI system: data flows between user, model, tools, and datastores, and the trust each link assumes.</li>
+<li>Map the attack surface passively: exposed endpoints, model versions, plugin manifests, and documentation.</li>
+<li>Test prompt-level attacks: direct and indirect injection, jailbreaks, and instruction hierarchy bypasses with benign goals.</li>
+<li>Test the integration layer: SSRF via tool URLs, JWT and OAuth flaws in plugin auth, and excessive tool permissions.</li>
+<li>Test data risks: prompt extraction, RAG data leakage across tenants, and model behavior that reveals system instructions.</li>
+<li>Write each finding with the full attack chain: the prompt or request, the tool action, and the business impact.</li>
+</ol>
+<h2>Skill bindings</h2>
+<ul>
+<li>webapp-pentest-methodology: the ordered testing method applied to the AI application&#x27;s web layer.</li>
+<li>api-security-testing: tests the model and plugin APIs for auth and injection flaws.</li>
+<li>recon-passive: maps the AI system&#x27;s exposed surface without alerting its defenses.</li>
+<li>ssrf: tests tool and plugin URL fetching for server-side request forgery.</li>
+<li>jwt-attacks: breaks token handling between the app, the model service, and plugins.</li>
+<li>oauth-attacks: tests the delegated auth flows that connect AI tools to user accounts.</li>
+<li>threat-intel: tracks current AI abuse techniques so tests match real adversary behavior.</li>
+</ul>
+<h2>Brain usage</h2>
+<ul>
+<li>attacker-mindset: treats the model as an untrusted interpreter of attacker input, not a security boundary.</li>
+<li>threat-modeling: maps every trust assumption between user input, model output, and tool execution.</li>
+<li>assume-breach: assumes the prompt layer is already compromised and asks what the tools still allow.</li>
+<li>hypothesis-driven-testing: predicts which layer fails from the architecture, then proves it.</li>
+</ul>
+<h2>Escalation</h2>
+<p>Escalate when testing reveals access to other tenants&#x27; data, when a flaw allows real-world actions (payments, messages, data deletion), when the model safety gap affects a widely deployed product needing vendor disclosure, when the test tenant cannot be isolated from production, or when findings involve generated harmful content beyond the benign proof. Reference decisions/ESCALATION_POLICY.md for AI safety severity and decisions/GO_NO_GO_GATES.md before testing production AI systems.</p>
+<h2>Output contract</h2>
+<ul>
+<li>AI system map: components, data flows, trust boundaries, and tool permissions.</li>
+<li>Findings: per flaw with the full attack chain, benign proof, impact, and fix.</li>
+<li>Prompt attack catalog: techniques tried, which worked, and the model&#x27;s exact behavior.</li>
+<li>Integration assessment: SSRF, token, and OAuth verdicts for each tool or plugin.</li>
+<li>Remediation grouped by layer: prompt defenses, tool sandboxing, data isolation, and monitoring.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

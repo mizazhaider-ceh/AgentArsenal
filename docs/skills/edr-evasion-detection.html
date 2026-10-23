@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: edr-evasion-detection</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>edr-evasion-detection</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reviewing whether attacker techniques evade the</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="edr-basics.html">edr-basics</a> <a href="threat-hunting.html">threat-hunting</a> <a href="siem-detections.html">siem-detections</a> <a href="purple-team-exercises.html">purple-team-exercises</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>EDR evasion is the attacker&#x27;s craft: unhooking, AMSI bypass, LOLBins, and direct syscalls. This skill covers authorized gap testing: running atomic technique tests in the lab, seeing what the EDR catches, and tuning the detections. Test only on lab systems or with written authorization; evasion testing on production endpoints is disruptive.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Baseline the EDR: version, policy, and what it claims to detect.</li>
+<li>Pick evasion classes to test: unhooking, AMSI, ETW, LOLBins, and</li>
+<p>syscalls.</p>
+<li>Run atomic tests in the lab, one technique at a time, with full</li>
+<p>logging.</p>
+<li>Record: blocked, alerted, or silent, with the exact telemetry.</li>
+<li>Tune: write or enable the detection for each silent technique.</li>
+<li>Retest after tuning to confirm the gap closed.</li>
+<li>Check for tampering protection: can the EDR itself be disabled.</li>
+<li>Report the residual gaps honestly with the test evidence.</li>
+</ol>
+<h2>1. Atomic testing (lab)</h2>
+<pre><code class="language-bash"># Atomic Red Team style: one technique, one test, full logging
+# Example: LOLBin execution test (lab Windows host)
+# powershell -c &quot;rundll32.exe javascript:...&quot;
+echo &quot;run each atomic, then check the EDR console within 5 minutes&quot;</code></pre>
+<pre><code class="language-bash"># AMSI bypass class test (lab): does the EDR see the bypass attempt
+# or only the payload after? Both matter for the gap analysis
+# Record: which stage alerted, with what severity</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Gap register: technique, expected detection, observed result.&quot;&quot;&quot;
+tests = [
+    (&quot;T1055 process injection&quot;, &quot;alert&quot;, &quot;silent&quot;),
+    (&quot;T1059.001 powershell download&quot;, &quot;block&quot;, &quot;alert&quot;),
+    (&quot;T1218 rundll32&quot;, &quot;alert&quot;, &quot;alert&quot;),
+    (&quot;direct syscalls&quot;, &quot;alert&quot;, &quot;silent&quot;),
+]
+for tech, want, got in tests:
+    status = &quot;GAP&quot; if got == &quot;silent&quot; else (&quot;TUNE&quot; if got != want else &quot;OK&quot;)
+    print(f&quot;[{status}] {tech}: want={want} got={got}&quot;)</code></pre>
+<h2>2. Tamper protection check</h2>
+<pre><code class="language-bash"># Can the EDR be disabled from an elevated lab prompt?
+# - service stop attempts (should be blocked or alerted)
+# - driver unload attempts
+# - exclusion abuse: adding attacker paths to exclusions
+# Test the exclusion path especially: overly broad exclusions are the
+# most common &quot;evasion&quot; and need no malware at all
+echo &quot;review: who can edit exclusions, and what is excluded now&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The EDR alerts but the SOC ignores the rule. The gap is process,</li>
+<p>not product; fix the triage, not just the rule.</p>
+<li>Tests are blocked by policy, not detected. Blocking is fine;</li>
+<p>record it as blocked, not as a detection gap.</p>
+<li>Cloud managed EDR with delayed telemetry. Account for the delay</li>
+<p>in the test window or you will mislabel.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>EDR disabled by the test: the tamper finding outranks technique</li>
+<p>gaps; report it first.</p>
+<li>Systemic blindness (e.g. no script logging): recommend the</li>
+<p>platform change (enable AMSI, script block logging) before rule tuning.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>This skill is defensive: it finds where the EDR is blind so you can fix it. Attackers use the same knowledge offensively, which is why testing stays in the lab with authorization. The durable program is purple: red runs the techniques, blue tunes the detections, and the gap register trends down over time. Assume breach: the EDR is one layer, and its gaps are known and tracked.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1562 (Impair Defenses), T1055, T1218.</li>
+<li>MITRE Engenuity ATT&amp;CK Evaluations: EDR test methodology.</li>
+<li>Related skills: edr-basics, purple-team-exercises.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

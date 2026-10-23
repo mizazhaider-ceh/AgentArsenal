@@ -32,7 +32,7 @@ def load_manifest():
     skills = data.get("skills", [])
     if not skills:
         raise SystemExit("error: arsenal-manifest.json contains no skills")
-    return skills
+    return data
 
 
 def badge_block(count):
@@ -45,7 +45,8 @@ def badge_block(count):
     )
 
 
-def catalog_block(skills):
+def catalog_block(manifest):
+    skills = manifest.get("skills", [])
     by_domain = OrderedDict()
     for skill in sorted(skills, key=lambda s: (s["domain"], s["name"])):
         by_domain.setdefault(skill["domain"], []).append(skill["name"])
@@ -56,6 +57,13 @@ def catalog_block(skills):
     for domain, names in by_domain.items():
         lines.append(f"| {domain} | {', '.join(names)} |")
     lines.append(f"| **Total** | **{len(skills)} skills across {len(by_domain)} domains** |")
+    for label, key in (("Agents", "agents"), ("Brains", "brains"),
+                       ("Sub-skills", "sub_skills"), ("Playbooks", "playbooks"),
+                       ("Workflows", "workflows")):
+        group = manifest.get(key)
+        count = len(group) if isinstance(group, dict) else 0
+        if count:
+            lines.append(f"| {label} | {count} |")
     lines.append(CATALOG_END)
     return "\n".join(lines)
 
@@ -73,12 +81,13 @@ def replace_section(text, start, end, replacement):
 
 
 def main():
-    skills = load_manifest()
+    manifest = load_manifest()
+    skills = manifest.get("skills", [])
     count = len(skills)
 
     text = README.read_text(encoding="utf-8")
     text = replace_section(text, SKILLCOUNT_START, SKILLCOUNT_END, badge_block(count))
-    text = replace_section(text, CATALOG_START, CATALOG_END, catalog_block(skills))
+    text = replace_section(text, CATALOG_START, CATALOG_END, catalog_block(manifest))
     README.write_text(text, encoding="utf-8")
 
     if "\u2014" in text:

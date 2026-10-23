@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """AgentArsenal CI validator (stdlib only).
 
-Validates every skills/<domain>/<skill>/SKILL.md against SPEC.md.
+Validates every skills/<domain>/<skill>/SKILL.md (including nested
+sub-skills at skills/<domain>/<skill>/sub/<sub>/SKILL.md) against SPEC.md,
+plus agents/<name>/AGENT.md, brains/<name>/BRAIN.md,
+playbooks/<name>/PLAYBOOK.md, and workflows/<pattern>.md.
+
 Prints file:line style errors and exits non-zero on ANY failure.
-Handles zero skills gracefully (exit 0).
+Missing artifact directories are skipped gracefully (exit 0).
 """
 
 import hashlib
@@ -15,6 +19,11 @@ from datetime import datetime
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKILLS_DIR = os.path.join(REPO_ROOT, "skills")
+AGENTS_DIR = os.path.join(REPO_ROOT, "agents")
+BRAINS_DIR = os.path.join(REPO_ROOT, "brains")
+PLAYBOOKS_DIR = os.path.join(REPO_ROOT, "playbooks")
+WORKFLOWS_DIR = os.path.join(REPO_ROOT, "workflows")
+DECISIONS_DIR = os.path.join(REPO_ROOT, "decisions")
 MANIFEST_PATH = os.path.join(REPO_ROOT, "arsenal-manifest.json")
 
 DOMAINS = [
@@ -22,12 +31,26 @@ DOMAINS = [
     "engineering", "incident", "forensics", "linux", "api",
     "cloud", "crypto", "bugbounty",
     "mobile", "binary", "malware", "soc", "osint", "defensive",
+    "ai-security", "hardware", "ics-scada", "blockchain",
+    "automotive", "privacy", "memory",
 ]
 LIFECYCLES = ["experimental", "stable", "deprecated"]
 REQUIRED_FIELDS = [
     "name", "description", "version", "domain", "lifecycle",
     "last_verified", "requires", "extends", "relates", "tools",
 ]
+SUB_REQUIRED_FIELDS = REQUIRED_FIELDS + ["parent"]
+AGENT_REQUIRED_FIELDS = [
+    "name", "kind", "description", "version", "role",
+    "skills", "brains", "memory_mode", "escalation", "constraints",
+]
+BRAIN_REQUIRED_FIELDS = [
+    "name", "kind", "description", "version", "provides", "used_by",
+]
+PLAYBOOK_REQUIRED_FIELDS = [
+    "name", "kind", "description", "version", "bindings",
+]
+MEMORY_MODES = ["stateless", "persistent"]
 REQUIRED_HEADINGS = ["## Quick Workflow", "## Edge cases", "## Key references"]
 EM_DASH = "\u2014"
 
@@ -37,6 +60,7 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 # key: value where the colon is followed by whitespace or end of line
 # (so "http://x" is NOT treated as a mapping)
 KEY_RE = re.compile(r"^([A-Za-z_][A-Za-z0-9_-]*):(?:[ \t]+(.*?))?[ \t]*$")
+BINDING_RE = re.compile(r"^(agent|skill|brain|decisions):(.+)$")
 
 
 # ---------------------------------------------------------------------------
@@ -215,11 +239,16 @@ def parse_frontmatter_block(fm_lines):
 
 
 # ---------------------------------------------------------------------------
-# Skill discovery
+# Artifact discovery
 # ---------------------------------------------------------------------------
 
 def find_skills():
-    """Return a list of (domain, name, skill_md_path) tuples, sorted."""
+    """Return (domain, name, skill_md_path, parent) tuples, sorted.
+
+    parent is None for top-level skills. Sub-skills live at
+    skills/<domain>/<skill>/sub/<sub>/SKILL.md and carry the parent
+    skill name.
+    """
     found = []
     if not os.path.isdir(SKILLS_DIR):
         return found
@@ -231,7 +260,73 @@ def find_skills():
             spath = os.path.join(dpath, name)
             if not os.path.isdir(spath):
                 continue
-            found.append((domain, name, os.path.join(spath, "SKILL.md")))
+            found.append((domain, name, os.path.join(spath, "SKILL.md"), None))
+            subdir = os.path.join(spath, "sub")
+            if not os.path.isdir(subdir):
+                continue
+            for sub in sorted(os.listdir(subdir)):
+                subpath = os.path.join(subdir, sub)
+                if not os.path.isdir(subpath):
+                    continue
+                found.append((domain, sub,
+                              os.path.join(subpath, "SKILL.md"), name))
+    return found
+
+
+def find_agents():
+    """Return (name, agent_md_path) tuples, sorted."""
+    found = []
+    if not os.path.isdir(AGENTS_DIR):
+        return found
+    for name in sorted(os.listdir(AGENTS_DIR)):
+        apath = os.path.join(AGENTS_DIR, name)
+        if not os.path.isdir(apath):
+            continue
+        found.append((name, os.path.join(apath, "AGENT.md")))
+    return found
+
+
+def find_brains():
+    """Return (name, brain_md_path) tuples, sorted."""
+    found = []
+    if not os.path.isdir(BRAINS_DIR):
+        return found
+    for name in sorted(os.listdir(BRAINS_DIR)):
+        bpath = os.path.join(BRAINS_DIR, name)
+        if not os.path.isdir(bpath):
+            continue
+        found.append((name, os.path.join(bpath, "BRAIN.md")))
+    return found
+
+
+def find_playbooks():
+    """Return (name, playbook_md_path) tuples, sorted."""
+    found = []
+    if not os.path.isdir(PLAYBOOKS_DIR):
+        return found
+    for name in sorted(os.listdir(PLAYBOOKS_DIR)):
+        ppath = os.path.join(PLAYBOOKS_DIR, name)
+        if not os.path.isdir(ppath):
+            continue
+        found.append((name, os.path.join(ppath, "PLAYBOOK.md")))
+    return found
+
+
+def find_workflows():
+    """Return (name, md_path) tuples for workflows/<pattern>.md, sorted.
+
+    README.md in the workflows dir is documentation, not a workflow.
+    """
+    found = []
+    if not os.path.isdir(WORKFLOWS_DIR):
+        return found
+    for fname in sorted(os.listdir(WORKFLOWS_DIR)):
+        if not fname.endswith(".md") or fname == "README.md":
+            continue
+        fpath = os.path.join(WORKFLOWS_DIR, fname)
+        if not os.path.isfile(fpath):
+            continue
+        found.append((fname[:-3], fpath))
     return found
 
 
@@ -239,19 +334,15 @@ def _rel(path):
     return os.path.relpath(path, REPO_ROOT)
 
 
-# ---------------------------------------------------------------------------
-# Per-skill validation
-# ---------------------------------------------------------------------------
-
-def validate_skill(domain, name, path, skill_names, errors):
-    """Validate one SKILL.md. Returns {"requires": [...], "extends": [...]}
-    for cycle detection, or None when the frontmatter is unusable."""
+def _parse_md_file(path, errors):
+    """Read a markdown file with frontmatter. Returns (rel, data, body)
+    or None when the file is unreadable or has no usable frontmatter."""
     rel = _rel(path)
     try:
         with open(path, encoding="utf-8-sig") as fh:
             text = fh.read()
     except OSError:
-        errors.append("%s:0: SKILL.md not found" % _rel(os.path.dirname(path)))
+        errors.append("%s:0: file not found" % _rel(os.path.dirname(path)))
         return None
 
     fm_lines, body, fm_err = split_frontmatter(text)
@@ -263,36 +354,39 @@ def validate_skill(domain, name, path, skill_names, errors):
         errors.append("%s:%d: frontmatter: %s" % (rel, lineno + 1, msg))
     if perrs and not data:
         return None
+    return rel, data, body
 
-    for field in REQUIRED_FIELDS:
-        if field not in data:
-            errors.append("%s:1: missing required frontmatter field '%s'"
-                          % (rel, field))
 
+def _check_name_slug(rel, data, want_name, errors):
     nm = data.get("name")
     if isinstance(nm, str):
-        if nm != name:
+        if nm != want_name:
             errors.append("%s:1: name '%s' does not match directory name '%s'"
-                          % (rel, nm, name))
+                          % (rel, nm, want_name))
         if not SLUG_RE.match(nm):
             errors.append("%s:1: name '%s' is not a lowercase slug (a-z0-9-)"
                           % (rel, nm))
     elif "name" in data:
         errors.append("%s:1: name must be a string" % rel)
 
+
+def _check_description(rel, data, errors, require_trigger=True):
     desc = data.get("description")
     if isinstance(desc, str):
         n = len(desc)
         if n < 80 or n > 1500:
             errors.append("%s:1: description is %d chars, must be 80 to 1500"
                           % (rel, n))
-        low = desc.lower()
-        if "use when" not in low and "when the" not in low:
-            errors.append("%s:1: description lacks a trigger phrase "
-                          "('use when' or 'when the')" % rel)
+        if require_trigger:
+            low = desc.lower()
+            if "use when" not in low and "when the" not in low:
+                errors.append("%s:1: description lacks a trigger phrase "
+                              "('use when' or 'when the')" % rel)
     elif "description" in data:
         errors.append("%s:1: description must be a string" % rel)
 
+
+def _check_version(rel, data, errors):
     ver = data.get("version")
     if isinstance(ver, str):
         if not SEMVER_RE.match(ver):
@@ -300,11 +394,73 @@ def validate_skill(domain, name, path, skill_names, errors):
     elif "version" in data:
         errors.append("%s:1: version must be a string" % rel)
 
+
+def _check_kind(rel, data, want_kind, errors):
+    kind = data.get("kind")
+    if isinstance(kind, str):
+        if kind != want_kind:
+            errors.append("%s:1: kind '%s' must be '%s'" % (rel, kind, want_kind))
+    elif "kind" in data:
+        errors.append("%s:1: kind must be a string" % rel)
+
+
+def _check_missing_fields(rel, data, required, errors):
+    for field in required:
+        if field not in data:
+            errors.append("%s:1: missing required frontmatter field '%s'"
+                          % (rel, field))
+
+
+def _check_string_list(rel, data, field, errors, known=None, known_label=""):
+    """Validate a frontmatter list of strings, optionally against a set of
+    known names. Returns the list of valid strings (possibly empty)."""
+    refs = data.get(field)
+    if not isinstance(refs, list):
+        if field in data:
+            errors.append("%s:1: %s must be a list" % (rel, field))
+        return []
+    out = []
+    for ref in refs:
+        if not isinstance(ref, str):
+            errors.append("%s:1: %s entries must be strings" % (rel, field))
+        elif known is not None and ref not in known:
+            errors.append("%s:1: %s references unknown %s '%s'"
+                          % (rel, field, known_label, ref))
+        else:
+            out.append(ref)
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Per-skill validation (top-level and sub-skills)
+# ---------------------------------------------------------------------------
+
+def validate_skill(domain, name, path, skill_names, errors,
+                   parent=None, top_skill_names=None):
+    """Validate one SKILL.md (top-level or sub-skill).
+
+    Returns {"requires": [...], "extends": [...], "parent": name|None}
+    for cycle detection, or None when the frontmatter is unusable.
+    parent is the enclosing skill name for sub-skills, else None.
+    """
+    parsed = _parse_md_file(path, errors)
+    if parsed is None:
+        return None
+    rel, data, body = parsed
+    is_sub = parent is not None
+
+    _check_missing_fields(rel, data,
+                          SUB_REQUIRED_FIELDS if is_sub else REQUIRED_FIELDS,
+                          errors)
+    _check_name_slug(rel, data, name, errors)
+    _check_description(rel, data, errors, require_trigger=True)
+    _check_version(rel, data, errors)
+
     dom = data.get("domain")
     if isinstance(dom, str):
         if dom not in DOMAINS:
-            errors.append("%s:1: domain '%s' is not one of the 21 spec domains"
-                          % (rel, dom))
+            errors.append("%s:1: domain '%s' is not one of the %d known "
+                          "domains" % (rel, dom, len(DOMAINS)))
     elif "domain" in data:
         errors.append("%s:1: domain must be a string" % rel)
 
@@ -331,16 +487,8 @@ def validate_skill(domain, name, path, skill_names, errors):
         errors.append("%s:1: last_verified must be a string" % rel)
 
     for field in ("requires", "extends", "relates"):
-        refs = data.get(field)
-        if isinstance(refs, list):
-            for ref in refs:
-                if not isinstance(ref, str):
-                    errors.append("%s:1: %s entries must be strings" % (rel, field))
-                elif ref not in skill_names:
-                    errors.append("%s:1: %s references unknown skill '%s'"
-                                  % (rel, field, ref))
-        elif field in data:
-            errors.append("%s:1: %s must be a list" % (rel, field))
+        _check_string_list(rel, data, field, errors,
+                           known=skill_names, known_label="skill")
 
     tools = data.get("tools")
     if isinstance(tools, list):
@@ -364,12 +512,272 @@ def validate_skill(domain, name, path, skill_names, errors):
             errors.append("%s:1: body is missing the exact heading '%s'"
                           % (rel, heading))
 
+    if is_sub:
+        par = data.get("parent")
+        if isinstance(par, str):
+            if top_skill_names is not None and par not in top_skill_names:
+                errors.append("%s:1: parent '%s' is not a real top-level "
+                              "skill" % (rel, par))
+            if par != parent:
+                errors.append("%s:1: parent '%s' does not match the "
+                              "enclosing skill directory '%s'"
+                              % (rel, par, parent))
+        elif "parent" in data:
+            errors.append("%s:1: parent must be a string" % rel)
+
     reqs = data.get("requires")
     exts = data.get("extends")
     return {
-        "requires": [r for r in reqs if isinstance(r, str)] if isinstance(reqs, list) else [],
-        "extends": [e for e in exts if isinstance(e, str)] if isinstance(exts, list) else [],
+        "requires": [r for r in reqs if isinstance(r, str)]
+                    if isinstance(reqs, list) else [],
+        "extends": [e for e in exts if isinstance(e, str)]
+                   if isinstance(exts, list) else [],
+        "parent": parent,
     }
+
+
+# ---------------------------------------------------------------------------
+# Per-agent validation
+# ---------------------------------------------------------------------------
+
+def validate_agent(name, path, skill_names, brain_names, errors):
+    """Validate one agents/<name>/AGENT.md."""
+    parsed = _parse_md_file(path, errors)
+    if parsed is None:
+        return
+    rel, data, _body = parsed
+
+    _check_missing_fields(rel, data, AGENT_REQUIRED_FIELDS, errors)
+    _check_name_slug(rel, data, name, errors)
+    _check_kind(rel, data, "agent", errors)
+    _check_description(rel, data, errors, require_trigger=True)
+    _check_version(rel, data, errors)
+
+    role = data.get("role")
+    if isinstance(role, str):
+        if not role.strip():
+            errors.append("%s:1: role must be a non-empty string" % rel)
+    elif "role" in data:
+        errors.append("%s:1: role must be a string" % rel)
+
+    _check_string_list(rel, data, "skills", errors,
+                       known=skill_names, known_label="skill")
+    _check_string_list(rel, data, "brains", errors,
+                       known=brain_names, known_label="brain")
+
+    mode = data.get("memory_mode")
+    if isinstance(mode, str):
+        if mode not in MEMORY_MODES:
+            errors.append("%s:1: memory_mode '%s' must be one of: %s"
+                          % (rel, mode, ", ".join(MEMORY_MODES)))
+    elif "memory_mode" in data:
+        errors.append("%s:1: memory_mode must be a string" % rel)
+
+    esc = data.get("escalation")
+    if isinstance(esc, str):
+        full = os.path.normpath(os.path.join(REPO_ROOT, esc))
+        if not os.path.isfile(full):
+            errors.append("%s:1: escalation file '%s' does not exist"
+                          % (rel, esc))
+        elif os.path.commonpath([full, DECISIONS_DIR]) != DECISIONS_DIR:
+            errors.append("%s:1: escalation '%s' must point at a file under "
+                          "decisions/" % (rel, esc))
+    elif "escalation" in data:
+        errors.append("%s:1: escalation must be a string" % rel)
+
+    constraints = data.get("constraints")
+    if isinstance(constraints, list):
+        for i, item in enumerate(constraints):
+            if not isinstance(item, str) or not item.strip():
+                errors.append("%s:1: constraints[%d] must be a non-empty "
+                              "string" % (rel, i))
+    elif "constraints" in data:
+        errors.append("%s:1: constraints must be a list" % rel)
+
+
+# ---------------------------------------------------------------------------
+# Per-brain validation
+# ---------------------------------------------------------------------------
+
+def validate_brain(name, path, errors):
+    """Validate one brains/<name>/BRAIN.md."""
+    parsed = _parse_md_file(path, errors)
+    if parsed is None:
+        return
+    rel, data, _body = parsed
+
+    _check_missing_fields(rel, data, BRAIN_REQUIRED_FIELDS, errors)
+    _check_name_slug(rel, data, name, errors)
+    _check_kind(rel, data, "brain", errors)
+    _check_description(rel, data, errors, require_trigger=False)
+    _check_version(rel, data, errors)
+
+    provides = data.get("provides")
+    if isinstance(provides, list):
+        if not provides:
+            errors.append("%s:1: provides must list at least one item" % rel)
+        for i, item in enumerate(provides):
+            if not isinstance(item, str) or not item.strip():
+                errors.append("%s:1: provides[%d] must be a non-empty string"
+                              % (rel, i))
+    elif "provides" in data:
+        errors.append("%s:1: provides must be a list" % rel)
+
+    used_by = data.get("used_by")
+    if isinstance(used_by, list):
+        for i, item in enumerate(used_by):
+            if not isinstance(item, str):
+                errors.append("%s:1: used_by[%d] must be a string" % (rel, i))
+    elif "used_by" in data:
+        errors.append("%s:1: used_by must be a list" % rel)
+
+
+# ---------------------------------------------------------------------------
+# Per-playbook validation
+# ---------------------------------------------------------------------------
+
+def _parse_phase_table_bindings(body, rel, errors):
+    """Extract bindings from a playbook phase table.
+
+    Looks for a markdown table whose header names the columns
+    "owner agent", "skills used", "brains used", and "decision gates".
+    Returns a list of (kind, target) tuples where kind is one of
+    "agent", "skill", "brain", "decisions".
+    """
+    bindings = []
+    lines = body.splitlines()
+    col_index = None
+    for line in lines:
+        stripped = line.strip()
+        if not stripped.startswith("|"):
+            continue
+        cells = [c.strip().lower() for c in stripped.strip("|").split("|")]
+        if col_index is None:
+            if "owner agent" in cells and "skills used" in cells:
+                col_index = {
+                    "agent": cells.index("owner agent"),
+                    "skill": cells.index("skills used"),
+                    "brain": cells.index("brains used") if "brains used" in cells else None,
+                    "decisions": cells.index("decision gates") if "decision gates" in cells else None,
+                }
+            continue
+        if set(cells) <= {"", "-", "---", ":---", "---:", ":---:"}:
+            continue
+        if all(re.match(r"^:?-+:?$", c) for c in cells):
+            continue  # markdown table separator row
+        raw_cells = [c.strip() for c in stripped.strip("|").split("|")]
+        for kind, idx in col_index.items():
+            if idx is None or idx >= len(raw_cells):
+                continue
+            for target in re.split(r"[,;]", raw_cells[idx]):
+                target = target.strip()
+                if target and target not in ("-", "n/a", "none"):
+                    bindings.append((kind, target))
+    return bindings
+
+
+def validate_playbook(name, path, skill_names, agent_names, brain_names,
+                      errors):
+    """Validate one playbooks/<name>/PLAYBOOK.md.
+
+    Bindings may be listed in frontmatter ("bindings:" with kind:target
+    entries) or in a phase table with "owner agent", "skills used",
+    "brains used", and "decision gates" columns. At least one binding
+    must be listed, and every binding must resolve.
+    """
+    parsed = _parse_md_file(path, errors)
+    if parsed is None:
+        return
+    rel, data, body = parsed
+
+    _check_missing_fields(rel, data,
+                          [f for f in PLAYBOOK_REQUIRED_FIELDS
+                           if f != "bindings"],
+                          errors)
+    _check_name_slug(rel, data, name, errors)
+    _check_kind(rel, data, "playbook", errors)
+    _check_description(rel, data, errors, require_trigger=False)
+    _check_version(rel, data, errors)
+
+    bindings = []  # (kind, target, where)
+    fm_bindings = data.get("bindings")
+    if isinstance(fm_bindings, list):
+        for i, item in enumerate(fm_bindings):
+            if not isinstance(item, str):
+                errors.append("%s:1: bindings[%d] must be a string" % (rel, i))
+                continue
+            m = BINDING_RE.match(item.strip())
+            if not m:
+                errors.append("%s:1: bindings[%d] '%s' must look like "
+                              "'kind:target' (agent:, skill:, brain:, "
+                              "decisions:)" % (rel, i, item))
+                continue
+            bindings.append((m.group(1), m.group(2).strip(), "frontmatter"))
+    elif "bindings" in data:
+        errors.append("%s:1: bindings must be a list" % rel)
+    for kind, target in _parse_phase_table_bindings(body, rel, errors):
+        bindings.append((kind, target, "phase table"))
+
+    if not bindings:
+        errors.append("%s:1: playbook lists no bindings (add a frontmatter "
+                      "'bindings' list or a phase table with 'owner agent', "
+                      "'skills used', 'brains used', 'decision gates' "
+                      "columns)" % rel)
+        return
+
+    for kind, target, where in bindings:
+        if kind == "agent" and target not in agent_names:
+            errors.append("%s:1: %s references unknown agent '%s'"
+                          % (rel, where, target))
+        elif kind == "skill" and target not in skill_names:
+            errors.append("%s:1: %s references unknown skill '%s'"
+                          % (rel, where, target))
+        elif kind == "brain" and target not in brain_names:
+            errors.append("%s:1: %s references unknown brain '%s'"
+                          % (rel, where, target))
+        elif kind == "decisions":
+            fname = target if target.endswith(".md") else target + ".md"
+            full = os.path.normpath(os.path.join(DECISIONS_DIR, fname))
+            if not os.path.isfile(full):
+                errors.append("%s:1: %s references unknown decisions file "
+                              "'%s'" % (rel, where, target))
+        elif kind not in ("agent", "skill", "brain", "decisions"):
+            errors.append("%s:1: %s has unknown binding kind '%s'"
+                          % (rel, where, kind))
+
+
+# ---------------------------------------------------------------------------
+# Per-workflow validation
+# ---------------------------------------------------------------------------
+
+WORKFLOW_PHASE_RE = re.compile(
+    r"^#{2,3}\s*(phase\b|step\s+sequence\b)", re.IGNORECASE)
+
+
+def validate_workflow(name, path, errors):
+    """Validate one workflows/<pattern>.md.
+
+    The body (after frontmatter, when present) must start with a '# Title'
+    line and contain at least one phase section: a '## Phase' or
+    '### Phase' heading, or a '## Step sequence' section describing the
+    ordered stages.
+    """
+    rel = _rel(path)
+    try:
+        with open(path, encoding="utf-8-sig") as fh:
+            text = fh.read()
+    except OSError:
+        errors.append("%s:0: workflow file not found" % rel)
+        return
+    _fm_lines, body, _fm_err = split_frontmatter(text)
+    if _fm_err:
+        body = text
+    lines = [line for line in body.splitlines() if line.strip()]
+    if not lines or not re.match(r"^#\s+\S", lines[0]):
+        errors.append("%s:1: workflow must start with a '# Title' line" % rel)
+    if not any(WORKFLOW_PHASE_RE.match(line.strip()) for line in lines):
+        errors.append("%s:1: workflow has no phase section (need a '## Phase' "
+                      "heading or a '## Step sequence' section)" % rel)
 
 
 # ---------------------------------------------------------------------------
@@ -377,15 +785,26 @@ def validate_skill(domain, name, path, skill_names, errors):
 # ---------------------------------------------------------------------------
 
 def check_cycles(deps, errors):
-    """DFS cycle detection over requires+extends edges."""
+    """DFS cycle detection over requires+extends+parent edges.
+
+    A sub-skill's parent edge is checked for cycles but is NOT a requires
+    edge: it never counts toward dependency closure.
+    """
     WHITE, GRAY, BLACK = 0, 1, 2
     color = {name: WHITE for name in deps}
     stack = []
 
+    def targets(node):
+        info = deps[node]
+        out = list(info["requires"]) + list(info["extends"])
+        if info.get("parent"):
+            out.append(info["parent"])
+        return out
+
     def visit(node):
         color[node] = GRAY
         stack.append(node)
-        for target in deps[node]["requires"] + deps[node]["extends"]:
+        for target in targets(node):
             if target not in deps:
                 continue
             if color[target] == GRAY:
@@ -423,14 +842,60 @@ def check_em_dashes(errors):
                 errors.append("%s:0: cannot read file: %s" % (rel, exc))
 
 
-def check_manifest(skill_paths, errors):
-    """If arsenal-manifest.json exists, every skill must be listed with a
-    matching sha256 of the SKILL.md on disk, and every manifest entry must
-    point at a real skill directory.
+def _sha256_of(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(65536), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
-    Supports both manifest shapes:
+
+def _check_manifest_dict_key(manifest, key, paths, errors):
+    """Check one dict-shaped manifest key: name -> {"sha256": ...}.
+
+    Skipped when the key is absent (older manifests). Every artifact on
+    disk must be listed with a matching sha256; every entry must point at
+    a real artifact file.
+    """
+    raw = manifest.get(key)
+    if raw is None:
+        return
+    if not isinstance(raw, dict):
+        errors.append('arsenal-manifest.json:1: "%s" must be an object' % key)
+        return
+    for name in sorted(paths):
+        rel = _rel(paths[name])
+        info = raw.get(name)
+        if not isinstance(info, dict):
+            errors.append('%s:1: %s is missing from arsenal-manifest.json '
+                          '("%s")' % (rel, name, key))
+            continue
+        want = info.get("sha256")
+        try:
+            got = _sha256_of(paths[name])
+        except OSError as exc:
+            errors.append("%s:1: cannot hash file: %s" % (rel, exc))
+            continue
+        if not isinstance(want, str) or want.lower() != got:
+            errors.append('%s:1: manifest sha256 mismatch ("%s") '
+                          "(manifest: %s, disk: %s)"
+                          % (rel, key, want, got))
+    for mname in sorted(raw):
+        if mname not in paths:
+            errors.append('arsenal-manifest.json:1: manifest "%s" entry '
+                          "'%s' has no matching file" % (key, mname))
+
+
+def check_manifest(artifact_paths, errors):
+    """If arsenal-manifest.json exists, every artifact must be listed with a
+    matching sha256 of the file on disk, and every manifest entry must
+    point at a real artifact file.
+
+    artifact_paths maps manifest key -> {name: file_path}.
+    The "skills" key supports both manifest shapes:
       {"skills": [{"name": ..., "path": ..., "sha256": ...}, ...]}
       {"skills": {name: {"sha256": ...}, ...}}
+    Other keys are dict-shaped only.
     """
     if not os.path.isfile(MANIFEST_PATH):
         return
@@ -443,6 +908,8 @@ def check_manifest(skill_paths, errors):
     if not isinstance(manifest, dict):
         errors.append("arsenal-manifest.json:1: manifest must be a JSON object")
         return
+
+    skill_paths = artifact_paths.get("skills", {})
     raw = manifest.get("skills")
     entries = {}  # name -> (sha256, path or None)
     if isinstance(raw, dict):
@@ -456,10 +923,11 @@ def check_manifest(skill_paths, errors):
                               "object with a string name" % i)
                 continue
             entries[info["name"]] = (info.get("sha256"), info.get("path"))
-    else:
-        errors.append("arsenal-manifest.json:1: \"skills\" must be a list or "
+    elif raw is not None:
+        errors.append('arsenal-manifest.json:1: "skills" must be a list or '
                       "an object")
-        return
+    else:
+        errors.append('arsenal-manifest.json:1: "skills" key is missing')
 
     for name in sorted(skill_paths):
         rel = _rel(skill_paths[name])
@@ -469,8 +937,7 @@ def check_manifest(skill_paths, errors):
             continue
         want, _ = entries[name]
         try:
-            with open(skill_paths[name], "rb") as fh:
-                got = hashlib.sha256(fh.read()).hexdigest()
+            got = _sha256_of(skill_paths[name])
         except OSError as exc:
             errors.append("%s:1: cannot hash file: %s" % (rel, exc))
             continue
@@ -491,6 +958,95 @@ def check_manifest(skill_paths, errors):
                               "path '%s' does not match skill directory '%s'"
                               % (mname, mpath, os.path.relpath(real, REPO_ROOT)))
 
+    for key in ("sub_skills", "agents", "brains", "playbooks", "workflows"):
+        _check_manifest_dict_key(manifest, key,
+                                 artifact_paths.get(key, {}), errors)
+
+
+# ---------------------------------------------------------------------------
+# install.sh platform check
+# ---------------------------------------------------------------------------
+
+PLATFORM_DOC = os.path.join(REPO_ROOT, "platforms", "PLATFORM_SUPPORT.md")
+INSTALL_SH = os.path.join(REPO_ROOT, "install.sh")
+PLATFORM_SLUG_RE = re.compile(r"^\s*([a-z0-9-]+)\)")
+TABLE_ROW_RE = re.compile(r"^\|\s*([^|]+?)\s*\|")
+
+
+def _platforms_from_install():
+    """Parse platform slugs accepted by install.sh --platform.
+
+    Reads the case statement between the PLATFORM_MAP_START and
+    PLATFORM_MAP_END markers. Returns (slugs, error) where error is None
+    on success.
+    """
+    try:
+        with open(INSTALL_SH, encoding="utf-8") as fh:
+            lines = fh.readlines()
+    except OSError as exc:
+        return None, "cannot read install.sh: %s" % exc
+    inside = False
+    slugs = []
+    for line in lines:
+        if "PLATFORM_MAP_START" in line:
+            inside = True
+            continue
+        if "PLATFORM_MAP_END" in line:
+            inside = False
+            continue
+        if inside:
+            m = PLATFORM_SLUG_RE.match(line)
+            if m:
+                slugs.append(m.group(1))
+    if not slugs:
+        return None, ("no platforms parsed from install.sh "
+                      "(markers PLATFORM_MAP_START/END missing or empty)")
+    return slugs, None
+
+
+def _platforms_from_doc():
+    """Parse the Platform column of the table in
+    platforms/PLATFORM_SUPPORT.md. Returns (slugs, error)."""
+    try:
+        with open(PLATFORM_DOC, encoding="utf-8-sig") as fh:
+            lines = fh.readlines()
+    except OSError as exc:
+        return None, "cannot read platforms/PLATFORM_SUPPORT.md: %s" % exc
+    slugs = []
+    for line in lines:
+        m = TABLE_ROW_RE.match(line.strip())
+        if not m:
+            continue
+        slug = m.group(1).strip().strip("`")
+        if not SLUG_RE.match(slug) or slug.lower() == "platform":
+            continue
+        slugs.append(slug)
+    if not slugs:
+        return None, "no platform rows parsed from platforms/PLATFORM_SUPPORT.md"
+    return slugs, None
+
+
+def check_install_platforms(errors):
+    """Every --platform value accepted by install.sh must have a matching
+    row in platforms/PLATFORM_SUPPORT.md, and vice versa."""
+    install_slugs, install_err = _platforms_from_install()
+    if install_err:
+        errors.append("install.sh:1: %s" % install_err)
+        return
+    doc_slugs, doc_err = _platforms_from_doc()
+    if doc_err:
+        errors.append("platforms/PLATFORM_SUPPORT.md:1: %s" % doc_err)
+        return
+    install_set = set(install_slugs)
+    doc_set = set(doc_slugs)
+    for slug in sorted(install_set - doc_set):
+        errors.append("install.sh:1: platform '%s' accepted by --platform "
+                      "has no row in platforms/PLATFORM_SUPPORT.md" % slug)
+    for slug in sorted(doc_set - install_set):
+        errors.append("platforms/PLATFORM_SUPPORT.md:1: platform '%s' listed "
+                      "in the doc but not accepted by install.sh --platform"
+                      % slug)
+
 
 # ---------------------------------------------------------------------------
 # Main
@@ -498,37 +1054,84 @@ def check_manifest(skill_paths, errors):
 
 def main():
     errors = []
+
     skills = find_skills()
-    skill_names = set(name for _, name, _ in skills)
+    top = [(d, n, p) for d, n, p, parent in skills if parent is None]
+    subs = [(d, n, p, parent) for d, n, p, parent in skills if parent is not None]
+    all_skill_names = set(n for _, n, _, _ in skills)
+    top_skill_names = set(n for _, n, _ in top)
 
     seen = set()
-    for domain, name, path in skills:
+    for _d, name, path, _parent in skills:
         if name in seen:
             errors.append("%s:0: duplicate skill name '%s' used in more "
                           "than one directory" % (_rel(os.path.dirname(path)),
                                                   name))
         seen.add(name)
 
+    agents = find_agents()
+    brains = find_brains()
+    playbooks = find_playbooks()
+    workflows = find_workflows()
+    agent_names = set(n for n, _ in agents)
+    brain_names = set(n for n, _ in brains)
+
     deps = {}
-    for domain, name, path in skills:
-        info = validate_skill(domain, name, path, skill_names, errors)
+    for domain, name, path in top:
+        info = validate_skill(domain, name, path, all_skill_names, errors)
+        if info is not None:
+            deps[name] = info
+    for domain, name, path, parent in subs:
+        info = validate_skill(domain, name, path, all_skill_names, errors,
+                              parent=parent, top_skill_names=top_skill_names)
         if info is not None:
             deps[name] = info
 
+    for name, path in agents:
+        validate_agent(name, path, all_skill_names, brain_names, errors)
+    for name, path in brains:
+        validate_brain(name, path, errors)
+    for name, path in playbooks:
+        validate_playbook(name, path, all_skill_names, agent_names,
+                          brain_names, errors)
+    for name, path in workflows:
+        validate_workflow(name, path, errors)
+
     check_cycles(deps, errors)
     check_em_dashes(errors)
-    check_manifest({name: path for _, name, path in skills
-                    if os.path.isfile(path)}, errors)
+    check_install_platforms(errors)
+    check_manifest({
+        "skills": {name: path for _, name, path in top
+                   if os.path.isfile(path)},
+        "sub_skills": {name: path for _, name, path, _ in subs
+                       if os.path.isfile(path)},
+        "agents": {name: path for name, path in agents
+                   if os.path.isfile(path)},
+        "brains": {name: path for name, path in brains
+                   if os.path.isfile(path)},
+        "playbooks": {name: path for name, path in playbooks
+                      if os.path.isfile(path)},
+        "workflows": {name: path for name, path in workflows
+                      if os.path.isfile(path)},
+    }, errors)
 
     if errors:
         for line in errors:
             print(line)
         print("%d error(s) found." % len(errors))
         return 1
-    if not skills:
-        print("No skills found. All checks passed (0 errors).")
-    else:
-        print("All checks passed for %d skill(s)." % len(skills))
+    parts = ["%d skill(s)" % len(top)]
+    if subs:
+        parts.append("%d sub-skill(s)" % len(subs))
+    if agents:
+        parts.append("%d agent(s)" % len(agents))
+    if brains:
+        parts.append("%d brain(s)" % len(brains))
+    if playbooks:
+        parts.append("%d playbook(s)" % len(playbooks))
+    if workflows:
+        parts.append("%d workflow(s)" % len(workflows))
+    print("All checks passed for %s." % ", ".join(parts))
     return 0
 
 

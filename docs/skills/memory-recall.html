@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: memory-recall</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>memory-recall</h2><div class="meta"><span class="badge gray">memory</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when an agent needs to look up what it already knows</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="memory-capture.html">memory-capture</a> <a href="memory-consolidation.html">memory-consolidation</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>memory-store</td><td>1.0.0</td></tr><tr><td>SQLite</td><td>3.45.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Recall is the habit of asking the store before doing new work. It saves re-running scans, prevents contradicting established facts, and surfaces procedural knowledge exactly when a task needs it. This skill covers query patterns, relevance ranking, and how to read a result set with a critical eye. Schemas live in memory/MEMORY_SCHEMA.md; recall timing in memory/LIFECYCLE.md.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>State the question in 2 to 4 keywords before querying.</li>
+<li>Recall broadly first (no kind filter), then narrow with kind, tag,</li>
+<p>or agent filters.</p>
+<li>Read results top-down: higher relevance first, but check confidence</li>
+<p>and date on each entry.</p>
+<li>Treat low-confidence or stale entries as leads to verify, not facts.</li>
+<li>If the query returns nothing useful, note the gap: store what you</li>
+<p>learn so the next recall hits.</p>
+</ol>
+<h2>1. Basic query patterns</h2>
+<p>Start broad, then filter. The default limit of 10 is usually right for interactive use; raise it for audits.</p>
+<pre><code class="language-bash"># Broad search across all kinds
+memory-store.py recall --query &quot;login brute force&quot; --limit 10
+
+# Durable facts only
+memory-store.py recall --query &quot;token expiry&quot; --kind semantic
+
+# How-to knowledge for the current task
+memory-store.py recall --query &quot;nmap rate limit&quot; --kind procedural
+
+# What happened on one host
+memory-store.py recall --query &quot;10.0.1.5&quot; --kind episodic --limit 20</code></pre>
+<p>Keyword choice matters more than sentence structure. Use the nouns the entry would contain: <code>staging api token</code>, not &quot;what do we know about how long staging tokens last&quot;. Try synonyms on a miss: <code>auth</code> vs <code>login</code>, <code>scan</code> vs <code>sweep</code>.</p>
+<h2>2. Filtering with tags and agents</h2>
+<p>When the store is large, filters beat longer queries:</p>
+<pre><code class="language-bash"># Entries from one agent about one topic
+memory-store.py recall --query &quot;scan&quot; --tags nmap --agent hunter-01
+
+# Everything procedural an operator recorded
+memory-store.py recall --query &quot;&quot; --kind procedural --agent operator-izaz --limit 50</code></pre>
+<p>Combine kind plus tags for the common case: &quot;procedural knowledge about sqlmap&quot; becomes <code>--kind procedural --tags sqlmap</code> with a short query. Agent filters are useful for audits (&quot;what did this agent claim?&quot;) and for finding the operator&#x27;s own notes.</p>
+<h2>3. How relevance ranking works</h2>
+<p>memory-store ranks results in four passes, and knowing the order helps you write better queries:</p>
+<ol>
+<li>Kind, tag, and agent filters apply first; filtered-out entries</li>
+<p>never score.</p>
+<li>Query token overlap with the payload scores the entry. More distinct</li>
+<p>query tokens matched means a higher rank.</p>
+<li>Ties break on confidence (higher first), then recency (newer first).</li>
+<li>Expired entries never appear in recall results.</li>
+</ol>
+<p>Practical consequences: a query with one rare keyword (<code>token</code>) beats a query with three common ones (<code>the api is</code>); filters are the only way to guarantee a kind shows up; and a stale-but-confident entry can outrank fresh evidence, so always read the <code>created</code> timestamp.</p>
+<h2>4. Reading results critically</h2>
+<p>Every result shows id, kind, agent, confidence, date, tags, and text:</p>
+<pre><code class="language-bash">memory-store.py recall --query &quot;port 22 10.0.1.5&quot; --limit 5</code></pre>
+<p>Interpretation rules:</p>
+<ul>
+<li>Confidence 0.9+ from a direct observation: trust, but confirm the</li>
+<p>date is recent for fast-changing facts (open ports, running services).</p>
+<li>Confidence 0.4 to 0.6: a lead, not a fact. Verify with a fresh</li>
+<p>command before acting on it.</p>
+<li>Two entries disagree: read both timestamps and agents. Newer direct</li>
+<p>observation wins; if both are recent and credible, tag the topic <code>disputed</code> and re-check live (see memory-hygiene).</p>
+<li><code>merged_from</code> entries carry merged confidence from duplicates; the</li>
+<p>confidence is stronger than the text age suggests.</p>
+</ul>
+<p>After recall, act: use the knowledge, then record the outcome with memory-capture so the store learns whether the recalled fact held up.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Query returns nothing. The knowledge may be tagged differently, or</li>
+<p>it was never captured. Try synonyms, drop filters, then accept the gap and store the new finding when you learn it.</p>
+<li>Query returns hundreds of rows. Narrow with <code>--kind</code> and <code>--tags</code></li>
+<p>before raising <code>--limit</code>. Reading 50 rows is an audit; reading 500 is a script job (dump with a small Python snippet against the SQLite file directly).</p>
+<li>Expired knowledge is needed anyway. Expired entries are hidden from</li>
+<p>recall by design. If you truly need them (forensics on old events), query the SQLite file directly with a raw SELECT before the next <code>forget --expired</code> run, and export what you need.</p>
+<li>Recall during an active incident. Query with the host or indicator</li>
+<p>first, then the technique: <code>recall --query 10.0.2.41</code> before <code>recall --query lateral movement</code>. Specifics beat abstractions under time pressure.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Contradictory entries on a fact you must act on now: trust the</li>
+<p>newest direct observation, record your decision as episodic, and mark the topic <code>disputed</code> for later hygiene.</p>
+<li>A critical procedural entry looks outdated (names an old tool</li>
+<p>version): verify the procedure against the current version before following it, then update or supersede the entry.</p>
+<li>Recall is slow on a large store: the ranking is token-overlap over</li>
+<p>full rows; for stores past ~50k rows, add tag filters to every query and shorten the episodic TTL (see memory-hygiene size budgets).</p>
+<li>The store file is corrupt: stop, copy the file aside, and restore</li>
+<p>from the latest backup. Never run write commands against a suspect database.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Misuse of recall looks like bulk extraction: one agent dumping the whole store (<code>--limit</code> huge, empty queries) to exfiltrate operational knowledge, or fishing queries for secrets that should never have been stored. Detect it by watching for abnormal query volume from one agent and by auditing recalled content for secret-like patterns. The mitigation is twofold: never store secrets (memory-capture redaction rules), and treat the memory database as sensitive data at rest, with the same access controls as any credential-adjacent file.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-200 (Exposure of Sensitive Information to an Unauthorized</li>
+<p>Actor): why the store is sensitive data at rest.</p>
+<li>SQLite documentation: https://sqlite.org/docs.html</li>
+<li>Python sqlite3 module: https://docs.python.org/3/library/sqlite3.html</li>
+<li>memory/MEMORY_SCHEMA.md and memory/LIFECYCLE.md in this repo.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

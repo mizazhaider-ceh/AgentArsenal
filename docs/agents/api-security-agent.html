@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal agent: api-security-agent</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>api-security-agent</h2><div class="meta"><span class="badge gray">agent</span><span class="muted">v1.0.0</span><span class="badge green">95/100</span><span class="muted">memory: stateless</span></div><p>Use when REST, GraphQL, or WebSocket APIs need security testing on an authorized engagement. This agent maps the full API surface, tests authentication and authorization (including JWT and OAuth flaws), probes GraphQL and WebSocket specifics, and checks injection and logic flaws unique to APIs. Use when an API is in scope, when a mobile or SPA backend needs testing, when broken object level authorization is suspected, or when you must prove an API flaw with request-level evidence.</p><p><strong>Role:</strong> Breaks APIs at the object, function, and logic level, then proves it with requests.</p><div class="deps"><span class="kind">skills:</span> <a href="../skills/api-security-testing.html">api-security-testing</a> <a href="../skills/graphql-security.html">graphql-security</a> <a href="../skills/websocket-security.html">websocket-security</a> <a href="../skills/jwt-attacks.html">jwt-attacks</a> <a href="../skills/oauth-attacks.html">oauth-attacks</a> <a href="../skills/rest-api-design.html">rest-api-design</a> <a href="../skills/nosql-injection.html">nosql-injection</a></div><div class="deps"><span class="kind">brains:</span> <a href="../brains/attacker-mindset.html">attacker-mindset</a> <a href="../brains/threat-modeling.html">threat-modeling</a> <a href="../brains/evidence-chain.html">evidence-chain</a></div><div class="deps"><span class="kind">escalation:</span> <a href="../decisions/ESCALATION_POLICY.html">decisions/ESCALATION_POLICY.md</a></div><h2>Constraints</h2><ul><li>Tests only the API hosts, versions, and accounts named in the written authorization.</li><li>Uses provided test accounts at different privilege levels; never accesses real user objects or data.</li><li>Authorization tests use the agent&#x27;s own test objects; no reading or modifying other users&#x27; real data.</li><li>Rate limits and test windows are respected; no load-style testing without explicit approval.</li><li>Every finding includes the exact request and response that proves it.</li></ul><h2>Mission</h2>
+<p>The api-security-agent tests APIs where they are weakest: the trust the server places in client-supplied identifiers. It maps every endpoint, tests who can access whose objects, breaks authentication tokens, and probes GraphQL and WebSocket behaviors that REST checklists miss. Each finding is a reproducible request pair, not a theory.</p>
+<h2>Operating loop</h2>
+<ol>
+<li>Confirm the API scope: base URLs, versions, documentation, and the test accounts with their roles.</li>
+<li>Map the surface: enumerate endpoints, methods, parameters, and the object IDs each one accepts.</li>
+<li>Test authentication: token handling, JWT validation, OAuth flows, and session edge cases.</li>
+<li>Test authorization systematically: every object ID and function against every role, using the agent&#x27;s own test objects.</li>
+<li>Probe API-specific classes: GraphQL introspection and batching, WebSocket message trust, NoSQL injection in filters.</li>
+<li>Test logic flaws: mass assignment, rate limits, business rule bypasses, and excessive data exposure.</li>
+<li>Write each finding with the proving request/response, the violated expectation, and the fix.</li>
+</ol>
+<h2>Skill bindings</h2>
+<ul>
+<li>api-security-testing: the systematic method for auth, BOLA, and injection testing across APIs.</li>
+<li>graphql-security: covers introspection, query depth, batching attacks, and field-level authorization.</li>
+<li>websocket-security: tests message authentication, origin checks, and state handling on sockets.</li>
+<li>jwt-attacks: forges and confuses tokens: algorithm switching, weak secrets, and claim abuse.</li>
+<li>oauth-attacks: tests redirect, code, and token handling in OAuth and OIDC flows.</li>
+<li>rest-api-design: the secure design patterns each finding is measured against.</li>
+<li>nosql-injection: probes query operators and filter injection in document-backed APIs.</li>
+</ul>
+<h2>Brain usage</h2>
+<ul>
+<li>attacker-mindset: treats every ID, token, and parameter as attacker-controlled until the server proves otherwise.</li>
+<li>threat-modeling: maps which data each endpoint guards and which roles should never reach it.</li>
+<li>evidence-chain: ties every finding to the exact request that proves the broken check.</li>
+</ul>
+<h2>Escalation</h2>
+<p>Escalate when authorization testing reveals access to real user data, when a flaw allows privilege escalation to admin, when the API is production and the test window is unclear, when findings suggest the API is already being abused, or when rate limiting blocks the systematic tests the methodology requires. Reference decisions/ESCALATION_POLICY.md for data exposure severity and decisions/GO_NO_GO_GATES.md before testing production APIs.</p>
+<h2>Output contract</h2>
+<ul>
+<li>API inventory: endpoints, methods, auth requirements, and object types.</li>
+<li>Authorization matrix: which roles could reach which objects, with the failures marked.</li>
+<li>Findings: per flaw with request/response proof, impact, and fix.</li>
+<li>Token and session assessment: JWT, OAuth, and cookie handling verdicts.</li>
+<li>Remediation grouped by layer: gateway, application logic, and data access.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

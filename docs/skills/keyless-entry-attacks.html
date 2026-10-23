@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: keyless-entry-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>keyless-entry-attacks</h2><div class="meta"><span class="badge gray">automotive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing keyless entry and immobilizer systems</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bluetooth-le.html">bluetooth-le</a> <a href="automotive-threat-model.html">automotive-threat-model</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Keyless entry theft is mostly relay attacks: amplify the fob&#x27;s signal from inside the house to the car outside, and the car thinks the key is present. This skill covers authorized assessment concepts and defensive review on your own vehicles: how the attacks work, how to test defenses in the lab, and what actually stops them. Only test on vehicles you own, parked securely, and never as a how to for theft.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the system: passive keyless entry, remote fob, or phone</li>
+<p>as key, and the frequency bands used.</p>
+<li>Understand the protocol: challenge response, rolling codes, and</li>
+<p>distance bounding if present.</p>
+<li>Assess relay exposure in the lab: does the car unlock when the fob</li>
+<p>signal is relayed from another room.</p>
+<li>Review rolling code implementations for reuse and desync issues.</li>
+<li>Check the immobilizer separately: starting the car is a higher bar</li>
+<p>than unlocking it.</p>
+<li>Test the mitigations: motion sensors in fobs, UWB ranging, and PIN</li>
+<p>to drive.</p>
+<li>Advise on storage: signal blocking pouches and parking practices.</li>
+<li>Report the theft scenarios honestly with the tested mitigations.</li>
+</ol>
+<h2>1. Relay attack concept and lab test</h2>
+<pre><code class="language-text">Relay attack: two radios bridge the distance.
+  [fob in house] &lt;---&gt; [relay box A] &lt;---&gt; [relay box B] &lt;---&gt; [car]
+  The car measures a valid response and unlocks; distance is not checked.
+Defenses: ultra wideband (UWB) distance bounding, fob motion sensors
+that sleep when still, PIN to drive.</code></pre>
+<pre><code class="language-bash"># Lab assessment (your own vehicle, your own equipment):
+# 1. place fob far from the car, confirm the car stays locked
+# 2. with a lab relay setup, bridge the signal per your test plan
+# 3. record: does it unlock? does it allow start? does the alarm trigger?
+# 4. repeat with the fob in a signal blocking pouch (expect: stays locked)
+echo &quot;document each scenario; never test on other people&#x27;s vehicles&quot;</code></pre>
+<h2>2. Rolling code review</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Rolling code properties to check (protocol review, not capture).&quot;&quot;&quot;
+checks = [
+    &quot;code never repeats within the window&quot;,
+    &quot;receiver resyncs within a bounded window only&quot;,
+    &quot;codes are not derived from a short predictable counter&quot;,
+    &quot;each button has independent sequence state&quot;,
+    &quot;jamming + record + replay (rolljam class) is mitigated&quot;,
+]
+for c in checks:
+    print(&quot;[ ]&quot;, c)</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The car uses UWB ranging. Relay is much harder; verify the UWB</li>
+<p>cannot be downgraded to plain RSSI.</p>
+<li>Phone as key over Bluetooth. Review the Bluetooth pairing and the</li>
+<p>app&#x27;s key storage (see bluetooth-le).</p>
+<li>Aftermarket alarms and trackers add their own bypasses. Assess the</li>
+<p>whole system, not just the factory fob.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Relay works including start: recommend PIN to drive, UWB upgrade</li>
+<p>path, and immediate storage mitigations.</p>
+<li>Cryptographic break suspected: this needs specialist RF and crypto</li>
+<p>review; do not publish attack details.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Owners detect relay theft only after the fact, which is why prevention matters: signal blocking storage, disabled keyless entry where the car allows it, and PIN to drive. Manufacturers defend with UWB distance bounding, sleeping fobs, and immobilizers that need more than a relayed unlock. Insurers and police track theft patterns to warn about vulnerable models.</p>
+<h2>Key references</h2>
+<ul>
+<li>Relay attack research literature (authorized lab studies).</li>
+<li>UWB distance bounding standards (IEEE 802.15.4z).</li>
+<li>CWE-294 (Authentication Bypass by Capture-replay).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

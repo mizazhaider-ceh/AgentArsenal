@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: breach-data-osint</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>breach-data-osint</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when checking whether credentials or data from public</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="osint-methodology.html">osint-methodology</a></div><div class="deps"><span class="kind">requires:</span> <a href="osint-methodology.html">osint-methodology</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="password-attacks.html">password-attacks</a> <a href="auth-attacks.html">auth-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Hashcat</td><td>6.2.6</td></tr></tbody></table><p>Breach data turns public leaks into credential risk: the passwords your users reused elsewhere are now attacker wordlists. This skill covers using breach data responsibly on authorized engagements: looking up exposure, handling any credentials found with extreme care, and assessing the organizational impact. Breach data is sensitive personal data; the handling discipline here is the point.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the scope covers breach-data checks and the specific</li>
+<p>identifiers.</p>
+<li>Look up exposure through reputable breach notification services.</li>
+<li>For in-scope findings, assess: which accounts, what data, how fresh.</li>
+<li>Handle any retrieved credentials under the strictest rules.</li>
+<li>Report exposure factually: who is affected, what to do.</li>
+<li>Delete working copies of breach data at engagement end.</li>
+</ol>
+<h2>1. Lookup discipline</h2>
+<pre><code class="language-bash"># Reputable lookup approach (per identifier, with authorization):
+# - Use established breach notification services for email checks
+# - For organizational assessment: the domain&#x27;s exposure summary
+# - Record: breach name, date, data types exposed, nothing more
+
+# What to record per hit:
+# breach: &lt;name&gt;, date: &lt;date&gt;, data: &lt;types&gt;, accounts affected: &lt;count&gt;
+# What NOT to record: the actual passwords, in notes or tickets
+
+# Organizational exposure pattern:
+python3 - &lt;&lt;&#x27;EOF&#x27;
+print(&quot;Assess per department/role where the scope allows:&quot;)
+print(&quot;- Executives and IT admins in breaches: priority resets&quot;)
+print(&quot;- Service account emails in breaches: investigate reuse&quot;)
+print(&quot;- Fresh breaches (&lt; 1 year): higher credential-stuffing risk&quot;)
+EOF</code></pre>
+<p>Look up, do not download: the question &quot;is this email in a breach&quot; has established services; bulk breach datasets are a handling liability that most engagements do not need.</p>
+<h2>2. Credential handling</h2>
+<pre><code class="language-bash"># If the engagement authorizes credential testing from breach data:
+# 1. The credential list lives encrypted, access-logged, minimal copies
+# 2. Testing follows credential-stuffing rules (rate limits, approval)
+# 3. Every confirmed hit is reported through the sensitive channel
+# 4. The client forces resets; you verify the resets
+
+# After the engagement:
+# shred -u /tmp/breach_working_list.txt  (and any copies)
+# Confirm deletion in the closeout notes</code></pre>
+<p>Breached passwords in your hands are a liability from the first second: encrypt at rest, minimize copies, and destroy on schedule. The handling rules are stricter than for any other engagement data because the data belongs to real people who did not consent to your holding it.</p>
+<h2>3. Organizational assessment</h2>
+<pre><code class="language-bash"># The deliverable for &quot;are we in the breaches&quot;:
+# - Exposure summary: N accounts in M breaches, by data type
+# - Priority actions: who resets what, in what order
+# - Policy fixes: breached-password blocking at registration and login
+# - Monitoring: ongoing breach alerts for the domain
+
+# The systemic fix (recommend once, reference everywhere):
+# check new and changed passwords against breach corpora;
+# NIST SP 800-63B requires it, and it kills the reuse problem at the root</code></pre>
+<p>The assessment&#x27;s value is the action list, not the breach list: who resets, what policy changes, what monitoring starts. Breach exposure without the remediation plan is just bad news.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The scope does not cover breach checks. Do not improvise them;</li>
+<p>credential-adjacent work without authorization is the fastest way to end an engagement badly.</p>
+<li>The data is clearly fake or poisoned. Breach datasets contain junk;</li>
+<p>validate hits before acting on them.</p>
+<li>An executive is heavily exposed. Report factually through the agreed</li>
+<p>channel; do not editorialize about their personal security.</p>
+<li>Legal restricts breach data use. Some jurisdictions limit it; legal</li>
+<p>clears the approach before the work starts.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Active credential abuse is suspected from the exposure: treat as an</li>
+<p>incident input (forced resets, session revocation) alongside the assessment.</p>
+<li>The organization needs ongoing monitoring: recommend the breach</li>
+<p>alerting service that fits, with the current exposure as the baseline.</p>
+<li>You need the full dataset analyzed: that is a data-handling decision</li>
+<p>for leadership and legal, not a technical one.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, breach data is both threat intel and hygiene input: monitor the organization&#x27;s domains in breach feeds, force resets on exposure, and block breached passwords proactively. The defender&#x27;s automation is the registration-time breach check; every password set that matches a breach corpus is a future credential-stuffing success prevented.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-63B (breached password checks).</li>
+<li>CWE-521 (Weak Password Requirements).</li>
+<li>Have I Been Pwned and similar notification services (lookup method).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

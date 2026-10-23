@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ssh-baseline</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ssh-baseline</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hardening SSH on a Linux server or auditing its</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-hardening.html">linux-hardening</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-hardening.html">linux-hardening</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a> <a href="auth-attacks.html">auth-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>OpenSSH</td><td>9.6</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>SSH is the front door of every Linux server: harden it and the most attacked service becomes the strongest. This skill covers the SSH hardening baseline: the sshd_config settings that matter, key-only authentication, and verifying what is actually running. Apply it to new builds and audit it on existing ones; SSH misconfigurations are privesc-linux&#x27;s favorite finding.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Read the current effective configuration (<code>sshd -T</code>).</li>
+<li>Apply the baseline: key-only auth, no root, protocol hygiene.</li>
+<li>Verify the settings took effect (not just the file).</li>
+<li>Test authentication as a normal user and as root (must fail).</li>
+<li>Set up fail2ban or equivalent rate limiting.</li>
+<li>Document the baseline as the team&#x27;s standard.</li>
+</ol>
+<h2>1. The baseline configuration</h2>
+<pre><code class="language-bash"># Read the EFFECTIVE config (includes defaults and includes)
+sshd -T | grep -i -E &#x27;permitrootlogin|passwordauth|pubkeyauth|port|permitTunnel|maxauthtries|logingracetime&#x27;
+
+# Baseline /etc/ssh/sshd_config.d/hardening.conf:
+# PermitRootLogin no
+# PasswordAuthentication no
+# PubkeyAuthentication yes
+# ChallengeResponseAuthentication no
+# UsePAM yes (for account/session, not for password auth)
+# MaxAuthTries 3
+# LoginGraceTime 30
+# PermitEmptyPasswords no
+# X11Forwarding no
+# AllowTcpForwarding no (unless the role needs it)
+# AllowAgentForwarding no
+# ClientAliveInterval 300
+# ClientAliveCountMax 2
+# LogLevel VERBOSE
+
+# Apply and verify: restart, then re-read the effective config
+systemctl restart sshd
+sshd -T | grep -i -E &#x27;permitrootlogin|passwordauth&#x27;</code></pre>
+<p><code>sshd -T</code> is the truth; the config file is the intent. Includes, defaults, and distro overrides mean the file can lie. Always verify with <code>-T</code> after changes.</p>
+<h2>2. Key management</h2>
+<pre><code class="language-bash"># Key-only means the keys are now the credential: manage them
+# - Ed25519 keys, no RSA-1024 or DSA anywhere
+# - Authorized keys reviewed: who has access, remove the departed
+for u in $(ls /home); do
+  echo &quot;== $u&quot;
+  cat /home/$u/.ssh/authorized_keys 2&gt;/dev/null | cut -d&#x27; &#x27; -f3 | head -5
+done
+
+# Permissions that SSH enforces (wrong perms = key ignored = lockout risk)
+chmod 700 ~/.ssh &amp;&amp; chmod 600 ~/.ssh/authorized_keys
+
+# Check for weak keys still accepted
+ssh-keygen -l -f /home/*/.ssh/authorized_keys 2&gt;/dev/null | grep -v -E &#x27;ED25519|ECDSA|RSA \(2048|3072|4096&#x27; | head -10</code></pre>
+<p>Key sprawl is the silent failure of key-only auth: fifty keys, nobody knows whose. The authorized_keys audit is part of the baseline, not an extra.</p>
+<h2>3. Rate limiting and monitoring</h2>
+<pre><code class="language-bash"># fail2ban for SSH: slows password guessing to irrelevance
+# (with key-only auth, guessing is already dead; this is defense in depth)
+# jail.local: [sshd] enabled=true, maxretry=3, bantime=1h
+
+# Monitor SSH auth logs for the patterns that matter
+grep -E &#x27;Failed|Invalid user&#x27; /var/log/auth.log | tail -10
+# Alert on: root login attempts, many failures from one IP, logins at odd hours
+
+# Verify root login is actually refused (test, do not assume)
+ssh -o BatchMode=yes root@127.0.0.1 2&gt;&amp;1 | head -2
+# Expect: Permission denied (publickey) -- and root has no key</code></pre>
+<p>With key-only auth plus no-root plus rate limiting, SSH brute force is a non-issue and the logs prove it. The monitoring stays because the logs also catch the misconfigurations (a sudden password-auth success means someone changed the config).</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Legacy automation needs password auth. Isolate it: Match blocks for</li>
+<p>specific users or sources, with a migration deadline, not a global exception.</p>
+<li>The change locks everyone out. Test from a second session before</li>
+<p>closing the first; keep console access until the new config is proven.</p>
+<li>FIPS or compliance modes restrict algorithms. Align the baseline</li>
+<p>with the compliance requirement; document the deviations.</p>
+<li>Jump host versus direct: the baseline applies to both, but the jump</li>
+<p>host gets the stricter forwarding settings.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The audit finds SSH as the privesc path (weak keys, agent</li>
+<p>forwarding): fix per this baseline and re-run the privesc checks.</p>
+<li>MFA for SSH is required: add it via PAM (TOTP) on top of keys, and</li>
+<p>test the full login flow including automation accounts.</p>
+<li>Fleet-wide rollout: bake the baseline into the image or config</li>
+<p>management, and audit with the <code>sshd -T</code> check on a schedule.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Hardened SSH is monitored SSH: the auth logs become high-signal because legitimate failures drop to near zero. Alert on any root attempt, any password-auth success (config drift), and key usage from new sources. The defender&#x27;s win is that SSH stops being the incident source and starts being the incident evidence.</p>
+<h2>Key references</h2>
+<ul>
+<li>CIS Benchmark: SSH server configuration sections.</li>
+<li>OpenSSH 9.6 sshd_config manual.</li>
+<li>NIST SP 800-123 (server security, SSH guidance).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

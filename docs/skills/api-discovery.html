@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: api-discovery</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>api-discovery</h2><div class="meta"><span class="badge gray">api</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when mapping an API&#x27;s full attack surface before security</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="api-security-testing.html">api-security-testing</a></div><div class="deps"><span class="kind">requires:</span> <a href="api-security-testing.html">api-security-testing</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-active.html">recon-active</a> <a href="web-sqli.html">web-sqli</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>ffuf</td><td>2.1</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>API discovery finds the endpoints the documentation forgot: old versions, debug routes, shadow APIs, and the methods nobody admitted to. This skill covers systematic discovery on authorized engagements: documentation hunting, wordlist fuzzing, version enumeration, and GraphQL introspection. The inventory it produces feeds rest-fuzzing and authz-testing; undiscovered endpoints are untested endpoints.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Collect every documented endpoint and the API versioning scheme.</li>
+<li>Hunt for documentation: OpenAPI specs, GraphQL schemas, Postman</li>
+<p>collections left exposed.</p>
+<li>Fuzz for undocumented paths with API-focused wordlists.</li>
+<li>Enumerate versions: v1, v2, beta, internal, legacy.</li>
+<li>Introspect GraphQL where present.</li>
+<li>Merge everything into one endpoint inventory with methods.</li>
+<li>Hand the inventory to the fuzzing and authz phases.</li>
+</ol>
+<h2>1. Documentation hunting</h2>
+<pre><code class="language-bash"># Common documentation locations
+for p in /openapi.json /swagger.json /swagger.yaml /api-docs \
+         /graphql /graphiql /playground /api/swagger.json; do
+  code=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; &quot;https://target.example$p&quot;)
+  [ &quot;$code&quot; = &quot;200&quot; ] &amp;&amp; echo &quot;FOUND: $p&quot;
+done
+
+# Save any spec found; it becomes the test plan
+curl -s https://target.example/openapi.json -o /tmp/openapi.json
+python3 -c &quot;
+import json
+spec = json.load(open(&#x27;/tmp/openapi.json&#x27;))
+print(&#x27;endpoints:&#x27;, len(spec.get(&#x27;paths&#x27;, {})))
+for p in list(spec.get(&#x27;paths&#x27;, {}))[:10]: print(&#x27; &#x27;, p)
+&quot;
+
+# JavaScript bundles reference endpoints the docs omit
+curl -s https://target.example/static/app.js | grep -o -E &#x27;\&quot;/api/[^\&quot;]*\&quot;&#x27; \
+  | sort -u &gt; /tmp/js_endpoints.txt
+wc -l /tmp/js_endpoints.txt</code></pre>
+<p>An exposed spec in production is a finding by itself (information disclosure), and it is also your test plan. Save it before it gets removed mid-test.</p>
+<h2>2. Path and version fuzzing</h2>
+<pre><code class="language-bash"># API-focused wordlist fuzzing
+ffuf -u &#x27;https://target.example/api/FUZZ&#x27; \
+  -H &#x27;Authorization: Bearer TOKEN&#x27; \
+  -w /usr/share/wordlists/seclists/Discovery/Web-Content/api-actions.txt \
+  -mc 200,201,204,301,302,400,401,403 -o /tmp/api_fuzz.json
+
+# Version enumeration: old versions keep old vulnerabilities
+for v in v1 v2 v3 beta internal legacy test dev; do
+  code=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; \
+    -H &#x27;Authorization: Bearer TOKEN&#x27; &quot;https://target.example/api/$v/users&quot;)
+  echo &quot;/api/$v/users -&gt; $code&quot;
+done
+
+# Method discovery per endpoint (documented GET may hide a working DELETE)</code></pre>
+<p>Old versions are the prize: v1 often lacks the authz checks v2 added. Test every live version with the same rigor; &quot;deprecated&quot; without removal is still attack surface.</p>
+<h2>3. GraphQL introspection</h2>
+<pre><code class="language-bash"># Introspection query: dumps the whole schema when enabled
+curl -s -X POST &#x27;https://target.example/graphql&#x27; \
+  -H &#x27;Authorization: Bearer TOKEN&#x27; -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;query&quot;:&quot;{__schema{queryType{name}mutationType{name}}}&quot;}&#x27; \
+  | head -c 500; echo
+
+# Full schema dump for offline review (when introspection is on)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import json, urllib.request
+q = {&quot;query&quot;: &quot;{__schema{types{name fields{name}}}}&quot;}
+req = urllib.request.Request(&quot;https://target.example/graphql&quot;,
+    data=json.dumps(q).encode(),
+    headers={&quot;Content-Type&quot;: &quot;application/json&quot;, &quot;Authorization&quot;: &quot;Bearer TOKEN&quot;})
+print(urllib.request.urlopen(req, timeout=15).read()[:300])
+EOF</code></pre>
+<p>Introspection enabled in production is both a finding and a test plan: it lists every query and mutation. When it is disabled, fall back to suggestions, error messages, and JS bundle greps for field names.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The API needs signed requests. Fuzz through Burp with the signing</li>
+<p>handled, or discovery stalls at 401s.</p>
+<li>Everything returns 200 with the same body. The API may route unknown</li>
+<p>paths to a default handler; compare body hashes, not status codes.</p>
+<li>The inventory keeps growing. Time-box discovery, freeze the list,</li>
+<p>and let testing findings reopen it.</p>
+<li>WebSocket or gRPC endpoints exist. They need their own discovery</li>
+<p>(protocol-aware tools); note them and schedule the follow-up.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Shadow endpoints found serving production data: report them as a</li>
+<p>priority finding; undocumented plus production is the worst combination.</p>
+<li>You need the backend source view: ask the client for the route table</li>
+<p>to diff against your discovered list; the diff is the shadow API.</p>
+<li>Discovery is blocked by aggressive WAF: note the coverage gap and</li>
+<p>work from the documented surface plus JS references.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see API discovery as fuzzing bursts against /api paths, 404 storms with API wordlists, and introspection queries. It is distinguishable from normal use and worth alerting on. Defenses are not exposing specs and introspection in production, removing dead versions, and monitoring for enumeration patterns. The durable fix is knowing your own API inventory better than the attacker does.</p>
+<h2>Key references</h2>
+<ul>
+<li>OWASP API Security Top 10 2023: API9 Improper Inventory Management.</li>
+<li>CWE-200 (Exposure of Sensitive Information to an Unauthorized Actor).</li>
+<li>OWASP Testing Guide: API testing sections.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: detection-engineering-mindset</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>detection-engineering-mindset</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must build or improve detections: writing detection rules for a SIEM, deciding what to alert on, tuning noisy alerts, hunting for attacker techniques, or measuring whether the SOC actually sees attacks. Provides detection engineering reasoning: detect the technique not the tool, climb the pyramid of pain, prefer high-fidelity over high-volume, treat detections as code, and measure mean time to detect. Load this brain when the task is to see the attacker, not just to collect logs.</p><h2>Provides</h2><ul><li>Technique-based detection design</li><li>Pyramid of pain prioritization</li><li>High-fidelity alert tuning</li><li>Detections-as-code discipline</li><li>Detection coverage measurement</li><li>Alert fatigue countermeasures</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>Most organizations collect logs and call it detection. Then the SOC drowns in five thousand alerts a day, tunes out, and misses the real one. Detection engineering is the discipline of building detections that fire when it matters and stay quiet when it does not. It treats each detection as a small product: designed against a specific attacker technique, tested, tuned, and measured. It matters because an undetected attacker is just a future breach report. Visibility you cannot act on is expensive storage.</p>
+<h2>Core mental models</h2>
+<p><strong>Detect the technique, not the tool.</strong> Attackers change tools constantly; they change techniques rarely. A detection for &quot;mimikatz.exe running&quot; dies the day the attacker renames the binary. A detection for &quot;a process opening LSASS with read access to dump credentials&quot; survives renames, recompiles, and new tools. Anchor every detection to the underlying technique (credential access, lateral movement, persistence) and let the tool names be details.</p>
+<p><strong>Climb the pyramid of pain.</strong> The pyramid of pain ranks what you detect by how much it hurts the attacker to change: hashes at the bottom (trivial to change), then IPs, domains, artifacts, tools, and techniques at the top (painful to change). Detections at the bottom are cheap to build and cheap to evade. Spend your engineering time climbing: every detection should sit as high on the pyramid as your telemetry allows.</p>
+<p><strong>High fidelity beats high volume.</strong> One alert that fires ten times a year and is right nine times is worth more than a thousand alerts that are right half the time. Every false positive trains analysts to ignore the rule, which silently deletes your detection. Tune ruthlessly: baseline normal, exclude the known-good, and set thresholds from data. An alert nobody trusts is an alert that does not exist.</p>
+<p><strong>Detections are code.</strong> Version them, test them, review them, and retire them. A detection rule should live in a repository with tests (does it fire on the attack? does it stay quiet on normal?), a named owner, and a review date. Detections rot as systems change: the rule that was perfect last year fires on the new backup tool today. Treat the detection backlog like a software backlog.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>Pick the technique to detect, mapped to MITRE ATT&amp;CK if possible. Name the adversary behavior precisely.</li>
+<li>Check telemetry: do you have the logs to see this technique? If not, get the telemetry first.</li>
+<li>Write the detection against the technique&#x27;s invariant behavior, not tool names or hashes.</li>
+<li>Baseline normal: run it against a week of real data and count the noise before it goes live.</li>
+<li>Tune: exclude known-good patterns, set thresholds from the baseline, document each exclusion&#x27;s reason.</li>
+<li>Test both directions: does it fire on a simulated attack? Does it stay quiet on normal activity?</li>
+<li>Define the response: what does the analyst do when this fires? A detection without a runbook is a notification.</li>
+<li>Ship it as code: versioned, reviewed, with an owner and a review date.</li>
+<li>Measure: true positives, false positives, time from attack to alert. Track the trend.</li>
+<li>Retire or fix detections that go noisy, stale, or untrusted. A dead rule is worse than no rule.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If the detection names a filename, it is already half dead. Name the behavior.</li>
+<li>Baseline before you alert. Unknown noise is just future false positives.</li>
+<li>Every exclusion needs a reason and an expiry. Exclusions are where attackers hide.</li>
+<li>One detection, one technique, one runbook. Bundled mega-rules are untunable.</li>
+<li>Test with real attack simulations, not just imagination. Atomic-style tests are cheap.</li>
+<li>If analysts mute it, believe them and fix the rule. They are the customer.</li>
+<li>Measure mean time to detect per technique, not alerts per day.</li>
+<li>Retire detections that have not fired truly in a year. They are archaeology.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>IOC-only detection.</strong> Alerting on hashes and IPs the attacker changes before lunch.</li>
+<li><strong>Alert spam.</strong> Hundreds of untuned rules producing thousands of alerts nobody reads.</li>
+<li><strong>Tool-name anchoring.</strong> Detecting &quot;psexec&quot; instead of detecting lateral movement via service creation.</li>
+<li><strong>No runbook.</strong> Alerts that fire with no documented next step, so each analyst improvises.</li>
+<li><strong>Write-once rules.</strong> Detections deployed and never reviewed, slowly rotting into noise or silence.</li>
+</ul>
+<h2>Worked example</h2>
+<p>Goal: detect credential dumping. Bad detection: alert on <code>mimikatz.exe</code>. The attacker renames it and walks past. Detection engineering pass: technique is &quot;OS Credential Dumping&quot; (T1003), invariant behavior is a non-system process opening LSASS with process-memory read rights. Telemetry check: Sysmon or EDR gives process-access events with granted rights. Rule: alert when a process outside the signed-system baseline requests 0x1010/0x1410 rights on lsass.exe. Baseline week: the backup agent triggers it twice (legitimate, documented exclusion with reason). Test: run a renamed dumping tool in the lab, rule fires. Runbook: isolate host, check for lateral movement, rotate potentially exposed credentials. Result: a detection that survives tool changes, fires rarely, and is trusted. That is the difference between logging and detection engineering.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

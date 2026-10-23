@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: iam-enumeration</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>iam-enumeration</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when enumerating AWS IAM with credentials on an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="aws-enumeration.html">aws-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="aws-enumeration.html">aws-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cloud-security-basics.html">cloud-security-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>AWS CLI</td><td>2.15</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>IAM enumeration from the attacker&#x27;s side answers: what do these credentials actually allow. This skill covers mapping key privileges on authorized engagements: identifying the identity, enumerating its policies, simulating actions, and finding escalation paths. It is the offensive complement to cloud-iam-review; where that skill audits the configuration, this one tests what the keys unlock.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the identity behind the keys.</li>
+<li>Enumerate its attached and inline policies.</li>
+<li>Simulate key actions to confirm effective permissions.</li>
+<li>List assumable roles and their permissions.</li>
+<li>Map privilege escalation paths from the permission set.</li>
+<li>Document the effective access with the evidence.</li>
+</ol>
+<h2>1. Identity and policy mapping</h2>
+<pre><code class="language-bash"># Who are these keys?
+aws sts get-caller-identity --output text
+
+# Policies on the identity (user example; adapt for role)
+USER=$(aws sts get-caller-identity --query &#x27;Arn&#x27; --output text | cut -d/ -f2)
+aws iam list-attached-user-policies --user-name $USER --output text
+aws iam list-user-policies --user-name $USER --output text
+
+# Read each policy document for the effective permission set
+aws iam get-policy --policy-arn &lt;arn&gt; --query &#x27;Policy.DefaultVersionId&#x27; --output text</code></pre>
+<p>Keys often belong to roles assumed via STS, not IAM users: check the ARN shape. Role credentials expire, which bounds your session; note the expiry and plan the enumeration inside it.</p>
+<h2>2. Simulation and role assumption</h2>
+<pre><code class="language-bash"># Policy simulator: can I do X on Y? (no guessing, ask the API)
+aws iam simulate-principal-policy \
+  --policy-source-arn &lt;user-or-role-arn&gt; \
+  --action-names s3:GetObject ec2:DescribeInstances iam:PassRole \
+  --output text
+
+# List roles I can assume
+aws iam list-roles --query &#x27;Roles[].[RoleName,Arn]&#x27; --output text | head -20
+
+# Assume a role and enumerate from inside it
+aws sts assume-role --role-arn &lt;role-arn&gt; --role-session-name test \
+  --output text --query &#x27;Credentials.[AccessKeyId,SecretAccessKey,SessionToken]&#x27;</code></pre>
+<p>The simulator is authoritative: it evaluates the real policy set including conditions and boundaries. When simulation and your reading disagree, trust the simulator and update your reading.</p>
+<h2>3. Escalation path mapping</h2>
+<pre><code class="language-bash"># Classic escalation primitives to check (with the simulator or careful reads):
+# - iam:PassRole + ec2:RunInstances -&gt; new instance with an admin role
+# - iam:CreatePolicyVersion -&gt; escalate your own policies
+# - iam:AttachUserPolicy -&gt; attach admin to yourself
+# - lambda:CreateFunction + iam:PassRole -&gt; code as the role
+
+# Check for the specific dangerous combos your permission set allows
+aws iam simulate-principal-policy --policy-source-arn &lt;arn&gt; \
+  --action-names iam:PassRole iam:CreatePolicyVersion iam:AttachUserPolicy \
+  --output text</code></pre>
+<p>Document each escalation path as a chain: starting permission, action, resulting access. Only execute the escalation with explicit approval; enumeration proves the path exists, execution proves it works, and the engagement decides which it needs.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The keys are heavily restricted. Enumerate what is allowed; limited</li>
+<p>keys still map the account&#x27;s shape through allowed read APIs.</p>
+<li>Simulation is denied. Fall back to careful policy reading; note the</li>
+<p>simulator gap.</p>
+<li>The session expires mid-enumeration. Re-assume the role and continue;</li>
+<p>keep the enumeration scripted so reruns are cheap.</p>
+<li>Multiple key sets exist. Enumerate each separately; different keys</li>
+<p>often have different privilege levels.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A privilege escalation path is confirmed: get approval before</li>
+<p>executing; the finding stands on the enumeration alone if approval is denied.</p>
+<li>The keys grant admin: the assessment pivots to data and persistence</li>
+<p>review; re-scope with the test lead.</p>
+<li>You need persistence for the scenario: persistence in cloud needs</li>
+<p>separate explicit approval; enumerate it, do not create it.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see IAM enumeration as unusual API call patterns: policy reads, simulator calls, and role assumption attempts from a key that normally does something narrow. CloudTrail logs all of it. Defenses are alerting on enumeration patterns, least-privilege keys (so enumeration finds little), and short-lived credentials that bound the session. The attacker&#x27;s enumeration is the defender&#x27;s detection opportunity.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1580 (Cloud Infrastructure Discovery).</li>
+<li>CWE-250 (Execution with Unnecessary Privileges).</li>
+<li>AWS IAM policy simulator documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: opc-ua-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>opc-ua-security</h2><div class="meta"><span class="badge gray">ics-scada</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing OPC UA servers on an authorized OT</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="modbus-security.html">modbus-security</a> <a href="scada-network-seg.html">scada-network-seg</a> <a href="tls-analysis.html">tls-analysis</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>OPC UA was designed with security in mind: signed and encrypted endpoints, certificates, and user authentication. In practice it is often deployed with security disabled: anonymous access, the None policy, and self signed certificates nobody validates. This skill covers authorized assessment: discovering endpoints, grading their security policies, testing authentication, and enumerating the address space. Coordinate with operations; even reads can load fragile servers.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Get written OT authorization naming the segment and test window.</li>
+<li>Discover OPC UA servers on the standard port 4840 and any custom</li>
+<p>ports.</p>
+<li>List every endpoint and grade its security policy and mode.</li>
+<li>Test anonymous access and weak credentials on each endpoint.</li>
+<li>Review certificate handling: self signed, expired, or never</li>
+<p>validated.</p>
+<li>Enumerate the address space: browse nodes and note writable ones.</li>
+<li>Check user roles: what can an authenticated low privilege user do.</li>
+<li>Report each endpoint with its policy grade and the fix.</li>
+</ol>
+<h2>1. Endpoint discovery and policy grading</h2>
+<pre><code class="language-bash"># Find OPC UA servers on the authorized segment
+sudo nmap -sS -p 4840 --open -T2 192.168.10.0/24 -oN /tmp/opcua_disc.txt
+grep -B2 open /tmp/opcua_disc.txt | head</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;OPC UA endpoint grader (stdlib socket; parses GetEndpoints response).&quot;&quot;&quot;
+import socket, struct
+
+HOST = &quot;192.168.10.30&quot;
+PORT = 4840
+
+def hello():
+    # Minimal OPC UA Hello + GetEndpoints request
+    hello_msg = b&quot;HELF&quot; + struct.pack(&quot;&lt;I&quot;, 28) + struct.pack(&quot;&lt;I&quot;, 0)
+    hello_msg += struct.pack(&quot;&lt;I&quot;, 16) + b&quot;opc.tcp://&quot; + struct.pack(&quot;&lt;I&quot;, 0)
+    s = socket.create_connection((HOST, PORT), timeout=5)
+    s.sendall(hello_msg)
+    data = s.recv(4096)
+    s.close()
+    return data
+
+try:
+    resp = hello()
+    print(&quot;server answered hello, bytes:&quot;, len(resp))
+    print(&quot;next: use a full client (python-opcua) for endpoint parsing&quot;)
+except Exception as e:  # noqa: BLE001
+    print(&quot;no answer:&quot;, e)</code></pre>
+<p>For full endpoint parsing, use the opcua asyncua library in the lab (stdlib only rule applies to committed scripts; assessment tooling may use it):</p>
+<pre><code class="language-bash"># List endpoints with security policy details
+python3 - &lt;&lt; &#x27;PY&#x27;
+# pip-installed asyncua used as assessment tooling (not committed code)
+from asyncua import Client
+import asyncio
+async def main():
+    async with Client(&quot;opc.tcp://192.168.10.30:4840&quot;) as client:
+        for ep in await client.get_endpoints():
+            print(ep.EndpointUrl, &quot;|&quot;, ep.SecurityPolicyUri.split(&quot;#&quot;)[-1],
+                  &quot;|&quot;, ep.SecurityMode.name)
+asyncio.run(main())
+PY
+# Flag: SecurityPolicy None or SecurityMode None on any endpoint
+# Flag: Basic128Rsa15 or Basic256 (deprecated weak policies)</code></pre>
+<h2>2. Authentication and node enumeration</h2>
+<pre><code class="language-bash"># Test anonymous access: can you browse without credentials?
+python3 - &lt;&lt; &#x27;PY&#x27;
+from asyncua import Client
+import asyncio
+async def main():
+    async with Client(&quot;opc.tcp://192.168.10.30:4840&quot;) as client:
+        root = client.get_root_node()
+        children = await root.get_children()
+        print(&quot;anonymous browse OK, root children:&quot;, len(children))
+        for c in children[:10]:
+            print(&quot; -&quot;, await c.read_browse_name())
+asyncio.run(main())
+PY</code></pre>
+<pre><code class="language-bash"># Try default and weak credentials on endpoints that need login
+# (use the plant&#x27;s documented test accounts only, never brute force OT)
+# Then enumerate writable nodes as the authenticated user:
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;checklist: anonymous browse, default creds, role of test user,&quot;)
+print(&quot;writable setpoints visible to that role, method nodes callable&quot;)
+PY</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The server only offers deprecated policies. That is the finding;</li>
+<p>recommend an upgrade path, not a config tweak.</p>
+<li>Certificates are self signed and the client is told to trust all.</li>
+<p>Document the MITM exposure this creates on the segment.</p>
+<li>Browsing a large address space hangs the server. Browse</li>
+<p>incrementally and stop at the first level that proves the point.</p>
+<li>Redundant server pairs behave differently. Test both; failover</li>
+<p>servers are often misconfigured.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No endpoints answer: the server may require a reverse connection or</li>
+<p>sit behind an aggregator; check the architecture docs.</p>
+<li>Authentication blocks enumeration: review the user and role model</li>
+<p>from documentation and test privilege boundaries with the provided test accounts.</p>
+<li>Custom port in use: scan the vendor documented range on the target</li>
+<p>hosts only.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see OPC UA attacks as unknown clients calling GetEndpoints, anonymous sessions, failed logins, and browsing patterns no HMI uses. Detect with server audit logs: alert on anonymous sessions, new client certificates, and write or method calls outside the baseline. The durable fix is to offer only signed and encrypted endpoints, disable anonymous access, validate client certificates against a managed trust list, and enforce least privilege roles on nodes.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK ICS T0806 (Brute Force I/O Addresses).</li>
+<li>CWE-306 (Missing Authentication for Critical Function).</li>
+<li>CWE-295 (Improper Certificate Validation).</li>
+<li>OPC Foundation: OPC UA Security Model specification.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

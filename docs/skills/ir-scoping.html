@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ir-scoping</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ir-scoping</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when an incident is declared and you need to define what</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-response.html">incident-response</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-response.html">incident-response</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="threat-hunting.html">threat-hunting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Incident scoping is the first hour done right: decide what happened, how far it reaches, and who needs to know, before the response scatters. This skill covers the scoping discipline: severity classification, rapid scope determination, notifications, and setting up the response so the later phases have something to work with. Scoping errors compound; every later phase inherits them.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Capture the initial report: what was seen, when, by whom, on what.</li>
+<li>Classify severity with the organization&#x27;s scale.</li>
+<li>Determine the initial scope: affected hosts, users, data.</li>
+<li>Notify stakeholders per the severity&#x27;s notification list.</li>
+<li>Stand up the response: lead, channel, tracking ticket.</li>
+<li>Set the next decision point and the information needed for it.</li>
+<li>Log everything from minute one.</li>
+</ol>
+<h2>1. Severity classification</h2>
+<pre><code class="language-bash"># Severity scale (adapt to the organization&#x27;s, but have one):
+# SEV-1: active breach, data theft, ransomware spreading: all hands
+# SEV-2: confirmed compromise, contained host: response team
+# SEV-3: suspicious, unconfirmed: analyst investigation
+# SEV-4: informational: log and watch
+
+# Classification inputs, gathered in the first 30 minutes:
+# - Is attacker activity ongoing right now?
+# - Is sensitive data involved or reachable?
+# - How many hosts/users are affected?
+# - Is there business impact (outage, defacement)?
+
+cat &gt; /tmp/ir_scope.txt &lt;&lt;&#x27;EOF&#x27;
+Incident: &lt;id&gt; opened &lt;UTC time&gt;
+Reporter: &lt;name&gt;, &lt;how detected&gt;
+Severity: SEV-&lt;n&gt; (rationale: &lt;one line&gt;)
+Affected: &lt;hosts/users/data, as known&gt;
+Attacker active: [ ] yes [ ] no [ ] unknown
+Next decision: &lt;time&gt;, needs &lt;information&gt;
+EOF</code></pre>
+<p>Classify fast and reclassify freely: an initial SEV-3 that becomes a SEV-1 in an hour is normal. The failure is not reclassifying, not the first guess.</p>
+<h2>2. Rapid scope determination</h2>
+<pre><code class="language-bash"># First-pass scope questions, answered from logs and the reporter:
+# - Which hosts show the indicator? (search the SIEM for the IOC)
+# - Which users authenticated from those hosts recently?
+# - What data do those hosts and users touch?
+# - Is there lateral movement evidence (new hosts in the last 24h)?
+
+# Time-box the first pass: 60 minutes, then decide on the known scope
+# and keep expanding in parallel with containment</code></pre>
+<p>Scope is a living answer, not a one-time deliverable. The first pass sets the containment boundary; the investigation keeps refining it. Say &quot;scope as currently known&quot; in every update so nobody mistakes it for final.</p>
+<h2>3. Notifications and structure</h2>
+<pre><code class="language-bash"># Notification list per severity (define before the incident):
+# SEV-1: CISO, legal, comms, IT leadership, within 1 hour
+# SEV-2: security management, IT ops, within 4 hours
+# SEV-3: security team channel
+# Never notify customers or regulators without legal; that decision
+# belongs to leadership, not the response team
+
+# Response structure, stood up immediately:
+# - Incident lead (one person, decides)
+# - Comms lead (one voice outward)
+# - Tracking ticket (every action logged with timestamps)
+# - War channel (one place, no side channels for decisions)</code></pre>
+<p>One lead, one channel, one ticket. Incidents fail on coordination more than on technique; the structure is the technique at this stage.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The report is vague (&quot;something weird on a server&quot;). Treat it as</li>
+<p>SEV-3 and investigate; vague reports are how real incidents start.</p>
+<li>Multiple incidents at once. Triage them into one tracking structure</li>
+<p>with separate scopes; do not let them share a lead.</p>
+<li>The scope keeps growing. That is expected in the first hours; expand</li>
+<p>the response (more analysts, higher severity) instead of defending the first scope.</p>
+<li>Business pressure to downplay. The severity reflects the facts;</li>
+<p>document the facts and let leadership own the risk decision.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Severity reaches SEV-1: invoke the full incident plan, including</li>
+<p>legal and executive notification, per the playbook.</p>
+<li>You need outside help (forensics firm, law enforcement): that</li>
+<p>decision belongs to leadership with legal counsel; prepare the facts they need to decide.</p>
+<li>Scoping stalls on missing data: decide on the known scope and note</li>
+<p>the gaps explicitly rather than waiting for perfect information.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>This sub-skill IS the defender&#x27;s view at hour zero: scoping well is what separates a response from a panic. The preparation that pays off is the severity scale, the notification lists, and the practiced first-hour routine. Every minute spent deciding who leads is a minute the attacker keeps. Tabletop exercises exist to make this hour boring.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-61 (Computer Security Incident Handling Guide).</li>
+<li>SANS Incident Handler&#x27;s Handbook.</li>
+<li>MITRE ATT&amp;CK (understand what the scoped activity maps to).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

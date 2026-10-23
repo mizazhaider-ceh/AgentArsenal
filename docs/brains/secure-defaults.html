@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: secure-defaults</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>secure-defaults</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must choose defaults for a system, product, or configuration: shipping a new service, writing installation guides, reviewing a vendor&#x27;s out-of-box settings, or deciding what happens when the user changes nothing. Provides secure-defaults reasoning: the default is the product because most users never change it, risk must be opt-in not opt-out, dangerous options require explicit deliberate action, and every default should be justifiable as the safe choice. Load this brain when designing anything with settings, so the lazy path is also the safe path.</p><h2>Provides</h2><ul><li>Default-is-the-product framing</li><li>Opt-in risk vs opt-out safety design</li><li>Explicit-action gating for dangerous options</li><li>Default audit and hardening checklists</li><li>Safe-configuration-as-shipped discipline</li><li>User-behavior-aware default selection</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>Most users never change defaults. Not because they are lazy, but because defaults look like recommendations from the maker. That makes the default the real product: whatever ships out of the box is what the world actually runs. Secure defaults is the discipline of making that out-of-box state the safe state, so doing nothing is safe and doing something dangerous requires deliberate effort. It matters because every breach that starts with &quot;the default password,&quot; &quot;the open S3 bucket,&quot; or &quot;debug mode left on&quot; is a defaults failure, not a user failure.</p>
+<h2>Core mental models</h2>
+<p><strong>The default is the product.</strong> Whatever you ship as the default is what 90 percent of deployments will run, forever. Design reviews should treat the default configuration as the primary configuration, because it is. If the secure setup requires fourteen manual steps, you do not have a secure product with insecure defaults. You have an insecure product.</p>
+<p><strong>Risk is opt-in, safety is opt-out.</strong> The user should have to take explicit action to become less safe, never to become safe. Authentication on by default, encryption on by default, verbose debug off by default. If someone wants the risky mode, make them ask for it clearly, and ideally warn them at the moment of choice. The safe path should be the path of least resistance.</p>
+<p><strong>Dangerous options need friction.</strong> Some options are inherently dangerous: disabling auth, binding to all interfaces, running as root. These should not be one checkbox away. Require explicit, deliberate action: a typed confirmation, a separate step, a warning that states the consequence plainly. Friction here is a feature. It converts accidents into decisions.</p>
+<p><strong>Defaults are a promise.</strong> Every default says &quot;the maker thinks this is fine.&quot; Shipping an open-by-default database says you think open databases are fine. Users trust that promise, attackers exploit it. Audit your defaults the way you would audit a promise: is each one something you would defend publicly? If not, change it before someone else finds it.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>List every default in the system: ports, credentials, permissions, features, logging, network binding.</li>
+<li>For each default, ask: if the user never touches this, is the result safe? If not, change the default.</li>
+<li>Authentication and encryption: on by default, no exceptions, no &quot;simple mode&quot; that skips them.</li>
+<li>Network exposure: bind to localhost by default; listening on all interfaces requires explicit action.</li>
+<li>Credentials: no default passwords, ever. Generate unique ones per install or force creation at setup.</li>
+<li>Dangerous options (disable auth, debug mode, permissive CORS): gate behind explicit confirmation with a plain-language warning.</li>
+<li>Debug, verbose, and development features: off in the shipped default. Dev mode must be chosen, not inherited.</li>
+<li>Write the hardening guide for what remains, but assume most users will not read it. The defaults carry the weight.</li>
+<li>Test the fresh install: deploy with zero changes and attack it. The default must survive.</li>
+<li>Review defaults on every major release. New features bring new defaults, and new defaults bring new risk.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If the quickstart guide&#x27;s first step is &quot;disable the firewall,&quot; the defaults are wrong, not the user.</li>
+<li>No default credential survives contact with the internet. Generate or require, never ship.</li>
+<li>The most dangerous default is the one nobody remembers setting. Document every default visibly.</li>
+<li>Localhost first, internet later. Exposure should be a decision, not an accident.</li>
+<li>A warning the user must click through is cheaper than the breach the default would cause.</li>
+<li>Ship the hardened config as the only config. &quot;Example insecure config&quot; in docs becomes production weekly.</li>
+<li>Defaults decay: re-audit when features are added, dependencies change, or threats evolve.</li>
+<li>If you would be embarrassed explaining a default in a postmortem, change it now.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Default credentials.</strong> Admin/admin shipping in 2026. The internet scans for these in minutes.</li>
+<li><strong>Open by default.</strong> Services binding to 0.0.0.0, buckets public, APIs unauthenticated until the user &quot;hardens&quot; them.</li>
+<li><strong>Debug in prod.</strong> Verbose errors, stack traces, and debug endpoints on in the shipped build.</li>
+<li><strong>Insecure &quot;simple mode.&quot;</strong> A setup wizard that skips auth &quot;to get you started quickly&quot; and is never revisited.</li>
+<li><strong>Documented unsafety.</strong> Knowing the default is unsafe and writing a hardening guide instead of fixing the default.</li>
+</ul>
+<h2>Worked example</h2>
+<p>A team ships a self-hosted analytics tool. Old defaults: binds to 0.0.0.0, admin password &quot;admin,&quot; no TLS, debug endpoints enabled. Every install guide starts with &quot;change the password and set up TLS later.&quot; Secure-defaults redesign: binds to localhost only, with a setup step that generates a unique admin password and prints it once; TLS with a self-signed cert by default, proper cert as an explicit option; debug endpoints compiled out of the release build; exposing it to the network requires editing the bind address with a warning shown at startup (&quot;you are exposing this to the network, ensure auth and TLS are configured&quot;). Fresh-install test: deployed with zero changes, scanned from outside, nothing reachable, nothing with default creds. The lazy path is now the safe path. Support tickets about &quot;I got hacked with a fresh install&quot; drop to zero.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

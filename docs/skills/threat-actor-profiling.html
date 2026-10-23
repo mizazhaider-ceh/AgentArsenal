@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: threat-actor-profiling</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>threat-actor-profiling</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">99/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when building or reviewing threat actor profiles for</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="threat-intel.html">threat-intel</a> <a href="threat-hunting.html">threat-hunting</a> <a href="dark-web-monitoring.html">dark-web-monitoring</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Threat actor profiling turns incident data into reusable defense: who they are, how they work, and what to detect next time. This skill covers the method for authorized intelligence work: collecting TTPs, mapping to ATT&amp;CK, profiling infrastructure and victimology, and converting the profile into detection priorities. It informs defense; it is not a license for hack back.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Collect the raw material: incident timelines, malware, and</li>
+<p>infrastructure from your authorized cases.</p>
+<li>Extract TTPs and map each to MITRE ATT&amp;CK technique IDs.</li>
+<li>Profile infrastructure: domains, IPs, certificates, and reuse</li>
+<p>patterns.</p>
+<li>Profile victimology: sectors, regions, and company sizes hit.</li>
+<li>Assess sophistication and resources: what the TTPs imply about</li>
+<p>the actor.</p>
+<li>Write the profile: summary, TTPs, infrastructure, and confidence</li>
+<p>levels.</p>
+<li>Convert to defense: detection rules and hunt hypotheses from the</li>
+<p>TTPs.</p>
+<li>Share per policy: TLP markings and need to know.</li>
+</ol>
+<h2>1. TTP extraction and mapping</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;TTP map builder: observations to ATT&amp;CK with confidence.&quot;&quot;&quot;
+ttps = [
+    (&quot;spearphish with malicious macro&quot;, &quot;T1566.001&quot;, &quot;high&quot;),
+    (&quot;rundll32 for execution&quot;, &quot;T1218.011&quot;, &quot;high&quot;),
+    (&quot;mimikatz credential dump&quot;, &quot;T1003.001&quot;, &quot;medium&quot;),
+    (&quot;data staged in recycle bin&quot;, &quot;T1074&quot;, &quot;medium&quot;),
+    (&quot;exfil over HTTPS to VPS&quot;, &quot;T1048.003&quot;, &quot;high&quot;),
+]
+for obs, tid, conf in ttps:
+    print(f&quot;{tid} [{conf}] {obs}&quot;)
+print(&quot;\nprofile the cluster: which techniques co occur across incidents&quot;)</code></pre>
+<pre><code class="language-bash"># Infrastructure pivot points (from your case data):
+# - domain registration patterns (registrar, naming, timing)
+# - certificate reuse across infrastructure
+# - VPS provider and payment patterns (where legally obtained)
+# - overlap with public reporting (match TTPs, not just names)
+echo &quot;confidence rule: one indicator is a clue, clusters are a profile&quot;</code></pre>
+<h2>2. From profile to defense</h2>
+<pre><code class="language-bash"># Detection priorities: the actor&#x27;s favorite techniques become your
+# top detections and hunts, tuned to your environment
+# - top 5 TTPs -&gt; sigma rules or EDR analytics
+# - infrastructure patterns -&gt; blocklists and DNS monitoring
+# - victimology -&gt; which business units get the briefing
+echo &quot;review quarterly: actors evolve, profiles must too&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Attribution confidence is low. Say so; a weak attribution used</li>
+<p>for strong decisions is worse than none.</p>
+<li>Multiple actors share tooling (RaaS affiliates). Profile the</li>
+<p>behavior cluster, not just the malware family.</p>
+<li>Public reporting conflicts with your data. Trust your evidence,</li>
+<p>note the conflict, and share back through proper channels.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Active targeting of your organization: brief leadership and</li>
+<p>raise monitoring on the profiled TTPs immediately.</p>
+<li>Need finished intelligence: hand to the intel team with your</li>
+<p>TTP package; profiling feeds their process.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Profiling is defensive intelligence: it tells you which techniques deserve your detection budget. The profile&#x27;s consumers are the SOC (detections), threat hunting (hypotheses), and leadership (risk). The durable practice is keeping profiles current and tied to detections: a profile nobody hunts on is trivia.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK: technique and group knowledge base.</li>
+<li>Diamond Model of Intrusion Analysis.</li>
+<li>TLP (Traffic Light Protocol) for sharing.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

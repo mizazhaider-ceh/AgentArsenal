@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: timeline-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>timeline-basics</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when building a forensic timeline of events from a disk</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><div class="deps"><span class="kind">requires:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="disk-forensics.html">disk-forensics</a> <a href="log-forensics.html">log-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>The Sleuth Kit</td><td>4.12.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A timeline orders every timestamped event into one story: file created, log written, process started, all in sequence. This skill covers building basic timelines from filesystem metadata: extracting MAC times, merging sources, and reading the result for attacker activity. Timelines turn a pile of artifacts into the narrative the investigation needs.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Work from the verified image or read-only mount.</li>
+<li>Extract filesystem timestamps (MAC times) for the scope.</li>
+<li>Add log sources: system, application, security logs.</li>
+<li>Normalize timezones: everything to UTC, then to the local zone.</li>
+<li>Sort into one timeline and filter to the incident window.</li>
+<li>Read for attacker patterns: bursts, odd hours, sequences.</li>
+<li>Annotate the timeline with the investigation&#x27;s conclusions.</li>
+</ol>
+<h2>1. Extracting filesystem times</h2>
+<pre><code class="language-bash"># TSK: list all files with MAC times (image must be acquired already)
+fls -r -m / /analysis/case01_work.img &gt; /tmp/bodyfile.txt
+head -5 /tmp/bodyfile.txt
+
+# mactime: turn the body file into a sorted timeline
+mactime -b /tmp/bodyfile.txt -d &gt; /tmp/timeline.csv
+head -10 /tmp/timeline.csv
+
+# Focus on the incident window (example: Oct 20-22)
+awk -F&#x27;,&#x27; &#x27;$1 &gt;= &quot;2026-10-20&quot; &amp;&amp; $1 &lt;= &quot;2026-10-22&quot;&#x27; /tmp/timeline.csv \
+  &gt; /tmp/window.csv
+wc -l /tmp/window.csv</code></pre>
+<p>MAC times are modified, accessed, changed (metadata), and birth/created. Attacker activity clusters: look for bursts of creates and modifies at odd hours, especially in temp directories, startup locations, and web roots.</p>
+<h2>2. Merging log sources</h2>
+<pre><code class="language-bash"># System logs add the process and auth events the filesystem lacks
+# Extract auth events into the same CSV shape for merging
+grep -E &#x27;sshd|su:|sudo&#x27; /mnt/image/var/log/auth.log | head -10
+
+# Python: merge and sort multiple timestamped sources
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import csv
+from datetime import datetime
+
+events = []
+# filesystem timeline rows: date,time,event,path
+with open(&#x27;/tmp/window.csv&#x27;) as f:
+    for row in csv.DictReader(f):
+        events.append((row[&#x27;Date&#x27;] + &#x27; &#x27; + row[&#x27;Time&#x27;], &#x27;fs&#x27;, row[&#x27;File Name&#x27;]))
+
+events.sort()
+for ts, src, detail in events[:20]:
+    print(f&quot;{ts} [{src}] {detail}&quot;)
+print(f&quot;[*] {len(events)} events in window&quot;)
+EOF</code></pre>
+<p>One timeline with filesystem, auth, and application events beats three separate ones. The correlation is the analysis: a file created two minutes after a successful SSH login from an odd IP tells the story.</p>
+<h2>3. Reading for attacker activity</h2>
+<pre><code class="language-bash"># Hunt patterns in the merged timeline:
+# - Executables created in /tmp, /var/tmp, /dev/shm
+grep -E &#x27;/tmp/|/var/tmp/|/dev/shm/&#x27; /tmp/window.csv | grep -i -E &#x27;\.sh$|\.py$|\.elf$|\.bin$&#x27; | head -10
+
+# - Startup persistence: cron, systemd, registry Run keys, Startup folder
+grep -i -E &#x27;cron|systemd|/etc/cron&#x27; /tmp/window.csv | head -10
+
+# - Mass file access (staging for exfiltration)
+#   many reads in a short window from one directory
+
+# - Timestomping: clusters of identical unlikely timestamps
+cut -d&#x27;,&#x27; -f1,2 /tmp/window.csv | sort | uniq -c | sort -rn | head -10</code></pre>
+<p>Timestomping shows as statistical impossibility: hundreds of files with the exact same second-precision timestamp. Normal systems do not do that; attackers covering tracks do.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Timezones are mixed. Normalize everything to UTC at ingest; a</li>
+<p>timeline with mixed zones lies about sequence.</p>
+<li>Timestamps were altered (timestomping). Cross-check with logs and</li>
+<p>journal entries that the attacker may have missed.</p>
+<li>The clock was wrong during the incident. Note the skew if you can</li>
+<p>prove it (NTP logs, correlated external events); otherwise flag the uncertainty.</p>
+<li>The timeline is millions of rows. Filter to the window and the</li>
+<p>interesting paths first; full-timeline review is a last resort.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need deeper artifact timelines: hand specific questions to</li>
+<p>artifact-parsing (browser history, registry, event logs each have their own timeline tools).</p>
+<li>The timeline must be court-ready: document every source, every</li>
+<p>normalization step, and every filter applied.</p>
+<li>Correlation needs the network side: merge firewall and proxy logs</li>
+<p>using the same UTC normalization.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, timelines are the incident reconstruction tool: they turn alerts into sequences and sequences into root cause. Building timelines routinely (not just during incidents) creates the baseline that makes anomalies visible. The defender&#x27;s investment is centralized logging with synchronized clocks; without NTP discipline, every timeline is suspect.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-86 (Guide to Integrating Forensic Techniques into Incident</li>
+<p>Response).</p>
+<li>The Sleuth Kit documentation: fls, mactime.</li>
+<li>&quot;File System Forensic Analysis&quot; (timestamp interpretation).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

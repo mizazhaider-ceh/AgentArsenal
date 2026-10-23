@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: pcb-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>pcb-analysis</h2><div class="meta"><span class="badge gray">hardware</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when analyzing a printed circuit board on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="hardware-reversing.html">hardware-reversing</a> <a href="uart-jtag.html">uart-jtag</a> <a href="firmware-extraction.html">firmware-extraction</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>PCB analysis reads the board itself: what is connected to what, where power flows, and whether anything does not belong. This skill covers the lab method for boards you own or may test: systematic visual inspection, power mapping, signal tracing, and tamper checks. It feeds every other hardware skill with the ground truth of the physical device.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Photograph the board front and back at high resolution before</li>
+<p>probing anything.</p>
+<li>Do a visual pass: look for rework, extra components, cut traces, and</li>
+<p>anything that differs from a reference board.</p>
+<li>Identify power input and map the power rails with a multimeter</li>
+<p>(device unpowered).</p>
+<li>Trace key signals: UART, SPI, I2C, and debug headers from the SoC to</li>
+<p>their test points.</p>
+<li>Power the board and verify rail voltages match the regulators.</li>
+<li>Check for implants: unexpected components, extra wiring, or modified</li>
+<p>firmware indicators.</p>
+<li>Draw the partial schematic of the security relevant parts.</li>
+<li>Hand the pinout map to the uart-jtag and firmware-extraction work.</li>
+</ol>
+<h2>1. Visual inspection and power mapping</h2>
+<pre><code class="language-bash"># Unpowered continuity mapping: build a net list of interesting points
+# Use the multimeter beeper; record which test points connect to which pins
+python3 - &lt;&lt; &#x27;PY&#x27;
+nets = {
+    &quot;GND&quot;: [&quot;TP1&quot;, &quot;TP7&quot;, &quot;USB shield&quot;],
+    &quot;3V3&quot;: [&quot;TP2&quot;, &quot;U1 pin 8 (flash VCC)&quot;],
+    &quot;UART_TX?&quot;: [&quot;TP3 -&gt; SoC pin 42&quot;],
+    &quot;UART_RX?&quot;: [&quot;TP4 -&gt; SoC pin 43&quot;],
+}
+for net, points in nets.items():
+    print(f&quot;{net}: {&#x27;, &#x27;.join(points)}&quot;)
+print(&quot;verify each with the meter before connecting anything active&quot;)
+PY</code></pre>
+<pre><code class="language-bash"># Powered rail check: confirm voltages before attaching logic tools
+# Measure each regulator output against ground; note any rail that is
+# dead or wrong, since the board may have a fault or a mod
+echo &quot;expected: 3V3, 1V8, 5V_USB&quot;
+echo &quot;record actual readings in notes/rails.txt&quot;</code></pre>
+<h2>2. Signal tracing to debug interfaces</h2>
+<pre><code class="language-bash"># Trace from SoC to header: continuity from the SoC UART pins to test
+# points identifies TX and RX without powering the board
+# Then confirm direction by scoping during boot (TX toggles, RX is idle high)
+
+# Document the final pinout for the team
+cat &gt; /tmp/hwrev/notes/pinout.txt &lt;&lt; &#x27;PINOUT&#x27;
+J3 debug header (unpopulated, 2.54mm):
+  pin 1: GND
+  pin 2: UART TX (SoC pin 42, 115200 baud)
+  pin 3: UART RX (SoC pin 43)
+  pin 4: 3V3 (do not connect to adapter VCC)
+PINOUT
+cat /tmp/hwrev/notes/pinout.txt</code></pre>
+<h2>3. Tamper and implant check</h2>
+<p>Compare against a known good board or high resolution reference photos. Look for:</p>
+<pre><code class="language-bash"># Photo comparison checklist (do visually, record results)
+# - extra components not on the reference (implants)
+# - rework: flux residue, hand soldering, lifted pads
+# - cut or jumpered traces (bodges)
+# - replaced chips (date codes that do not match the batch)
+# - unexpected test point wiring
+python3 - &lt;&lt; &#x27;PY&#x27;
+checks = [&quot;extra components&quot;, &quot;rework residue&quot;, &quot;cut traces&quot;,
+          &quot;date code mismatch&quot;, &quot;added wiring&quot;, &quot;replaced shielding&quot;]
+print(&quot;tamper checklist:&quot;)
+for c in checks:
+    print(f&quot;  [ ] {c}&quot;)
+PY</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Multilayer board hides inner traces. Use continuity and behavior</li>
+<p>(scope during boot) instead of visual tracing for inner layers.</p>
+<li>No reference board exists. Document everything as found and flag</li>
+<p>anomalies as suspicious rather than confirmed.</p>
+<li>Conformal coating blocks probing. Scrape tiny windows at test points</li>
+<p>with a fiberglass pen, or use existing uncoated headers.</p>
+<li>The board is densely packed BGA. Limit tracing to the accessible</li>
+<p>interfaces and rely more on firmware analysis.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Tracing inconclusive: X-ray imaging (service bureau) reveals inner</li>
+<p>layers and hidden components.</p>
+<li>Suspected implant: remove and analyze the component separately, and</li>
+<p>compare firmware hashes against a known good image.</p>
+<li>Need the full schematic: board reverse engineering services exist,</li>
+<p>but weigh the cost against the assessment value.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders against PCB tampering use tamper evident seals, potting, intrusion switches that wipe keys, and supply chain controls with board level attestation. They detect modifications through visual inspection programs and firmware hash checks at boot. For high assurance devices, assume the board will be probed and keep secrets in tamper resistant elements, not in traces anyone can follow.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-1191 (On-Chip Debug and Test Interface With Improper Access</li>
+<p>Control).</p>
+<li>NIST SP 800-161: supply chain risk management.</li>
+<li>IPC inspection standards for PCB rework identification.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

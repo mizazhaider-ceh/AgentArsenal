@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ransomware-playbook-run</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ransomware-playbook-run</h2><div class="meta"><span class="badge gray">defensive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when ransomware is detected or suspected and the</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-playbooks.html">incident-playbooks</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-playbooks.html">incident-playbooks</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>YARA</td><td>4.5</td></tr></tbody></table><p>Ransomware is the incident where minutes matter: every minute of spread is more encrypted data. This skill is the executable playbook: the ordered actions from detection through recovery, with the decisions marked. Run it when ransomware is suspected; adapt the tempo to the situation, but do not skip the order. Isolate first, think second, recover third.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm it is ransomware: ransom note, mass file renames, or EDR</li>
+<p>verdict (do not wait for certainty if encryption is spreading).</p>
+<li>Isolate affected hosts immediately: network quarantine, do not shut</li>
+<p>down yet.</p>
+<li>Protect backups: disconnect and verify them before the attacker</li>
+<p>reaches them.</p>
+<li>Identify the variant from the note, extensions, and EDR data.</li>
+<li>Scope the spread: which hosts, which shares, which data.</li>
+<li>Decide the recovery path: clean backups, rebuild, or decryptor.</li>
+<li>Execute recovery and validate before reconnecting anything.</li>
+</ol>
+<h2>1. First 15 minutes</h2>
+<pre><code class="language-bash"># 1. ISOLATE: EDR network quarantine on every affected host NOW
+#    (one click per host; do all known-affected before investigating)
+
+# 2. Do NOT shut down yet: memory holds keys and evidence
+#    Exception: encryption spreading faster than you can quarantine -&gt;
+#    then shutdown is the lesser evil
+
+# 3. Protect backups immediately:
+#    - Disconnect backup storage from the network
+#    - Verify backup integrity from an isolated console
+#    - Check backup logs for attacker access in the last 30 days
+
+# 4. Photograph/document the ransom note (it identifies the variant)</code></pre>
+<p>The ransom note is evidence and intelligence: it names the variant, which determines whether a free decryptor exists and what the actor&#x27;s pattern is. Save it before anything overwrites it.</p>
+<h2>2. Variant identification and scoping</h2>
+<pre><code class="language-bash"># Identify from: ransom note text, encrypted file extensions,
+# EDR/AV verdict, and dropped tool names
+# Check decryptor availability: No More Ransom project (nomoreransom.org)
+
+# Scope the spread fast:
+# - Query EDR for the ransomware process name across all hosts
+# - Check file shares for fresh .encrypted extensions (or variant&#x27;s)
+# - Review backup logs: when did the attacker first touch backups?
+
+# Preserve one encrypted sample plus the note for the investigation
+# (and for decryptor testing later)</code></pre>
+<p>Variant identification changes the recovery math completely: a variant with a free decryptor, a variant with flawed crypto, and a variant with neither are three different incidents. Identify before deciding.</p>
+<h2>3. Recovery decision</h2>
+<pre><code class="language-bash"># Decision tree:
+# 1. Clean, tested, isolated backups exist -&gt; restore (verify first)
+# 2. Free decryptor exists for the variant -&gt; test on samples, then run
+# 3. Neither -&gt; rebuild from gold images + data from clean sources
+# 4. Ransom payment: leadership + legal decision ONLY; note that payment
+#    funds crime, may be sanctioned, and often does not recover data
+
+# Recovery order: domain controllers and identity first, then
+# critical services, then the rest; validate each tier before the next</code></pre>
+<p>Never reconnect a recovered host to a network that still has infected hosts. Recovery happens in an isolated recovery network, validated, then reconnected in tiers. Re-infection during recovery is the classic second disaster.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The ransomware is still spreading during recovery. Stop recovery,</li>
+<p>re-isolate, re-scope; the eradication was incomplete.</p>
+<li>Backups are encrypted too. The attacker did their homework; fall to</li>
+<p>decryptor or rebuild, and treat backup protection as the top lessons learned item.</p>
+<li>The variant is new with no decryptor. Focus on clean rebuild and the</li>
+<p>investigation; do not pay without the leadership and legal process.</p>
+<li>Data theft accompanied encryption (double extortion). The incident</li>
+<p>now includes a data breach playbook run in parallel.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Leadership must decide on ransom: prepare the facts (recovery cost,</li>
+<p>downtime cost, decryptor status, legal constraints) and let them decide; never decide alone.</p>
+<li>Law enforcement notification: follow the jurisdiction&#x27;s requirements</li>
+<p>and the organization&#x27;s policy; preserve evidence accordingly.</p>
+<li>The playbook does not fit (novel variant): fall back to the general</li>
+<p>incident-response phases and update this playbook afterward.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>This playbook exists because prevention sometimes fails; the defender&#x27;s real investment is in the pieces that make this playbook short: tested offline backups, network segmentation that slows spread, EDR with behavioral ransomware detection, and practiced isolation drills. Every ransomware incident should end with the question: which of these failed, and what fixes it before next time.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-61 (incident handling).</li>
+<li>CISA ransomware guide (variant and recovery guidance).</li>
+<li>No More Ransom project (decryptor availability).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

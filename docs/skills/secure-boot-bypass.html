@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: secure-boot-bypass</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>secure-boot-bypass</h2><div class="meta"><span class="badge gray">hardware</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing secure boot implementations on devices</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="firmware-analysis.html">firmware-analysis</a> <a href="glitching-attacks.html">glitching-attacks</a> <a href="uart-jtag.html">uart-jtag</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Ghidra</td><td>11.3</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>OpenSSL</td><td>3.4</td></tr></tbody></table><p>Secure boot is a chain of signatures from immutable ROM to the application: each stage verifies the next before running it. Bypasses break a link: a skipped check, a confused parser, a rollback to a signed but vulnerable version. This skill covers authorized assessment of secure boot on your own devices: mapping the chain, reviewing each verification step, and testing the classic bypass classes without damaging the device.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the boot chain: ROM, first stage loader, second stage, kernel,</li>
+<p>application, and what verifies what.</p>
+<li>Find the root of trust: where the first key lives (OTP, fuses) and</li>
+<p>whether it can be changed.</p>
+<li>Review each verification step for the classic flaws: unchecked</li>
+<p>return values, TOCTOU between check and use, and parser bugs.</p>
+<li>Check rollback protection: can a signed old version with known bugs</li>
+<p>still boot.</p>
+<li>Check key management: test keys in production, debug unlock paths.</li>
+<li>Attempt only in scope bypass tests on your own device, starting with</li>
+<p>software level tricks.</p>
+<li>Document every link in the chain and its strength.</li>
+<li>Recommend fixes per link, not just &quot;enable secure boot&quot;.</li>
+</ol>
+<h2>1. Chain mapping and verification review</h2>
+<pre><code class="language-bash"># Extract each boot stage from the flash dump (offsets from binwalk)
+binwalk -e -C /tmp/boot_chain /tmp/flash_a.bin
+ls -l /tmp/boot_chain/_flash_a.bin.extracted/ | head
+
+# Check what each stage verifies: look for crypto and compare routines
+strings -n 6 /tmp/boot_stage2.bin | grep -i -E &quot;rsa|ecdsa|sha256|signature|verify&quot; | head -20</code></pre>
+<pre><code class="language-bash"># Verify a signature yourself to understand the format (lab)
+# Extract the public key embedded in the stage (often a raw modulus)
+python3 - &lt;&lt; &#x27;PY&#x27;
+# Typical flow to replicate:
+# 1. hash = SHA256(image_body)
+# 2. rsa_verify(pubkey, signature, hash)
+# Reimplement with OpenSSL to confirm you parsed the format right:
+print(&quot;openssl dgst -sha256 -verify pubkey.pem -signature sig.bin image_body.bin&quot;)
+PY
+openssl dgst -sha256 -verify /tmp/pubkey.pem \
+  -signature /tmp/sig.bin /tmp/image_body.bin &amp;&amp; echo &quot;signature valid&quot;</code></pre>
+<h2>2. Classic bypass classes to test</h2>
+<pre><code class="language-bash"># 1. Rollback: is there a version counter, and is it enforced?
+#    Look for anti-rollback fuses or version fields in the image header
+xxd /tmp/image_header.bin | head -10
+# Try booting the oldest signed image you can find (your own device)
+
+# 2. TOCTOU: is the verified buffer the same one that gets executed?
+#    Review: does verification read from flash while boot copies from RAM?
+
+# 3. Parser confusion: does the image parser accept overlapping or
+#    duplicate sections that change what is verified vs what runs?
+
+# 4. Debug unlock: does a debug command disable verification?
+grep -ai &quot;secureboot.*disable\|sb_disable\|debug.*unlock&quot; /tmp/flash_a.bin | head -5</code></pre>
+<pre><code class="language-bash"># Check for test keys: production images signed with &quot;test&quot; or &quot;debug&quot; keys
+strings -n 10 /tmp/flash_a.bin | grep -i -E &quot;test.*key|debug.*key|do not ship&quot; | head -10
+# A test key in production means anyone with the test private key
+# (often leaked in SDKs) can sign arbitrary firmware</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The ROM stage is undocumented. Infer its behavior from the first</li>
+<p>mutable stage and from vendor security whitepapers.</p>
+<li>Verification uses a custom crypto implementation. Review it for the</li>
+<p>classic bugs (padding oracle in RSA, short exponents) before assuming the chain is sound.</p>
+<li>Rollback fuses are one time programmable and already burned. You</li>
+<p>cannot test rollback on that unit; test on a fresh unit or review only.</p>
+<li>The device boots encrypted images. You need the key management</li>
+<p>review, not image modification tests.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Software review finds nothing: consider fault injection against the</li>
+<p>verification step (see glitching-attacks) on your own device.</p>
+<li>Fault injection out of scope: report the chain as reviewed with no</li>
+<p>software bypass found, and note the residual physical risk.</p>
+<li>Chain is sound but update delivery is not: pivot to the update</li>
+<p>mechanism (transport, parsing) as the weaker link.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders monitor secure boot through attestation: the device reports measurements of each boot stage to a verifier. They detect bypasses with boot failure counters, anti rollback fuse state, and remote attestation mismatches. The durable design is a minimal ROM verifier, hardware protected keys, enforced rollback counters, and measured boot so a bypassed device cannot attest as healthy.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-1191 (On-Chip Debug and Test Interface With Improper Access</li>
+<p>Control).</p>
+<li>CWE-347 (Improper Verification of Cryptographic Signature).</li>
+<li>CWE-494 (Download of Code Without Integrity Check).</li>
+<li>NIST SP 800-193: platform firmware resiliency guidelines.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

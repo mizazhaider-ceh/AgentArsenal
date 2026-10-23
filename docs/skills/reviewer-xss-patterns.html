@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: reviewer-xss-patterns</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>reviewer-xss-patterns</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reviewing code for cross-site scripting</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="code-reviewer.html">code-reviewer</a></div><div class="deps"><span class="kind">requires:</span> <a href="code-reviewer.html">code-reviewer</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="secure-coding.html">secure-coding</a> <a href="web-xss.html">web-xss</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Code review catches XSS where it is introduced: the template that skips escaping, the JavaScript that writes innerHTML, the <code>| safe</code> that nobody justified. This skill covers the review patterns across server templates and client JavaScript: the dangerous constructs, how to verify encoding is context-correct, and the framework-specific bypasses. Review the render point, not the data.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find every render point: templates, DOM writes, URL builders.</li>
+<li>For each, identify the sink context (HTML, attribute, JS, URL).</li>
+<li>Verify the encoding matches the context, or that the framework</li>
+<p>auto-escapes it.</p>
+<li>Flag every escaping bypass (<code>safe</code>, <code>bypassSecurity</code>, innerHTML)</li>
+<p>and demand justification.</p>
+<li>Check the dangerous sinks list below for each JavaScript file.</li>
+<li>Write findings with file, line, context, and the safe pattern.</li>
+</ol>
+<h2>1. Template patterns</h2>
+<pre><code class="language-html">&lt;!-- Jinja2 / Django: auto-escape is ON by default; these break it --&gt;
+{{ user_input }}              &lt;!-- SAFE: escaped --&gt;
+{{ user_input | safe }}       &lt;!-- REVIEW: why is this trusted? --&gt;
+{% autoescape off %}...{% endautoescape %}  &lt;!-- REVIEW: whole block unescaped --&gt;
+
+&lt;!-- React: escaped by default; this is the bypass --&gt;
+&lt;div&gt;{userInput}&lt;/div&gt;                          &lt;!-- SAFE --&gt;
+&lt;div dangerouslySetInnerHTML={{__html: userInput}} /&gt;  &lt;!-- REVIEW --&gt;
+
+&lt;!-- Angular: interpolation is safe; this bypasses it --&gt;
+&lt;p&gt;{{ userInput }}&lt;/p&gt;                        &lt;!-- SAFE --&gt;
+&lt;div [innerHTML]=&quot;userInput&quot;&gt;&lt;/div&gt;           &lt;!-- REVIEW --&gt;
+&lt;div [innerHTML]=&quot;sanitizer.bypassSecurityTrustHtml(x)&quot;&gt;&lt;/div&gt;  &lt;!-- REVIEW HARD --&gt;</code></pre>
+<p>Every bypass needs a comment explaining the trust basis, and &quot;from our API&quot; is not a trust basis (the API serves user input). No justification, no bypass: that is the review rule.</p>
+<h2>2. JavaScript sink review</h2>
+<pre><code class="language-javascript">// Reviewer red list: search every JS file for these
+element.innerHTML = x;        // REVIEW: use textContent
+element.outerHTML = x;        // REVIEW
+document.write(x);            // REVIEW: remove
+eval(x);                      // VULN: never eval untrusted input
+setTimeout(x, 100);           // REVIEW if x is a string: use a function
+location.href = x;            // REVIEW: allow-list the destination
+new Function(x);              // VULN: eval by another name
+
+// jQuery: .html() is a sink, .text() is not
+$(&quot;#out&quot;).html(userInput);    // REVIEW
+$(&quot;#out&quot;).text(userInput);    // SAFE
+
+// URL building: javascript: URLs execute
+a.href = userInput;           // REVIEW: validate scheme allow-list first</code></pre>
+<p>Grep the red list on every review; it takes seconds and catches the majority of DOM XSS. Then read the surrounding code for the ones that need context to judge.</p>
+<h2>3. Context verification</h2>
+<pre><code class="language-html">&lt;!-- The encoder must match the context: review each render point --&gt;
+&lt;script&gt;var name = &quot;{{ user_input }}&quot;;&lt;/script&gt;
+&lt;!-- REVIEW: HTML-escaping in a JS string context is WRONG.
+     Need: var name = {{ user_input | tojson }}; --&gt;
+
+&lt;a href=&quot;{{ user_url }}&quot;&gt;link&lt;/a&gt;
+&lt;!-- REVIEW: URL context needs scheme validation, not just escaping.
+     javascript: URLs survive HTML-escaping. --&gt;
+
+&lt;div title=&quot;{{ user_title }}&quot;&gt;x&lt;/div&gt;
+&lt;!-- SAFE if attribute is quoted and value is HTML-escaped --&gt;</code></pre>
+<p>The most common review miss: correct escaping, wrong context. HTML encoding does not neutralize a JavaScript string breakout, and URL encoding does not stop <code>javascript:</code>. Check the context first, the encoder second.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The data is &quot;trusted&quot; (admin-entered, from a partner API). Stored</li>
+<p>XSS comes from trusted roles too; encode by context regardless of source trust.</p>
+<li>The bypass is load-bearing (rich text editor). Require the sanitizer</li>
+<p>(DOMPurify or equivalent) with its config reviewed, plus tests against the bypass corpus.</p>
+<li>Legacy code disables auto-escape globally. Flag it as systemic;</li>
+<p>the fix is enabling it and fixing breakages, not leaving it off.</p>
+<li>The scanner flags safe code. Verify and note the false positive</li>
+<p>pattern so future reviews skip it faster.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Systemic missing encoding: propose the framework default fix</li>
+<p>(enable auto-escape, ban innerHTML) with the instance list.</p>
+<li>A bypass is genuinely needed: require the sanitizer, the config</li>
+<p>review, and the regression tests as the acceptance criteria.</p>
+<li>Continuous protection: add the dangerous-sink grep and the hostile</li>
+<p>render tests to CI.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, review is the leftmost XSS control: every finding fixed in review is an incident that never happens. Complement with DAST against staging and CSP reporting in production (blocked inline scripts reveal the misses). The defender&#x27;s metric is XSS findings per review hour trending down as the team learns the patterns.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-79 (Cross-site Scripting).</li>
+<li>OWASP XSS Prevention Cheat Sheet.</li>
+<li>OWASP Code Review Guide: XSS sections.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

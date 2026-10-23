@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: smart-contract-audit</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>smart-contract-audit</h2><div class="meta"><span class="badge gray">blockchain</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when auditing Solidity smart contracts on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="secure-coding.html">secure-coding</a> <a href="code-reviewer.html">code-reviewer</a> <a href="defi-threats.html">defi-threats</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Slither</td><td>0.11.0</td></tr></tbody></table><p>Smart contract bugs are final: once deployed, the code holds real money and often cannot be patched. This skill covers the audit method for Solidity contracts you are authorized to review: automated scanning with Slither, focused manual review of the dangerous patterns, and upgradeability checks. Work on testnets and local forks, never against mainnet contracts you do not own.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Get the full scope: contracts, deployment scripts, docs, and the</li>
+<p>threat model (who is trusted, what is the worst loss).</p>
+<li>Compile cleanly and run Slither; triage every high and medium</li>
+<p>finding.</p>
+<li>Review access control on every state changing function: who can</li>
+<p>call it and what it can do.</p>
+<li>Check arithmetic, reentrancy, and oracle usage manually; scanners</li>
+<p>miss logic bugs.</p>
+<li>Review upgradeability: proxy patterns, admin keys, and timelocks.</li>
+<li>Test economic attacks on a local fork: flash loans, price</li>
+<p>manipulation, and sandwiching.</p>
+<li>Write findings with severity, proof of concept, and fix.</li>
+<li>Recommend a retest after fixes and monitoring for the admin keys.</li>
+</ol>
+<h2>1. Static analysis with Slither</h2>
+<pre><code class="language-bash"># Compile and scan (assumes a hardhat or foundry project you own)
+cd /tmp/audit/target-project
+slither . --exclude-dependencies</code></pre>
+<pre><code class="language-bash"># Triage: focus on high impact detectors first
+slither . --exclude-dependencies 2&gt;&amp;1 | grep -A3 -i &quot;reentrancy\|access\|arbitrary&quot; | head -40
+# False positives are common; confirm each one by reading the code</code></pre>
+<pre><code class="language-bash"># Printer for quick overviews: inheritance, variables, function summary
+slither . --print inheritance --print variable-order 2&gt;/dev/null | head -60</code></pre>
+<h2>2. Manual review checklist</h2>
+<pre><code class="language-bash"># Access control: every external/public state changing function needs
+# an explicit check; list functions and their modifiers
+grep -rn &quot;function.*public\|function.*external&quot; contracts/ | head -30</code></pre>
+<pre><code class="language-solidity">// VULNERABLE: no access control on a sensitive function
+function setOwner(address n) public { owner = n; }
+
+// FIXED: restrict to the current owner
+function setOwner(address n) public onlyOwner { owner = n; }</code></pre>
+<pre><code class="language-solidity">// VULNERABLE: reentrancy, state updated after external call
+function withdraw() public {
+    (bool ok,) = msg.sender.call{value: balances[msg.sender]}(&quot;&quot;);
+    require(ok);
+    balances[msg.sender] = 0;  // too late
+}
+
+// FIXED: checks-effects-interactions
+function withdraw() public {
+    uint256 amt = balances[msg.sender];
+    balances[msg.sender] = 0;
+    (bool ok,) = msg.sender.call{value: amt}(&quot;&quot;);
+    require(ok);
+}</code></pre>
+<pre><code class="language-bash"># Oracle review: where do prices come from, and can they be manipulated?
+grep -rn &quot;getReserves\|latestRoundData\|price&quot; contracts/ | head -20
+# Single source spot prices are manipulable; check for TWAP or Chainlink</code></pre>
+<h2>3. Upgradeability review</h2>
+<pre><code class="language-bash"># Proxy pattern check: who is the admin, is there a timelock
+grep -rn &quot;TransparentUpgradeableProxy\|UUPS\|upgradeTo\|_authorizeUpgrade&quot; contracts/ | head -20
+# Findings: EOA admin with no timelock, missing upgrade authorization,
+# storage collisions between proxy and implementation</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The code uses inline assembly. Review it line by line; scanners</li>
+<p>struggle with assembly and it often handles memory unsafely.</p>
+<li>Upgradeable contracts use initializers, not constructors. Check</li>
+<p>that initialize cannot be called twice or front run.</p>
+<li>The protocol relies on off chain keepers or oracles. Those are</li>
+<p>trusted third parties; document the trust assumption.</p>
+<li>Findings depend on economic conditions (low liquidity). State the</li>
+<p>assumptions so the severity is honest.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Slither will not run (old Solidity version): pin a compatible</li>
+<p>solc with <code>solc-select</code> and retry, or review manually.</p>
+<li>Logic bug suspected but not proven: write a Foundry test that</li>
+<p>demonstrates the exploit on a local fork.</p>
+<li>Admin key risk dominates: recommend multisig plus timelock and</li>
+<p>monitoring, since code cannot fix key management.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders of live protocols monitor for exploit patterns: flash loans followed by large swaps, admin key usage, upgrade events, and oracle deviations. They use pausable contracts, bug bounties, and real time monitoring (Forta style bots). The durable defense is layered: audit, formal verification for critical invariants, timelocked upgrades, and incident response runbooks for pausing.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-841 (Improper Enforcement of Behavioral Workflow): reentrancy.</li>
+<li>CWE-862 (Missing Authorization): access control gaps.</li>
+<li>CWE-682 (Incorrect Calculation): arithmetic and oracle issues.</li>
+<li>SWC Registry: smart contract weakness classification.</li>
+<li>Slither 0.11.0 documentation: detectors and printers.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

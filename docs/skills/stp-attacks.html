@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: stp-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>stp-attacks</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing Spanning Tree Protocol on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="vlan-hopping.html">vlan-hopping</a> <a href="nmap-methodology.html">nmap-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Wireshark</td><td>4.4</td></tr></tbody></table><p>Spanning Tree elects a root bridge to prevent loops, and it trusts BPDU messages from any port: an attacker who becomes root sees traffic and can reshape the topology. This skill covers authorized lab testing: observing STP, attempting root takeover, and reviewing the guards that stop it. Lab switches or written authorization only; STP games on production can take the network down.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Observe STP passively: capture BPDUs and note the current root.</li>
+<li>Review the switch configs: root guard, BPDU guard, and priority</li>
+<p>settings.</p>
+<li>In the lab, attempt root takeover with a superior BPDU.</li>
+<li>Verify the impact: traffic paths change, and the attacker sees</li>
+<p>more.</p>
+<li>Test the guards: does BPDU guard shut the port as configured.</li>
+<li>Check for STP manipulation as a MITM primitive in the report.</li>
+<li>Restore the lab topology and confirm the real root returns.</li>
+<li>Recommend the guard configuration per port role.</li>
+</ol>
+<h2>1. Observation and root takeover (lab)</h2>
+<pre><code class="language-bash"># Capture BPDUs and identify the root bridge
+sudo tshark -i eth0 -Y &quot;stp&quot; -a duration:20 | head -10
+# Note: root bridge ID, root path cost, and which port you are on</code></pre>
+<pre><code class="language-bash"># Lab: send a superior BPDU to claim root (Yersinia or scapy as tooling)
+# yersinia stp -attack 2 -interface eth0
+# Then re-capture: if your bridge ID is now root, the takeover worked
+sudo tshark -i eth0 -Y &quot;stp&quot; -a duration:20 | grep -i &quot;root&quot; | head -5</code></pre>
+<pre><code class="language-bash"># Verify traffic impact in the lab: paths reconverge through you
+# (measure with traceroute between lab hosts before and after)
+traceroute 192.168.1.20</code></pre>
+<h2>2. Guard review</h2>
+<pre><code class="language-bash"># Config review checklist per port:
+# - access ports: BPDU guard ON (shuts port on any BPDU)
+# - uplinks to real switches: root guard ON (blocks superior BPDUs)
+# - core: explicit root priority set (4096), never left to election
+# - unused ports: shutdown
+grep -i -A2 &quot;spanning-tree&quot; /tmp/switch_config.txt | head -30</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The network runs RSTP or MSTP. The attack shape is the same;</li>
+<p>verify the guard names in the vendor syntax.</p>
+<li>BPDU guard err-disables your test port. That is the control</li>
+<p>working; recover the port per the runbook and note the success.</p>
+<li>Wireless or virtual switches in the path. They may not speak STP;</li>
+<p>the wired edge is still where you test.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Takeover works in the lab: the finding is the missing guards;</li>
+<p>recommend per the checklist and retest.</p>
+<li>Production review only: grade configs without sending BPDUs.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see STP attacks as topology changes, root bridge flaps, and BPDU guard err-disable events. Detect with SNMP traps on STP changes and monitoring of the root bridge identity. The durable fix is the guard trio: BPDU guard on access ports, root guard on distribution uplinks, and a pinned root priority on the intended core.</p>
+<h2>Key references</h2>
+<ul>
+<li>IEEE 802.1D/802.1w: STP/RSTP standards.</li>
+<li>CWE-923 (Improper Restriction of Communication Channel).</li>
+<li>Vendor STP hardening guides.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

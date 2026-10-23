@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal decision: ESCALATION_POLICY</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>ESCALATION_POLICY</h2><div class="meta"><span class="badge gray">decision doc</span><span class="muted">ESCALATION_POLICY.md</span></div><h1>Escalation Policy</h1>
+<p>When an agent or operator hits a limit it cannot resolve alone, it escalates. This policy defines severity tiers, response times, who acts, and how the escalation is recorded. Every AGENT.md points here (or at a stricter local policy) via its <code>escalation</code> field.</p>
+<h2>Severity tiers</h2>
+<h3>SEV-1: Stop work, get a human now</h3>
+<ul>
+<li>Suspected active compromise of client infrastructure during an engagement.</li>
+<li>Any action that could destroy data, brick a device, or affect production</li>
+<p>systems outside the agreed scope.</p>
+<li>Discovery of live credentials, personal data, or illegal material you did</li>
+<p>not expect to find.</p>
+<li>Response time: immediate. Halt the run, preserve state, page the engagement</li>
+<p>lead.</p>
+<li>Who: engagement lead, then the client contact defined in the scope doc.</li>
+</ul>
+<h3>SEV-2: Human review before continuing</h3>
+<ul>
+<li>A tool behaves unexpectedly against in-scope targets (crash loop, wrong</li>
+<p>host responding, scope boundary unclear).</p>
+<li>A finding that changes the engagement risk picture (e.g. domain admin</li>
+<p>achieved two hours in, critical vuln on a production-adjacent host).</p>
+<li>Response time: within 1 hour during working hours, 4 hours outside them.</li>
+<li>Who: engagement lead. The agent pauses the affected phase; unrelated phases</li>
+<p>may continue.</p>
+</ul>
+<h3>SEV-3: Log it, continue, review at the next checkpoint</h3>
+<ul>
+<li>Edge cases the skill documents but cannot fully handle (odd banner,</li>
+<p>unsupported firmware version, rate-limited API).</p>
+<li>Minor scope ambiguity that a reasonable reading resolves (a hostname that</li>
+<p>resolves to an in-scope IP, a new subdomain of an in-scope domain).</p>
+<li>Response time: reviewed at the next phase gate or daily standup.</li>
+<li>Who: the agent itself logs it; the reviewer reads the log.</li>
+</ul>
+<h3>SEV-4: Note and move on</h3>
+<ul>
+<li>Cosmetic issues: typos in docs, slow but working tools, noisy logs.</li>
+<li>Response time: next scheduled review. No page, no pause.</li>
+</ul>
+<h2>How to escalate</h2>
+<ol>
+<li>Stop the thing that is escalating (SEV-1/2). Do not try one more thing.</li>
+<li>Record an episodic memory entry: what happened, what you did, what you</li>
+<p>preserved (see <code>memory/LIFECYCLE.md</code>).</p>
+<li>Notify the owner for the tier above, with: severity, one-line summary,</li>
+<p>what is paused, what evidence exists, and what you need from them.</p>
+<li>Wait for explicit release before resuming a paused phase. Silence is not</li>
+<p>approval.</p>
+<li>After resolution, add a procedural memory entry so the next agent does</li>
+<p>not hit the same wall.</p>
+</ol>
+<h2>Default ownership (override per engagement)</h2>
+<ul>
+<li>SEV-1: engagement lead, backup: project owner (izaz).</li>
+<li>SEV-2: engagement lead.</li>
+<li>SEV-3/4: the operating agent, reviewed by the engagement lead.</li>
+</ul>
+<h2>Response time summary</h2>
+<p>| Tier | Human response | Work state | | --- | --- | --- | | SEV-1 | Immediate | Halt everything | | SEV-2 | 1h (working) / 4h (off hours) | Pause affected phase | | SEV-3 | Next checkpoint | Continue, log it | | SEV-4 | Next review | Continue, note it |</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

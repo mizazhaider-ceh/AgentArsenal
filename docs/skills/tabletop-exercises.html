@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: tabletop-exercises</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>tabletop-exercises</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when planning and running incident response tabletop</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="incident-playbooks.html">incident-playbooks</a> <a href="crisis-communications.html">crisis-communications</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Tabletops test the plan without the outage: the team talks through a scenario, makes decisions, and finds the gaps while it is cheap. This skill covers running them well: realistic scenarios, good injects, honest facilitation, and follow through on the findings. It is for teams that own incident response.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Set the objective: which plan and which capability is under</li>
+<p>test.</p>
+<li>Write the scenario: realistic, specific to your environment, and</li>
+<p>hard enough to matter.</p>
+<li>Plan injects: timed complications that force decisions.</li>
+<li>Invite the right people: IR, IT, legal, comms, and leadership</li>
+<p>as the scenario needs.</p>
+<li>Facilitate: keep it moving, draw out the quiet, note the gaps</li>
+<p>without blame.</p>
+<li>Capture findings live: decisions, gaps, and action items.</li>
+<li>Fix the playbook within two weeks while memory is fresh.</li>
+<li>Schedule the next one; one tabletop is a start, not a program.</li>
+</ol>
+<h2>1. Scenario and injects</h2>
+<pre><code class="language-bash"># Scenario template (fill for your environment):
+# - trigger: EDR alert at 02:00, ransomware on 30 workstations
+# - facts given: which systems, what the SOC sees
+# - unknowns: is it spreading, are backups intact, who is the actor
+# Injects (reveal on schedule):
+# T+20m: the backup admin&#x27;s credentials were used at 01:30
+# T+40m: a journalist calls asking about the outage
+# T+60m: the CEO demands systems back in 2 hours for a client demo
+echo &quot;injects test decisions, not just knowledge&quot;</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Finding tracker: gap, owner, due date.&quot;&quot;&quot;
+findings = [
+    (&quot;no after hours contact for the backup vendor&quot;, &quot;IR lead&quot;, &quot;2026-11-06&quot;),
+    (&quot;legal not in the escalation path&quot;, &quot;CISO&quot;, &quot;2026-11-06&quot;),
+    (&quot;comms has no holding statement&quot;, &quot;comms lead&quot;, &quot;2026-11-13&quot;),
+]
+for gap, owner, due in findings:
+    print(f&quot;[ ] {gap} -- {owner} by {due}&quot;)
+print(&quot;review at the next exercise: which findings actually closed&quot;)</code></pre>
+<h2>2. Facilitation notes</h2>
+<pre><code class="language-bash"># Ground rules to state up front:
+# - this is a safe space; no blame, no performance review
+# - answer as your role, with the tools you really have at 2am
+# - &quot;we would call X&quot; is not an answer; who is X and what is the number
+# - the facilitator is not a participant; they keep time and score gaps
+echo &quot;the best finding is &#x27;we assumed someone else does that&#x27;&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Leadership will not attend. Run it anyway with the working</li>
+<p>team, and send leadership the findings; they attend the next one.</p>
+<li>The scenario is too easy. Add an inject that breaks the plan&#x27;s</li>
+<p>assumption (backups are gone, the lead is unreachable).</p>
+<li>Remote participants multitask. Require cameras on and a</li>
+<p>dedicated 90 minutes.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Exercise reveals no usable plan: the outcome is a project to</li>
+<p>write one, with the exercise findings as requirements.</p>
+<li>Real incident during the exercise: pause and respond; the</li>
+<p>tabletop can wait.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Tabletops are readiness detection: they find the missing phone numbers, the unclear authorities, and the untested assumptions before the attacker does. The findings feed the playbooks, the contact lists, and the tooling gaps. The durable program runs them quarterly, rotates scenarios across threat types, and tracks finding closure like vulnerabilities.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-61: incident handling (exercise context).</li>
+<li>CISA tabletop exercise packages.</li>
+<li>Related skills: incident-playbooks, crisis-communications.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

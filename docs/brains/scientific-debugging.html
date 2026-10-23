@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: scientific-debugging</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>scientific-debugging</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must find the cause of a malfunction: a bug that will not reproduce reliably, a system behaving differently than expected, a failing test with an unclear cause, or any technical problem where guessing has replaced understanding. Provides scientific debugging reasoning: reproduce first, change one variable at a time, binary-search the cause, distrust your assumptions before your tools, and instrument before guessing. Load this brain when the fix must address the real cause, not the symptom that was easiest to blame.</p><h2>Provides</h2><ul><li>Reproduce-first discipline</li><li>One-variable experiment design</li><li>Binary search cause narrowing</li><li>Assumption auditing</li><li>Instrumentation-before-guessing habit</li><li>Minimal test case construction</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>Debugging fails when it becomes guessing: change something, hope, repeat. Sometimes you get lucky. Usually you &quot;fix&quot; the symptom, break something else, and meet the bug again next month. Scientific debugging treats the bug as a hypothesis to be tested: reproduce it reliably, narrow the cause systematically, and only then fix it. It matters because the cost of a wrong fix compounds: each guess adds complexity that the next debugger must untangle. The disciplined path is slower per step and faster overall.</p>
+<h2>Core mental models</h2>
+<p><strong>Reproduce first, fix never before.</strong> If you cannot make the bug happen on demand, you cannot prove you fixed it. The reproduction is the foundation of everything: it turns &quot;sometimes it fails&quot; into a controlled experiment. Invest whatever it takes to get a reliable repro, a script, a sequence, a minimal case. Debugging without a repro is arguing with a ghost.</p>
+<p><strong>The bug is in your assumptions.</strong> When the code &quot;cannot&quot; be wrong, check what you assumed: that the config loaded, that the versions match, that the cache was cleared, that the test hits the code you think it does. Most long debugging sessions end with &quot;oh, it was reading the old config.&quot; Audit assumptions explicitly before blaming the logic. The environment lies more often than the code.</p>
+<p><strong>Binary search the cause.</strong> When the failure is somewhere in a large space (a thousand commits, a long pipeline, a big config), do not walk it linearly. Bisect: test the middle, keep the half that fails, repeat. Each test eliminates half the space. This turns a hundred possibilities into seven tests. The same logic applies to code paths, config options, and input ranges. Halve, test, repeat.</p>
+<p><strong>Instrument before guessing.</strong> Add logging, tracing, or a probe that shows what actually happens, then read it. A guess is a theory with no data; an instrumented run is data looking for a theory. The five minutes spent adding the log line saves the fifty minutes spent guessing. When you catch yourself theorizing for more than a few minutes, stop and measure instead.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>Write down the symptom precisely: what happens, when, with what input, in what environment.</li>
+<li>Build a reliable reproduction: a script or sequence that triggers the bug every time (or with known probability).</li>
+<li>Check the assumptions first: versions, configs, caches, which code actually runs, which data it reads.</li>
+<li>Form a hypothesis about the cause, then design the smallest test that could kill it.</li>
+<li>Change one variable per test. Record each result.</li>
+<li>If the space is large, bisect it: commits, config halves, input ranges, code paths.</li>
+<li>Instrument the suspect area: log the actual values, trace the actual path. Read the output.</li>
+<li>Once found, build the minimal test case: the smallest input that still triggers it.</li>
+<li>Fix the cause, not the symptom. Then re-run the repro to prove the fix.</li>
+<li>Add a regression test so the bug cannot return silently. The repro becomes the test.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If you have been guessing for 30 minutes, stop and build the repro. You are behind, not ahead.</li>
+<li>&quot;It works on my machine&quot; means the environments differ. Diff the environments, not the code.</li>
+<li>The last change is guilty until proven innocent. Check the recent diff first.</li>
+<li>Intermittent bugs are timing or state bugs. Make timing and state your first suspects.</li>
+<li>Read the error message literally before interpreting it creatively. It usually means what it says.</li>
+<li>Rubber-duck it: explain the system out loud. The flaw often surfaces mid-sentence.</li>
+<li>When the fix feels like a hack, you found the symptom. Keep digging for the cause.</li>
+<li>A bug you cannot explain will return. Understanding is part of the fix.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Guess-and-patch.</strong> Changing code on hunches without a repro or a test. Fixes nothing reliably, breaks things randomly.</li>
+<li><strong>Symptom suppression.</strong> Catching the exception, retrying blindly, or restarting on a schedule instead of finding the cause.</li>
+<li><strong>Blaming the tools.</strong> &quot;The compiler is broken&quot; before checking your own assumptions. It is never the compiler. (Almost never.)</li>
+<li><strong>Skipping the repro.</strong> &quot;I know what it is&quot; followed by a fix that does not fix it, twice.</li>
+<li><strong>No regression test.</strong> Fixing the bug and leaving the door open for its return.</li>
+</ul>
+<h2>Worked example</h2>
+<p>Users report intermittent login failures, roughly one in twenty attempts, no pattern by user. Guessing would start with the auth code. Scientific debugging starts with the repro: a script hammering logins shows the same one-in-twenty rate in staging. Assumptions audit: same code, same config, but staging and prod share nothing else... except the auth service calls a time API. Instrumentation: log the token timestamps on failures. Pattern found: failures cluster when the app server&#x27;s clock drifts more than 30 seconds from the token issuer. Root cause: no NTP sync on two app servers; tokens generated on one are &quot;from the future&quot; on the other. Binary search was unnecessary; the assumption audit found it. Fix: enable NTP everywhere and add clock-skew monitoring. Regression test: a login with a skewed clock now alerts instead of failing silently. The auth code was innocent all along. The environment was the bug.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mobile-forensics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mobile-forensics</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when doing forensics on mobile devices in an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="disk-forensics.html">disk-forensics</a> <a href="ios-basics.html">ios-basics</a> <a href="android-static.html">android-static</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Mobile forensics recovers evidence from phones: messages, locations, app data, and deleted content, within the limits of encryption and authorization. This skill covers the method for authorized cases: acquisition options, artifact locations, and analysis. Work only with proper legal authority and handle the device to preserve evidence.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm legal authority and scope before touching the device.</li>
+<li>Isolate the device: Faraday bag, airplane mode, do not power</li>
+<p>off a running encrypted phone lightly.</p>
+<li>Choose acquisition: logical, file system, or physical, per</li>
+<p>device and authority.</p>
+<li>Hash and document everything acquired.</li>
+<li>Analyze system artifacts: calls, messages, locations, and</li>
+<p>network.</p>
+<li>Analyze app data: the apps relevant to the case.</li>
+<li>Recover deleted data where the method supports it.</li>
+<li>Report with the method&#x27;s limits stated.</li>
+</ol>
+<h2>1. Acquisition decisions</h2>
+<pre><code class="language-bash"># Decision factors (no single tool does everything):
+# - iOS: checkra1n devices allow physical; modern need agent based
+# - Android: depends on model, patch level, and bootloader state
+# - encrypted and locked: logical may be all you get; do not guess passcodes
+#   beyond policy (attempt limits can wipe)
+echo &quot;record: method, tool version, hashes, and what was NOT captured&quot;</code></pre>
+<pre><code class="language-bash"># After acquisition, verify integrity immediately
+sha256sum /evidence/phone_image.bin &gt; /tmp/mf/hash.txt
+# Work on copies; the original stays sealed</code></pre>
+<h2>2. Artifact analysis</h2>
+<pre><code class="language-bash"># iOS key artifacts (from a file system acquisition):
+# - SMS: /private/var/mobile/Library/SMS/sms.db
+# - calls: CallHistory.storedata
+# - locations: /private/var/mobile/Library/Caches/com.apple.routined/
+# - Safari: History.db, WhatsApp: ChatStorage.sqlite
+find /tmp/mf/ios -name &quot;sms.db&quot; -o -name &quot;History.db&quot; 2&gt;/dev/null | head</code></pre>
+<pre><code class="language-bash"># Android key artifacts:
+# - SMS: /data/data/com.android.providers.telephony/databases/mmssms.db
+# - calls: calllog.db, contacts: contacts2.db
+# - WhatsApp: msgstore.db (needs key), location: cached cells
+find /tmp/mf/android -name &quot;mmssms.db&quot; -o -name &quot;contacts2.db&quot; 2&gt;/dev/null | head</code></pre>
+<pre><code class="language-bash"># Quick triage queries (SQLite)
+sqlite3 /tmp/mf/ios/sms.db \
+  &quot;SELECT datetime(date/1000000000,&#x27;unixepoch&#x27;), address, text FROM message LIMIT 5;&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The phone is locked and encrypted. Without the passcode and</li>
+<p>legal authority to compel, acquisition stops; document it.</p>
+<li>Cloud backups exist. They are a separate source with separate</li>
+<p>authority; do not mix them silently.</p>
+<li>The device is damaged. Chip off is specialized lab work; scope</li>
+<p>it separately.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Time sensitive (kidnapping, imminent threat): follow the</li>
+<p>emergency procedures; speed changes the method choice.</p>
+<li>Need app specific deep dive: analyze the app&#x27;s database schema</li>
+<p>per the case needs.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>This skill is investigative; the defensive side is for device owners: encryption on, strong passcodes, remote wipe, and backup awareness. For investigators, the durable practices are legal authority first, Faraday isolation, and honest reporting of what each method can and cannot recover.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-101: mobile forensics guidelines.</li>
+<li>Related skills: forensics-fundamentals, disk-forensics.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

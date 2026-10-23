@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: process-memory-triage</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>process-memory-triage</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need a fast read of processes in a memory dump</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="memory-forensics.html">memory-forensics</a></div><div class="deps"><span class="kind">requires:</span> <a href="memory-forensics.html">memory-forensics</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="malware-in-memory.html">malware-in-memory</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Volatility</td><td>2.5.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Process triage answers one question fast: does this memory image contain something malicious. This skill covers the rapid pass: listing processes, spotting the anomalies that matter, and deciding in minutes which hosts and processes deserve the full workflow. It trades completeness for speed deliberately; triage finds the fires, the full workflow maps the building.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List processes with parentage and command lines.</li>
+<li>Flag anomalies: odd parents, odd paths, odd names.</li>
+<li>Check network connections per suspicious process.</li>
+<li>Review command lines for encoded or obfuscated content.</li>
+<li>Decide: clean, suspicious, or compromised, with the evidence.</li>
+<li>Escalate the suspicious and compromised to full analysis.</li>
+</ol>
+<h2>1. The rapid pass</h2>
+<pre><code class="language-bash">V=&quot;python3 /opt/volatility3/vol.py -f /evidence/memdump.raw&quot;
+
+# Process tree: parent-child relationships at a glance
+$V windows.pstree.PsTree 2&gt;/dev/null | head -50
+
+# Command lines: what each process was actually doing
+$V windows.cmdline.CmdLine 2&gt;/dev/null | head -40
+
+# Anomalies to flag immediately:
+# - explorer.exe with a non-standard parent
+# - svchost.exe outside C:\Windows\System32
+# - powershell/cmd with base64 (-enc, -EncodedCommand)
+# - processes running from Temp, AppData, ProgramData
+# - misspelled system names (svch0st, explorerr)</code></pre>
+<pre><code class="language-bash"># Quick scripted anomaly flags
+$V windows.pslist.PsList 2&gt;/dev/null | grep -i -E \
+  &#x27;temp|appdata|programdata|/tmp/|/dev/shm&#x27; | head -20
+$V windows.cmdline.CmdLine 2&gt;/dev/null | grep -i -E \
+  &#x27;encod|frombase64|iex|downloadstring|/dev/tcp&#x27; | head -20</code></pre>
+<p>Two minutes of reading the tree with these flags catches most real intrusions. The patterns above are what attacker tooling looks like in memory; legitimate software rarely matches them.</p>
+<h2>2. Network correlation</h2>
+<pre><code class="language-bash">V=&quot;python3 /opt/volatility3/vol.py -f /evidence/memdump.raw&quot;
+
+# Which processes hold external connections
+$V windows.netstat.NetStat 2&gt;/dev/null | grep ESTABLISHED | head -20
+
+# Cross-reference: PID from netstat against the process list
+# A powershell.exe with an external ESTABLISHED connection is the
+# classic triage hit</code></pre>
+<p>A suspicious process plus an external connection is a compromised verdict waiting for confirmation. A suspicious process with no network may be dormant, staged, or a false positive; note the distinction.</p>
+<h2>3. Triage decision</h2>
+<pre><code class="language-bash"># Decision template per host:
+cat &gt; /tmp/triage_host01.txt &lt;&lt;&#x27;EOF&#x27;
+Host: WS-114, dump 2026-10-23 09:00 UTC
+Anomalies:
+ - powershell.exe (PID 4820) parent cmd.exe, -EncodedCommand present
+ - ESTABLISHED to 203.0.113.45:443 from PID 4820
+Verdict: COMPROMISED (evidence: encoded PowerShell + external C2)
+Next: full volatility-workflow + malware-in-memory on PID 4820
+EOF</code></pre>
+<p>Write the verdict down with the evidence, even in a fast triage. The incident team acts on these calls; &quot;looks bad&quot; without the specifics wastes the speed you gained.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Everything looks normal but the host is suspected. Triage is a fast</li>
+<p>pass, not a clean bill of health; say &quot;no anomalies found in triage&quot; rather than &quot;clean.&quot;</p>
+<li>The dump is from a server with odd but legitimate software. Note the</li>
+<p>oddities as known-good after one verification, so the next triage is faster.</p>
+<li>Too many hosts to triage deeply. Triage all broadly, then full</li>
+<p>workflow on the hits; that is exactly what triage is for.</p>
+<li>Encoded command lines are legitimate admin tooling. Check the decoded</li>
+<p>content before verdicting; admins do use -EncodedCommand.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Verdict is compromised: start containment per the incident plan and</li>
+<p>hand the host to the full workflow.</p>
+<li>Verdict is suspicious: run the full volatility-workflow on that host</li>
+<p>next; triage did its job by prioritizing it.</p>
+<li>You need the decoded payload now: base64-decode the command line and</li>
+<p>read it before deciding.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, process triage is the incident response skill: the first hour decides the scope. Building triage runbooks (the exact commands, the anomaly flags, the verdict template) lets any analyst triage consistently under pressure. The defender&#x27;s preparation is memory capture capability plus practiced triage; the alternative is waiting for the full analysis while the attacker keeps working.</p>
+<h2>Key references</h2>
+<ul>
+<li>Volatility 3 2.5.2 documentation: PsList, PsTree, CmdLine, NetStat.</li>
+<li>MITRE ATT&amp;CK T1059 (Command and Scripting Interpreter) for</li>
+<p>command-line patterns.</p>
+<li>NIST SP 800-61 (incident handling).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: modbus-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>modbus-security</h2><div class="meta"><span class="badge gray">ics-scada</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing Modbus TCP or Modbus RTU on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="nmap-methodology.html">nmap-methodology</a> <a href="network-pivoting.html">network-pivoting</a> <a href="scada-network-seg.html">scada-network-seg</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>nmap</td><td>7.98</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>Wireshark</td><td>4.4</td></tr></tbody></table><p>Modbus is the most common industrial protocol and it has no authentication: anyone who can reach port 502 can usually read and write process values. This skill covers authorized assessment of Modbus TCP and RTU: finding devices, enumerating what they expose, mapping registers to physical meaning, and proving which writes are possible. In OT, always coordinate with operations first; even reads can disturb fragile devices, and writes can move real machinery.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Get written authorization that names the OT network segment, the</li>
+<p>allowed test window, and whether any writes are permitted.</p>
+<li>Discover Modbus devices passively first: watch traffic with</li>
+<p>Wireshark before sending a single packet.</p>
+<li>Scan for port 502 on the authorized segment with a slow, careful</li>
+<p>nmap profile.</p>
+<li>Identify each device: unit ID, vendor strings, and which function</li>
+<p>codes it answers.</p>
+<li>Read safe registers (inputs, holding registers) and map them to</li>
+<p>process meaning with the operations team.</p>
+<li>If writes are authorized, test them on a lab device or during a</li>
+<p>maintenance window, one register at a time.</p>
+<li>Document every device, its exposure, and which function codes are</li>
+<p>enabled.</p>
+<li>Recommend network controls: Modbus has no auth, so the network must</li>
+<p>provide the boundary.</p>
+</ol>
+<h2>1. Discovery and enumeration</h2>
+<pre><code class="language-bash"># Slow, OT-safe scan for Modbus TCP on the authorized segment only
+sudo nmap -sS -p 502 --open -T2 --max-retries 1 \
+  192.168.10.0/24 -oN /tmp/modbus_discovery.txt
+cat /tmp/modbus_discovery.txt | grep -B2 open | head -20</code></pre>
+<pre><code class="language-bash"># Banner and device identification via nmap scripts (still gentle)
+sudo nmap -sV -p 502 --script modbus-discover \
+  --script-args modbus-discover.aggressive=false \
+  192.168.10.20 -oN /tmp/modbus_id.txt
+cat /tmp/modbus_id.txt</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Modbus TCP enumerator: unit IDs and function codes (lab/authorized).&quot;&quot;&quot;
+import socket, struct
+
+HOST = &quot;192.168.10.20&quot;
+PORT = 502
+
+def mbap(tid, unit, pdu):
+    return struct.pack(&quot;&gt;HHHB&quot;, tid, 0, len(pdu) + 1, unit) + pdu
+
+def query(unit, pdu, timeout=3):
+    s = socket.create_connection((HOST, PORT), timeout=timeout)
+    s.sendall(mbap(1, unit, pdu))
+    data = s.recv(260)
+    s.close()
+    return data
+
+# Try unit IDs 1..16 with a read device identification (function 43/14)
+for unit in range(1, 17):
+    try:
+        resp = query(unit, b&quot;\x2b\x0e\x01\x00&quot;)
+        if len(resp) &gt; 9 and resp[7] == 0x2B:
+            print(f&quot;unit {unit}: responds to device ID query&quot;)
+    except Exception:  # noqa: BLE001 - offline units just skip
+        pass
+
+# Function code support: which of these get a real answer vs exception
+for fc, name in [(1, &quot;read coils&quot;), (2, &quot;read discrete inputs&quot;),
+                 (3, &quot;read holding regs&quot;), (4, &quot;read input regs&quot;),
+                 (5, &quot;write coil&quot;), (6, &quot;write reg&quot;), (15, &quot;write coils&quot;),
+                 (16, &quot;write regs&quot;)]:
+    pdu = struct.pack(&quot;&gt;BHH&quot;, fc, 0, 1 if fc &lt; 5 else 1)
+    if fc in (5, 6):
+        pdu = struct.pack(&quot;&gt;BHH&quot;, fc, 0, 0xFF00 if fc == 5 else 0)
+    if fc in (15, 16):
+        pdu = struct.pack(&quot;&gt;BHHBB&quot;, fc, 0, 1, 1, 0) + (b&quot;\x01&quot; if fc == 15 else b&quot;\x00\x00&quot;)
+    try:
+        resp = query(1, pdu)
+        code = resp[7]
+        print(f&quot;FC {fc:2d} {name:18s}: {&#x27;SUPPORTED&#x27; if code == fc else &#x27;exception&#x27;}&quot;)
+    except Exception as e:  # noqa: BLE001
+        print(f&quot;FC {fc:2d} {name:18s}: no answer ({e})&quot;)</code></pre>
+<h2>2. Register mapping and safe reads</h2>
+<pre><code class="language-bash"># Read holding registers 0..49 and look for live process values
+python3 - &lt;&lt; &#x27;PY&#x27;
+import socket, struct
+def read_holding(host, unit, start, count):
+    s = socket.create_connection((host, 502), timeout=3)
+    pdu = struct.pack(&quot;&gt;BHH&quot;, 3, start, count)
+    s.sendall(struct.pack(&quot;&gt;HHHB&quot;, 1, 0, len(pdu) + 1, unit) + pdu)
+    data = s.recv(260); s.close()
+    vals = struct.unpack(&quot;&gt;&quot; + &quot;H&quot; * count, data[9:9 + 2 * count])
+    return vals
+vals = read_holding(&quot;192.168.10.20&quot;, 1, 0, 50)
+for i, v in enumerate(vals):
+    if v != 0:
+        print(f&quot;reg {i}: {v}&quot;)
+PY</code></pre>
+<p>Work with operations to label registers: which one is temperature, which is a setpoint, which drives an actuator. A register map without physical meaning is just numbers.</p>
+<h2>3. Write testing (authorized only)</h2>
+<p>Writes move real equipment. Only test writes that operations approves, on lab hardware or in a maintenance window, and announce each one.</p>
+<pre><code class="language-bash"># Example: toggle a TEST coil that operations confirmed is safe
+python3 - &lt;&lt; &#x27;PY&#x27;
+import socket, struct
+s = socket.create_connection((&quot;192.168.10.20&quot;), 502, timeout=3)
+pdu = struct.pack(&quot;&gt;BHH&quot;, 5, 10, 0xFF00)  # write coil 10 ON
+s.sendall(struct.pack(&quot;&gt;HHHB&quot;, 2, 0, len(pdu) + 1, 1) + pdu)
+print(&quot;write response:&quot;, s.recv(260).hex())
+s.close()
+PY</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The device answers reads but resets on fast scanning. Slow down</li>
+<p>(T1/T2 timing) and space queries; fragile stacks crash under load.</p>
+<li>Unit ID 0 or 255 behaves as broadcast. Do not send broadcast writes;</li>
+<p>they hit every device on the segment.</p>
+<li>A gateway translates Modbus TCP to serial RTU. Timeouts are longer</li>
+<p>and concurrent queries collide; serialize your requests.</p>
+<li>Registers return 0xFFFF or exceptions for unmapped ranges. Map only</li>
+<p>what answers cleanly.</p>
+<li>The device requires a specific unit ID per function. Enumerate unit</li>
+<p>IDs first instead of assuming unit 1.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Port 502 closed but the device speaks Modbus on a custom port: check</li>
+<p>the vendor docs and scan the documented alternates.</p>
+<li>Reads work but the process meaning is unclear: capture traffic</li>
+<p>during a known operation (a valve opening) and correlate register changes with the physical event.</p>
+<li>No test window for writes: report write capability as untested but</li>
+<p>likely, based on supported function codes, and recommend disabling write function codes at the firewall.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see Modbus attacks as new hosts scanning port 502, function codes the HMI never uses (especially writes), and register access outside normal ranges. Detect with an OT IDS allowlist: alert on any Modbus write, any new master on the segment, and any function code not in the baseline. The durable defense is network architecture: Modbus devices on an isolated OT segment, a firewall that permits only the HMI&#x27;s IP to use write function codes, and no route from IT or the internet to port 502.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T0806 (Brute Force I/O Addresses) and ICS T0821</li>
+<p>(Modify Controller Tasking).</p>
+<li>CWE-306 (Missing Authentication for Critical Function).</li>
+<li>CWE-862 (Missing Authorization): no access checks on function codes.</li>
+<li>Modbus Organization: MODBUS Application Protocol Specification.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

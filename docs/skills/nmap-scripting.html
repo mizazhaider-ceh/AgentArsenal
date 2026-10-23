@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: nmap-scripting</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>nmap-scripting</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need nmap&#x27;s scripting engine (NSE) to enumerate</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="nmap-methodology.html">nmap-methodology</a></div><div class="deps"><span class="kind">requires:</span> <a href="nmap-methodology.html">nmap-methodology</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-active.html">recon-active</a> <a href="smb-enumeration.html">smb-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>nmap</td><td>7.98</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>The nmap scripting engine runs Lua scripts that do real enumeration: listing SMB shares, grabbing HTTP titles, checking for specific CVEs. This skill covers using NSE on authorized engagements with discipline: pick scripts for the services you found, prefer safe scripts by default, and treat script output as leads to verify, not as findings. Intrusive scripts can crash services, so the category system exists for a reason.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List the services from nmap-service-detection that deserve scripts.</li>
+<li>Run default safe scripts first (<code>-sC</code>) on those services.</li>
+<li>Add targeted scripts per service: SMB, HTTP, databases, TLS.</li>
+<li>Run vulnerability-check scripts only against in-scope services.</li>
+<li>Verify every positive by hand before reporting it.</li>
+<li>Save script output with the scan for the report.</li>
+</ol>
+<h2>1. Safe default scripts</h2>
+<pre><code class="language-bash"># Default script set: safe, useful, runs with version detection
+nmap -sC -sV -p 22,80,443,445,3306 10.0.5.23 -oN /tmp/scripts_default.txt
+
+# List scripts by category before running them
+ls /usr/share/nmap/scripts/ | grep -E &#x27;smb|http&#x27; | head -20
+nmap --script-help smb-os-discovery | head -20
+
+# Update the script database after nmap upgrades
+nmap --script-updatedb</code></pre>
+<p><code>-sC</code> is the everyday choice: it runs the <code>default</code> category, which the nmap team keeps non-intrusive. Start here on every engagement.</p>
+<h2>2. Targeted service scripts</h2>
+<pre><code class="language-bash"># SMB enumeration bundle (host is Windows or Samba)
+nmap --script smb-os-discovery,smb-security-mode,smb-enum-shares,smb-enum-users \
+  -p445 10.0.5.23 -oN /tmp/smb_enum.txt
+
+# HTTP enumeration: titles, methods, headers
+nmap --script http-title,http-methods,http-server-header \
+  -p80,443,8080 10.0.5.23 -oN /tmp/http_enum.txt
+
+# TLS quality snapshot
+nmap --script ssl-cert,ssl-enum-ciphers -p443 10.0.5.23 -oN /tmp/tls.txt
+
+# Database basics (no credentials needed for banner-level scripts)
+nmap --script mysql-info -p3306 10.0.5.23 -oN /tmp/mysql.txt</code></pre>
+<p>Match scripts to discovered services. Running SMB scripts against a Linux web server wastes time and litters logs; the service inventory from the previous phase tells you exactly which scripts apply.</p>
+<h2>3. Vulnerability check scripts</h2>
+<pre><code class="language-bash"># Famous-CVE checks: fast, read-only, high signal when positive
+nmap --script vuln -p80,443 10.0.5.23 -oN /tmp/vuln_web.txt
+
+# Single CVE checks when you suspect a specific issue
+nmap --script smb-vuln-ms17-010 -p445 10.0.5.23 -oN /tmp/ms17010.txt
+nmap --script http-vuln-cve2017-5638 -p8080 10.0.5.23 -oN /tmp/struts.txt
+
+# Script arguments when a script needs tuning
+nmap --script http-enum --script-args http-enum.basepath=/app/ \
+  -p80 10.0.5.23 -oN /tmp/http_enum2.txt</code></pre>
+<p>Every <code>vuln</code> positive needs hand verification. Script checks are heuristic; they false-positive on backported patches and custom builds. Confirm with the service version and, where safe, a manual probe before the finding goes in the report.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>A script crashes or hangs on a weird service. Kill the run, rerun with</li>
+<p>that script excluded, and note the behavior; fragile services get manual treatment only.</p>
+<li>Script output is empty but the service is real. The script&#x27;s probe did</li>
+<p>not match; try the manual equivalent (curl, smbclient) before moving on.</p>
+<li>Too many scripts slow the engagement. Scope scripts to the services</li>
+<p>that matter for the test objectives, not every open port.</p>
+<li>Scripts need credentials you do not have. Skip credentialed scripts</li>
+<p>unless the engagement provides accounts; note the gap.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need deeper SMB or HTTP enumeration than scripts give: switch to</li>
+<p>dedicated tools (smbclient, enum4linux, ffuf) and keep nmap for what it does best.</p>
+<li>A vuln script positive needs exploit confirmation: hand it to the</li>
+<p>exploitation phase with the exact script output attached, and get approval before touching the exploit.</p>
+<li>Custom script needed: write NSE in Lua only when no existing script</li>
+<p>fits, and test it against a lab target first.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see NSE as distinctive follow-up traffic: SMB session setups, HTTP requests for odd paths, and the probe patterns of vuln checks, all from the scanning host. IDS signatures exist for the noisiest scripts. Defenses are patching (so vuln scripts find nothing), SMB hardening, and alerting on enumeration patterns. Script output is recon, not proof; defenders know the difference too.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1046 (Network Service Discovery).</li>
+<li>MITRE ATT&amp;CK T1595.002 (Active Scanning: Vulnerability Scanning).</li>
+<li>nmap 7.98 NSE documentation and script library.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privacy-threat-model</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privacy-threat-model</h2><div class="meta"><span class="badge gray">privacy</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when building a privacy threat model for a system you</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privacy-impact-assessment.html">privacy-impact-assessment</a> <a href="data-minimization.html">data-minimization</a> <a href="gdpr-engineering.html">gdpr-engineering</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Security threat models ask who breaks in; privacy threat models ask who learns what about whom, including insiders and the system itself. This skill gives the method: LINDDUN categories, privacy attacker profiles, and data flow analysis that surfaces linkability and identifiability risks a security review misses.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Draw the data flow diagram: subjects, processes, data stores, and</li>
+<p>every flow of personal data.</p>
+<li>Walk each element against LINDDUN: Linkability, Identifiability,</li>
+<p>Non-repudiation, Detectability, Disclosure, Unawareness, Non compliance.</p>
+<li>Profile privacy attackers: the curious insider, the data broker,</li>
+<p>the state actor, and the system operator itself.</p>
+<li>For each threat, name the harmed party: it is the data subject,</li>
+<p>not the company.</p>
+<li>Rate by severity to the subject and likelihood given the</li>
+<p>architecture.</p>
+<li>Turn threats into requirements: PETs, minimization, or process</li>
+<p>changes.</p>
+<li>Assign owners and verify at implementation, not just on paper.</li>
+<li>Revisit when data flows change; the model rots fast.</li>
+</ol>
+<h2>1. LINDDUN walkthrough</h2>
+<pre><code class="language-bash"># LINDDUN categories with the question each asks:
+# Linkability:      can two actions be tied to the same person?
+# Identifiability:  can the person be named from this data?
+# Non-repudiation:  can the subject deny it later (logs as evidence)?
+# Detectability:    can an observer tell the subject did something?
+# Disclosure:       is personal data exposed where it should not be?
+# Unawareness:      does the subject know this processing happens?
+# Non-compliance:   does this violate policy or law?
+echo &quot;walk every data flow and store against all seven&quot;</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Threat register: one row per (element, LINDDUN category) finding.&quot;&quot;&quot;
+threats = [
+    (&quot;analytics pipeline&quot;, &quot;Linkability&quot;,
+     &quot;pseudonymous IDs stable across sessions allow profiling&quot;,
+     &quot;rotate IDs per session or add noise&quot;),
+    (&quot;support tickets&quot;, &quot;Identifiability&quot;,
+     &quot;agents see full history including unrelated past tickets&quot;,
+     &quot;scope ticket view to the current issue&quot;),
+    (&quot;mobile SDK&quot;, &quot;Unawareness&quot;,
+     &quot;location collected though the feature never shows a map&quot;,
+     &quot;remove collection or disclose and get consent&quot;),
+]
+for el, cat, desc, mitigation in threats:
+    print(f&quot;[{cat}] {el}\n  threat: {desc}\n  fix: {mitigation}\n&quot;)</code></pre>
+<h2>2. Data flow diagram essentials</h2>
+<pre><code class="language-bash"># Minimum viable DFD for privacy:
+# - every datastore labeled with whose data and how long
+# - every flow labeled with the data categories it carries
+# - trust boundaries where the operator changes (your backend vs vendor)
+# - the subject&#x27;s view: what they think happens vs what actually happens
+echo &quot;the gap between subject expectation and reality is where threats hide&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The system is internal only. Insiders are still privacy attackers;</li>
+<p>internal tools need the same analysis.</p>
+<li>Machine learning on the data. Models memorize; add extraction and</li>
+<p>membership inference to the threats.</p>
+<li>The threat model is done once and filed. Schedule the revisit with</li>
+<p>the data flow owner, or it becomes fiction.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>High severity threat with no cheap fix: propose the PET</li>
+<p>(differential-privacy, anonymization-techniques) or a product scope change, with the tradeoff explicit.</p>
+<li>Legal classification needed (is this personal data): involve</li>
+<p>counsel; engineers should not make that call alone.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Privacy threats are detected by design review, not by SIEM: data flow audits, schema change gates, and periodic re modeling. The &quot;defender&quot; here is the design itself plus the DPO&#x27;s oversight. Durable practice: make the threat model a living doc owned by the team, reviewed on every architecture change, with mitigations tracked like security bugs.</p>
+<h2>Key references</h2>
+<ul>
+<li>LINDDUN methodology (linddun.org): categories and process.</li>
+<li>NIST Privacy Framework: threat modeling context.</li>
+<li>Related skills: privacy-impact-assessment, differential-privacy.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

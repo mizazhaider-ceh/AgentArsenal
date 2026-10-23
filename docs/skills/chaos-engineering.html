@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: chaos-engineering</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>chaos-engineering</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">94/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when running chaos experiments to prove resilience.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="devsecops-pipeline.html">devsecops-pipeline</a> <a href="prometheus-monitoring.html">prometheus-monitoring</a> <a href="incident-response.html">incident-response</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Chaos engineering breaks things on purpose to learn: kill a pod, partition the network, expire a certificate, and watch whether the system heals. This skill covers the disciplined method: hypothesis, controlled blast radius, steady state metrics, and learning. Run only in environments you own with explicit approval; chaos in production needs a written plan and an abort path.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define steady state: the metrics that prove the system is healthy.</li>
+<li>Form a hypothesis: &quot;killing one AZ keeps error rate under 0.1%&quot;.</li>
+<li>Design the smallest experiment that tests it, with a tight blast</li>
+<p>radius.</p>
+<li>Get approval: who is on call, how to abort, and the time box.</li>
+<li>Run and observe: steady state metrics plus the new failure.</li>
+<li>Abort if steady state breaks beyond the hypothesis bounds.</li>
+<li>Analyze: what actually happened versus the hypothesis.</li>
+<li>Fix the weakness and re run to prove the fix.</li>
+</ol>
+<h2>1. Experiment design</h2>
+<pre><code class="language-bash"># Experiment card template:
+# hypothesis: cache node failure does not raise p99 above 500ms
+# blast radius: one cache node in staging
+# steady state: p99 &lt; 300ms, error rate &lt; 0.05%
+# method: terminate the node, wait 5 min, observe
+# abort: p99 &gt; 800ms for 60s, or any data loss signal
+# rollback: restart the node; traffic shifts back automatically
+cat &gt; /tmp/chaos/exp_cache_node.md &lt;&lt; &#x27;MD&#x27;
+# Experiment: cache node termination
+MD</code></pre>
+<pre><code class="language-bash"># Steady state check before the experiment (prometheus as tooling)
+# curl the query API for the key SLIs; record the baseline numbers
+# Only proceed if the baseline is green; chaos on a sick system teaches nothing
+echo &quot;baseline: p99, error rate, saturation for the affected service&quot;</code></pre>
+<h2>2. Common experiments</h2>
+<pre><code class="language-bash"># Safe starter set (staging first, production only with approval):
+# - kill a random pod (tests restart and readiness)
+# - add 200ms latency between services (tests timeouts)
+# - fill a disk to 90% (tests alerting and handling)
+# - expire a test certificate (tests rotation)
+# - partition one AZ (tests multi AZ design)
+echo &quot;each experiment needs the abort condition defined up front&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The experiment finds nothing. That is a result: the hypothesis</li>
+<p>held, and you have evidence for the resilience claim.</p>
+<li>Blast radius escapes (the tool hits the wrong target). Abort</li>
+<p>immediately, fix the targeting, and review before retrying.</p>
+<li>Stateful systems (databases) need extra care: test failover, not</li>
+<p>data destruction, unless the backup restore is the hypothesis.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Steady state breaks badly: abort, restore, and run the incident</li>
+<p>process; the experiment becomes a real incident with a head start.</p>
+<li>Repeated failures of the same hypothesis: this is an</li>
+<p>architectural finding, not bad luck; redesign, don&#x27;t retry.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Chaos is defensive: it finds resilience gaps before attackers or accidents do. From a security view, chaos validates the controls that incidents rely on: failover, backups, and alerting. Misuse looks like unapproved experiments in production. The durable practice is regular game days with the on call team, where the hypotheses come from past incidents and threat models.</p>
+<h2>Key references</h2>
+<ul>
+<li>&quot;Chaos Engineering&quot; (O&#x27;Reilly): principles and practice.</li>
+<li>Related skills: prometheus-monitoring, incident-response.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

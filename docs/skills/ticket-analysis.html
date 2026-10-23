@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ticket-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ticket-analysis</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you hold Kerberos tickets on an authorized AD</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="kerberoasting.html">kerberoasting</a></div><div class="deps"><span class="kind">requires:</span> <a href="kerberoasting.html">kerberoasting</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="memory-forensics.html">memory-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Impacket</td><td>0.11.0</td></tr><tr><td>PowerShell</td><td>7.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A Kerberos ticket is authentication without the password: whoever holds a valid service ticket or ticket-granting ticket acts as that user until it expires. This skill covers working with captured tickets on authorized engagements: decoding them to see what they grant, reusing them (pass-the-ticket), and understanding the forgery techniques for the report. Tickets come from memory dumps, roasting, or delegation abuse; this sub-skill starts where those end.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory the tickets you hold: type (TGT or service), user, expiry.</li>
+<li>Decode each ticket and review its flags and lifetime.</li>
+<li>Test the ticket with a read-only authenticated action.</li>
+<li>Reuse valid tickets for the engagement&#x27;s objectives (pass-the-ticket).</li>
+<li>Note delegation flags and weak encryption as separate findings.</li>
+<li>Record ticket lifetimes and the actions each ticket enabled.</li>
+</ol>
+<h2>1. Decoding tickets</h2>
+<pre><code class="language-bash"># Impacket: describe a ticket file (.kirbi or ccache)
+python3 /opt/impacket/examples/describeTicket.py /tmp/ticket.kirbi 2&gt;&amp;1 | head -30
+# Shows: user, domain, expiry, flags, encryption type
+
+# Convert between formats as tools demand
+# kirbi (Rubeus/Mimikatz) &lt;-&gt; ccache (Impacket/Linux)
+python3 /opt/impacket/examples/ticketConverter.py /tmp/ticket.kirbi /tmp/ticket.ccache</code></pre>
+<pre><code class="language-powershell"># Rubeus: list tickets in the current session
+Rubeus.exe triage
+# Decode one in detail
+Rubeus.exe describe /ticket:&lt;base64blob&gt;</code></pre>
+<p>Read the expiry first: a ticket valid for 10 hours shapes your whole session plan. Read the flags next: forwardable and renewable tickets are more reusable; check the encryption type for RC4 versus AES.</p>
+<h2>2. Pass-the-ticket</h2>
+<pre><code class="language-bash"># Impacket: use the ticket without knowing the password
+export KRB5CCNAME=/tmp/ticket.ccache
+python3 /opt/impacket/examples/smbclient.py -k -no-pass corp.example/sqlservice@10.0.5.20
+# -k means Kerberos auth, -no-pass means use the ticket cache
+
+# Read-only proof first: list a share, do not write
+# shares&gt; ls</code></pre>
+<pre><code class="language-powershell"># Rubeus: inject the ticket into the current session
+Rubeus.exe ptt /ticket:&lt;base64blob&gt;
+# Then act as the user: klist shows the imported ticket
+klist | head -10</code></pre>
+<p>Pass-the-ticket is quieter than password use (no new authentication against the KDC for service tickets) and works when the password is unknown or rotated. Prove access with a read, then proceed to objectives.</p>
+<h2>3. Forgery concepts for the report</h2>
+<pre><code class="language-bash"># Golden ticket: forged TGT with the krbtgt hash (domain compromise level)
+# Silver ticket: forged service ticket with the service account hash
+# Both need hashes you should only hold with explicit approval
+
+# Check what you would need: krbtgt hash enables golden tickets,
+# which is why DCSync is the crown jewel it is</code></pre>
+<p>Describe forgery accurately in the report without building forgeries you do not need: a golden ticket grants any access for up to 10 years by default settings, which is why krbtgt hash disclosure is a recovery-level event. If the engagement legitimately needs a forged ticket demonstrated, get explicit approval first.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The ticket expired mid-operation. Request or capture fresh tickets;</li>
+<p>factor the lifetime into the op plan from the start.</p>
+<li>The ticket is for the wrong SPN. Service tickets are single-service;</li>
+<p>you need the right ticket per target service.</p>
+<li>Clock skew breaks Kerberos. Keep the attack box within 5 minutes of</li>
+<p>the DC; sync with NTP before blaming the ticket.</p>
+<li>Delegation flags surprise you. Unconstrained delegation on the</li>
+<p>account means its tickets can be abused further; note it as its own finding.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need a TGT but hold only service tickets: use the service access</li>
+<p>to hunt for the next credential or ticket; do not forge what you cannot legitimately get.</p>
+<li>Ticket reuse is blocked by policy: note the control working and move</li>
+<p>to credential-based paths.</p>
+<li>The engagement needs the full ticket attack chain documented: map</li>
+<p>each ticket to the access it granted in the report&#x27;s attack path section.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see pass-the-ticket as logons without a matching prior authentication, tickets used from unusual hosts, and RC4 tickets in an AES environment. Forged tickets show as impossible lifetimes or anomalous PAC data. Defenses are AES-only Kerberos, short ticket lifetimes, monitoring for logon anomalies, and treating any krbtgt compromise as a full forest recovery event (reset the krbtgt password twice).</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1550.003 (Use Alternate Authentication Material: Pass</li>
+<p>the Ticket).</p>
+<li>MITRE ATT&amp;CK T1558.001 (Steal or Forge Kerberos Tickets: Golden</li>
+<p>Ticket).</p>
+<li>CWE-287 (Improper Authentication).</li>
+<li>Impacket ticket tools documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

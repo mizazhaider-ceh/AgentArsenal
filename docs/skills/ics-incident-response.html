@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ics-incident-response</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ics-incident-response</h2><div class="meta"><span class="badge gray">ics-scada</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when responding to a suspected incident in an OT or</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="incident-playbooks.html">incident-playbooks</a> <a href="plc-basics.html">plc-basics</a> <a href="scada-network-seg.html">scada-network-seg</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Wireshark</td><td>4.4</td></tr></tbody></table><p>OT incident response puts safety first, process second, and forensics third: the opposite priority order of IT response. You cannot just isolate a PLC the way you isolate a laptop; the process it controls may need it running. This skill covers the OT adapted method: triage with operations, evidence collection that does not disturb the process, and recovery coordinated with the physical world.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Ensure human safety first: confirm with operations that the process</li>
+<p>is in a safe state before any response action.</p>
+<li>Declare the incident and bring operations into the command</li>
+<p>structure; they own the process, you own the investigation.</p>
+<li>Scope without disruption: passive capture and log review before any</li>
+<p>active containment.</p>
+<li>Collect OT evidence: historian data, HMI logs, PLC program copies,</li>
+<p>and network captures from span ports.</p>
+<li>Decide containment with operations: what can be isolated without</li>
+<p>unsafe process effects.</p>
+<li>Eradicate: clean engineering workstations, reset credentials, and</li>
+<p>restore known good PLC logic from offline backups.</p>
+<li>Recover in stages with operations validating the process at each</li>
+<p>step.</p>
+<li>Review: update the OT playbook with what the process constraints</li>
+<p>taught you.</p>
+</ol>
+<h2>1. Safe evidence collection</h2>
+<pre><code class="language-bash"># Passive capture from a SPAN port (never inline on OT without approval)
+sudo tshark -i eth0 -f &quot;not arp&quot; -w /tmp/ir_ot/capture.pcap &amp;
+echo $! &gt; /tmp/ir_ot/capture.pid
+# Let it run; stop with: kill $(cat /tmp/ir_ot/capture.pid)</code></pre>
+<pre><code class="language-bash"># Pull PLC program copies for comparison (read only, with operations)
+# Example via vendor tool CLI or engineering workstation export;
+# hash immediately to preserve integrity
+sha256sum /tmp/ir_ot/plc_program_export.ap15 &gt; /tmp/ir_ot/plc_hash.txt
+# Compare against the last known good backup hash
+diff /tmp/ir_ot/plc_hash.txt /backups/plc_known_good_hash.txt \
+  &amp;&amp; echo &quot;logic unchanged&quot; || echo &quot;LOGIC DIFFERS - investigate&quot;</code></pre>
+<pre><code class="language-bash"># Historian export for the incident window: process values tell you
+# what the attacker changed physically
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;export from historian: tag values for incident window&quot;)
+print(&quot;look for: setpoint changes, manual overrides, alarm suppressions&quot;)
+print(&quot;correlate each anomaly with a network event from the capture&quot;)
+PY</code></pre>
+<h2>2. Containment decisions with operations</h2>
+<pre><code class="language-bash"># Decision matrix (fill with operations, do not decide alone):
+# - isolate engineering workstation: usually safe, do it
+# - block IT to OT conduit: safe if historian replica exists
+# - stop a PLC: almost never without a controlled shutdown plan
+# - fail over to redundant systems: only per operating procedures
+echo &quot;every containment action needs an operations sign off&quot;</code></pre>
+<p>Never reboot a PLC or HMI to &quot;clear malware&quot; without operations approval: you may lose the only copy of the running logic or trip the process.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The attacker is in the safety system network. Stop and escalate:</li>
+<p>safety systems protect people, and any response action needs the safety engineer&#x27;s approval.</p>
+<li>No span ports exist. Use a temporary tap installed during a</li>
+<p>maintenance window, or work from logs only.</p>
+<li>Logs are minimal or overwritten. OT devices log little; the</li>
+<p>historian and the firewall at the conduit become your main sources.</p>
+<li>Operations will not allow any containment. Document the risk</li>
+<p>acceptance, focus on monitoring, and plan containment for the next maintenance window.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Ransomware on IT spreading toward OT: sever the IT to OT conduit at</li>
+<p>the firewall immediately per the pre approved playbook.</p>
+<li>Physical process affected: follow the site emergency procedures</li>
+<p>first; the cyber investigation waits.</p>
+<li>Need external help: call the vendor and national CERT per the</li>
+<p>playbook; OT incidents often need both.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>OT detection is about process anomalies as much as network ones: setpoints that change without a work order, HMIs logging in at odd hours, and PLC programs that differ from the known good hash. Mature sites run allowlist IDS on OT segments and hash PLC logic on a schedule. After an incident, the detection gaps to close are usually visibility (span ports, logging) and change control on the OT side.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-82r3: OT incident response guidance.</li>
+<li>IEC 62443-2-1: security program including incident response.</li>
+<li>MITRE ATT&amp;CK for ICS: technique to scenario mapping.</li>
+<li>Related skills: incident-response, safety-systems.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

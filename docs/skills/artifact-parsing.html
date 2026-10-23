@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: artifact-parsing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>artifact-parsing</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when extracting meaning from specific forensic artifacts:</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><div class="deps"><span class="kind">requires:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="disk-forensics.html">disk-forensics</a> <a href="memory-forensics.html">memory-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>The Sleuth Kit</td><td>4.12.1</td></tr></tbody></table><p>Artifacts are the structured traces applications leave: browser history databases, registry hives, event logs, jump lists. This skill covers finding and parsing the high-value artifacts on disk images: where they live, which tools read them, and what questions each answers. Artifacts give you user intent where timelines give you sequence; together they reconstruct the incident.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the OS and the artifacts it produces.</li>
+<li>Extract the artifact files from the image to your analysis copy.</li>
+<li>Parse each with the right tool; never hand-read binary formats.</li>
+<li>Correlate artifact contents with the timeline.</li>
+<li>Answer the investigation&#x27;s specific questions from the artifacts.</li>
+<li>Document the artifact path, tool, and interpretation.</li>
+</ol>
+<h2>1. Windows artifacts</h2>
+<pre><code class="language-bash"># Extract hives and event logs from the image (TSK icat by inode,
+# or mount read-only and copy)
+# Key paths on the image:
+# C:\Windows\System32\config\SYSTEM, SOFTWARE, SECURITY, SAM
+# C:\Windows\System32\winevt\Logs\Security.evtx, System.evtx
+# C:\Users\&lt;u&gt;\NTUSER.DAT, UsrClass.dat
+
+# Registry: recent docs, run keys, USB history (parse with a registry tool)
+# Python registry parsing (or use an established parser on the copies)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+print(&quot;Parse NTUSER.DAT RecentDocs, Run keys, and TypedURLs&quot;)
+print(&quot;Parse SYSTEM hive: USBSTOR (USB history), Services (persistence)&quot;)
+print(&quot;Parse SOFTWARE hive: installed programs, uninstall entries&quot;)
+EOF
+
+# Event logs: filter Security.evtx for logons (4624) and process creation (4688)
+# Use evtx parsing tools; filter to the incident window first</code></pre>
+<p>Registry Run keys and Services are the persistence checklist; USBSTOR answers &quot;was data walked out on a thumb drive&quot;; Security.evtx logons answer &quot;who was here and when.&quot;</p>
+<h2>2. Browser and application artifacts</h2>
+<pre><code class="language-bash"># Browser history locations on the image:
+# Chrome: C:\Users\&lt;u&gt;\AppData\Local\Google\Chrome\User Data\Default\History (sqlite)
+# Firefox: ...\Profiles\&lt;p&gt;\places.sqlite
+
+# Query Chrome history directly with sqlite3 on the extracted copy
+sqlite3 /tmp/History &quot;SELECT url, datetime(last_visit_time/1000000-11644473600,&#x27;unixepoch&#x27;) FROM urls ORDER BY last_visit_time DESC LIMIT 20;&quot;
+
+# Downloads, cookies, and login data are sibling sqlite files;
+# parse each for the investigation&#x27;s questions
+
+# Email and chat artifacts per the applications installed;
+# check the usual data directories under AppData and Documents</code></pre>
+<p>Browser history is often the investigation&#x27;s best witness: it shows intent (searches), access (URLs with timestamps), and downloads. Treat timestamps carefully (WebKit epoch differs from unix epoch).</p>
+<h2>3. Linux artifacts</h2>
+<pre><code class="language-bash"># Key paths on a Linux image:
+# /var/log/auth.log, syslog: authentication and sudo
+# /home/*/.bash_history: typed commands (often the whole attack)
+# /var/log/cron: scheduled task execution
+# /etc/crontab, /etc/cron.*: persistence
+# ~/.ssh/authorized_keys: planted keys
+
+# Bash history is frequently the entire intrusion in one file
+grep -E &#x27;wget|curl|chmod|nc |ncat|/dev/tcp&#x27; /mnt/image/home/user/.bash_history | head -20
+
+# Auth log: logons, sudo use, in the incident window
+grep -E &#x27;sshd.*Accepted|sudo.*COMMAND&#x27; /mnt/image/var/log/auth.log | head -20</code></pre>
+<p>On Linux, <code>.bash_history</code> plus <code>auth.log</code> plus the timeline usually reconstructs the intrusion end to end. Check for history deletion too: a truncated history file is itself evidence.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The artifact is corrupted or partially overwritten. Parse what</li>
+<p>survives; carve the rest (see deleted-file-carving) and note the gaps.</p>
+<li>The user cleared history or logs. The clearing is evidence; look for</li>
+<p>the tools used to clear and the artifacts they missed.</p>
+<li>Timestamps conflict between artifacts. Different applications, different</li>
+<p>epochs and zones; normalize before correlating.</p>
+<li>The artifact format is proprietary. Find the vendor&#x27;s documentation or</li>
+<p>a community parser; do not guess at binary layouts.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need registry or evtx at scale: use dedicated forensic frameworks</li>
+<p>that batch-parse hives and logs into the timeline.</p>
+<li>Artifacts point to memory-resident activity: hand the question to</li>
+<p>memory-forensics with the artifact evidence attached.</p>
+<li>The artifact answers are needed for legal proceedings: document the</li>
+<p>tool, version, and exact commands for reproducibility.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, artifacts are the detection surface that survives log deletion: registry persistence, browser history, and file artifacts persist where logs were cleared. Building artifact baselines (normal Run keys, normal services) makes anomalies visible during hunts. The defender&#x27;s lesson is that attackers who clean logs often forget artifacts.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-86 (Guide to Integrating Forensic Techniques into Incident</li>
+<p>Response).</p>
+<li>SANS forensic artifact references (persistence locations).</li>
+<li>SQLite database format documentation (browser artifacts).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

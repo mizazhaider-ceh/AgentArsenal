@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: can-bus-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>can-bus-security</h2><div class="meta"><span class="badge gray">automotive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing CAN bus security on a vehicle or bench</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="automotive-ethernet.html">automotive-ethernet</a> <a href="ecu-firmware.html">ecu-firmware</a> <a href="network-pivoting.html">network-pivoting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Wireshark</td><td>4.4</td></tr></tbody></table><p>The CAN bus is a broadcast network with no authentication: every ECU sees every message and trusts the sender ID. This skill covers authorized testing on your own vehicle or bench rig: sniffing traffic, reverse engineering message meanings, testing injection safely, and reviewing gateway segmentation. Never test on a moving vehicle or anyone else&#x27;s car; bench setups and your own parked vehicle only, with safety precautions.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Set up the bench: your vehicle parked and off, or a bench rig with</li>
+<p>ECUs you own, plus a CAN interface.</p>
+<li>Bring up the interface and confirm you see traffic.</li>
+<li>Capture a baseline: idle, then during controlled actions (door</li>
+<p>open, lights on).</p>
+<li>Reverse engineer message IDs: correlate actions with frames.</li>
+<li>Map the gateways: which buses exist and what passes between them.</li>
+<li>Test injection on the bench only: replay frames and observe.</li>
+<li>Check diagnostics: UDS access and seed key authentication.</li>
+<li>Report the exposure with the safety limits you respected.</li>
+</ol>
+<h2>1. Sniffing with SocketCAN</h2>
+<pre><code class="language-bash"># Bring up a CAN interface (canable, PCAN, or similar adapter)
+sudo ip link set can0 up type can bitrate 500000
+# Common automotive bitrates: 500000 (powertrain), 125000 (body), 250000
+
+# Watch live traffic
+candump can0 | head -30
+# Log to file for analysis
+candump -l can0</code></pre>
+<pre><code class="language-bash"># Baseline diff: capture idle, then capture while toggling something
+candump -l can0 &amp; sleep 10; kill %1; mv candump-*.log /tmp/can_idle.log
+# now open a door, then:
+candump -l can0 &amp; sleep 10; kill %1; mv candump-*.log /tmp/can_door.log
+# Compare: new or changed IDs belong to the door action
+python3 - &lt;&lt; &#x27;PY&#x27;
+def ids(path):
+    out = set()
+    for line in open(path):
+        parts = line.split()
+        if len(parts) &gt;= 3:
+            out.add(parts[2])
+    return out
+idle, door = ids(&quot;/tmp/can_idle.log&quot;), ids(&quot;/tmp/can_door.log&quot;)
+print(&quot;IDs only seen during door action:&quot;, sorted(door - idle)[:20])
+PY</code></pre>
+<h2>2. Injection testing (bench only)</h2>
+<pre><code class="language-bash"># Replay a captured frame on the bench rig (NEVER on a driven vehicle)
+cansend can0 2F1#1122334455667788
+# Observe the bench ECU response; record which frames cause actions</code></pre>
+<pre><code class="language-bash"># Fuzz a single ID&#x27;s data bytes carefully on the bench
+# (stop immediately on unexpected behavior)
+for b in 00 FF; do
+  cansend can0 2F1#${b}00000000000000
+  sleep 1
+done</code></pre>
+<h2>3. UDS diagnostics check</h2>
+<pre><code class="language-bash"># UDS runs over CAN (ISO-TP); check diagnostic session access
+# Tester present and session control are the entry points
+# Seed-key: request seed (0x27 0x01), compute key, send key (0x27 0x02)
+python3 - &lt;&lt; &#x27;PY&#x27;
+print(&quot;checklist: does security access use a real algorithm or a constant?&quot;)
+print(&quot;known weak: seed always 0x0000, key equals seed, no brute force delay&quot;)
+print(&quot;never brute force a live vehicle ECU; review on the bench&quot;)
+PY</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The vehicle has CAN FD or multiple bitrates. Set the interface to</li>
+<p>match; wrong bitrate shows as error frames.</p>
+<li>Gateways filter between buses. What you inject on the OBD port may</li>
+<p>not reach the powertrain bus; map the gateway rules.</p>
+<li>The car sleeps and the bus goes quiet. Wake it with a door handle</li>
+<p>or ignition to accessory, parked and secured.</p>
+<li>EVs have additional high voltage safety concerns. Do not probe</li>
+<p>high voltage wiring; stay on the 12V CAN side.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Injection works on safety critical IDs on the bench: this is a</li>
+<p>critical finding; verify gateway segmentation as the mitigation.</p>
+<li>UDS seed key is weak: demonstrate on the bench, then recommend</li>
+<p>proper authentication and brute force delays.</p>
+<li>Need the full vehicle picture: move to automotive-threat-model for</li>
+<p>the systematic analysis.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Vehicle defenders use gateways with message filtering, IDS on the CAN bus (detecting injected frames by timing and counter anomalies), and secure diagnostics with real seed key algorithms. They detect attacks through frames that break timing patterns and diagnostic sessions from unexpected sources. The durable direction is authenticated CAN (SecOC) for critical messages and strong gateway isolation.</p>
+<h2>Key references</h2>
+<ul>
+<li>ISO 11898: CAN protocol standard.</li>
+<li>ISO 14229 (UDS): diagnostic services.</li>
+<li>CWE-306 (Missing Authentication for Critical Function).</li>
+<li>CWE-924 (Improper Enforcement of Message Integrity): unauthenticated bus.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

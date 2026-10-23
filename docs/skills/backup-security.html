@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: backup-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>backup-security</h2><div class="meta"><span class="badge gray">defensive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when designing or auditing backup security. Covers</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ransomware-response.html">ransomware-response</a> <a href="incident-response.html">incident-response</a> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Backups are the last line against ransomware, and attackers know it: they delete backups first. This skill covers making backups that survive: the 3-2-1 rule, immutability, encryption, and restore testing that proves recovery works. Design for the systems you own.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory what needs backing up: data, configs, and the</li>
+<p>procedures to rebuild.</p>
+<li>Apply 3-2-1: three copies, two media types, one off site and</li>
+<p>offline or immutable.</p>
+<li>Make backups immutable: object lock, air gap, or offline media</li>
+<p>the attacker cannot delete.</p>
+<li>Encrypt backups with keys the production environment cannot</li>
+<p>reach.</p>
+<li>Separate backup credentials: the backup admin is not the domain</li>
+<p>admin.</p>
+<li>Test restores on a schedule: a backup you have not restored is</li>
+<p>a hope.</p>
+<li>Monitor backup health: success, age, and integrity checks with</li>
+<p>alerts.</p>
+<li>Document the recovery runbook with realistic time estimates.</li>
+</ol>
+<h2>1. Design checks</h2>
+<pre><code class="language-bash"># Backup audit questions (answer per system):
+# - where are the three copies, and which failures kill each?
+# - can ransomware on the production network delete or encrypt them?
+# - who holds the backup credentials, and are they separate?
+# - when was the last successful restore test, and how long did it take?
+echo &quot;if the answer to &#x27;can the attacker delete it&#x27; is yes, redesign&quot;</code></pre>
+<pre><code class="language-bash"># Immutability verification (example: S3 object lock)
+# aws s3api get-object-lock-configuration --bucket backups
+# Check: compliance mode, retention period, and that the backup role
+# cannot override it
+echo &quot;verify: try deleting a locked object as the backup role -&gt; must fail&quot;</code></pre>
+<h2>2. Restore testing</h2>
+<pre><code class="language-bash"># Quarterly restore drill template:
+# 1. pick a system at random (no warning to the restore team is better)
+# 2. time the full restore to an isolated network
+# 3. verify: data integrity, application starts, users can log in
+# 4. record: time to restore, gaps found, runbook fixes
+echo &quot;track RTO vs actual; the gap is the finding&quot;</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Backup health dashboard sketch.&quot;&quot;&quot;
+backups = [
+    {&quot;system&quot;: &quot;file server&quot;, &quot;last_ok&quot;: &quot;2026-10-22&quot;, &quot;restore_test&quot;: &quot;2026-07-15&quot;},
+    {&quot;system&quot;: &quot;database&quot;, &quot;last_ok&quot;: &quot;2026-10-23&quot;, &quot;restore_test&quot;: &quot;2026-10-01&quot;},
+    {&quot;system&quot;: &quot;configs&quot;, &quot;last_ok&quot;: &quot;2026-10-20&quot;, &quot;restore_test&quot;: &quot;never&quot;},
+]
+for b in backups:
+    flag = &quot; &lt;-- TEST RESTORE&quot; if b[&quot;restore_test&quot;] in (&quot;never&quot;,) or b[&quot;restore_test&quot;] &lt; &quot;2026-08-01&quot; else &quot;&quot;
+    print(f&quot;{b[&#x27;system&#x27;]:12s} backup {b[&#x27;last_ok&#x27;]} restore {b[&#x27;restore_test&#x27;]}{flag}&quot;)</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Backups are huge and immutable storage is costly. Tier: immutable</li>
+<p>for the critical set, standard for the rest, documented.</p>
+<li>The backup software itself is the target. Harden it like any</li>
+<p>privileged system and monitor its logs.</p>
+<li>Cloud backups in the same account as production. Separate</li>
+<p>account with no shared admin is the fix.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Restore test fails: treat as an incident for the recovery</li>
+<p>capability; fix before the next test cycle.</p>
+<li>Ransomware active: protect the backup infrastructure first,</li>
+<p>then start recovery per the playbook.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Backup attacks are detected through backup job failures, mass deletion attempts on backup storage, and backup admin logins at odd hours. Defenders alert on all of these and keep the backup network isolated. The durable truth: ransomware defense is backup defense, and untested backups are not backups.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-34: contingency planning.</li>
+<li>3-2-1 backup rule literature.</li>
+<li>Related skills: ransomware-response, incident-response.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

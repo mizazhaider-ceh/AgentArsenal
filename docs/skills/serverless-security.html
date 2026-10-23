@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: serverless-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>serverless-security</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">92/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing serverless applications (Lambda,</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cloud-security-basics.html">cloud-security-basics</a> <a href="iam-privesc.html">iam-privesc</a> <a href="api-security-testing.html">api-security-testing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Serverless removes servers but not security work: the function code, its triggers, and its IAM role are the new attack surface. This skill covers authorized assessment: enumerating functions and triggers, injecting events, abusing over broad roles, and reviewing dependencies. Test only accounts and functions you are authorized to assess.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate functions, triggers, and environment variables you can</li>
+<p>see with the test role.</p>
+<li>Map each trigger to its input: API Gateway, S3 events, queues,</li>
+<p>and schedules.</p>
+<li>Test event injection: malformed and malicious event payloads per</li>
+<p>trigger.</p>
+<li>Review the execution role: what the function can reach with its</li>
+<p>permissions.</p>
+<li>Check environment variables and layers for secrets.</li>
+<li>Review dependencies for known vulnerabilities.</li>
+<li>Test the API triggers with the web API skills.</li>
+<li>Report per function with its role&#x27;s blast radius.</li>
+</ol>
+<h2>1. Enumeration (AWS example, authorized account)</h2>
+<pre><code class="language-bash"># List functions and their triggers
+aws lambda list-functions --query &#x27;Functions[].FunctionName&#x27; --output text
+aws lambda get-policy --function-name orders-api 2&gt;/dev/null | head -30
+# Environment variables (may hold secrets; handle carefully)
+aws lambda get-function-configuration --function-name orders-api \
+  --query &#x27;Environment.Variables&#x27;</code></pre>
+<pre><code class="language-bash"># Who can invoke: resource policy plus the execution role
+aws lambda get-function --function-name orders-api \
+  --query &#x27;Configuration.Role&#x27;
+aws iam get-role-policy --role-name lambda-orders-role --policy-name inline 2&gt;/dev/null | head -40
+# Wildcard actions or * resources on the role = the finding</code></pre>
+<h2>2. Event injection</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Event injection probes per trigger type (authorized functions).&quot;&quot;&quot;
+print(&quot;API Gateway: test like any web API (see api-security-testing)&quot;)
+print(&quot;S3 trigger: upload objects with malicious names and contents&quot;)
+print(&quot;SQS trigger: send malformed message bodies&quot;)
+print(&quot;schedule: check for time based logic flaws&quot;)
+print(&quot;each probe: does the function validate, or trust the event?&quot;)</code></pre>
+<pre><code class="language-bash"># S3 event path traversal via object key (classic)
+aws s3 cp /tmp/evil.txt s3://target-bucket/../../tmp/evil.txt --profile test
+# Then check the function logs: did it write outside the intended path
+aws logs tail /aws/lambda/s3-processor --since 5m --profile test | head -20</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Functions are VPC attached. The network path matters; assess the</li>
+<p>security groups too.</p>
+<li>Layers are shared across functions. A vulnerable layer affects</li>
+<p>everything; inventory layer versions.</p>
+<li>The function is behind a WAF at API Gateway. Test the function</li>
+<p>directly via its other triggers too.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Role is over privileged: demonstrate the reachable services</li>
+<p>(list buckets, read tables) within the test account.</p>
+<li>Event injection works: escalate to the impact (data written,</li>
+<p>messages sent) with a harmless proof.</p>
+<li>Need the full account picture: hand to iam-privesc for the role</li>
+<p>chain review.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see serverless attacks as unusual invocations, functions calling services outside their baseline, and spikes in duration or memory (crypto mining). They detect with CloudTrail for control plane, function logs for data plane, and anomaly alerts. The durable defense is least privilege roles per function, input validation on every trigger, dependency scanning in CI, and no secrets in env vars.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1578 (Modify Cloud Compute Infrastructure).</li>
+<li>CWE-862 (Missing Authorization): role and trigger gaps.</li>
+<li>CWE-798 (Use of Hard-coded Credentials): env var secrets.</li>
+<li>Cloud provider serverless security guidance.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: port-forwarding-chains</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>port-forwarding-chains</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need specific internal services exposed through</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="network-pivoting.html">network-pivoting</a></div><div class="deps"><span class="kind">requires:</span> <a href="network-pivoting.html">network-pivoting</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="c2-fundamentals.html">c2-fundamentals</a> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>OpenSSH</td><td>9.6</td></tr><tr><td>socat</td><td>1.7</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Port forwarding chains expose individual internal services through footholds: precise, low-noise, and easy to reason about. This skill covers building forward chains on authorized engagements: local and remote forwards, multi-hop chains, non-SSH forwarders for constrained hosts, and the mapping discipline that keeps chains debuggable. Use it when you know exactly which services you need; use SOCKS proxies when you are still exploring.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List the exact internal services you need (host, port, purpose).</li>
+<li>Build the shortest chain to each: direct forward where possible.</li>
+<li>Assign local ports systematically and write the map down.</li>
+<li>Verify each forward end to end before relying on it.</li>
+<li>Run the service-specific tools against the local ports.</li>
+<li>Tear down every forward at engagement end.</li>
+</ol>
+<h2>1. Building the chain</h2>
+<pre><code class="language-bash"># Single hop: internal web app on your localhost:8080
+ssh -L 8080:10.1.0.23:80 -N -f user@foothold.example
+
+# Two hops: foothold1 reaches foothold2&#x27;s network
+# Hop A: local 2222 -&gt; foothold2&#x27;s SSH via foothold1
+ssh -L 2222:10.1.0.5:22 -N -f user@foothold1.example
+# Hop B: through hop A, forward the deep service
+ssh -p 2222 -L 8080:10.2.0.9:80 -N -f user@localhost
+
+# Remote forward: expose your attack-box tool to the internal network
+ssh -R 8080:127.0.0.1:8080 -N -f user@foothold.example</code></pre>
+<pre><code class="language-bash"># Port map (keep this in your notes, it is the chain&#x27;s documentation)
+# localhost:8080 -&gt; 10.1.0.23:80  (intranet web)
+# localhost:8443 -&gt; 10.1.0.24:443 (admin panel)
+# localhost:2222 -&gt; 10.1.0.5:22   (second hop SSH)</code></pre>
+<p>Write the map before building. Chains built from memory develop port collisions and mystery forwards that nobody can tear down later.</p>
+<h2>2. Non-SSH forwarders</h2>
+<pre><code class="language-bash"># socat relay on a foothold without SSH forwarding
+# On foothold: listen 8080, forward to internal 10.1.0.23:80
+socat TCP-LISTEN:8080,fork TCP:10.1.0.23:80 &amp;
+
+# Then SSH local-forward to the relay (or reach it directly)
+ssh -L 8080:127.0.0.1:8080 -N -f user@foothold.example
+
+# Chisel-style tunneling concepts apply the same way with any
+# forwarder the engagement approves; the chain logic is identical</code></pre>
+<p>Constrained footholds (no SSH, no forwarding allowed) still pivot with a simple relay binary. The chain gets longer, but each link stays simple and testable.</p>
+<h2>3. Verification and troubleshooting</h2>
+<pre><code class="language-bash"># Verify each link independently, from the outside in
+curl -s http://127.0.0.1:8080/ -o /dev/null -w &#x27;end-to-end: %{http_code}\n&#x27;
+
+# Which forward is broken? Test at each hop
+ssh user@foothold.example &#x27;curl -s http://10.1.0.23/ -o /dev/null -w &quot;%{http_code}\n&quot;&#x27;
+# If the foothold reaches it but you do not, your forward is broken;
+# if the foothold cannot, the target or route is the problem
+
+# List your active forwards
+ps aux | grep -E &#x27;ssh.*-L|ssh.*-R&#x27; | grep -v grep</code></pre>
+<p>Debug outside-in: confirm the far end first, then each forward link. Most chain failures are a dead far end or a typo in the map, not SSH itself.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>GatewayPorts blocks remote forwards from binding publicly. Remote</li>
+<p>forwards bind to localhost on the foothold by default; binding wider needs the foothold&#x27;s sshd_config cooperation.</p>
+<li>Forwards die silently. Wrap critical forwards in autossh or a simple</li>
+<p>loop that re-establishes them, and alert yourself when they drop.</p>
+<li>The same local port is needed twice. Extend the map (8080, 8081,</li>
+<p>8082) rather than reusing; collisions waste more time than the extra ports cost.</p>
+<li>Firewall between footholds blocks the relay port. Pick relay ports</li>
+<p>that the inter-foothold path allows (443 and 53 are the usual candidates).</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The chain needs more hops than is sane: reconsider; three SSH hops</li>
+<p>with forwards is usually a sign to get a better foothold instead.</p>
+<li>A forward must persist across days: document it as infrastructure,</li>
+<p>monitor it, and include it in the teardown checklist.</p>
+<li>You need the whole subnet, not services: switch to socks-proxies;</li>
+<p>forwards are the wrong tool for exploration.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see forward chains as SSH sessions with channel opens to internal hosts, relay processes (socat) on servers that should not run them, and internal services accessed from unexpected sources. Each link is visible on its own host, which is why chains are noisier than they feel. Defenses are disabling forwarding where unneeded, monitoring for relay binaries on servers, and alerting on SSH channel patterns.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1572 (Protocol Tunneling).</li>
+<li>MITRE ATT&amp;CK T1090 (Proxy).</li>
+<li>OpenSSH 9.6 manual: -L, -R, -D forwarding options.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

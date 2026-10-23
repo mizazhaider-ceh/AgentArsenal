@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: firmware-extraction</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>firmware-extraction</h2><div class="meta"><span class="badge gray">hardware</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to get firmware off a device or out of an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="firmware-analysis.html">firmware-analysis</a> <a href="uart-jtag.html">uart-jtag</a> <a href="static-triage.html">static-triage</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>binwalk</td><td>2.4.1</td></tr><tr><td>flashrom</td><td>1.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Firmware extraction is getting the bytes: from an update file on a website, from a SPI flash chip on the board, or from a debug port. This skill covers the authorized lab workflow: unpacking update packages, reading external flash with a programmer, carving filesystems out of raw dumps, and verifying what you extracted. Work only on devices you own or have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Start with the easy path: download official update files and try to</li>
+<p>unpack them before touching hardware.</p>
+<li>Identify the flash chip on the board and check whether it is readable</li>
+<p>in circuit.</p>
+<li>Read the chip with flashrom and verify the dump (read twice, compare</li>
+<p>hashes).</p>
+<li>Carve the dump with binwalk to find bootloaders, kernels, and</li>
+<p>filesystems.</p>
+<li>Extract each filesystem and list its contents for the analysis phase.</li>
+<li>If in circuit reads fail, desolder or use a clip, and re-verify.</li>
+<li>Document chip part number, programmer, read settings, and hashes.</li>
+</ol>
+<h2>1. Update file unpacking</h2>
+<pre><code class="language-bash"># Identify the update file type first
+file /tmp/vendor_update.bin
+binwalk /tmp/vendor_update.bin | head -20
+
+# Extract everything binwalk recognizes
+binwalk -e -C /tmp/fw_extract /tmp/vendor_update.bin
+find /tmp/fw_extract -maxdepth 3 | head -30</code></pre>
+<pre><code class="language-bash"># Encrypted or obfuscated updates: measure entropy to confirm
+python3 - &lt;&lt; &#x27;PY&#x27;
+import math, collections
+data = open(&quot;/tmp/vendor_update.bin&quot;, &quot;rb&quot;).read()
+freq = collections.Counter(data)
+ent = -sum(c / len(data) * math.log2(c / len(data)) for c in freq.values())
+print(f&quot;entropy: {ent:.2f} bits/byte (near 8.0 suggests encryption)&quot;)
+PY
+# High entropy with a small header often means a simple XOR or a
+# documented crypto scheme; check the vendor&#x27;s GPL release or FCC filings</code></pre>
+<h2>2. SPI flash reading with flashrom</h2>
+<pre><code class="language-bash"># Detect the chip (use a CH341A or similar programmer, clip on the chip)
+flashrom -p ch341a_spi
+# Read twice and compare: a stable read is a trustworthy read
+flashrom -p ch341a_spi -r /tmp/flash_a.bin
+flashrom -p ch341a_spi -r /tmp/flash_b.bin
+sha256sum /tmp/flash_a.bin /tmp/flash_b.bin</code></pre>
+<pre><code class="language-bash"># Carve the verified dump
+binwalk -e -C /tmp/spi_extract /tmp/flash_a.bin
+# Common finds: U-Boot at the start, kernel, squashfs or jffs2 roots
+find /tmp/spi_extract -name &quot;*.squashfs&quot; -o -name &quot;squashfs-root&quot; | head
+# Extract squashfs manually if binwalk missed it
+unsquashfs -d /tmp/rootfs /tmp/spi_extract/_flash_a.bin.extracted/4A000.squashfs 2&gt;/dev/null
+ls /tmp/rootfs | head</code></pre>
+<h2>3. Verifying the extraction</h2>
+<pre><code class="language-bash"># Sanity checks on the dump before analysis
+ls -l /tmp/flash_a.bin
+# Look for known magic: U-Boot, ELF, squashfs (hsqs), JFFS2
+xxd /tmp/flash_a.bin | head -5
+python3 - &lt;&lt; &#x27;PY&#x27;
+data = open(&quot;/tmp/flash_a.bin&quot;, &quot;rb&quot;).read()
+for magic, name in [(b&quot;hsqs&quot;, &quot;squashfs&quot;), (b&quot;\x7fELF&quot;, &quot;ELF&quot;),
+                    (b&quot;UBI#&quot;, &quot;UBI&quot;), (b&quot;\x85\x19&quot;, &quot;JFFS2&quot;)]:
+    print(name, &quot;found at offsets:&quot;, [hex(i) for i in range(len(data)) if data[i:i+len(magic)] == magic][:5])
+PY</code></pre>
+<p>An all 0xFF or all 0x00 dump means the read failed or the chip was not selected. A dump that changes between reads means the chip is being written during read (power the board down and read the chip isolated).</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Chip reads differently each time. The SoC is accessing flash</li>
+<p>concurrently; hold the SoC in reset during the read.</p>
+<li>flashrom does not recognize the chip. Force the chip type with</li>
+<p><code>-c &lt;name&gt;</code> after identifying it from the package marking, or add it to the flashchips table.</p>
+<li>The image is a multi volume UBI. Use <code>ubireader</code> to extract volumes</li>
+<p>instead of binwalk.</p>
+<li>The filesystem is encrypted (dm-crypt/LUKS header). Extraction stops</li>
+<p>here unless key recovery is in scope; document the finding.</p>
+<li>Update files are delta patches, not full images. You need the base</li>
+<p>version the delta applies to, or a device to apply it on.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>In circuit read fails: lift the chip&#x27;s VCC pin or desolder it and</li>
+<p>read it in a socket.</p>
+<li>BGA chip with no accessible pins: use the UART or JTAG path</li>
+<p>(uart-jtag skill) to dump from software instead.</p>
+<li>eMMC storage: use an eMMC adapter in 1 bit mode, or boot the device</li>
+<p>into a loader that exposes storage over USB.</p>
+<li>Everything hardware fails: analyze the update file statically and</li>
+<p>report extraction limits honestly.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>The device defender prevents extraction with encrypted firmware at rest, secure boot that rejects modified images, and readout protection on debug ports. They detect tampering through secure boot failure counters and attestation. For the analyst, the durable lesson is that unencrypted external flash is readable by anyone with a ten dollar clip, so sensitive data and keys must never sit in plaintext on SPI flash.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-1193 (Power-On of Untrusted Execution): untrusted firmware.</li>
+<li>CWE-1242 (Inclusion of Undocumented Features or Chicken Bits).</li>
+<li>flashrom documentation: supported programmers and chips.</li>
+<li>binwalk 2.4.1 documentation: extraction and entropy analysis.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

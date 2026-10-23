@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: suid-binaries</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>suid-binaries</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have a low-privilege Linux shell on an authorized</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-linux.html">privesc-linux</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-linux.html">privesc-linux</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Sudo</td><td>1.9</td></tr></tbody></table><p>SUID binaries run with the file owner&#x27;s privileges, so a SUID root binary with a shell escape is a direct path to root. This skill covers the SUID enumeration and exploitation workflow on authorized engagements: finding every SUID and SGID file, checking each against known techniques, and testing safely. It is the highest-yield privesc check on Linux, and it takes minutes, so it always comes early in the escalation order.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate all SUID and SGID binaries on the system.</li>
+<li>Filter out the standard, non-exploitable ones you recognize.</li>
+<li>Look up each unusual binary in GTFOBins for SUID techniques.</li>
+<li>Test the technique in a way that proves privilege without damage.</li>
+<li>Confirm the elevated shell and record the exact binary and method.</li>
+<li>Check for SUID scripts and writable SUID binaries as bonus paths.</li>
+</ol>
+<h2>1. Enumeration</h2>
+<pre><code class="language-bash"># All SUID binaries, sorted for review
+find / -perm -4000 -type f 2&gt;/dev/null | sort
+
+# SGID binaries too (group privilege, sometimes just as good)
+find / -perm -2000 -type f 2&gt;/dev/null | sort
+
+# Focus on the unusual: exclude the standard system paths
+find / -perm -4000 -type f 2&gt;/dev/null | grep -v -E &#x27;^/(usr/bin|bin)/&#x27; | sort
+
+# Check for SUID files writable by your user (misconfiguration gold)
+find / -perm -4000 -writable -type f 2&gt;/dev/null
+
+# Capabilities are the modern SUID: check those too
+getcap -r / 2&gt;/dev/null | grep -v -E &#x27;^$&#x27;</code></pre>
+<p>Read the whole list before testing anything. The standard set (passwd, sudo, su, mount) is noise; the custom or third-party binary in <code>/opt</code> or the user&#x27;s home is the signal.</p>
+<h2>2. Testing GTFOBins techniques</h2>
+<pre><code class="language-bash"># Example pattern: check the binary&#x27;s help for shell escapes first
+/usr/local/bin/custom-tool --help 2&gt;&amp;1 | head -20
+
+# Classic testable cases (verify against GTFOBins for the exact binary):
+# vim-like SUID: escape to shell from inside the program
+# find-like SUID: -exec /bin/sh
+# less-like SUID: !/bin/sh from the pager
+# python-like SUID: python -c &#x27;import os; os.system(&quot;/bin/sh&quot;)&#x27;
+
+# Safe proof: run id or whoami through the technique, not a full shell first
+# then escalate to the shell only to confirm</code></pre>
+<p>Test with a read-only proof (<code>id</code> showing uid 0) before dropping into a root shell. The finding is proven at <code>uid=0</code>; the interactive shell is just confirmation.</p>
+<h2>3. Writable and script edge cases</h2>
+<pre><code class="language-bash"># SUID shell scripts: the kernel ignores SUID on scripts on most
+# systems, but check anyway (some configurations honor it)
+/tmp/check.sh 2&gt;/dev/null; file /usr/local/bin/*.sh 2&gt;/dev/null | head
+
+# SUID binary with a writable library or config it loads
+strings /usr/local/bin/vuln-suid | grep -E &#x27;\.so|/etc/&#x27; | head -10
+ldd /usr/local/bin/vuln-suid 2&gt;/dev/null | grep &#x27;not found&#x27;
+
+# Relative path execution inside a SUID binary (PATH hijack)
+strings /usr/local/bin/vuln-suid | grep -E &#x27;system\(|popen|exec&#x27; | head -5</code></pre>
+<p>A SUID binary that calls <code>system(&quot;ls&quot;)</code> without a full path is exploitable through PATH manipulation. A SUID binary loading a missing shared library is exploitable by planting the library. Both are worth more in the report than a plain GTFOBins hit because they show custom-code flaws.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The binary is SUID but drops privileges immediately. Some programs</li>
+<p>sanitize; test the actual technique rather than assuming SUID equals root.</p>
+<li>GTFOBins has no entry for the binary. Read its strings and help text;</li>
+<p>custom binaries with shell escapes are common in CTF and enterprise alike.</p>
+<li>The filesystem is mounted nosuid. Check <code>mount | grep nosuid</code>; SUID</li>
+<p>bits on nosuid mounts do nothing, which is a defensive finding.</p>
+<li>Containers confuse the picture. SUID inside a container escalates to</li>
+<p>container root, not host root; note which boundary you crossed.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No SUID path works: move to sudo-misconfig, the next check in the</li>
+<p>privesc-linux order, then cron-abuse and kernel-exploits.</p>
+<li>You found a custom SUID binary with a memory corruption bug: that is a</li>
+<p>binary exploitation task; note it and time-box the exploit attempt.</p>
+<li>The SUID binary is exploitable but unstable: get the proof (<code>id</code></li>
+<p>output) in one clean run and stop; repeated crashes look like instability in the report and risk the engagement.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see SUID exploitation as a low-privilege process suddenly running as root, which EDR and auditd can flag through parent-child process anomalies. Unusual SUID binaries appear in file integrity monitoring. Defenses are minimizing SUID binaries (remove the bit where unneeded), mounting user-writable areas nosuid, using capabilities instead of full SUID root, and monitoring for new SUID files.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1548.001 (Abuse Elevation Control Mechanism: Setuid and</li>
+<p>Setgid).</p>
+<li>CWE-250 (Execution with Unnecessary Privileges).</li>
+<li>CWE-732 (Incorrect Permission Assignment for Critical Resource).</li>
+<li>GTFOBins: SUID techniques per binary.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

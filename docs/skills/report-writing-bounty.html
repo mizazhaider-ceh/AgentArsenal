@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: report-writing-bounty</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>report-writing-bounty</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing a bug bounty report that gets triaged fast</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><div class="deps"><span class="kind">requires:</span> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a> <a href="web-xss.html">web-xss</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr></tbody></table><p>The bounty report is the product: a great find with a bad report pays like a bad find. This skill covers writing reports that triage quickly: clear titles, reproducible PoCs, honest impact, and the right severity. Triagers process hundreds of reports; yours must make the vulnerability obvious in the first thirty seconds.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Reproduce the finding from scratch in a clean session.</li>
+<li>Write the title: vulnerability plus location, no hype.</li>
+<li>Document reproduction steps that work copy-paste.</li>
+<li>Show the impact with the minimal proof.</li>
+<li>State the severity with reasoning, not just a label.</li>
+<li>Suggest the fix briefly (one paragraph).</li>
+<li>Submit and track; respond to triager questions fast.</li>
+</ol>
+<h2>1. Structure that triages fast</h2>
+<pre><code class="language-bash">cat &gt; /tmp/bounty_report_template.txt &lt;&lt;&#x27;EOF&#x27;
+Title: &lt;Vuln type&gt; in &lt;endpoint/parameter&gt; allows &lt;impact&gt;
+       e.g. &quot;Stored XSS in support ticket subject executes in admin panel&quot;
+
+Severity: &lt;your assessment + one-line reasoning&gt;
+
+Summary: &lt;3 sentences: what, where, worst case&gt;
+
+Steps to reproduce:
+1. &lt;exact step, with the request or click&gt;
+2. &lt;exact step&gt;
+3. &lt;observed result&gt;
+
+Proof of concept:
+&lt;the exact request, curl command, or payload; copy-paste ready&gt;
+
+Impact: &lt;what an attacker gains, concretely, with the proof&gt;
+
+Remediation: &lt;the fix in one paragraph&gt;
+
+Notes: &lt;test account used, scope confirmation, cleanup done&gt;
+EOF</code></pre>
+<p>The steps to reproduce are the report&#x27;s core: a triager who cannot reproduce in five minutes will deprioritize or close the report. Test your own steps in a fresh browser and a fresh account before submitting; your muscle memory hides missing steps.</p>
+<h2>2. PoC quality</h2>
+<pre><code class="language-bash"># PoC quality bar:
+# - Copy-paste ready: the exact curl, the exact payload, the exact clicks
+# - Minimal: the shortest proof that shows the vulnerability
+# - Safe: no real user data, no destructive actions, test accounts only
+# - Complete: includes auth (which test account), the request, the response
+
+# Example: IDOR PoC
+# 1. Log in as testuser_a (provided test account)
+# 2. GET /api/orders/1001 -&gt; 200 with A&#x27;s data (baseline)
+# 3. Log in as testuser_b
+# 4. GET /api/orders/1001 with B&#x27;s token -&gt; 200 with A&#x27;s data (vulnerability)
+# 5. Screenshot: B&#x27;s session showing A&#x27;s order details
+
+# Video PoCs: for complex chains only; keep under 2 minutes, narrate the steps</code></pre>
+<p>Screenshots prove state; requests prove reproducibility. Include both for visual findings (XSS rendering, UI issues) and lean on requests for logic flaws. Redact nothing the triager needs; redact everything else.</p>
+<h2>3. Impact and severity honesty</h2>
+<pre><code class="language-bash"># Impact formula: capability + reach, stated plainly
+# WEAK: &quot;This is critical because XSS is dangerous&quot;
+# STRONG: &quot;Any authenticated user can store this payload; it executes for
+# every admin viewing tickets, allowing session theft and admin takeover.
+# Shown: admin session cookie readable in console (screenshot).&quot;
+
+# Severity self-assessment:
+# - Map to the program&#x27;s severity guide explicitly
+# - State assumptions (&quot;assumes admin reviews tickets daily&quot;)
+# - Do not inflate: triagers punish inflation with slower handling
+# - Do not undersell chained impact: show the chain, each link proven</code></pre>
+<p>Honest impact with proof earns trust; inflated impact with hand-waving earns skepticism that follows you to the next report. When the impact needs a chain, prove every link in the PoC section.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The triager cannot reproduce. Respond within 24 hours with a</li>
+<p>clarified PoC or a video; most &quot;cannot reproduce&quot; is a missing step.</p>
+<li>The finding is a duplicate. Accept it gracefully; check</li>
+<p>duplicate-avoidance before the next submission, not after.</p>
+<li>The severity is downgraded. Argue once, with evidence, politely;</li>
+<p>then accept the decision and move on.</p>
+<li>The program goes silent. Follow up once after their stated SLA;</li>
+<p>then let it be.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A critical finding needs immediate attention: use the program&#x27;s</li>
+<p>priority channel if they have one; otherwise submit normally and note the urgency factually.</p>
+<li>The report was rejected unfairly: rewrite with tighter PoC and</li>
+<p>resubmit only if the policy allows; otherwise take the lesson.</p>
+<li>You need the report template improved: iterate it from triager</li>
+<p>feedback, not from theory.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>From the program&#x27;s side, good reports are the cheapest security investment: they convert external researcher time into fixed vulnerabilities. Programs detect report quality problems by triage time and reopen rates. The defender&#x27;s action on a good report is the fix plus the regression test; the report&#x27;s remediation paragraph should make that trivial.</p>
+<h2>Key references</h2>
+<ul>
+<li>Program-specific severity guides (read before submitting).</li>
+<li>OWASP Testing Guide (methodology backing for the PoC).</li>
+<li>CVSS calculator (for severity reasoning, where the program uses it).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -21,6 +21,10 @@ from datetime import datetime, timezone
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKILLS_DIR = os.path.join(REPO_ROOT, "skills")
+AGENTS_DIR = os.path.join(REPO_ROOT, "agents")
+BRAINS_DIR = os.path.join(REPO_ROOT, "brains")
+PLAYBOOKS_DIR = os.path.join(REPO_ROOT, "playbooks")
+WORKFLOWS_DIR = os.path.join(REPO_ROOT, "workflows")
 MANIFEST_PATH = os.path.join(REPO_ROOT, "arsenal-manifest.json")
 
 FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
@@ -107,10 +111,29 @@ def sha256_of(path):
     return digest.hexdigest()
 
 
-def derive():
+def read_frontmatter_file(md_path):
+    """Read a markdown file and return its parsed frontmatter dict."""
+    with open(md_path, "r", encoding="utf-8") as fh:
+        text = fh.read()
+    try:
+        return parse_frontmatter(text)
+    except ValueError as exc:
+        print("error: %s: %s" % (md_path, exc), file=sys.stderr)
+        sys.exit(2)
+
+
+def derive_skills():
+    """Derive the top-level "skills" list.
+
+    Shape is frozen for backward compatibility (install.sh and
+    gen_readme_catalog.py depend on it): a list of dicts with keys
+    name, version, domain, path, sha256, lifecycle, requires, extends,
+    relates, sorted by name. Sub-skills are NOT included here; they go
+    in "sub_skills".
+    """
     skills = []
     if not os.path.isdir(SKILLS_DIR):
-        return {"generated_at": now_utc(), "skills": []}
+        return skills
 
     for domain in sorted(os.listdir(SKILLS_DIR)):
         domain_path = os.path.join(SKILLS_DIR, domain)
@@ -121,13 +144,7 @@ def derive():
             md_path = os.path.join(skill_path, "SKILL.md")
             if not os.path.isfile(md_path):
                 continue
-            with open(md_path, "r", encoding="utf-8") as fh:
-                text = fh.read()
-            try:
-                fm = parse_frontmatter(text)
-            except ValueError as exc:
-                print("error: %s: %s" % (md_path, exc), file=sys.stderr)
-                sys.exit(2)
+            fm = read_frontmatter_file(md_path)
             skills.append({
                 "name": fm.get("name", skill),
                 "version": fm.get("version", "0.0.0"),
@@ -141,7 +158,106 @@ def derive():
             })
 
     skills.sort(key=lambda s: s["name"])
-    return {"generated_at": now_utc(), "skills": skills}
+    return skills
+
+
+def derive_sub_skills():
+    """Derive "sub_skills": name -> {parent, path, sha256, version}."""
+    sub_skills = {}
+    if not os.path.isdir(SKILLS_DIR):
+        return sub_skills
+
+    for domain in sorted(os.listdir(SKILLS_DIR)):
+        domain_path = os.path.join(SKILLS_DIR, domain)
+        if not os.path.isdir(domain_path):
+            continue
+        for skill in sorted(os.listdir(domain_path)):
+            sub_dir = os.path.join(domain_path, skill, "sub")
+            if not os.path.isdir(sub_dir):
+                continue
+            for sub in sorted(os.listdir(sub_dir)):
+                md_path = os.path.join(sub_dir, sub, "SKILL.md")
+                if not os.path.isfile(md_path):
+                    continue
+                fm = read_frontmatter_file(md_path)
+                name = fm.get("name", sub)
+                sub_skills[name] = {
+                    "parent": fm.get("parent", skill),
+                    "path": "skills/%s/%s/sub/%s" % (domain, skill, sub),
+                    "sha256": sha256_of(md_path),
+                    "version": fm.get("version", "0.0.0"),
+                }
+    return dict(sorted(sub_skills.items()))
+
+
+def derive_kind_file_map(root_dir, filename):
+    """Derive name -> {path, sha256, version} for agents/, brains/,
+    playbooks/ style directories holding one markdown file each."""
+    entries = {}
+    if not os.path.isdir(root_dir):
+        return entries
+    for name in sorted(os.listdir(root_dir)):
+        md_path = os.path.join(root_dir, name, filename)
+        if not os.path.isfile(md_path):
+            continue
+        fm = read_frontmatter_file(md_path)
+        entries[fm.get("name", name)] = {
+            "path": os.path.relpath(os.path.dirname(md_path), REPO_ROOT),
+            "sha256": sha256_of(md_path),
+            "version": fm.get("version", "0.0.0"),
+        }
+    return dict(sorted(entries.items()))
+
+
+def derive_agents():
+    """Derive "agents": name -> {path, sha256, version, skills, brains}."""
+    entries = {}
+    if not os.path.isdir(AGENTS_DIR):
+        return entries
+    for name in sorted(os.listdir(AGENTS_DIR)):
+        md_path = os.path.join(AGENTS_DIR, name, "AGENT.md")
+        if not os.path.isfile(md_path):
+            continue
+        fm = read_frontmatter_file(md_path)
+        entries[fm.get("name", name)] = {
+            "path": "agents/%s" % name,
+            "sha256": sha256_of(md_path),
+            "version": fm.get("version", "0.0.0"),
+            "skills": fm.get("skills", []) or [],
+            "brains": fm.get("brains", []) or [],
+        }
+    return dict(sorted(entries.items()))
+
+
+def derive_workflows():
+    """Derive "workflows": name -> {path, sha256} for workflows/*.md."""
+    entries = {}
+    if not os.path.isdir(WORKFLOWS_DIR):
+        return entries
+    for fname in sorted(os.listdir(WORKFLOWS_DIR)):
+        if not fname.endswith(".md") or fname == "README.md":
+            continue
+        md_path = os.path.join(WORKFLOWS_DIR, fname)
+        if not os.path.isfile(md_path):
+            continue
+        entries[fname[:-3]] = {
+            "path": "workflows/%s" % fname,
+            "sha256": sha256_of(md_path),
+        }
+    return dict(sorted(entries.items()))
+
+
+def derive():
+    manifest = {
+        "generated_at": now_utc(),
+        "skills": derive_skills(),
+        "sub_skills": derive_sub_skills(),
+        "agents": derive_agents(),
+        "brains": derive_kind_file_map(BRAINS_DIR, "BRAIN.md"),
+        "playbooks": derive_kind_file_map(PLAYBOOKS_DIR, "PLAYBOOK.md"),
+        "workflows": derive_workflows(),
+    }
+    return manifest
 
 
 def now_utc():
@@ -164,23 +280,39 @@ def main():
             sys.exit(1)
         with open(MANIFEST_PATH, "r", encoding="utf-8") as fh:
             on_disk = json.load(fh)
-        if on_disk.get("skills") != manifest["skills"]:
+        derived_keys = {k: v for k, v in manifest.items() if k != "generated_at"}
+        disk_keys = {k: v for k, v in on_disk.items() if k != "generated_at"}
+        if disk_keys != derived_keys:
             print("check failed: checked-in manifest differs from derived manifest",
                   file=sys.stderr)
             sys.exit(1)
-        print("ok: manifest matches derived skills (%d skills)" % len(manifest["skills"]))
+        counts = ", ".join(
+            "%d %s" % (len(manifest[k]) if isinstance(manifest[k], (list, dict)) else 0, k)
+            for k in ("skills", "sub_skills", "agents", "brains",
+                      "playbooks", "workflows")
+        )
+        print("ok: manifest matches derived artifacts (%s)" % counts)
         return
 
     with open(MANIFEST_PATH, "w", encoding="utf-8") as fh:
         json.dump(manifest, fh, indent=2)
         fh.write("\n")
-    print("wrote %s (%d skills)" % (MANIFEST_PATH, len(manifest["skills"])))
+    counts = {k: len(v) for k, v in manifest.items()
+              if k != "generated_at" and isinstance(v, (list, dict))}
+    print("wrote %s (%s)" % (MANIFEST_PATH, ", ".join(
+        "%d %s" % (n, k) for k, n in sorted(counts.items()))))
 
     if args.json:
         by_domain = {}
         for skill in manifest["skills"]:
             by_domain[skill["domain"]] = by_domain.get(skill["domain"], 0) + 1
-        print(json.dumps({"skills": len(manifest["skills"]), "by_domain": by_domain}))
+        print(json.dumps({"skills": len(manifest["skills"]),
+                          "sub_skills": len(manifest["sub_skills"]),
+                          "agents": len(manifest["agents"]),
+                          "brains": len(manifest["brains"]),
+                          "playbooks": len(manifest["playbooks"]),
+                          "workflows": len(manifest["workflows"]),
+                          "by_domain": by_domain}))
 
 
 if __name__ == "__main__":

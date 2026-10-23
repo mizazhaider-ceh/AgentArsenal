@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: zero-trust-reasoning</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>zero-trust-reasoning</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must design or evaluate access in a world without a trusted network: architecting service-to-service auth, reviewing VPN-based access, planning remote work security, or challenging &quot;internal means safe&quot; assumptions. Provides zero-trust reasoning: never trust, always verify; identity is the new perimeter; every request is authenticated, authorized, and encrypted regardless of origin; trust is continuously re-evaluated, not granted once. Load this brain when the network location must stop being a security decision.</p><h2>Provides</h2><ul><li>Never-trust-always-verify request evaluation</li><li>Identity-as-perimeter architecture</li><li>Per-request authentication and authorization</li><li>Continuous verification over one-time checks</li><li>Network-location distrust modeling</li><li>Micro-segmentation reasoning</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>Zero trust is a response to a simple observation: the network perimeter is dead. People work from home, services live in three clouds, vendors connect directly, and attackers phish their way inside anyway. If &quot;inside the network&quot; ever meant &quot;safe,&quot; it does not anymore. Zero trust replaces location-based trust with a stricter rule: no user, device, or service is trusted by default, every request is verified, and access is granted per request, not per network. It matters because every flat trusted-internal design is one stolen credential away from total compromise.</p>
+<h2>Core mental models</h2>
+<p><strong>Never trust, always verify.</strong> Every access request, from anywhere, to anything, must prove who it is from, that it is allowed, and that the channel is safe. There is no &quot;already inside so skip the check.&quot; The internal HR tool gets the same authentication rigor as the public login page. This sounds expensive, and the tooling (identity-aware proxies, mutual TLS, short-lived tokens) makes it routine.</p>
+<p><strong>Identity is the new perimeter.</strong> In a zero-trust world, the boundary that matters is not the firewall, it is the identity: who (or what) is making this request, on which device, in what state? A request from a managed laptop with a fresh token is different from the same request from an unknown device with an old one. Build the perimeter around verified identity plus device posture, not around IP ranges.</p>
+<p><strong>Verify continuously, not once.</strong> A login at 9 AM does not prove the 3 PM request is legitimate. Sessions get hijacked, tokens get stolen, contexts change. Zero trust re-evaluates: short token lifetimes, step-up auth for sensitive actions, anomaly checks on behavior. Trust has a half-life. Design as if every grant expires, because it should.</p>
+<p><strong>The network is hostile, including yours.</strong> Treat every network, yours included, as if an attacker watches it. That means encryption everywhere (service to service, not just at the edge), no cleartext internal protocols, and no security decision based on source IP alone. If your design breaks when the network is hostile, it was never zero trust.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>Inventory every access path: who reaches what, from where, with what credential today.</li>
+<li>Find every decision based on network location (&quot;internal, so no auth needed&quot;). List them all.</li>
+<li>Put identity on every path: authenticate the user or workload on each request, regardless of origin.</li>
+<li>Authorize per request: check the specific action against policy at request time, not just at login.</li>
+<li>Encrypt everything in transit, including internal service-to-service traffic (mutual TLS or equivalent).</li>
+<li>Add device posture to the decision: managed, patched, and healthy devices get more than unknown ones.</li>
+<li>Shorten trust lifetimes: short-lived tokens, re-auth for sensitive actions, session anomaly checks.</li>
+<li>Micro-segment: services reach only the services they need, verified per connection.</li>
+<li>Log every access decision centrally. Verification you cannot audit is theater.</li>
+<li>Migrate incrementally: pick the highest-value asset, wrap it in zero-trust access, then expand. Big bang fails.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If removing the VPN breaks your security model, you had a VPN, not a security model.</li>
+<li>Every &quot;trusted internal&quot; service is a future incident report. Verify it like an external one.</li>
+<li>Source IP is a hint, not an identity. Never authorize on it alone.</li>
+<li>The most valuable zero-trust win is usually the admin path: jump hosts, consoles, and CI systems.</li>
+<li>Start with identity, then devices, then network. In that order.</li>
+<li>Encrypt internal traffic before you perfect anything else. It is the cheapest big win.</li>
+<li>A policy engine nobody can read is a policy nobody trusts. Keep policies reviewable.</li>
+<li>Migrate asset by asset. &quot;Zero trust everything by Friday&quot; is how you get neither.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>VPN as trust.</strong> Treating VPN-connected devices as internal and therefore safe. The phished laptop is now &quot;trusted.&quot;</li>
+<li><strong>Flat internal network.</strong> Once past the edge, everything reachable, nothing authenticated. Zero trust&#x27;s opposite.</li>
+<li><strong>One-time verification.</strong> A login token that lives for 30 days with no re-checks. Trust without expiry.</li>
+<li><strong>IP allowlisting as auth.</strong> &quot;Only our office IP can reach it&quot; instead of proving who is asking.</li>
+<li><strong>Big-bang migration.</strong> Trying to convert everything at once, stalling for a year, shipping nothing.</li>
+</ul>
+<h2>Worked example</h2>
+<p>A company runs internal tools behind a VPN: dashboards, admin consoles, and the deploy system. Anyone on the VPN reaches everything, no further auth on most tools. Zero-trust migration, incremental: first the deploy system, highest value. It moves behind an identity-aware proxy: every request needs a short-lived token tied to the engineer&#x27;s identity and a managed-device check, regardless of VPN status. Then mutual TLS between the deploy system and its build agents, replacing IP allowlists. Then the admin consoles, one by one. A year later the VPN is just an encrypted pipe, not a trust decision: a stolen laptop on the VPN reaches nothing without the identity, the device posture, and the per-request checks. When an attacker later phishes an engineer, the session token is short-lived and device-bound, and the anomalous access attempt is logged and denied. Location stopped mattering. Identity does the work.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

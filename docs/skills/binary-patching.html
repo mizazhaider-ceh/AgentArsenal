@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: binary-patching</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>binary-patching</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">92/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when patching binaries in a lab on authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ghidra-basics.html">ghidra-basics</a> <a href="pwn-fundamentals.html">pwn-fundamentals</a> <a href="secure-coding.html">secure-coding</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Ghidra</td><td>11.3</td></tr></tbody></table><p>Binary patching modifies compiled code directly: flip a check, NOP a call, or fix a vulnerability when source is unavailable. This skill covers the lab method on binaries you own or may test: finding the bytes, making minimal patches, and verifying behavior. Never patch someone else&#x27;s software or production systems.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Work on a copy; keep the original hash for comparison.</li>
+<li>Locate the target in a disassembler: the check, the call, or the</li>
+<p>vulnerable code.</p>
+<li>Design the minimal patch: same size or smaller is easiest.</li>
+<li>Apply the bytes with a patcher or Python.</li>
+<li>Verify: the behavior changed as intended and nothing else broke.</li>
+<li>Test the surrounding functionality, not just the patched path.</li>
+<li>Document the offset, original bytes, and new bytes.</li>
+<li>Prefer fixing the source; patching is for when you cannot.</li>
+</ol>
+<h2>1. Byte patching</h2>
+<pre><code class="language-bash"># Example: flip a JE (74) to JNE (75) to invert a check (lab binary)
+# 1. find the offset in Ghidra/objdump, 2. patch the copy
+cp target target.patched
+printf &#x27;\x75&#x27; | dd of=target.patched bs=1 seek=$((0x1234)) conv=notrunc 2&gt;/dev/null
+# Verify the disassembly changed as intended
+objdump -d target.patched | grep -A2 -B2 &quot;1234:&quot; | head -10</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Minimal patcher with backup and verification.&quot;&quot;&quot;
+import shutil, hashlib
+
+path = &quot;/tmp/lab/target&quot;
+shutil.copy(path, path + &quot;.bak&quot;)
+data = bytearray(open(path, &quot;rb&quot;).read())
+
+patches = [
+    # (offset, original, new) - invert JE to JNE at the auth check
+    (0x1234, b&quot;\x74&quot;, b&quot;\x75&quot;),
+]
+for off, orig, new in patches:
+    assert data[off:off+len(orig)] == orig, f&quot;unexpected bytes at {hex(off)}&quot;
+    data[off:off+len(new)] = new
+
+open(path + &quot;.patched&quot;, &quot;wb&quot;).write(data)
+print(&quot;sha256 original:&quot;, hashlib.sha256(open(path,&#x27;rb&#x27;).read()).hexdigest()[:16])
+print(&quot;sha256 patched: &quot;, hashlib.sha256(open(path+&#x27;.patched&#x27;,&#x27;rb&#x27;).read()).hexdigest()[:16])</code></pre>
+<h2>2. Common patch patterns (lab)</h2>
+<pre><code class="language-bash"># NOP out a call: replace E8 xx xx xx xx (5 bytes) with 5x 0x90
+# Force a check to pass: replace TEST+JZ with XOR EAX,EAX (success code)
+# Disable a nag screen: patch the conditional jump around it
+# Fix a strcpy: harder; needs code cave or same size replacement
+echo &quot;rule: same size patches are safe; growing needs a code cave&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The binary is signed or has integrity checks. Patching breaks</li>
+<p>the signature; that is expected, note it.</p>
+<li>Patch space is too small. Use a code cave: jump to empty space,</li>
+<p>do the work, jump back.</p>
+<li>Position independent code: patch relative offsets carefully, not</li>
+<p>absolute addresses.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Need to add substantial logic: write the new code as a shared</li>
+<p>library and LD_PRELOAD it instead of patching.</p>
+<li>Patching production: do not. Fix the source and redeploy.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders detect patching with code signing, integrity monitoring, and hash allowlists. Patching is also how attackers crack software, which is why the authorization boundary matters: this skill is for your binaries and lab targets. The durable defense for vendors is signed updates and tamper detection, not obscurity.</p>
+<h2>Key references</h2>
+<ul>
+<li>Ghidra patching workflows.</li>
+<li>&quot;Practical Binary Analysis&quot;: patching chapters.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

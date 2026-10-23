@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: evidence-chain</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>evidence-chain</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must prove something happened and show its work: building a forensic timeline, writing an incident report, justifying a finding to a skeptical reviewer, or chaining observations into a conclusion that holds up under challenge. Provides evidence-chain reasoning: every claim traces to a source, artifacts beat assertions, timelines are the skeleton of proof, gaps are findings too, and the chain must survive hostile review. Load this brain whenever conclusions must be defensible, not just plausible.</p><h2>Provides</h2><ul><li>Claim-to-source traceability</li><li>Artifact-first proof over assertions</li><li>Timeline construction as proof skeleton</li><li>Evidence gap identification</li><li>Chain of custody thinking</li><li>Hostile-review hardening of conclusions</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>A conclusion without evidence is an opinion, and opinions lose arguments. In security work, conclusions get challenged: by incident commanders, by clients, by lawyers, by your own future self. The evidence-chain brain teaches an agent to build every conclusion as a chain: claim, linked to artifact, linked to source, ordered in time. It matters because agents generate confident-sounding text easily. This brain makes the confidence earned, traceable, and checkable by someone who was not there.</p>
+<h2>Core mental models</h2>
+<p><strong>Every claim needs a source.</strong> &quot;The attacker exfiltrated data&quot; is not a finding until you can point at the artifact: the proxy log line, the packet capture, the file timestamp. Get in the habit of attaching the source to the claim at the moment you make it, not later. Later never comes, and an unsourced claim quietly becomes an assumption that later reasoning builds on. Chains are only as strong as their weakest unsourced link.</p>
+<p><strong>Artifacts beat assertions.</strong> Prefer primary artifacts over summaries and memory: the raw log over the dashboard screenshot, the actual file over someone&#x27;s description of it, the packet capture over the IDS alert. Each layer of summary is a layer where detail died and errors were born. When you must rely on a secondary source, label it as such and note what the primary would confirm.</p>
+<p><strong>The timeline is the skeleton.</strong> A pile of artifacts proves nothing until ordered in time. The timeline turns &quot;these things exist&quot; into &quot;this happened, then this, then this,&quot; which is the actual story. Build it early, keep it updated, and let it expose contradictions: an event that cannot fit the timeline is either wrong or the most interesting thing you have. Causality needs order; order needs timestamps you trust.</p>
+<p><strong>Gaps are findings.</strong> &quot;We have no logs for that server between 02:00 and 04:00&quot; is not an absence of evidence, it is evidence of a gap, and gaps have causes: logging was disabled, the attacker cleared them, retention expired. Record every gap explicitly, with its time bounds and possible explanations. A chain with labeled gaps is honest and useful. A chain that pretends the gaps are not there is fiction.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>State the conclusion you want to support, in one sentence.</li>
+<li>List the claims the conclusion depends on. Break compound claims apart.</li>
+<li>For each claim, attach the artifact: file, log line, hash, screenshot, command output.</li>
+<li>For each artifact, record the source and how it was obtained (tool, command, time).</li>
+<li>Build the timeline: order all artifacts, note timezone and clock reliability.</li>
+<li>Check consistency: does every artifact fit the timeline? Flag contradictions.</li>
+<li>List the gaps: what should exist but does not, with time bounds.</li>
+<li>Stress-test the chain: what is the weakest link? What would a skeptic attack first?</li>
+<li>Write the conclusion with the chain attached, weakest link labeled.</li>
+<li>Preserve the artifacts: hashes, copies, read-only handling. Do not alter sources.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>Capture the artifact before you interpret it. Interpretation can wait; volatile evidence cannot.</li>
+<li>Hash what you collect. A hash today ends arguments tomorrow.</li>
+<li>One strong artifact beats five weak ones. Quality over quantity.</li>
+<li>If the timestamps disagree, distrust the clocks before you distrust the story.</li>
+<li>Absence of logs after a compromise is a signal, not a dead end.</li>
+<li>Write the chain so a stranger could re-derive your conclusion. If they cannot, it is not a chain.</li>
+<li>Corroborate the critical claims with a second independent source.</li>
+<li>Never edit the evidence to make the story cleaner. The mess is the truth.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Assertion stacking.</strong> Conclusions built on conclusions, with the original artifact three layers down and forgotten.</li>
+<li><strong>Cherry-picking.</strong> Keeping the artifacts that fit the story and quietly dropping the ones that do not.</li>
+<li><strong>Timeline-free findings.</strong> A list of scary facts with no order, which proves activity but not a story.</li>
+<li><strong>Ignoring gaps.</strong> Presenting a clean narrative while the two missing hours go unmentioned.</li>
+<li><strong>Editing the source.</strong> Opening the evidence file in a write-mode tool, altering timestamps by accessing them carelessly, or analyzing on the original instead of a copy.</li>
+</ul>
+<h2>Worked example</h2>
+<p>Claim: &quot;Customer records were exfiltrated on Tuesday.&quot; Chain: proxy logs show 2.1 GB outbound to an unknown host at 03:12 (artifact: proxy.log lines, hash recorded). Firewall logs confirm the connection from the database server (second source, corroboration). Database query logs show a SELECT * on the customers table at 03:09 by the reporting service account (artifact: db slow log). Timeline: 03:09 query, 03:12 transfer, both in server-local time, NTP healthy. Gap: no EDR telemetry on the database server (agent was uninstalled in January, noted as gap and contributing factor). Weakest link: the receiving host is unknown, so exfiltration is inferred from volume plus destination, stated honestly. Conclusion written with the chain: each sentence carries its artifact. A reviewer can re-derive everything. That is an evidence chain, not a story.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

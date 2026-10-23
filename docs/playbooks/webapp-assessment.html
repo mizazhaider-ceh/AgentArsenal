@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal playbook: webapp-assessment</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>webapp-assessment</h2><div class="meta"><span class="badge gray">playbook</span><span class="muted">v1.0.0</span></div><p>Use when you need a deep security assessment of a web application and its APIs, from threat modeling through manual and automated testing to remediation-ready findings. Covers auth and session flaws, injection classes, file handling, API and GraphQL issues, and business logic abuse. Load this playbook when a client gives you test credentials and in-scope URLs and you need task order, owners, skills, brains, and decision gates for a complete web and API assessment.</p><h1>Web Application Assessment Playbook</h1>
+<p>Authorized work only. Test only the URLs, APIs, and accounts named in the rules of engagement. Never attack production data, other tenants, or out-of-scope endpoints.</p>
+<h2>Objective</h2>
+<p>Assess the security of a web application and its APIs by mapping the attack surface, testing each vulnerability class with validated proof, and delivering findings that developers can reproduce and fix. Success is a complete coverage map, zero untested in-scope endpoints, and findings with working reproduction steps.</p>
+<h2>Phase table</h2>
+<p>| phase | owner agent | skills used | brains used | decision gates | exit criteria | |-------|-------------|-------------|-------------|----------------|---------------| | 1. Scope and threat model | api-security-agent | api-security-testing, webapp-pentest-methodology, technical-writing | threat-modeling, cost-of-attack | GO_NO_GO_GATES | App map, trust boundaries, test accounts, agreed windows | | 2. Recon and mapping | recon-agent | recon-passive, recon-active, webapp-pentest-methodology, graphql-security, websocket-security | attacker-mindset, hypothesis-driven-testing | GO_NO_GO_GATES | Full endpoint and parameter inventory, auth flows documented | | 3. Authentication and session testing | web-exploitation-agent | auth-attacks, jwt-attacks, oauth-attacks, password-attacks, open-redirect | hypothesis-driven-testing, root-cause-analysis | RISK_MATRIX | All auth flows tested, session handling validated | | 4. Injection and data handling | web-exploitation-agent | web-sqli, web-xss, nosql-injection, xxe, ssti, lfi-rfi, file-upload-attacks, ssrf | hypothesis-driven-testing, evidence-chain | RISK_MATRIX | Every injection class tested per input vector, findings validated | | 5. API and business logic | api-security-agent | api-security-testing, jwt-attacks, graphql-security, rest-api-design, csrf, cors-misconfig, cache-poisoning, http-request-smuggling | root-cause-analysis, attacker-mindset | ESCALATION_POLICY | All API endpoints tested for authorization and logic flaws | | 6. Reporting and retest | pentest-reporter-agent | technical-writing, testing-strategies | evidence-chain, root-cause-analysis | COST_BENEFIT | Developer-ready report with reproduction steps, retest window set |</p>
+<h2>Detailed phases</h2>
+<h3>Phase 1. Scope and threat model</h3>
+<p>Steps:</p>
+<ol>
+<li>Collect in-scope URLs, API base paths, test credentials, and the data classification of the application.</li>
+<li>Draw the trust boundary map: user input, authentication service, backend APIs, third-party integrations, storage.</li>
+<li>List the crown jewels: what data or function would hurt most if compromised. Rank test priority by this.</li>
+<li>Confirm the test window, rate limits, and the client&#x27;s definition of a stop condition (for example, account lockout thresholds).</li>
+</ol>
+<p>Evidence to collect: scope document, trust boundary diagram, asset priority list, test credentials vault entry, rate limit agreement.</p>
+<h3>Phase 2. Recon and mapping</h3>
+<p>Steps:</p>
+<ol>
+<li>Spider the application as an unauthenticated user, then repeat as each test role.</li>
+<li>Inventory every endpoint, parameter, header, and WebSocket or GraphQL operation. Mark which require authentication.</li>
+<li>Document authentication flows: login, password reset, MFA, OAuth grants, token refresh, logout.</li>
+<li>Identify technology stack, WAF presence, and rate limiting behavior from responses.</li>
+</ol>
+<p>Commands (where relevant):</p>
+<pre><code class="language-bash">mkdir -p ~/engagements/&lt;client&gt;/webapp/map
+# store spider output, then build endpoints.md: method, path, auth required, parameters</code></pre>
+<p>Evidence to collect: spider archives, endpoint inventory with auth requirements, auth flow diagrams, stack fingerprint notes.</p>
+<h3>Phase 3. Authentication and session testing</h3>
+<p>Steps:</p>
+<ol>
+<li>Test credential handling: lockout, password reset poisoning, username enumeration, MFA bypass attempts within the risk matrix.</li>
+<li>Test session management: token randomness, fixation, timeout, concurrent session control, logout effectiveness.</li>
+<li>Test JWT and OAuth flows: algorithm confusion, none algorithm, weak secrets, redirect URI validation, scope tampering.</li>
+<li>Test open redirects only where they chain into credential theft, and only within approved impact.</li>
+</ol>
+<p>Evidence to collect: auth test matrix (flow, test, result), token samples with weak points highlighted, session test logs.</p>
+<h3>Phase 4. Injection and data handling</h3>
+<p>Steps:</p>
+<ol>
+<li>Test SQL injection per parameter with time-based and boolean payloads. Confirm with database version or sleep responses, never with data dumps.</li>
+<li>Test stored, reflected, and DOM XSS with unique canary strings. Prove execution context, not just reflection.</li>
+<li>Test NoSQL injection, XXE, SSTI, and LFI or RFI where the stack suggests them. Use out-of-band or local file reads that stay in scope.</li>
+<li>Test file upload: extension bypass, content type confusion, and where the file lands. Test SSRF with internal metadata endpoints blocked by the risk matrix unless explicitly approved.</li>
+</ol>
+<p>Commands (where relevant):</p>
+<pre><code class="language-bash"># canary-based validation example pattern
+curl -s -b session=&lt;token&gt; &quot;&lt;url&gt;?q=&lt;canary&gt;&quot; | grep -c &quot;&lt;canary&gt;&quot;</code></pre>
+<p>Evidence to collect: request and response pairs per finding, canary proof, payload logs, false-positive notes.</p>
+<h3>Phase 5. API and business logic</h3>
+<p>Steps:</p>
+<ol>
+<li>Test broken object level authorization: swap IDs across users and roles for every endpoint that takes an object reference.</li>
+<li>Test mass assignment, excessive data exposure, and rate limit or quota bypass.</li>
+<li>Test GraphQL introspection, nested query depth, and batching abuse.</li>
+<li>Test business logic: price or quantity tampering, workflow step skipping, race conditions on limited resources, with safe single-account tests first.</li>
+</ol>
+<p>Evidence to collect: authorization test matrix, business logic test cases with expected versus actual behavior, rate limit observations.</p>
+<h3>Phase 6. Reporting and retest</h3>
+<p>Steps:</p>
+<ol>
+<li>Write each finding with title, severity, affected endpoint, reproduction steps, request and response proof, impact, and fix guidance.</li>
+<li>Group findings by root cause so one fix can close a class of issues.</li>
+<li>Deliver the draft, hold the developer walkthrough, then finalize.</li>
+<li>Schedule the retest and define what counts as fixed (code deployed, config changed, retest passes).</li>
+</ol>
+<p>Evidence to collect: draft and final report, walkthrough notes, retest checklist, client sign-off.</p>
+<h2>Decision gates</h2>
+<ul>
+<li><strong>GO_NO_GO_GATES</strong> (decisions/GO_NO_GO_GATES.md): must pass before Phase 1 and Phase 2. Checks: written authorization, in-scope URL list, test accounts working, test window agreed, production safety rules confirmed. Missing any item blocks testing.</li>
+<li><strong>RISK_MATRIX</strong> (decisions/RISK_MATRIX.md): used in Phases 3 and 4. Payloads are scored before sending. Anything that risks data corruption, lockout of real users, or service disruption needs explicit written approval.</li>
+<li><strong>ESCALATION_POLICY</strong> (decisions/ESCALATION_POLICY.md): used in Phase 5. Business logic tests that touch money, inventory, or other users data stop and escalate for written approval before proceeding.</li>
+<li><strong>COST_BENEFIT</strong> (decisions/COST_BENEFIT.md): used in Phase 6. Findings are ordered by fix cost versus risk reduction so the development team patches the highest-value items first.</li>
+</ul>
+<h2>Deliverables</h2>
+<ol>
+<li>Scope document and threat model with trust boundaries.</li>
+<li>Endpoint and parameter inventory with authentication requirements.</li>
+<li>Auth, injection, API, and business logic test matrices.</li>
+<li>Validated findings with reproduction steps and proof pairs.</li>
+<li>Developer-ready report with severity, impact, and remediation guidance.</li>
+<li>Retest checklist and schedule.</li>
+</ol>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: rsa-small-exponent</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>rsa-small-exponent</h2><div class="meta"><span class="badge gray">crypto</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when RSA uses a small public or private exponent and</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="rsa-attacks.html">rsa-attacks</a></div><div class="deps"><span class="kind">requires:</span> <a href="rsa-attacks.html">rsa-attacks</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a> <a href="rsa-common-mistakes.html">rsa-common-mistakes</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>OpenSSL</td><td>3.0</td></tr></tbody></table><p>Small exponents create specific, well-understood RSA breaks: e=3 with unpadded messages falls to cube roots and broadcast attacks, and tiny private exponents fall to Wiener&#x27;s attack. This skill covers assessing and exploiting small-exponent RSA on authorized engagements and in CTFs: recognizing the conditions, running the standard attacks, and knowing when the exponent is actually fine (proper padding saves e=3).</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Read e from the public key; note if it is 3 or otherwise small.</li>
+<li>Check the padding: textbook (attackable) versus OAEP (safe).</li>
+<li>For e=3 textbook: try the cube-root attack on each ciphertext.</li>
+<li>For broadcast scenarios: collect ciphertexts of the same message</li>
+<p>under different moduli and apply Hastad.</p>
+<li>For small d suspicion: check Wiener&#x27;s conditions.</li>
+<li>Verify every recovery by decrypting or by the padding structure.</li>
+</ol>
+<h2>1. Cube-root and broadcast attacks</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;e=3 textbook RSA attacks.&quot;&quot;&quot;
+
+def icbrt(c):
+    # Integer cube root via binary search (exact, no float error)
+    lo, hi = 0, c
+    while lo &lt; hi:
+        mid = (lo + hi) // 2
+        if mid ** 3 &lt; c:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+def try_cube_root(c):
+    m = icbrt(c)
+    return m if m ** 3 == c else None
+    # Works when m^3 &lt; n (message small relative to modulus)
+
+# Hastad&#x27;s broadcast: same m, e=3, three different moduli n1,n2,n3
+# c1 = m^3 mod n1, c2 = m^3 mod n2, c3 = m^3 mod n3
+# CRT combines to m^3 mod (n1*n2*n3); since m^3 &lt; n1*n2*n3,
+# the CRT result IS m^3 exactly, then cube-root it.
+def crt(a_list, n_list):
+    from math import prod
+    N = prod(n_list)
+    x = 0
+    for a, n in zip(a_list, n_list):
+        Ni = N // n
+        inv = pow(Ni, -1, n)
+        x = (x + a * Ni * inv) % N
+    return x</code></pre>
+<p>The broadcast attack needs the SAME plaintext under THREE different keys with e=3: common in CTFs, rare in production (proper padding kills it everywhere). When the conditions hold, it is deterministic and fast.</p>
+<h2>2. Wiener&#x27;s attack concept</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Wiener&#x27;s attack: small private exponent d via continued fractions.&quot;&quot;&quot;
+
+# Condition: d &lt; n^0.25 / 3 (roughly). Then k/d approximates e/n,
+# and continued fractions of e/n reveal k/d, hence d.
+#
+# Steps:
+# 1. Compute continued fraction convergents of e/n
+# 2. For each convergent k/d candidate, test if it yields factors:
+#    phi = (e*d - 1) / k must be integer; then solve x^2 - (n-phi+1)x + n = 0
+# 3. Integer roots are p and q: key recovered
+#
+# In practice: use an established Wiener implementation; the concept
+# above is what to verify when it claims success (it must produce
+# factors that multiply to n).</code></pre>
+<p>Wiener&#x27;s attack matters when d was chosen small for performance (a mistake) or leaked partially. Modern libraries do not generate small d; finding one means custom key generation, which is itself the finding.</p>
+<h2>3. When small exponents are fine</h2>
+<pre><code class="language-bash"># e=3 or e=65537 with OAEP padding: NOT vulnerable to these attacks
+# The padding randomizes the message, killing cube-root and broadcast.
+# Review checklist:
+# - Padding = OAEP or PKCS#1 v1.5 with careful implementation -&gt; e=3 OK
+# - Padding = none (textbook) -&gt; e=3 BROKEN, any small message falls
+# - d small by design -&gt; BROKEN regardless of padding (Wiener)
+
+# e=65537 (the standard) with any proper padding: fine, move on
+openssl rsa -pubin -in /tmp/pubkey.pem -text -noout | grep -i exponent</code></pre>
+<p>Do not report e=3 as a finding without checking the padding: e=3 with OAEP is standard practice in some deployments and completely fine. The finding is &quot;textbook RSA with e=3,&quot; not &quot;e=3.&quot;</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Related messages (not identical) under e=3: Franklin-Reiter style</li>
+<p>attacks apply when messages differ by a known polynomial; rarer, but check when broadcast data looks related.</p>
+<li>The exponent is small but the key is huge: the attacks depend on</li>
+<p>the exponent and padding, not the key size; 4096-bit textbook e=3 falls to the same cube root.</p>
+<li>Partial key exposure: related attacks (Coppersmith) apply when most</li>
+<p>of d or p leaks; that is advanced territory needing specialized tooling.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>An attack succeeds: demonstrate the decryption, report the exact</li>
+<p>conditions (exponent, padding absence, message reuse), and recommend OAEP plus e=65537.</p>
+<li>The conditions are close but not met: document the near-miss with</li>
+<p>the missing condition; near-misses guide the hardening.</p>
+<li>Custom RSA implementation found: recommend replacing with the</li>
+<p>standard library rather than patching the exponent choice.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, small-exponent issues are prevented by standards: use the vetted library&#x27;s defaults (e=65537, OAEP), never textbook RSA, and never custom key generation. Audit existing deployments for e values and padding modes; legacy integrations are where textbook e=3 hides. The defender&#x27;s check is a configuration audit, not monitoring: these attacks leave no distinctive log pattern until the plaintext is used.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm).</li>
+<li>Hastad (1988): broadcast attack on RSA.</li>
+<li>Wiener (1990): cryptanalysis of short RSA secret exponents.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

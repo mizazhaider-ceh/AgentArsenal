@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bloodhound-collection</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bloodhound-collection</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to collect Active Directory data for</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bloodhound-methodology.html">bloodhound-methodology</a></div><div class="deps"><span class="kind">requires:</span> <a href="bloodhound-methodology.html">bloodhound-methodology</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="ldap-enumeration.html">ldap-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>BloodHound</td><td>4.3</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>Impacket</td><td>0.11.0</td></tr></tbody></table><p>BloodHound turns Active Directory into a graph and finds the shortest path from your user to Domain Admin. Collection is the step that feeds it: gathering users, groups, sessions, local admins, and ACLs into the JSON files BloodHound ingests. This skill covers running collectors on authorized engagements with the right method for the situation and an honest view of the noise each method makes.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm credentials and the collection account&#x27;s context.</li>
+<li>Choose the collector: SharpHound on Windows, BloodHound.py from</li>
+<p>Linux.</p>
+<li>Choose the collection method: default first, all only with reason.</li>
+<li>Run collection and verify the output files are complete.</li>
+<li>Ingest into BloodHound and sanity-check node counts.</li>
+<li>Re-collect after any privilege change; the graph is a snapshot.</li>
+</ol>
+<h2>1. Running the collectors</h2>
+<pre><code class="language-powershell"># SharpHound on a domain-joined Windows host (most complete, needs .NET)
+SharpHound.exe -c All --outputdirectory C:\temp\ --prettyjson
+# Quieter default: -c Default collects the core object types
+SharpHound.exe -c Default --outputdirectory C:\temp\</code></pre>
+<pre><code class="language-bash"># BloodHound.py from Linux with domain credentials
+bloodhound-python -u testuser -p &#x27;TestPass123!&#x27; -d corp.example \
+  -dc 10.0.5.10 -c All -o /tmp/bh
+ls -la /tmp/bh/*.json
+
+# With NTLM hash instead of password (pass-the-hash collection)
+bloodhound-python -u testuser --hashes :&lt;nthash&gt; -d corp.example \
+  -dc 10.0.5.10 -c All -o /tmp/bh</code></pre>
+<p><code>-c All</code> includes session enumeration and local admin collection, which are the noisiest and most valuable parts. Default to <code>All</code> unless the engagement demands quiet; the extra data usually decides the attack path.</p>
+<h2>2. Collection methods and their cost</h2>
+<pre><code class="language-bash"># Method guide:
+# Default: users, groups, computers, OUs, GPOs, trusts. Quiet, fast.
+# All: Default plus sessions, local admins, ACLs, RDP. Noisy, complete.
+# SessionOnly: just user sessions. For when you only need sessions.
+# LoggedOn: sessions via NetWkstaUserEnum, needs admin on targets.
+
+# Verify completeness: compare counts against LDAP reality
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import json, glob
+for f in glob.glob(&quot;/tmp/bh/*.json&quot;):
+    data = json.load(open(f))
+    print(f.split(&quot;/&quot;)[-1], len(data.get(&quot;data&quot;, [])))
+EOF</code></pre>
+<p>Session collection touches every computer (it asks each who is logged on), which is why it is noisy and why it finds the admin sessions that win engagements. If <code>All</code> is too loud, run <code>Default</code> first and add sessions later against high-value targets only.</p>
+<h2>3. Ingestion and sanity checks</h2>
+<pre><code class="language-bash"># Ingest: drag the JSON files into the BloodHound UI, or use the API
+# Sanity checks in the UI:
+# - Total users roughly matches the LDAP count
+# - Domain Admins group is populated
+# - Your starting user node exists with its groups
+
+# Timestamp the collection; label it in your notes
+date -u &gt; /tmp/bh/collection_time.txt</code></pre>
+<p>A collection with zero sessions when admins definitely log on somewhere means the session method failed (permissions, firewall); fix the method, do not assume no sessions exist.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The collector crashes on huge domains. Split by OU or use <code>Default</code></li>
+<p>first, then targeted <code>All</code> on the OUs that matter.</p>
+<li>Session enumeration needs privileges you lack. Collect what you can;</li>
+<p>sessions appear after the first privilege escalation, so re-collect then.</p>
+<li>BloodHound.py and SharpHound disagree. They query differently;</li>
+<p>SharpHound on a domain host is usually more complete for Windows artifacts.</p>
+<li>The data is stale within hours. Sessions change constantly; timestamp</li>
+<p>every collection and re-collect before acting on session-based paths.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need stealth collection: use <code>Default</code>, avoid session sweeping,</li>
+<p>and accept the thinner graph.</p>
+<li>Collection is blocked by EDR: coordinate with the test lead; collectors</li>
+<p>are dual-use tools that defenses correctly flag.</p>
+<li>The graph is too big to read: move to bloodhound-path-analysis for</li>
+<p>the query-driven approach.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see collection as LDAP query storms from one host, session enumeration touching every workstation (event logs on each), and the collector binary itself (SharpHound is signatured). Good detection is alerting on enumeration patterns from non-admin hosts. Defenses are monitoring for the patterns, limiting who can read sensitive attributes, and remembering that collection is read-only: the damage comes from what the attacker does with the paths it reveals.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1087 (Account Discovery).</li>
+<li>MITRE ATT&amp;CK T1069 (Permission Groups Discovery).</li>
+<li>BloodHound 4.3 documentation: collectors and ingestion.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

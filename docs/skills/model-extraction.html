@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: model-extraction</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>model-extraction</h2><div class="meta"><span class="badge gray">ai-security</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing whether a machine learning model behind an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="api-security-testing.html">api-security-testing</a> <a href="crypto-fundamentals.html">crypto-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Model extraction turns a paid prediction API into a free copy of the model: an attacker queries it systematically and trains a substitute that behaves the same. This skill covers authorized testing of that risk: measuring how much signal each query leaks, running bounded extraction probes, and testing membership inference on sensitive training data. Keep query volumes inside the agreed test budget and never build a working clone beyond the proof point.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Characterize the API: inputs, outputs, confidence scores, rate limits,</li>
+<p>and pricing per query.</p>
+<li>Check what the outputs leak: full probability vectors leak far more</li>
+<p>than top label answers.</p>
+<li>Run a bounded extraction probe: a few hundred queries over the input</li>
+<p>space, then measure how well a simple substitute predicts the rest.</p>
+<li>Test membership inference: can you tell whether a specific record was</li>
+<p>in the training set.</p>
+<li>Try model inversion on small output classes to recover representative</li>
+<p>inputs.</p>
+<li>Review rate limiting and monitoring: does anyone notice systematic</li>
+<p>querying.</p>
+<li>Stop at the proof point: a substitute that beats a stated accuracy bar</li>
+<p>on a holdout set is enough.</p>
+<li>Report the cost math: queries times price equals the cost of stealing</li>
+<p>the model.</p>
+</ol>
+<h2>1. Output leakage assessment</h2>
+<p>Rich outputs make extraction cheap. Check what the API returns before you query at scale.</p>
+<pre><code class="language-bash"># What does one prediction return? (authorized test endpoint)
+curl -s -X POST &#x27;https://target.example/api/predict&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -H &quot;Authorization: Bearer $TOKEN&quot; \
+  -d &#x27;{&quot;features&quot;:[0.5,0.2,0.9,0.1]}&#x27; | python3 -m json.tool
+# Full probability vector = high leakage. Top label only = low leakage.</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Bounded extraction probe: substitute model accuracy vs query budget.&quot;&quot;&quot;
+import json, urllib.request, random
+
+ENDPOINT = &quot;https://target.example/api/predict&quot;
+TOKEN = &quot;REPLACE_WITH_TEST_TOKEN&quot;
+BUDGET = 500  # agreed query budget, do not exceed
+
+def predict(x):
+    req = urllib.request.Request(
+        ENDPOINT, data=json.dumps({&quot;features&quot;: x}).encode(),
+        headers={&quot;Content-Type&quot;: &quot;application/json&quot;,
+                 &quot;Authorization&quot;: f&quot;Bearer {TOKEN}&quot;})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.load(r)
+
+# Query a grid over the input space (4 features, small demo)
+labeled = []
+for _ in range(BUDGET):
+    x = [random.random() for _ in range(4)]
+    try:
+        labeled.append((x, predict(x)))
+    except Exception as e:  # noqa: BLE001
+        print(&quot;stopped early:&quot;, e)
+        break
+print(f&quot;collected {len(labeled)} labeled queries within budget&quot;)
+# A real test would train a substitute here and score it on a holdout
+# set; agreement above ~90 percent proves practical extraction.</code></pre>
+<h2>2. Membership inference probe</h2>
+<p>Membership inference asks whether a specific record was used in training, which is a privacy finding even without full extraction.</p>
+<pre><code class="language-bash"># Compare model confidence on a suspected member vs a random input
+python3 - &lt;&lt; &#x27;PY&#x27;
+import json, urllib.request
+ENDPOINT = &quot;https://target.example/api/predict&quot;
+TOKEN = &quot;REPLACE_WITH_TEST_TOKEN&quot;
+def predict(x):
+    req = urllib.request.Request(ENDPOINT, data=json.dumps({&quot;features&quot;: x}).encode(),
+        headers={&quot;Content-Type&quot;: &quot;application/json&quot;, &quot;Authorization&quot;: f&quot;Bearer {TOKEN}&quot;})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.load(r)
+suspect = [0.51, 0.22, 0.88, 0.11]   # record suspected in training set
+random_in = [0.13, 0.77, 0.31, 0.55] # random record
+for label, x in [(&quot;suspect&quot;, suspect), (&quot;random&quot;, random_in)]:
+    out = predict(x)
+    print(label, &quot;-&gt;&quot;, str(out)[:160])
+PY
+# Members often get higher confidence or lower loss; a consistent gap
+# across many samples is the finding, not one query.</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The API returns only labels with no scores. Extraction is still</li>
+<p>possible but needs far more queries; note the higher cost as a mitigating factor.</p>
+<li>Rate limits or CAPTCHAs appear mid probe. Stop and report the</li>
+<p>effective defense instead of evading it.</p>
+<li>The model is an ensemble or behind randomization. Measure output</li>
+<p>stability across repeated identical queries first.</p>
+<li>Concept drift retrains the model weekly. A stolen copy decays, which</li>
+<p>lowers the business impact; say so honestly.</p>
+<li>The endpoint requires per query payment. Track spend against the</li>
+<p>agreed budget and stop before overrunning it.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Label only outputs: switch to decision boundary walking with small</li>
+<p>input perturbations to map the boundary precisely.</p>
+<li>Defended with output rounding: test whether rounding is coarse enough</li>
+<p>to matter by comparing substitute accuracy with and without it.</p>
+<li>Query budget too small for a full substitute: demonstrate the trend</li>
+<p>instead, showing accuracy climbing with query count on a small slice.</p>
+<li>Membership inference inconclusive on one record: test a batch of</li>
+<p>suspected members and report the statistical gap.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see extraction as systematic querying: uniform coverage of the input space, high query volume from few accounts, and repeated near duplicate inputs for boundary mapping. Detect with per account query budgets, alerts on grid like access patterns, and output minimization (return labels, not full probability vectors). Stronger defenses add proof of work per query, watermarking of outputs, and monitoring for substitute models that mirror the victim&#x27;s behavior. Differential privacy during training blunts membership inference.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATLAS AML.T0024 (Exfiltrate Model).</li>
+<li>CWE-200 (Exposure of Sensitive Information): training data leakage.</li>
+<li>CWE-770 (Allocation of Resources Without Limits): unbounded querying.</li>
+<li>NIST AI 100-2e2025: model extraction and inference attacks.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

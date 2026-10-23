@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: container-image-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>container-image-security</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing container image security on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="docker-deep.html">docker-deep</a> <a href="cicd-security.html">cicd-security</a> <a href="devsecops-pipeline.html">devsecops-pipeline</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Container images ship the whole userspace: vulnerable libraries, leaked secrets in layers, and malware in base images. This skill covers the assessment and hardening: scanning, minimal bases, layer forensics, and signing. Work on images you own or are authorized to assess.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory the images: where they come from, how they are built,</li>
+<p>and where they are stored.</p>
+<li>Scan for vulnerabilities with a scanner and triage by</li>
+<p>exploitability, not just CVE count.</p>
+<li>Inspect layers for secrets: history, env, and files in every</li>
+<p>layer.</p>
+<li>Check the base image: minimal, pinned, and from a trusted</li>
+<p>source.</p>
+<li>Verify the build: reproducible, no network at build surprises,</li>
+<p>and SBOM generated.</p>
+<li>Check signing: Cosign signatures verified at deploy time.</li>
+<li>Review runtime config: non root, read only filesystem, dropped</li>
+<p>capabilities.</p>
+<li>Gate the pipeline: block on criticals with a documented</li>
+<p>exception process.</p>
+</ol>
+<h2>1. Scanning and layer forensics</h2>
+<pre><code class="language-bash"># Scan with trivy (as assessment tooling)
+trivy image --severity HIGH,CRITICAL myregistry/app:1.2.3 2&gt;/dev/null | head -40
+# Triage: focus on reachable, network exposed packages first</code></pre>
+<pre><code class="language-bash"># Secrets in layers: history shows build time values, layers keep deleted files
+docker history --no-trunc myregistry/app:1.2.3 | head -20
+# Extract every layer and grep for secrets
+mkdir -p /tmp/img &amp;&amp; cd /tmp/img
+docker save myregistry/app:1.2.3 -o app.tar &amp;&amp; tar xf app.tar
+grep -rhoE &quot;AKIA[0-9A-Z]{16}|xox[bap]-[A-Za-z0-9-]{10,}&quot; . 2&gt;/dev/null | sort -u | head
+# Any hit = secret baked into the image; rotate it and fix the build</code></pre>
+<pre><code class="language-bash"># Base image check: distroless or minimal, pinned by digest
+docker inspect myregistry/app:1.2.3 --format &#x27;{{.Config.Image}}&#x27; | head -2
+# Pinned by digest (sha256:...) not by floating tag (latest)</code></pre>
+<h2>2. Signing with Cosign</h2>
+<pre><code class="language-bash"># Sign at build time (pipeline)
+cosign sign --key cosign.key myregistry/app:1.2.3
+# Verify at deploy time (admission controller or manual check)
+cosign verify --key cosign.pub myregistry/app:1.2.3
+# Unsigned or badly signed images must not deploy</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The scanner flags hundreds of CVEs in a language runtime. Triage</li>
+<p>by the app&#x27;s actual exposure; a CVE in an unused binary is noise.</p>
+<li>The image is from a vendor and cannot be rebuilt. Scan it, sign</li>
+<p>your approval, and isolate it at runtime.</p>
+<li>Secrets found in a public image. Rotate immediately; the secret</li>
+<p>is already compromised.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Critical RCE in an internet facing image: patch and redeploy on</li>
+<p>an emergency timeline, then fix the pipeline gate that missed it.</p>
+<li>Signing missing everywhere: propose the rollout in stages (warn,</li>
+<p>then enforce) to avoid breaking deploys.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders detect image attacks with registry scanning on push, admission controllers that block unsigned or vulnerable images, and runtime monitoring for unexpected processes. They defend with minimal bases, automated rebuilds, and signed pipelines. The durable practice is treating images as build artifacts with full provenance: source, SBOM, scan results, and signature, all the way to the cluster.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-798 (Use of Hard-coded Credentials): layer secrets.</li>
+<li>CWE-1104 (Use of Unmaintained Third Party Components).</li>
+<li>Sigstore/Cosign documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

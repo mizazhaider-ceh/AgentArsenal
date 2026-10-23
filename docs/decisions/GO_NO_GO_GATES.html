@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal decision: GO_NO_GO_GATES</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>GO_NO_GO_GATES</h2><div class="meta"><span class="badge gray">decision doc</span><span class="muted">GO_NO_GO_GATES.md</span></div><h1>Go / No-Go Gates</h1>
+<p>An engagement proceeds through five gates. Each gate is a question with a pass condition. A No-Go at any gate stops the engagement until the condition is met. Gates are checked in order; a later gate is never used to excuse an earlier No-Go.</p>
+<h2>Gate 1: Authorization</h2>
+<p>Question: do we have written permission to do exactly this work?</p>
+<ul>
+<li>Pass: a signed scope document names the targets, the time window, the</li>
+<p>allowed techniques, and a client contact. The agent can quote the scope line for any action it takes.</p>
+<li>No-Go: verbal permission only, scope document missing, targets described</li>
+<p>vaguely (&quot;the network&quot;), or the time window has expired.</p>
+<li>Remedy: get the written scope. There is no shortcut.</li>
+</ul>
+<h2>Gate 2: Safety</h2>
+<p>Question: can we do this work without harming systems, data, or people?</p>
+<ul>
+<li>Pass: every planned action scores Low or Medium on <code>RISK_MATRIX.md</code>, High</li>
+<p>actions have lead approval plus safeguards, no Extreme actions remain.</p>
+<li>No-Go: any Extreme action, or a High action without a documented safeguard</li>
+<p>and rollback plan.</p>
+<li>Remedy: redesign the action (slower, narrower, off-hours) or drop it.</li>
+</ul>
+<h2>Gate 3: Capability</h2>
+<p>Question: do we have the skills, tools, and access to do this well?</p>
+<ul>
+<li>Pass: the needed skills exist in the arsenal (or the gap is named and</li>
+<p>accepted), tools are installed and tested, credentials provided by the client work.</p>
+<li>No-Go: core technique missing, tool untested against the target type, or</li>
+<p>access not yet provisioned.</p>
+<li>Remedy: lab-test first, provision access, or narrow the scope to what is</li>
+<p>covered.</p>
+</ul>
+<h2>Gate 4: Detection posture</h2>
+<p>Question: does the client know what to expect, and do we know what they will see?</p>
+<ul>
+<li>Pass: the client contact confirmed the test window, the SOC or NOC knows</li>
+<p>the source IPs if the engagement is not meant to be stealthy, and the defender-view section of each skill used has been read.</p>
+<li>No-Go: unannounced testing against a defended network, or nobody can say</li>
+<p>who gets paged if we trip an alarm.</p>
+<li>Remedy: confirm the window and the contact list. For red-team (stealth)</li>
+<p>work, the No-Go becomes a documented, explicitly approved exception.</p>
+</ul>
+<h2>Gate 5: Exit readiness</h2>
+<p>Question: can we stop cleanly and prove what we did?</p>
+<ul>
+<li>Pass: rollback steps exist for every state-changing action, evidence</li>
+<p>collection is planned (commands logged, memory entries captured), and the report outline is ready.</p>
+<li>No-Go: actions with no undo path, or no plan to show the client what</li>
+<p>happened.</p>
+<li>Remedy: write the rollback steps and the evidence plan before starting.</li>
+</ul>
+<h2>Gate log</h2>
+<p>Record each gate check as one line: date, gate, Go/No-Go, who decided, and the evidence (scope doc id, risk scores, tool test output). A No-Go that later becomes a Go gets a second line; the first line is never edited, only superseded.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

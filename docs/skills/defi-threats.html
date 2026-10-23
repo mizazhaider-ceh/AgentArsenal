@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: defi-threats</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>defi-threats</h2><div class="meta"><span class="badge gray">blockchain</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing DeFi protocols for economic and technical</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="smart-contract-audit.html">smart-contract-audit</a> <a href="bridge-attacks.html">bridge-attacks</a> <a href="dao-governance-risks.html">dao-governance-risks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>DeFi attackers do not break code, they break assumptions: that prices are fair, that liquidity is deep, that voters are honest. This skill covers authorized assessment of DeFi threat models: mapping the economic assumptions, testing them on forks, and reviewing the mitigations. Test on local mainnet forks, never against live protocols.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the money flows: deposits, borrows, swaps, liquidations, and</li>
+<p>fees, with the contracts involved.</p>
+<li>List every external dependency: oracles, DEX pools, and other</li>
+<p>protocols it composes with.</p>
+<li>Identify the economic assumptions: price sources, liquidity depth,</li>
+<p>and honest majority assumptions.</p>
+<li>Test flash loan attacks on a fork: borrow, manipulate, profit,</li>
+<p>repay, all in one transaction.</p>
+<li>Test oracle manipulation: move the price source and see what the</li>
+<p>protocol does.</p>
+<li>Review MEV exposure: can transactions be sandwiched or frontrun for</li>
+<p>profit.</p>
+<li>Check governance: can an attacker buy votes and change the rules.</li>
+<li>Report each broken assumption with the fork test that broke it.</li>
+</ol>
+<h2>1. Fork based testing setup</h2>
+<pre><code class="language-bash"># Fork mainnet locally for safe testing (needs an RPC URL you control)
+anvil --fork-url &quot;$RPC_URL&quot; --fork-block-number 21000000 &amp;
+echo &quot;local fork on 127.0.0.1:8545; fund a test account and attack the fork&quot;</code></pre>
+<pre><code class="language-bash"># Impersonate a whale account on the fork to get test capital
+cast rpc anvil_impersonateAccount 0xWhaleAddress --rpc-url http://127.0.0.1:8545
+# Never do this on mainnet; it only works on your local fork</code></pre>
+<h2>2. Oracle manipulation test pattern</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Oracle manipulation test outline (run against your local fork).&quot;&quot;&quot;
+print(&quot;attack pattern:&quot;)
+print(&quot;1. read the protocol&#x27;s price source (which pool, which oracle)&quot;)
+print(&quot;2. on the fork, swap a large amount to move the pool price&quot;)
+print(&quot;3. call the protocol function that reads the manipulated price&quot;)
+print(&quot;4. measure the profit: borrow too much, liquidate unfairly, etc.&quot;)
+print(&quot;5. check mitigations: TWAP window, Chainlink fallback, sanity bounds&quot;)</code></pre>
+<pre><code class="language-bash"># Inspect what the protocol actually reads for prices
+grep -rn &quot;getReserves\|latestRoundData\|consult\|quote&quot; contracts/ | head -20
+# Then on the fork: move the underlying pool and observe the effect</code></pre>
+<h2>3. Flash loan attack surface checklist</h2>
+<pre><code class="language-bash"># Functions callable in one transaction that depend on manipulable state
+grep -rn &quot;flashLoan\|borrow\|liquidate&quot; contracts/ --include=&quot;*.sol&quot; | head -20
+# For each: what stops an attacker from borrowing big, distorting a
+# price, and extracting value before repaying in the same transaction</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The fork drifts from mainnet state. Pin the block number and note</li>
+<p>it; results are valid for that state.</p>
+<li>Mitigations exist but have parameters (TWAP window, deviation</li>
+<p>thresholds). Test the boundary values, not just the happy path.</p>
+<li>The protocol is upgradeable. Economic review must cover the admin&#x27;s</li>
+<p>power too, not just the current logic.</p>
+<li>Composability: the protocol is safe alone but dangerous combined</li>
+<p>with another protocol&#x27;s feature. Test the composition.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Attack unprofitable on the fork due to gas or slippage: compute the</li>
+<p>capital threshold where it becomes profitable and report that.</p>
+<li>Logic too complex for manual review: use symbolic execution or</li>
+<p>fuzzing (Foundry invariant tests) on the critical invariants.</p>
+<li>Governance risk found: hand to dao-governance-risks for the deep</li>
+<p>review.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>DeFi defenders monitor mempools for attack transactions, oracles for deviations, and admin actions for surprises. They defend with TWAP oracles, borrow caps, pause mechanisms, and bug bounties sized to the TVL. The durable lesson from every major DeFi hack is that economic assumptions need the same rigor as code: document them, test them adversarially, and monitor them live.</p>
+<h2>Key references</h2>
+<ul>
+<li>SWC Registry: oracle and access weaknesses.</li>
+<li>Major incident post mortems: oracle manipulation case studies.</li>
+<li>Flash loan attack literature and mitigations.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

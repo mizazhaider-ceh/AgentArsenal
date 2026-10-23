@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal brain: incident-command-mindset</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All artifacts</a></p><h2>incident-command-mindset</h2><div class="meta"><span class="badge gray">brain</span><span class="muted">v1.0.0</span><span class="badge green">90/100</span></div><p>Use when an agent must run or support a coordinated response: leading a security incident, organizing a multi-person outage response, structuring war-room communication, or deciding who does what when everything is on fire. Provides incident command reasoning: one commander with clear authority, limited span of control, objectives before actions, rhythmic communication, and documentation as you go. Load this brain when the response involves more than one person and chaos is the default outcome.</p><h2>Provides</h2><ul><li>Single-commander authority structure</li><li>Span-of-control management</li><li>Objectives-before-actions planning</li><li>Rhythmic communication cadence</li><li>Live documentation discipline</li><li>Role clarity under pressure</li></ul><div class="deps"><span class="kind">used by:</span> <span class="muted">none</span></div><p>Incidents fail more often from chaos than from technical difficulty. Five smart people all &quot;helping&quot; without coordination will trip over each other, duplicate work, miss the critical task, and lose the timeline. Incident command is the antidote: a simple structure borrowed from emergency services where one person commands, everyone has a role, objectives come before actions, and communication runs on a rhythm. It matters because the first hour of an incident sets its trajectory, and an hour of coordinated response beats a day of brilliant individuals working at cross purposes.</p>
+<h2>Core mental models</h2>
+<p><strong>One commander, clear authority.</strong> Exactly one person owns the incident: they set objectives, approve major actions, and resolve conflicts. Not a committee, not &quot;whoever is senior,&quot; one named human. Everyone else advises and executes. This feels hierarchical and it is, because incidents need decisions faster than consensus allows. The commander does not do the technical work; they run the response.</p>
+<p><strong>Span of control: nobody manages more than seven.</strong> If one person is directly coordinating more than about five to seven people or workstreams, coordination collapses. Split into roles: operations (doing the technical work), communications (talking to stakeholders), scribe (writing everything down), and subject experts as needed. Small teams can double up roles, but the roles must exist and be named.</p>
+<p><strong>Objectives before actions.</strong> Before anyone touches a keyboard, the commander states the current objectives in priority order: &quot;1. Stop the bleeding (contain). 2. Understand scope. 3. Preserve evidence.&quot; Every proposed action is then judged against the objectives. This stops the classic failure where someone starts rebuilding servers (recovery) while the attacker is still inside (containment not done). Sequence matters more than speed.</p>
+<p><strong>Communicate on a rhythm.</strong> Chaos loves silence. Set a battle rhythm: status updates every 15 or 30 minutes, same format each time (what we know, what we are doing, what we need). The commander runs it, the scribe records it. Stakeholders get updates on a slower rhythm so they stop interrupting the workers. Rhythm turns panic into process.</p>
+<h2>Operating checklist</h2>
+<ol>
+<li>Declare the incident and name the commander. Say it out loud: &quot;I am incident commander.&quot;</li>
+<li>Assign the core roles: operations lead, communications, scribe. Double up only if the team is tiny.</li>
+<li>State the objectives in priority order. Write them where everyone can see.</li>
+<li>Establish the rhythm: tactical updates every 15-30 minutes, stakeholder updates hourly.</li>
+<li>Start the timeline immediately: every action and observation logged with a timestamp.</li>
+<li>Scope before you fix: understand what is affected before you start changing things.</li>
+<li>Approve major actions through the commander: isolations, shutdowns, notifications, wipes.</li>
+<li>Keep one shared picture: a single channel or doc that is the source of truth. Kill side channels.</li>
+<li>Rotate people before they break: incidents are marathons that feel like sprints. Plan relief.</li>
+<li>Stand down formally: declare the incident over, schedule the postmortem, thank the team.</li>
+</ol>
+<h2>Heuristics</h2>
+<ul>
+<li>If two people think they are in charge, nobody is. Name the commander in the first five minutes.</li>
+<li>The scribe is not optional. The timeline is the postmortem, the evidence, and the legal record.</li>
+<li>No action without an objective it serves. &quot;Doing something&quot; is not a strategy.</li>
+<li>Update stakeholders before they ask. Silence breeds escalations that steal your workers.</li>
+<li>Contain first, understand second, recover third, lessons last. The order is the discipline.</li>
+<li>If the war room has twenty people talking, split it: workers in one channel, observers in another.</li>
+<li>Tired responders make bad calls. A rested second shift beats a heroic first shift.</li>
+<li>Declare &quot;incident over&quot; explicitly. Otherwise it fades without learning.</li>
+</ul>
+<h2>Anti-patterns</h2>
+<ul>
+<li><strong>Committee command.</strong> Decisions by consensus during a breach. Slow, and nobody owns the outcome.</li>
+<li><strong>Fixing before scoping.</strong> Rebuilding systems while the attacker still has access. You will rebuild twice.</li>
+<li><strong>No scribe.</strong> The timeline reconstructed from memory a week later, which is to say, fiction.</li>
+<li><strong>Side channels.</strong> Decisions made in DMs that the commander never hears about. The shared picture shatters.</li>
+<li><strong>Hero shifts.</strong> The same three people for 18 hours straight, making the worst decisions at hour 16.</li>
+</ul>
+<h2>Worked example</h2>
+<p>A ransomware alert fires at 02:00. The on-call engineer declares the incident and names herself commander (one commander, minute five). Roles: a second engineer takes operations, a third takes scribe, stakeholder comms goes to the manager on a 60-minute rhythm. Objectives posted: 1. Contain spread. 2. Determine scope and patient zero. 3. Preserve evidence. Tactical rhythm: every 20 minutes. Operations isolates hosts per the commander&#x27;s approval, never freelancing. The scribe&#x27;s timeline captures every isolation time, which later becomes the evidence chain. At 03:00 the manager tells executives &quot;contained, assessing scope, next update 04:00,&quot; and the execs stop calling the engineers. At 06:00 a rested second shift takes over with the full timeline. Containment holds, scope is known, evidence is intact, and nobody burned out. The response worked because the structure worked, not because anyone was heroic.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

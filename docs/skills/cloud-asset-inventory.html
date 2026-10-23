@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: cloud-asset-inventory</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>cloud-asset-inventory</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need a complete inventory of cloud assets for</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="cloud-security-basics.html">cloud-security-basics</a></div><div class="deps"><span class="kind">requires:</span> <a href="cloud-security-basics.html">cloud-security-basics</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="aws-enumeration.html">aws-enumeration</a> <a href="recon-passive.html">recon-passive</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>AWS CLI</td><td>2.15</td></tr></tbody></table><p>You cannot secure what you do not know exists: cloud asset inventory is the foundation of cloud security review. This skill covers building the inventory on authorized engagements: discovering accounts and resources, enumerating the high-risk asset types, and finding the shadow resources nobody remembers. It is read-only enumeration; findings about the assets feed the IAM and logging reviews.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the account and organization scope in writing.</li>
+<li>List all accounts in the organization.</li>
+<li>Enumerate high-risk assets per account: storage, compute, databases,</li>
+<p>public IPs.</p>
+<li>Flag internet-exposed resources specifically.</li>
+<li>Hunt shadow assets: old regions, forgotten projects, test accounts.</li>
+<li>Write the inventory with exposure notes per asset.</li>
+</ol>
+<h2>1. Account and resource discovery</h2>
+<pre><code class="language-bash"># AWS: list accounts in the organization
+aws organizations list-accounts --output table 2&gt;/dev/null | head -30
+
+# Per account: the high-risk resource types
+for region in us-east-1 eu-west-1; do
+  echo &quot;== $region ==&quot;
+  aws ec2 describe-instances --region $region \
+    --query &#x27;Reservations[].Instances[].[InstanceId,PublicIpAddress,State.Name]&#x27; \
+    --output text 2&gt;/dev/null | head -10
+  aws rds describe-db-instances --region $region \
+    --query &#x27;DBInstances[].[DBInstanceIdentifier,PubliclyAccessible]&#x27; \
+    --output text 2&gt;/dev/null | head -10
+done
+
+# Storage buckets (global namespace in AWS, per-project in GCP/Azure)
+aws s3api list-buckets --query &#x27;Buckets[].Name&#x27; --output text 2&gt;/dev/null | tr &#x27;\t&#x27; &#x27;\n&#x27; | head -20</code></pre>
+<p>Enumerate every region the organization uses, not just the primary one: forgotten resources live in odd regions. The inventory is per account per region; anything less is incomplete.</p>
+<h2>2. Exposure flagging</h2>
+<pre><code class="language-bash"># Public IPs and open security groups (AWS example)
+aws ec2 describe-security-groups \
+  --query &#x27;SecurityGroups[?IpPermissions[?IpRanges[?CidrIp==`0.0.0.0/0`]]].[GroupId,GroupName]&#x27; \
+  --output text 2&gt;/dev/null | head -10
+
+# Public S3 buckets: check the bucket policy and ACLs per bucket
+for b in $(aws s3api list-buckets --query &#x27;Buckets[].Name&#x27; --output text 2&gt;/dev/null); do
+  acl=$(aws s3api get-bucket-acl --bucket $b 2&gt;/dev/null | grep -c &#x27;AllUsers&#x27;)
+  [ &quot;$acl&quot; -gt 0 ] &amp;&amp; echo &quot;PUBLIC ACL: $b&quot;
+done
+
+# Public snapshots and AMIs shared externally
+aws ec2 describe-snapshots --owner-ids self \
+  --query &#x27;Snapshots[?Public==`true`].[SnapshotId]&#x27; --output text 2&gt;/dev/null | head -5</code></pre>
+<p>Every internet-exposed asset gets an exposure note: what it is, why it is public, and whether the exposure is intended. Unintended public exposure is the most common cloud finding; the inventory makes it visible.</p>
+<h2>3. Shadow asset hunting</h2>
+<pre><code class="language-bash"># Hunt patterns:
+# - Regions with resources but no active project (forgotten)
+# - Accounts with no recent CloudTrail activity (abandoned)
+# - Old access keys (created years ago, still active)
+# - Unattached EBS volumes and elastic IPs (paying for forgotten)
+
+aws ec2 describe-volumes \
+  --query &#x27;Volumes[?State==`available`].[VolumeId,Size,CreateTime]&#x27; \
+  --output text 2&gt;/dev/null | head -10
+aws iam list-users --query &#x27;Users[].[UserName,CreateDate]&#x27; \
+  --output text 2&gt;/dev/null | head -20</code></pre>
+<p>Shadow assets are the attacker&#x27;s favorite: unmonitored, unpatched, and often over-permissioned. The inventory review should ask of every asset: who owns it, what it does, and what happens if it is compromised. No owner means decommission.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The organization list is incomplete. Ask for the full account list;</li>
+<p>cloud accounts get created outside central IT regularly.</p>
+<li>Read-only credentials lack some APIs. Note the blind spots; an</li>
+<p>inventory with known gaps beats a guessed-complete one.</p>
+<li>Multi-cloud: repeat per provider with the provider&#x27;s tooling; the</li>
+<p>inventory merges at the end, not during.</p>
+<li>The inventory is huge. Prioritize internet-exposed and data-bearing</li>
+<p>assets; the full list still gets recorded.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You find clearly unintended public exposure of sensitive data: report</li>
+<p>through the critical channel immediately; do not wait for the full inventory.</p>
+<li>Shadow accounts cannot be attributed: recommend suspension pending</li>
+<p>owner identification, with leadership approval.</p>
+<li>The inventory must be continuous: hand the enumeration commands to</li>
+<p>the team as the scheduled job that keeps it fresh.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders, the inventory is the prerequisite for everything else: detection rules, IAM review, and logging all assume you know the assets. Cloud asset discovery tools and CSPM products automate this, but the discipline is the same: every account, every region, regularly. The defender&#x27;s metric is time from asset creation to inventory; shadow IT makes that number large, and attackers live in the gap.</p>
+<h2>Key references</h2>
+<ul>
+<li>CIS Benchmarks for AWS, Azure, GCP (asset configuration baselines).</li>
+<li>NIST SP 800-210 (access control for cloud, inventory concepts).</li>
+<li>Cloud provider documentation: resource enumeration APIs.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

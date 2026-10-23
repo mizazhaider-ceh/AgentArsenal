@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: data-breach-playbook-run</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>data-breach-playbook-run</h2><div class="meta"><span class="badge gray">defensive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when data theft is confirmed or suspected and the data</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-playbooks.html">incident-playbooks</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-response.html">incident-response</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A data breach playbook runs alongside the technical response but answers different questions: what was taken, who must be told, and by when. This skill is the executable playbook: scoping the theft, preserving the evidence lawyers need, meeting notification obligations, and supporting honest communication. Legal drives the timeline here; technical findings feed it.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the theft: what evidence shows data left the environment.</li>
+<li>Determine WHAT: data types, whose data, how many records.</li>
+<li>Preserve evidence with legal hold in mind from the start.</li>
+<li>Engage legal immediately: notification obligations depend on</li>
+<p>jurisdiction and data type.</p>
+<li>Scope the access: how the attacker reached the data, for how long.</li>
+<li>Support notification: factual content for the messages.</li>
+<li>Run lessons learned with the breach lens.</li>
+</ol>
+<h2>1. Confirming and scoping the theft</h2>
+<pre><code class="language-bash"># Evidence of exfiltration to gather:
+# - Firewall/proxy logs: large transfers to external hosts
+# - Database audit logs: bulk queries, dumps
+# - Endpoint: archive tools (rar, 7z) run before transfer
+# - Cloud: unusual download volumes from storage
+
+# WHAT was taken (the question everything else depends on):
+# - Data types: PII, credentials, financial, health, IP
+# - Whose: customers, employees, which regions
+# - How many: record counts, with the query that produced them
+# - Sensitivity: encrypted? hashed? plaintext?
+
+# Document the theft evidence like forensics: hashes, logs, queries,
+# all preserved with chain of custody</code></pre>
+<p>&quot;What was taken&quot; is the hardest question and the most important: every notification decision flows from it. Invest the analysis time here; guessing wrong in either direction (over or under) has real costs.</p>
+<h2>2. Legal and notification track</h2>
+<pre><code class="language-bash"># Engage legal BEFORE drafting any notification or public statement.
+# Legal determines:
+# - Which jurisdictions&#x27; breach laws apply (residence of the data subjects)
+# - Notification deadlines (they vary: 72 hours is common in the EU)
+# - What must be notified: regulators, individuals, both
+# - Privilege: which investigation work product stays privileged
+
+# Technical support to legal:
+# - Factual timeline of the theft (no speculation in writing)
+# - Record counts with methodology
+# - Remediation status (what is fixed, what is in progress)
+
+# Do NOT: notify customers without legal, discuss the breach on
+# unprivileged channels, or speculate about attribution in writing</code></pre>
+<p>The notification clock starts at discovery or confirmation depending on the jurisdiction; know which applies. Missing a deadline turns a breach into a compliance failure too.</p>
+<h2>3. Communication support</h2>
+<pre><code class="language-bash"># The technical team provides facts; comms and legal own the message.
+# Facts to prepare:
+# - What happened, in plain language, without jargon
+# - What data was involved, specifically
+# - What the organization did about it (containment, fixes)
+# - What affected people should do (concrete steps)
+# - Where to get help (dedicated contact, not the general line)
+
+# Prepare for the questions: how, how many, why us, is it over,
+# what are you doing to prevent repeats</code></pre>
+<p>Honest, specific communication beats vague reassurance: people forgive breaches better than they forgive evasions. The technical team&#x27;s job is making sure every factual claim in the message is true.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The theft is suspected but unproven. Investigate as a breach (legal</li>
+<p>hold, scoping) while stating the status honestly; downgrade only on evidence.</p>
+<li>A third party reports your data (ransomware leak site, researcher).</li>
+<p>Treat the report as the detection; verify independently before acting on it.</p>
+<li>The data was encrypted by the attacker (ransomware). Theft plus</li>
+<p>encryption is the double extortion case; run both playbooks.</p>
+<li>The breach involves a processor or vendor. Their notification duties</li>
+<p>and yours interact; legal coordinates, technical verifies their claims.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Regulators must be notified: legal files, technical provides the</li>
+<p>factual annex; keep the annex updated as the investigation refines the numbers.</p>
+<li>Law enforcement involvement: preserve evidence to their standard</li>
+<p>and coordinate through legal.</p>
+<li>The playbook timeline conflicts with the investigation: legal sets</li>
+<p>the notification deadline; the investigation prioritizes answering the notification questions first.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>The defender&#x27;s preparation for this playbook: data inventory (knowing what sensitive data lives where), egress monitoring that can answer &quot;what left,&quot; database audit logging, and practiced legal engagement. The organizations that handle breaches well knew their data before the incident; the ones that struggle discover their data during it.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-61 (incident handling).</li>
+<li>GDPR Articles 33-34 (notification duties, EU reference point).</li>
+<li>Sector breach notification laws (jurisdiction-specific, via legal).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>
