@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-timeline-analysis-plaso-timelines</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-timeline-analysis-plaso-timelines</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to build forensic timelines from disk</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-timeline-analysis.html">incident-timeline-analysis</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-timeline-analysis.html">incident-timeline-analysis</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-timeline-analysis.html">incident-timeline-analysis</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Plaso</td><td>20241006</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Plaso (log2timeline) parses forensic artifacts into a single timestamped event store: file system metadata, logs, browser history, registry hives, and dozens more. This sub-skill is the operator&#x27;s guide: installation notes, parser selection, storage handling, psort filtering, and the performance practices that keep large cases moving. Authorized investigations on your own evidence only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm Plaso is installed and note the version for the case.</li>
+<li>Choose the input: disk image, mounted image, or log directory.</li>
+<li>Select parsers: start broad, then narrow for the second pass.</li>
+<li>Run log2timeline.py into a named storage file per host.</li>
+<li>Inspect with pinfo.py: event counts, time range, parser stats.</li>
+<li>Filter with psort.py to the incident window and export CSV.</li>
+<li>Iterate: add parsers or narrow filters based on what you find.</li>
+<li>Archive the storage file with the case; it is re-queryable.</li>
+</ol>
+<h2>1. Running log2timeline</h2>
+<pre><code class="language-bash"># From a disk image (read-only handling is your responsibility)
+log2timeline.py --storage-file web-03.plaso /evidence/INC-2026-1042/disk-sda.img
+
+# From a directory of collected logs and artifacts
+log2timeline.py --storage-file logs.plaso /evidence/INC-2026-1042/logs/
+
+# With a specific parser set for a focused second pass
+log2timeline.py --parsers syslog,apache_access,chrome_history \
+  --storage-file web-03-focused.plaso /evidence/INC-2026-1042/disk-sda.img
+
+# Workers: scale to the machine, but watch memory
+log2timeline.py --workers 4 --storage-file web-03.plaso /evidence/INC-2026-1042/disk-sda.img</code></pre>
+<p>Example console output shape:</p>
+<pre><code>[INFO] log2timeline version 20241006
+[INFO] Source: /evidence/INC-2026-1042/disk-sda.img
+[INFO] Processing completed: 184,203 events in 00:14:32
+[INFO] Storage file: web-03.plaso (412 MB)</code></pre>
+<p>One storage file per host keeps cases manageable; merging happens at psort time. Name files <code>hostname.plaso</code> so a year from now the archive still makes sense.</p>
+<h2>2. Inspecting with pinfo</h2>
+<pre><code class="language-bash">pinfo.py web-03.plaso</code></pre>
+<p>Example output shape:</p>
+<pre><code>Plaso storage file: web-03.plaso
+Events: 184,203
+First event: 2026-10-18 06:12:44.000000 UTC
+Last event: 2026-10-23 09:41:02.000000 UTC
+Parsers:
+  filestat: 142,010
+  syslog: 28,442
+  apache_access: 8,911
+  chrome_history: 3,102
+  ...</code></pre>
+<p>Sanity checks: the time range should cover your incident window; if the first event is after the suspected intrusion, you are missing history (image too new, logs rotated). Parser counts tell you what you have to work with; zero syslog events on a Linux web server means the logs did not survive.</p>
+<h2>3. Filtering and exporting with psort</h2>
+<pre><code class="language-bash"># Incident window to CSV, UTC
+psort.py -o csv --slice &quot;2026-10-20 00:00:00&quot; &quot;2026-10-23 12:00:00&quot; \
+  -w incident-window.csv web-03.plaso
+
+# Filter language: parser, message content, timestamps
+psort.py -o csv -w ssh-events.csv \
+  --filter &quot;parser is &#x27;syslog&#x27; and message contains &#x27;sshd&#x27;&quot; web-03.plaso
+
+# File writes in /tmp during the window (staging detection)
+psort.py -o csv -w tmp-writes.csv \
+  --filter &quot;parser is &#x27;filestat&#x27; and filename contains &#x27;/tmp&#x27; and timestamp_desc contains &#x27;Content Modification&#x27;&quot; \
+  web-03.plaso
+
+# Deduplicated, sorted output for the super-timeline
+psort.py -o csv -w web-03-clean.csv --dedup web-03.plaso</code></pre>
+<p>psort filter examples worth keeping in the runbook:</p>
+<pre><code># Authentication events across common parsers
+parser is &#x27;syslog&#x27; and (message contains &#x27;Accepted&#x27; or message contains &#x27;Failed&#x27;)
+
+# Browser downloads
+parser is &#x27;chrome_history&#x27; and message contains &#x27;Download&#x27;
+
+# USB device connections (Linux)
+parser is &#x27;syslog&#x27; and message contains &#x27;USB&#x27;</code></pre>
+<h2>4. Merging hosts and feeding Timesketch</h2>
+<pre><code class="language-bash"># One CSV per host, then concatenate for the super-timeline
+psort.py -o csv -w web-03-clean.csv --dedup web-03.plaso
+psort.py -o csv -w ws-11-clean.csv --dedup ws-11.plaso
+head -1 web-03-clean.csv &gt; super.csv
+tail -n +2 -q web-03-clean.csv ws-11-clean.csv &gt;&gt; super.csv
+
+# Import into Timesketch for collaborative analysis
+# (Timesketch web UI: create sketch &gt; upload super.csv)</code></pre>
+<p>Timesketch turns the flat CSV into a searchable, annotatable timeline the whole team can work. Upload per-host CSVs as separate timelines in one sketch to keep the source straight.</p>
+<h2>5. Performance practices</h2>
+<ul>
+<li>Run log2timeline on the evidence copy, never the original.</li>
+<li>Start with default parsers on the full image, then run focused</li>
+<p>parser passes into separate storage files; re-parsing everything for one new parser wastes hours.</p>
+<li><code>--workers</code> helps up to the disk&#x27;s throughput; beyond that it</li>
+<p>just burns memory. Watch <code>htop</code> on the first run and tune.</p>
+<li>Storage files grow large (hundreds of MB per host). Keep them;</li>
+<p>re-running log2timeline costs more than disk space.</p>
+<li>For very large cases, slice by time at psort and archive the</li>
+<p>window CSVs alongside the full storage file.</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>log2timeline fails on a corrupt image region. Use</li>
+<p><code>--partition</code> to target specific partitions, or image the readable regions and note the gap.</p>
+<li>Zero events from a parser you expected. The artifact may be</li>
+<p>absent (logs wiped), the parser name may be wrong (check <code>log2timeline.py --info</code>), or the file may be a format variant the parser does not handle.</p>
+<li>Timestamps far in the future or past (year 2080, year 1970).</li>
+<p>Filesystem timestamp corruption is common on failing disks; filter the absurd range out and note it.</p>
+<li>The storage file is corrupt after an interrupted run. Delete</li>
+<p>and re-run; partial storage files are not repairable.</p>
+<li>Memory exhaustion on huge images. Reduce workers, process</li>
+<p>partitions separately, or move to a bigger analysis host; do not <code>--workers 32</code> a laptop and hope.</p>
+<li>Encrypted volumes. Decrypt with the recovered key first (see</li>
+<p>evidence preservation); Plaso cannot parse ciphertext.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The timeline shows the intrusion predates all available</li>
+<p>history. Escalate the retention gap as a finding and check backups or archives for older copies.</p>
+<li>Parser output suggests anti-forensics (timestomping: clusters</li>
+<p>of identical unlikely timestamps). Escalate to the forensics lead; timestomping analysis is a specialty.</p>
+<li>The case needs timelines from dozens of hosts. Script the</li>
+<p>log2timeline runs, parallelize across analysis hosts, and track completion in the case file; do not run them by hand.</p>
+<li>Results will go to legal. Freeze the Plaso version, the exact</li>
+<p>commands, and the storage files; reproducibility is the requirement.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Plaso timelines are how defenders see what the attacker did after the fact, which is why attackers target the underlying artifacts: log deletion, timestomping, and wiping shell history. The defense is layered: centralize logs beyond the attacker&#x27;s reach, protect filesystem metadata with integrity monitoring, and keep retention longer than your detection time. Every timeline gap you hit in an investigation becomes a detection engineering task for peacetime.</p>
+<h2>Key references</h2>
+<ul>
+<li>Plaso documentation: https://plaso.readthedocs.io/</li>
+<li>Parser list and filter language:</li>
+<p>https://plaso.readthedocs.io/en/latest/sources/user/Parsers-and-plugins.html</p>
+<li>Timesketch: https://timesketch.org/</li>
+<li>Parent workflow: incident-timeline-analysis (this repo)</li>
+<li>NIST SP 800-86: https://csrc.nist.gov/publications/detail/sp/800-86/final</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

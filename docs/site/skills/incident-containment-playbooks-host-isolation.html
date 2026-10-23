@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-containment-playbooks-host-isolation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-containment-playbooks-host-isolation</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you must cut an affected host off from the</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-containment-playbooks.html">incident-containment-playbooks</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-containment-playbooks.html">incident-containment-playbooks</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-containment-playbooks.html">incident-containment-playbooks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>iptables</td><td>1.8</td></tr><tr><td>Velociraptor</td><td>0.72</td></tr><tr><td>osquery</td><td>5.12.1</td></tr></tbody></table><p>Host isolation disconnects a compromised machine from everything except your security tooling, while leaving it powered on so memory and disk state survive for forensics. It is the most common containment action and the easiest to get subtly wrong: too loose and the attacker keeps a channel, too tight and you lose the EDR telemetry you need. This sub-skill covers the recipes, the validation, and the exceptions. Authorized incident response only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the host is in scope and the incident commander approved</li>
+<p>isolation.</p>
+<li>Capture volatile state first (connections, processes) per the</li>
+<p>evidence playbook.</p>
+<li>Apply the isolation rules for the platform, allowing only SIEM,</li>
+<p>EDR, and management networks.</p>
+<li>Validate from the host: attacker channels fail, security</li>
+<p>tooling still checks in.</p>
+<li>Validate from the network: no unexpected flows to or from the</li>
+<p>host.</p>
+<li>Log the action with timestamp, host, method, and ticket id.</li>
+<li>Monitor the isolated host for reconnection attempts.</li>
+<li>Plan the exit: isolation ends at eradication, not before.</li>
+</ol>
+<h2>1. Linux isolation with iptables</h2>
+<pre><code class="language-bash"># Define the allowed destinations: SIEM, EDR, and your forensics jump host
+SIEM=203.0.113.10
+EDR=203.0.113.11
+JUMP=203.0.113.12
+
+# Save the current ruleset first so you can restore it
+iptables-save &gt; /evidence/INC-2026-1042/iptables-before.rules
+
+# OUTPUT chain: allow security tooling and loopback, drop the rest
+iptables -F OUTPUT
+iptables -A OUTPUT -d $SIEM -j ACCEPT -m comment --comment &quot;INC-2026-1042&quot;
+iptables -A OUTPUT -d $EDR -j ACCEPT -m comment --comment &quot;INC-2026-1042&quot;
+iptables -A OUTPUT -d $JUMP -p tcp --dport 22 -j ACCEPT -m comment --comment &quot;INC-2026-1042&quot;
+iptables -A OUTPUT -o lo -j ACCEPT
+iptables -A OUTPUT -j DROP
+
+# INPUT chain: allow established management SSH, drop the rest
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s $JUMP -p tcp --dport 22 -j ACCEPT -m comment --comment &quot;INC-2026-1042&quot;
+iptables -A INPUT -j DROP
+
+iptables -L -n -v --line-numbers | head -25</code></pre>
+<p>Example output shape:</p>
+<pre><code>Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+num   pkts bytes target     prot opt in     out     source      destination
+1        0     0 ACCEPT     all  --  *      *       0.0.0.0/0   203.0.113.10
+2        0     0 ACCEPT     all  --  *      *       0.0.0.0/0   203.0.113.11
+3        0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0   203.0.113.12   tcp dpt:22
+4        0     0 ACCEPT     all  --  *      lo      0.0.0.0/0   0.0.0.0/0
+5        0     0 DROP       all  --  *      *       0.0.0.0/0   0.0.0.0/0</code></pre>
+<p>DNS will fail for the host (no resolver allowed), which is intended: name resolution is a common exfiltration channel. If the EDR needs DNS, allow UDP 53 to your internal resolver only, and log it.</p>
+<h2>2. Linux isolation with nftables</h2>
+<pre><code class="language-bash"># nftables equivalent for newer distributions
+nft flush ruleset  # CAREFUL: only on the isolated host, ruleset saved first
+nft add table inet ir
+nft add chain inet ir output { type filter hook output priority 0 \; }
+nft add rule inet ir output ip daddr 203.0.113.10 accept
+nft add rule inet ir output ip daddr 203.0.113.11 accept
+nft add rule inet ir output oif lo accept
+nft add rule inet ir output drop
+nft list ruleset</code></pre>
+<p>Know which firewall your fleet uses before the incident. Running iptables commands on an nftables-only host silently does nothing if the compatibility layer is absent.</p>
+<h2>3. Windows isolation with Windows Firewall</h2>
+<pre><code class="language-powershell"># Run as administrator. Save current config first.
+netsh advfirewall export &quot;C:\Evidence\INC-2026-1042\fw-before.wfw&quot;
+
+# Allow the security stack outbound
+New-NetFirewallRule -DisplayName &quot;IR-INC1042-allow-SIEM&quot; -Direction Outbound `
+  -RemoteAddress 203.0.113.10 -Action Allow -Profile Any
+New-NetFirewallRule -DisplayName &quot;IR-INC1042-allow-EDR&quot; -Direction Outbound `
+  -RemoteAddress 203.0.113.11 -Action Allow -Profile Any
+
+# Allow RDP/WinRM from the jump host only, for forensic access
+New-NetFirewallRule -DisplayName &quot;IR-INC1042-allow-jump-in&quot; -Direction Inbound `
+  -RemoteAddress 203.0.113.12 -Action Allow -Profile Any
+
+# Deny everything else outbound
+New-NetFirewallRule -DisplayName &quot;IR-INC1042-deny-out&quot; -Direction Outbound `
+  -Action Block -Profile Any
+
+Get-NetFirewallRule -DisplayName &quot;IR-INC1042-*&quot; | Select-Object DisplayName, Enabled</code></pre>
+<p>Test RDP or WinRM from the jump host immediately; a typo in the allow rule locks you out of your own isolated host, which is embarrassing and slows the response.</p>
+<h2>4. EDR network containment</h2>
+<p>Most EDR platforms offer one-click network isolation that is more reliable than hand-written rules and reversible from the console. Prefer it when available:</p>
+<pre><code class="language-bash"># Velociraptor: quarantine a host via the API (example pattern)
+# In practice use your EDR console: select host &gt; Network isolate &gt; confirm
+# Velociraptor hunt to verify the agent still checks in after isolation
+velociraptor --config server.config.yaml query \
+  &quot;SELECT client_id, last_seen FROM clients() WHERE hostname = &#x27;web-03&#x27;&quot;</code></pre>
+<p>EDR isolation usually allows the agent&#x27;s own traffic by design, which solves the &quot;too tight&quot; problem automatically. The tradeoff is dependence on the EDR control plane; if the attacker may have compromised it, use host firewall rules instead.</p>
+<h2>5. Keeping forensic access working</h2>
+<p>Isolation must not cut off the responders. Checklist per isolated host:</p>
+<ul>
+<li>SSH or WinRM from the jump host: tested, working.</li>
+<li>EDR agent checking in: confirm in the console.</li>
+<li>Syslog forwarding to the SIEM: confirm events still arrive.</li>
+<li>Memory capture path: confirm you can run the capture tool and</li>
+<p>exfiltrate the image to evidence storage.</p>
+</ul>
+<pre><code class="language-bash"># From the jump host: verify you can still reach the isolated host
+ssh -o ConnectTimeout=5 ir@web-03 &quot;hostname; uptime&quot;
+# From the SIEM: confirm events still arriving
+# (check the last event timestamp for web-03 in your SIEM)</code></pre>
+<p>If forensic access fails, loosen precisely: add one allow rule for the needed flow, log it, and re-validate. Never remove the whole isolation to &quot;make things easier&quot;.</p>
+<h2>6. Validating the isolation</h2>
+<pre><code class="language-bash"># On the isolated host: attacker channels must fail
+curl -m 5 https://example.com ; echo &quot;exit: $?&quot;
+# Expected: timeout, exit 28
+ping -c1 8.8.8.8 ; echo &quot;exit: $?&quot;
+# Expected: no reply
+
+# Security tooling must still work
+curl -m 5 https://203.0.113.11/health ; echo &quot;exit: $?&quot;
+# Expected: 200 or the EDR&#x27;s expected response
+
+# From the network: watch for any flows bypassing the rules
+# (on the switch or firewall: filter for the host&#x27;s IP for 5 minutes)</code></pre>
+<p>Also verify the malware&#x27;s known C2 specifically: if threat intel says it beacons to 198.51.100.23, confirm that flow is dead. A host that cannot reach the internet but can still reach a hardcoded IP you forgot to block is not isolated.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The host has two network interfaces and you only firewalled one.</li>
+<p>Enumerate interfaces first (<code>ip addr</code>) and apply rules to all, or isolate at the switch port instead.</p>
+<li>IPv6 provides a bypass around IPv4-only rules. Write both</li>
+<p>families (ip6tables) or disable IPv6 on the host during the incident.</p>
+<li>The attacker has a scheduled task that reverts firewall rules.</li>
+<p>Monitor the ruleset (<code>iptables -L</code> on a loop or EDR file integrity), and treat rule reversion as evidence of active persistence.</p>
+<li>The host is a virtual machine. Hypervisor-level network</li>
+<p>disconnect is cleaner than in-guest rules and cannot be reverted by guest malware; prefer it when available.</p>
+<li>Isolation breaks the application so badly that the business</li>
+<p>demands reconnection. The commander decides; the compromise is usually a narrower allow-list for the specific business flow, with full packet capture on it.</p>
+<li>The EDR agent dies on the isolated host. You lose visibility;</li>
+<p>fall back to host firewall rules plus switch-level capture, and note the visibility gap.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Isolation does not stop the malicious activity (encryption</li>
+<p>continues, beacons continue). The host may have an out-of-band channel (second NIC, cellular modem, BMC); investigate the hardware path, not just the OS.</p>
+<li>Multiple hosts need simultaneous isolation. Script the</li>
+<p>iptables and firewall commands and run them via your configuration management or Velociraptor in one wave; sequential isolation lets the attacker move.</p>
+<li>The isolated host holds the only copy of critical data with no</li>
+<p>backup. Involve the business owner before any action that risks the data, including memory capture on an unstable host.</p>
+<li>You suspect the attacker is watching your response (counter-IR).</li>
+<p>Coordinate the isolation wave out-of-band and execute simultaneously to deny them reaction time.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Host isolation is a response action, but its effectiveness depends on peacetime preparation: firewall tooling standardized across the fleet, EDR on every host, and tested runbooks so the 3 AM isolation takes minutes, not an hour of man-page reading. Measure time from detection to isolation as a core metric. The strategic view: hosts that are already segmented need less dramatic isolation, which is why network segmentation in peacetime pays off during incidents.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent playbook: incident-containment-playbooks (this repo)</li>
+<li>NIST SP 800-61 Rev. 2: https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final</li>
+<li>iptables documentation: https://www.netfilter.org/documentation/</li>
+<li>nftables wiki: https://wiki.nftables.org/</li>
+<li>Velociraptor docs: https://docs.velociraptor.app/</li>
+<li>MITRE ATT&amp;CK T1562 (Impair Defenses): https://attack.mitre.org/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

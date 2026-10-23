@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-forensics-challenges-steganography</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-forensics-challenges-steganography</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF forensics challenge hides data inside images,</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-forensics-challenges.html">ctf-forensics-challenges</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-forensics-challenges.html">ctf-forensics-challenges</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="ctf-forensics-challenges.html">ctf-forensics-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>ExifTool</td><td>12.90</td></tr><tr><td>binwalk</td><td>2.3</td></tr><tr><td>CyberChef</td><td>latest</td></tr></tbody></table><p>Steganography hides data inside ordinary-looking files: flags in image pixels, audio frequencies, or invisible text characters. CTF stego challenges are solved with a standard tool ladder run in order, because each layer is designed to be found by one specific tool. This sub-skill covers the authorized methodology: the ordered tool sequence, what each tool&#x27;s output means, manual LSB inspection when tools fail, audio visual analysis, text stego decoding, and handling layered challenges. Scope is CTF competitions, lab media, and files you are authorized to analyze.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Run the cheap checks first: <code>file</code>, <code>exiftool</code>, <code>binwalk</code>, and a</li>
+<p>flag-shaped grep over the raw bytes.</p>
+<li>Check the file size against expectations; appended data after the</li>
+<p>logical end (JPEG EOI, PNG IEND) is the most common hiding spot.</p>
+<li>For PNG: run <code>zsteg -a</code> (all channels, all bit orders).</li>
+<li>For JPEG/BMP/WAV/AU with a passphrase hint: try <code>steghide extract</code></li>
+<p>with empty, then challenge-themed passphrases, then <code>stegseek</code>.</p>
+<li>For audio: view the spectrogram; listen for SSTV warbles or DTMF.</li>
+<li>For text: check trailing whitespace and zero-width unicode with</li>
+<p><code>cat -A</code> and a Python scan.</p>
+<li>If one layer yields an archive or another image, recurse the whole</li>
+<p>ladder on the extracted file.</p>
+<li>Decode the final payload (base64, hex, reversed, XOR) and verify</li>
+<p>the flag format.</p>
+</ol>
+<h2>1. The ordered tool ladder</h2>
+<p>Run in this order; stop at the first hit, then recurse on any extracted file.</p>
+<pre><code class="language-bash">f=&quot;$1&quot;  # the challenge file
+
+# 1. metadata and magic
+file &quot;$f&quot;
+exiftool &quot;$f&quot; | head -40        # Comment, Description, Artist fields often hold flags
+
+# 2. appended data
+binwalk &quot;$f&quot;                   # archives glued after IEND/EOI
+tail -c 200 &quot;$f&quot; | xxd         # eyeball the tail
+
+# 3. raw flag grep (catches plaintext and base64-ish hiding)
+grep -a -o -E &quot;flag\{[^}]+\}&quot; &quot;$f&quot; | head -3
+strings -n 10 &quot;$f&quot; | grep -i -E &quot;flag|ctf&quot; | head -10
+
+# 4. PNG LSB
+zsteg -a &quot;$f&quot; 2&gt;/dev/null | head -40
+
+# 5. steghide (needs a passphrase guess)
+steghide info &quot;$f&quot; -p &quot;&quot;       # test empty passphrase
+echo &quot;test&quot; | steghide extract -sf &quot;$f&quot; -p &quot;&quot; -xf /tmp/out.bin -f 2&gt;&amp;1 | head -3</code></pre>
+<p><code>zsteg -a</code> output shape: lines like <code>b1,rgb,lsb,xy .. text: &quot;flag{...}&quot;</code> where b1 is bit plane 1, rgb the channel, lsb the order. Copy the extracted text directly; when it says <code>file: ...</code> it wrote an embedded file to disk.</p>
+<h2>2. steghide and stegseek</h2>
+<pre><code class="language-bash"># Try the challenge&#x27;s obvious passphrases first (theme words, &quot;password&quot;, &quot;&quot;)
+for pw in &quot;&quot; &quot;password&quot; &quot;ctf&quot; &quot;flag&quot; &quot;stego&quot;; do
+  echo &quot;== passphrase: &#x27;$pw&#x27;&quot;
+  steghide extract -sf image.jpg -p &quot;$pw&quot; -xf /tmp/out_$RANDOM.bin -f 2&gt;&amp;1 | head -2
+done
+
+# Brute force with rockyou when hints suggest a real passphrase
+stegseek image.jpg /usr/share/wordlists/rockyou.txt
+# [i] Found passphrase: &quot;sunshine&quot;  -&gt; writes image.jpg.out
+file image.jpg.out &amp;&amp; head -c 200 image.jpg.out</code></pre>
+<p><code>stegseek</code> is fast because it exploits steghide&#x27;s format; use it before manual guessing marathons. If the challenge gives no passphrase hint at all, the intended tool is probably zsteg or appended data, not steghide.</p>
+<h2>3. Manual LSB inspection</h2>
+<p>When tools find nothing but the image still feels wrong (file too large, visual noise), inspect bit planes manually.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Dump LSB planes of a PNG for manual inspection.&quot;&quot;&quot;
+from PIL import Image
+
+img = Image.open(&quot;image.png&quot;).convert(&quot;RGB&quot;)
+w, h = img.size
+px = img.load()
+
+for plane in (0, 1):          # bit planes 0 and 1
+    bits = []
+    for y in range(h):
+        for x in range(w):
+            r, g, b = px[x, y]
+            bits.append(str((r &gt;&gt; plane) &amp; 1))
+            bits.append(str((g &gt;&gt; plane) &amp; 1))
+            bits.append(str((b &gt;&gt; plane) &amp; 1))
+    raw = bytes(int(&quot;&quot;.join(bits[i:i+8]), 2) for i in range(0, len(bits) - 7, 8))
+    open(f&quot;/tmp/plane{plane}.bin&quot;, &quot;wb&quot;).write(raw)
+    print(f&quot;plane {plane}: {len(raw)} bytes, printable ratio:&quot;,
+          sum(32 &lt;= c &lt; 127 for c in raw) / max(len(raw), 1))</code></pre>
+<p>Check each plane file: high printable ratio means text is hidden there. Also try MSB-to-LSB and reversed bit orders (<code>zsteg --order</code> variants) before concluding the image is clean.</p>
+<h2>4. Audio steganography</h2>
+<pre><code class="language-bash"># Spectrogram: flags are often drawn as text in the frequency domain
+sox audio.wav -n spectrogram -o /tmp/spec.png
+# open /tmp/spec.png and read it like an image
+
+# Metadata and appended data first (same ladder as images)
+exiftool audio.wav | head -20
+binwalk audio.wav
+
+# SSTV: the warbling robot sound encodes an image
+# record or convert to wav, then decode with robot36 / QSSTV
+
+# DTMF tones: decode dial sequences
+# multimon-ng -a DTMF -t wav audio.wav
+
+# LSB in WAV: same Python approach as images, on 16-bit samples
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import wave
+w = wave.open(&quot;audio.wav&quot;)
+frames = w.readframes(w.getnframes())
+lsb = bytes(b &amp; 1 for b in frames)
+text = bytes(int(&quot;&quot;.join(map(str, lsb[i:i+8])), 2) for i in range(0, len(lsb) - 7, 8))
+print(text[:200])
+EOF</code></pre>
+<p>Listen to the audio once: morse code beeps, dial tones, and SSTV warbles are recognizable by ear and each maps to a specific decoder.</p>
+<h2>5. Text steganography</h2>
+<pre><code class="language-bash"># Trailing whitespace: spaces and tabs encode binary
+cat -A note.txt | head -20
+# &quot;hello world   $&quot;  -&gt; trailing spaces before $ are data
+
+# Zero-width unicode: invisible characters encode bits
+python3 - &lt;&lt;&#x27;EOF&#x27;
+data = open(&quot;note.txt&quot;, encoding=&quot;utf-8&quot;).read()
+mapping = {&quot;\u200b&quot;: &quot;0&quot;, &quot;\u200c&quot;: &quot;1&quot;, &quot;\u200d&quot;: &quot;&quot;, &quot;\ufeff&quot;: &quot;&quot;}
+bits = &quot;&quot;.join(mapping.get(c, &quot;&quot;) for c in data)
+if bits:
+    raw = bytes(int(bits[i:i+8], 2) for i in range(0, len(bits) - 7, 8))
+    print(raw[:300])
+else:
+    print(&quot;no zero-width characters found&quot;)
+EOF
+
+# Whitespace decode: space=0, tab=1 on trailing runs
+python3 - &lt;&lt;&#x27;EOF&#x27;
+bits = &quot;&quot;
+for line in open(&quot;note.txt&quot;):
+    stripped = line.rstrip(&quot;\n&quot;)
+    trail = stripped[len(stripped.rstrip(&quot; \t&quot;)):]
+    bits += trail.replace(&quot; &quot;, &quot;0&quot;).replace(&quot;\t&quot;, &quot;1&quot;)
+raw = bytes(int(bits[i:i+8], 2) for i in range(0, len(bits) - 7, 8))
+print(raw[:300])
+EOF</code></pre>
+<h2>6. Layered challenges</h2>
+<p>CTF authors chain methods: a PNG with LSB text pointing to a steghide passphrase, whose extracted zip contains audio with a spectrogram flag. Handle layers strictly in order:</p>
+<ol>
+<li>Solve the outermost layer completely before theorizing about inner</li>
+<p>ones.</p>
+<li>Extracted files go through the full ladder again (binwalk, zsteg,</li>
+<p>exiftool, grep).</p>
+<li>Keep every intermediate file; a wrong turn is cheap to retry if you</li>
+<p>kept the inputs.</p>
+<li>Read ALL text zsteg/steghide output; passphrases and next-step hints</li>
+<p>hide in tool output the solver skims past.</p>
+</ol>
+<h2>Edge cases</h2>
+<ul>
+<li>The image is a valid photo with no hidden data: the challenge may be</li>
+<p>about metadata only (GPS coordinates, camera serial); exiftool is the whole solve.</p>
+<li>zsteg reports data but it is garbage: try <code>--order</code> variations and</li>
+<p>different channels; some challenges use MSB-first or inverted bits.</p>
+<li>The audio spectrogram shows nothing: check the phase or stereo</li>
+<p>difference (flag in L-R channel), or slow the audio down (hidden voice at 0.25x speed).</p>
+<li>Video files: extract frames (<code>ffmpeg -i vid.mp4 frame%03d.png</code>)</li>
+<p>and run the image ladder on each; also check audio track separately.</p>
+<li>The file extension lies (a PNG renamed to .jpg or vice versa): trust</li>
+<p><code>file</code> output over the name; run the ladder for the real format.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Full ladder finds nothing: verify the file is not corrupt or a</li>
+<p>decoy; check the challenge description for hints you dismissed (numbers that are bit planes, color names that are channels).</p>
+<li>The passphrase is not in rockyou: derive candidates from the</li>
+<p>challenge theme, author handle, and event name before wider brute force.</p>
+<li>Custom LSB scheme (every 3rd pixel, alpha channel only): read the</li>
+<p>challenge source or binary when provided; custom schemes are always documented in the challenge materials.</p>
+<li>Time is short: prioritize appended data and zsteg; they solve the</li>
+<p>majority of CTF image challenges in under five minutes combined.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders encounter steganography in data exfiltration and malware C2: payloads hidden in images on public sites, DNS TXT records, and social media uploads. Detection uses statistical steganalysis (LSB plane randomness tests, file size anomalies, format inconsistencies) rather than per-file inspection. Durable defenses: egress content inspection, blocking unknown outbound protocols, and data classification so sensitive files are tracked regardless of container. For analysts, the CTF ladder transfers directly: metadata, appended data, LSB, then targeted tools.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1027 (Obfuscated Files or Information) and T1002</li>
+<p>(Data Compressed) for exfil-adjacent hiding.</p>
+<li>zsteg: https://github.com/zed-0xff/zsteg</li>
+<li>steghide docs: http://steghide.sourceforge.net/documentation.html</li>
+<li>ExifTool: https://exiftool.org/</li>
+<li>&quot;Steganography in depth&quot; references via HackTricks forensics section.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

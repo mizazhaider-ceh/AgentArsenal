@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-scope-recon-out-of-scope-avoidance</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-scope-recon-out-of-scope-avoidance</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing is underway on an in-scope bug bounty program and you need mechanical guarantees that no packet leaves the authorized scope. Covers enforcing the target list in scanners (exclusion flags), Burp target scope with out-of-scope dropping, pre-flight scope checks before active tools run, handling redirects and pivots that lead outside scope, and the honest disclosure procedure when you touch out-of-scope by accident. Authorized targets only.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bugbounty-scope-recon.html">bugbounty-scope-recon</a></div><div class="deps"><span class="kind">requires:</span> <a href="bugbounty-scope-recon.html">bugbounty-scope-recon</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bugbounty-scope-recon-scope-boundary-mapping.html">bugbounty-scope-recon-scope-boundary-mapping</a> <a href="bugbounty-scope-recon-asset-discovery.html">bugbounty-scope-recon-asset-discovery</a> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>nmap</td><td>7.98</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>ffuf</td><td>2.1</td></tr></tbody></table><p>Out-of-scope avoidance is mechanical, not willpower. Memory fails during a long hunt; configuration does not. This sub-skill sets up the enforcement layer: exclusion lists in every scanner, Burp dropping out-of-scope traffic, pre-flight checks before active tools run, and rules for redirects and pivots that try to lead you outside. It also covers what to do when avoidance fails. Only test targets with an in-scope verdict.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Build exclude.txt from the boundary mapping verdicts and keep it next to targets-in-scope.txt.</li>
+<li>Pass the exclusion list to every scanner that supports one; verify the flag actually filters.</li>
+<li>Configure Burp target scope from the in-scope list and enable dropping out-of-scope requests.</li>
+<li>Add a pre-flight scope check script in front of ad-hoc active commands.</li>
+<li>Define the redirect and pivot rule: never follow a lead from in-scope to out-of-scope.</li>
+<li>Re-check scope on every program policy update; move newly excluded assets to exclude.txt immediately.</li>
+<li>If out-of-scope gets touched anyway: stop, document, disclose honestly to the program.</li>
+</ol>
+<h2>1. Scanner-level exclusions</h2>
+<p>Every scanner gets the exclusion list. Verify the flag works with a dry run before the real run:</p>
+<pre><code class="language-bash"># nmap: exclude file (verify with --excludefile, test on one host first)
+nmap -sV --top-ports 100 -T3 --excludefile exclude.txt -iL targets-in-scope.txt -oA nmap-scoped
+
+# ffuf: single host from the in-scope list only, never a bare wordlist run
+ffuf -u https://api.example.com/FUZZ -w wordlist.txt -mc 200,301,302,403 -o ffuf-api.json
+
+# nuclei: run against the in-scope URL list, not a discovered-everywhere list
+nuclei -l in-scope-urls.txt -t ~/nuclei-templates/http/misconfiguration/ -o nuclei.txt</code></pre>
+<p>The pattern: tools read from <code>targets-in-scope.txt</code> and exclude <code>exclude.txt</code>. Never point a scanner at a raw discovery file that has not been through boundary verdicts.</p>
+<h2>2. Burp target scope enforcement</h2>
+<p>In Burp Suite, define the target scope from your in-scope list, then turn on enforcement:</p>
+<ul>
+<li>Target &gt; Scope: add each in-scope domain (use suffix match for <code>example.com</code> to cover subdomains) and each in-scope IP or range.</li>
+<li>Proxy &gt; Options (or the equivalent in 2026.x): enable dropping or flagging out-of-scope requests so a stray click in the browser does not generate unauthorized traffic.</li>
+<li>Spider and Scanner: set to only crawl in-scope targets.</li>
+</ul>
+<p>Test the enforcement: browse to an excluded host through the proxy and confirm the request is dropped or flagged before it leaves. A scope rule you never tested is a hope, not a control.</p>
+<h2>3. Pre-flight scope check script</h2>
+<p>For ad-hoc commands, a tiny check beats memory:</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+# scope-check.sh: usage: scope-check.sh &lt;target&gt;
+target=&quot;$1&quot;
+if grep -qxF &quot;$target&quot; targets-in-scope.txt; then
+  echo &quot;IN SCOPE: $target&quot;
+elif grep -qxF &quot;$target&quot; exclude.txt; then
+  echo &quot;OUT OF SCOPE: $target, refusing&quot;; exit 1
+else
+  echo &quot;NO VERDICT for $target, refusing (ask the program first)&quot;; exit 1
+fi</code></pre>
+<pre><code class="language-bash">./scope-check.sh api.example.com &amp;&amp; nmap -sV api.example.com</code></pre>
+<p>Anything without a verdict refuses. This is deliberately strict: the failure mode of strictness is a missed test, while the failure mode of laxity is a ban.</p>
+<h2>4. Redirects, pivots, and third-party boundaries</h2>
+<p>The two most common accidental crossings:</p>
+<ul>
+<li>Redirects: an in-scope app redirects to an out-of-scope domain (SSO provider, payment processor, partner site). Do not follow it with testing intent. Note the redirect and move on.</li>
+<li>Pivots: a finding on an in-scope host suggests an attack against a connected out-of-scope host (a database on a partner network, an internal host named in an error). The vulnerability does not transfer scope. Report what you found on the in-scope asset; do not pivot.</li>
+</ul>
+<p>For SSRF testing specifically, this matters most: collaborator callbacks are fine, but directing the server at out-of-scope internal or partner addresses from an SSRF is still out-of-scope testing. Keep SSRF proof inside clearly authorized space (your collaborator, the program&#x27;s own hosts).</p>
+<h2>Edge cases</h2>
+<ul>
+<li>A scan is already running when the policy updates with new exclusions: kill the scan, update exclude.txt, and restart against the new list. Do not let it finish &quot;since it already started.&quot;</li>
+<li>Burp&#x27;s scope uses suffix matching and you fat-fingered the domain: review the scope entries character by character after configuring. <code>exampl.com</code> matching nothing is a silent failure.</li>
+<li>The target resolves to different IPs per region and one is out-of-scope: pin your testing to the in-scope resolution or ask the program which endpoint to use.</li>
+<li>You discover the program&#x27;s own scanner or canary in your logs: do not test it back. Note it and continue with your scope.</li>
+<li>Shared tooling (a team wordlist server, a shared collaborator): ensure shared infrastructure cannot cause your traffic to hit out-of-scope targets on your behalf.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You touched out-of-scope: stop immediately, record exactly what was sent (timestamps, requests, responses), and disclose it to the program honestly with the explanation of how it happened. Then fix the control that failed.</li>
+<li>The program disputes whether an asset was in scope: your decisions.md and SCOPE.txt are the evidence. Walk them through the verdict calmly.</li>
+<li>Repeated near-misses: your enforcement layer has a gap. Audit which tool or habit bypassed the checks and close it before the next session.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Out-of-scope probing from an otherwise careful hunter usually means an ambiguous policy line or a tooling gap, not malice. Clarify the line; the hunter&#x27;s decision log will show good faith.</li>
+<li>Defenders: publish exclusions as explicitly as inclusions. &quot;Everything except X&quot; is clearer than implying X is excluded.</li>
+<li>Rate and scope alerts on your side should distinguish in-scope hunter traffic (expected, welcome) from out-of-scope traffic (investigate, then clarify).</li>
+<li>Safe harbor language should state plainly that good-faith, in-policy testing is authorized and how to report accidental crossings; hunters who can disclose safely will disclose.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>HackerOne safe harbor documentation: https://docs.hackerone.com</li>
+<li>Bugcrowd safe harbor docs: https://docs.bugcrowd.com</li>
+<li>Burp Suite target scope documentation: https://portswigger.net/burp/documentation</li>
+<li>nmap documentation: https://nmap.org/book/man.html</li>
+<li>MITRE ATT&amp;CK T1595 Active Scanning: https://attack.mitre.org/techniques/T1595/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

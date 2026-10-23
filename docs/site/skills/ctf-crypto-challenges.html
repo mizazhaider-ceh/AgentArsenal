@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-crypto-challenges</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-crypto-challenges</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when competing in a CTF cryptography challenge,</p><h2>Sub-skills</h2><ul><li><a href="ctf-crypto-challenges-classical-ciphers.html">ctf-crypto-challenges-classical-ciphers</a> <span class="muted">v1.0.0: Use when a CTF crypto challenge uses a classical cipher</span></li><li><a href="ctf-crypto-challenges-hash-and-encoding.html">ctf-crypto-challenges-hash-and-encoding</a> <span class="muted">v1.0.0: Use when a CTF crypto challenge involves password hashes,</span></li><li><a href="ctf-crypto-challenges-rsa-attacks.html">ctf-crypto-challenges-rsa-attacks</a> <span class="muted">v1.0.0: Use when a CTF crypto challenge provides RSA parameters (n,</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ctf-web-challenges.html">ctf-web-challenges</a> <a href="ctf-forensics-challenges.html">ctf-forensics-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>CyberChef</td><td>latest</td></tr><tr><td>John the Ripper</td><td>1.9.0-jumbo</td></tr><tr><td>hashcat</td><td>6.2.6</td></tr></tbody></table><p>CTF crypto challenges are built around mistakes: weak ciphers, misused RSA, custom constructions with a flaw, and hashes protecting short secrets. The winning pattern is identification first (what construction is this, what are the parameters), then the known attack for that mistake, then a Python solver. This skill covers the authorized methodology across classical, RSA, and hash/encoding challenges, with concrete attack code. Scope is CTF competitions, lab exercises, and constructions you are authorized to analyze; it does not cover attacking real-world systems.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the construction: ciphertext shape, provided parameters</li>
+<p>(n, e, c for RSA), source code when given.</p>
+<li>Check for the classic mistakes first: ECB mode, small e with small</li>
+<p>message, reused nonce, hardcoded key in source.</p>
+<li>For classical ciphers, try CyberChef&#x27;s magic and frequency analysis</li>
+<p>before writing code.</p>
+<li>For RSA, run the parameter checklist (small e, shared n, close</li>
+<p>primes, small d via Wiener, broadcast) in order.</p>
+<li>For hashes, identify the algorithm (length, charset, source) and</li>
+<p>crack with a wordlist or mask attack.</p>
+<li>Write the solver in Python, keeping the attack steps separate from</li>
+<p>parsing so it is reusable.</p>
+<li>Verify the output matches the flag format; partial decryptions</li>
+<p>usually mean one wrong parameter.</p>
+<li>Document the flaw class; CTF crypto is pattern matching, and notes</li>
+<p>compound across events.</p>
+</ol>
+<h2>1. Identification: reading the challenge</h2>
+<pre><code class="language-bash"># Ciphertext shape hints
+echo &quot;aGVsbG8=&quot; | base64 -d        # base64 wrapper? decode first
+# hex string of even length        # maybe raw bytes as hex
+# long integer n, e, c             # RSA parameters
+
+# CyberChef &quot;Magic&quot; operation tries dozens of decodings at once;
+# paste the ciphertext there before anything else.
+
+# Python quick checks
+python3 - &lt;&lt;&#x27;EOF&#x27;
+ct = open(&quot;cipher.txt&quot;).read().strip()
+print(&quot;length:&quot;, len(ct))
+from collections import Counter
+freq = Counter(ct)
+print(&quot;top chars:&quot;, freq.most_common(8))
+# single-case letters, no digits -&gt; classical cipher likely
+# hex charset -&gt; bytes; base64 charset -&gt; encoded layer
+EOF</code></pre>
+<p>When source is provided, read it fully: the flaw is usually one line (<code>e = 3</code>, <code>key = b&quot;password&quot;</code>, <code>random</code> instead of <code>secrets</code>, ECB mode).</p>
+<h2>2. RSA parameter checklist</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;RSA triage: checks the classic CTF mistakes in order.&quot;&quot;&quot;
+import math
+
+n = 0x...  # from challenge
+e = 0x...  # from challenge
+c = 0x...  # from challenge (possibly a list for broadcast)
+
+# 1. Small e with small message: c = m^e &lt; n -&gt; integer e-th root
+def iroot(k, c):
+    lo, hi = 0, int(pow(c, 1.0 / k)) + 2
+    while lo &lt; hi:
+        mid = (lo + hi) // 2
+        if mid**k &lt; c: lo = mid + 1
+        else: hi = mid
+    return lo
+m = iroot(e, c)
+if pow(m, e) == c:
+    print(&quot;small-e root attack worked:&quot;, m.to_bytes((m.bit_length()+7)//8, &quot;big&quot;))
+
+# 2. n factors trivially (small n, or p/q given elsewhere)
+#    try: factor(n) with Pollard Rho, or check gcd with other challenge moduli
+
+# 3. Common modulus: same n, two ciphertexts with coprime e1, e2
+#    extended Eucldiean: a*e1 + b*e2 = 1 -&gt; m = c1^a * c2^b mod n
+
+# 4. Wiener: d &lt; n^0.25 -&gt; continued fraction attack on e/n
+#    (implement or use owiener / RsaCtfTool --private)
+
+# 5. Hastad broadcast: same m, e=3, three different n -&gt; CRT then cube root</code></pre>
+<p>RsaCtfTool automates most of this:</p>
+<pre><code class="language-bash"># Feed n, e, c and let it try every known attack
+python3 RsaCtfTool.py -n 0xC0FFEE... --uncipher 0xDEAD... -e 3 --private</code></pre>
+<p>Order matters: try small-e root and factoring first (seconds), then Wiener and broadcast (minutes), then CTF-specific variants (CRT fault, partial key exposure via Coppersmith).</p>
+<h2>3. Classical cipher attacks</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+from collections import Counter
+import string
+
+ct = &quot;WKH TXLFN EURZQ IRA MXPSV...&quot;  # example Caesar
+
+# Caesar: try all 26 shifts, score by English frequency
+def caesar(s, k):
+    return &quot;&quot;.join(chr((ord(c) - 65 + k) % 26 + 65) if c.isupper()
+                   else chr((ord(c) - 97 + k) % 26 + 97) if c.islower() else c
+                   for c in s)
+for k in range(26):
+    print(k, caesar(ct, k)[:40])
+
+# Vigenere: Kasiski / Friedman to find key length, then per-column Caesar
+# (CyberChef&#x27;s Vigenere break with known crib is faster interactively)
+
+# Substitution: frequency analysis seed, then manual solving
+freq = Counter(c for c in ct.upper() if c.isalpha())
+print(freq.most_common())
+# map most common ciphertext letter -&gt; E, then refine with digraphs
+
+# Transposition (columnar/rail fence): try rail fence depths 2..12
+def rail_decrypt(ct, rails):
+    n = len(ct); cycle = 2 * rails - 2
+    idx = sorted(range(n), key=lambda i: min(i % cycle, cycle - i % cycle))
+    pt = [&quot;&quot;] * n
+    for plain_pos, cipher_pos in enumerate(idx):
+        pt[cipher_pos] = ct[plain_pos]
+    return &quot;&quot;.join(pt)
+for r in range(2, 13):
+    print(r, rail_decrypt(ct.replace(&quot; &quot;, &quot;&quot;), r)[:40])</code></pre>
+<p>XOR with repeating key: guess key length via Hamming distance between blocks, then solve each column as single-byte XOR (frequency attack on each byte position).</p>
+<h2>4. Hash cracking and identification</h2>
+<pre><code class="language-bash"># Identify the hash by length and charset
+# 32 hex  -&gt; MD5 / NTLM / md5crypt variant
+# 40 hex  -&gt; SHA1
+# 64 hex  -&gt; SHA256
+# $2y$... -&gt; bcrypt ; $6$... -&gt; sha512crypt
+
+# hashcat modes: 0=MD5, 100=SHA1, 1400=SHA2-256, 1800=sha512crypt, 3200=bcrypt
+hashcat -m 0 hashes.txt /usr/share/wordlists/rockyou.txt --force
+hashcat -m 1400 hashes.txt -a 3 &#x27;?l?l?l?l?d?d&#x27; --force   # mask: 4 lower + 2 digits
+
+# John the Ripper auto-detects many formats
+john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt</code></pre>
+<p>In CTFs the preimage is usually a short secret, a flag-format string, or a dictionary word; run rockyou first, then masks matching the challenge theme, then targeted wordlists.</p>
+<h2>5. Encoding layers</h2>
+<p>CTF crypto often wraps the real cipher in encodings. Peel mechanically:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+import base64, binascii
+
+s = open(&quot;cipher.txt&quot;).read().strip()
+for _ in range(10):  # peel up to 10 layers
+    changed = False
+    for name, fn in [
+        (&quot;b64&quot;, lambda x: base64.b64decode(x).decode()),
+        (&quot;hex&quot;, lambda x: bytes.fromhex(x).decode()),
+        (&quot;b32&quot;, lambda x: base64.b32decode(x).decode()),
+        (&quot;rev&quot;, lambda x: x[::-1]),
+        (&quot;rot13&quot;, lambda x: __import__(&quot;codecs&quot;).decode(x, &quot;rot_13&quot;)),
+    ]:
+        try:
+            s2 = fn(s)
+            if s2 != s and all(32 &lt;= ord(c) &lt; 127 or c in &quot;\n&quot; for c in s2[:50]):
+                print(f&quot;peeled {name}: {s2[:60]}&quot;)
+                s, changed = s2, True
+                break
+        except Exception:
+            pass
+    if not changed:
+        break
+print(&quot;final:&quot;, s[:200])</code></pre>
+<p>CyberChef&#x27;s &quot;Magic&quot; operation does the same interactively and catches XOR and rail fence layers too.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The ciphertext is not English after full decryption: the plaintext</li>
+<p>may be the flag directly (no English to score); check the flag format instead of readability.</p>
+<li>RSA with e = 65537 and proper padding: the flaw is elsewhere</li>
+<p>(shared primes across challenges, small private exponent, faulty CRT in source); do not waste time on textbook attacks.</p>
+<li>Custom S-box or Feistel in source: reimplement it exactly in</li>
+<p>Python and invert round by round; one transcription error breaks everything, so test encryption round-trips first.</p>
+<li>The challenge is interactive (oracle): count your queries; padding</li>
+<p>oracles and CBC bit-flipping need many requests, so script them and stay within rate limits.</p>
+<li>The challenge mixes crypto with another category (crypto-pwn,</li>
+<p>web-crypto): solve the outer layer first with its own skill, then attack the crypto core; do not blend the toolchains.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No classic mistake found in RSA: check for related-message attacks</li>
+<p>(Franklin-Reiter), partial private key (Coppersmith with known bits), and faulty signatures leaking CRT components.</p>
+<li>Classical cipher resists frequency analysis: the plaintext may be</li>
+<p>compressed or the flag only (too short for statistics); try crib dragging with <code>flag{</code> as the known plaintext.</p>
+<li>Hash will not crack: the preimage may be a key, not a password;</li>
+<p>look for length-extension (MD5/SHA1 with secret prefix in source) instead of cracking.</p>
+<li>Everything looks correct but the flag is wrong: check byte order</li>
+<p>(little vs big endian in int-to-bytes), padding bytes included in the message, and off-by-one in key length.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders care about the inverse: ensuring none of these mistakes ship. That means using vetted libraries (never custom ciphers), RSA with OAEP padding and e = 65537, unique random nonces, password hashing with argon2/bcrypt/scrypt (never raw MD5/SHA), and key management that keeps secrets out of source. Detection of weak crypto in the wild uses fingerprinting (small RSA keys in certificates, ECB patterns in ciphertext) and code scanning for hardcoded keys and weak algorithms. CTF crypto trains exactly the recognition skills defenders need in code review.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1552 (Unsecured Credentials) for hardcoded keys.</li>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm).</li>
+<li>CWE-798 (Use of Hard-coded Credentials).</li>
+<li>CWE-330 (Use of Insufficiently Random Values).</li>
+<li>CWE-916 (Use of Password Hash With Insufficient Computational</li>
+<p>Effort).</p>
+<li>RsaCtfTool: https://github.com/RsaCtfTool/RsaCtfTool</li>
+<li>CyberChef: https://gchq.github.io/CyberChef/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

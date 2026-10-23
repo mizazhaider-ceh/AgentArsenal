@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-osint-challenges-image-geolocation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-osint-challenges-image-geolocation</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF OSINT challenge provides a photo that must be</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-osint-challenges.html">ctf-osint-challenges</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-osint-challenges.html">ctf-osint-challenges</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-methodology.html">osint-methodology</a> <a href="ctf-osint-challenges.html">ctf-osint-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>ExifTool</td><td>12.90</td></tr></tbody></table><p>Image geolocation is identifying where a photo was taken from visual evidence alone. CTF challenges strip EXIF GPS and expect you to read the scene: text on signs, architectural styles, vegetation, license plates, and sun angles. This sub-skill covers the authorized competition workflow: systematic clue extraction, search strategies, and verification discipline. Scope is CTF competitions and imagery you are authorized to analyze.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Check EXIF anyway (<code>exiftool</code>); stripped GPS is the norm but</li>
+<p>thumbnails and software tags sometimes survive.</p>
+<li>Extract every readable clue: text on signs, shop names, license</li>
+<p>plates, flags, phone number formats, language.</p>
+<li>Note environmental clues: vegetation, terrain, architecture style,</li>
+<p>road markings, vehicle models, sun direction and shadow length.</p>
+<li>Reverse image search the photo (Google Lens, Bing, Yandex, TinEye)</li>
+<p>to check whether it is a stock or previously published image.</p>
+<li>Search distinctive text clues in quotes plus candidate regions.</li>
+<li>Verify on Street View or satellite imagery: match 3+ independent</li>
+<p>details (a sign, a building shape, a road layout).</p>
+<li>Produce the answer in the required format (coordinates, address,</li>
+<p>venue name) with the verification trail.</p>
+<li>Never submit a guess from one clue; geolocation needs</li>
+<p>corroboration.</p>
+</ol>
+<h2>1. The visual clue checklist</h2>
+<p>Work through this list on every photo before searching:</p>
+<ul>
+<li>Text: shop signs, street signs, billboards, license plates, menus,</li>
+<p>posters. Transcribe exactly, including language and script.</p>
+<li>Numbers: phone country codes (+32 Belgium, +33 France), postal</li>
+<p>codes, license plate formats and colors.</p>
+<li>Architecture: roof shapes, window styles, building materials,</li>
+<p>church or mosque silhouettes, construction style.</p>
+<li>Nature: tree species (palms vs pines), terrain (flat vs hills),</li>
+<p>sky and light quality.</p>
+<li>Infrastructure: road marking colors, sidewalk style, power line</li>
+<p>design, traffic sign shapes (EU round vs US diamond).</p>
+<li>People and vehicles: license plates, taxi colors, bus liveries,</li>
+<p>clothing styles.</p>
+<li>Sun: shadow direction gives hemisphere and rough time; long</li>
+<p>shadows mean morning or evening.</p>
+</ul>
+<p>Write clues down; the list becomes your search query set.</p>
+<h2>2. Reverse image search strategy</h2>
+<pre><code class="language-bash"># No CLI does this well; use the web UIs and compare:
+# - Google Lens: best for landmarks and text in image
+# - Bing Visual Search: strong on similar scenes
+# - Yandex Images: strong on faces and Eastern Europe / Central Asia
+# - TinEye: best for finding the earliest publication (original source)</code></pre>
+<p>If the image is a cropped stock photo, TinEye finds the original with its caption and location. If it is AI-generated or a composite, reverse search fails and the challenge expects pure clue reading; look for inconsistencies (impossible shadows, garbled text) as the hint.</p>
+<h2>3. Searching from text clues</h2>
+<pre><code class="language-bash"># Quoted distinctive phrases plus region guesses
+# &quot;Café de la Poste&quot; brussels
+# &quot;Pizzeria Napoli&quot; &quot;via Roma&quot; street view
+# license plate format: search &quot;&lt;format description&gt; license plate country&quot;</code></pre>
+<p>Search the transcribed sign text in quotes; small businesses have unique names that resolve to an address instantly. For non-Latin scripts, use Lens to transcribe, then search the transcription. When a phone number is visible, the country code narrows the search to one country immediately.</p>
+<h2>4. Verification with maps</h2>
+<ol>
+<li>Drop the candidate address into Street View; walk virtually to the</li>
+<p>photo&#x27;s viewpoint.</p>
+<li>Match at least three details: a distinctive sign, a building</li>
+<p>facade, the road curve, a lamppost style.</p>
+<li>Cross-check with satellite view: roof shapes and parking lots</li>
+<p>should match the photo&#x27;s background.</p>
+<li>Check the sun: does the shadow direction in Street View imagery</li>
+<p>(noting its capture date) roughly agree with the photo?</p>
+</ol>
+<p>A single matching sign is not enough; signs move. Three independent static features (building, road layout, permanent fixture) is the standard.</p>
+<h2>5. Coordinates from shadows (rough)</h2>
+<p>When the challenge wants coordinates and clues are thin:</p>
+<ul>
+<li>Hemisphere: shadows point away from the equator at noon; in the</li>
+<p>northern hemisphere, noon shadows point north.</p>
+<li>Shadow length vs object height gives sun elevation; with a known</li>
+<p>date (event posters, EXIF CreateDate), solar calculators estimate latitude within a few degrees.</p>
+<li>This is a corroboration technique, not a primary one; use it to</li>
+<p>choose between two candidate cities, not to derive coordinates from scratch.</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>Indoor photo: geolocate via distinctive interiors (chain</li>
+<p>restaurants, hotel lobbies, venue stages); search the visible branding, not the architecture.</p>
+<li>Night photo: fewer clues; rely on lit signage and light pole</li>
+<p>designs, plus any visible text.</p>
+<li>Heavily cropped photo: reverse search the crop anyway (engines</li>
+<p>handle crops well); the original may be wider and more revealing.</p>
+<li>The location is fictional or a game map: recognize the style</li>
+<p>(game UI elements, impossible geography) and switch to game-community wikis rather than real maps.</p>
+<li>The photo is a screenshot (maps app, game, video): geolocate the</li>
+<p>depicted content, not the screenshot chrome; UI elements date the capture but not the place.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No readable text and generic scenery: look at the smallest</li>
+<p>details (a power outlet shape, a manhole cover design, a distinctive tree); CTF photos always contain one deliberate clue.</p>
+<li>Reverse search finds nothing and clues are ambiguous: widen the</li>
+<p>region search with the strongest single clue (a unique shop name beats ten generic ones).</p>
+<li>Two candidate locations both match: find the discriminator (a</li>
+<p>second sign, a license plate, a phone code) rather than guessing.</p>
+<li>Time is short: prioritize quoted text search; it resolves faster</li>
+<p>than visual comparison in most CTF geolocation challenges.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders use geolocation awareness to protect people and operations: training staff that photos leak locations, stripping EXIF before publishing, and reviewing backgrounds in shared images. For investigators, the same skills verify the provenance of viral images and detect misattributed locations. Organizations monitor for exposed imagery of sensitive sites (data centers, executive homes) and request takedowns. The durable lesson: every photo is a potential location disclosure; treat publication as intentional disclosure.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1593 (Search Open Websites/Domains).</li>
+<li>Bellingcat geolocation guides: https://www.bellingcat.com/resources/</li>
+<li>Google Earth / Street View and Bing Maps (verification tools).</li>
+<li>SunCalc (shadow and sun position): https://www.suncalc.org/</li>
+<li>GeoGuessr community guides (visual clue reading techniques).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

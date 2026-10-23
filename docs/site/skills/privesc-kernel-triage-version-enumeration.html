@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-kernel-triage-version-enumeration</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-kernel-triage-version-enumeration</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized kernel privilege escalation triage needs</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-kernel-triage.html">privesc-kernel-triage</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-kernel-triage.html">privesc-kernel-triage</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a> <a href="privesc-windows.html">privesc-windows</a> <a href="privesc-kernel-triage-exploit-db-matching.html">privesc-kernel-triage-exploit-db-matching</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>Exploit matching lives or dies on precision: an exploit for upstream 5.15.0 may not apply to distribution build 5.15.0-91, and a user-namespace exploit is dead when user namespaces are disabled. This sub-skill covers extracting a complete kernel fingerprint on Linux and Windows: version strings, build metadata, compile dates, loaded modules and drivers, and the subsystem and sysctl prerequisites that exploits require. Authorized penetration tests, labs, and CTFs only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Collect the full version identity: <code>uname -a</code>, <code>/proc/version</code>, distro release files, and on Windows the exact build from <code>systeminfo</code>.</li>
+<li>Record the compile or build date and compare it against the CVE fix dates you will check later.</li>
+<li>Enumerate loaded modules (<code>lsmod</code>) on Linux and drivers (<code>driverquery /v</code>) on Windows; note third-party or unusual entries.</li>
+<li>Check exploit-gating subsystems: user namespaces, eBPF availability, io_uring, and related sysctls.</li>
+<li>Record CPU architecture and any virtualization or container indicators.</li>
+<li>Save the fingerprint to a file; every later matching step references it instead of re-running enumeration.</li>
+</ol>
+<h2>1. Linux version identity</h2>
+<p>Collect every version field; each answers a different matching question.</p>
+<pre><code class="language-bash">uname -a
+uname -r; uname -v; uname -m
+cat /proc/version
+cat /etc/os-release</code></pre>
+<p>Example output shape:</p>
+<pre><code>Linux web01 5.15.0-91-generic #101-Ubuntu SMP Tue Nov 14 13:30:08 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux</code></pre>
+<p>Read it as: upstream <code>5.15.0</code>, Ubuntu build <code>-91</code>, SMP build compiled Nov 14 2023, x86_64. The compile date is your first patch heuristic: a CVE fixed upstream in October 2023 is likely included in a November 2023 distro build, but confirm against the distro&#x27;s CVE tracker rather than assuming. Also check <code>/boot</code> for available kernel images and <code>dpkg -l | grep linux-image</code> or <code>rpm -qa | grep kernel</code> for the installed package version.</p>
+<h2>2. Compile date versus patch date reasoning</h2>
+<p>Backported fixes mean the version number lies; the build date and the distro tracker tell the truth.</p>
+<pre><code class="language-bash">stat -c %y /boot/vmlinuz-$(uname -r) 2&gt;/dev/null</code></pre>
+<p>Workflow: note the CVE&#x27;s upstream fix commit date, then check the distro security tracker (Ubuntu CVE pages, Red Hat CVE database) for whether that fix landed in the installed build. If the tracker says the build is patched, stop; if it says vulnerable or the package predates the fix, the CVE stays on the candidate list. Record the tracker URL and verdict for each CVE in your notes.</p>
+<h2>3. Loaded modules and drivers</h2>
+<p>Exploits frequently target specific modules or third-party drivers rather than core kernel code.</p>
+<pre><code class="language-bash">lsmod | head -30
+ls -la /lib/modules/$(uname -r)/ 2&gt;/dev/null | head</code></pre>
+<p>Example output shape: standard modules (ext4, nvme, x86 stuff) plus possibly unusual entries like <code>vboxguest</code>, a vendor driver, or an out-of-tree module. Unusual or third-party modules are prime suspects: search exploit databases by module name. On Windows:</p>
+<pre><code class="language-powershell">driverquery /v | findstr /i /v &quot;Microsoft&quot;
+systeminfo | findstr /i &quot;OS Version&quot;</code></pre>
+<p>Non-Microsoft drivers with known CVEs are the Windows equivalent of the third-party module path. Record driver names and versions exactly.</p>
+<h2>4. Subsystem and sysctl prerequisites</h2>
+<p>Many modern Linux exploits need a subsystem that hardening guides disable. Check before matching.</p>
+<pre><code class="language-bash">sysctl kernel.unprivileged_userns_clone 2&gt;/dev/null
+cat /proc/sys/kernel/unprivileged_bpf_disabled 2&gt;/dev/null
+grep -i io_uring /boot/config-$(uname -r) 2&gt;/dev/null
+unshare --user --map-root-user id 2&gt;&amp;1 | head -2</code></pre>
+<p>Example output shape: <code>unshare</code> succeeding with <code>uid=0(root)</code> inside the namespace proves unprivileged user namespaces work, which keeps userns exploit candidates alive. <code>unprivileged_bpf_disabled=2</code> kills unprivileged eBPF exploit paths. <code>io_uring</code> in the kernel config keeps io_uring CVE candidates alive. Each prerequisite you verify narrows the exploit list honestly instead of by hope.</p>
+<h2>5. Architecture and environment indicators</h2>
+<p>Record architecture and whether the target is virtualized or containerized, because exploits are architecture-specific and container kernels are host kernels.</p>
+<pre><code class="language-bash">uname -m; lscpu | grep -i &quot;model name&quot; | head -1
+ls -la /.dockerenv 2&gt;/dev/null; cat /proc/1/cgroup 2&gt;/dev/null | head -5
+systemd-detect-virt 2&gt;/dev/null</code></pre>
+<p>An aarch64 target needs ARM exploit builds; an x86_64 exploit will not run. A container indicator changes the risk calculus entirely: kernel exploitation inside a container affects the host, which needs host-level authorization.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Some minimal containers lack <code>uname</code> full output or <code>/boot</code>; fall back to <code>/proc/version</code> and <code>/proc/sys/kernel/*</code> which are almost always present.</li>
+<li>Distro trackers sometimes mark a CVE as not-affected for reasons unrelated to patching (configuration not present); read the notes, not just the status word.</li>
+<li><code>lsmod</code> can be empty in containers that share the host&#x27;s module set without visibility; the host kernel version still governs exploitability.</li>
+<li>Windows build numbers from <code>systeminfo</code> lag behind actual patch state when updates are pending reboot; check <code>wmic qfe list</code> for installed KBs.</li>
+<li>Custom-compiled kernels (common in CTFs) have no distro tracker; match purely on upstream version plus the config file if exposed.</li>
+<li>Kernel headers may be absent, which blocks compiling exploits on target; plan to cross-compile on your attack box for the exact architecture.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If version enumeration shows a fully patched kernel, close the kernel path quickly and return to misconfiguration vectors; do not burn hours on patched kernels.</li>
+<li>When the distro tracker is ambiguous, test exploit prerequisites empirically (unshare, bpf checks) rather than debating the tracker.</li>
+<li>If one subsystem is disabled (userns off), pivot the matching to CVEs in subsystems that are enabled; the fingerprint tells you which lists to search.</li>
+<li>Combine with the exploit-db-matching sub-skill: the fingerprint file you saved is its required input.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Version enumeration itself is low-noise (reading files and sysctls), which is why it should always precede any exploit attempt. Defenders make this triage harder for attackers by patching promptly, using livepatch to shrink reboot windows, and disabling unneeded subsystems, which removes whole exploit classes regardless of version. From the authorized tester side, a precise fingerprint demonstrates methodology in the report: it shows you ruled candidates in and out on evidence, not on version-number guessing.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1068 (Exploitation for Privilege Escalation)</li>
+<li>uname manual: https://man7.org/linux/man-pages/man1/uname.1.html</li>
+<li>Ubuntu CVE tracker: https://ubuntu.com/security/cves</li>
+<li>Red Hat CVE database: https://access.redhat.com/security/updates/cve</li>
+<li>Microsoft Security Update Guide: https://msrc.microsoft.com/update-guide</li>
+<li>Kernel config documentation: https://www.kernel.org/doc/html/latest/admin-guide/sysctl/kernel.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

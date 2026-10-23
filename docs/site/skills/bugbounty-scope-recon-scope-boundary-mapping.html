@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-scope-recon-scope-boundary-mapping</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-scope-recon-scope-boundary-mapping</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when your asset inventory is built and every discovered asset needs a verdict before testing begins. Covers the three-verdict system (in-scope, out-of-scope, gray area), how to judge tricky cases like CNAMEs to third parties, acquired domains, shared staging, and IP reassignments, writing the decision log that protects you, and asking the program precise scope questions that get fast yeses. Authorized targets only, only test assets the program explicitly lists in scope.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bugbounty-scope-recon.html">bugbounty-scope-recon</a></div><div class="deps"><span class="kind">requires:</span> <a href="bugbounty-scope-recon.html">bugbounty-scope-recon</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bugbounty-scope-recon-asset-discovery.html">bugbounty-scope-recon-asset-discovery</a> <a href="bugbounty-scope-recon-out-of-scope-avoidance.html">bugbounty-scope-recon-out-of-scope-avoidance</a> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>dig</td><td>9.18</td></tr><tr><td>whois</td><td>5.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Boundary mapping is the verdict step: every asset in your inventory gets labeled in-scope, out-of-scope, or gray area, with the reasoning written down. Gray areas stay untouched until the program answers in writing. This decision log is what proves your testing stayed authorized. This sub-skill covers only the boundary verdict step of bugbounty-scope-recon. Only test assets with an in-scope verdict.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Take the asset inventory from asset discovery as the input list.</li>
+<li>For each asset, apply the three-verdict test: explicitly listed or clearly covered, explicitly excluded or third-party, or ambiguous.</li>
+<li>Resolve CNAMEs and check IP ownership for every verdict; the DNS answer often changes the call.</li>
+<li>Write each verdict plus one line of reasoning into decisions.md.</li>
+<li>Batch all gray-area assets into one precise question to the program, with evidence per asset.</li>
+<li>Mark the final in-scope list as the enforced target list for all tooling.</li>
+<li>Re-run the verdicts whenever the program updates its policy.</li>
+</ol>
+<h2>1. The three-verdict test</h2>
+<p>For each asset, ask in order:</p>
+<ul>
+<li>In-scope: is the exact name or IP listed, or does a listed wildcard or CIDR plainly cover it. <code>api.example.com</code> under <code>*.example.com</code>: in-scope.</li>
+<li>Out-of-scope: is it explicitly excluded, does it belong to a third party, or is it outside every listed domain and range. <code>staging.example.com</code> when excluded: out-of-scope, no debate.</li>
+<li>Gray area: plausible but not decidable from the policy alone. Acquired company domains not yet listed, subdomains pointing at partners, shared staging environments, app-discovered API hosts on generic cloud domains.</li>
+</ul>
+<pre><code class="language-bash"># decisions.md format: asset | verdict | reasoning | date
+# api.example.com | IN | covered by *.example.com | 2026-10-23
+# staging.example.com | OUT | explicitly excluded in policy | 2026-10-23
+# legacy-acquired.io | GRAY | acquired 2024, not listed; asked program | 2026-10-23</code></pre>
+<p>Default rule: when you cannot decide between in-scope and gray, it is gray. When you cannot decide between gray and out, it is out. Caution never cost anyone a ban.</p>
+<h2>2. DNS and ownership checks that change verdicts</h2>
+<p>The DNS answer frequently flips a verdict. Check before finalizing:</p>
+<pre><code class="language-bash"># CNAME to a third party: the name may be in scope, the provider is not
+dig +short shop.example.com CNAME @1.1.1.1
+# Example output shape: shops.myshopify.com.
+
+# IP ownership for range-scoped assets
+whois -h whois.arin.net 203.0.113.45 | grep -iE &quot;orgname|netname&quot; | head -3</code></pre>
+<p>Verdict rules from these checks:</p>
+<ul>
+<li>In-scope name CNAMEd to a third-party SaaS: test application behavior on the in-scope name only. Do not test the provider&#x27;s infrastructure; that is someone else&#x27;s scope.</li>
+<li>IP in a scoped range that whois now shows as reassigned: treat as out-of-scope until the program confirms. Ranges get reallocated and stale scopes are common.</li>
+<li>Subdomain resolving to an IP outside the program&#x27;s ASN with no CNAME explanation: gray. It may be a partner integration or a misconfiguration; ask.</li>
+</ul>
+<h2>3. Asking the program well</h2>
+<p>Batch gray areas into one message with evidence per asset. Precise asks get fast answers:</p>
+<pre><code>Subject: Scope question: 3 assets found during recon
+
+1. legacy-acquired.io - resolves to 198.51.100.23, serves the Example Corp
+   login page with your branding. Acquired 2024 per press release.
+   Request: confirm in or out of scope.
+2. partners.example.com - CNAMEs to partner-cdn.net (third party).
+   Request: is testing the application behavior on partners.example.com
+   in scope, excluding the CDN infrastructure itself.
+3. api-internal.example.com - resolves internally only from my location;
+   found in your Android app&#x27;s strings. Request: confirm in or out.</code></pre>
+<p>Ask once, with everything, instead of dripping one question a day. Most programs answer scope questions quickly because ambiguity protects neither side.</p>
+<h2>4. The enforced target list</h2>
+<p>After verdicts, compile the final list that your tooling will enforce:</p>
+<pre><code class="language-bash">grep &quot;| IN |&quot; decisions.md | cut -d&#x27;|&#x27; -f1 | tr -d &#x27; &#x27; | sort -u &gt; targets-in-scope.txt
+grep &quot;| OUT |&quot; decisions.md | cut -d&#x27;|&#x27; -f1 | tr -d &#x27; &#x27; | sort -u &gt; exclude.txt
+wc -l targets-in-scope.txt exclude.txt</code></pre>
+<p><code>targets-in-scope.txt</code> feeds your scanners and your Burp target scope. <code>exclude.txt</code> feeds every exclusion flag. Gray assets appear in neither file until the program answers.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The program answers &quot;we&#x27;ll get back to you&quot; and never does: after their stated SLA, treat the asset as out-of-scope and move on. Silence is not permission.</li>
+<li>A verdict changes mid-hunt (program updates exclusions): move the asset to exclude.txt immediately and stop any running scans against it.</li>
+<li>Two scope lines conflict (a wildcard includes what an exclusion names): the exclusion wins. Specific beats general.</li>
+<li>The asset is the program&#x27;s but the finding would be in a third-party component: report the application-layer issue on the in-scope name; do not test the component&#x27;s own infrastructure.</li>
+<li>You inherited someone else&#x27;s target list: re-verify every verdict yourself. Secondhand scope is how out-of-scope scans happen.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Gray list keeps growing: your scope reading may be too cautious or the policy too vague. Ask the program for a scope clarification call or an updated policy; many will oblige.</li>
+<li>A critical-looking issue appears on a gray asset: do not probe it. Note its existence with zero exploitation detail and ask the program whether to proceed.</li>
+<li>The program expands scope based on your questions: re-run asset discovery on the new scope lines and re-do verdicts for affected assets.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>A written decision log is the audit trail that separates authorized testing from unauthorized scanning. Keep it per program, per engagement.</li>
+<li>Defenders: ambiguous scopes generate gray-area questions; every vague line costs your team triage time answering hunters. Write scopes like firewall rules: explicit allows, explicit denies.</li>
+<li>Monitor for hunters probing just outside your stated scope: it usually signals an ambiguous policy line, not malice. Clarify the line instead of banning the hunter.</li>
+<li>Safe harbor depends on the boundary: publish the exact scope, keep it current, and hunters will stay inside it.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>HackerOne program scope documentation: https://docs.hackerone.com</li>
+<li>Bugcrowd scope and safe harbor docs: https://docs.bugcrowd.com</li>
+<li>dig documentation (BIND 9): https://www.isc.org/bind/</li>
+<li>MITRE ATT&amp;CK T1590 Gather Victim Network Information: https://attack.mitre.org/techniques/T1590/</li>
+<li>OWASP Testing Guide: https://owasp.org/www-project-web-security-testing-guide/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mobile-android-dynamic-network-interception</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mobile-android-dynamic-network-interception</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to capture and analyze an Android app&#x27;s</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="mobile-android-dynamic.html">mobile-android-dynamic</a></div><div class="deps"><span class="kind">requires:</span> <a href="mobile-android-dynamic.html">mobile-android-dynamic</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="mobile-android-dynamic.html">mobile-android-dynamic</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2024.12</td></tr><tr><td>Frida</td><td>16.5</td></tr><tr><td>objection</td><td>1.11</td></tr><tr><td>adb</td><td>35.0</td></tr><tr><td>Wireshark</td><td>4.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Network interception puts your proxy between the app and its servers so you can read, modify, and replay the API traffic. It is the highest value dynamic technique for business apps because the traffic shows exactly what data leaves the device. This sub-skill covers the full chain: proxy setup, CA installation, pinning bypass, packet capture fallbacks, and turning a capture into an API map. Authorized targets and test devices only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Start Burp Suite on the workstation and note the proxy port.</li>
+<li>Set the device proxy with adb and confirm it took effect.</li>
+<li>Install the Burp CA into the Android system trust store.</li>
+<li>Exercise the app and confirm decrypted HTTPS in Burp.</li>
+<li>If traffic stays encrypted, bypass pinning with objection or</li>
+<p>Frida.</p>
+<li>For non-HTTP traffic, capture packets on the device with tcpdump.</li>
+<li>Map the API: hosts, endpoints, authentication, and sensitive</li>
+<p>fields.</p>
+<li>Clear the proxy and remove test artifacts when done.</li>
+</ol>
+<h2>1. Proxy configuration</h2>
+<pre><code class="language-bash"># Emulator: 10.0.2.2 reaches the host. Physical device: use the workstation LAN IP.
+adb shell settings put global http_proxy 10.0.2.2:8080
+adb shell settings get global http_proxy
+# Expected: 10.0.2.2:8080
+
+# Burp must listen on all interfaces for a physical device
+# (Proxy &gt; Options &gt; Bind to address: All interfaces)</code></pre>
+<p>Some apps ignore the system proxy setting. For those, redirect at the network layer with iptables on the rooted device:</p>
+<pre><code class="language-bash"># Redirect all port 443 traffic through Burp&#x27;s invisible proxying
+adb shell &quot;su -c &#x27;iptables -t nat -A OUTPUT -p tcp --dport 443 -j DNAT --to-destination 10.0.2.2:8080&#x27;&quot;
+# Burp: enable invisible proxying on the listener (Support invisible proxying)</code></pre>
+<p>Remove the rule afterward:</p>
+<pre><code class="language-bash">adb shell &quot;su -c &#x27;iptables -t nat -D OUTPUT -p tcp --dport 443 -j DNAT --to-destination 10.0.2.2:8080&#x27;&quot;
+adb shell settings put global http_proxy :0</code></pre>
+<h2>2. Installing the Burp CA in the system store</h2>
+<p>Android 7+ ignores user-installed CAs by default, so the Burp CA must go into the system trust store on a rooted device.</p>
+<pre><code class="language-bash"># Export Burp&#x27;s CA in DER format (Proxy &gt; Options &gt; Import/export CA certificate)
+# Convert and name it by its subject hash
+openssl x509 -inform DER -in cacert.der -out /tmp/burp-ca.pem
+HASH=$(openssl x509 -inform PEM -subject_hash_old -in /tmp/burp-ca.pem | head -1)
+echo &quot;hash: $HASH&quot;
+cp /tmp/burp-ca.pem /tmp/${HASH}.0
+
+adb push /tmp/${HASH}.0 /data/local/tmp/
+adb shell &quot;su -c &#x27;mount -o rw,remount /system&#x27;&quot;
+adb shell &quot;su -c &#x27;cp /data/local/tmp/${HASH}.0 /system/etc/security/cacerts/&#x27;&quot;
+adb shell &quot;su -c &#x27;chmod 644 /system/etc/security/cacerts/${HASH}.0&#x27;&quot;
+adb shell &quot;su -c &#x27;mount -o ro,remount /system&#x27;&quot;
+
+# Verify the system sees it
+adb shell &quot;su -c &#x27;ls /system/etc/security/cacerts/&#x27; | grep $HASH&quot;</code></pre>
+<p>Rebooting some emulator images wipes /system changes; if the CA vanishes, use an emulator image with writable system or re-push at the start of each session.</p>
+<h2>3. Confirming interception and bypassing pinning</h2>
+<p>Exercise the app: log in, refresh, search. In Burp&#x27;s HTTP history you should see full requests and responses.</p>
+<pre><code class="language-bash"># Quick check that traffic is flowing through the proxy
+# In Burp: Proxy &gt; HTTP history should show the app&#x27;s hosts
+# TLS handshake should list Burp&#x27;s CA as issuer (Proxy &gt; Intercept off, just history)</code></pre>
+<p>If you see CONNECT entries with no decrypted content, or TLS alerts, the app pins. First try objection:</p>
+<pre><code>android sslpinning disable --quiet</code></pre>
+<p>Then the Frida pattern from the ssl-pinning-bypass sub-skill for the specific library (OkHttp, TrustKit, network security config pins). Re-test after each attempt; pinning is per host, so confirm every important host, not just the first one.</p>
+<h2>4. Packet capture fallback with tcpdump</h2>
+<p>When the proxy cannot see the traffic (QUIC, raw TLS sockets, custom protocols), capture packets on the device and analyze offline.</p>
+<pre><code class="language-bash"># Push a static tcpdump build for the device architecture
+adb push tcpdump-arm64 /data/local/tmp/tcpdump
+adb shell &quot;chmod 755 /data/local/tmp/tcpdump&quot;
+
+# Capture during an app session
+adb shell &quot;su -c &#x27;/data/local/tmp/tcpdump -i any -w /data/local/tmp/cap.pcap port not 22&#x27;&quot;
+
+# Pull and open in Wireshark
+adb pull /data/local/tmp/cap.pcap ./
+wireshark cap.pcap</code></pre>
+<p>In Wireshark, start with the conversation statistics (Statistics &gt; Conversations) to find unexpected hosts, then follow TCP streams. For TLS streams you cannot decrypt, the handshake still reveals SNI hostnames and certificate details, which maps the app&#x27;s server footprint.</p>
+<p>To decrypt TLS offline when you hold the session keys, hook SSLKEYLOGFILE-style export with Frida at the native layer and load the key log into Wireshark. This is advanced; the proxy path should be exhausted first.</p>
+<h2>5. WebSocket and non-HTTP traffic</h2>
+<pre><code class="language-bash"># In Burp, WebSockets appear under Proxy &gt; WebSockets history
+# Confirm the app&#x27;s realtime channel: look for 101 Switching Protocols</code></pre>
+<p>For MQTT, custom binary protocols, or raw sockets, hook the socket layer with Frida to capture plaintext before encryption:</p>
+<pre><code class="language-javascript">// Dump plaintext at the SSLSocket layer
+Java.perform(function () {
+    var SSLSocket = Java.use(&#x27;javax.net.ssl.SSLSocket&#x27;);
+    // Hook the output stream write via the socket&#x27;s streams is complex;
+    // simpler: hook OkHttp&#x27;s WebSocketListener or the app&#x27;s socket wrapper
+    // identified from static analysis
+    var Wrapper = Java.use(&#x27;com.example.target.SocketWrapper&#x27;);
+    Wrapper.send.overload(&#x27;java.lang.String&#x27;).implementation = function (msg) {
+        console.log(&#x27;[*] socket send: &#x27; + msg.slice(0, 200));
+        return this.send(msg);
+    };
+});</code></pre>
+<p>Document the protocol: message format, authentication, and whether sensitive data crosses it. Realtime channels often carry chat, location, or transaction data with weaker protections than the REST API.</p>
+<h2>6. Building the API map</h2>
+<p>Turn the capture into the deliverable the rest of the test uses:</p>
+<pre><code class="language-bash"># Export Burp history and summarize hosts
+# (Burp: select history entries &gt; Save selected items, then parse)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import xml.etree.ElementTree as ET
+tree = ET.parse(&#x27;burp-history.xml&#x27;)
+hosts = {}
+for item in tree.getroot().iter(&#x27;item&#x27;):
+    host = item.find(&#x27;host&#x27;).text
+    path = item.find(&#x27;path&#x27;).text.split(&#x27;?&#x27;)[0]
+    hosts.setdefault(host, set()).add(path)
+for host, paths in sorted(hosts.items()):
+    print(f&quot;\n## {host} ({len(paths)} endpoints)&quot;)
+    for p in sorted(paths)[:15]:
+        print(f&quot;  {p}&quot;)
+EOF</code></pre>
+<p>Example output shape:</p>
+<pre><code>## api.example.com (23 endpoints)
+  /v2/auth/login
+  /v2/auth/refresh
+  /v2/users/me
+  /v2/users/me/payment-methods</code></pre>
+<p>For each host note: authentication mechanism (bearer token, cookie, client cert), sensitive fields in requests and responses (tokens, PII, card data), and transport (TLS version from the handshake). Endpoints that return other users&#x27; data with only a client-supplied id are the IDOR candidates for the next test phase.</p>
+<h2>7. Modifying and replaying traffic</h2>
+<pre><code class="language-bash"># In Burp: right-click a request &gt; Send to Repeater
+# Modify parameters and observe; document every mutated request</code></pre>
+<p>Standard mutations for the authorized test: removing the auth header, swapping user ids between the client&#x27;s test accounts, tampering prices or quantities, replaying a state-changing request twice. Each mutation gets one line in the notes: request, change, response, verdict.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The app uses its own DNS (DNS-over-HTTPS) and bypasses your</li>
+<p>host-based rules. Block DoH at the lab firewall or override with iptables DNAT for port 53 as well as 443.</p>
+<li>Traffic is pinned and the bypass fails on a banking-hardened app.</li>
+<p>Document the effective pinning, and ask the client for a test build with pinning disabled; do not burn days on one control.</p>
+<li>The emulator&#x27;s proxy setting does not affect the app. Some apps</li>
+<p>read proxy settings at startup only; set the proxy before launching the app, or use the iptables redirect which cannot be ignored.</p>
+<li>Burp&#x27;s CA expires or the hash filename is wrong. The app fails</li>
+<p>closed with certificate errors, which actually confirms your CA is being evaluated. Re-export the CA and recheck the hash.</p>
+<li>Huge media uploads pollute the capture. Filter Burp history by</li>
+<p>MIME type or host to keep the API map readable.</p>
+<li>The app certificate-pins only some hosts. Verify host by host;</li>
+<p>mixed pinning coverage is itself a reportable inconsistency.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You cannot decrypt traffic for the core API and the test needs</li>
+<p>it. Escalate to the engagement lead for a pinning-disabled test build; this is a routine authorized request.</p>
+<li>Captured traffic shows credentials or PII in cleartext or in URLs.</li>
+<p>Capture a clean sample, stop, and report; cleartext credentials are a High finding that does not need further exploitation.</p>
+<li>The traffic reveals undocumented hosts outside the agreed scope.</li>
+<p>Note them as observed, do not probe them, and confirm scope before any active testing.</p>
+<li>The app uses mutual TLS with a client certificate embedded in the</li>
+<p>app. Extracting it for proxy use is authorized on the test build; document the extraction since an embedded client cert is itself a finding about key storage.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Interception is detected through pinning, proxy detection (checking the system proxy setting), and VPN or proxy detection heuristics. The durable defenses are pinning plus attestation, so that even a successful proxy position yields rejected requests, and minimizing sensitive data in transit in the first place. Your report should state plainly which hosts were interceptable and which resisted, because &quot;all API traffic was readable after a one-command bypass&quot; versus &quot;pinning held on all hosts&quot; tells the client exactly where they stand.</p>
+<h2>Key references</h2>
+<ul>
+<li>Burp Suite mobile and proxy documentation:</li>
+<p>https://portswigger.net/burp/documentation</p>
+<li>Android network security configuration:</li>
+<p>https://developer.android.com/training/articles/security-config</p>
+<li>Frida CodeShare pinning bypasses:</li>
+<p>https://codeshare.frida.re/</p>
+<li>Wireshark documentation: https://www.wireshark.org/docs/</li>
+<li>OWASP MSTG network communication testing:</li>
+<p>https://mas.owasp.org/MSTG/</p>
+<li>OWASP MASVS network requirements:</li>
+<p>https://mas.owasp.org/MASVS/</p>
+<li>tcpdump man page: https://www.tcpdump.org/manpages/tcpdump.1.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-osint-challenges-metadata-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-osint-challenges-metadata-analysis</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF OSINT or forensics challenge provides files</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-osint-challenges.html">ctf-osint-challenges</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-osint-challenges.html">ctf-osint-challenges</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-methodology.html">osint-methodology</a> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>ExifTool</td><td>12.90</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Metadata is data about the file: who made it, when, where, and with what. CTF authors plant flags in EXIF comments, GPS tags, document authors, and software version strings because most players never look there. This sub-skill covers the authorized metadata workflow: extracting everything, interpreting the fields that matter, and pivoting from each finding. Scope is CTF competitions, lab files, and files you are authorized to analyze.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Run <code>exiftool</code> with all tags (<code>-a -u</code>) on every file in the</li>
+<p>challenge bundle; do not assume which file hides the metadata.</p>
+<li>Prioritize high-value fields: GPS coordinates, Comment,</li>
+<p>Description, Author, Creator, Software, CreateDate.</p>
+<li>Convert GPS to a map location and verify it matches the challenge</li>
+<p>context.</p>
+<li>Pivot on usernames found in Author/Creator/Software into the</li>
+<p>username-hunting workflow.</p>
+<li>For Office docs, unzip and read the XML properties directly;</li>
+<p>for PDFs, check info dict plus embedded files.</p>
+<li>Extract embedded thumbnails; they sometimes differ from the main</li>
+<p>image and contain the hidden content.</p>
+<li>Check for metadata in container formats (video encoder strings,</li>
+<p>audio tags) with the same exiftool pass.</p>
+<li>Record the exact tags and values; metadata writeups need the</li>
+<p>field names, not just the conclusions.</p>
+</ol>
+<h2>1. ExifTool deep dive</h2>
+<pre><code class="language-bash"># Everything, including duplicates and unknown tags
+exiftool -a -u -G1 photo.jpg | head -80
+# -G1 shows the group (EXIF, XMP, IPTC, MakerNotes) per tag
+
+# GPS specifically, in decimal degrees
+exiftool -gpslatitude -gpslongitude -n photo.jpg
+# 50.8503 4.3517  -&gt; paste into a map
+
+# Common flag fields, one pass over a directory
+exiftool -r -Comment -Description -Artist -Author -Creator -Software \
+  -CreateDate -GPSLatitude -GPSLongitude ./challenge_files/ | head -60
+
+# Write a clean report of all metadata to a file for notes
+exiftool -a -u photo.jpg &gt; /tmp/meta.txt</code></pre>
+<p>MakerNotes (camera-specific) sometimes contain serial numbers and owner names; XMP can carry editing history with usernames. Do not stop at the first screen of output.</p>
+<h2>2. GPS coordinates: extraction and verification</h2>
+<pre><code class="language-bash"># Decimal output for direct map use
+exiftool -n -gpslatitude -gpslongitude photo.jpg
+
+# Full GPS block (altitude, timestamp, processing method)
+exiftool -gps:all photo.jpg</code></pre>
+<p>Verify the coordinates make sense: a CTF photo &quot;taken in Brussels&quot; with GPS in the ocean means spoofed metadata (which is itself the challenge: the real location comes from visual clues, or the spoofed coordinates spell something). Check GPSDateStamp vs CreateDate mismatches; they reveal edited metadata.</p>
+<h2>3. Office document internals</h2>
+<pre><code class="language-bash"># .docx/.xlsx/.pptx are zips; the properties are XML
+unzip -p report.docx docProps/core.xml | python3 -c &quot;
+import sys, xml.dom.minidom
+print(xml.dom.minidom.parseString(sys.stdin.read()).toprettyxml())&quot;
+# dc:creator, dc:title, dcterms:created, cp:revision
+
+unzip -p report.docx docProps/app.xml      # application, company
+unzip -l report.docx | head -30            # embedded objects and images
+
+# Tracked changes and comments can hold deleted flag text
+unzip -p report.docx word/comments.xml</code></pre>
+<p>Also check: <code>docProps/custom.xml</code> for custom properties, embedded files in <code>word/embeddings/</code>, and revision history showing removed content. A &quot;clean&quot; document with 40 revisions is hiding something.</p>
+<h2>4. PDF metadata and embedded objects</h2>
+<pre><code class="language-bash">pdfinfo document.pdf
+# Title, Author, Creator, Producer, CreationDate
+
+exiftool -a -u document.pdf | grep -i -E &quot;author|creator|title|subject|keyword&quot;
+
+# Embedded files (flags hide as attachments)
+pdfdetach -list document.pdf
+pdfdetach -saveall -o /tmp/pdf_embedded document.pdf
+
+# Incremental updates: previous versions of the PDF may contain removed text
+# (check with pdfinfo Pages vs actual content, or carve with binwalk)</code></pre>
+<h2>5. Thumbnail and preview recovery</h2>
+<pre><code class="language-bash"># Extract the embedded thumbnail (may differ from the displayed image)
+exiftool -b -ThumbnailImage photo.jpg &gt; /tmp/thumb.jpg
+file /tmp/thumb.jpg &amp;&amp; exiftool /tmp/thumb.jpg | head -10
+
+# Some formats store multiple previews
+exiftool -b -PreviewImage photo.jpg &gt; /tmp/preview.jpg
+exiftool -b -JpgFromRaw photo.dng &gt; /tmp/fromraw.jpg</code></pre>
+<p>CTF authors sometimes put the flag only in the thumbnail: the main image looks clean, the 160px preview contains text. Always extract and view thumbnails.</p>
+<h2>6. Pivoting from metadata</h2>
+<p>Each metadata value is a new OSINT seed:</p>
+<ul>
+<li>Author/Creator username -&gt; username-hunting workflow.</li>
+<li>GPS coordinates -&gt; image-geolocation verification workflow.</li>
+<li>Software string with a username (`Adobe Photoshop, registered to</li>
+<p>johndoe`) -&gt; username search.</p>
+<li>CreateDate anomalies -&gt; timeline questions (why was this edited</li>
+<p>at 3am? what version came before?).</p>
+<li>Serial numbers -&gt; usually dead ends in CTFs, but note them.</li>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>Metadata is entirely stripped: the challenge expects visual or</li>
+<p>content analysis instead; do not keep digging an empty hole.</p>
+<li>Timestamps are uniform or zeroed: treat as anti-forensics signal</li>
+<p>and pivot to content.</p>
+<li>The file has metadata for a different file (copy-paste artifact):</li>
+<p>note the mismatch; CTF authors sometimes plant the flag in the inconsistency itself.</p>
+<li>Video files: check all streams (<code>exiftool -a</code> shows per-stream</li>
+<p>tags); encoder strings like <code>Lavf</code> plus a username are the usual plant.</p>
+<li>The metadata contains deliberately false GPS: treat it as a clue</li>
+<p>about the author&#x27;s intent (a joke location, a previous challenge) rather than discarding it outright.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>exiftool shows nothing but the file feels planted: run <code>strings</code></li>
+<p>on the raw file; some challenges hide fake &quot;metadata&quot; as plain text near the header.</p>
+<li>GPS points nowhere sensible: convert manually (degrees, minutes,</li>
+<p>seconds fields may be split across tags) before concluding it is spoofed.</p>
+<li>The document properties are all default: check the binary XML</li>
+<p>for custom parts (<code>unzip -l</code> full listing); defaults in the UI do not mean empty internals.</p>
+<li>Two files claim contradictory authorship: check CreateDate ordering</li>
+<p>and editing software; the later editor usually overwrote the original author field.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders strip metadata as a matter of policy: publishing pipelines remove EXIF GPS, document properties get scrubbed, and video gets re-encoded. Detection of metadata leakage is by audit: sample public files and check what they expose. DLP tools can flag GPS-tagged uploads from corporate devices. For individuals, the lesson is the CTF lesson: every file you share carries its history unless you actively remove it; check before publishing, not after.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1593 (Search Open Websites/Domains).</li>
+<li>ExifTool documentation: https://exiftool.org/</li>
+<li>OSINT Framework: https://osintframework.com/</li>
+<li>Bellingcat metadata guides: https://www.bellingcat.com/resources/</li>
+<li>NIST SP 800-86 (media metadata in forensic examination).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

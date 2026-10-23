@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mobile-ios-static-objection-workflows</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mobile-ios-static-objection-workflows</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you want fast read-oriented runtime inspection of</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="mobile-ios-static.html">mobile-ios-static</a></div><div class="deps"><span class="kind">requires:</span> <a href="mobile-ios-static.html">mobile-ios-static</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="mobile-ios-static.html">mobile-ios-static</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>objection</td><td>1.11</td></tr><tr><td>Frida</td><td>16.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>objection is a runtime exploration toolkit built on Frida that gives you a REPL over a running iOS app with no scripting required. For static analysts it is the bridge to runtime truth: the plist said the app stores a token, objection shows you the actual keychain item. This sub-skill covers the read-oriented iOS workflows: storage dumps, bundle inspection, and memory search. All commands run against an app on a test device you own, for a target you are authorized to assess.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm frida-server is running on the test device and the versions</li>
+<p>match your workstation.</p>
+<li>Attach objection to the running app or spawn it.</li>
+<li>Dump the bundle metadata and environment for orientation.</li>
+<li>Dump keychain, NSUserDefaults, and plist files; compare against the</li>
+<p>static findings.</p>
+<li>Search memory for the secret-shaped strings found in the static pass.</li>
+<li>Disable SSL pinning and confirm traffic in your proxy.</li>
+<li>Save every dump with the build version in the filename.</li>
+</ol>
+<h2>1. Attaching and orienting</h2>
+<pre><code class="language-bash"># Attach to the running app (find the name with frida-ps first)
+frida-ps -U | grep -i target
+objection --gadget com.example.target explore
+
+# Or spawn it fresh, useful when you need early lifecycle behavior
+objection --gadget com.example.target explore --startup-command &quot;ios keychain dump&quot;</code></pre>
+<p>Inside the REPL, orient yourself:</p>
+<pre><code># Show the app environment: bundle id, paths, versions
+env
+
+# Example output shape
+# Name               Path
+# -----------------  ------------------------------------------------
+# Bundle identifier  com.example.target
+# Bundle path        /var/containers/Bundle/Application/&lt;UUID&gt;/Target.app
+# Data path          /var/mobile/Containers/Data/Application/&lt;UUID&gt;/</code></pre>
+<p>The data path is where the app&#x27;s documents, library, and caches live. Every storage dump below reads from there.</p>
+<h2>2. Keychain dump</h2>
+<p>The keychain is where secrets should live. Dump it and check the protection classes.</p>
+<pre><code>ios keychain dump
+
+# Example output shape
+# Account        Service              Data                      Accessible
+# -------------  ------------------- -------------------------  --------------------------
+# user@example   com.example.target  s3cr3t-t0k3n...            AfterFirstUnlock
+# device-id      com.example.target  9F2C...                   Always</code></pre>
+<p><code>kSecAttrAccessibleAlways</code> is deprecated and weak; <code>AfterFirstUnlock</code> is common but weaker than <code>WhenUnlocked</code> or <code>WhenPasscodeSetThisDeviceOnly</code>. Cross-check: the static pass may have found the token in strings, which means it was also compiled into the binary, a double finding. Note which items the app actually creates versus what the code suggests.</p>
+<p>Export for the report:</p>
+<pre><code>ios keychain dump --json keychain-dump.json</code></pre>
+<h2>3. NSUserDefaults and plist inspection</h2>
+<p>NSUserDefaults is a plist on disk and frequently contains more than preferences.</p>
+<pre><code># Dump all defaults
+ios nsuserdefaults get
+
+# Example output shape
+# {
+#   &quot;authToken&quot;: &quot;eyJhbGciOi...&quot;,
+#   &quot;lastSyncDate&quot;: &quot;2026-10-20T...&quot;,
+#   &quot;userEmail&quot;: &quot;user@example.com&quot;
+# }
+
+# List plist files in the app sandbox
+ios plist list
+ios plist cat /var/mobile/Containers/Data/Application/&lt;UUID&gt;/Library/Preferences/com.example.target.plist</code></pre>
+<p>An auth token in NSUserDefaults is a finding: defaults are stored unencrypted in the app sandbox and included in backups. Compare with the keychain dump; tokens should be in the keychain, not here.</p>
+<h2>4. Bundle and class inspection</h2>
+<pre><code># Bundle info: versions, frameworks, URL schemes as the runtime sees them
+ios bundles list_bundles
+ios bundles list_frameworks
+
+# List loaded classes, filtered to the app&#x27;s own prefix
+ios hooking list_classes | grep -i target | head -20
+
+# List methods of an interesting class found via class-dump
+ios hooking list_methods com.example.target.LoginManager --include-parents</code></pre>
+<p>Example output shape:</p>
+<pre><code># com.example.target.LoginManager methods
+# - loginWithUsername:password:completion:
+# - isAuthenticated
+# - validatePIN:
+# - refreshTokenWithCompletion:</code></pre>
+<p>These method names become the hook targets for the mobile-frida-scripting skill. The static class-dump and this runtime listing should agree; if a method appears in headers but not at runtime, it may be stripped or in an unloaded bundle.</p>
+<h2>5. Memory search for static leads</h2>
+<p>Take each secret-shaped string from the static pass and search the app&#x27;s memory for live copies.</p>
+<pre><code># Search all of the app&#x27;s memory for a token fragment
+memory search &quot;eyJhbGciOi&quot; --string
+
+# Example output shape
+# 0x105a4b000  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+# Dump the region around a hit for context
+memory dump 0x105a4b000 256 --output /tmp/token-mem.bin</code></pre>
+<p>Live copies of hardcoded secrets in memory confirm they are actually used, which raises severity. Also search for the plist-declared URL schemes and any PIN or password field contents while the relevant screen is open.</p>
+<h2>6. SSL pinning disable for traffic confirmation</h2>
+<pre><code># Inside the objection REPL
+ios sslpinning disable --quiet</code></pre>
+<p>Then exercise the app and watch your proxy (Burp or similar). If decrypted HTTPS appears, the static ATS review from the parent skill gains its runtime verdict. If traffic stays encrypted, the app pins in native code or uses a custom trust evaluation, and you escalate to the Frida pinning bypass sub-skill.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>objection fails to attach with a Frida version mismatch error. The</li>
+<p>gadget or server version must match the workstation Frida 16.5 exactly; this is the most common objection failure.</p>
+<li>The app detects the jailbreak and refuses to launch, so there is</li>
+<p>nothing to attach to. Use the client-supplied build path, or accept that runtime confirmation is blocked and mark findings accordingly.</p>
+<li><code>ios keychain dump</code> returns empty on a fresh install. Interact with</li>
+<p>the app first (log in, enable biometrics) so it actually writes keychain items, then re-dump.</p>
+<li>Memory search finds thousands of hits for a short string. Lengthen</li>
+<p>the search token to something distinctive, or narrow with <code>--offsets-only</code> and sample.</p>
+<li>The app uses an app group container outside its own data path.</li>
+<p>Check <code>env</code> for group container paths and dump those plists too; shared containers are a common place for tokens to leak between a main app and its extensions.</p>
+<li>objection commands hang on apps with heavy anti-tamper. Fall back</li>
+<p>to plain Frida scripts, which let you control hook timing more precisely.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The keychain contains credentials for third-party services that look</li>
+<p>live. Treat like any extracted secret: verify only with client approval, report immediately, recommend rotation.</p>
+<li>Storage dumps reveal other users&#x27; data on a shared test device.</li>
+<p>Stop, wipe the device, and note the finding without retaining the data; you do not need to keep PII to prove the point.</p>
+<li>Pinning disable does not work and the static pass flagged</li>
+<p><code>allowInvalidCertificates</code>. That combination means custom trust code; hand the exact class and method names to the Frida function-hooking sub-skill for a targeted bypass.</p>
+<li>You need to modify app behavior, not just read it. objection&#x27;s</li>
+<p><code>ios hooking set_return_value</code> covers simple cases; anything complex belongs in a custom Frida script.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>objection injects the Frida gadget, which a defending app can detect: open Frida port, gadget library in memory maps, modified code signature. Jailbreak detection blocks the whole workflow. From the defender side, the durable controls are the same as ever: sensitive data in the keychain with strong accessibility classes, nothing sensitive in NSUserDefaults, certificate pinning that survives the generic bypass, and server-side authorization so that even a fully instrumented client yields little. When you report, distinguish between &quot;objection read it trivially&quot; (weak client posture) and &quot;objection was blocked by X&quot; (control working as designed).</p>
+<h2>Key references</h2>
+<ul>
+<li>objection documentation and iOS command reference:</li>
+<p>https://github.com/sensepost/objection</p>
+<li>Frida iOS specifics: https://frida.re/docs/ios/</li>
+<li>Apple keychain services documentation:</li>
+<p>https://developer.apple.com/documentation/security/keychain_services</p>
+<li>Apple NSUserDefaults documentation:</li>
+<p>https://developer.apple.com/documentation/foundation/userdefaults</p>
+<li>OWASP MSTG iOS dynamic analysis:</li>
+<p>https://mas.owasp.org/MSTG/</p>
+<li>OWASP MASVS storage requirements:</li>
+<p>https://mas.owasp.org/MASVS/</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

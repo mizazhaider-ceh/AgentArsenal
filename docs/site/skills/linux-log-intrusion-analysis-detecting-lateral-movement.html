@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-log-intrusion-analysis-detecting-lateral-movement</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-log-intrusion-analysis-detecting-lateral-movement</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hunting for lateral movement across Linux hosts during</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a> <a href="linux-log-intrusion-analysis-auth-log-triage.html">linux-log-intrusion-analysis-auth-log-triage</a> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>OpenSSH</td><td>9.6</td></tr><tr><td>auditd</td><td>3.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Attackers rarely stop at the first host: they pivot, harvesting credentials and hopping to the next system. Lateral movement is the phase where a single-host incident becomes a fleet incident, so detecting it quickly bounds the damage. This sub-skill covers the defensive analyst&#x27;s method for finding movement between Linux hosts: tracing SSH chains, spotting forwarding and proxy abuse, finding the credentials used to spread, correlating logins across hosts, and auditing the trust relationships that make movement possible. For investigations you are authorized to conduct; defensive only. The parent skill sets the strategy; this file is the lateral movement field manual.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>From the compromised host, list outbound SSH sessions and connections: who went where, when, as whom.</li>
+<li>Pull the accepted-login history on neighboring hosts for the same window and look for the chain.</li>
+<li>Audit trust material on the source host: private keys, agent sockets, known_hosts, and authorized_keys changes.</li>
+<li>Correlate by time: a login to host B minutes after a login to host A from the same user is a chain until proven otherwise.</li>
+<li>Check for forwarding and proxy abuse: agent forwarding, ProxyJump chains, and tunnel listeners.</li>
+<li>Identify the credential used for each hop (key, password, agent) and scope the rotation accordingly.</li>
+<li>Contain: revoke the credentials, break the trust paths, and widen the hunt to every host in the chain before cleanup.</li>
+</ol>
+<h2>1. Tracing outbound SSH from the source host</h2>
+<p>Start where you have the foothold: what did this host reach out to? Auth logs show outbound only indirectly, so combine process, connection, and log evidence.</p>
+<pre><code class="language-bash">grep -E &quot;Accepted&quot; /var/log/auth.log | awk &#x27;{print $1, $2, $3, $9, $11}&#x27; | head -20
+ss -tnp 2&gt;/dev/null | grep -E &quot;:22&quot; | head -20
+ps aux | grep -E &quot;ssh |scp &quot; | grep -v grep | head -10</code></pre>
+<p>Example output shape: accepted logins into this host (the inbound side of the chain), current TCP connections to port 22 elsewhere (the outbound side), and running ssh/scp processes with their full command lines (which reveal the target host and user). For historical outbound SSH, check shell history files and <code>~/.ssh/known_hosts</code> additions: a new known_hosts entry timestamps first contact with a host. Every outbound hop becomes a new host to investigate.</p>
+<h2>2. Correlating logins across hosts</h2>
+<p>A lateral chain looks like this in logs: host A shows an accepted login from the attacker at 02:10, host B shows an accepted login from host A&#x27;s IP at 02:13 as the same user. Correlate aggressively.</p>
+<pre><code class="language-bash">grep &quot;Accepted&quot; /var/log/auth.log | awk &#x27;{print $1&quot; &quot;$2&quot; &quot;$3&quot; &quot;$9&quot; &quot;$11}&#x27; &gt; /root/ir-evidence/accepted-hostA.log
+awk &#x27;{print $4, $5}&#x27; /root/ir-evidence/accepted-hostA.log | sort | uniq -c | sort -rn | head -10</code></pre>
+<p>Do this on every host in the suspected chain, then align the timelines: same username appearing on multiple hosts within minutes, especially service or admin accounts, is the signature. Watch for the attacker&#x27;s discipline breaking down: inconsistent usernames per host, logins at times the legitimate user never works, and key-based logins from hosts where that user normally uses a bastion. Build one merged timeline across hosts; the chain usually reads clearly once ordered.</p>
+<h2>3. Auditing trust material: keys, agents, known_hosts</h2>
+<p>Lateral movement runs on trust: private keys on disk, loaded ssh agents, and authorized_keys entries. Audit all of it on the source host.</p>
+<pre><code class="language-bash">find /home /root -name &quot;id_*&quot; -not -name &quot;*.pub&quot; 2&gt;/dev/null | head -10
+ls -la /tmp/ssh-*/agent.* /run/user/*/openssh_agent 2&gt;/dev/null
+cat /root/.ssh/known_hosts 2&gt;/dev/null | awk &#x27;{print $1}&#x27; | head -20
+find /home /root -name &quot;authorized_keys&quot; -newermt &quot;2026-10-01&quot; 2&gt;/dev/null</code></pre>
+<p>Example output shape: private keys present (each one is a credential the attacker could have taken), agent sockets (a loaded agent lets an attacker hop without the key file), known_hosts entries (the map of where this host connects), and recently changed authorized_keys (new keys are both persistence and movement enablers). An <code>ssh-add -l</code> on a live agent lists loaded keys; treat every loaded key as compromised if the host is. Rotation scope follows the trust: every key found here, everywhere it is trusted.</p>
+<h2>4. Forwarding, ProxyJump, and tunnel abuse</h2>
+<p>SSH&#x27;s legitimate features are the attacker&#x27;s pivot toolkit: agent forwarding exposes the agent to the remote host, ProxyJump chains hops opaquely, and <code>-R</code>/<code>-L</code> tunnels punch through network boundaries.</p>
+<pre><code class="language-bash">grep -iE &quot;forwarding|proxyjump|proxycommand&quot; /etc/ssh/sshd_config /etc/ssh/ssh_config 2&gt;/dev/null | head -10
+ps aux | grep -E &quot;ssh.*-[LRD]&quot; | grep -v grep | head -10
+ss -tlnp 2&gt;/dev/null | grep -i ssh | head -10</code></pre>
+<p>Example output shape: forwarding settings (enabled agent forwarding is the risk), ssh processes with <code>-L</code>/<code>-R</code>/<code>-D</code> flags (active tunnels, with endpoints in the command line), and listening sockets owned by ssh (reverse tunnels waiting for use). Check <code>AllowAgentForwarding</code>, <code>AllowTcpForwarding</code>, and <code>PermitTunnel</code> in sshd_config as part of containment hardening. A reverse tunnel from a compromised host to an internal service is both movement and exfiltration path; note its endpoints before killing it.</p>
+<h2>5. Detecting credential harvesting for spread</h2>
+<p>Before moving, attackers collect the credentials that enable it: reading key files, dumping memory, querying the agent, or reusing passwords. Look for the harvesting.</p>
+<pre><code class="language-bash">grep -iE &quot;id_rsa|id_ed25519|authorized_keys|\.ssh&quot; /var/log/auth.log 2&gt;/dev/null | head -10
+ausearch -k ssh_keys 2&gt;/dev/null | tail -10
+ls -lat /home/*/.ssh/ /root/.ssh/ 2&gt;/dev/null | head -20</code></pre>
+<p>Indicators: access times on private key files outside the owner&#x27;s normal pattern, auditd records of processes reading <code>.ssh</code> directories that are not ssh itself, new files in <code>.ssh</code> (planted keys), and password-change or key-generation activity in the window. If harvesting is confirmed, the rotation scope expands from &quot;the compromised account&quot; to &quot;every credential present on the host&quot;, which is usually the painful but correct answer.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Legitimate automation (Ansible, backup systems, monitoring) creates constant host-to-host SSH that looks exactly like lateral movement; maintain an inventory of expected automation sources and service accounts so hunts start from anomalies, not from cron jobs.</li>
+<li>Bastion and jump-host architectures concentrate logins through one host by design; on bastions, correlate session start/end with downstream host logins rather than treating every hop as suspicious.</li>
+<li>Attackers may use non-SSH movement (exploited services, database links, container escapes, management APIs); if the SSH trail goes cold but the timeline continues, widen to service logs and network flows instead of concluding movement stopped.</li>
+<li>Clock skew between hosts breaks time correlation; verify NTP on every host in the chain before ordering events, and allow skew tolerance in the correlation window.</li>
+<li>Deleted logs on intermediate hosts are common when the attacker cleans as they go; a host with a suspicious gap sitting between two confirmed hops is itself evidence of movement through it.</li>
+<li>IPv6 and nonstandard SSH ports evade naive <code>:22</code> greps; check listening and established connections broadly (<code>ss -tnp</code>) and know your environment&#x27;s actual SSH ports.</li>
+<li>Cloud and ephemeral hosts may no longer exist; pivot to cloud audit trails (which recorded the instance&#x27;s network flows and API calls) when the host itself is gone.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If the chain reaches a high-value host (domain controller equivalent, backup server, identity provider, production database), escalate immediately regardless of what was done there: presence on crown-jewel hosts changes the incident&#x27;s severity class.</li>
+<li>If credential harvesting is confirmed, escalate for fleet-wide credential rotation planning: the movement phase may be over, but the harvested credentials make re-entry trivial until rotated.</li>
+<li>If movement crossed a trust boundary (prod to dev, corporate to OT, one client to another in MSP contexts), escalate the scope expansion explicitly: each boundary crossed is a separate notification and containment problem.</li>
+<li>If you cannot determine the full chain (logs missing, hosts gone), escalate the uncertainty itself: recommend broader containment (rotate more, isolate more) proportional to what cannot be ruled out, and say so plainly.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Lateral movement detection is continuous correlation, not a one-time hunt. Defenders baseline normal host-to-host SSH (which accounts, which paths, which hours) and alert on deviations: first-time host pairs, unusual service accounts moving, off-hours chains, and forwarding/tunnel creation. MITRE T1021 (Remote Services) is the technique; T1078 (Valid Accounts) is usually the enabler, which is why credential hygiene and rotation scope matter as much as the network detection. Network flow data and EDR process telemetry complement log correlation, catching movement that never touches auth logs. The architectural defenses are structural: bastion hosts with session recording, no direct host-to-host SSH for users, agent forwarding disabled by default, and network segmentation that makes each hop a policy decision rather than a default route.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1021 Remote Services: https://attack.mitre.org/techniques/T1021/</li>
+<li>MITRE ATT&amp;CK T1078 Valid Accounts: https://attack.mitre.org/techniques/T1078/</li>
+<li>MITRE ATT&amp;CK T1550 Use Alternate Authentication Material: https://attack.mitre.org/techniques/T1550/</li>
+<li>OpenSSH forwarding and tunneling docs: https://man7.org/linux/man-pages/man1/ssh.1.html</li>
+<li>NIST SP 800-92 Guide to Computer Security Log Management: https://csrc.nist.gov/publications/detail/sp/800-92/final</li>
+<li>CIS distribution benchmarks (SSH and account sections): https://www.cisecurity.org/cis-benchmarks/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

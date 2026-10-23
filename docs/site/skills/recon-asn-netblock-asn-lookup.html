@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-asn-netblock-asn-lookup</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-asn-netblock-asn-lookup</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you know some of the target&#x27;s IPs or domains and need to identify their autonomous system numbers. Covers IP-to-ASN lookup via Team Cymru and regional whois, domain-to-ASN via resolution plus lookup, handling multi-ASN organizations and acquisitions, verifying the ASN actually announces the prefix today, and recording the ASN inventory that feeds prefix mapping. Authorized targets only.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="recon-asn-netblock.html">recon-asn-netblock</a></div><div class="deps"><span class="kind">requires:</span> <a href="recon-asn-netblock.html">recon-asn-netblock</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-asn-netblock-bgp-data.html">recon-asn-netblock-bgp-data</a> <a href="recon-passive.html">recon-passive</a> <a href="domain-osint.html">domain-osint</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>whois</td><td>5.5</td></tr><tr><td>dig</td><td>9.18</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>The ASN lookup step answers: which autonomous systems does this organization operate. Get it wrong and you enumerate someone else&#x27;s network; get it right and the prefix mapping that follows is precise. This sub-skill covers identifying the target&#x27;s ASNs for recon-asn-netblock: lookup methods, verification, and the multi-ASN reality of modern organizations. Only look up ASNs for organizations you are authorized to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Collect known-good IPs: resolved subdomains, mail server IPs, IPs from Shodan host data.</li>
+<li>Look up each IP&#x27;s origin ASN via Team Cymru; record ASN, prefix, and AS name.</li>
+<li>Cross-check with regional whois for the organization name on the ASN and prefix.</li>
+<li>Deduplicate to the ASN set; investigate when known IPs map to different ASNs.</li>
+<li>Verify each ASN announces its prefixes today via a looking glass or BGP data.</li>
+<li>Record the ASN inventory with evidence per ASN; hand it to prefix mapping.</li>
+</ol>
+<h2>1. IP to ASN with Team Cymru</h2>
+<pre><code class="language-bash"># Single IP
+whois -h whois.cymru.com &quot; -v 203.0.113.45&quot;
+# Bulk: feed IPs, get ASN mapping back
+cat known-ips.txt | whois -h whois.cymru.com &quot; -v -f&quot; 2&gt;/dev/null | sort -u</code></pre>
+<p>Example output shape:</p>
+<pre><code>AS      | IP            | BGP Prefix     | CC | Registry | Allocated  | AS Name
+64496   | 203.0.113.45  | 203.0.113.0/24 | US | arin     | 2008-01-01 | EXAMPLE-CORP
+64496   | 198.51.100.23 | 198.51.100.0/24| US | arin     | 2015-06-11 | EXAMPLE-CORP</code></pre>
+<p>Bulk mode is efficient: pipe your whole resolved-IP list through once and sort the ASN column. One dominant ASN means a simple footprint; several ASNs mean acquisitions, multi-cloud, or CDN fronting that needs untangling.</p>
+<h2>2. ASN details and organization check</h2>
+<pre><code class="language-bash"># ASN record: name, allocated date, registry
+whois -h whois.cymru.com &quot; -v AS64496&quot;
+# Regional registry for the organization behind it
+whois -h whois.arin.net AS64496 | grep -iE &quot;asname|orgname|descr&quot; | head -5</code></pre>
+<p>What to verify: the AS name resembles the target organization, the allocation date is plausible (a 2024 ASN for a 1998 company suggests a recent acquisition or a new network), and the registry matches the expected region. Mismatches do not disqualify an ASN, they just demand an explanation before you enumerate its prefixes.</p>
+<h2>3. Domain to ASN path</h2>
+<p>For domain-first recon, resolve then look up:</p>
+<pre><code class="language-bash"># Resolve key hostnames, then map their IPs to ASNs
+for h in example.com mail.example.com vpn.example.com; do
+  dig +short &quot;$h&quot; A @1.1.1.1 | head -3
+done | sort -u &gt; key-ips.txt
+cat key-ips.txt | whois -h whois.cymru.com &quot; -v -f&quot; 2&gt;/dev/null | sort -u</code></pre>
+<p>CDN-fronted names will map to the CDN&#x27;s ASN (Cloudflare, Akamai), not the target&#x27;s. That is correct and useful: it tells you which names are fronted, and the origin ASN hunt continues via historical DNS, certificate SANs on odd ports, and the other pivot techniques.</p>
+<h2>4. Multi-ASN situations</h2>
+<p>Large or acquisitive organizations legitimately hold several ASNs. Untangle them:</p>
+<ul>
+<li>List every ASN your IPs map to, with counts. The ASN holding most IPs is usually the primary.</li>
+<li>Research each: acquisition announcements, subsidiary names in the AS name, regional registries (a RIPE ASN for the EU subsidiary, an ARIN ASN for HQ).</li>
+<li>Record per-ASN scope status separately: your authorization may cover the primary ASN but not an acquired subsidiary&#x27;s network. When unsure, ask.</li>
+<li>Watch for cloud ASNs (AWS, Azure, GCP): the target&#x27;s cloud workloads live there, but the ASN is shared with millions of others. Cloud IPs need domain or certificate pivots, not ASN enumeration.</li>
+</ul>
+<h2>5. Verification before enumeration</h2>
+<p>Before enumerating any ASN&#x27;s prefixes, verify it is real and current:</p>
+<pre><code class="language-bash"># RIPEstat: is the ASN currently announcing
+curl -s &quot;https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS64496&quot; \
+  | jq &#x27;.data.prefixes | length&#x27;
+# A looking glass or bgp.he.net confirms the announcements visually</code></pre>
+<p>An ASN with zero current announcements is either withdrawn (skip it) or your data is stale (re-check). Record the verification date; BGP changes and your notes should show when the picture was taken.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The IP maps to a DDoS-mitigation ASN (always-on scrubbing): the real origin ASN hides behind it. Look at historical BGP data from before the mitigation contract, or at non-HTTP services that bypass it.</li>
+<li>Private ASN numbers in whois output: data error or internal leak; ignore for internet enumeration.</li>
+<li>The ASN lookup returns different results per query time: BGP anycast and traffic engineering shift announcements. Take two snapshots hours apart and use the stable set.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No ASN maps cleanly to the organization (everything is CDN or cloud): the ASN path is a dead end for this target. Fall back to domain and certificate pivots, which work regardless of where the IPs live.</li>
+<li>You find an ASN that looks like the target but the name is ambiguous: research the acquisition history before enumerating. Enumerating the wrong company&#x27;s network is the failure mode this step exists to prevent.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>ASN lookups are fully passive: queries hit Team Cymru and registries, never the target.</li>
+<li>Defenders should know their ASN inventory, including subsidiaries and acquisitions. Unknown ASNs in your name are either shadow IT or someone else&#x27;s problem; find out which.</li>
+<li>Keep ASN and prefix registrations accurate: stale registry data sends authorized hunters toward the wrong networks and slows incident response.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>Team Cymru IP to ASN: https://www.team-cymru.com/ip-asn-mapping</li>
+<li>RIPEstat API docs: https://stat.ripe.net/docs/data_api</li>
+<li>bgp.he.net: https://bgp.he.net</li>
+<li>ARIN whois: https://www.arin.net</li>
+<li>MITRE ATT&amp;CK T1590 Gather Victim Network Information: https://attack.mitre.org/techniques/T1590/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-methodology-reporting-phase</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-methodology-reporting-phase</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">90/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a finding is validated on an in-scope bug bounty target and needs to become a payout-ready report. Covers the triage-before-writing checklist (clean-session reproduction, impact confirmation, duplicate search), the report structure triagers reward (specific title, justified severity, numbered reproduction steps with raw HTTP, concrete impact, remediation), evidence habits (screenshots and video as support, never as substitute), one-vulnerability-per-report discipline, and polite retest etiquette after fixes. Authorized targets only.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bugbounty-methodology.html">bugbounty-methodology</a></div><div class="deps"><span class="kind">requires:</span> <a href="bugbounty-methodology.html">bugbounty-methodology</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a> <a href="bugbounty-report-writing.html">bugbounty-report-writing</a> <a href="bugbounty-duplicate-avoidance.html">bugbounty-duplicate-avoidance</a> <a href="bugbounty-methodology-exploitation-phase.html">bugbounty-methodology-exploitation-phase</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A validated finding earns nothing until a tired triager understands it at midnight. The reporting phase converts exploitation output into reports that get triaged fast and paid fairly: triage before writing, one vulnerability per report, exact reproduction steps, concrete impact, and polite retests. This sub-skill covers only the reporting phase of bugbounty-methodology. Report only vulnerabilities found on targets the program lists in scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Triage the candidate: reproduce from a clean session with fresh accounts before writing anything.</li>
+<li>Confirm the impact is real and concrete (whose data, which privilege, what an attacker gains).</li>
+<li>Search for duplicates: disclosed reports, your own notes, the program&#x27;s known-issues list.</li>
+<li>Write one report per vulnerability with the structure in section 2.</li>
+<li>Attach evidence: screenshots or short video of the key step, supporting the written steps, never replacing them.</li>
+<li>Submit, then track: answer triager questions promptly and precisely.</li>
+<li>After a fix is marked, retest the exact steps plus close variants, politely and once.</li>
+<li>Confirm the fix or demonstrate the bypass with the same quality as the original report, then move on.</li>
+</ol>
+<h2>1. Triage before writing</h2>
+<p>Never write a report from a single observation. The triage checklist:</p>
+<ul>
+<li>Reproduce from a clean browser profile and fresh test accounts. Session confusion is the most common false positive in access control testing.</li>
+<li>Confirm the impact with the least privilege that demonstrates it. Reading one other user&#x27;s invoice proves IDOR; dumping the table does not add value and looks hostile.</li>
+<li>Check it is in scope: the exact host, and the exact test type, must both be allowed by the policy.</li>
+<li>Search duplicates first (see bugbounty-duplicate-avoidance): the program&#x27;s disclosed reports, HackerOne Hacktivity or Bugcrowd disclosures for that program, and your own submission history.</li>
+<li>Severity sanity check: does the impact match the bounty table, or are you inflating it. Overstated severity slows triage and costs credibility.</li>
+</ul>
+<p>If any check fails, the finding goes back to validation or gets dropped. A dropped false positive costs nothing; a submitted one costs reputation.</p>
+<h2>2. Report structure that gets paid</h2>
+<p>Write for a tired triager at midnight: short sentences, exact steps, no hype.</p>
+<ol>
+<li>Title: specific and searchable. &quot;Stored XSS in support ticket subject executes in admin panel&quot; beats &quot;XSS vulnerability found.&quot;</li>
+<li>Severity: justified against the bounty table with one sentence of reasoning. Cite CVSS only if the program uses it.</li>
+<li>Summary: two sentences on what is broken and why it matters.</li>
+<li>Reproduction steps: numbered, starting from a clean state, with exact requests. Include raw HTTP requests, not just screenshots:</li>
+</ol>
+<pre><code class="language-http">POST /api/v1/tickets HTTP/1.1
+Host: support.target.com
+Authorization: Bearer &lt;attacker-token&gt;
+Content-Type: application/json
+
+{&quot;subject&quot;: &quot;&lt;svg onload=alert(document.domain)&gt;&quot;, &quot;body&quot;: &quot;help&quot;}</code></pre>
+<ol>
+<li>Impact: what an attacker gains, concretely. &quot;I read another user&#x27;s invoices including names and amounts&quot; beats &quot;IDOR vulnerability.&quot;</li>
+<li>Remediation: one paragraph on the fix (server-side authorization check on the object, output encoding at render, parameterized query).</li>
+<li>Attachments: screenshots or video of the key step. Screenshots support the written steps; they never replace them.</li>
+</ol>
+<p>One vulnerability per report. Bundling distinct bugs into one report costs you money and confuses remediation. Chained issues that only matter together are one report; independent issues are separate reports.</p>
+<h2>3. Evidence habits</h2>
+<p>Collect evidence during exploitation, not after:</p>
+<ul>
+<li>Save the raw request and response for the proving step (Burp: save item, or copy as curl).</li>
+<li>Screenshot the moment of impact: the other user&#x27;s data rendered, the alert firing in the victim session, the admin action completed as a low-privilege user.</li>
+<li>For stored XSS or multi-step flows, a short screen recording is worth ten screenshots. Narrate nothing; let the steps speak.</li>
+<li>Redact other users&#x27; real data if you touched any. Blur names, emails, and amounts that are not yours.</li>
+<li>Keep a per-finding evidence folder: <code>findings/2026-10-23-idor-invoices/</code> with request.txt, response.txt, screenshots, and notes.md.</li>
+</ul>
+<h2>4. Retest etiquette</h2>
+<p>After the program marks a report fixed, retest promptly and politely:</p>
+<ul>
+<li>Run the exact reproduction steps first, then close variants (encoding bypasses, neighboring IDs, the same flaw on a sibling endpoint).</li>
+<li>Confirm the fix with the same evidence quality as the original, or demonstrate the bypass just as clearly.</li>
+<li>Thank the triager and close the loop. Do not keep hammering a fixed endpoint to find new ways in; that is a new hunt, not a retest.</li>
+<li>If the fix is incomplete, say exactly which variant still works and stop there. One clear bypass note beats five angry comments.</li>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>The triager asks for clarification: answer within a day, precisely, with the exact step they asked about. Do not resend the whole report.</li>
+<li>Severity is set lower than you claimed: stay factual, cite the policy and bounty table once, and accept the final call gracefully. Arguing burns the relationship that brings the next invite.</li>
+<li>The report is marked duplicate: note the pattern, hunt its siblings on other endpoints, and check the disclosure timeline so your next similar find lands first.</li>
+<li>The program goes quiet past its SLA: one polite follow-up, then move on. Never threaten disclosure to speed triage.</li>
+<li>You realize after submitting that the finding is weaker than claimed: update the report honestly before triage finishes. Corrections build trust; discovered exaggerations destroy it.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A report is rejected as intended behavior: ask for the reasoning, learn the program&#x27;s risk appetite, and adjust what you submit there next time. Different programs pay for different things.</li>
+<li>Repeated rejections on one program: rotate to a different program rather than grinding. Your methodology transfers; the program&#x27;s appetite does not.</li>
+<li>A fix bypass turns into a new variant class: after confirming the bypass, sweep the sibling endpoints once, then report the pattern to the program as a follow-up note on the original report.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Good reports teach the defender: the remediation paragraph and the attack class turn one report into a codebase-wide fix. Write remediation for the developer who will implement it.</li>
+<li>Evidence with raw HTTP requests lets defenders replay the issue in staging without guessing, which shortens fix time.</li>
+<li>Honest severity helps defenders prioritize correctly; inflated severity trains them to discount your future reports.</li>
+<li>Polite retests confirm the fix actually landed, which is a defensive win, not just a payout step.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>HackerOne report writing guidance: https://docs.hackerone.com</li>
+<li>Bugcrowd researcher documentation: https://docs.bugcrowd.com</li>
+<li>OWASP Testing Guide reporting section: https://owasp.org/www-project-web-security-testing-guide/</li>
+<li>CVSS v3.1 specification: https://www.first.org/cvss/</li>
+<li>CWE-639 Authorization Bypass Through User-Controlled Key: https://cwe.mitre.org/data/definitions/639.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

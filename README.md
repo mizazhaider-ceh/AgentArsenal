@@ -3,9 +3,9 @@
 # AgentArsenal
 
 <!-- SKILLCOUNT:START -->
-![skills](https://img.shields.io/badge/skills-246-blue)
+![skills](https://img.shields.io/badge/skills-285-blue)
 <!-- SKILLCOUNT:END -->
-[![sub-skills](https://img.shields.io/badge/sub--skills-110-9cf)](MINDMAP.md)
+[![sub-skills](https://img.shields.io/badge/sub--skills-227-9cf)](MINDMAP.md)
 [![agents](https://img.shields.io/badge/agents-25-blueviolet)](agents/README.md)
 [![brains](https://img.shields.io/badge/brains-16-red)](brains/README.md)
 [![platforms](https://img.shields.io/badge/platforms-19-orange)](platforms/PLATFORM_SUPPORT.md)
@@ -19,8 +19,8 @@
 Every skill carries a version, a freshness date, and a lifecycle state. A 14-check CI harness and a 0 to 100 quality scorer keep the bar high. One manifest drives the installer, the docs site, and the Claude Code marketplace integration.
 
 ```diff
-+ 246 skills across 28 domains, every one versioned, scored, and CI-checked
-+ 110 sub-skills that drill into the 30 highest-value parent skills
++ 285 skills across 29 domains, every one versioned, scored, and CI-checked
++ 227 sub-skills that drill into the 69 highest-value parent skills
 + 25 named agents, 16 reasoning brains, 8 engagement playbooks, 4 multi-agent workflows
 + 47 stdlib-only CLI operator tools, zero third-party dependencies
 + 19 agent platforms supported from one SKILL.md standard
@@ -271,10 +271,10 @@ Every tool accepts `--help`, exits 0 on success, 2 on usage errors. Full table i
 ## Skill catalog
 
 <!-- CATALOG:START -->
-246 skills across 28 domains. Regenerated from `arsenal-manifest.json` by `scripts/gen_readme_catalog.py`.
+285 skills across 29 domains. Regenerated from `arsenal-manifest.json` by `scripts/gen_readme_catalog.py`.
 
 <details>
-<summary><strong>Expand the full catalog: 246 skills, one line each</strong></summary>
+<summary><strong>Expand the full catalog: 285 skills, one line each</strong></summary>
 
 ### :key: ad (8 skills)
 
@@ -332,12 +332,14 @@ Every tool accepts `--help`, exits 0 on success, 2 on usage errors. Full table i
 - `telematics-security`: assessing a telematics unit or connected car backend on an authorized engagement. Covers TCU architecture, cellular attack surface, backend API review, and remote command flows.
 - `v2x-security`: assessing vehicle to everything communication on an authorized engagement or lab setup. Covers DSRC and C-V2X basics, message types (BSM, CAM, DENM), PKI and certificate review, and misbehavior detection concepts.
 
-### :nut_and_bolt: binary (11 skills)
+### :nut_and_bolt: binary (13 skills)
 
 *Reverse engineering and exploitation: pwn basics, ROP, heap, shellcode, Ghidra, angr.*
 
 - `angr-basics`: you need symbolic execution to explore program paths automatically, typically for CTF binaries, crackmes, or vulnerability research on code you are authorized to analyze.
+- `binary-anti-analysis-bypass`: a binary under authorized lab analysis resists analysis resists debugging or sandboxing, covering debugger detection, timing checks, VM and sandbox fingerprinting, or stalling tricks.
 - `binary-patching`: patching binaries in a lab on authorized targets: your own software, CTF binaries, or client approved test builds. Covers byte patching, assembly level fixes, and verifying patches.
+- `binary-patching-techniques`: you need to modify a compiled binary's behavior in an authorized lab, covering bypassing a license or trial check, neutralizing an anti-analysis routine, correcting a buggy code path, or testing how a program reacts to altered logic.
 - `firmware-analysis`: analyzing a firmware image from a device you own or are authorized to test. Covers Binwalk scanning and extraction, entropy analysis, SquashFS and archive recovery, bootloader and kernel identification, hunting hardcoded credentials and keys, and reverse engineering extracted binaries with Ghidra.
 - `format-strings`: you need to exploit a format string vulnerability on an authorized target, such as a CTF pwn challenge or lab binary that passes user input directly to printf or a similar function.
 - `ghidra-basics`: you need to reverse engineer a compiled binary on an authorized task, such as a CTF reversing challenge, malware triage in a lab, or auditing a binary you have permission to analyze.
@@ -361,11 +363,15 @@ Every tool accepts `--help`, exits 0 on success, 2 on usage errors. Full table i
 - `smart-contract-audit`: auditing Solidity smart contracts on an authorized engagement or for your own project. Covers static analysis with Slither, manual review of access control and arithmetic, reentrancy testing, and upgradeability review.
 - `wallet-security`: reviewing cryptocurrency wallet security for users or on an authorized product assessment. Covers seed phrase handling, hardware versus software wallets, transaction signing risks, and common theft techniques to defend against.
 
-### :moneybag: bugbounty (1 skills)
+### :moneybag: bugbounty (5 skills)
 
 *Running a bug bounty workflow end to end, from recon to paid report.*
 
 - `bug-bounty-workflow`: hunting on a bug bounty program and you need a repeatable, professional methodology from scope to payout.
+- `bugbounty-duplicate-avoidance`: a finding is validated on an in-scope bug bounty target and you need to check it is not already known before writing the report.
+- `bugbounty-methodology`: hunting on an in-scope bug bounty program and you need a complete, repeatable methodology that takes you from scope reading to payout.
+- `bugbounty-report-writing`: a validated in-scope finding needs to become a report that gets triaged fast and paid fairly.
+- `bugbounty-scope-recon`: starting a new in-scope bug bounty program and you need reconnaissance that stays strictly inside the authorized scope.
 
 ### :satellite: c2 (1 skills)
 
@@ -407,6 +413,18 @@ Every tool accepts `--help`, exits 0 on success, 2 on usage errors. Full table i
 - `rng-attacks`: assessing random number generation on an authorized engagement. Covers weak PRNGs, seed prediction, VM snapshot issues, and reviewing randomness sources in code. Also use when tokens, keys, or nonces look predictable.
 - `rsa-attacks`: you face an RSA challenge or misconfigured RSA on an authorized test, CTF, or code review and need an operator workflow for the classic attacks.
 - `tls-analysis`: assessing the TLS configuration of a service you own or are authorized to test, or when decrypting your own captured traffic for troubleshooting. Covers certificate chain validation with openssl, protocol and cipher enumeration, testssl.sh comprehensive scans, TLS keylog decryption in Wireshark, and JA3/JA4 fingerprinting for detection.
+
+### :triangular_flag_on_post: ctf (7 skills)
+
+*Capture-the-flag competition skills: pwn, reversing, web, forensics, crypto, and competition playbooks.*
+
+- `ctf-competition-playbook`: preparing for, competing in, or reviewing a CTF competition as an individual or team. Covers pre-competition setup (tooling, notes, environment), team roles and communication, challenge triage and point strategy, time management across the event, solver scripting discipline, flag submission hygiene, and post-event review.
+- `ctf-crypto-challenges`: competing in a CTF cryptography challenge, practicing in a lab, or analyzing cryptographic constructions you are authorized to examine.
+- `ctf-forensics-challenges`: competing in a CTF forensics challenge, practicing in a lab, or analyzing evidence you are authorized to handle.
+- `ctf-osint-challenges`: competing in a CTF OSINT challenge, practicing in a lab, or researching information you are authorized to collect.
+- `ctf-pwn-basics`: competing in a CTF pwn (binary exploitation) challenge, practicing in a lab, or testing a binary on systems you are authorized to test.
+- `ctf-reversing-basics`: competing in a CTF reverse engineering challenge, practicing in a lab, or analyzing a binary you are authorized to examine.
+- `ctf-web-challenges`: competing in a CTF web challenge, practicing in a lab, or testing a web application you are authorized to test.
 
 ### :shield: defensive (7 skills)
 
@@ -504,27 +522,39 @@ Every tool accepts `--help`, exits 0 on success, 2 on usage errors. Full table i
 - `safety-systems`: you need to understand safety instrumented systems for OT security work. Covers what SIS does, why it is separate from process control, the security boundaries around it, and how to assess without ever endangering people.
 - `scada-network-seg`: designing or assessing network segmentation for OT and SCADA environments on an authorized engagement. Covers the Purdue model, conduit and zone design per IEC 62443, firewall rule review between IT and OT, and validating that segmentation actually holds.
 
-### :rotating_light: incident (3 skills)
+### :rotating_light: incident (6 skills)
 
 *Incident response: the IR process, tabletop exercises, crisis communications.*
 
 - `crisis-communications`: planning or executing communications during a security incident. Covers holding statements, stakeholder mapping, notification timelines, and working with legal and PR.
+- `incident-breach-scoping`: you must determine the full blast radius of a confirmed intrusion on systems you are authorized to defend.
+- `incident-containment-playbooks`: a security incident is confirmed on systems you are authorized to defend and you must stop the bleeding without destroying evidence.
 - `incident-response`: a security incident is suspected or confirmed and you need a disciplined response on authorized systems. Covers the NIST 800-61 lifecycle: preparation, detection and analysis, containment, eradication, recovery, and lessons learned.
+- `incident-timeline-analysis`: you need to reconstruct what happened and when during an authorized incident investigation.
 - `tabletop-exercises`: planning and running incident response tabletop exercises. Covers scenario design, facilitation, injects, and turning findings into playbook fixes. Also use when the IR plan exists on paper but has never been tested.
 
-### :penguin: linux (3 skills)
+### :penguin: linux (6 skills)
 
 *Linux security: hardening, eBPF security, container hardening.*
 
 - `ebpf-security`: assessing eBPF usage on Linux systems you own or are authorized to review. Covers eBPF program inventory, capability review, malicious eBPF detection, and safe development practices.
 - `linux-container-hardening`: hardening Linux containers you run. Covers runtime options, seccomp and AppArmor profiles, capability drops, read only filesystems, and user namespaces. Also use when a container deployment needs a security baseline.
 - `linux-hardening`: hardening a Linux server for production, when locking down SSH with key-only authentication, when writing a default-deny firewall with ufw or nftables, when disabling unneeded services.
+- `linux-hardening-baseline`: building a defensive Linux hardening baseline for a server fleet, audit, or compliance review.
+- `linux-log-intrusion-analysis`: investigating a Linux host for signs of intrusion using its logs, in a defensive incident response or threat hunting role.
+- `linux-systemd-security`: securing systemd on a Linux server from a defensive posture across unit files, sandboxing, and logging.
 
-### :bug: malware (4 skills)
+### :bug: malware (10 skills)
 
 *Malware analysis: static triage, dynamic sandboxing, packers, YARA rules.*
 
 - `dynamic-sandbox`: a suspicious file needs to be executed to reveal its behavior, and only inside an isolated sandbox or disposable VM with no route to production networks.
+- `malware-behavioral-analysis`: you need to understand what malware does at runtime beyond a sandbox summary, covering API call sequences, process injection chains, persistence installation order, and defense evasion in action.
+- `malware-config-extraction`: you need the malware's embedded configuration, covering C2 addresses, encryption keys, campaign IDs, mutex names, and operational parameters, pulled from the binary without full reverse engineering.
+- `malware-packer-triage`: a malware sample appears packed, obfuscated, or otherwise resistant to static analysis and you need to identify the packer and recover the original payload.
+- `malware-sandbox-analysis`: you need to detonate a malware sample safely and extract structured behavioral evidence, covering process trees, file and registry activity, network traffic, and MITRE ATT&CK-mapped capabilities.
+- `malware-static-triage`: a suspicious file lands in the queue and you need a fast, safe verdict without executing it, covering what it is, what it can do, and how urgent it is.
+- `malware-yara-writing`: you need a production-quality YARA rule written from malware triage findings and validated against clean and malicious corpora.
 - `packer-analysis`: static triage finds a packed or encrypted executable and you need the real payload underneath. Covers packer identification with Detect It Easy, the trivial UPX case, entropy and section analysis to map the packed regions, manual unpacking concepts using memory dumps, overlay data handling, and re-triaging the unpacked binary.
 - `static-triage`: you receive a suspicious file and must decide what it is without executing it. Covers the full static triage pipeline in an isolated lab: hashing and file identification, strings and entropy analysis, import and section inspection, YARA scanning, packer detection, and headless Ghidra function listing.
 - `yara-rules`: you need to write, test, or tune YARA rules for malware detection and hunting. Covers rule anatomy, string types and modifiers, condition logic, the pe/elf/math/hash/dotnet modules, testing against clean and malicious corpora, measuring false positives, atom quality for performance, and YARA-X differences.
@@ -539,7 +569,7 @@ Every tool accepts `--help`, exits 0 on success, 2 on usage errors. Full table i
 - `memory-hygiene`: the memory store needs a health check: removing duplicates safely, resolving contradictory entries, decaying stale confidence, redacting secrets that slipped in, keeping an audit trail, or enforcing size budgets.
 - `memory-recall`: an agent needs to look up what it already knows before doing new work, or when an operator wants the facts behind a past decision. Covers query patterns (keyword choice, kind filters, tag and agent filters), how the memory-store relevance ranking works, interpreting confidence and staleness, and recalling procedural knowledge mid-task.
 
-### :iphone: mobile (5 skills)
+### :iphone: mobile (8 skills)
 
 *Mobile security: Android static and dynamic analysis, iOS basics, hardening.*
 
@@ -548,6 +578,9 @@ Every tool accepts `--help`, exits 0 on success, 2 on usage errors. Full table i
 - `android-static`: you need to reverse engineer an Android APK you are authorized to test, such as a client mobile application on a penetration test or a CTF challenge APK.
 - `ios-basics`: you need to assess an iOS application you are authorized to test, such as a client iPhone app on a penetration test or a CTF challenge IPA.
 - `ios-dynamic-analysis`: dynamically analyzing iOS apps on an authorized engagement with a test device you own. Covers jailbreak lab setup, Frida instrumentation, traffic interception, and runtime data inspection.
+- `mobile-android-dynamic`: you need to analyze a running Android app during an authorized engagement, such as a client mobile pentest or your own organization's release candidate.
+- `mobile-frida-scripting`: you need to write custom Frida instrumentation for mobile apps during an authorized test, on Android or iOS.
+- `mobile-ios-static`: you need to statically analyze an iOS application during an authorized engagement, such as a client mobile app pentest or a review of your own organization's App Store build.
 
 ### :globe_with_meridians: network (19 skills)
 
@@ -573,13 +606,16 @@ Every tool accepts `--help`, exits 0 on success, 2 on usage errors. Full table i
 - `wireless-wpa`: testing Wi-Fi security on authorized engagements with written permission covering the wireless network.
 - `zero-trust-networking`: designing or assessing zero trust network architectures on an authorized engagement. Covers identity based access, microsegmentation review, policy engine assessment, and validating that implicit trust is actually gone.
 
-### :eyes: osint (6 skills)
+### :eyes: osint (9 skills)
 
 *Open source intelligence: domains, usernames, images, social media, threat intel.*
 
 - `domain-osint`: investigating domains, DNS history, certificates, and hosting infrastructure from public sources on an authorized engagement. Covers RDAP and WHOIS lookups, DNS enumeration past and present, certificate transparency mining, passive DNS pivoting, ASN and BGP analysis, and infrastructure link analysis.
 - `image-osint`: extracting intelligence from images on an authorized investigation. Covers metadata analysis, reverse image search, geolocation from visual clues, and authenticity checks.
+- `osint-breach-data`: you need to work with breach data during an authorized investigation or defensive security review.
+- `osint-image-geolocation`: you need to determine where a photograph was taken during an authorized investigation, using only the image and public sources.
 - `osint-methodology`: planning and running an open source intelligence collection effort against public sources only. Covers the OSINT cycle, defining collection requirements, building a collection plan, source evaluation, operational security for researchers, sock puppet hygiene, documentation and evidence handling, and reporting.
+- `osint-username-enumeration`: you need to find accounts and profiles tied to a username or handle across the internet during an authorized investigation.
 - `social-media-osint`: researching publicly visible social media content on an authorized engagement. Covers profile analysis and attribution, timeline and network mapping, image and video metadata, geolocation from public posts, sock puppet OPSEC, and lawful limits.
 - `threat-intel`: working with cyber threat intelligence on a defensive team: collecting IOCs, evaluating feeds, running a MISP instance, writing STIX/TAXII sharing packages, scoring and aging indicators, and turning intel into detections and blocks.
 - `username-osint`: investigating a username across platforms on an authorized investigation. Covers username enumeration, profile correlation, timeline building, and operational security.
@@ -597,19 +633,27 @@ Every tool accepts `--help`, exits 0 on success, 2 on usage errors. Full table i
 - `privacy-impact-assessment`: running a privacy impact assessment (DPIA) for a new feature or system. Covers when a DPIA is required, the assessment steps, risk scoring, mitigation planning, and getting sign off.
 - `privacy-threat-model`: building a privacy threat model for a system you design or review. Covers LINDDUN methodology, attacker profiling for privacy, linkability and identifiability analysis, and turning the model into engineering requirements.
 
-### :arrow_up: privesc (2 skills)
+### :arrow_up: privesc (6 skills)
 
 *Privilege escalation on Linux and Windows, step by step.*
 
+- `privesc-container-escape`: authorized testing lands you inside a container and you need to determine whether escape to the host is possible.
+- `privesc-kernel-triage`: authorized privilege escalation has exhausted misconfiguration vectors and the kernel is the remaining path, or when you need to rule the kernel out quickly.
 - `privesc-linux`: you hold a low-privilege Linux shell on an authorized engagement, lab, or CTF and need a reliable path to root.
+- `privesc-linux-vectors`: you hold a low-privilege Linux shell on an authorized penetration test, lab, or CTF and need a systematic map of every local privilege escalation vector before you exploit anything.
 - `privesc-windows`: you hold a low-privilege Windows shell on an authorized engagement, lab, or CTF and need a path to SYSTEM or Administrator.
+- `privesc-windows-vectors`: you hold a low-privilege Windows shell or session on an authorized penetration test, lab, or CTF and need a systematic map of every local privilege escalation vector before you exploit anything.
 
-### :telescope: recon (2 skills)
+### :telescope: recon (6 skills)
 
 *Reconnaissance: passive and active target discovery before you touch anything.*
 
 - `recon-active`: you have written authorization and need to directly probe the target: DNS zone transfer attempts, authoritative NS interrogation, subdomain brute forcing, reverse DNS sweeps, ICMP and TCP host discovery, and initial service discovery with dig, nmap, masscan, gobuster, and ffuf.
+- `recon-asn-netblock`: authorized reconnaissance needs to move from domain names to the organization's network infrastructure.
+- `recon-cert-transparency`: you want to mine certificate transparency logs for authorized reconnaissance on a target domain.
 - `recon-passive`: starting authorized reconnaissance on a target domain or organization while staying off the target's own infrastructure. Passive reconnaissance with whois, dig against public resolvers, crt.sh certificate transparency logs, Shodan, Censys, theHarvester, Sublist3r, and Amass in passive mode.
+- `recon-subdomain-enumeration`: starting authorized reconnaissance on a target domain and you need the complete subdomain enumeration playbook.
+- `recon-subdomain-takeover`: authorized reconnaissance finds DNS records pointing at third-party services and you need to check for subdomain takeover.
 
 ### :police_car: soc (14 skills)
 
@@ -668,7 +712,7 @@ Every tool accepts `--help`, exits 0 on success, 2 on usage errors. Full table i
 
 ## Sub-skills
 
-110 drill-down modules under 30 high-value parent skills, at `skills/<domain>/<skill>/sub/<sub>/SKILL.md`. A sub-skill carries the standard frontmatter plus a `parent:` field and the full body skeleton, so a big skill like `web-sqli` splits into focused modules (`sqli-detection`, `sqli-union-extraction`, `sqli-blind`, `sqli-out-of-band`, `sqli-manual-fallback`, `sqlmap-automation`) that load only when needed.
+227 drill-down modules under 69 high-value parent skills, at `skills/<domain>/<skill>/sub/<sub>/SKILL.md`. A sub-skill carries the standard frontmatter plus a `parent:` field and the full body skeleton, so a big skill like `web-sqli` splits into focused modules (`sqli-detection`, `sqli-union-extraction`, `sqli-blind`, `sqli-out-of-band`, `sqli-manual-fallback`, `sqlmap-automation`) that load only when needed.
 
 | Parent skill | Sub-skills | Count |
 | --- | --- | --- |
@@ -872,13 +916,13 @@ Quality is measured, not claimed. Two machine gates run in CI:
 
 **Gate 1: `scripts/validate.py` (14 checks).** Validates every skill, sub-skill, agent, brain, playbook, and workflow: required frontmatter fields, name matching the directory slug, trigger-dense descriptions, semver versions, valid lifecycle values, sane `last_verified` dates, dependency references that resolve, an acyclic dependency graph, required body headings (`## Quick Workflow`, `## Edge cases`, `## Key references`), sub-skill `parent` edges, agent/brain/playbook frontmatter contracts, manifest consistency, and content hygiene (no em dashes). Any failure exits non-zero and fails the build.
 
-**Gate 2: `scripts/score.py` (0 to 100).** Grades every artifact on trigger density, command quality, edge cases, and references. Merge requires 70 or higher. Current repo scores (from `scores.json`, 356 scored artifacts: 246 skills plus 110 sub-skills):
+**Gate 2: `scripts/score.py` (0 to 100).** Grades every artifact on trigger density, command quality, edge cases, and references. Merge requires 70 or higher. Current repo scores (from `scores.json`, 512 scored artifacts: 285 skills plus 227 sub-skills):
 
 | Metric | Value |
 | --- | --- |
-| Artifacts scored | 356 (246 skills + 110 sub-skills) |
-| Average score | 95.6 / 100 |
-| Lowest score | 92 / 100 |
+| Artifacts scored | 512 (285 skills + 227 sub-skills) |
+| Average score | 96.1 / 100 |
+| Lowest score | 85 / 100 |
 | Artifacts at 90+ | 356 (100%) |
 | Merge gate | 70+ |
 | Agents average | 95.2 / 100 (25 agents, lowest 95) |
@@ -964,12 +1008,12 @@ Run `python3 scripts/generate_docs.py` to build it, then open `docs/index.html`.
 
 ## Project stats
 
-The repo currently holds **246 skills**, **110 sub-skills**, **25 agents**, **16 brains**, **8 playbooks**, **4 workflows**, **47 CLI tools**, and **19 supported platforms** (counted 2026-10-23; the catalog above is regenerated from the manifest).
+The repo currently holds **285 skills**, **227 sub-skills**, **25 agents**, **16 brains**, **8 playbooks**, **4 workflows**, **47 CLI tools**, and **19 supported platforms** (counted 2026-10-23; the catalog above is regenerated from the manifest).
 
 | Artifact | Count | Location | Quality signal |
 | --- | --- | --- | --- |
-| Skills | 246 | `skills/<domain>/<name>/SKILL.md` | avg 95.6/100, min 92 |
-| Sub-skills | 110 | `skills/<domain>/<skill>/sub/<sub>/SKILL.md` | avg 95.6/100 |
+| Skills | 285 | `skills/<domain>/<name>/SKILL.md` | avg 96.0/100, min 90 |
+| Sub-skills | 227 | `skills/<domain>/<skill>/sub/<sub>/SKILL.md` | avg 96.2/100 |
 | Agents | 25 | `agents/<name>/AGENT.md` | avg 95.2/100, min 95 |
 | Brains | 16 | `brains/<name>/BRAIN.md` | validated contracts |
 | Playbooks | 8 | `playbooks/<name>/PLAYBOOK.md` | validated bindings |

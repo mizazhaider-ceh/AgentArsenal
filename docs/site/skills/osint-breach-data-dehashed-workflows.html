@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: osint-breach-data-dehashed-workflows</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>osint-breach-data-dehashed-workflows</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to query breach search engines</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="osint-breach-data.html">osint-breach-data</a></div><div class="deps"><span class="kind">requires:</span> <a href="osint-breach-data.html">osint-breach-data</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-breach-data.html">osint-breach-data</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>jq</td><td>1.7</td></tr></tbody></table><p>Breach search engines index combo lists and breach dumps behind a query interface: email, username, IP, hash, password, phone. Knowing the query syntax turns a thousand-row dump into the twelve rows that matter. This sub-skill covers fielded search patterns, API automation, pagination, and result handling for defensive cases. Query only what your authorization covers, and treat every result as sensitive data with a purge plan.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the exact query targets from the case scope (domains,</li>
+<p>accounts, indicators).</p>
+<li>Start with fielded searches: email and domain first, then</li>
+<p>username and IP pivots.</p>
+<li>Page through large result sets completely; do not sample.</li>
+<li>Parse JSON into a normalized table with jq or Python.</li>
+<li>Correlate across breaches: same email in multiple dumps, password</li>
+<p>reuse patterns.</p>
+<li>Reduce to the case-relevant set and purge the rest per policy.</li>
+<li>Record every query string, timestamp, and result count.</li>
+<li>Hand the reduced set to the parent workflow for notification.</li>
+</ol>
+<h2>1. Query syntax and fielded searches</h2>
+<p>Breach search engines support fielded queries. Learn the fields:</p>
+<pre><code class="language-bash"># Email and domain searches (the defensive bread and butter)
+# Web UI or API query patterns (service-specific, pattern shown):
+#   email:alice@example.com
+#   domain:example.com
+#   username:alice_ops
+#   ip:203.0.113.45
+#   hash:5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8
+
+# API pattern with curl
+curl -s -H &quot;Authorization: Bearer $BREACH_API_KEY&quot; \
+  --get &quot;https://api.breach-service.example/v1/search&quot; \
+  --data-urlencode &quot;query=email:alice@example.com&quot; \
+  --data-urlencode &quot;size=100&quot; | jq .</code></pre>
+<p>Example response shape:</p>
+<pre><code class="language-json">{
+  &quot;total&quot;: 3,
+  &quot;results&quot;: [
+    {
+      &quot;email&quot;: &quot;alice@example.com&quot;,
+      &quot;username&quot;: &quot;alice_ops&quot;,
+      &quot;breach&quot;: &quot;Collection#1&quot;,
+      &quot;breach_date&quot;: &quot;2019-01-07&quot;,
+      &quot;password_plaintext&quot;: &quot;Summer2019!&quot;,
+      &quot;ip&quot;: &quot;203.0.113.45&quot;
+    }
+  ]
+}</code></pre>
+<p>Fielded searches to run per account: email, username, and any known IP. Per domain: the domain query, then the top usernames from it as follow-ups. Document each query string verbatim; &quot;I searched the domain&quot; is not reproducible, the exact query is.</p>
+<h2>2. Pagination and complete collection</h2>
+<pre><code class="language-bash"># Paginate until total is reached; partial collection misses breaches
+PAGE=1
+while true; do
+  RESP=$(curl -s -H &quot;Authorization: Bearer $BREACH_API_KEY&quot; \
+    --get &quot;https://api.breach-service.example/v1/search&quot; \
+    --data-urlencode &quot;query=domain:example.com&quot; \
+    --data-urlencode &quot;page=$PAGE&quot; --data-urlencode &quot;size=100&quot;)
+  echo &quot;$RESP&quot; &gt; page-${PAGE}.json
+  TOTAL=$(echo &quot;$RESP&quot; | jq .total)
+  COUNT=$(echo &quot;$RESP&quot; | jq &#x27;.results | length&#x27;)
+  echo &quot;page $PAGE: $COUNT results (total $TOTAL)&quot;
+  [ &quot;$COUNT&quot; -eq 0 ] &amp;&amp; break
+  PAGE=$((PAGE + 1))
+done</code></pre>
+<p>Merge pages into one normalized file:</p>
+<pre><code class="language-bash">jq -s &#x27;{results: map(.results) | add}&#x27; page-*.json &gt; merged.json
+jq &#x27;.results | length&#x27; merged.json</code></pre>
+<p>Never sample a large result set for a defensive case. The one row you skip is the domain admin&#x27;s plaintext password; completeness is the point.</p>
+<h2>3. Parsing and normalization with jq</h2>
+<pre><code class="language-bash"># Table of email, breach, date, and whether plaintext is present
+jq -r &#x27;.results[] | [.email, .breach, .breach_date,
+  (if .password_plaintext then &quot;PLAINTEXT&quot; else &quot;hash-only&quot; end)] | @tsv&#x27; \
+  merged.json | sort | uniq -c | sort -rn | head -30
+
+# Pivot: all breaches touching privileged accounts
+jq -r &#x27;.results[] | select(.email | test(&quot;admin|ops|svc|root&quot;; &quot;i&quot;)) |
+  [.email, .breach] | @tsv&#x27; merged.json | sort -u
+
+# Extract unique IPs for infrastructure pivots (authorized scope only)
+jq -r &#x27;.results[] | .ip // empty&#x27; merged.json | sort -u &gt; ips.txt</code></pre>
+<p>Example output shape:</p>
+<pre><code>3 alice@example.com Collection#1 2019-01-07 PLAINTEXT
+2 ops@example.com VendorBreach2023 2023-05-11 PLAINTEXT
+1 svc-backup@example.com OldForum2016 2016-11-02 hash-only</code></pre>
+<p>The <code>sort | uniq -c</code> pattern collapses combo-list duplication, where the same credential appears in many repackaged lists. Deduplicate before counting exposure, or the numbers mislead.</p>
+<h2>4. Cross-breach correlation</h2>
+<pre><code class="language-python"># correlate.py: link accounts across breaches, spot password reuse
+import json
+from collections import defaultdict
+
+data = json.load(open(&#x27;merged.json&#x27;))[&#x27;results&#x27;]
+by_email = defaultdict(list)
+for r in data:
+    by_email[r[&#x27;email&#x27;].lower()].append(r)
+
+for email, rows in sorted(by_email.items()):
+    breaches = sorted({r[&#x27;breach&#x27;] for r in rows})
+    pwds = {r.get(&#x27;password_plaintext&#x27;) for r in rows if r.get(&#x27;password_plaintext&#x27;)}
+    if len(breaches) &gt; 1:
+        print(f&quot;{email}: {len(breaches)} breaches {breaches}&quot;)
+        if len(pwds) == 1:
+            print(f&quot;  SAME password across all breaches -&gt; reuse confirmed&quot;)</code></pre>
+<p>Example output shape:</p>
+<pre><code>ops@example.com: 3 breaches [&#x27;OldForum2016&#x27;, &#x27;Collection#1&#x27;, &#x27;VendorBreach2023&#x27;]
+  SAME password across all breaches -&gt; reuse confirmed</code></pre>
+<p>Password reuse across breaches is the finding that justifies forced resets beyond the single breach: the password is not just leaked, it is a skeleton key the user carries between services.</p>
+<h2>5. Chain of custody for results</h2>
+<pre><code class="language-bash"># Hash raw result files at collection time
+sha256sum page-*.json merged.json &gt; results.sha256
+cat results.sha256
+
+# Case log entry per query batch
+cat &gt;&gt; query-log.md &lt;&lt;&#x27;EOF&#x27;
+## 2026-10-23 10:15 UTC
+Query: domain:example.com (pages 1-4, 342 results)
+Authorization: case-scope.md v1
+Raw files: page-1.json .. page-4.json, sha256 in results.sha256
+Reduced: triage.csv (38 in-scope accounts)
+Purge due: 2026-11-23 (plaintext fields)
+EOF</code></pre>
+<p>If results may support disciplinary or legal action, this log is what makes them admissible as an investigative record rather than a screenshot someone could have edited.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The API returns truncated or redacted passwords on your plan.</li>
+<p>Note the limitation; hash-only results still prove exposure and still justify resets.</p>
+<li>Rate limits throttle a large domain query. Back off, resume with</li>
+<p>pagination state saved, and note the elapsed collection window.</p>
+<li>Combo lists duplicate the same credential dozens of times. The</li>
+<p>dedupe step is mandatory before any counting or reporting.</p>
+<li>A result references a breach you cannot verify exists. Treat the</li>
+<p>row as uncorroborated; do not name the breach in external communications until confirmed.</p>
+<li>The query returns accounts of people who left years ago. Still</li>
+<p>notify IT to disable or confirm disabled status; stale accounts with known passwords are a real attack path.</p>
+<li>Plaintext fields appear for accounts outside your scope in a</li>
+<p>shared dump. Exclude them from the case file and purge the raw pages on schedule.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Results show active credential use (recent breach, privileged</li>
+<p>account, no MFA). Escalate to incident response immediately; notification can run in parallel but containment comes first.</p>
+<li>The breach is not public knowledge and affects customers. Engage</li>
+<p>legal before any external statement; your query log now matters.</p>
+<li>You discover the search service itself is dubious (no clear data</li>
+<p>sourcing, offers full dumps for sale). Do not use it; find a reputable source and note why you rejected the first one.</p>
+<li>Query volume suggests a compromise of your own infrastructure</li>
+<p>(thousands of corporate accounts in one fresh breach). Escalate from case handling to a coordinated response with leadership.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Breach search engines are dual-use: defenders query their own exposure, attackers query everyone else&#x27;s. The defense is making the query worthless: unique passwords per service (so one breach does not cascade), MFA everywhere (so passwords alone do not grant access), and monitoring for your domain in new breaches so you learn from the alert feed instead of the attacker. Run this workflow on a schedule, not just after incidents; the alert that arrives before the attacker acts is the whole value proposition.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent workflow: osint-breach-data (this repo)</li>
+<li>Have I Been Pwned API: https://haveibeenpwned.com/API/v3</li>
+<li>NIST SP 800-63B: https://pages.nist.gov/800-63-3/sp800-63b.html</li>
+<li>OWASP Credential Stuffing Prevention:</li>
+<p>https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html</p>
+<li>MITRE ATT&amp;CK T1078 (Valid Accounts): https://attack.mitre.org/</li>
+<li>jq manual: https://jqlang.github.io/jq/manual/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

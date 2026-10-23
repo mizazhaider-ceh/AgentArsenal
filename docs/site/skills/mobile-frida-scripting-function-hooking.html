@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mobile-frida-scripting-function-hooking</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mobile-frida-scripting-function-hooking</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need precise control over individual methods</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="mobile-frida-scripting.html">mobile-frida-scripting</a></div><div class="deps"><span class="kind">requires:</span> <a href="mobile-frida-scripting.html">mobile-frida-scripting</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="mobile-frida-scripting.html">mobile-frida-scripting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Frida</td><td>16.5</td></tr><tr><td>frida-tools</td><td>12.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Function hooking is the core Frida operation: intercept one method, see what goes in, decide what comes out. Done well, it turns a black box security check into a readable log line. This sub-skill is the reference for doing it precisely: exact signatures, argument handling on both platforms, return value control, and field access. All examples assume an authorized target on a test device you control. Forcing return values changes app behavior; label such hooks clearly in your notes so observation and modification never get confused.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Get the exact method signature from static analysis or runtime</li>
+<p>enumeration (class name, method name, parameter types).</p>
+<li>Write a minimal hook that only logs entry, and confirm it fires.</li>
+<li>Add argument dumping with proper type conversion for readability.</li>
+<li>Add return value logging with a backtrace to see the caller.</li>
+<li>If the test needs it, add return value forcing or argument</li>
+<p>modification, clearly labeled.</p>
+<li>For state inspection, read instance fields or call getters on live</li>
+<p>instances.</p>
+<li>Chain hooks across the call flow (caller and callee) to confirm</li>
+<p>the full path.</p>
+<li>Save the script with the app version and a note of what it proved.</li>
+</ol>
+<h2>1. Android: exact overload resolution</h2>
+<pre><code class="language-javascript">Java.perform(function () {
+    var Target = Java.use(&#x27;com.example.target.CryptoUtil&#x27;);
+
+    // List overloads when you are unsure of the signature
+    Target.encrypt.overloads.forEach(function (o, i) {
+        console.log(&#x27;[*] overload &#x27; + i + &#x27;: &#x27; + o.methodName + o.argumentTypes.join(&#x27;,&#x27;));
+    });
+
+    // Hook the exact overload: encrypt(byte[], byte[])
+    Target.encrypt.overload(&#x27;[B&#x27;, &#x27;[B&#x27;).implementation = function (data, key) {
+        console.log(&#x27;[*] encrypt called&#x27;);
+        console.log(&#x27;    key (&#x27; + key.length + &#x27; bytes): &#x27; + bytesToHex(key));
+        console.log(&#x27;    plaintext (&#x27; + data.length + &#x27; bytes): &#x27; + bytesToHex(data.slice(0, 64)));
+        var out = this.encrypt(data, key);
+        console.log(&#x27;    ciphertext (&#x27; + out.length + &#x27; bytes): &#x27; + bytesToHex(out.slice(0, 64)));
+        return out;
+    };
+
+    function bytesToHex(arr) {
+        var hex = [];
+        for (var i = 0; i &lt; arr.length; i++) {
+            hex.push((&#x27;0&#x27; + (arr[i] &amp; 0xff).toString(16)).slice(-2));
+        }
+        return hex.join(&#x27;&#x27;);
+    }
+});</code></pre>
+<p>Example output shape:</p>
+<pre><code>[*] overload 0: encrypt[B,[B
+[*] encrypt called
+    key (32 bytes): 9f2c4a7e1b3d5f608a2c4e6b8d0a2f4c6e...
+    plaintext (48 bytes): 7b22757365726e616d65223a22616c69636522...
+    ciphertext (64 bytes): a41f09c2...</code></pre>
+<p>A 32-byte key logged here is the app&#x27;s encryption key in the clear. That is the finding; the hook is just how you proved it.</p>
+<h2>2. Android: forcing return values and modifying arguments</h2>
+<pre><code class="language-javascript">Java.perform(function () {
+    var Checker = Java.use(&#x27;com.example.target.RootChecker&#x27;);
+
+    // Force the check to report &quot;not rooted&quot; during authorized testing
+    Checker.isDeviceRooted.implementation = function () {
+        console.log(&#x27;[*] isDeviceRooted() forced to false&#x27;);
+        return false;
+    };
+
+    // Modify an argument: rewrite the API base URL to your test server
+    var Api = Java.use(&#x27;com.example.target.ApiClient&#x27;);
+    Api.setBaseUrl.overload(&#x27;java.lang.String&#x27;).implementation = function (url) {
+        var testUrl = &#x27;https://test-api.example.local/&#x27;;
+        console.log(&#x27;[*] rewriting base URL &#x27; + url + &#x27; -&gt; &#x27; + testUrl);
+        this.setBaseUrl(testUrl);
+    };
+});</code></pre>
+<p>Label every behavior-changing hook in the script header with <code>MODIFIES BEHAVIOR</code> so a later reader never mistakes forced values for observed ones.</p>
+<h2>3. Android: fields and live instances</h2>
+<pre><code class="language-javascript">Java.perform(function () {
+    // Read and write an instance field
+    var Session = Java.use(&#x27;com.example.target.Session&#x27;);
+    var field = Session.class.getDeclaredField(&#x27;authToken&#x27;);
+    field.setAccessible(true);
+
+    // Find live instances and dump the field
+    Java.choose(&#x27;com.example.target.Session&#x27;, {
+        onMatch: function (instance) {
+            var token = field.get(instance);
+            console.log(&#x27;[*] live session token: &#x27; + token);
+        },
+        onComplete: function () { console.log(&#x27;[*] instance scan complete&#x27;); }
+    });
+
+    // Call a method on the live instance
+    Java.choose(&#x27;com.example.target.Session&#x27;, {
+        onMatch: function (instance) {
+            console.log(&#x27;[*] isExpired: &#x27; + instance.isExpired());
+        },
+        onComplete: function () {}
+    });
+});</code></pre>
+<p><code>Java.choose</code> only finds instances the garbage collector has not collected; trigger the relevant screen first so the instance exists.</p>
+<h2>4. iOS: hooking selectors precisely</h2>
+<pre><code class="language-javascript">if (ObjC.available) {
+    var LoginManager = ObjC.classes.LoginManager;
+
+    // Instance method with arguments: - loginWithUsername:password:completion:
+    Interceptor.attach(LoginManager[&#x27;- loginWithUsername:password:completion:&#x27;].implementation, {
+        onEnter: function (args) {
+            // args[0] self, args[1] selector, args[2..] real arguments
+            var username = ObjC.Object(args[2]).toString();
+            var password = ObjC.Object(args[3]).toString();
+            console.log(&#x27;[*] login attempt for: &#x27; + username);
+            console.log(&#x27;[*] password length: &#x27; + password.length);
+            // Never log the password value itself in saved output
+        },
+        onLeave: function (retval) {
+            console.log(&#x27;[*] login returned, backtrace:&#x27;);
+            console.log(Thread.backtrace(this.context, Backtracer.ACCURATE)
+                .map(DebugSymbol.fromAddress).join(&#x27;\n&#x27;));
+        }
+    });
+
+    // Class method: + sharedManager
+    Interceptor.attach(LoginManager[&#x27;+ sharedManager&#x27;].implementation, {
+        onLeave: function (retval) {
+            console.log(&#x27;[*] sharedManager -&gt; &#x27; + retval);
+        }
+    });
+}</code></pre>
+<p>Note the discipline: log that a password was passed and its length, not its value, in any artifact you keep. Your working notes are still part of the engagement record.</p>
+<h2>5. iOS: properties, ivars, and live instances</h2>
+<pre><code class="language-javascript">if (ObjC.available) {
+    // Find live instances of a view controller or manager
+    ObjC.choose(ObjC.classes.LoginViewController, {
+        onMatch: function (vc) {
+            console.log(&#x27;[*] found LoginViewController: &#x27; + vc);
+            // Read an ivar by name
+            var token = vc.$ivars._authToken;
+            if (token) console.log(&#x27;[*] _authToken: &#x27; + token.toString().slice(0, 20) + &#x27;...&#x27;);
+        },
+        onComplete: function () {}
+    });
+
+    // Swizzle via method_setImplementation for persistent replacement
+    var orig = LoginManager[&#x27;- isAuthenticated&#x27;].implementation;
+    Interceptor.attach(orig, {
+        onLeave: function (retval) {
+            console.log(&#x27;[*] isAuthenticated intercepted, forcing true for test flow&#x27;);
+            retval.replace(1);
+        }
+    });
+}</code></pre>
+<p><code>$ivars</code> access is the fastest way to read object state without calling getters that might have side effects.</p>
+<h2>6. Chaining hooks across a call flow</h2>
+<p>One hook shows a point; chained hooks show the flow. Hook the caller and the callee together to confirm data actually travels between them:</p>
+<pre><code class="language-javascript">Java.perform(function () {
+    var Ui = Java.use(&#x27;com.example.target.LoginActivity&#x27;);
+    var Net = Java.use(&#x27;com.example.target.ApiClient&#x27;);
+
+    Ui.onLoginClicked.implementation = function (view) {
+        console.log(&#x27;[*] FLOW: login button clicked&#x27;);
+        this.onLoginClicked(view);
+    };
+    Net.postCredentials.overload(&#x27;java.lang.String&#x27;, &#x27;java.lang.String&#x27;)
+        .implementation = function (u, p) {
+            console.log(&#x27;[*] FLOW: credentials posted for &#x27; + u);
+            return this.postCredentials(u, p);
+        };
+});</code></pre>
+<p>If the first hook fires but the second never does, the credentials take a different path than static analysis suggested, and you have just found the real one by elimination.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The method is overloaded and your signature is slightly wrong. The</li>
+<p>hook silently never fires. Always enumerate overloads first when the signature comes from a decompiler rather than headers.</p>
+<li>The class is loaded by a custom classloader (common in packed or</li>
+<p>plugin apps). <code>Java.use</code> fails; enumerate classloaders with <code>Java.enumerateClassLoaders</code> and use <code>Java.ClassFactory</code> on the right one.</p>
+<li>The method is inlined or the call goes through reflection. Hook the</li>
+<p>reflective call (<code>Method.invoke</code>) instead, and log which method it dispatches to.</p>
+<li>iOS selector lookup returns undefined. The class may be Swift-only</li>
+<p>(no ObjC metadata) or the method may be stripped. Check <code>ObjC.classes</code> for the class first, then fall back to native hooking of the mangled symbol.</p>
+<li>Hooking a hot method (called thousands of times per second) floods</li>
+<p>the log and slows the app. Add a counter and log every Nth call, or hook only while a flag set via RPC is true.</p>
+<li>Forcing a return value crashes the app later. The app may depend</li>
+<p>on side effects of the real method. Force values only for the narrow test, then restore the original implementation.</p>
+<li>Arguments are encrypted or encoded before your hook point. Move the</li>
+<p>hook earlier in the call chain, or hook the encode function itself.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The security check you need to observe is split across native code.</li>
+<p>Hand the Java or ObjC hook points to the native-code-tracing sub-skill and trace from the managed hook into the native layer.</p>
+<li>The app detects hooks on its security methods (integrity checks</li>
+<p>over its own code). Hook the integrity check itself first, or attach later in the lifecycle after the check has run.</p>
+<li>You need to hook a method that only exists in a dynamically loaded</li>
+<p>module. Use <code>Module.load</code> callbacks or hook <code>dlopen</code>/<code>System.loadLibrary</code> and install your hooks when the module appears.</p>
+<li>The engagement needs repeatable instrumentation. Promote the script</li>
+<p>to the TypeScript workflow from the parent skill and check it into the engagement repo with the target build version.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Method hooks are invisible to the app unless it looks for them: integrity checks over method implementations, timing anomalies, and Frida artifact detection. A defender-grade app combines these with server-side verification so that a forced <code>isAuthenticated = true</code> still cannot reach protected data. Your report should state exactly which client-side checks fell to hooking and whether the server stopped the forced flow anyway. That distinction is the difference between a critical finding and an informative one.</p>
+<h2>Key references</h2>
+<ul>
+<li>Frida JavaScript API (Java and ObjC bridges):</li>
+<p>https://frida.re/docs/javascript-api/</p>
+<li>Frida CodeShare hooking examples:</li>
+<p>https://codeshare.frida.re/</p>
+<li>objection memory and hooking commands:</li>
+<p>https://github.com/sensepost/objection</p>
+<li>OWASP MSTG reverse engineering chapters:</li>
+<p>https://mas.owasp.org/MSTG/</p>
+<li>Apple Objective-C runtime reference:</li>
+<p>https://developer.apple.com/documentation/objectivec</p>
+<li>Android ART runtime method resolution notes:</li>
+<p>https://source.android.com/docs/core/dalvik</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

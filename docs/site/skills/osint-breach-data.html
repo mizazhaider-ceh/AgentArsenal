@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: osint-breach-data</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>osint-breach-data</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to work with breach data during an</p><h2>Sub-skills</h2><ul><li><a href="osint-breach-data-breach-notification.html">osint-breach-data-breach-notification</a> <span class="muted">v1.0.0: Use when breach exposure is confirmed and affected users</span></li><li><a href="osint-breach-data-dehashed-workflows.html">osint-breach-data-dehashed-workflows</a> <span class="muted">v1.0.0: Use when you need to query breach search engines</span></li><li><a href="osint-breach-data-password-pattern-analysis.html">osint-breach-data-password-pattern-analysis</a> <span class="muted">v1.0.0: Use when you need to turn leaked password data into</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-methodology.html">osint-methodology</a> <a href="threat-intel.html">threat-intel</a> <a href="osint-username-enumeration.html">osint-username-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>hashcat</td><td>6.2.6</td></tr><tr><td>jq</td><td>1.7</td></tr><tr><td>curl</td><td>8.5</td></tr></tbody></table><p>Breach data work means querying collections of leaked credentials to answer defensive questions: are our accounts exposed, how bad is the exposure, and what do we do about it. This skill covers the authorized, defensive workflow: scoping, querying breach search services for your own domains and accounts, analyzing password patterns to fix policy, and notifying and remediating. It does not cover trafficking in stolen data, cracking other people&#x27;s passwords, or using breaches offensively. If your authorization does not cover the query, do not run it.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Establish authorization in writing: which domains, accounts, and</li>
+<p>breaches are in scope, and who approved the queries.</p>
+<li>Inventory your exposure surface: corporate domains, executive</li>
+<p>accounts, service accounts, and third-party SaaS logins.</p>
+<li>Query breach search services for your scoped domains and accounts.</li>
+<li>Deduplicate and classify results: live credentials versus old,</li>
+<p>corporate versus personal reuse.</p>
+<li>Analyze password patterns in your own leaked passwords to audit</li>
+<p>policy effectiveness.</p>
+<li>Assess credential-stuffing risk: which exposed accounts have</li>
+<p>access to what.</p>
+<li>Notify affected users and force resets with a clear timeline.</li>
+<li>Document everything: queries run, results, notifications sent.</li>
+</ol>
+<h2>1. Scoping and rules of engagement</h2>
+<p>Write the scope before touching any breach data:</p>
+<ul>
+<li>Domains: <code>example.com</code>, plus acquired domains and common</li>
+<p>typosquat variants you own.</p>
+<li>Accounts: named executives, IT admins, service accounts, and any</li>
+<p>account the incident involves.</p>
+<li>Purpose: defensive notification and remediation, or a specific</li>
+<p>authorized investigation.</p>
+<li>Prohibitions: no querying individuals outside scope, no retaining</li>
+<p>plaintext passwords longer than the remediation window, no sharing results beyond the response team.</p>
+</ul>
+<pre><code class="language-bash"># Case file header template
+cat &gt; case-scope.md &lt;&lt;&#x27;EOF&#x27;
+# Breach data case: &lt;name&gt;
+Date: 2026-10-23
+Authorized by: &lt;name, role&gt;
+Scope domains: example.com
+Scope accounts: &lt;list or &quot;all corporate accounts&quot;&gt;
+Purpose: defensive exposure check after &lt;incident/audit&gt;
+Data handling: plaintext credentials purged after remediation
+EOF</code></pre>
+<p>If legal or compliance needs to review the plan, that review happens now, not after the queries.</p>
+<h2>2. Querying breach search services</h2>
+<p>Breach search services index public breach corpora behind a query API. Query only your scoped domains and accounts.</p>
+<pre><code class="language-bash"># Pattern: authenticated API query for your domain (service-specific syntax)
+curl -s -H &quot;Authorization: Bearer $BREACH_API_KEY&quot; \
+  &quot;https://api.breach-service.example/v1/query?domain=example.com&quot; | jq .
+
+# Example response shape
+# {
+#   &quot;results&quot;: [
+#     {&quot;email&quot;: &quot;alice@example.com&quot;, &quot;breach&quot;: &quot;Collection#1&quot;,
+#      &quot;date&quot;: &quot;2019-01-07&quot;, &quot;password_hash&quot;: &quot;5baa61e4...&quot;},
+#     {&quot;email&quot;: &quot;ops@example.com&quot;, &quot;breach&quot;: &quot;VendorBreach2023&quot;,
+#      &quot;date&quot;: &quot;2023-05-11&quot;, &quot;password_plaintext&quot;: &quot;Summer2023!&quot;}
+#   ],
+#   &quot;total&quot;: 2
+# }</code></pre>
+<p>Save raw responses with timestamps, then immediately reduce: extract the account list and breach names into the case file, and handle plaintext passwords per your data-handling rule (use them for notification, then purge).</p>
+<p>The DeHashed-style workflow sub-skill covers query syntax, fielded searches, and result parsing in depth.</p>
+<h2>3. Deduplication and classification</h2>
+<pre><code class="language-python"># triage.py: dedupe and classify breach hits for your domain
+import json
+from collections import defaultdict
+
+hits = json.load(open(&#x27;breach-results.json&#x27;))[&#x27;results&#x27;]
+by_account = defaultdict(list)
+for h in hits:
+    by_account[h[&#x27;email&#x27;].lower()].append(h)
+
+for account, items in sorted(by_account.items()):
+    breaches = sorted({i[&#x27;breach&#x27;] for i in items})
+    plaintext = any(&#x27;password_plaintext&#x27; in i for i in items)
+    print(f&quot;{account}: {len(items)} hits, breaches={breaches}, plaintext={&#x27;YES&#x27; if plaintext else &#x27;no&#x27;}&quot;)</code></pre>
+<p>Example output shape:</p>
+<pre><code>alice@example.com: 3 hits, breaches=[&#x27;Collection#1&#x27;, &#x27;VendorBreach2023&#x27;], plaintext=YES
+ops@example.com: 1 hits, breaches=[&#x27;VendorBreach2023&#x27;], plaintext=YES</code></pre>
+<p>Classify each account: does the person still work here, is the account still active, does it have privileged access. An exposed plaintext password on a current domain admin account is an immediate reset and a review of what that account touched.</p>
+<h2>4. Password pattern analysis for policy audits</h2>
+<p>Use your own organization&#x27;s leaked passwords (from the scoped query) to test whether the password policy works. Aggregate, never individualize.</p>
+<pre><code class="language-python"># policy-audit.py: aggregate patterns from your own breach hits
+import re
+from collections import Counter
+
+passwords = [h[&#x27;password_plaintext&#x27;] for h in hits if &#x27;password_plaintext&#x27; in h]
+patterns = Counter()
+for p in passwords:
+    if re.fullmatch(r&#x27;[A-Z][a-z]+\d{2,4}!&#x27;, p):
+        patterns[&#x27;CapitalizedWord+digits+symbol&#x27;] += 1
+    elif re.fullmatch(r&#x27;(?i)(summer|winter|spring|autumn|fall)\d{4}.*&#x27;, p):
+        patterns[&#x27;Season+year&#x27;] += 1
+    elif len(p) &lt; 10:
+        patterns[&#x27;short (&lt;10)&#x27;] += 1
+    else:
+        patterns[&#x27;other&#x27;] += 1
+print(patterns.most_common())</code></pre>
+<p>Example output shape:</p>
+<pre><code>[(&#x27;Season+year&#x27;, 34), (&#x27;CapitalizedWord+digits+symbol&#x27;, 21), (&#x27;short (&lt;10)&#x27;, 8), (&#x27;other&#x27;, 12)]</code></pre>
+<p>If 70 percent of leaked passwords match <code>Season+year</code>, the policy that requires &quot;a capital, a number, and a symbol&quot; is producing predictable passwords. That aggregate finding justifies moving to passphrases or passwordless, without ever naming who chose what. The password-pattern-analysis sub-skill goes deeper on masks and hashcat-driven policy testing.</p>
+<h2>5. Credential-stuffing risk assessment</h2>
+<p>For each exposed account, answer: where could this password be reused, and what does the account access.</p>
+<pre><code class="language-bash"># Checklist per exposed privileged account (manual, with the identity team)
+# 1. Is the password still valid anywhere? (force reset regardless)
+# 2. Does the user reuse it on personal accounts that share the email? (ask, do not test)
+# 3. Are there login anomalies for the account? (check SIEM for the last 90 days)
+# 4. Is MFA enforced on every service the account touches?</code></pre>
+<p>Prioritize: domain admins, cloud console users, VPN users, and anyone with production database access. An exposed password plus missing MFA on VPN is the classic initial access path; treat it as an incident until proven otherwise.</p>
+<h2>6. Notification and forced resets</h2>
+<p>Template for the notification (adapt to your organization&#x27;s voice):</p>
+<pre><code>Subject: Action required: password reset after breach exposure
+
+We found your corporate email in a public data breach. As a
+precaution, your password has been expired. Please set a new one
+at &lt;SSO portal&gt; before &lt;date&gt;. Use a unique passphrase you do not
+use anywhere else. Contact the service desk if you did not expect
+this message.</code></pre>
+<pre><code class="language-bash"># Track the remediation in the case file
+cat &gt; remediation.csv &lt;&lt;&#x27;EOF&#x27;
+account,notified,reset_confirmed,mfa_verified,notes
+alice@example.com,2026-10-23,2026-10-23,yes,was domain admin: reviewed sessions
+ops@example.com,2026-10-23,pending,no,MFA enrollment required
+EOF</code></pre>
+<p>Force the reset rather than requesting it, expire sessions, and verify MFA enrollment. For service accounts, rotate the secret and update the consumers in the same change window.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The breach data includes customers, not just employees. Customer</li>
+<p>notification has legal timelines in many jurisdictions; involve legal immediately and do not improvise the notice.</p>
+<li>Plaintext passwords appear for accounts outside your scope mixed</li>
+<p>into a combo list. Do not query or retain them; note the incidental exposure and purge.</p>
+<li>The service account password cannot be rotated without downtime.</li>
+<p>Schedule the rotation, add compensating monitoring meanwhile, and document the risk acceptance.</p>
+<li>An executive refuses the reset or delays. Escalate through the</li>
+<p>incident chain; exposed privileged credentials are not optional hygiene.</p>
+<li>The breach is fresh and the data may still be spreading. Assume</li>
+<p>the passwords are in attackers&#x27; hands now, not later, and prioritize resets over perfect triage.</p>
+<li>Your queries return nothing. That is a result, not a failure:</li>
+<p>record the negative with the same rigor, including the corpora covered and their dates.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Exposed credentials show signs of active use (logins from</li>
+<p>unusual locations, new MFA devices). This is now an incident: invoke the incident-response skill and treat it as suspected account compromise.</p>
+<li>The breach involves a third-party vendor holding your data. Engage</li>
+<p>vendor management and legal; your notification duties may depend on the contract.</p>
+<li>You discover the breach data contains highly sensitive personal</li>
+<p>data beyond credentials (health, financial). Minimize handling, involve privacy counsel, and tighten the purge timeline.</p>
+<li>The volume suggests a systemic issue (hundreds of accounts, one</li>
+<p>breach). Escalate from individual resets to a program: forced org-wide rotation, MFA enforcement, and a post-incident review.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>This skill is the defender view: breach data as an early warning system. Operationalize it with continuous monitoring (domain alerting from breach notification services), MFA everywhere so leaked passwords alone are insufficient, and password policy based on blocklists and length rather than composition rules. The strategic defense is reducing the value of stolen passwords: SSO, phishing-resistant MFA, and short session lifetimes. Every breach triage should end with a control improvement, not just resets.</p>
+<h2>Key references</h2>
+<ul>
+<li>Have I Been Pwned (domain and breach checking):</li>
+<p>https://haveibeenpwned.com/</p>
+<li>DeHashed-style breach search services (query syntax in the</li>
+<p>sub-skill; use per your authorization)</p>
+<li>NIST SP 800-63B (password guidance: length over complexity):</li>
+<p>https://pages.nist.gov/800-63-3/sp800-63b.html</p>
+<li>OWASP credential stuffing guidance:</li>
+<p>https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html</p>
+<li>hashcat documentation: https://hashcat.net/wiki/</li>
+<li>MITRE ATT&amp;CK T1078 (Valid Accounts) and T1110 (Brute Force):</li>
+<p>https://attack.mitre.org/</p>
+<li>CISA guidance on MFA: https://www.cisa.gov/topics/cybersecurity-best-practices/multifactor-authentication</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

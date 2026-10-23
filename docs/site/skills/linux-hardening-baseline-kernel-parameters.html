@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-hardening-baseline-kernel-parameters</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-hardening-baseline-kernel-parameters</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when tuning Linux kernel parameters with sysctl as part of</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a> <a href="linux-hardening.html">linux-hardening</a> <a href="linux-systemd-security.html">linux-systemd-security</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>sysctl</td><td>4.0</td></tr><tr><td>systemd</td><td>255</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Sysctl parameters are the kernel&#x27;s configuration knobs: they control exploit mitigations, information exposure, and network stack behavior. Set correctly, they raise the cost of exploitation and close entire classes of misconfiguration. This sub-skill covers the defensive sysctl baseline: which parameters matter, what values to set, how to persist them so they survive reboot, and how to verify. Purely defensive, for systems you own or administer. The parent skill places kernel tuning in the wider baseline; this file is the parameter-level reference.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Record the current values of every parameter you plan to change, so you can roll back.</li>
+<li>Write the baseline to a file in <code>/etc/sysctl.d/</code> (e.g. <code>99-hardening.conf</code>), never rely on <code>sysctl -w</code> alone.</li>
+<li>Apply with <code>sysctl --system</code> and verify each value took effect.</li>
+<li>Test workload behavior on a staging host per role before fleet rollout.</li>
+<li>Reboot the staging host and re-verify: persistence is part of the control.</li>
+<li>Roll out via automation, then add the verification commands to drift detection.</li>
+<li>Review after each kernel or distro upgrade, because parameter names and defaults change.</li>
+</ol>
+<h2>1. Exploit mitigation parameters</h2>
+<p>These knobs make memory corruption and local privilege escalation harder, and they hide kernel internals from unprivileged users.</p>
+<pre><code class="language-bash">cat &gt;&gt; /etc/sysctl.d/99-hardening.conf &lt;&lt;&#x27;EOF&#x27;
+kernel.randomize_va_space = 2
+kernel.kptr_restrict = 2
+kernel.dmesg_restrict = 1
+kernel.perf_event_paranoid = 2
+kernel.kexec_load_disabled = 1
+kernel.core_uses_pid = 1
+fs.suid_dumpable = 0
+EOF
+sysctl --system
+sysctl kernel.randomize_va_space kernel.kptr_restrict kernel.dmesg_restrict</code></pre>
+<p>What these do: full ASLR (<code>randomize_va_space=2</code>), no kernel pointer leaks to unprivileged users (<code>kptr_restrict=2</code>, <code>dmesg_restrict=1</code>), restricted perf events (which have been an exploit vector), disabled kexec (prevents booting a hostile kernel), and no core dumps from SUID programs (<code>suid_dumpable=0</code>, because core dumps of privileged processes leak memory contents). Verify each with <code>sysctl &lt;name&gt;</code> after applying; a typo in the key name is silently ignored unless you check.</p>
+<h2>2. Module loading and kernel attack surface</h2>
+<p>Loadable kernel modules are powerful and historically exploited. Restrict who can load them and disable dangerous module autoloading.</p>
+<pre><code class="language-bash">cat &gt;&gt; /etc/sysctl.d/99-hardening.conf &lt;&lt;&#x27;EOF&#x27;
+kernel.modules_disabled = 0
+kernel.unprivileged_bpf_disabled = 2
+net.core.bpf_jit_harden = 2
+EOF
+echo &quot;install dccp /bin/false&quot; &gt;&gt; /etc/modprobe.d/hardening.conf
+echo &quot;install sctp /bin/false&quot; &gt;&gt; /etc/modprobe.d/hardening.conf
+echo &quot;install bluetooth /bin/false&quot; &gt;&gt; /etc/modprobe.d/hardening.conf</code></pre>
+<p><code>modules_disabled=1</code> is the strongest option but irreversible until reboot and breaks anything that loads modules later (including some drivers and security tools), so most baselines leave it 0 and instead blacklist unneeded protocols via modprobe. <code>unprivileged_bpf_disabled=2</code> blocks unprivileged eBPF entirely (value 1 blocks it without the bpf() syscall, 2 is the strictest). Verify blacklists with <code>lsmod | grep -E &quot;dccp|sctp&quot;</code> returning nothing.</p>
+<h2>3. Network stack hardening</h2>
+<p>The network sysctls close spoofing, redirection, and ancient-protocol abuse at the kernel level, complementing the firewall.</p>
+<pre><code class="language-bash">cat &gt;&gt; /etc/sysctl.d/99-hardening.conf &lt;&lt;&#x27;EOF&#x27;
+net.ipv4.tcp_syncookies = 1
+net.ipv4.ip_forward = 0
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_source_route = 0
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.default.rp_filter = 1
+net.ipv4.conf.all.log_martians = 1
+net.ipv4.conf.default.log_martians = 1
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.icmp_ignore_bogus_error_responses = 1
+net.ipv4.tcp_rfc1337 = 1
+EOF
+sysctl --system</code></pre>
+<p>What these do: SYN cookies blunt SYN floods, disabled forwarding stops the host becoming a router by accident (enable only on actual routers), no ICMP redirects sent or accepted (prevents route manipulation), no source-routed packets (a classic spoofing vector), reverse path filtering drops spoofed packets, martian logging records impossible addresses, and broadcast ping is ignored (Smurf protection). Verify with <code>sysctl -a | grep -E &quot;ip_forward|accept_redirects|rp_filter&quot;</code> and confirm forwarding-dependent roles (VPN gateways, container hosts) are exempted deliberately.</p>
+<h2>4. Core dumps and crash data</h2>
+<p>Core dumps capture process memory, which for privileged or secret-handling processes means credentials on disk. Control where dumps go and who can trigger them.</p>
+<pre><code class="language-bash">grep -E &quot;core&quot; /etc/sysctl.d/99-hardening.conf
+sysctl kernel.core_pattern fs.suid_dumpable
+ulimit -c</code></pre>
+<p>Set <code>kernel.core_pattern</code> to a controlled path or to <code>|/bin/false</code> to discard, keep <code>fs.suid_dumpable=0</code>, and set <code>ulimit -c 0</code> in <code>/etc/security/limits.conf</code> (<code>* hard core 0</code>) for defense in depth. If you run a crash-reporting pipeline (systemd-coredump, apport), route dumps there with strict permissions instead of disabling entirely, and document the decision: debugging needs sometimes outweigh the hardening preference.</p>
+<h2>5. Persistence, verification, and drift detection</h2>
+<p>A sysctl baseline only counts if it survives reboot and is monitored. The persistence chain is: file in <code>/etc/sysctl.d/</code>, applied by <code>systemd-sysctl.service</code> at boot, verified after reboot, watched for drift.</p>
+<pre><code class="language-bash">systemd-sysctl --cat-config | grep -E &quot;kptr_restrict|ip_forward&quot; | head -10
+sysctl --system 2&gt;&amp;1 | grep -i error | head -5</code></pre>
+<p><code>systemd-sysctl --cat-config</code> shows the merged effective configuration with file sources, which is what you audit. Check for errors on apply: unknown keys on older kernels fail loudly here, which is how you catch parameters your kernel does not support. For drift detection, store expected <code>sysctl -a</code> output for the baseline keys and diff on a schedule; any change to a security sysctl outside change control is investigated.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Container hosts share the host kernel: sysctl set inside a container mostly does nothing (network and some kernel keys are namespaced, most are not), so apply the baseline on the host, not in container images, and document which keys are per-namespace.</li>
+<li><code>kernel.modules_disabled=1</code> cannot be undone without reboot and breaks DKMS-style driver installs, livepatch, and some security agents; test thoroughly or leave it 0 with modprobe blacklists instead.</li>
+<li>Some parameters are per-interface (<code>conf.all</code> vs <code>conf.default</code> vs <code>conf.eth0</code>): new interfaces inherit <code>default</code>, so set both <code>all</code> and <code>default</code> to cover interfaces created later, and verify on the actual interface names in use.</li>
+<li>Older kernels lack newer keys (<code>unprivileged_bpf_disabled</code>, <code>bpf_jit_harden</code>); <code>sysctl --system</code> errors on unknown keys, so gate version-specific keys by kernel version in your automation rather than shipping one file everywhere.</li>
+<li>Strict <code>rp_filter=1</code> breaks asymmetric routing setups common in multi-homed servers and some cloud topologies; use loose mode (2) or per-interface exceptions where the network design requires it, and document why.</li>
+<li>Disabling IPv6-related or uncommon-protocol sysctls does not remove the code; prefer modprobe blacklists plus firewall rules for protocols you truly want gone, since sysctl only tunes behavior.</li>
+<li>Performance-sensitive workloads (high-throughput networking, databases) can be affected by settings like <code>tcp_syncookies</code> behavior under load or perf restrictions; benchmark before and after on representative load.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If a required application breaks under the baseline (database needing perf events, router needing forwarding), do not silently drop the control: record a scoped exception with the exact parameter, the business justification, compensating controls, and a review date.</li>
+<li>If verification after reboot shows values reverted, escalate to the provisioning team: something in the boot chain (cloud-init, a conflicting sysctl file with higher sort priority) is overriding the baseline, and hand-editing will not stick.</li>
+<li>If a kernel upgrade introduces new security parameters (or deprecates old ones), schedule a baseline review; running a stale baseline on a new kernel means missing new mitigations.</li>
+<li>If drift detection reports sysctl changes with no matching change ticket, treat it as a potential compromise indicator (attackers do tune the kernel) and investigate before re-applying.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Sysctl hardening is verified, not assumed: defenders diff live values against the baseline on a schedule and alert on changes to security-relevant keys. MITRE ATT&amp;CK T1068 (Exploitation for Privilege Escalation) is the technique these mitigations blunt: ASLR, kptr_restrict, and module restrictions each remove or narrow an exploitation primitive. Auditd can watch <code>/etc/sysctl.d/</code> for unauthorized modifications, and the <code>sysctl</code> syscall itself is auditable for runtime changes. The detection story is simple: the baseline values are known, any deviation is an event, and unexplained deviation is investigated as hostile until proven otherwise.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1068 Exploitation for Privilege Escalation: https://attack.mitre.org/techniques/T1068/</li>
+<li>Kernel sysctl documentation: https://www.kernel.org/doc/html/latest/admin-guide/sysctl/kernel.html</li>
+<li>CIS distribution benchmarks (system maintenance and kernel sections): https://www.cisecurity.org/cis-benchmarks/</li>
+<li>systemd-sysctl.service manual: https://www.freedesktop.org/software/systemd/man/systemd-sysctl.service.html</li>
+<li>sysctl.d manual: https://www.freedesktop.org/software/systemd/man/sysctl.d.html</li>
+<li>NIST SP 800-123 Guide to General Server Security: https://csrc.nist.gov/publications/detail/sp/800-123/final</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

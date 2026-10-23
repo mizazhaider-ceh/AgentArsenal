@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-log-intrusion-analysis-auth-log-triage</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-log-intrusion-analysis-auth-log-triage</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when triaging Linux authentication logs during incident</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a> <a href="linux-log-intrusion-analysis-detecting-lateral-movement.html">linux-log-intrusion-analysis-detecting-lateral-movement</a> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>systemd</td><td>255</td></tr><tr><td>auditd</td><td>3.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Authentication logs are the highest-signal source in most Linux investigations: they record every login attempt, every sudo invocation, and every account change. Triage means turning that firehose into answers fast: was there an attack, did it succeed, and which accounts are implicated. This sub-skill covers the defensive analyst&#x27;s method for <code>/var/log/auth.log</code> (Debian/Ubuntu) and <code>/var/log/secure</code> (RHEL family): parsing, brute force detection, valid-account abuse hunting, sudo auditing, and account-change tracking. For systems you are authorized to investigate; defensive only. The parent skill sets the investigation strategy; this file is the auth-log field manual.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the log path for the distro and confirm the available time window (including rotated files).</li>
+<li>Count and characterize failed authentication: volume, sources, targeted usernames, and timing pattern.</li>
+<li>List every successful authentication in the window with user, source, method, and time; flag anomalies.</li>
+<li>Audit sudo usage: who ran what as whom, especially first-time or unusual commands.</li>
+<li>Check account and credential changes: new users, password changes, new SSH keys, group modifications.</li>
+<li>Correlate: tie successful logins to subsequent sudo, new persistence, and outbound activity in the timeline.</li>
+<li>Write up: attack pattern, successful sessions with evidence lines, affected accounts, and recommended containment.</li>
+</ol>
+<h2>1. Knowing your log paths and window</h2>
+<p>Debian-family logs SSH and sudo to <code>/var/log/auth.log</code>; RHEL-family uses <code>/var/log/secure</code>. Rotated files (<code>auth.log.1</code>, <code>auth.log.2.gz</code>) extend the window. Start by mapping what you have.</p>
+<pre><code class="language-bash">ls -lat /var/log/auth.log* /var/log/secure* 2&gt;/dev/null
+zcat /var/log/auth.log.2.gz 2&gt;/dev/null | head -2
+LOG=/var/log/auth.log; [ -f /var/log/secure ] &amp;&amp; LOG=/var/log/secure; echo &quot;Using $LOG&quot;</code></pre>
+<p>Example output shape: rotation dates showing history depth (often 4 weeks via logrotate). If the suspected intrusion predates the oldest log, record that boundary immediately: it limits what the investigation can prove. Work from copies for the deep analysis, and note the timezone (log timestamps are local time; correlate carefully with UTC sources).</p>
+<h2>2. Detecting brute force and password spraying</h2>
+<p>Brute force is high-volume failures against few accounts; spraying is low-volume failures across many accounts (designed to dodge per-account lockouts). Detect both by aggregating.</p>
+<pre><code class="language-bash">LOG=/var/log/auth.log
+grep -c &quot;Failed password&quot; $LOG
+grep &quot;Failed password&quot; $LOG | grep -oE &quot;for (invalid user )?[a-zA-Z0-9._-]+&quot; | sort | uniq -c | sort -rn | head -15
+grep &quot;Failed password&quot; $LOG | grep -oE &quot;from [0-9.]+&quot; | sort | uniq -c | sort -rn | head -15</code></pre>
+<p>Example output shape: top targeted usernames (often <code>root</code>, <code>admin</code>, <code>test</code>) and top source IPs with counts. A single source hammering one account is classic brute force; many sources each trying a few passwords across many accounts is a distributed spray or botnet. Check <code>btmp</code> too (<code>lastb | head</code>) for a second view of failures. Volume alone is reconnaissance; the critical question is always whether any attempt succeeded, which the next section answers.</p>
+<h2>3. Hunting valid-account abuse in successful logins</h2>
+<p>One successful anomalous login outweighs any volume of failures. List every success and hunt for what does not belong.</p>
+<pre><code class="language-bash">LOG=/var/log/auth.log
+grep &quot;Accepted&quot; $LOG | awk &#x27;{print $1, $2, $3, $9, $11}&#x27; | sort | uniq -c | sort -rn | head -20
+grep &quot;Accepted&quot; $LOG | grep -vE &quot;from (10\.0\.0\.5|10\.0\.0\.6)&quot; | head -20</code></pre>
+<p>Example output shape: timestamp, user, source IP for each accepted login, with counts. Flag: logins at unusual hours for the user, from unexpected source networks or geographies, via unexpected methods (password where keys are policy), rapid logins across many hosts (spray success), and any <code>Accepted</code> for accounts that should be dormant. For each flagged session, pull the full surrounding log context (±10 minutes) and trace what the session did via sudo logs and the journal.</p>
+<h2>4. Auditing sudo usage</h2>
+<p>Sudo logs show privilege use, and attackers who land as an unprivileged user reach for it immediately. Look for first-time sudoers, unusual commands, and sudo failures (which indicate probing).</p>
+<pre><code class="language-bash">LOG=/var/log/auth.log
+grep -E &quot;sudo.*COMMAND&quot; $LOG | awk -F&#x27;COMMAND=&#x27; &#x27;{print $2}&#x27; | sort | uniq -c | sort -rn | head -20
+grep -E &quot;sudo.*user NOT in sudoers|authentication failure.*sudo&quot; $LOG | head -10
+grep -E &quot;sudo:.*COMMAND=/bin/(bash|sh)&quot; $LOG | head -10</code></pre>
+<p>Example output shape: command frequency (normal admin patterns versus shells, editors on sensitive files, or download tools like curl/wget via sudo). Red flags: <code>sudo -i</code> or <code>sudo su -</code> shells, sudo invocations by accounts that never had sudo before, commands run at odd hours, and <code>user NOT in sudoers</code> lines showing privilege probing. Correlate each suspicious sudo with the login session that preceded it.</p>
+<h2>5. Account, key, and group changes</h2>
+<p>Persistence often starts with a new account or a new SSH key. The auth logs record account administration; the filesystem confirms keys.</p>
+<pre><code class="language-bash">LOG=/var/log/auth.log
+grep -iE &quot;useradd|new user|password changed|groupadd|usermod&quot; $LOG | head -15
+grep -E &quot;Accepted publickey&quot; $LOG | awk &#x27;{print $9, $11}&#x27; | sort | uniq -c | sort -rn | head -10
+find /home /root -name &quot;authorized_keys&quot; -newermt &quot;2026-10-01&quot; 2&gt;/dev/null</code></pre>
+<p>Example output shape: account creation lines with the creating user, key-based logins by user and source, and recently modified authorized_keys files. Any account created outside change control, any new key in root&#x27;s or a service account&#x27;s authorized_keys, and any user added to sudo/admin groups is treated as potential persistence until proven legitimate. Verify against your account inventory; unknown accounts get disabled first and investigated second.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Log timestamps are in local time and rotation boundaries can split an attack across files; always search the rotated logs too, and convert timezones explicitly when correlating with UTC-based sources like cloud trails.</li>
+<li>Successful logins via SSH keys show <code>Accepted publickey</code>, which is normal for admin workflows; the anomaly is in the who/when/where, not the method, so baseline normal key-login patterns before hunting.</li>
+<li><code>sudo</code> can be configured to log via syslog with different formats or to not log at all (<code>!syslog</code>); verify sudo logging is actually enabled and centralized, because a silent sudo is a blind spot, not a clean bill of health.</li>
+<li>High-volume brute force from many sources is often background internet noise on public-facing hosts; distinguish it from targeted attacks by looking for success, targeted usernames matching your actual accounts, and timing correlated with other indicators.</li>
+<li>Service accounts and automation produce regular, odd-hour logins that look anomalous to a human reviewer; maintain a list of expected automation sources so triage does not chase cron jobs.</li>
+<li>An attacker with root can edit logs to remove their tracks; cross-check auth logs against <code>wtmp</code> (<code>last</code>), <code>btmp</code> (<code>lastb</code>), the journal, and the central collector, and treat inconsistencies as tampering evidence.</li>
+<li>Password spraying deliberately stays under lockout thresholds, so per-account failure counts look benign; detect it by aggregating failures per source IP across all usernames instead.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If any successful login is confirmed malicious, escalate immediately: disable the account, rotate its credentials and keys, revoke its sessions, and widen the hunt to every host it touched.</li>
+<li>If sudo logs show privilege escalation by an unknown actor, treat the host as compromised and move to full incident response (isolation, forensic imaging) rather than continuing log-only analysis.</li>
+<li>If account or key changes indicate persistence, do not just delete the artifact: investigate how it was created first, because the creation vector (stolen credential, exploited service) is still open.</li>
+<li>If the log window does not cover the suspected initial access, escalate the evidence gap to stakeholders with a clear statement of what can and cannot be determined.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Auth log triage is both incident response and continuous detection. Defenders run the same aggregations as scheduled hunts: failure-rate anomalies per source, new successful-login patterns, first-time sudo commands, and account-change alerts. MITRE T1110 (Brute Force) is detected by failure aggregation and mitigated by key-only SSH plus fail2ban; T1078 (Valid Accounts) is detected by anomaly hunting on successes and mitigated by account lifecycle controls. Centralized auth logs with alerting on the patterns in sections 2-5 turn triage from a manual fire drill into a monitored control. The defender&#x27;s rule: failures are noise until correlated, successes are signal, and any success you cannot explain is an incident.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1110 Brute Force: https://attack.mitre.org/techniques/T1110/</li>
+<li>MITRE ATT&amp;CK T1078 Valid Accounts: https://attack.mitre.org/techniques/T1078/</li>
+<li>MITRE ATT&amp;CK T1098 Account Manipulation: https://attack.mitre.org/techniques/T1098/</li>
+<li>Debian auth logging (rsyslog/auth.log): https://www.debian.org/doc/manuals/securing-debian-manual/</li>
+<li>sudo logging manual: https://www.sudo.ws/docs/man/sudoers.man/#logging</li>
+<li>NIST SP 800-92 Guide to Computer Security Log Management: https://csrc.nist.gov/publications/detail/sp/800-92/final</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

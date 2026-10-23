@@ -32,7 +32,7 @@ DOMAINS = [
     "cloud", "crypto", "bugbounty",
     "mobile", "binary", "malware", "soc", "osint", "defensive",
     "ai-security", "hardware", "ics-scada", "blockchain",
-    "automotive", "privacy", "memory",
+    "automotive", "privacy", "memory", "ctf",
 ]
 LIFECYCLES = ["experimental", "stable", "deprecated"]
 REQUIRED_FIELDS = [

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-competition-playbook-team-roles-and-comms</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-competition-playbook-team-roles-and-comms</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when organizing a CTF team for an upcoming or live</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-competition-playbook.html">ctf-competition-playbook</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-competition-playbook.html">ctf-competition-playbook</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ctf-competition-playbook.html">ctf-competition-playbook</a> <a href="ctf-osint-challenges.html">ctf-osint-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>git</td><td>2.45</td></tr></tbody></table><p>A CTF team without roles duplicates work, loses findings, and stalls when someone sleeps. This sub-skill defines the lightweight role structure and communication conventions that keep a team fast for the whole event. It is process, not theory: who does what, what gets said where, and how handoffs work. Scope is authorized competitions only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Before the event, assign the captain, category leads, and a scribe;</li>
+<p>small teams double up roles explicitly.</p>
+<li>Create one channel per category plus an announcements channel;</li>
+<p>agree on naming before the start.</p>
+<li>Set the notes convention: every challenge has an owner and a</li>
+<p>status, updated in the shared doc, not in chat.</p>
+<li>During the event, leads triage their categories and reassign</li>
+<p>stuck challenges; the captain watches overall points and time.</p>
+<li>Use structured help requests (what, tried, stuck-at, notes link)</li>
+<p>instead of vague calls for help.</p>
+<li>Hand off cleanly when resting or swapping: status, findings, and</li>
+<p>next step in the notes.</p>
+<li>In the last hour, the captain calls the stop on new work and runs</li>
+<p>the submission sweep.</p>
+<li>After the event, the scribe&#x27;s notes become the writeup skeleton.</li>
+</ol>
+<h2>1. Role definitions</h2>
+<ul>
+<li>Captain: owns the clock and the points. Runs triage, reassigns</li>
+<p>stuck work, calls sleep rotations, and makes the final-hour stop decision. Does not own challenges unless the team is tiny.</p>
+<li>Category leads (web, pwn, rev, crypto, forensics, osint): own</li>
+<p>triage and assignment inside their category; the person others ask first for that category.</p>
+<li>Floater: no fixed category; picks up quick wins anywhere, verifies</li>
+<p>others&#x27; partial solves with fresh eyes, and covers gaps.</p>
+<li>Scribe: keeps the notes doc and flags log current; in small teams</li>
+<p>this is a 10-percent duty shared by everyone, not a full role.</p>
+<li>Everyone: updates their own challenge status; asks for help early;</li>
+<p>commits solvers to the repo.</p>
+</ul>
+<p>For a 2-3 person team: captain doubles as a lead, everyone scribes their own work, and the floater role disappears. Write the assignments down; verbal agreements evaporate at hour 10.</p>
+<h2>2. Channel and notes conventions</h2>
+<pre><code class="language-text">#announcements  -&gt; solves, bloods, organizer messages, time calls (read-only-ish)
+#web  #pwn  #rev  #crypto  #forensics  #osint  -&gt; working discussion per category
+#general        -&gt; logistics, food, sleep rotation</code></pre>
+<p>Notes doc format (one shared file, updated live):</p>
+<pre><code class="language-text">## web/jwt-admin (200 pts) -- owner: izaz -- status: solving
+Findings: alg none rejected; secret brute force running (rockyou, 40%).
+Next: try kid header injection; source shows key lookup by kid.
+Solver: ctf-event/web/jwt_admin.py (partial)</code></pre>
+<p>Status vocabulary (keep it fixed): <code>untouched</code>, <code>looking</code>, <code>solving</code>, <code>stuck</code>, <code>verifying</code>, <code>done</code>. Fixed words let the captain scan the doc in seconds.</p>
+<h2>3. Effective help requests</h2>
+<p>Bad: &quot;web is broken, help&quot;. Good:</p>
+<pre><code class="language-text">#web @here stuck: sqli-login (150 pts)
+What: login bypass, source shows concatenated query, WAF blocks UNION.
+Tried: comment bypasses, tamper space2comment, boolean blind (slow).
+Stuck at: need faster exfil; blind gives 1 char/40s.
+Notes: notes.md#web/sqli-login -- owner: izaz, 50 min in.</code></pre>
+<p>The template: challenge, what it is, what you tried, where you are stuck, time invested, notes link. Anyone reading it can help in under 5 minutes. Set the norm early: asking with context is encouraged, silent grinding past 45 minutes is not.</p>
+<h2>4. Handoffs: rest, swaps, and fresh eyes</h2>
+<pre><code class="language-text">Handoff: pwn/heap-note (300 pts) -- izaz -&gt; mariam
+Status: solving. Findings: UAF confirmed, leak works, tcache poison
+  fails on remote (libc differs?). Next: identify remote libc from
+  the two leaks in solver output. Solver: ctf-event/pwn/heap_note.py
+  runs to the poison step locally. Time in: 90 min.</code></pre>
+<p>A handoff needs: status, findings so far, concrete next step, solver state, and time invested. The receiver reads the notes, runs the solver, and continues; no verbal-only handoffs. For sleep rotations in long events: the captain keeps a simple roster (who sleeps when), and sleeping players hand off all owned challenges first.</p>
+<h2>5. Captain&#x27;s time calls</h2>
+<p>Fixed announcements keep everyone synchronized without meetings:</p>
+<ul>
+<li>T+30min: &quot;Triage done? Post your category&#x27;s quick-win list.&quot;</li>
+<li>Hourly: &quot;Status check: post one line per owned challenge.&quot;</li>
+<li>T-3h: &quot;Last call for starting hard challenges.&quot;</li>
+<li>T-1h: &quot;Stop new work. Finish partials, verify submissions.&quot;</li>
+<li>T-15min: &quot;Submission sweep: check notes for unverified flags.&quot;</li>
+</ul>
+<p>Short, predictable, in #announcements. No discussion threads there; discussion goes to category channels.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Two people want the same challenge: the lead assigns one owner;</li>
+<p>the other becomes reviewer (fresh eyes later) or takes the next challenge.</p>
+<li>A player disappears mid-event: captain reassigns after one</li>
+<p>check-in attempt; the notes doc makes reassignment painless.</p>
+<li>Personality friction under stress: keep feedback about the work</li>
+<p>(&quot;this approach is slow, try X&quot;), not the person; the captain de-escalates by reassigning, not by debating.</p>
+<li>Remote vs in-person mix: default to written updates; voice calls</li>
+<p>only for active pairing on one challenge.</p>
+<li>Chat scrolls too fast during a blood race: move coordination to the</li>
+<p>notes doc and keep chat for the single active decision.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Communication collapses (everyone silent, work duplicated): the</li>
+<p>captain calls a 5-minute reset: everyone posts status, leads re-triage, duplicates get merged.</p>
+<li>The notes doc is stale: the scribe (or captain) does a 10-minute</li>
+<p>audit each hour in long events; stale notes are worse than no notes because they misdirect helpers.</p>
+<li>Help requests go unanswered: the floater&#x27;s explicit duty is</li>
+<p>answering them; if there is no floater, the captain assigns reviewers round-robin.</p>
+<li>A disagreement about strategy turns personal: the captain separates</li>
+<p>the people (different challenges) and revisits the decision with data after 30 minutes.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For organizers, healthy team communication is invisible; unhealthy patterns are detectable: multiple teams submitting identical flags in sequence (flag sharing), or one account solving across impossible category breadth at machine speed (shared accounts or automation against the rules). Event rules typically require named team members and prohibit cross-team collaboration; the playbook here stays firmly inside those lines.</p>
+<h2>Key references</h2>
+<ul>
+<li>CTFtime team guidelines and fair play norms: https://ctftime.org/</li>
+<li>Trail of Bits CTF wiki (team organization):</li>
+<p>https://github.com/trailofbits/ctf-wiki</p>
+<li>picoCTF team play guides (role splits for small teams):</li>
+<p>https://picoctf.org/</p>
+<li>DEF CON CTF retrospective writeups (communication under pressure).</li>
+<li>HackTheBox CTF team guides (role splits for small teams).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

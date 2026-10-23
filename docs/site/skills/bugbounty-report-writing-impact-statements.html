@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-report-writing-impact-statements</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-report-writing-impact-statements</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge yellow">85/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have a working proof of concept on an in-scope target and need to write the impact section that justifies your severity. Covers translating technical bugs into concrete attacker gains (whose data, which privilege, what action), the impact ladder from informational to critical with examples per bug class, avoiding hype and theoretical impact, and matching the impact claim to the program&#x27;s bounty table. Authorized targets only.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bugbounty-report-writing.html">bugbounty-report-writing</a></div><div class="deps"><span class="kind">requires:</span> <a href="bugbounty-report-writing.html">bugbounty-report-writing</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bugbounty-report-writing-proof-of-concept-format.html">bugbounty-report-writing-proof-of-concept-format</a> <a href="bugbounty-report-writing-cvss-scoring.html">bugbounty-report-writing-cvss-scoring</a> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Impact is the sentence that decides your severity. Triagers do not pay for bug classes; they pay for what an attacker concretely gains: whose data, which privilege, what action. This sub-skill teaches the translation from technical finding to impact statement, the impact ladder with per-class examples, and how to keep claims honest and matched to the bounty table. Write impact only for vulnerabilities found inside program scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>State the primitive: what the bug lets you do in one clause (read, write, execute, escalate).</li>
+<li>Name the victim and the asset: which user&#x27;s data, which role&#x27;s privilege, which system.</li>
+<li>Remove prerequisites honestly: does it need user interaction, a second bug, or special conditions.</li>
+<li>Place it on the impact ladder to sanity-check your severity.</li>
+<li>Write the impact paragraph: primitive plus victim plus scale, in two to three sentences.</li>
+<li>Cross-check against the program&#x27;s bounty table before submitting.</li>
+</ol>
+<h2>1. The translation method</h2>
+<p>Every impact statement follows one shape: attacker action plus victim plus asset plus scale.</p>
+<ul>
+<li>Weak: &quot;IDOR vulnerability in the invoice endpoint.&quot;</li>
+<li>Strong: &quot;Any authenticated user can read any other user&#x27;s invoices, including names, addresses, and amounts, by changing the invoice ID. I confirmed this with two test accounts.&quot;</li>
+</ul>
+<p>The strong version names the primitive (read), the victim (any other user), the asset (invoices with PII), and the proof (two test accounts). Write yours the same way, then delete any adjective that is not doing work (&quot;critical,&quot; &quot;severe,&quot; &quot;dangerous&quot; add nothing; the facts set the severity).</p>
+<h2>2. The impact ladder with examples</h2>
+<p>Use the ladder to check your severity claim before the triager does:</p>
+<ul>
+<li>Informational: version disclosure, verbose errors with no sensitive data. Impact: helps an attacker fingerprint, nothing more.</li>
+<li>Low: reflected XSS requiring heavy user interaction, verbose errors leaking internal paths, missing security headers alone. Impact: limited, conditional, or preparatory.</li>
+<li>Medium: stored XSS in a low-traffic area, IDOR exposing non-sensitive data, CSRF on low-value actions, user enumeration. Impact: real but bounded, or needing significant interaction.</li>
+<li>High: stored XSS in an admin panel, IDOR exposing PII or financial data, authentication bypass on accounts, SSRF reaching internal services, SQLi with data extraction. Impact: direct compromise of users, data, or privilege.</li>
+<li>Critical: remote code execution, full authentication bypass at scale, SSRF to cloud metadata leading to infrastructure keys, mass account takeover (password reset flaw affecting all users). Impact: system-level or population-level compromise.</li>
+</ul>
+<p>Per-class examples:</p>
+<ul>
+<li>XSS: reflected with one click (low to medium); stored firing for every admin (high); stored in a signup field firing for all users (critical).</li>
+<li>IDOR: reading your own data with another ID (not a finding); reading another user&#x27;s non-sensitive preferences (low to medium); reading PII or financial records (high); modifying or deleting another user&#x27;s data (high).</li>
+<li>SSRF: callback to your collaborator only (low, unproven); reading cloud metadata (high to critical depending on what the credentials unlock).</li>
+<li>Business logic: a coupon reusable twice (low to medium); price set to zero at checkout (high); mass creation of paid resources for free (high).</li>
+</ul>
+<h2>3. Honesty rules</h2>
+<ul>
+<li>Claim only what you demonstrated. &quot;Could lead to RCE&quot; without the shell is not RCE impact; it is the impact of the step you proved, plus a clearly labeled next step.</li>
+<li>State prerequisites plainly: &quot;requires the victim to click a link while logged in&quot; or &quot;requires an admin to view the ticket queue.&quot; Hidden prerequisites discovered by the triager read as exaggeration.</li>
+<li>Do not stack hypothetical chains: one demonstrated link is a chain; three imagined links are fiction. Programs pay for the demonstrated part.</li>
+<li>Match the bounty table: if the program pays medium for user enumeration, do not argue it is high. Learn their appetite and aim your hunting where it pays.</li>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>The impact is real but the program&#x27;s table underpays the class: report it anyway with honest severity. Reputation compounds; one underpaid report is cheap tuition.</li>
+<li>Two impacts from one bug (XSS that also leaks CSRF tokens): state the primary impact and note the secondary in one sentence. Do not double-claim severity.</li>
+<li>The impact depends on data you must not touch (real user PII): prove with your own test accounts&#x27; data and describe the rest by field names, not contents. Never exfiltrate real user data to prove a point.</li>
+<li>The program asks &quot;what is the worst case&quot;: give the realistic worst case you can defend, labeled as such, separate from the demonstrated impact.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Triager downgrades severity: cite the demonstrated impact and the bounty table once, factually, then accept the call. One calm pushback is professional; two is arguing.</li>
+<li>You discover a bigger impact after submitting: update the report with new evidence before triage closes. Upgrades with proof are welcome.</li>
+<li>Impact is unclear because the data classification is unknown: describe the fields exposed and let the program classify. &quot;Exposes full names, emails, and order histories&quot; is enough.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Impact statements tell defenders what to prioritize: a precise impact paragraph routes the fix to the right team faster than a severity label alone.</li>
+<li>Honest impact trains correct risk models; inflated impact trains alert fatigue. The defender&#x27;s backlog is real and your honesty shapes it.</li>
+<li>The ladder in section 2 doubles as a defender triage rubric: map incoming reports to it before assigning.</li>
+<li>Fix the class the impact reveals: an IDOR exposing PII means an authorization review, not a single endpoint patch.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>CVSS v3.1 specification: https://www.first.org/cvss/</li>
+<li>HackerOne severity guidance: https://docs.hackerone.com</li>
+<li>Bugcrowd vulnerability rating taxonomy: https://docs.bugcrowd.com</li>
+<li>CWE database: https://cwe.mitre.org/</li>
+<li>OWASP Risk Rating Methodology: https://owasp.org/www-community/OWASP_Risk_Rating_Methodology</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

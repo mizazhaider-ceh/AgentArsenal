@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: osint-image-geolocation-landmark-recognition</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>osint-image-geolocation-landmark-recognition</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a photo contains visible features that can</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="osint-image-geolocation.html">osint-image-geolocation</a></div><div class="deps"><span class="kind">requires:</span> <a href="osint-image-geolocation.html">osint-image-geolocation</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-image-geolocation.html">osint-image-geolocation</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>ImageMagick</td><td>7.1</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>ExifTool</td><td>12.9</td></tr></tbody></table><p>Landmark recognition is reading a photo like a detective reads a room: every sign, building style, plate format, and tree species is a clue that narrows the map. It works when metadata is stripped, which is most of the time on real cases. This sub-skill teaches the systematic visual scan, the clue categories that discriminate best, and how to confirm a candidate location so the geolocation holds up. Authorized investigations only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Work on a copy; crop regions of interest with ImageMagick for</li>
+<p>close inspection.</p>
+<li>Read signage: language, script, phone formats, brand names.</li>
+<li>Read the built environment: architecture, road markings, traffic</li>
+<p>signs, street furniture.</p>
+<li>Read vehicles: plate formats and colors, driving side, models.</li>
+<li>Read nature: vegetation, terrain, sky and light quality.</li>
+<li>Combine clues into a region hypothesis, then a candidate list.</li>
+<li>Confirm the best candidate against street-level imagery with</li>
+<p>multiple matching features.</p>
+<li>Write the evidence chain: clue, crop, conclusion, confidence.</li>
+</ol>
+<h2>1. Cropping for inspection</h2>
+<pre><code class="language-bash"># Work on a copy; crop regions without touching the original
+cp photo.jpg work.jpg
+identify work.jpg
+# Example: work.jpg JPEG 4032x3024
+
+# Crop the sign (x, y, width, height tuned per image)
+convert work.jpg -crop 1400x500+1800+900 sign.jpg
+convert work.jpg -crop 1600x900+200+1500 street.jpg
+convert work.jpg -crop 1000x800+2500+100 skyline.jpg
+
+# Enhance a dark or distant crop for reading
+convert sign.jpg -modulate 110,30 -sharpen 0x1 sign-enhanced.jpg</code></pre>
+<p>Keep every crop with a descriptive filename; the report references them as figures. Never upscale beyond readability; enhancement helps reading, it does not create detail.</p>
+<h2>2. Signage and language</h2>
+<p>Signage is the highest-discrimination clue category:</p>
+<ul>
+<li>Script and language: Cyrillic narrows enormously, as do Arabic,</li>
+<p>CJK scripts, or distinctive combinations (Dutch plus French suggests Belgium).</p>
+<li>Phone number formats: country codes (+32), grouping, and trunk</li>
+<p>prefixes.</p>
+<li>Brand names: chains are regional (a specific supermarket brand</li>
+<p>may exist in three countries).</p>
+<li>Regulatory signs: parking, no-entry, and warning sign designs are</li>
+<p>national standards.</p>
+</ul>
+<pre><code class="language-bash"># Record observations in a structured note as you read
+cat &gt; clues.md &lt;&lt;&#x27;EOF&#x27;
+## Signage
+- Shop sign: Dutch text &quot;Bakkerij&quot; (crop sign.jpg)
+- Phone on van: +32 2 ... (Belgian country code, Brussels area code)
+- Parking sign: Belgian design (blue P, white on blue)
+EOF</code></pre>
+<p>Search distinctive business names directly: a quoted shop name in a web search often returns the address, which becomes candidate one.</p>
+<h2>3. Built environment</h2>
+<ul>
+<li>Architecture: brick terraces versus Haussmann blocks versus</li>
+<p>Soviet prefabs each suggest regions; roof shapes and window styles refine further.</p>
+<li>Road markings: center line color (yellow in the US, white in</li>
+<p>much of Europe), crosswalk styles (zebra versus continental).</p>
+<li>Traffic signs: shape and color conventions are national (US</li>
+<p>yellow diamonds, European red-bordered triangles).</p>
+<li>Street furniture: lamp post designs, bollards, bins, and bus</li>
+<p>stops are often municipal standards.</p>
+<li>Infrastructure: power line styles, tram tracks, curb heights.</li>
+</ul>
+<p>No single feature proves a location; the combination does. &quot;Brick terraces plus red phone box plus left-hand traffic&quot; is England in three clues.</p>
+<h2>4. Vehicles and plates</h2>
+<pre><code class="language-bash"># Crop and read plates where visible (follow case privacy policy on retention)
+convert work.jpg -crop 600x200+1500+2000 plate.jpg</code></pre>
+<p>Plate knowledge that discriminates fast:</p>
+<ul>
+<li>Plate color schemes: yellow rear plates (UK, Netherlands),</li>
+<p>blue EU band on the left (most of Europe), white on green (some regions).</p>
+<li>Plate format: letter and digit groupings are national.</li>
+<li>Driving side: which side of the road vehicles use, visible from</li>
+<p>parked cars or traffic flow.</p>
+<li>Vehicle models: some models are region-specific (kei cars in</li>
+<p>Japan, utes in Australia).</p>
+</ul>
+<p>A plate gives country; the format plus a city code on the plate can give the region. Never run a plate through unauthorized lookup services; the visual format analysis is the authorized technique.</p>
+<h2>5. Vegetation, terrain, and sky</h2>
+<ul>
+<li>Trees: palms versus pines versus deciduous; eucalyptus suggests</li>
+<p>Australia or California; olive suggests the Mediterranean.</p>
+<li>Terrain: flat polder versus hills versus mountains in the</li>
+<p>background.</p>
+<li>Sky and light: quality of light suggests latitude, though this</li>
+<p>is weak alone; combine with the shadow analysis sub-skill for real constraint.</p>
+</ul>
+<p>These clues are coarse but they kill wrong hypotheses fast: palms eliminate Scandinavia no matter what the sign says (unless it is a botanical garden, which is why clues combine).</p>
+<h2>6. Reverse image search</h2>
+<pre><code class="language-bash"># Upload the crop (not the full image if people are visible) to reverse image search
+# Engines index landmarks, business fronts, and tourist photos well
+# Use the sign or skyline crop for distinctive features</code></pre>
+<p>Reverse search works best on: famous landmarks, hotel fronts, restaurant signs, and street art. It works poorly on: generic residential streets, interiors, and night shots. When it hits, the result still needs confirmation against street-level imagery; search results mislabel locations routinely.</p>
+<h2>7. Confirming against street-level imagery</h2>
+<p>The candidate from clues must survive contact with street-level imagery. Match at least three independent features:</p>
+<pre><code class="language-bash">cat &gt; confirmation.md &lt;&lt;&#x27;EOF&#x27;
+## Candidate: Rue des Bouchers 12, Brussels
+Feature 1: bakery sign &quot;Bakkerij&quot; matches facade (crop sign.jpg vs sv-1.png)
+Feature 2: lamp post design matches (crop street.jpg vs sv-2.png)
+Feature 3: road curve and crosswalk position match (overview vs map)
+Imagery date: 2025-06 (facade may have changed since)
+Verdict: CONFIRMED at street level
+EOF</code></pre>
+<p>If the imagery is newer than the photo, expect changes and weight structural features (road layout, building massing) over cosmetic ones (paint, signage). If imagery is unavailable for the area, state the confirmation gap honestly.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The photo is indoors. Landmark recognition may only reach the</li>
+<p>building or the city (outlet styles, language on fire exit signs). State the limit.</p>
+<li>Tourist landmarks are easy; residential streets are hard. Budget</li>
+<p>effort accordingly and say so in the case plan.</p>
+<li>The image is heavily filtered (color shifts). Do not trust color</li>
+<p>clues (plate colors, vegetation tone); rely on shapes and text.</p>
+<li>Multiple locations share the chain store or franchise look.</li>
+<p>Franchises are weak locators; the street around them is the locator.</p>
+<li>The photo mixes locations (a collage or a composite). Analyze</li>
+<p>each panel separately; composites are common in disinformation cases.</p>
+<li>Night or bad weather hides most clues. Note what is unusable</li>
+<p>and lean on signage and artificial landmarks.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Visual clues point to a private residence and the case does not</li>
+<p>authorize locating individuals. Stop and escalate the scope question before refining further.</p>
+<li>The location is critical and confidence is stuck at medium. Bring</li>
+<p>in a second analyst for an independent read; fresh eyes catch clues the first reader normalized.</p>
+<li>The image appears staged or AI-generated (impossible shadows,</li>
+<p>garbled text). Escalate to a media-forensics review; geolocating a synthetic image wastes the case and risks a false attribution.</p>
+<li>Clues contradict each other (Arabic sign, Scandinavian</li>
+<p>architecture). Treat the contradiction as the finding: the photo may be misattributed, edited, or from a diaspora neighborhood, and each hypothesis needs testing.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Landmark recognition is defeated by awareness: photograph against nondescript backgrounds, avoid signage and distinctive buildings, and remember that even a bus stop design can place you. Platforms stripping EXIF does not strip the pixels, so visual hygiene is the real defense. For investigators, the defender view is a privacy discipline: the sharper your visual reading gets, the more careful you must be about whose location you are determining and why the authorization covers it.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent workflow: osint-image-geolocation (this repo)</li>
+<li>Bellingcat geolocation guides:</li>
+<p>https://www.bellingcat.com/resources/</p>
+<li>Mapillary: https://www.mapillary.com/</li>
+<li>OpenStreetMap: https://www.openstreetmap.org/</li>
+<li>License plate format references (country standards)</li>
+<li>Google Earth and street-level imagery documentation</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

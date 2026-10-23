@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: binary-patching-techniques-nop-and-jump-patching</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>binary-patching-techniques-nop-and-jump-patching</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need the precise mechanics of NOP and jump</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="binary-patching-techniques.html">binary-patching-techniques</a></div><div class="deps"><span class="kind">requires:</span> <a href="binary-patching-techniques.html">binary-patching-techniques</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="binary-patching.html">binary-patching</a> <a href="binary-anti-analysis-bypass.html">binary-anti-analysis-bypass</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>x64dbg</td><td>2025.06</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>Ghidra</td><td>11.3</td></tr></tbody></table><p>NOP and jump patching are the two atomic operations of binary modification: remove an effect, or redirect a decision. Done right, they change one behavior and nothing else; done sloppily, they corrupt instruction alignment and crash the program. This sub-skill covers the byte-level mechanics for the parent binary-patching-techniques skill. Scope: patch only binaries you are authorized to modify, in an isolated lab, for authorized analysis or testing. Never patch software to evade licensing or protections without authorization.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Disassemble the target region and identify the exact instruction</li>
+<p>bytes to change.</p>
+<li>Decide: flip (jump), NOP-fill (call), or rewrite (short sequence).</li>
+<li>Compute the replacement bytes, checking lengths match exactly.</li>
+<li>Apply in the debugger first; test the behavior change.</li>
+<li>Write to a file copy; verify neighboring disassembly is intact.</li>
+<li>Record file offsets, before/after bytes, and rationale.</li>
+</ol>
+<h2>1. Conditional jump flips</h2>
+<p>Short conditional jumps are 2 bytes: opcode plus signed displacement. Flipping the condition keeps the displacement:</p>
+<pre><code class="language-text">74 cb   je  target    -&gt;  75 cb   jne target    (flip condition)
+74 cb   je  target    -&gt;  EB cb   jmp target    (always take)
+75 cb   jne target    -&gt;  EB cb   jmp target    (always take)
+EB cb   jmp target    -&gt;  90 90   nop; nop      (never take)</code></pre>
+<p>Near jumps (0F 84 .. ..) are 6 bytes; the same logic applies with the two-byte opcode (0F 84 je becomes 0F 85 jne, or E9 for unconditional with a 4-byte displacement). The displacement bytes never change when you only flip the condition, so the target stays correct.</p>
+<p>In x64dbg: select the jump, press Space, type the new mnemonic (<code>jne</code>, <code>jmp</code>, <code>nop</code>), Enter. The assembler handles encoding; verify the byte length matches the original in the hex dump.</p>
+<h2>2. NOP-filling calls and instructions</h2>
+<p>A call is 5 bytes (E8 + 4-byte relative offset). Replace with five 0x90 bytes:</p>
+<pre><code class="language-text">Before:  E8 3A 10 00 00   call 0x401250
+After:   90 90 90 90 90   nop x5</code></pre>
+<p>For longer sequences, use multi-byte NOPs to keep alignment clean (optional but tidy):</p>
+<pre><code class="language-text">66 90        2-byte nop
+0F 1F 00     3-byte nop
+0F 1F 40 00  4-byte nop</code></pre>
+<p>x64dbg does this automatically when you assemble <code>nop</code> over a selected instruction: it fills the exact byte count. Rule: the replacement must be exactly the same length as the original. Shorter leaves partial instructions; longer overwrites the next instruction.</p>
+<h2>3. Relative offset math</h2>
+<p>When you must redirect a jump to a new target, compute the relative displacement:</p>
+<pre><code class="language-python">def rel32(from_addr: int, to_addr: int, insn_len: int) -&gt; bytes:
+    # displacement measured from the END of the instruction
+    disp = to_addr - (from_addr + insn_len)
+    return disp.to_bytes(4, &quot;little&quot;, signed=True)
+
+# Example: at 0x401200, 5-byte jmp to 0x401500
+print(rel32(0x401200, 0x401500, 5).hex())  # fb020000
+# bytes: E9 FB 02 00 00   jmp 0x401500</code></pre>
+<p>For 2-byte short jumps the displacement is 1 byte (range -128..127); if the target is farther, use the 5-byte near form instead. Always verify in the disassembler after patching: the displayed target address must be the intended one.</p>
+<h2>4. Patching on disk with Python</h2>
+<pre><code class="language-python">path = &quot;copy.exe&quot;
+data = bytearray(open(path, &quot;rb&quot;).read())
+
+# Patch at FILE OFFSET (not VA, not RVA)
+off = 0x1234
+orig = data[off:off+2]
+assert orig == b&quot;\x74\x1b&quot;, f&quot;unexpected bytes: {orig.hex()}&quot;
+data[off:off+2] = b&quot;\xeb\x1b&quot;   # je -&gt; jmp
+
+open(&quot;copy_patched.exe&quot;, &quot;wb&quot;).write(data)
+print(f&quot;patched file offset {off:#x}: {orig.hex()} -&gt; eb1b&quot;)</code></pre>
+<p>Convert VA to file offset via section tables (or use pefile), and always assert the original bytes before writing: if they do not match, you are patching the wrong location or the wrong build.</p>
+<h2>5. Verification</h2>
+<pre><code class="language-bash"># Disassemble the patched region and eyeball it
+# In Ghidra/x64dbg: the patched instruction must decode cleanly AND
+# the instructions before and after must be unchanged
+
+# Byte-level diff of the two files
+cmp -l original.exe patched.exe</code></pre>
+<p>Example output shape:</p>
+<pre><code class="language-text">  4660  74 353</code></pre>
+<p>One differing byte at file offset 4660 (0x1234): 0x74 became 0xEB. Exactly the intended change, nothing else. If cmp shows more differences than your patch, something else modified the file; start over from a clean copy.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Patches inside packed code: patch the unpacked memory image, not</li>
+<p>the packed file; or unpack first, then patch the dump.</p>
+<li>Self-checking code: the program may checksum the patched region;</li>
+<p>patch the checksum routine first (document the chain).</p>
+<li>Patching data, not code: NOP-filling a data reference corrupts</li>
+<p>data; confirm the target is an instruction via disassembly.</p>
+<li>Concurrent threads executing the patched region: pause all threads</li>
+<p>in the debugger before patching live memory.</p>
+<li>Signed binaries: patching invalidates the signature; expected in</li>
+<p>the lab, never redistribute.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If the needed patch is longer than the available space (no room</li>
+<p>for new logic), escalate to code-cave techniques or accept a simpler patch; do not overwrite adjacent functions.</p>
+<li>If patches must survive a protector&#x27;s integrity checks, escalate:</li>
+<p>that is anti-tamper work, a separate engagement.</p>
+</ul>
+<ul>
+<li>If a patch must redirect execution to new code (not just skip), escalate to code-cave techniques; inline space is rarely enough.</li>
+<li>If the binary is signed and the lab requires a valid signature, note that no byte patch preserves it; assess tamper response instead.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Byte-exact patch records (offset, before, after, rationale) make lab work reproducible and defensible: another analyst applies the same patch and gets the same behavior. When assessing tamper resistance for a client, the finding is which checks fell to a one-byte flip versus which resisted; that gap analysis drives hardening advice (server-side checks, signature verification, anti-tamper). Never distribute patched binaries outside the authorized engagement.</p>
+<h2>Key references</h2>
+<ul>
+<li>Intel 64 and IA-32 Architectures Software Developer Manuals:</li>
+<p>https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html</p>
+<li>x64dbg documentation:</li>
+<p>https://x64dbg.com/</p>
+<li>Ghidra documentation:</li>
+<p>https://ghidra-sre.org/</p>
+<li>Practical Binary Analysis (Dennis Andriesse), Chapter 6</li>
+<p>(disassembly concepts)</p>
+</ul>
+<ul>
+<li>x86 opcode reference:</li>
+<p>http://ref.x86asm.net/coder64.html</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

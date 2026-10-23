@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-crypto-challenges-classical-ciphers</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-crypto-challenges-classical-ciphers</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF crypto challenge uses a classical cipher</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-crypto-challenges.html">ctf-crypto-challenges</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-crypto-challenges.html">ctf-crypto-challenges</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ctf-crypto-challenges.html">ctf-crypto-challenges</a> <a href="ctf-forensics-challenges.html">ctf-forensics-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>CyberChef</td><td>latest</td></tr></tbody></table><p>Classical ciphers substitute or reorder letters with small key spaces, which makes them solvable with statistics and brute force rather than math. CTFs use them as warmups and as layers inside bigger challenges. This sub-skill covers the authorized solver toolkit: identifying the cipher family from ciphertext shape, breaking each family with Python, and using cribs (known plaintext like <code>flag{</code>) to collapse the search. Scope is CTF competitions and lab exercises only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Profile the ciphertext: alphabet size, case, spaces preserved,</li>
+<p>length; each family has a signature.</p>
+<li>Run CyberChef Magic first; it names many classical ciphers outright.</li>
+<li>Caesar/shift: brute force all shifts and score for English.</li>
+<li>Polyalphabetic (Vigenere): find key length (Kasiski/Friedman), then</li>
+<p>solve each column as Caesar.</p>
+<li>Monoalphabetic substitution: frequency seed plus crib dragging.</li>
+<li>Transposition: try rail fence depths and columnar with crib</li>
+<p>anchoring.</p>
+<li>Repeating-key XOR: Hamming distance for key length, then per-byte</li>
+<p>frequency attack.</p>
+<li>Verify the output reads as English or matches the flag format.</li>
+</ol>
+<h2>1. Ciphertext profiling</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+from collections import Counter
+import math
+
+ct = open(&quot;cipher.txt&quot;).read().strip()
+letters = [c for c in ct.upper() if c.isalpha()]
+print(&quot;total:&quot;, len(ct), &quot;letters:&quot;, len(letters))
+print(&quot;distinct letters:&quot;, len(set(letters)))
+
+# Index of coincidence: ~0.065 English, ~0.038 random, ~0.065 monoalphabetic too
+n = len(letters)
+freq = Counter(letters)
+ic = sum(f * (f - 1) for f in freq.values()) / (n * (n - 1))
+print(f&quot;IC: {ic:.4f}&quot;)
+# IC near 0.065 with flat-ish top frequencies -&gt; Vigenere/transposition
+# IC near 0.065 with English-like curve -&gt; Caesar/substitution
+# IC near 0.038 -&gt; polyalphabetic with long key, or random</code></pre>
+<p>Signatures: spaces preserved plus English word lengths visible -&gt; transposition or Vigenere. No spaces, even length hex -&gt; bytes layer, not classical. Repeated digraphs at regular intervals -&gt; Vigenere (note the distances; their GCD hints the key length).</p>
+<h2>2. Caesar and affine ciphers</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+# Caesar brute force with chi-squared English scoring
+ENGLISH = [0.0817,0.0149,0.0278,0.0425,0.1270,0.0223,0.0202,0.0609,0.0697,
+           0.0015,0.0077,0.0403,0.0241,0.0675,0.0751,0.0193,0.0009,0.0599,
+           0.0633,0.0906,0.0276,0.0098,0.0236,0.0015,0.0197,0.0007]
+
+def chi2(text):
+    text = [c for c in text.upper() if c.isalpha()]
+    n = len(text)
+    if not n: return float(&quot;inf&quot;)
+    obs = [text.count(chr(65+i)) for i in range(26)]
+    return sum((o - n*e)**2/(n*e) for o, e in zip(obs, ENGLISH))
+
+def caesar(s, k):
+    return &quot;&quot;.join(chr((ord(c)-65+k)%26+65) if c.isupper()
+                   else chr((ord(c)-97+k)%26+97) if c.islower() else c for c in s)
+
+ct = open(&quot;cipher.txt&quot;).read().strip()
+for k in range(26):
+    pt = caesar(ct, k)
+    print(f&quot;{k:2d} chi2={chi2(pt):8.1f}  {pt[:50]}&quot;)
+# lowest chi2 is the answer
+
+# Affine (ax+b mod 26): 312 key combos, brute force all with the same scorer
+def affine(s, a, b):
+    inv = pow(a, -1, 26)
+    return &quot;&quot;.join(chr((inv*(ord(c)-65-b))%26+65) if c.isupper()
+                   else chr((inv*(ord(c)-97-b))%26+97) if c.islower() else c for c in s)
+best = min(((affine(ct,a,b),a,b) for a in [1,3,5,7,9,11,15,17,19,21,23,25]
+            for b in range(26)), key=lambda t: chi2(t[0]))
+print(&quot;affine best:&quot;, best[1], best[2], best[0][:60])</code></pre>
+<h2>3. Vigenere: key length then columns</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+from collections import Counter
+
+ct = &quot;&quot;.join(c for c in open(&quot;cipher.txt&quot;).read().upper() if c.isalpha())
+
+# Kasiski: distances between repeated trigrams
+def kasiski(ct):
+    dists = []
+    for i in range(len(ct)-3):
+        tri = ct[i:i+3]
+        j = ct.find(tri, i+1)
+        while j != -1:
+            dists.append(j-i)
+            j = ct.find(tri, j+1)
+    from math import gcd
+    from functools import reduce
+    return reduce(gcd, dists) if dists else 0
+print(&quot;likely key length divides:&quot;, kasiski(ct))
+
+# Friedman test as cross-check, then solve each column as Caesar
+def solve_vigenere(ct, klen):
+    key = &quot;&quot;
+    for col in range(klen):
+        column = ct[col::klen]
+        best = min(range(26), key=lambda k: chi2(caesar(column, k)))
+        key += chr(65+best)
+    return key, caesar(ct, sum(ord(c)-65 for c in key) % 26)  # placeholder</code></pre>
+<p>Cleaner: decrypt with the recovered key directly:</p>
+<pre><code class="language-python">def vigenere_decrypt(ct, key):
+    return &quot;&quot;.join(chr((ord(c)-65-(ord(key[i % len(key)])-65))%26+65) for i, c in enumerate(ct))
+
+for klen in range(2, 21):
+    key = &quot;&quot;.join(chr(65+min(range(26), key=lambda k: chi2(caesar(ct[col::klen], k))))
+                  for col in range(klen))
+    pt = vigenere_decrypt(ct, key)
+    print(f&quot;len={klen} key={key} chi2={chi2(pt):.1f} {pt[:40]}&quot;)</code></pre>
+<p>The correct key length shows a sharp chi2 drop. Autokey variants need a crib; use the crib-dragging technique from section 6.</p>
+<h2>4. Monoalphabetic substitution with cribs</h2>
+<p>Pure frequency mapping gets you 70 percent; cribs finish it.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+# Crib dragging: slide &quot;FLAG{&quot; (or &quot;THE&quot;) across the ciphertext,
+# keep placements with consistent mapping
+def crib_drag(ct, crib):
+    ct = &quot;&quot;.join(c for c in ct.upper() if c.isalpha())
+    hits = []
+    for i in range(len(ct)-len(crib)+1):
+        mapping, ok = {}, True
+        for a, b in zip(crib, ct[i:i+len(crib)]):
+            if a in mapping and mapping[a] != b: ok = False; break
+            if b in {v for k, v in mapping.items() if k != a}: ok = False; break
+            mapping[a] = b
+        if ok: hits.append((i, mapping))
+    return hits
+
+for pos, m in crib_drag(open(&quot;cipher.txt&quot;).read(), &quot;FLAG&quot;):
+    print(pos, m)</code></pre>
+<p>Extend the mapping from the hit: apply it to the whole text, guess the remaining letters from partial English words, and iterate. Common CTF cribs: <code>flag{</code>, <code>ctf{</code>, <code>picoctf{</code>, <code>the</code>, <code>and</code>.</p>
+<h2>5. Transposition ciphers</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+# Rail fence: try depths 2..len//2
+def rail_decrypt(ct, rails):
+    n = len(ct); cycle = 2*rails-2
+    order = sorted(range(n), key=lambda i: min(i % cycle, cycle - i % cycle) if cycle else 0)
+    pt = [&quot;&quot;]*n
+    for plain_pos, cipher_pos in enumerate(order):
+        pt[cipher_pos] = ct[plain_pos]
+    return &quot;&quot;.join(pt)
+
+ct = &quot;&quot;.join(open(&quot;cipher.txt&quot;).read().split())
+for r in range(2, min(15, len(ct)//2)):
+    pt = rail_decrypt(ct, r)
+    if chi2(pt) &lt; 150:   # English-like
+        print(r, pt[:60])
+
+# Columnar: with a crib, deduce the column order
+# (CyberChef&#x27;s &quot;Rail Fence Cipher Decode&quot; with brute force covers this interactively)</code></pre>
+<p>Columnar by hand: write the ciphertext into rows under the guessed key length, then permute columns until the crib appears; the crib anchors the column order and the rest follows.</p>
+<h2>6. Repeating-key XOR</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+# Key length via normalized Hamming distance, then per-column single-byte XOR
+def hamming(a, b): return bin(int.from_bytes(a,&quot;big&quot;) ^ int.from_bytes(b,&quot;big&quot;)).count(&quot;1&quot;)
+
+data = open(&quot;cipher.bin&quot;,&quot;rb&quot;).read()
+def keylen_score(k):
+    blocks = [data[i*k:(i+1)*k] for i in range(4)]
+    return sum(hamming(blocks[i], blocks[j])/k for i in range(4) for j in range(i+1,4))/6
+klen = min(range(2, 41), key=keylen_score)
+print(&quot;likely key length:&quot;, klen)
+
+key = bytes(max(range(256),
+    key=lambda b: sum(1 for c in data[i::klen] if chr(c ^ b) in
+        &quot;etaoin shrdluETAOINSHRDLU&quot;)) for i in range(klen))
+print(&quot;key:&quot;, key)
+print(bytes(c ^ key[i % klen] for i, c in enumerate(data))[:200])</code></pre>
+<p>Single-byte XOR scoring by English letter frequency is the inner loop; run it per column once the key length is fixed.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Ciphertext too short for statistics (under ~100 letters): lean on</li>
+<p>cribs and brute force instead of frequency analysis.</p>
+<li>Homophonic or polyphonic hints in the description: the challenge</li>
+<p>says which family; do not fight the hint.</p>
+<li>Playfair: digraph statistics and the 5x5 grid; CyberChef has a</li>
+<p>Playfair operation, use it before hand-rolling.</p>
+<li>The &quot;classical cipher&quot; is a red herring over modern crypto: if IC</li>
+<p>is flat and nothing classical fits, look for the real construction underneath (XOR with a stream, not a repeating key).</p>
+<li>Multiple classical layers stacked (Vigenere over transposition): peel</li>
+<p>outside-in; solve the layer whose statistics are cleanest first, then re-profile.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Vigenere key length will not resolve: try autokey and running-key</li>
+<p>variants, or the key may be as long as the message (one-time pad with a reused pad: crib-drag the pad instead).</p>
+<li>Substitution mapping stalls at 80 percent: look for nulls</li>
+<p>(decoy letters) or a final transposition applied after substitution; solve in reverse order of application.</p>
+<li>Repeating-key XOR key length ambiguous: the data may be compressed</li>
+<p>first (deflates frequency signals); try decompressing candidate plaintexts with zlib before scoring.</p>
+<li>CyberChef Magic names the cipher but your solver disagrees: trust the</li>
+<p>tool&#x27;s identification and port its exact algorithm; hand-rolled variants drift on details like alphabet ordering.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders treat classical ciphers as broken by definition: their presence in real systems (XOR &quot;encryption&quot;, Caesar-style obfuscation, hardcoded substitution tables) is a finding, not a control. Detection is by code review and secret scanning, since ciphertext patterns (high IC with letter-only alphabets, repeating-key XOR artifacts) are recognizable. The durable fix is modern authenticated encryption from a vetted library. For analysts, these techniques double as deobfuscation tools for malware that hides strings with XOR or single-byte ciphers.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1027 (Obfuscated Files or Information).</li>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm).</li>
+<li>CyberChef: https://gchq.github.io/CyberChef/</li>
+<li>&quot;The Code Book&quot; (Singh): classical cipher background.</li>
+<li>dCode classical cipher solvers: https://www.dcode.fr/en (crib and</li>
+<p>brute-force tools for competitions).</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

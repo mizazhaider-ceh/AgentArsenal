@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-23T06:04:29Z",
+  "generated_at": "2026-10-23T07:29:53Z",
   "skills": [
     {
       "name": "accessibility-security",
@@ -382,6 +382,20 @@
       ]
     },
     {
+      "name": "binary-anti-analysis-bypass",
+      "version": "1.0.0",
+      "domain": "binary",
+      "path": "skills/binary/binary-anti-analysis-bypass",
+      "sha256": "852c15e344dac6f501377abbb2cc84c08f2f1672234e7115bd21914d966d7148",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "malware-sandbox-analysis",
+        "binary-patching-techniques"
+      ]
+    },
+    {
       "name": "binary-patching",
       "version": "1.0.0",
       "domain": "binary",
@@ -394,6 +408,20 @@
         "ghidra-basics",
         "pwn-fundamentals",
         "secure-coding"
+      ]
+    },
+    {
+      "name": "binary-patching-techniques",
+      "version": "1.0.0",
+      "domain": "binary",
+      "path": "skills/binary/binary-patching-techniques",
+      "sha256": "06bbea31bacce3824b6d755fc5103ad8ca5ff845ab7fb224502f2e2778584bf2",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "binary-patching",
+        "binary-anti-analysis-bypass"
       ]
     },
     {
@@ -481,6 +509,74 @@
       ],
       "extends": [],
       "relates": []
+    },
+    {
+      "name": "bugbounty-duplicate-avoidance",
+      "version": "1.0.0",
+      "domain": "bugbounty",
+      "path": "skills/bugbounty/bugbounty-duplicate-avoidance",
+      "sha256": "6c57ab0046f8d38b2ea5ea0b6955af1b0194ef7d6f0f8cabf6bc44803c2c6efb",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "bug-bounty-workflow",
+        "bugbounty-methodology",
+        "bugbounty-report-writing",
+        "bugbounty-methodology-reporting-phase"
+      ]
+    },
+    {
+      "name": "bugbounty-methodology",
+      "version": "1.0.0",
+      "domain": "bugbounty",
+      "path": "skills/bugbounty/bugbounty-methodology",
+      "sha256": "3a547af76f308fd57f0fe610e5164bf826df6da85da357dff9d9cc6c73ebe9b5",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "bug-bounty-workflow",
+        "bugbounty-scope-recon",
+        "bugbounty-report-writing",
+        "bugbounty-duplicate-avoidance",
+        "recon-subdomain-enumeration"
+      ]
+    },
+    {
+      "name": "bugbounty-report-writing",
+      "version": "1.0.0",
+      "domain": "bugbounty",
+      "path": "skills/bugbounty/bugbounty-report-writing",
+      "sha256": "41635672a06461b8019a62fd27995e9ca692f9f8da161630c3ef716c25c72ad2",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "bug-bounty-workflow",
+        "bugbounty-methodology",
+        "bugbounty-methodology-reporting-phase",
+        "bugbounty-report-writing-impact-statements",
+        "bugbounty-report-writing-proof-of-concept-format",
+        "bugbounty-report-writing-cvss-scoring"
+      ]
+    },
+    {
+      "name": "bugbounty-scope-recon",
+      "version": "1.0.0",
+      "domain": "bugbounty",
+      "path": "skills/bugbounty/bugbounty-scope-recon",
+      "sha256": "d54428162ce433d5ed3c29ad1325633eb4cd7abebc257d6a68dc6da62ac7a49f",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "bug-bounty-workflow",
+        "bugbounty-methodology",
+        "recon-subdomain-enumeration",
+        "recon-asn-netblock",
+        "domain-osint"
+      ]
     },
     {
       "name": "c2-fundamentals",
@@ -753,6 +849,104 @@
         "webapp-pentest-methodology",
         "auth-attacks",
         "web-xss"
+      ]
+    },
+    {
+      "name": "ctf-competition-playbook",
+      "version": "1.0.0",
+      "domain": "ctf",
+      "path": "skills/ctf/ctf-competition-playbook",
+      "sha256": "85fdb281d7c3265f735874c1bdce4104abd7c55fd532c4ed95a3c380423e118b",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "ctf-web-challenges",
+        "ctf-osint-challenges"
+      ]
+    },
+    {
+      "name": "ctf-crypto-challenges",
+      "version": "1.0.0",
+      "domain": "ctf",
+      "path": "skills/ctf/ctf-crypto-challenges",
+      "sha256": "b642bbd8e10be3e19b1414919cbb20073b0ee0887026846ab7f7e4aafdcf8e4e",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "ctf-web-challenges",
+        "ctf-forensics-challenges"
+      ]
+    },
+    {
+      "name": "ctf-forensics-challenges",
+      "version": "1.0.0",
+      "domain": "ctf",
+      "path": "skills/ctf/ctf-forensics-challenges",
+      "sha256": "290b3b487b5bdb3757f735e1ababe9a2b09db2403ad71722d7b926a3e157e654",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "forensics-fundamentals",
+        "memory-forensics"
+      ]
+    },
+    {
+      "name": "ctf-osint-challenges",
+      "version": "1.0.0",
+      "domain": "ctf",
+      "path": "skills/ctf/ctf-osint-challenges",
+      "sha256": "189156f0e414e94dc29b036de8adf83e4de906f227a0f1fb268607d84456dd0f",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "osint-methodology",
+        "ctf-competition-playbook"
+      ]
+    },
+    {
+      "name": "ctf-pwn-basics",
+      "version": "1.0.0",
+      "domain": "ctf",
+      "path": "skills/ctf/ctf-pwn-basics",
+      "sha256": "e5c9b2b74ec12ec2b8b61687c656760b5ba72611e4d92a90eee79b18551fffe8",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "pwn-fundamentals",
+        "ctf-reversing-basics"
+      ]
+    },
+    {
+      "name": "ctf-reversing-basics",
+      "version": "1.0.0",
+      "domain": "ctf",
+      "path": "skills/ctf/ctf-reversing-basics",
+      "sha256": "630d279c31eb444c0c349e51062e81e6e0459ca53a78448f016314fd56be634b",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "ghidra-basics",
+        "ctf-pwn-basics"
+      ]
+    },
+    {
+      "name": "ctf-web-challenges",
+      "version": "1.0.0",
+      "domain": "ctf",
+      "path": "skills/ctf/ctf-web-challenges",
+      "sha256": "c1f68841b56cf595ea0cb0181bbc604db32ddf9c83e7f49c17495c0b9cc0e4ab",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "web-sqli",
+        "ctf-crypto-challenges"
       ]
     },
     {
@@ -1631,6 +1825,36 @@
       ]
     },
     {
+      "name": "incident-breach-scoping",
+      "version": "1.0.0",
+      "domain": "incident",
+      "path": "skills/incident/incident-breach-scoping",
+      "sha256": "7c3a44be8f1bd9f7e5b9a5a962b5bcced4088cf2f0e280ad02906f10a2ad1c53",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response",
+        "threat-intel",
+        "incident-containment-playbooks"
+      ]
+    },
+    {
+      "name": "incident-containment-playbooks",
+      "version": "1.0.0",
+      "domain": "incident",
+      "path": "skills/incident/incident-containment-playbooks",
+      "sha256": "dee818f300cbc3bfc87e9f65909f20fd69eb5dbf15a48c489bf6abe4f8d366a2",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response",
+        "incident-timeline-analysis",
+        "incident-breach-scoping"
+      ]
+    },
+    {
       "name": "incident-playbooks",
       "version": "1.0.0",
       "domain": "defensive",
@@ -1655,6 +1879,21 @@
       "extends": [],
       "relates": [
         "forensics-fundamentals"
+      ]
+    },
+    {
+      "name": "incident-timeline-analysis",
+      "version": "1.0.0",
+      "domain": "incident",
+      "path": "skills/incident/incident-timeline-analysis",
+      "sha256": "636195668603b741f3977a4bd0fae10673a5e7ed0ac4d3cfcedc31ebe651390f",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response",
+        "log-forensics",
+        "memory-forensics"
       ]
     },
     {
@@ -1888,6 +2127,52 @@
       ]
     },
     {
+      "name": "linux-hardening-baseline",
+      "version": "1.0.0",
+      "domain": "linux",
+      "path": "skills/linux/linux-hardening-baseline",
+      "sha256": "e70c008ffc77575a016be3d67cb87d3f3e852a9ba0a96dd5bb316176ab5adeac",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "linux-hardening",
+        "linux-systemd-security",
+        "linux-log-intrusion-analysis"
+      ]
+    },
+    {
+      "name": "linux-log-intrusion-analysis",
+      "version": "1.0.0",
+      "domain": "linux",
+      "path": "skills/linux/linux-log-intrusion-analysis",
+      "sha256": "2bd3002849a984d0f1647ebdb5d0ec4d720fad7e7621b226ebf0953ef58c5905",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "linux-hardening",
+        "linux-hardening-baseline",
+        "linux-systemd-security",
+        "linux-log-intrusion-analysis"
+      ]
+    },
+    {
+      "name": "linux-systemd-security",
+      "version": "1.0.0",
+      "domain": "linux",
+      "path": "skills/linux/linux-systemd-security",
+      "sha256": "7b2cf8bcb23dc641d36fe76db3026b90cd3ac3444c2cb46921f5c55ab158212b",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "linux-hardening",
+        "linux-hardening-baseline",
+        "linux-log-intrusion-analysis"
+      ]
+    },
+    {
       "name": "llm-red-teaming",
       "version": "1.0.0",
       "domain": "ai-security",
@@ -1959,6 +2244,90 @@
       "relates": [
         "git-workflows",
         "python-cli-tooling"
+      ]
+    },
+    {
+      "name": "malware-behavioral-analysis",
+      "version": "1.0.0",
+      "domain": "malware",
+      "path": "skills/malware/malware-behavioral-analysis",
+      "sha256": "76bbefd735671a4a0f1b0be59eefd519125a1f7bc9e4b88558577d5d0963761f",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "dynamic-sandbox",
+        "malware-config-extraction"
+      ]
+    },
+    {
+      "name": "malware-config-extraction",
+      "version": "1.0.0",
+      "domain": "malware",
+      "path": "skills/malware/malware-config-extraction",
+      "sha256": "766bf0f4d4b59ed882666751029e963b2b0217f8c7c0e37e9853495afca3cb15",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "malware-static-triage",
+        "malware-behavioral-analysis"
+      ]
+    },
+    {
+      "name": "malware-packer-triage",
+      "version": "1.0.0",
+      "domain": "malware",
+      "path": "skills/malware/malware-packer-triage",
+      "sha256": "7e653b590e56b403f9dc64aa382decadb094314db257bf4a92b2679e9cdcef9e",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "packer-analysis",
+        "malware-static-triage"
+      ]
+    },
+    {
+      "name": "malware-sandbox-analysis",
+      "version": "1.0.0",
+      "domain": "malware",
+      "path": "skills/malware/malware-sandbox-analysis",
+      "sha256": "ff95bbdbd4527e53404883f2a917c7eb3046606803c0f413686af58c49205e77",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "dynamic-sandbox",
+        "malware-behavioral-analysis"
+      ]
+    },
+    {
+      "name": "malware-static-triage",
+      "version": "1.0.0",
+      "domain": "malware",
+      "path": "skills/malware/malware-static-triage",
+      "sha256": "4fcc8c8182232cfe46fc774fd6ed90ab03640f6d877ce370c4fef7750640cbb3",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "static-triage",
+        "malware-yara-writing"
+      ]
+    },
+    {
+      "name": "malware-yara-writing",
+      "version": "1.0.0",
+      "domain": "malware",
+      "path": "skills/malware/malware-yara-writing",
+      "sha256": "9bb8395a99ac4b6e06c012de0dc6326f32d5f51b09bc92fd234d079a50db65e4",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "yara-rules",
+        "malware-static-triage"
       ]
     },
     {
@@ -2049,6 +2418,21 @@
       ]
     },
     {
+      "name": "mobile-android-dynamic",
+      "version": "1.0.0",
+      "domain": "mobile",
+      "path": "skills/mobile/mobile-android-dynamic",
+      "sha256": "c5a7ee91140ecacbd7513d63a5e0b9348dbac7002f0bd4704257d8ce857bf5b8",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "android-static",
+        "android-dynamic",
+        "mobile-frida-scripting"
+      ]
+    },
+    {
       "name": "mobile-forensics",
       "version": "1.0.0",
       "domain": "forensics",
@@ -2062,6 +2446,36 @@
         "disk-forensics",
         "ios-basics",
         "android-static"
+      ]
+    },
+    {
+      "name": "mobile-frida-scripting",
+      "version": "1.0.0",
+      "domain": "mobile",
+      "path": "skills/mobile/mobile-frida-scripting",
+      "sha256": "5a7516fc65badf5de88ce8d454ff37c2d35dc005393f60acf720d055270c25d6",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "mobile-ios-static",
+        "android-dynamic",
+        "ios-dynamic-analysis"
+      ]
+    },
+    {
+      "name": "mobile-ios-static",
+      "version": "1.0.0",
+      "domain": "mobile",
+      "path": "skills/mobile/mobile-ios-static",
+      "sha256": "2698fba40ff0630a1ca0c072295b2a2b0c5d015e118181328954d2ebdd483d40",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "ios-basics",
+        "ios-dynamic-analysis",
+        "mobile-frida-scripting"
       ]
     },
     {
@@ -2268,6 +2682,36 @@
       ]
     },
     {
+      "name": "osint-breach-data",
+      "version": "1.0.0",
+      "domain": "osint",
+      "path": "skills/osint/osint-breach-data",
+      "sha256": "7df8fbb9dbfb7f67cf9de2f26d44244b4efeeabbe335c30214494c5654364a31",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "osint-methodology",
+        "threat-intel",
+        "osint-username-enumeration"
+      ]
+    },
+    {
+      "name": "osint-image-geolocation",
+      "version": "1.0.0",
+      "domain": "osint",
+      "path": "skills/osint/osint-image-geolocation",
+      "sha256": "7675d473d7b26e07d839aaaf01abb5b12705d9d492835cc475e0c50bf618c890",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "image-osint",
+        "osint-methodology",
+        "osint-username-enumeration"
+      ]
+    },
+    {
       "name": "osint-methodology",
       "version": "1.0.0",
       "domain": "osint",
@@ -2278,6 +2722,21 @@
       "extends": [],
       "relates": [
         "recon-passive"
+      ]
+    },
+    {
+      "name": "osint-username-enumeration",
+      "version": "1.0.0",
+      "domain": "osint",
+      "path": "skills/osint/osint-username-enumeration",
+      "sha256": "7fc746d8276b5b2281e3bb8ca93a3a9d5bd17a9d7be4040fc1c60ee2c2d629f1",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "username-osint",
+        "osint-methodology",
+        "threat-intel"
       ]
     },
     {
@@ -2450,6 +2909,36 @@
       ]
     },
     {
+      "name": "privesc-container-escape",
+      "version": "1.0.0",
+      "domain": "privesc",
+      "path": "skills/privesc/privesc-container-escape",
+      "sha256": "28d182db8c2ef9ae3c053d06d56e763ce8955cbf6622370f37c33255827b254a",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "privesc-linux",
+        "privesc-linux-vectors",
+        "linux-container-hardening"
+      ]
+    },
+    {
+      "name": "privesc-kernel-triage",
+      "version": "1.0.0",
+      "domain": "privesc",
+      "path": "skills/privesc/privesc-kernel-triage",
+      "sha256": "9bcfe9746f01f1ff897866551ad7161fc3484101bf4cd35595194d82c2465d03",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "privesc-linux",
+        "privesc-windows",
+        "privesc-linux-vectors"
+      ]
+    },
+    {
       "name": "privesc-linux",
       "version": "1.0.0",
       "domain": "privesc",
@@ -2464,6 +2953,20 @@
       ]
     },
     {
+      "name": "privesc-linux-vectors",
+      "version": "1.0.0",
+      "domain": "privesc",
+      "path": "skills/privesc/privesc-linux-vectors",
+      "sha256": "fc332fe9e23d7f317732c531494a3d5ca52d7d83bd9db0f3aa1d401b027ea85b",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "privesc-linux",
+        "privesc-kernel-triage"
+      ]
+    },
+    {
       "name": "privesc-windows",
       "version": "1.0.0",
       "domain": "privesc",
@@ -2474,6 +2977,20 @@
       "extends": [],
       "relates": [
         "privesc-linux"
+      ]
+    },
+    {
+      "name": "privesc-windows-vectors",
+      "version": "1.0.0",
+      "domain": "privesc",
+      "path": "skills/privesc/privesc-windows-vectors",
+      "sha256": "10c9b3a41e7b874a43a52fffde63a7ab36da1ad174bb5da6f0de8650f691e7da",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "privesc-windows",
+        "privesc-kernel-triage"
       ]
     },
     {
@@ -2632,6 +3149,39 @@
       "relates": []
     },
     {
+      "name": "recon-asn-netblock",
+      "version": "1.0.0",
+      "domain": "recon",
+      "path": "skills/recon/recon-asn-netblock",
+      "sha256": "73adc0b35d62c3a49a5422bb54f8d90c58e64c8dc43d3035ecebcd5a7f8e214e",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "recon-passive",
+        "recon-active",
+        "recon-subdomain-enumeration",
+        "bugbounty-scope-recon",
+        "nmap-methodology"
+      ]
+    },
+    {
+      "name": "recon-cert-transparency",
+      "version": "1.0.0",
+      "domain": "recon",
+      "path": "skills/recon/recon-cert-transparency",
+      "sha256": "6f56b0033fb32d0197ba0ce32baaafc703486258437c48c63de60d20fd0839e5",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "recon-passive",
+        "recon-subdomain-enumeration",
+        "recon-subdomain-enumeration-passive-sources",
+        "domain-osint"
+      ]
+    },
+    {
       "name": "recon-passive",
       "version": "1.0.0",
       "domain": "recon",
@@ -2641,6 +3191,40 @@
       "requires": [],
       "extends": [],
       "relates": []
+    },
+    {
+      "name": "recon-subdomain-enumeration",
+      "version": "1.0.0",
+      "domain": "recon",
+      "path": "skills/recon/recon-subdomain-enumeration",
+      "sha256": "be9f977378c7eb0cff253d952e9714142340064cc0dad4c6c3f17bb09fbce871",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "recon-passive",
+        "recon-active",
+        "recon-cert-transparency",
+        "dns-enumeration",
+        "bugbounty-methodology"
+      ]
+    },
+    {
+      "name": "recon-subdomain-takeover",
+      "version": "1.0.0",
+      "domain": "recon",
+      "path": "skills/recon/recon-subdomain-takeover",
+      "sha256": "4f29af9e7135e115c82a67b23066b43ca64e96db47cc27867e4ec018f93b9326",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "recon-subdomain-enumeration",
+        "recon-active",
+        "dns-enumeration",
+        "bugbounty-methodology",
+        "bug-bounty-workflow"
+      ]
     },
     {
       "name": "redis-basics",
@@ -3586,6 +4170,42 @@
       "sha256": "c07e45884639231d3d45aff6d9068ae98b880a1b635c7b8b0a63372a18a40700",
       "version": "1.0.0"
     },
+    "binary-anti-analysis-bypass-debugger-evasion": {
+      "parent": "binary-anti-analysis-bypass",
+      "path": "skills/binary/binary-anti-analysis-bypass/sub/binary-anti-analysis-bypass-debugger-evasion",
+      "sha256": "aa154bc6c5660bda25fd60ec82587daa3c0fc317326ab6e919d8d273818254fc",
+      "version": "1.0.0"
+    },
+    "binary-anti-analysis-bypass-timing-checks": {
+      "parent": "binary-anti-analysis-bypass",
+      "path": "skills/binary/binary-anti-analysis-bypass/sub/binary-anti-analysis-bypass-timing-checks",
+      "sha256": "398a7f663c57fa7699961269f92cbb496153f608bf1685ce81f85be18c74b1df",
+      "version": "1.0.0"
+    },
+    "binary-anti-analysis-bypass-vm-and-sandbox-detection": {
+      "parent": "binary-anti-analysis-bypass",
+      "path": "skills/binary/binary-anti-analysis-bypass/sub/binary-anti-analysis-bypass-vm-and-sandbox-detection",
+      "sha256": "93afeb851beab1e1a57e1508f6a0de8534e51d8d87b1ccc54f5180dd01ea3f01",
+      "version": "1.0.0"
+    },
+    "binary-patching-techniques-binary-diffing": {
+      "parent": "binary-patching-techniques",
+      "path": "skills/binary/binary-patching-techniques/sub/binary-patching-techniques-binary-diffing",
+      "sha256": "7e62ee0b3f4075f243016b15381074e86d76a9927949706dd53e1801f96b1b7f",
+      "version": "1.0.0"
+    },
+    "binary-patching-techniques-keygenning": {
+      "parent": "binary-patching-techniques",
+      "path": "skills/binary/binary-patching-techniques/sub/binary-patching-techniques-keygenning",
+      "sha256": "a732eb8f25579405f4c52fabcdb81aaa94030043995b98ca96f1aca97c85768a",
+      "version": "1.0.0"
+    },
+    "binary-patching-techniques-nop-and-jump-patching": {
+      "parent": "binary-patching-techniques",
+      "path": "skills/binary/binary-patching-techniques/sub/binary-patching-techniques-nop-and-jump-patching",
+      "sha256": "6c10dfb33290887989a9ac183c9edec1fa3932fb47657c26dcf6fe49e62dc345",
+      "version": "1.0.0"
+    },
     "bloodhound-collection": {
       "parent": "bloodhound-methodology",
       "path": "skills/ad/bloodhound-methodology/sub/bloodhound-collection",
@@ -3608,6 +4228,78 @@
       "parent": "osint-methodology",
       "path": "skills/osint/osint-methodology/sub/breach-data-osint",
       "sha256": "4c148ef6fc6d2a978bdb8e213d64dad219ad5477ddbdfef0dd90dae6cc4d0e3a",
+      "version": "1.0.0"
+    },
+    "bugbounty-duplicate-avoidance-disclosure-timelines": {
+      "parent": "bugbounty-duplicate-avoidance",
+      "path": "skills/bugbounty/bugbounty-duplicate-avoidance/sub/bugbounty-duplicate-avoidance-disclosure-timelines",
+      "sha256": "04c4c63ffc69723d5c3746bb36d7e6fe209a7515fb5c549379ed56f748b86626",
+      "version": "1.0.0"
+    },
+    "bugbounty-duplicate-avoidance-program-specific-dupes": {
+      "parent": "bugbounty-duplicate-avoidance",
+      "path": "skills/bugbounty/bugbounty-duplicate-avoidance/sub/bugbounty-duplicate-avoidance-program-specific-dupes",
+      "sha256": "9ea50ac53a28462d5b57fde3e12c16c20954dc249540142eb1969522a6a2176a",
+      "version": "1.0.0"
+    },
+    "bugbounty-duplicate-avoidance-search-techniques": {
+      "parent": "bugbounty-duplicate-avoidance",
+      "path": "skills/bugbounty/bugbounty-duplicate-avoidance/sub/bugbounty-duplicate-avoidance-search-techniques",
+      "sha256": "84084810610af835a3e6c7ccc3d41aae1f9c8eb8e70af60f5514ffa1777c3323",
+      "version": "1.0.0"
+    },
+    "bugbounty-methodology-exploitation-phase": {
+      "parent": "bugbounty-methodology",
+      "path": "skills/bugbounty/bugbounty-methodology/sub/bugbounty-methodology-exploitation-phase",
+      "sha256": "86d02799dddabfa142c894a57ce6c2ecaf46fafa47229fa53249a91a7b6ec091",
+      "version": "1.0.0"
+    },
+    "bugbounty-methodology-recon-phase": {
+      "parent": "bugbounty-methodology",
+      "path": "skills/bugbounty/bugbounty-methodology/sub/bugbounty-methodology-recon-phase",
+      "sha256": "0d8653d95abdcc103c29552356ca274e17aed0e59d92e7e23a9cba43ed02f608",
+      "version": "1.0.0"
+    },
+    "bugbounty-methodology-reporting-phase": {
+      "parent": "bugbounty-methodology",
+      "path": "skills/bugbounty/bugbounty-methodology/sub/bugbounty-methodology-reporting-phase",
+      "sha256": "c38d983972a13d1e6f41baf490135bab8450ed382946e4bb70366e0afde4ef80",
+      "version": "1.0.0"
+    },
+    "bugbounty-report-writing-cvss-scoring": {
+      "parent": "bugbounty-report-writing",
+      "path": "skills/bugbounty/bugbounty-report-writing/sub/bugbounty-report-writing-cvss-scoring",
+      "sha256": "82de60f84062c3d5d243a365c5ac554c7e5825d4f79885249d82e2bc333cea76",
+      "version": "1.0.0"
+    },
+    "bugbounty-report-writing-impact-statements": {
+      "parent": "bugbounty-report-writing",
+      "path": "skills/bugbounty/bugbounty-report-writing/sub/bugbounty-report-writing-impact-statements",
+      "sha256": "a4a7ffeb383cbee9a2ce8f37ec4c5ef907c44847247b40293990487199062dff",
+      "version": "1.0.0"
+    },
+    "bugbounty-report-writing-proof-of-concept-format": {
+      "parent": "bugbounty-report-writing",
+      "path": "skills/bugbounty/bugbounty-report-writing/sub/bugbounty-report-writing-proof-of-concept-format",
+      "sha256": "eccebd8fed188bcf7115baf352ac071dac3990445bd856471e48101fdce575cc",
+      "version": "1.0.0"
+    },
+    "bugbounty-scope-recon-asset-discovery": {
+      "parent": "bugbounty-scope-recon",
+      "path": "skills/bugbounty/bugbounty-scope-recon/sub/bugbounty-scope-recon-asset-discovery",
+      "sha256": "ec2b2218e588dd2805d8be4e67a8d7b5db0b75c59bfdd23ad4670c3e7092c1fd",
+      "version": "1.0.0"
+    },
+    "bugbounty-scope-recon-out-of-scope-avoidance": {
+      "parent": "bugbounty-scope-recon",
+      "path": "skills/bugbounty/bugbounty-scope-recon/sub/bugbounty-scope-recon-out-of-scope-avoidance",
+      "sha256": "2d1a656eb5b70a1948e60b7b545015cb64860d79541e8caf1a31be262ce2c855",
+      "version": "1.0.0"
+    },
+    "bugbounty-scope-recon-scope-boundary-mapping": {
+      "parent": "bugbounty-scope-recon",
+      "path": "skills/bugbounty/bugbounty-scope-recon/sub/bugbounty-scope-recon-scope-boundary-mapping",
+      "sha256": "f929a8f1ea6661329a9e67df6d0515edc474509d398aa2237ae829bc225b708b",
       "version": "1.0.0"
     },
     "c2-channel-setup": {
@@ -3662,6 +4354,132 @@
       "parent": "privesc-linux",
       "path": "skills/privesc/privesc-linux/sub/cron-abuse",
       "sha256": "13983315a6a7239102fc05e1934b48703277d4b2e0b5e23de0efe18d7871a688",
+      "version": "1.0.0"
+    },
+    "ctf-competition-playbook-challenge-triage": {
+      "parent": "ctf-competition-playbook",
+      "path": "skills/ctf/ctf-competition-playbook/sub/ctf-competition-playbook-challenge-triage",
+      "sha256": "38cd7618af470e0ca0657c103b448b257d6328a10e07931920cc8180ef66ba6e",
+      "version": "1.0.0"
+    },
+    "ctf-competition-playbook-team-roles-and-comms": {
+      "parent": "ctf-competition-playbook",
+      "path": "skills/ctf/ctf-competition-playbook/sub/ctf-competition-playbook-team-roles-and-comms",
+      "sha256": "7e473351bcda50b762641515500adba274bd674fc46bbfa07d2adcdace08d137",
+      "version": "1.0.0"
+    },
+    "ctf-competition-playbook-time-management": {
+      "parent": "ctf-competition-playbook",
+      "path": "skills/ctf/ctf-competition-playbook/sub/ctf-competition-playbook-time-management",
+      "sha256": "c0de026e5edc10c8baadaf24a2c2bb152add9d0c8e9e443e1831cb25120f64d0",
+      "version": "1.0.0"
+    },
+    "ctf-crypto-challenges-classical-ciphers": {
+      "parent": "ctf-crypto-challenges",
+      "path": "skills/ctf/ctf-crypto-challenges/sub/ctf-crypto-challenges-classical-ciphers",
+      "sha256": "c2281b9664870894e42d659492690a862afd26da44b012c0c291417e66489a83",
+      "version": "1.0.0"
+    },
+    "ctf-crypto-challenges-hash-and-encoding": {
+      "parent": "ctf-crypto-challenges",
+      "path": "skills/ctf/ctf-crypto-challenges/sub/ctf-crypto-challenges-hash-and-encoding",
+      "sha256": "e9c6af553689b3fd548725d7f1d82dc2bbb05eadbb86b1e0c5ee3fe4ecfb351e",
+      "version": "1.0.0"
+    },
+    "ctf-crypto-challenges-rsa-attacks": {
+      "parent": "ctf-crypto-challenges",
+      "path": "skills/ctf/ctf-crypto-challenges/sub/ctf-crypto-challenges-rsa-attacks",
+      "sha256": "e0f9de596985629cc3ad93cc2941ec4070a7d63cab2f9b1182347c28cb3ab509",
+      "version": "1.0.0"
+    },
+    "ctf-forensics-challenges-disk-image-triage": {
+      "parent": "ctf-forensics-challenges",
+      "path": "skills/ctf/ctf-forensics-challenges/sub/ctf-forensics-challenges-disk-image-triage",
+      "sha256": "bdd43a4dbcba9ca818c8ab187704c0534ef444231f8bd17e3aea0797038a41ef",
+      "version": "1.0.0"
+    },
+    "ctf-forensics-challenges-pcap-analysis": {
+      "parent": "ctf-forensics-challenges",
+      "path": "skills/ctf/ctf-forensics-challenges/sub/ctf-forensics-challenges-pcap-analysis",
+      "sha256": "321742cae99598f045709af8da1fd9c0cc113668b7b93c3b257308fdb4f39302",
+      "version": "1.0.0"
+    },
+    "ctf-forensics-challenges-steganography": {
+      "parent": "ctf-forensics-challenges",
+      "path": "skills/ctf/ctf-forensics-challenges/sub/ctf-forensics-challenges-steganography",
+      "sha256": "da6ff93a4d324f6bc03fe825e5b60d186dbe1819991af85396a8a687ea35bc87",
+      "version": "1.0.0"
+    },
+    "ctf-osint-challenges-image-geolocation": {
+      "parent": "ctf-osint-challenges",
+      "path": "skills/ctf/ctf-osint-challenges/sub/ctf-osint-challenges-image-geolocation",
+      "sha256": "cce04e87d6f6959720dcf36a3cc1300f96ec28d7861666b52962d2393210de17",
+      "version": "1.0.0"
+    },
+    "ctf-osint-challenges-metadata-analysis": {
+      "parent": "ctf-osint-challenges",
+      "path": "skills/ctf/ctf-osint-challenges/sub/ctf-osint-challenges-metadata-analysis",
+      "sha256": "43af6279e49e8d3d56df88800c67e46e77b29e59d99f7d562f800f833f005d64",
+      "version": "1.0.0"
+    },
+    "ctf-osint-challenges-username-hunting": {
+      "parent": "ctf-osint-challenges",
+      "path": "skills/ctf/ctf-osint-challenges/sub/ctf-osint-challenges-username-hunting",
+      "sha256": "723a2252d125a84d1e58d1170ec522dd73baf886fd598c8022bd90b86decf059",
+      "version": "1.0.0"
+    },
+    "ctf-pwn-basics-buffer-overflows": {
+      "parent": "ctf-pwn-basics",
+      "path": "skills/ctf/ctf-pwn-basics/sub/ctf-pwn-basics-buffer-overflows",
+      "sha256": "69dc3b769f0fb00aabcf8c653a59e90dde65364d29a822e1d0ba98c7523910de",
+      "version": "1.0.0"
+    },
+    "ctf-pwn-basics-format-strings": {
+      "parent": "ctf-pwn-basics",
+      "path": "skills/ctf/ctf-pwn-basics/sub/ctf-pwn-basics-format-strings",
+      "sha256": "baccb70447e07ff1a403c34458eb5c3593c29f9c8464e3d870b8f7bbb3edb445",
+      "version": "1.0.0"
+    },
+    "ctf-pwn-basics-ret2libc": {
+      "parent": "ctf-pwn-basics",
+      "path": "skills/ctf/ctf-pwn-basics/sub/ctf-pwn-basics-ret2libc",
+      "sha256": "265e05fad3c7aaf71819a8988d372194c0fcae4444f7175850c36e1115f3567f",
+      "version": "1.0.0"
+    },
+    "ctf-reversing-basics-deobfuscation": {
+      "parent": "ctf-reversing-basics",
+      "path": "skills/ctf/ctf-reversing-basics/sub/ctf-reversing-basics-deobfuscation",
+      "sha256": "f25d30bfab2f85d063b69196b80369824336a1b089fe626069ccb96906544399",
+      "version": "1.0.0"
+    },
+    "ctf-reversing-basics-dynamic-debugging": {
+      "parent": "ctf-reversing-basics",
+      "path": "skills/ctf/ctf-reversing-basics/sub/ctf-reversing-basics-dynamic-debugging",
+      "sha256": "bcddd560f316be30899135d2e6251d58be4788034dd3ffa1e52386b1761df8a8",
+      "version": "1.0.0"
+    },
+    "ctf-reversing-basics-static-analysis-ghidra": {
+      "parent": "ctf-reversing-basics",
+      "path": "skills/ctf/ctf-reversing-basics/sub/ctf-reversing-basics-static-analysis-ghidra",
+      "sha256": "5962defdafd215243a0f5f9386fb736572fdeacb5e18d45753c6d54d3aec7d4e",
+      "version": "1.0.0"
+    },
+    "ctf-web-challenges-jwt-challenges": {
+      "parent": "ctf-web-challenges",
+      "path": "skills/ctf/ctf-web-challenges/sub/ctf-web-challenges-jwt-challenges",
+      "sha256": "c90e60321e1964db9761d5e970bc8f2201dbbda6f54d1d4acb946e84d463e9d3",
+      "version": "1.0.0"
+    },
+    "ctf-web-challenges-sqli-challenges": {
+      "parent": "ctf-web-challenges",
+      "path": "skills/ctf/ctf-web-challenges/sub/ctf-web-challenges-sqli-challenges",
+      "sha256": "2cd72d18de5d44ba01d31713c972437451cb00933d3d12226243fd148dd0ca18",
+      "version": "1.0.0"
+    },
+    "ctf-web-challenges-ssti-challenges": {
+      "parent": "ctf-web-challenges",
+      "path": "skills/ctf/ctf-web-challenges/sub/ctf-web-challenges-ssti-challenges",
+      "sha256": "47395bca429d47c7659ec2ed45b8913bffe5e818be0c46353b22098fa402471a",
       "version": "1.0.0"
     },
     "data-breach-playbook-run": {
@@ -3754,6 +4572,60 @@
       "sha256": "a980b7016a03a625ad01e2a473de0477931c86fec2c50e95e1b7399081df759b",
       "version": "1.0.0"
     },
+    "incident-breach-scoping-data-exfiltration-assessment": {
+      "parent": "incident-breach-scoping",
+      "path": "skills/incident/incident-breach-scoping/sub/incident-breach-scoping-data-exfiltration-assessment",
+      "sha256": "5af2b3c7972bb1c1dce3fd946cb9533e37c201785a601c4282ba6d00231f1de3",
+      "version": "1.0.0"
+    },
+    "incident-breach-scoping-initial-access-identification": {
+      "parent": "incident-breach-scoping",
+      "path": "skills/incident/incident-breach-scoping/sub/incident-breach-scoping-initial-access-identification",
+      "sha256": "ae460b329dbf1d8013427c87f62ff50eb371c41b5ea6987d42b0c5a48bb2a5c9",
+      "version": "1.0.0"
+    },
+    "incident-breach-scoping-lateral-movement-mapping": {
+      "parent": "incident-breach-scoping",
+      "path": "skills/incident/incident-breach-scoping/sub/incident-breach-scoping-lateral-movement-mapping",
+      "sha256": "3bc3ca3a63d2e04ae3c1b2fb0c10f3dd8d4e71955dbd0486744b100b53b54213",
+      "version": "1.0.0"
+    },
+    "incident-containment-playbooks-evidence-preservation": {
+      "parent": "incident-containment-playbooks",
+      "path": "skills/incident/incident-containment-playbooks/sub/incident-containment-playbooks-evidence-preservation",
+      "sha256": "1bc90f44eb86511322e381906fbd67fa338c7e5a360febbbd21072c0d0676be5",
+      "version": "1.0.0"
+    },
+    "incident-containment-playbooks-host-isolation": {
+      "parent": "incident-containment-playbooks",
+      "path": "skills/incident/incident-containment-playbooks/sub/incident-containment-playbooks-host-isolation",
+      "sha256": "0c065e5dfd953d8c14c698e5f15afe22a6cd8a517ccb57365487861b318c14dc",
+      "version": "1.0.0"
+    },
+    "incident-containment-playbooks-network-segmentation": {
+      "parent": "incident-containment-playbooks",
+      "path": "skills/incident/incident-containment-playbooks/sub/incident-containment-playbooks-network-segmentation",
+      "sha256": "aec38cac44820179cabcc8074a139d6befa734ddc1845c33658705c4eb774900",
+      "version": "1.0.0"
+    },
+    "incident-timeline-analysis-log-correlation": {
+      "parent": "incident-timeline-analysis",
+      "path": "skills/incident/incident-timeline-analysis/sub/incident-timeline-analysis-log-correlation",
+      "sha256": "e127d1e41e4eab9d1f83b36ea7f1b1aef7c0086580fa439c5a9888f0fab413a2",
+      "version": "1.0.0"
+    },
+    "incident-timeline-analysis-plaso-timelines": {
+      "parent": "incident-timeline-analysis",
+      "path": "skills/incident/incident-timeline-analysis/sub/incident-timeline-analysis-plaso-timelines",
+      "sha256": "c4172ff5660f4823f630e62ab508d288577ff46e2b48709f217c11f279a65c9a",
+      "version": "1.0.0"
+    },
+    "incident-timeline-analysis-super-timeline-analysis": {
+      "parent": "incident-timeline-analysis",
+      "path": "skills/incident/incident-timeline-analysis/sub/incident-timeline-analysis-super-timeline-analysis",
+      "sha256": "b593f02ee6a9983717a27d1c30fa52b104259137d87cf40abb6f25d3bb053c0f",
+      "version": "1.0.0"
+    },
     "infra-osint": {
       "parent": "osint-methodology",
       "path": "skills/osint/osint-methodology/sub/infra-osint",
@@ -3820,10 +4692,172 @@
       "sha256": "bf5ad004880adcc7b8b2c920eb494aaccc8977e510889a202a5bf17ccdf207f4",
       "version": "1.0.0"
     },
+    "linux-hardening-baseline-filesystem-permissions": {
+      "parent": "linux-hardening-baseline",
+      "path": "skills/linux/linux-hardening-baseline/sub/linux-hardening-baseline-filesystem-permissions",
+      "sha256": "8038f76098e7e383364a03fdac49f93df070a2d190bd932f0905ce0e4e9903eb",
+      "version": "1.0.0"
+    },
+    "linux-hardening-baseline-kernel-parameters": {
+      "parent": "linux-hardening-baseline",
+      "path": "skills/linux/linux-hardening-baseline/sub/linux-hardening-baseline-kernel-parameters",
+      "sha256": "fececc09a02a18db727d9ee01d5624116d9036e2c894576f02d405ec7e4a1d41",
+      "version": "1.0.0"
+    },
+    "linux-hardening-baseline-ssh-hardening": {
+      "parent": "linux-hardening-baseline",
+      "path": "skills/linux/linux-hardening-baseline/sub/linux-hardening-baseline-ssh-hardening",
+      "sha256": "c9406b57617efb4bf8f3b37786b415543eb2f9f0ecd2ed50e78e95fe68d5e2af",
+      "version": "1.0.0"
+    },
+    "linux-log-intrusion-analysis-auth-log-triage": {
+      "parent": "linux-log-intrusion-analysis",
+      "path": "skills/linux/linux-log-intrusion-analysis/sub/linux-log-intrusion-analysis-auth-log-triage",
+      "sha256": "18feae9e09fab9da84eb657cd9e008b38308acfae5a49822f84422837e5b7579",
+      "version": "1.0.0"
+    },
+    "linux-log-intrusion-analysis-detecting-lateral-movement": {
+      "parent": "linux-log-intrusion-analysis",
+      "path": "skills/linux/linux-log-intrusion-analysis/sub/linux-log-intrusion-analysis-detecting-lateral-movement",
+      "sha256": "2be86345b271f657b2371f9006a13d98def96bbf47e1a8e928c23f2792b921b4",
+      "version": "1.0.0"
+    },
+    "linux-log-intrusion-analysis-journalctl-forensics": {
+      "parent": "linux-log-intrusion-analysis",
+      "path": "skills/linux/linux-log-intrusion-analysis/sub/linux-log-intrusion-analysis-journalctl-forensics",
+      "sha256": "23b5d99dd7e64f2878dba54e4e306a2a4e8048ac07995015229ea848a709c759",
+      "version": "1.0.0"
+    },
+    "linux-systemd-security-journal-security": {
+      "parent": "linux-systemd-security",
+      "path": "skills/linux/linux-systemd-security/sub/linux-systemd-security-journal-security",
+      "sha256": "c98ffef13f0cb3e93c999f25ab4731f1f13c48c3aa42326b7ab6c1bae78efba8",
+      "version": "1.0.0"
+    },
+    "linux-systemd-security-sandboxing-directives": {
+      "parent": "linux-systemd-security",
+      "path": "skills/linux/linux-systemd-security/sub/linux-systemd-security-sandboxing-directives",
+      "sha256": "6683d4cd725ab0092cdaa4a3f0aa2b5f043aa450ac66ce7a8b7e234909aa0e44",
+      "version": "1.0.0"
+    },
+    "linux-systemd-security-unit-file-security": {
+      "parent": "linux-systemd-security",
+      "path": "skills/linux/linux-systemd-security/sub/linux-systemd-security-unit-file-security",
+      "sha256": "19f7a7d0f9566e511161ef2cb2df98c258d9ab84f8d726b1cdf355607ff8cb66",
+      "version": "1.0.0"
+    },
+    "malware-behavioral-analysis-api-hooking-traces": {
+      "parent": "malware-behavioral-analysis",
+      "path": "skills/malware/malware-behavioral-analysis/sub/malware-behavioral-analysis-api-hooking-traces",
+      "sha256": "96f4afb1b59261c8b76d5a66e547d18e5a65632c32b1139b3ea00f40fc3c49de",
+      "version": "1.0.0"
+    },
+    "malware-behavioral-analysis-persistence-mechanisms": {
+      "parent": "malware-behavioral-analysis",
+      "path": "skills/malware/malware-behavioral-analysis/sub/malware-behavioral-analysis-persistence-mechanisms",
+      "sha256": "58bcc0b6d65575910b6258281abf8d523e30bf1c60a1b03f0c22e09ce7482477",
+      "version": "1.0.0"
+    },
+    "malware-behavioral-analysis-process-injection": {
+      "parent": "malware-behavioral-analysis",
+      "path": "skills/malware/malware-behavioral-analysis/sub/malware-behavioral-analysis-process-injection",
+      "sha256": "261eb6d5cb3c7a6240401cafeb116fc3445a2e23b2e6f5d5038643bfbb005247",
+      "version": "1.0.0"
+    },
+    "malware-config-extraction-c2-extraction": {
+      "parent": "malware-config-extraction",
+      "path": "skills/malware/malware-config-extraction/sub/malware-config-extraction-c2-extraction",
+      "sha256": "20f29362de230619ac28620457b2945c390dc39299dba2a16deb32080c69b9e4",
+      "version": "1.0.0"
+    },
+    "malware-config-extraction-rc4-xor-configs": {
+      "parent": "malware-config-extraction",
+      "path": "skills/malware/malware-config-extraction/sub/malware-config-extraction-rc4-xor-configs",
+      "sha256": "fd8e3d16080b4fa04a270b68c8fa102cb33ee23c29b342386670ddf7e83ab511",
+      "version": "1.0.0"
+    },
+    "malware-config-extraction-string-decoding": {
+      "parent": "malware-config-extraction",
+      "path": "skills/malware/malware-config-extraction/sub/malware-config-extraction-string-decoding",
+      "sha256": "b938b9b9acd1d699c03d6c4204bc857aa4a1a28a71abb8c1375ed8cb83c3d767",
+      "version": "1.0.0"
+    },
     "malware-in-memory": {
       "parent": "memory-forensics",
       "path": "skills/forensics/memory-forensics/sub/malware-in-memory",
       "sha256": "9058b48d7d1d51a68eaf21556bf834ba2c477aa4b7d6af39bbfa2c9c79e2cc3f",
+      "version": "1.0.0"
+    },
+    "malware-packer-triage-entropy-analysis": {
+      "parent": "malware-packer-triage",
+      "path": "skills/malware/malware-packer-triage/sub/malware-packer-triage-entropy-analysis",
+      "sha256": "d62bbb7208f5484b9b63161df044d1c7bab37d16d3663b2ee45d0f4fe046ea83",
+      "version": "1.0.0"
+    },
+    "malware-packer-triage-manual-unpacking": {
+      "parent": "malware-packer-triage",
+      "path": "skills/malware/malware-packer-triage/sub/malware-packer-triage-manual-unpacking",
+      "sha256": "8fd343cc88a7df6addfbdad9f07d9c7cbcb998d1df1543151ad387872e1a4d38",
+      "version": "1.0.0"
+    },
+    "malware-packer-triage-upx-and-common-packers": {
+      "parent": "malware-packer-triage",
+      "path": "skills/malware/malware-packer-triage/sub/malware-packer-triage-upx-and-common-packers",
+      "sha256": "beace06e0b80689fbc03421385160c62e3efd4d9186a3bbb7f5e9ed5e42f52fd",
+      "version": "1.0.0"
+    },
+    "malware-sandbox-analysis-anti-vm-detection": {
+      "parent": "malware-sandbox-analysis",
+      "path": "skills/malware/malware-sandbox-analysis/sub/malware-sandbox-analysis-anti-vm-detection",
+      "sha256": "b1ef3ab60ce65d3bf903c451899efc63eeec094117866fdfbaf2a626e4fbd237",
+      "version": "1.0.0"
+    },
+    "malware-sandbox-analysis-capa-and-capabilities": {
+      "parent": "malware-sandbox-analysis",
+      "path": "skills/malware/malware-sandbox-analysis/sub/malware-sandbox-analysis-capa-and-capabilities",
+      "sha256": "98a702949346b48c434b613ada8b9ed2c8d1bf9213294f2153bba3cf4cb0a311",
+      "version": "1.0.0"
+    },
+    "malware-sandbox-analysis-network-traffic-analysis": {
+      "parent": "malware-sandbox-analysis",
+      "path": "skills/malware/malware-sandbox-analysis/sub/malware-sandbox-analysis-network-traffic-analysis",
+      "sha256": "c4a4d4a4319ad42991fdc131f04e3d03602ea4802ba8a524c37cdb6a64f082c3",
+      "version": "1.0.0"
+    },
+    "malware-static-triage-capa-integration": {
+      "parent": "malware-static-triage",
+      "path": "skills/malware/malware-static-triage/sub/malware-static-triage-capa-integration",
+      "sha256": "3ce54d7ce53b13fe211264d1a60a227ff651cb7ffa86879aacf9d3e712a02c80",
+      "version": "1.0.0"
+    },
+    "malware-static-triage-pe-header-analysis": {
+      "parent": "malware-static-triage",
+      "path": "skills/malware/malware-static-triage/sub/malware-static-triage-pe-header-analysis",
+      "sha256": "48b30795247cac34e3746135448f11e1d43384175e873980b1297129dee8088c",
+      "version": "1.0.0"
+    },
+    "malware-static-triage-strings-and-imports": {
+      "parent": "malware-static-triage",
+      "path": "skills/malware/malware-static-triage/sub/malware-static-triage-strings-and-imports",
+      "sha256": "a4b438f998a7c9e714f5c2d217f5e6a9d68f1d6ff2dd8bc8fe60906e15fafeb6",
+      "version": "1.0.0"
+    },
+    "malware-yara-writing-rule-optimization": {
+      "parent": "malware-yara-writing",
+      "path": "skills/malware/malware-yara-writing/sub/malware-yara-writing-rule-optimization",
+      "sha256": "2713e73ee67dba3638b5760ce0cfe91a8e58f2a72c0e982993e8ccd93f1fe9a7",
+      "version": "1.0.0"
+    },
+    "malware-yara-writing-rule-syntax-patterns": {
+      "parent": "malware-yara-writing",
+      "path": "skills/malware/malware-yara-writing/sub/malware-yara-writing-rule-syntax-patterns",
+      "sha256": "2b1e4ff47d583cba389f25798e8c679b908e4d673e5ef6a2bb56dab9b7679e96",
+      "version": "1.0.0"
+    },
+    "malware-yara-writing-yara-x-and-modules": {
+      "parent": "malware-yara-writing",
+      "path": "skills/malware/malware-yara-writing/sub/malware-yara-writing-yara-x-and-modules",
+      "sha256": "d4f176d98260f2a1237398f12b51c1433b7d5eefb0474baee0f45ae265c23820",
       "version": "1.0.0"
     },
     "mask-attacks": {
@@ -3842,6 +4876,60 @@
       "parent": "auth-attacks",
       "path": "skills/auth/auth-attacks/sub/mfa-bypass-testing",
       "sha256": "9c1c34016d75d7447c3f40078d246ab99400373e523f8adbc6b3ef875b39aacc",
+      "version": "1.0.0"
+    },
+    "mobile-android-dynamic-intent-analysis": {
+      "parent": "mobile-android-dynamic",
+      "path": "skills/mobile/mobile-android-dynamic/sub/mobile-android-dynamic-intent-analysis",
+      "sha256": "07984a14aa7541b05529ddf8a2b73f8adad37e68a74f9414faf68ae8ed10adca",
+      "version": "1.0.0"
+    },
+    "mobile-android-dynamic-network-interception": {
+      "parent": "mobile-android-dynamic",
+      "path": "skills/mobile/mobile-android-dynamic/sub/mobile-android-dynamic-network-interception",
+      "sha256": "252e430ce0fe69d0842dc7f2ac7ea0e20314b339deb5683dcc5451d4b1abb2b2",
+      "version": "1.0.0"
+    },
+    "mobile-android-dynamic-runtime-manipulation": {
+      "parent": "mobile-android-dynamic",
+      "path": "skills/mobile/mobile-android-dynamic/sub/mobile-android-dynamic-runtime-manipulation",
+      "sha256": "07dc741ac2cf9fa1e1a9daf29b65db5cf5b57407e4113a38323029e4974fe8bd",
+      "version": "1.0.0"
+    },
+    "mobile-frida-scripting-function-hooking": {
+      "parent": "mobile-frida-scripting",
+      "path": "skills/mobile/mobile-frida-scripting/sub/mobile-frida-scripting-function-hooking",
+      "sha256": "d19d7d1a0e1e38824b8f8ced285b7e21fa99c9822d7db68f838cc8e7d98f3dc1",
+      "version": "1.0.0"
+    },
+    "mobile-frida-scripting-native-code-tracing": {
+      "parent": "mobile-frida-scripting",
+      "path": "skills/mobile/mobile-frida-scripting/sub/mobile-frida-scripting-native-code-tracing",
+      "sha256": "ba80343f139b04cdd407955d13893d4687d5bf92df7462d826db7da19319d070",
+      "version": "1.0.0"
+    },
+    "mobile-frida-scripting-ssl-pinning-bypass": {
+      "parent": "mobile-frida-scripting",
+      "path": "skills/mobile/mobile-frida-scripting/sub/mobile-frida-scripting-ssl-pinning-bypass",
+      "sha256": "28995d5e8480950bebfb9b9ec7cc506c28238a624f4c4805b3e060e48ccc5aae",
+      "version": "1.0.0"
+    },
+    "mobile-ios-static-ipa-extraction": {
+      "parent": "mobile-ios-static",
+      "path": "skills/mobile/mobile-ios-static/sub/mobile-ios-static-ipa-extraction",
+      "sha256": "65bf32b67a1d935a9ba400743019a600e3298e81ee46f84b809413b9436454c3",
+      "version": "1.0.0"
+    },
+    "mobile-ios-static-objection-workflows": {
+      "parent": "mobile-ios-static",
+      "path": "skills/mobile/mobile-ios-static/sub/mobile-ios-static-objection-workflows",
+      "sha256": "431dc7c11bdc368dce56d3aae2c9cff1449339d724850ebf78f4ba60ae60e5c2",
+      "version": "1.0.0"
+    },
+    "mobile-ios-static-plist-and-strings-analysis": {
+      "parent": "mobile-ios-static",
+      "path": "skills/mobile/mobile-ios-static/sub/mobile-ios-static-plist-and-strings-analysis",
+      "sha256": "fe3960f6e828d6e09693e82cb7f0c2a3098f07564f1394d22f4b7de9cbdbc8bc",
       "version": "1.0.0"
     },
     "nmap-evasion": {
@@ -3878,6 +4966,60 @@
       "parent": "recon-active",
       "path": "skills/recon/recon-active/sub/os-fingerprinting",
       "sha256": "04efa303d20262fa692bf5231e2640b8825680a9e9dda98fc0d56a9e504874d2",
+      "version": "1.0.0"
+    },
+    "osint-breach-data-breach-notification": {
+      "parent": "osint-breach-data",
+      "path": "skills/osint/osint-breach-data/sub/osint-breach-data-breach-notification",
+      "sha256": "6084da95995787b44f5a6f85ed9fe08dbb9e06b6395fdc04bcdd665d768dc691",
+      "version": "1.0.0"
+    },
+    "osint-breach-data-dehashed-workflows": {
+      "parent": "osint-breach-data",
+      "path": "skills/osint/osint-breach-data/sub/osint-breach-data-dehashed-workflows",
+      "sha256": "8ad0fee3bf175a6446407d4754a5d7afd609999befaaeb4d7471fd0796161a75",
+      "version": "1.0.0"
+    },
+    "osint-breach-data-password-pattern-analysis": {
+      "parent": "osint-breach-data",
+      "path": "skills/osint/osint-breach-data/sub/osint-breach-data-password-pattern-analysis",
+      "sha256": "b067efccf8dff0c96a6f1e5e6259e414057502dd9df3c548c9b51d860e74ab22",
+      "version": "1.0.0"
+    },
+    "osint-image-geolocation-exif-analysis": {
+      "parent": "osint-image-geolocation",
+      "path": "skills/osint/osint-image-geolocation/sub/osint-image-geolocation-exif-analysis",
+      "sha256": "ead9aac0393ae969e199a3082ccfc4597474010366518c9615fcb12f226f9471",
+      "version": "1.0.0"
+    },
+    "osint-image-geolocation-landmark-recognition": {
+      "parent": "osint-image-geolocation",
+      "path": "skills/osint/osint-image-geolocation/sub/osint-image-geolocation-landmark-recognition",
+      "sha256": "29d60b36e2b53e8861e5917d129269af43518ebd4cd04ff6c53cc7d88c1d6f75",
+      "version": "1.0.0"
+    },
+    "osint-image-geolocation-shadow-and-sun-analysis": {
+      "parent": "osint-image-geolocation",
+      "path": "skills/osint/osint-image-geolocation/sub/osint-image-geolocation-shadow-and-sun-analysis",
+      "sha256": "7dfdef2908317718f2f6487ea5f22da7a7adca1f67bf9e2cfe4a95b33185f412",
+      "version": "1.0.0"
+    },
+    "osint-username-enumeration-cross-platform-correlation": {
+      "parent": "osint-username-enumeration",
+      "path": "skills/osint/osint-username-enumeration/sub/osint-username-enumeration-cross-platform-correlation",
+      "sha256": "5b49dc2757d2d93590a94309a6551a86af629f22f6df294bffa3c35b06814c1a",
+      "version": "1.0.0"
+    },
+    "osint-username-enumeration-handle-enumeration": {
+      "parent": "osint-username-enumeration",
+      "path": "skills/osint/osint-username-enumeration/sub/osint-username-enumeration-handle-enumeration",
+      "sha256": "ec9aa5885ec398677f410c7ae850de9fd48d3e26d2d6b4a25cfae92d9558c4e6",
+      "version": "1.0.0"
+    },
+    "osint-username-enumeration-sherlock-workflows": {
+      "parent": "osint-username-enumeration",
+      "path": "skills/osint/osint-username-enumeration/sub/osint-username-enumeration-sherlock-workflows",
+      "sha256": "da1cd0514edbcd67d309d035f2907ea749cd34ab5c1a055ace10222886965d8d",
       "version": "1.0.0"
     },
     "output-encoding": {
@@ -3952,6 +5094,78 @@
       "sha256": "deed525c998bf8fee6976813bd0ea4e5353f7d96fa32dafe0089541ede9f6ca7",
       "version": "1.0.0"
     },
+    "privesc-container-escape-capabilities-abuse": {
+      "parent": "privesc-container-escape",
+      "path": "skills/privesc/privesc-container-escape/sub/privesc-container-escape-capabilities-abuse",
+      "sha256": "d90ad6feffc641cdb5ffbc311586a083df6d4b944dfc0d69a2dbc8209ecf89f2",
+      "version": "1.0.0"
+    },
+    "privesc-container-escape-docker-socket": {
+      "parent": "privesc-container-escape",
+      "path": "skills/privesc/privesc-container-escape/sub/privesc-container-escape-docker-socket",
+      "sha256": "5bfb62e94954343af1944e12908c958148fa226b229ec67a6d8790657125a844",
+      "version": "1.0.0"
+    },
+    "privesc-container-escape-privileged-containers": {
+      "parent": "privesc-container-escape",
+      "path": "skills/privesc/privesc-container-escape/sub/privesc-container-escape-privileged-containers",
+      "sha256": "9318ab7126b4d4e8c4dd6cad5c314ce96c916ccf5a7877874ca98961138fa0aa",
+      "version": "1.0.0"
+    },
+    "privesc-kernel-triage-exploit-db-matching": {
+      "parent": "privesc-kernel-triage",
+      "path": "skills/privesc/privesc-kernel-triage/sub/privesc-kernel-triage-exploit-db-matching",
+      "sha256": "01ec9e02af952cf91df9fb8273a15f4376b406a5af058f74417b36e34a492171",
+      "version": "1.0.0"
+    },
+    "privesc-kernel-triage-safe-testing": {
+      "parent": "privesc-kernel-triage",
+      "path": "skills/privesc/privesc-kernel-triage/sub/privesc-kernel-triage-safe-testing",
+      "sha256": "3a3a42e4bcc76c898cddf73ff5387370bb5747d92a6ad380c9b60a4287af1e70",
+      "version": "1.0.0"
+    },
+    "privesc-kernel-triage-version-enumeration": {
+      "parent": "privesc-kernel-triage",
+      "path": "skills/privesc/privesc-kernel-triage/sub/privesc-kernel-triage-version-enumeration",
+      "sha256": "be1c76f8e8523525c6cb34ffbad80d4eec195a15094eeb17d1b960e7c463ec2f",
+      "version": "1.0.0"
+    },
+    "privesc-linux-vectors-cron-and-path-hijacking": {
+      "parent": "privesc-linux-vectors",
+      "path": "skills/privesc/privesc-linux-vectors/sub/privesc-linux-vectors-cron-and-path-hijacking",
+      "sha256": "ed87ad62a22c2b1e6fea366227d9d8e337890977ed543ca5777579e8d1125649",
+      "version": "1.0.0"
+    },
+    "privesc-linux-vectors-sudo-misconfigurations": {
+      "parent": "privesc-linux-vectors",
+      "path": "skills/privesc/privesc-linux-vectors/sub/privesc-linux-vectors-sudo-misconfigurations",
+      "sha256": "e2da631e5ae252a0fca64d16dcc9de1873e0d84cf6f4e5dc8af2d9539b4ec8f4",
+      "version": "1.0.0"
+    },
+    "privesc-linux-vectors-suid-binaries": {
+      "parent": "privesc-linux-vectors",
+      "path": "skills/privesc/privesc-linux-vectors/sub/privesc-linux-vectors-suid-binaries",
+      "sha256": "9a96808eb20d05ddfa97a0b06b7809c2487f557e1409f3cbe9b41d3e12efd77f",
+      "version": "1.0.0"
+    },
+    "privesc-windows-vectors-registry-and-scheduled-tasks": {
+      "parent": "privesc-windows-vectors",
+      "path": "skills/privesc/privesc-windows-vectors/sub/privesc-windows-vectors-registry-and-scheduled-tasks",
+      "sha256": "4e8007e05882fe9264ffa4e68e9f67c782649ad7873c70b33b5a829a95513338",
+      "version": "1.0.0"
+    },
+    "privesc-windows-vectors-service-misconfigurations": {
+      "parent": "privesc-windows-vectors",
+      "path": "skills/privesc/privesc-windows-vectors/sub/privesc-windows-vectors-service-misconfigurations",
+      "sha256": "6154edf5abcaf102f137295afd08ddcc8f16ad7acee3e5b7f9c35e8072fd0186",
+      "version": "1.0.0"
+    },
+    "privesc-windows-vectors-token-manipulation": {
+      "parent": "privesc-windows-vectors",
+      "path": "skills/privesc/privesc-windows-vectors/sub/privesc-windows-vectors-token-manipulation",
+      "sha256": "7e89b6992760e8303bec03b4cfa1b04ebacb230d77c37af6f3225444f701b677",
+      "version": "1.0.0"
+    },
     "process-memory-triage": {
       "parent": "memory-forensics",
       "path": "skills/forensics/memory-forensics/sub/process-memory-triage",
@@ -3964,10 +5178,82 @@
       "sha256": "8a62a32ff58065db37588f08e406f2369797c339f146ebac78bdbd8b5542f5e5",
       "version": "1.0.0"
     },
+    "recon-asn-netblock-asn-lookup": {
+      "parent": "recon-asn-netblock",
+      "path": "skills/recon/recon-asn-netblock/sub/recon-asn-netblock-asn-lookup",
+      "sha256": "91eaf2eee16a7dac87308c414bb5f6f66dd771326b6011fe79550a7c88359c9b",
+      "version": "1.0.0"
+    },
+    "recon-asn-netblock-bgp-data": {
+      "parent": "recon-asn-netblock",
+      "path": "skills/recon/recon-asn-netblock/sub/recon-asn-netblock-bgp-data",
+      "sha256": "0bdaabafb96d93db464d4c908b1c1a93c4a19952faf5d4edfae3d121a9e25db5",
+      "version": "1.0.0"
+    },
+    "recon-asn-netblock-netblock-enumeration": {
+      "parent": "recon-asn-netblock",
+      "path": "skills/recon/recon-asn-netblock/sub/recon-asn-netblock-netblock-enumeration",
+      "sha256": "ef2a32a84ff318d5e4f75541f58eed57fc2d5970047c901c2d8c4abb37e36fae",
+      "version": "1.0.0"
+    },
+    "recon-cert-transparency-certstream-monitoring": {
+      "parent": "recon-cert-transparency",
+      "path": "skills/recon/recon-cert-transparency/sub/recon-cert-transparency-certstream-monitoring",
+      "sha256": "3b17c0b035560a322d058fc5a5ccb58302a117a9b4c793e050ebadb31df74c9f",
+      "version": "1.0.0"
+    },
+    "recon-cert-transparency-crtsh-workflows": {
+      "parent": "recon-cert-transparency",
+      "path": "skills/recon/recon-cert-transparency/sub/recon-cert-transparency-crtsh-workflows",
+      "sha256": "60c1aa8aac4716236158c50f0f124a1cd5e211587718085f9c568e6e897d92b3",
+      "version": "1.0.0"
+    },
+    "recon-cert-transparency-subdomain-extraction": {
+      "parent": "recon-cert-transparency",
+      "path": "skills/recon/recon-cert-transparency/sub/recon-cert-transparency-subdomain-extraction",
+      "sha256": "3cb96d341f1a7c71f8e4a8718f660398c6213ca0a2f79f8f4cafb950bfc39b4b",
+      "version": "1.0.0"
+    },
     "recon-for-bounty": {
       "parent": "bug-bounty-workflow",
       "path": "skills/bugbounty/bug-bounty-workflow/sub/recon-for-bounty",
       "sha256": "ad896acded815830733ca98e24cc65800b08236aed492472010863f607d0ecd7",
+      "version": "1.0.0"
+    },
+    "recon-subdomain-enumeration-active-bruteforcing": {
+      "parent": "recon-subdomain-enumeration",
+      "path": "skills/recon/recon-subdomain-enumeration/sub/recon-subdomain-enumeration-active-bruteforcing",
+      "sha256": "e7e332debd432c66b7a2cece211be8738253ecf842112bcae952a1ad332a3b06",
+      "version": "1.0.0"
+    },
+    "recon-subdomain-enumeration-passive-sources": {
+      "parent": "recon-subdomain-enumeration",
+      "path": "skills/recon/recon-subdomain-enumeration/sub/recon-subdomain-enumeration-passive-sources",
+      "sha256": "351b7f1a9f67752085a8c87e66f885b23e70d773898c321dce9cbd2bf309a9cf",
+      "version": "1.0.0"
+    },
+    "recon-subdomain-enumeration-permutation-techniques": {
+      "parent": "recon-subdomain-enumeration",
+      "path": "skills/recon/recon-subdomain-enumeration/sub/recon-subdomain-enumeration-permutation-techniques",
+      "sha256": "1683e8c1ea344639c6f8c90f18394eeabc6896c5c67337440b7d2025b8c950ac",
+      "version": "1.0.0"
+    },
+    "recon-subdomain-takeover-claiming-and-verification": {
+      "parent": "recon-subdomain-takeover",
+      "path": "skills/recon/recon-subdomain-takeover/sub/recon-subdomain-takeover-claiming-and-verification",
+      "sha256": "05ff503148ecd4c4e937994a7a128e9ee63df5e2db4f08bd68740c988d47f0db",
+      "version": "1.0.0"
+    },
+    "recon-subdomain-takeover-cloud-service-fingerprints": {
+      "parent": "recon-subdomain-takeover",
+      "path": "skills/recon/recon-subdomain-takeover/sub/recon-subdomain-takeover-cloud-service-fingerprints",
+      "sha256": "ff33ab626b6ea9027bcf44eaaa78302af0fbd267d0530c84bb13c9fe3701da44",
+      "version": "1.0.0"
+    },
+    "recon-subdomain-takeover-dns-record-analysis": {
+      "parent": "recon-subdomain-takeover",
+      "path": "skills/recon/recon-subdomain-takeover/sub/recon-subdomain-takeover-dns-record-analysis",
+      "sha256": "a7075e71f7ae41ab956c29ee2fcfda26dfb4462bd760c742209806f20915e2b6",
       "version": "1.0.0"
     },
     "report-writing-bounty": {

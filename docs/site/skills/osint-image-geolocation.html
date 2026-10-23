@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: osint-image-geolocation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>osint-image-geolocation</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to determine where a photograph was</p><h2>Sub-skills</h2><ul><li><a href="osint-image-geolocation-exif-analysis.html">osint-image-geolocation-exif-analysis</a> <span class="muted">v1.0.0: Use when a photo in an authorized investigation may</span></li><li><a href="osint-image-geolocation-landmark-recognition.html">osint-image-geolocation-landmark-recognition</a> <span class="muted">v1.0.0: Use when a photo contains visible features that can</span></li><li><a href="osint-image-geolocation-shadow-and-sun-analysis.html">osint-image-geolocation-shadow-and-sun-analysis</a> <span class="muted">v1.0.0: Use when a photo&#x27;s shadows and sunlight can constrain</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="image-osint.html">image-osint</a> <a href="osint-methodology.html">osint-methodology</a> <a href="osint-username-enumeration.html">osint-username-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>ExifTool</td><td>12.9</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>ImageMagick</td><td>7.1</td></tr></tbody></table><p>Image geolocation determines where a photo was taken from its pixels and metadata: GPS tags, landmarks, signage language, vegetation, sun angle, and street furniture. Investigators use it to verify claimed locations and to place events. This skill covers the method from file preservation through metadata, visual analysis, solar analysis, and the confidence-rated report. It applies only to authorized investigations and respects privacy: geolocating a photo of a private individual without authorization is not in scope, and faces and plates get handled per your case policy.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm authorization and the question: exact location, or</li>
+<p>verification of a claimed one.</p>
+<li>Preserve the original: hash it, work on copies, never re-encode</li>
+<p>the original.</p>
+<li>Extract EXIF with ExifTool; check for GPS tags, timestamps, and</li>
+<p>device info.</p>
+<li>Do the visual read: landmarks, signage, language, vegetation,</li>
+<p>vehicles, street furniture.</p>
+<li>Run sun and shadow analysis for direction and time of day.</li>
+<li>Cross-check candidate locations against maps and street-level</li>
+<p>imagery.</p>
+<li>Score confidence and write the report with evidence per claim.</li>
+<li>Handle privacy: minimize retention of images with identifiable</li>
+<p>people.</p>
+</ol>
+<h2>1. Preservation</h2>
+<pre><code class="language-bash"># Hash the original immediately; every later step works on copies
+sha256sum photo.jpg | tee photo.sha256
+cp photo.jpg work-photo.jpg
+
+# Confirm it is what it claims to be
+file photo.jpg
+identify -verbose work-photo.jpg | grep -E &quot;Geometry|Format|Colorspace&quot;</code></pre>
+<p>Example output shape:</p>
+<pre><code>photo.jpg: JPEG image data, Exif, 4032x3024
+  Geometry: 4032x3024
+  Format: JPEG</code></pre>
+<p>If the file was re-encoded by a messaging app or social platform, EXIF is likely stripped and resolution reduced; note the provenance chain, since each re-encode destroys evidence.</p>
+<h2>2. EXIF extraction</h2>
+<pre><code class="language-bash"># Full EXIF dump
+exiftool photo.jpg &gt; exif.txt
+wc -l exif.txt
+
+# The fields that matter for geolocation
+exiftool -GPSPosition -GPSLatitude -GPSLongitude -GPSAltitude \
+  -CreateDate -DateTimeOriginal -Make -Model -Software photo.jpg
+
+# Extract the embedded thumbnail (sometimes it differs from the main image)
+exiftool -b -ThumbnailImage photo.jpg &gt; thumb.jpg</code></pre>
+<p>Example output shape:</p>
+<pre><code>GPS Position                    : 50.8503 N, 4.3517 E
+Create Date                     : 2026:10:20 14:32:11+02:00
+Make                            : Google
+Model                           : Pixel 8
+Software                        : HDR+ 1.0</code></pre>
+<p>A GPS position is the fastest answer, but verify it: check that the timestamp, the visible landmarks, and the sun angle agree with the coordinates. Spoofed or stale GPS tags happen, especially in screenshots of maps rather than true photos. No GPS data is normal for images from messaging apps; proceed to visual analysis.</p>
+<h2>3. Visual read: the systematic scan</h2>
+<p>Work through the image in layers, nearest to farthest:</p>
+<ol>
+<li>Foreground: signage text and language, license plates (country</li>
+<p>format), shop names, phone number formats.</p>
+<li>Midground: architecture style, road markings, traffic signs,</li>
+<p>vehicle models, street furniture (lamp posts, bins).</p>
+<li>Background: skyline, mountains, distinctive buildings, church</li>
+<p>spires, construction cranes.</p>
+<li>People and vehicles: uniforms, license plate colors, driving</li>
+<p>side (left or right).</p>
+<li>Vegetation and terrain: palm versus pine, arid versus green.</li>
+</ol>
+<pre><code class="language-bash"># Crop regions for closer inspection without touching the original
+convert work-photo.jpg -crop 1200x800+2000+400 sign-crop.jpg
+convert work-photo.jpg -crop 1000x700+500+1800 skyline-crop.jpg</code></pre>
+<p>Record each observation as a separate line with the crop filename. &quot;The sign is in Dutch&quot; narrows to a few countries; &quot;the license plate is yellow rear, white front&quot; narrows to one.</p>
+<h2>4. Sun and shadow analysis</h2>
+<p>Shadows give direction and time. The sub-skill osint-image-geolocation-shadow-and-sun-analysis covers the full method; the essentials:</p>
+<ul>
+<li>In the northern hemisphere at midday, shadows point north; in the</li>
+<p>southern hemisphere, south.</p>
+<li>Shadow length versus object height gives the sun&#x27;s elevation,</li>
+<p>which maps to time of day for a known date and latitude.</p>
+<li>The visible sun position plus the EXIF timestamp cross-checks the</li>
+<p>claimed timezone.</p>
+</ul>
+<pre><code class="language-bash"># Measure in the image: pick a vertical object with a clear shadow
+# Record pixel lengths; the ratio is what matters, not absolute size
+# shadow_pixels / object_pixels = 1 / tan(elevation)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import math
+ratio = 1.4  # shadow is 1.4x the object height
+elevation = math.degrees(math.atan(1 / ratio))
+print(f&quot;sun elevation ~{elevation:.1f} degrees&quot;)
+EOF</code></pre>
+<h2>5. Cross-checking with maps</h2>
+<p>Take the candidate from visual analysis and verify against street-level imagery: match the building facades, the road layout, the lamp post style, the shopfronts. A geolocation is confirmed when multiple independent features match the same spot: the sign text, the building across the street, and the road curve all agree.</p>
+<pre><code class="language-bash"># Keep a verification log per candidate
+cat &gt; candidates.md &lt;&lt;&#x27;EOF&#x27;
+## Candidate 1: Grand Place area, Brussels
+- Sign language Dutch/French: consistent
+- Facade match on street view: YES (screenshot sv-1.png)
+- Shadow direction vs EXIF time: consistent (north, midday)
+- Confidence: high
+EOF</code></pre>
+<p>One matching feature is a lead; three independent matches are a geolocation. If street-level imagery is outdated, note the imagery date; facades change.</p>
+<h2>6. Confidence-rated reporting</h2>
+<pre><code>Claim: photo taken at Grand Place, Brussels (50.8467 N, 4.3525 E)
+Confidence: high
+Evidence:
+- EXIF GPS 50.8503 N, 4.3517 E (400 m from claim, consistent)
+- Signage in Dutch and French (crop sign-crop.jpg)
+- Facade match on street-level imagery (sv-1.png, imagery dated 2025-06)
+- Shadow analysis: sun elevation ~35 deg, consistent with 14:32 local in October
+Limitations: no distinctive landmark in frame; location is street-level, not building-level</code></pre>
+<p>Always state the precision honestly: city-level, street-level, or building-level. Overclaiming precision is the classic geolocation failure.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>EXIF is stripped (social media, messaging apps). Proceed with</li>
+<p>visual and solar analysis; note the provenance loss.</p>
+<li>The image is a screenshot, not a photo. GPS tags may show the</li>
+<p>screenshot location, not the depicted location; treat metadata as suspect and rely on visual content.</p>
+<li>Night photo: no shadows, limited color. Lean on signage,</li>
+<p>architecture, and any visible skyline; artificial lighting color temperature is a weak clue at best.</p>
+<li>Indoor photo: geolocation may be impossible beyond the building</li>
+<p>if identifiable. State that plainly rather than guessing.</p>
+<li>The photo is old and the location has changed. Historical</li>
+<p>street-level imagery and archives help; note the imagery dates.</p>
+<li>Multiple plausible candidates. Rank them with evidence for each</li>
+<p>and pick the best-supported; do not force a single answer.</p>
+<li>Faces or plates are visible. Follow your case policy: blur in</li>
+<p>working copies if required, minimize retention, and never publish identifiable images without authorization.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The geolocation would identify a private individual&#x27;s home or</li>
+<p>routine. Stop and check authorization: locating private persons is outside most OSINT scopes and may be unlawful.</p>
+<li>The image appears to depict wrongdoing within your authorized</li>
+<p>scope. Preserve the original with hashes, document the chain of custody, and escalate to the case owner before further analysis.</p>
+<li>Confidence stays low after full analysis. Report &quot;unresolved&quot;</li>
+<p>with the evidence gathered; a wrong geolocation is worse than none, especially if operational decisions depend on it.</p>
+<li>The photo is one of a series. Geolocate the easiest first; a</li>
+<p>confirmed location for one image constrains the others.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Geolocation is defeated by stripping metadata (which most platforms do automatically), avoiding distinctive backgrounds, and being aware of what signage and landmarks reveal. For investigators, the defender view is a reminder of privacy impact: the same techniques that verify a news photo can locate a person, so authorization and minimization are not bureaucracy but the ethical core of the work. When publishing geolocation results, consider whether the location detail serves the investigation or merely exposes someone.</p>
+<h2>Key references</h2>
+<ul>
+<li>ExifTool documentation: https://exiftool.org/</li>
+<li>Bellingcat geolocation guides:</li>
+<p>https://www.bellingcat.com/resources/</p>
+<li>SunCalc (sun position for any location and time):</li>
+<p>https://www.suncalc.org/</p>
+<li>Shadow analysis methodology (sub-skill):</li>
+<p>osint-image-geolocation-shadow-and-sun-analysis (this repo)</p>
+<li>Mapillary street-level imagery: https://www.mapillary.com/</li>
+<li>OpenStreetMap: https://www.openstreetmap.org/</li>
+<li>Image OSINT references: image-osint (this repo)</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

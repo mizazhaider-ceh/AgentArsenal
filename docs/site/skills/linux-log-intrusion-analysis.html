@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-log-intrusion-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-log-intrusion-analysis</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when investigating a Linux host for signs of intrusion using</p><h2>Sub-skills</h2><ul><li><a href="linux-log-intrusion-analysis-auth-log-triage.html">linux-log-intrusion-analysis-auth-log-triage</a> <span class="muted">v1.0.0: Use when triaging Linux authentication logs during incident</span></li><li><a href="linux-log-intrusion-analysis-detecting-lateral-movement.html">linux-log-intrusion-analysis-detecting-lateral-movement</a> <span class="muted">v1.0.0: Use when hunting for lateral movement across Linux hosts during</span></li><li><a href="linux-log-intrusion-analysis-journalctl-forensics.html">linux-log-intrusion-analysis-journalctl-forensics</a> <span class="muted">v1.0.0: Use when doing forensic analysis with journalctl on a Linux</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a> <a href="linux-systemd-security.html">linux-systemd-security</a> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>systemd</td><td>255</td></tr><tr><td>auditd</td><td>3.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>When something is wrong on a Linux host, the logs are the witness: authentication logs show who knocked and who got in, the journal shows what the system did, and audit trails show what processes touched. This parent skill covers the defensive workflow for log-based intrusion analysis: how to scope an investigation, build a timeline, triage auth logs, do journal forensics, spot lateral movement, and verify the logs themselves have not been tampered with. Everything here is defensive analysis of systems you are authorized to investigate, typically during incident response or threat hunting. The sub-skills go deep on auth log triage, journalctl forensics, and lateral movement detection; this file is the investigation strategy.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Scope the investigation: which hosts, what time window, what triggered it (alert, user report, anomaly).</li>
+<li>Preserve evidence first: snapshot logs and journal files before analysis alters access times or triggers rotation.</li>
+<li>Check log integrity: journal seals, collector comparison, unexpected gaps or rotations.</li>
+<li>Build a timeline: authentication events, new processes, privilege changes, network connections, ordered by time.</li>
+<li>Triage auth logs for brute force, valid-account abuse, and impossible patterns (see auth-log-triage sub-skill).</li>
+<li>Do journal forensics across boots and units for persistence and execution traces (see journalctl-forensics sub-skill).</li>
+<li>Hunt lateral movement: SSH chains, new keys, credential use across hosts (see detecting-lateral-movement sub-skill).</li>
+<li>Write findings with timestamps, log excerpts, ATT&amp;CK mappings, and confidence levels.</li>
+</ol>
+<h2>1. Scoping and evidence preservation</h2>
+<p>An investigation without a scope becomes a fishing expedition; analysis without preservation destroys the evidence it needs. Define the window from the first indicator, then copy (not move) the relevant logs to an analysis location.</p>
+<pre><code class="language-bash">ls -lat /var/log/auth.log* /var/log/secure* 2&gt;/dev/null | head -10
+journalctl --list-boots | head -10
+mkdir -p /root/ir-evidence &amp;&amp; cp -a /var/log/auth.log* /root/ir-evidence/ 2&gt;/dev/null</code></pre>
+<p>Example output shape: log rotation dates bounding your available history, boot list showing whether the suspect window is covered, and a preserved copy with original timestamps (<code>cp -a</code>). Note the earliest available log timestamp immediately: if the incident window predates your logs, say so up front rather than discovering it mid-investigation. Work from copies where possible; every read of a live log is fine, but avoid actions that rotate or truncate.</p>
+<h2>2. Log integrity: trust but verify</h2>
+<p>Attackers clean logs (MITRE T1070), so the first analytical step is asking whether the witness is reliable. Check journal seals, compare against the central collector, and look for gaps.</p>
+<pre><code class="language-bash">journalctl --verify 2&gt;&amp;1 | tail -5
+journalctl --list-boots --no-pager | wc -l
+last -x 2&gt;/dev/null | head -10</code></pre>
+<p>Red flags: seal verification failures, boots missing from the expected sequence, <code>wtmp</code>/<code>btmp</code> entries inconsistent with auth logs, and log files smaller than rotation policy predicts. If the local logs disagree with the central collector, trust the collector and treat the local gap as a finding in itself. Document the integrity verdict for every log source you rely on; a timeline built on tampered logs is worse than no timeline.</p>
+<h2>3. Building the incident timeline</h2>
+<p>A timeline turns scattered events into a story: initial access, execution, persistence, lateral movement. Pull the key event types into one chronological view.</p>
+<pre><code class="language-bash">journalctl --since &quot;2026-10-20&quot; --until &quot;2026-10-23&quot; -p info --no-pager -o short-precise 2&gt;/dev/null | grep -iE &quot;sshd|sudo|useradd|cron|systemd.*(start|enable)&quot; | head -30</code></pre>
+<p>Correlate across sources: auth logs (who authenticated), journal (what services started), auditd (what processes executed what), and file timestamps (what changed). A typical intrusion timeline reads: brute force or valid-account login, then a new user or key added, then a persistence mechanism (cron, timer, unit), then outbound connections or lateral SSH. Write each timeline entry with timestamp, source, event, and confidence; mark inferred entries as inferred.</p>
+<h2>4. Auth log triage at a glance</h2>
+<p>Authentication logs answer the highest-value questions fastest: was there brute force, did any of it succeed, and were legitimate accounts abused? The full method is in the auth-log-triage sub-skill; the parent-level pass is:</p>
+<pre><code class="language-bash">grep -c &quot;Failed password&quot; /var/log/auth.log 2&gt;/dev/null
+grep &quot;Accepted&quot; /var/log/auth.log 2&gt;/dev/null | awk &#x27;{print $1, $2, $3, $9, $11}&#x27; | sort | uniq -c | sort -rn | head -15
+grep -iE &quot;invalid user|authentication failure&quot; /var/log/auth.log 2&gt;/dev/null | wc -l</code></pre>
+<p>Example output shape: failure counts (reconnaissance volume), accepted logins by time/user/source (the sessions that matter), and invalid-user attempts (username enumeration). Any <code>Accepted</code> outside expected users, hours, or source networks becomes a timeline anchor to investigate. One successful login from an unusual source outweighs ten thousand failed guesses.</p>
+<h2>5. Journal forensics at a glance</h2>
+<p>The journal shows system behavior around the suspect window: service starts, timer firings, kernel messages, and unit changes. The full method is in the journalctl-forensics sub-skill; the parent-level pass is:</p>
+<pre><code class="language-bash">journalctl -b -p warning --no-pager 2&gt;/dev/null | head -20
+journalctl --since &quot;2026-10-22 00:00&quot; --no-pager -o short 2&gt;/dev/null | grep -iE &quot;started|enabled|failed.*service|new session&quot; | head -20</code></pre>
+<p>Look for: services starting that should not exist, timers firing unknown units, new user sessions at odd hours, and kernel warnings (OOM kills hiding activity, module loads). Cross-reference every suspicious service start with the unit audit from the systemd security skills: an unknown unit that started at 03:00 is persistence until proven otherwise.</p>
+<h2>6. Lateral movement at a glance</h2>
+<p>Intruders rarely stop at one host. Look for the signs of movement: SSH from this host to others, new authorized keys, credential material accessed, and connections to internal hosts outside normal patterns. Full method in the detecting-lateral-movement sub-skill.</p>
+<pre><code class="language-bash">grep -E &quot;Accepted.*sshd&quot; /var/log/auth.log 2&gt;/dev/null | awk &#x27;{print $(NF-2)}&#x27; | sort | uniq -c | sort -rn | head -10
+ls -lat ~/.ssh/authorized_keys /home/*/.ssh/authorized_keys 2&gt;/dev/null
+ss -tnp 2&gt;/dev/null | grep ESTAB | head -15</code></pre>
+<p>Example output shape: accepted-login source IPs (unexpected internal sources suggest pivoting), recently modified authorized_keys files (new keys are persistence), and current established connections (unexpected internal peers). Treat every internal connection the host&#x27;s role does not explain as a lead, not as noise.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Log volume on busy hosts makes naive grepping slow and misleading; use time-bounded queries (<code>--since</code>/<code>--until</code>) and aggregate (counts by hour, by source) before reading individual lines, or you will miss patterns in the noise.</li>
+<li>Timezone and clock issues corrupt timelines: verify NTP health and note the timezone of every source, because correlating logs with skewed clocks produces false sequences that look like attacks.</li>
+<li>Attackers may log nothing if they used existing valid credentials quietly; absence of brute force does not mean absence of intrusion, so also hunt for behavioral anomalies (new keys, new persistence, odd hours) rather than only failed logins.</li>
+<li>Log rotation can delete the evidence mid-investigation; the preservation step exists for this reason, and on long-running incidents, arrange log shipping to hold the window open.</li>
+<li>Containers and orchestrated workloads log differently (stdout to the runtime, not the host journal); know where each workload&#x27;s logs actually land before concluding a host is clean.</li>
+<li>Encrypted or obfuscated payloads in logs (base64 blobs in cron commands, encoded PowerShell-style invocations) need decoding before judging; do not dismiss what you have not decoded.</li>
+<li>Multiple analysts touching live logs can contaminate access times and trigger rotations; coordinate a single evidence collection, then analyze from copies.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If integrity checks fail (seal failures, collector gaps, missing boots), escalate to full incident response immediately: you are likely looking at an active adversary doing Indicator Removal, not a logging bug.</li>
+<li>If the timeline shows successful authentication from unknown sources, escalate for credential containment: rotate the affected credentials and hunt the same indicators across the fleet before the trail cools.</li>
+<li>If lateral movement indicators appear, widen the scope to the connected hosts now, not after finishing this host; intruders move faster than sequential investigations.</li>
+<li>If the available log window does not cover the suspected intrusion start, escalate the visibility gap itself as a finding: the investigation is bounded by evidence, and the business needs to know what cannot be answered.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Log intrusion analysis is where the defensive skills converge: hardening (baselines) reduces noise, systemd security (unit audits, journal integrity) protects the evidence, and this skill consumes it all. MITRE ATT&amp;CK mappings run through the whole intrusion chain: T1110/T1078 for initial access, T1053/T1543 for persistence, T1070 for defense evasion, T1021/T1080-adjacent movement for lateral spread. The defender&#x27;s posture is continuous rather than incident-only: the same queries run as scheduled hunts, baselined against normal, so that an incident investigation starts from &quot;what changed&quot; instead of from zero. Centralized, tamper-evident logging is the foundation; everything in this skill assumes it and degrades without it.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK enterprise matrix: https://attack.mitre.org/</li>
+<li>MITRE ATT&amp;CK T1070 Indicator Removal: https://attack.mitre.org/techniques/T1070/</li>
+<li>MITRE ATT&amp;CK T1021 Remote Services: https://attack.mitre.org/techniques/T1021/</li>
+<li>journalctl manual: https://www.freedesktop.org/software/systemd/man/journalctl.html</li>
+<li>Linux auditd documentation: https://github.com/linux-audit/audit-documentation</li>
+<li>NIST SP 800-92 Guide to Computer Security Log Management: https://csrc.nist.gov/publications/detail/sp/800-92/final</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

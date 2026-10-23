@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-forensics-challenges-pcap-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-forensics-challenges-pcap-analysis</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">92/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF forensics challenge provides a packet capture,</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-forensics-challenges.html">ctf-forensics-challenges</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-forensics-challenges.html">ctf-forensics-challenges</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="nmap-methodology.html">nmap-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Wireshark</td><td>4.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>CyberChef</td><td>latest</td></tr></tbody></table><p>Packet captures record exactly what crossed the network, which makes them a favorite CTF forensics artifact: credentials, transferred files, and exfiltrated flags are all recoverable with the right filters. This sub-skill covers the authorized pcap workflow in depth: fast triage, protocol-specific extraction, stream following, file export, and reassembling covert channels (DNS, ICMP, timing) with Python. Scope is CTF competitions, lab captures, and evidence you are authorized to analyze.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Run <code>capinfos</code> and the protocol hierarchy to learn size, duration,</li>
+<p>and which protocols dominate.</p>
+<li>List conversations (Statistics -&gt; Conversations) to find the</li>
+<p>interesting host pairs.</p>
+<li>Check cleartext protocols first: HTTP objects, FTP-DATA, Telnet,</li>
+<p>DNS queries, SMTP.</p>
+<li>Follow the most suspicious TCP/UDP streams and read them as ASCII.</li>
+<li>Export transferred files and inspect them (they are often the next</li>
+<p>forensics stage: a zip, an image, a binary).</p>
+<li>Hunt covert channels: DNS label data, ICMP payloads, odd ports,</li>
+<p>periodic beacons.</p>
+<li>Reassemble exfiltrated bytes with tshark field extraction plus a</li>
+<p>Python script.</p>
+<li>Decode the reassembled blob (base64, hex, XOR) and verify the flag</li>
+<p>format.</p>
+</ol>
+<h2>1. Triage: capinfos and hierarchy</h2>
+<pre><code class="language-bash">capinfos capture.pcap
+# File size, packet count, duration, data rate -&gt; is this a 5 minute or 5 hour capture?
+
+tshark -r capture.pcap -q -z io,phs | head -40
+# Protocol Hierarchy Statistics: frames and bytes per protocol.
+# Look for: data on unusual ports, tftp/ftp-data (file transfer),
+# dns with huge query counts, icmp with data.
+
+# Top talkers
+tshark -r capture.pcap -q -z conv,ip | head -30
+
+# DNS query names (exfil often hides here)
+tshark -r capture.pcap -Y dns -T fields -e dns.qry.name | sort | uniq -c | sort -rn | head -30</code></pre>
+<p>If one host makes thousands of DNS queries with long random-looking labels, that is DNS tunneling until proven otherwise.</p>
+<h2>2. Cleartext protocol extraction</h2>
+<pre><code class="language-bash"># HTTP: list requests, then export objects
+tshark -r capture.pcap -Y &quot;http.request&quot; \
+  -T fields -e ip.src -e http.host -e http.request.method -e http.request.uri | head -30
+tshark -r capture.pcap --export-objects http,/tmp/http_objs &amp;&amp; ls -la /tmp/http_objs
+
+# Credentials in the clear (HTTP basic auth, FTP, Telnet)
+tshark -r capture.pcap -Y &quot;http.authorization&quot; -T fields -e http.authorization | sort -u
+tshark -r capture.pcap -Y &quot;ftp.request.command == USER or ftp.request.command == PASS&quot; \
+  -T fields -e ftp.request.arg
+tshark -r capture.pcap -q -z follow,tcp,ascii,0 | grep -i -E &quot;user|pass|login&quot; | head
+
+# FTP data transfers
+tshark -r capture.pcap --export-objects ftp-data,/tmp/ftp_objs &amp;&amp; ls -la /tmp/ftp_objs
+
+# SMTP / POP3 / IMAP credentials and message bodies
+tshark -r capture.pcap -q -z follow,tcp,ascii,0 | grep -i -E &quot;auth|subject|flag&quot; | head -20</code></pre>
+<p>Always inspect exported objects with <code>file</code> afterward; a transferred &quot;document&quot; is often a zip containing the next stage.</p>
+<h2>3. Following streams</h2>
+<pre><code class="language-bash"># Follow stream index N as ASCII (find N in the Conversations view)
+tshark -r capture.pcap -q -z follow,tcp,ascii,3 | head -80
+
+# Raw hex when ASCII mangles binary
+tshark -r capture.pcap -q -z follow,tcp,hex,3 | head -40
+
+# UDP streams (DNS exfil, custom protocols)
+tshark -r capture.pcap -q -z follow,udp,ascii,0 | head -60
+
+# Filter to one conversation, then read packets in order
+tshark -r capture.pcap -Y &quot;ip.addr==10.0.0.5 and tcp.port==4444&quot; -T fields \
+  -e frame.number -e tcp.seq -e tcp.len -e data.len | head -40</code></pre>
+<p>In the Wireshark GUI, right-click any packet of interest -&gt; Follow -&gt; TCP Stream gives the same view with clickable stream switching. Note the stream index in the window title for the tshark equivalent.</p>
+<h2>4. Reassembling DNS exfiltration</h2>
+<pre><code class="language-bash"># Pull the query labels in order
+tshark -r capture.pcap -Y &quot;dns.flags.response == 0&quot; \
+  -T fields -e frame.number -e dns.qry.name &gt; /tmp/dnsq.txt
+head -5 /tmp/dnsq.txt
+# 12  aGVsbG8td29ybGQ.example.com   &lt;- base64 label!</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Reassemble base64 labels exfiltrated via DNS queries.&quot;&quot;&quot;
+import base64
+
+blob = b&quot;&quot;
+seen = set()
+for line in open(&quot;/tmp/dnsq.txt&quot;):
+    parts = line.strip().split()
+    if len(parts) &lt; 2:
+        continue
+    label = parts[1].split(&quot;.&quot;)[0]      # first label holds the data
+    if label in seen:                    # skip retransmissions
+        continue
+    seen.add(label)
+    blob += label.encode()
+
+blob += b&quot;=&quot; * (-len(blob) % 4)          # fix padding
+open(&quot;/tmp/dns_exfil.bin&quot;, &quot;wb&quot;).write(base64.b64decode(blob))
+print(&quot;wrote&quot;, len(blob), &quot;chars of base64&quot;)</code></pre>
+<p>Variants: hex labels (decode with <code>bytes.fromhex</code>), per-query sequence numbers in a second label (sort by them), or data in TXT responses instead of queries (filter <code>dns.flags.response == 1</code> and read <code>dns.txt</code>).</p>
+<h2>5. Reassembling ICMP and odd-protocol exfil</h2>
+<pre><code class="language-bash"># ICMP payloads in order
+tshark -r capture.pcap -Y &quot;icmp.data.len &gt; 0&quot; \
+  -T fields -e frame.number -e icmp.data &gt; /tmp/icmp.txt
+wc -l /tmp/icmp.txt &amp;&amp; head -3 /tmp/icmp.txt</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Reassemble ICMP exfiltrated bytes (colon-separated hex from tshark).&quot;&quot;&quot;
+out = bytearray()
+for line in open(&quot;/tmp/icmp.txt&quot;):
+    parts = line.strip().split(&quot;\t&quot;)
+    if len(parts) &lt; 2 or not parts[1]:
+        continue
+    out += bytes.fromhex(parts[1].replace(&quot;:&quot;, &quot;&quot;))
+open(&quot;/tmp/icmp_exfil.bin&quot;, &quot;wb&quot;).write(out)
+print(&quot;reassembled&quot;, len(out), &quot;bytes&quot;)</code></pre>
+<p>Then identify the blob: <code>file /tmp/icmp_exfil.bin</code>, check for gzip/zlib magic, base64-decode if printable, XOR-brute-force if random-looking. The same pattern works for data smuggled in any protocol field; only the tshark <code>-e</code> field name changes.</p>
+<h2>6. Beaconing and C2 patterns</h2>
+<pre><code class="language-bash"># Periodic connections: group by second and count
+tshark -r capture.pcap -T fields -e frame.time_epoch -e ip.dst \
+  | awk &#x27;{print int($1), $2}&#x27; | sort | uniq -c | sort -rn | head -20
+
+# TLS metadata without decryption: SNI and cert names
+tshark -r capture.pcap -Y &quot;tls.handshake.extensions_server_name&quot; \
+  -T fields -e tls.handshake.extensions_server_name | sort | uniq -c | sort -rn | head
+
+# JA3-ish triage is GUI work; on CLI, flag odd ports and long-lived flows
+tshark -r capture.pcap -q -z conv,tcp | sort -k9 -rn | head -15</code></pre>
+<p>CTF beacons are usually simple: fixed interval, fixed size, to one destination. Commands and responses hide in the payload sizes or in small encrypted blobs; when the challenge provides the C2 key (config file, binary), decrypt offline with Python.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Capture has no full packets (snaplen truncated): stream following</li>
+<p>still works for headers and metadata; file export will be corrupt, so pivot to metadata analysis.</p>
+<li>The pcapng has multiple interfaces or decryption secrets: check</li>
+<p>for embedded TLS keylog blocks (Wireshark Preferences -&gt; TLS -&gt; keylog) before assuming traffic is opaque.</p>
+<li>Timestamps are weird (all zero): ordering by frame number still</li>
+<p>works; do not rely on time-based beacon analysis.</p>
+<li>The flag spans multiple streams: reassemble each, then concatenate</li>
+<p>in frame-number order.</p>
+<li>IPv6 or tunneled traffic: adjust filters (<code>ipv6.addr</code>, <code>gre</code>),</li>
+<p>but the follow/export workflow is identical.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Exported files are corrupt: the transfer may use a custom protocol;</li>
+<p>follow the stream in hex mode and carve the file manually by its magic bytes.</p>
+<li>DNS labels look encrypted, not encoded: find the key in the</li>
+<p>challenge bundle (config, binary, another artifact); CTF crypto is rarely unbreakable, just layered.</p>
+<li>Nothing but TLS: enumerate SNI values, certificate subjects, and</li>
+<p>flow sizes; the challenge may expect metadata-only answers, or the keylog is hidden in a second artifact.</p>
+<li>Reassembled blob is still not the flag: run it through the</li>
+<p>forensics parent workflow (binwalk, steg tools); exfil blobs are often archives or images with a second hiding layer.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders hunt exactly these patterns with NDR and DNS logging: long high-entropy subdomains, ICMP with payloads, periodic beacons, and cleartext credential use. Detections include DNS query length and entropy thresholds, ICMP data alerts, and TLS fingerprinting (JA3) for known C2. Durable defenses: egress filtering with allowlisted DNS, decrypt-and-inspect TLS at the boundary where policy allows, and full packet capture on critical segments so forensics is possible after the fact.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1048 (Exfiltration Over Alternative Protocol), T1071</li>
+<p>(Application Layer Protocol), T1041 (Exfiltration Over C2 Channel).</p>
+<li>Wireshark 4.2 display filter reference: https://www.wireshark.org/docs/dfref/</li>
+<li>tshark manual: https://www.wireshark.org/docs/man-pages/tshark.html</li>
+<li>scapy documentation: https://scapy.readthedocs.io/</li>
+<li>Wireshark sample captures: https://wiki.wireshark.org/SampleCaptures</li>
+<p>(practice protocol patterns on real captures).</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

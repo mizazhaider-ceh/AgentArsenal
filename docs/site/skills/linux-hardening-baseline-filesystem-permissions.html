@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-hardening-baseline-filesystem-permissions</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-hardening-baseline-filesystem-permissions</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when auditing or hardening Linux filesystem permissions as</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a> <a href="linux-hardening.html">linux-hardening</a> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>GNU coreutils</td><td>9.4</td></tr><tr><td>AIDE</td><td>0.18</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Permissions are the operating system&#x27;s first access control list, and misconfigurations here turn minor footholds into full compromise: a writable cron script becomes root execution, a world-readable shadow backup leaks password hashes, a new SUID binary is a backdoor. This sub-skill covers the defensive filesystem permission baseline: the correct modes for sensitive paths, how to find deviations with <code>find</code>, SUID/SGID auditing, umask policy, and ongoing monitoring. Purely defensive, for systems you own or administer. The parent skill places permissions in the wider baseline; this file is the command-level reference.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Snapshot the current state: key file modes, SUID/SGID lists, and world-writable files, saved as the audit baseline.</li>
+<li>Fix sensitive file modes: <code>/etc/shadow</code> 640 root:shadow, <code>/etc/passwd</code> 644, <code>/etc/ssh/*</code> restricted, cron directories 755 root-owned.</li>
+<li>Audit SUID/SGID binaries against the distro default list; remove the bit or justify every extra.</li>
+<li>Hunt world-writable files and directories outside <code>/tmp</code> and <code>/var/tmp</code>; fix ownership or modes.</li>
+<li>Verify sticky bits on world-writable directories (<code>/tmp</code>, <code>/var/tmp</code>, <code>/dev/shm</code>).</li>
+<li>Set and enforce umask policy (027 for most servers) in login profiles and service units.</li>
+<li>Schedule the audit: recurring finds plus AIDE integrity monitoring on permission-sensitive paths.</li>
+</ol>
+<h2>1. Sensitive file and directory modes</h2>
+<p>A small set of paths carries most of the risk. Check them first, fix them explicitly, and know the correct values by heart.</p>
+<pre><code class="language-bash">stat -c &quot;%a %U %G %n&quot; /etc/passwd /etc/shadow /etc/group /etc/gshadow
+stat -c &quot;%a %U %G %n&quot; /etc/ssh/ssh_host_*_key /etc/ssh/sshd_config
+stat -c &quot;%a %U %G %n&quot; /etc/crontab /etc/cron.d /etc/cron.daily 2&gt;/dev/null</code></pre>
+<p>Expected values: <code>/etc/passwd</code> 644 root:root, <code>/etc/shadow</code> 640 root:shadow (Debian) or 600 root:root (RHEL), <code>/etc/gshadow</code> 640 root:shadow, SSH private host keys 600 root:root, <code>sshd_config</code> 600 root:root, <code>/etc/crontab</code> and <code>/etc/cron.d</code> 644/755 root-owned with nothing group- or world-writable. Fix with <code>chmod</code> and <code>chown</code> explicitly per file; never <code>chmod -R</code> a system directory, which breaks more than it fixes.</p>
+<h2>2. SUID and SGID auditing</h2>
+<p>Every SUID binary is a potential privilege boundary, so the list must be short, known, and monitored. Compare against your distro&#x27;s default set.</p>
+<pre><code class="language-bash">find / -xdev -type f -perm -4000 -exec stat -c &quot;%a %U %n&quot; {} \; 2&gt;/dev/null | sort -k3
+find / -xdev -type f -perm -2000 -exec stat -c &quot;%a %G %n&quot; {} \; 2&gt;/dev/null | sort -k3</code></pre>
+<p>Example output shape: the standard set (<code>/usr/bin/passwd</code>, <code>/usr/bin/sudo</code>, <code>/usr/bin/su</code>, <code>/usr/bin/mount</code> on some distros, <code>/usr/bin/pkexec</code>) and nothing else. For each entry you cannot explain, investigate: check package ownership with <code>dpkg -S</code> or <code>rpm -qf</code>, and remove the bit with <code>chmod u-s</code> if it is not needed (common candidates: <code>mount</code>/<code>umount</code> on servers, games, legacy tools). Re-run after every package upgrade, because upgrades can reinstall SUID bits.</p>
+<h2>3. World-writable files and directories</h2>
+<p>World-writable files outside temporary directories are almost always wrong, and world-writable directories without the sticky bit let users delete each other&#x27;s files.</p>
+<pre><code class="language-bash">find / -xdev -type f -perm -0002 ! -path &quot;/proc/*&quot; ! -path &quot;/sys/*&quot; ! -path &quot;/dev/*&quot; 2&gt;/dev/null | head -20
+find / -xdev -type d -perm -0002 ! -path &quot;/proc/*&quot; ! -path &quot;/sys/*&quot; 2&gt;/dev/null | head -20
+stat -c &quot;%a %n&quot; /tmp /var/tmp /dev/shm</code></pre>
+<p>Expected: no world-writable files outside application temp areas you know about, and <code>/tmp</code>, <code>/var/tmp</code>, <code>/dev/shm</code> at mode 1777 (sticky bit set, shown as the leading 1). Fix files with <code>chmod o-w</code> or tighter, and set the sticky bit with <code>chmod +t</code>. Investigate before fixing: a world-writable file might be load-bearing for a legacy app, in which case fix the app&#x27;s umask or move its temp files rather than breaking it silently.</p>
+<h2>4. Umask policy</h2>
+<p>Umask decides the default modes of newly created files, which is where permission debt accumulates. A baseline umask of 027 gives owner full, group read, other nothing.</p>
+<pre><code class="language-bash">grep -r &quot;umask&quot; /etc/profile /etc/bash.bashrc /etc/login.defs 2&gt;/dev/null
+umask</code></pre>
+<p>Set <code>umask 027</code> in <code>/etc/profile</code> and <code>/etc/bash.bashrc</code> (or <code>/etc/profile.d/</code>), and <code>UMASK 027</code> in <code>/etc/login.defs</code>. For systemd services, add <code>UMask=0027</code> in the unit file (see the systemd security skills). Verify by creating a test file as a normal user and checking it is 640, not 644. Note: 027 can break multi-user shared directories and some applications; use 022 only where a documented need exists, and prefer ACLs for intentional sharing.</p>
+<h2>5. ACL and extended attribute auditing</h2>
+<p>Standard modes are not the whole story: POSIX ACLs and extended attributes can grant access the <code>ls -l</code> output hides.</p>
+<pre><code class="language-bash">getfacl -p /etc/shadow 2&gt;/dev/null
+find /etc /opt /srv -xdev -exec getfacl -p {} \; 2&gt;/dev/null | grep -B5 &quot;^user:[^:]*:rwx&quot; | head -30
+lsattr /etc/passwd /etc/shadow 2&gt;/dev/null</code></pre>
+<p>Example output shape: no unexpected ACL entries beyond the base user/group/other, and no surprising immutable flags. Unexpected ACLs granting named users write access to system files are a finding. Consider <code>chattr +i</code> on truly static critical files (with change management for updates), but weigh it against the operational friction: immutable files break package upgrades that touch them.</p>
+<h2>6. Continuous monitoring with AIDE</h2>
+<p>One-time fixes decay. AIDE (or Tripwire, or osquery) watches permission-sensitive paths and alerts on changes.</p>
+<pre><code class="language-bash">aide --init 2&gt;&amp;1 | tail -3
+cp /var/lib/aide/aide.db.new /var/lib/aide/aide.db
+aide --check 2&gt;&amp;1 | head -20</code></pre>
+<p>Initialize the database on a known-good system, protect the database itself (store a copy offline), and run <code>--check</code> on a schedule with alerts on any output. Include at minimum: <code>/etc/passwd</code>, <code>/etc/shadow</code>, <code>/etc/group</code>, <code>/etc/ssh/</code>, cron paths, <code>/usr/bin</code>, <code>/usr/sbin</code>, and your baseline config files. Any SUID change or mode change on these paths is investigated as a potential compromise first.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Container images and minimal installs have different default SUID sets than full server installs; build the expected list per image or role, not one global list, or you will drown in false positives.</li>
+<li><code>/usr/bin/sudo</code> must keep its SUID bit or sudo breaks entirely; never strip SUID from sudo, su, or passwd without understanding that you are disabling the tool, not hardening it.</li>
+<li>NFS mounts and some network filesystems do not honor local permission semantics the way local disks do (root squashing, all-squash); audit the export options on the server side too, because client-side modes can lie.</li>
+<li>Package upgrades and <code>dpkg --force</code> style repairs can reset modes you fixed by hand; this is why the baseline lives in automation (Ansible file module with explicit modes) rather than in shell history.</li>
+<li>Some applications legitimately need group-writable directories (shared deploy dirs, socket dirs); handle these with the setgid bit plus a dedicated group and documented ACLs, not with world-writable modes.</li>
+<li><code>find -perm -4000</code> on huge filesystems is slow; scope with <code>-xdev</code>, exclude known-good trees, and run during off-peak or against a file inventory database instead of live-walking every time.</li>
+<li>SELinux and AppArmor add a layer above discretionary permissions; a correct mode with a wrong SELinux context still denies (or wrongly allows) access, so check contexts (<code>ls -Z</code>) on SELinux systems as part of the same audit.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If the audit finds an unknown SUID binary or unexpected root-owned writable script in a cron path, treat it as a potential backdoor first: preserve evidence, check logs for how it got there, and involve incident response before deleting it.</li>
+<li>If fixing permissions breaks a production application, roll back the specific change, document the app&#x27;s requirement, and implement the narrowest compensating control (dedicated group, ACL) rather than leaving the finding open.</li>
+<li>If a path must stay world-writable for business reasons, escalate to formal risk acceptance with owner, review date, and monitoring (AIDE watch plus alerting) as compensating controls.</li>
+<li>If different teams manage different trees (<code>/opt</code> owned by app teams), assign permission ownership per tree so audit findings route to someone who can actually fix them.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Permission hardening feeds detection directly: AIDE alerts on mode, ownership, or SUID changes to watched paths, and auditd rules (<code>-w /usr/bin/sudo -p x</code>, watches on cron directories) log executions and modifications. MITRE ATT&amp;CK T1222 (File and Directory Permissions Modification) is both the technique attackers use and the signal defenders watch: unexpected permission changes on system binaries are a high-fidelity compromise indicator. T1548 (Abuse Elevation Control Mechanism) covers SUID abuse, which is why the SUID inventory is monitored, not just cleaned once. Centralize AIDE and auditd output; local integrity databases can be tampered with by an attacker who gains root.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1222 File and Directory Permissions Modification: https://attack.mitre.org/techniques/T1222/</li>
+<li>MITRE ATT&amp;CK T1548 Abuse Elevation Control Mechanism: https://attack.mitre.org/techniques/T1548/</li>
+<li>CIS distribution benchmarks (filesystem sections): https://www.cisecurity.org/cis-benchmarks/</li>
+<li>AIDE manual: https://aide.github.io/</li>
+<li>Linux file permissions and ACLs: https://man7.org/linux/man-pages/man1/chmod.1.html and https://man7.org/linux/man-pages/man5/acl.5.html</li>
+<li>Debian securing manual (file permissions): https://www.debian.org/doc/manuals/securing-debian-manual/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

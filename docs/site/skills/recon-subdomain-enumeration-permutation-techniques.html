@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-subdomain-enumeration-permutation-techniques</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-subdomain-enumeration-permutation-techniques</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when passive and brute force enumeration plateau and you need to mutate known names into undiscovered ones on an authorized target domain. Covers alteration wordlists (dnsgen), environment and numbering patterns, hyphen and ordering variants, service-name seeding from the target&#x27;s tech stack, and validating permutation output without wildcard pollution. Authorized targets only, only enumerate domains you are permitted to test.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="recon-subdomain-enumeration.html">recon-subdomain-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="recon-subdomain-enumeration.html">recon-subdomain-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-subdomain-enumeration-active-bruteforcing.html">recon-subdomain-enumeration-active-bruteforcing</a> <a href="recon-subdomain-enumeration-passive-sources.html">recon-subdomain-enumeration-passive-sources</a> <a href="recon-active.html">recon-active</a> <a href="dns-enumeration.html">dns-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>dnsx</td><td>1.2</td></tr><tr><td>dnsgen</td><td>1.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Permutations exploit the target&#x27;s naming convention: once you know they use <code>api-prod</code> and <code>web-staging</code>, you generate every combination of their words with every environment, number, and separator they use. This finds names no wordlist contains. This sub-skill covers the permutation layer of recon-subdomain-enumeration. Only enumerate domains you are authorized to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Take the confirmed subdomain list as seed input.</li>
+<li>Extract the naming vocabulary: prefixes, suffixes, separators, numbers, service words.</li>
+<li>Generate alterations with dnsgen from the seed list.</li>
+<li>Generate pattern-based combinations: environments, numbers, hyphen variants, order swaps.</li>
+<li>Seed service names from the target&#x27;s tech stack (job postings, docs, banners).</li>
+<li>Resolve the permutation list with dnsx, filtering wildcard noise.</li>
+<li>Merge new hits into the consolidated list.</li>
+</ol>
+<h2>1. Learning the vocabulary</h2>
+<p>The seed list teaches you the convention. Extract its parts:</p>
+<pre><code class="language-bash"># Second labels and their frequency: learn which words the org reuses
+cut -d. -f1 confirmed.txt | sort | uniq -c | sort -rn | head -40
+# Example output shape:
+#  12 api
+#   8 web
+#   6 staging
+#   5 internal
+
+# Separator style: count hyphens versus plain concatenation
+grep -c &quot;-&quot; confirmed.txt
+# Numbering style: which names carry digits
+grep -E &quot;[0-9]&quot; confirmed.txt | head -20</code></pre>
+<p>If the output shows <code>api-prod</code>, <code>api-staging</code>, <code>web-prod</code>, the convention is <code>&lt;service&gt;-&lt;env&gt;</code>. Your permutations should speak that dialect, not generic wordlist.</p>
+<h2>2. dnsgen alterations</h2>
+<p>dnsgen mutates each seed name with common alterations (word additions, number insertions, hyphenation):</p>
+<pre><code class="language-bash">pip install dnsgen
+dnsgen -l confirmed.txt &gt; dnsgen-perms.txt
+wc -l confirmed.txt dnsgen-perms.txt
+dnsx -l dnsgen-perms.txt -silent -resp -o dnsgen-hits.txt -t 100 -rl 200</code></pre>
+<p>dnsgen output is large (tens of thousands per hundred seeds), so resolve it in batches and filter wildcard IPs. Typical hit rate is low but the hits are names no dictionary contains, which makes them high-value: unusual names are often forgotten or staging hosts.</p>
+<h2>3. Pattern-based generation</h2>
+<p>Hand-built patterns from the learned vocabulary outperform generic alteration:</p>
+<pre><code class="language-bash"># Environments x services, both orders, both separators
+services=$(cut -d. -f1 confirmed.txt | sort -u)
+for env in dev staging qa uat prod test demo; do
+  for s in $services; do
+    echo &quot;$s-$env.example.com&quot;; echo &quot;$env-$s.example.com&quot;
+    echo &quot;$s$env.example.com&quot;;  echo &quot;$env$s.example.com&quot;
+  done
+done | sort -u &gt; env-perms.txt
+
+# Numbering variants on confirmed names
+while read -r n; do
+  base=&quot;${n%%.*}&quot;; rest=&quot;${n#*.}&quot;
+  for i in 1 2 3 01 02 v1 v2; do
+    echo &quot;$base$i.$rest&quot;; echo &quot;$base-$i.$rest&quot;
+  done
+done &lt; confirmed.txt | sort -u &gt; number-perms.txt
+
+wc -l env-perms.txt number-perms.txt
+dnsx -l &lt;(cat env-perms.txt number-perms.txt) -silent -resp -o pattern-hits.txt</code></pre>
+<p>Add org-specific environments you discovered (some companies use <code>ppe</code>, <code>int</code>, <code>acc</code>, <code>pre</code>). The vocabulary from section 1 tells you which.</p>
+<h2>4. Tech-stack seeding</h2>
+<p>Internal tooling subdomains follow the stack the company runs. Seed from:</p>
+<ul>
+<li>Job postings and engineering blogs: &quot;we run Kubernetes, Vault, Consul, Grafana&quot; becomes <code>vault.</code>, <code>consul.</code>, <code>grafana.</code>, <code>k8s.</code> guesses.</li>
+<li>Banner data from httpx: server headers and tech fingerprints name the stack directly.</li>
+<li>Common combos: <code>jenkins.</code>, <code>gitlab.</code>, <code>artifactory.</code>, <code>sonar.</code>, <code>kibana.</code>, <code>prometheus.</code>, <code>argocd.</code>, each with env prefixes from section 3.</li>
+</ul>
+<pre><code class="language-bash">for svc in jenkins gitlab vault consul grafana kibana prometheus argocd; do
+  echo &quot;$svc.example.com&quot;
+  for env in dev staging prod internal; do
+    echo &quot;$svc-$env.example.com&quot;; echo &quot;$env-$svc.example.com&quot;
+  done
+done | sort -u &gt; stack-perms.txt
+dnsx -l stack-perms.txt -silent -resp -o stack-hits.txt</code></pre>
+<h2>5. Validation and merging</h2>
+<p>Permutation lists are noisy by design; validate strictly:</p>
+<pre><code class="language-bash">cat dnsgen-hits.txt pattern-hits.txt stack-hits.txt \
+  | grep -v &quot;WILDCARD_IP&quot; | sort -u &gt; perm-validated.txt
+# Confirm each resolves and is not already known
+comm -23 &lt;(cut -d&#x27; &#x27; -f1 perm-validated.txt | sort -u) \
+         &lt;(cut -d&#x27; &#x27; -f1 resolved-final.txt | sort -u) &gt; perm-new.txt
+wc -l perm-new.txt &amp;&amp; head -10 perm-new.txt</code></pre>
+<p>Only genuinely new names proceed to httpx probing. Log the yield per technique; over campaigns you learn which permutation style pays for which kind of target.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>dnsgen output explodes (millions of candidates): cap it by seeding only the most productive names (services, not every blog subdomain) or it becomes a slow brute force with extra steps.</li>
+<li>Permutations mostly hit the wildcard IP: your filtering is working, but also reconsider; heavy wildcard use means the org provisions names dynamically and permutations have lower value there.</li>
+<li>The convention uses words you cannot guess (project codenames): mine certificate SANs, code repos, and the target&#x27;s own docs for codenames, then permute those.</li>
+<li>Non-English environments (German <code>entwicklung</code>, French <code>recette</code>): check the company&#x27;s locale; environment words follow the team&#x27;s language.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Permutations plateau: the naming convention is exhausted. Move to ASN netblock reverse-DNS sweeps and certificate hash pivoting in Shodan for infrastructure the DNS never names.</li>
+<li>One permutation hit reveals a new convention (a codename pattern): immediately generate a second permutation round seeded on the new names. Conventions nest.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Permutation resolution looks like brute forcing at the DNS layer: high-volume queries for similar names. Same authorization and pacing rules apply.</li>
+<li>Defenders: unusual subdomain names are often the forgotten ones (staging, old projects). Monitor CT logs for new names and audit for stale ones; attackers permute toward exactly these.</li>
+<li>A naming convention is an information leak: <code>db-backup-prod</code> tells an attacker what and where. Prefer opaque names for sensitive infrastructure.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>dnsgen: https://github.com/lazaruslabs/dnsgen</li>
+<li>dnsx documentation: https://github.com/projectdiscovery/dnsx</li>
+<li>SecLists DNS wordlists: https://github.com/danielmiessler/SecLists</li>
+<li>MITRE ATT&amp;CK T1590.002 DNS: https://attack.mitre.org/techniques/T1590/002/</li>
+<li>OWASP Amass documentation: https://github.com/owasp-amass/amass</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

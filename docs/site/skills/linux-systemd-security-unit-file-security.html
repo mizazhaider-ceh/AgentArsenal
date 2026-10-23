@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-systemd-security-unit-file-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-systemd-security-unit-file-security</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when auditing or hardening systemd unit files on a Linux</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-systemd-security.html">linux-systemd-security</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-systemd-security.html">linux-systemd-security</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-systemd-security.html">linux-systemd-security</a> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>systemd</td><td>255</td></tr><tr><td>AIDE</td><td>0.18</td></tr><tr><td>auditd</td><td>3.1</td></tr></tbody></table><p>A unit file is a recipe for running code as a chosen user at boot, on a timer, or on demand. Whoever can write one (or a drop-in that modifies one) can get persistent privileged execution, which is why unit files are security-sensitive configuration and a favorite persistence mechanism (MITRE T1543). This sub-skill covers the defensive side: auditing unit trust, setting safe privilege options in your own units, keeping ExecStart paths clean, auditing timers, and disabling what you do not need. For systems you own or administer; no exploitation content. The parent skill sets the strategy; this file is the unit-level reference.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List all enabled units and timers; justify each against the host&#x27;s role.</li>
+<li>Audit ownership and writability of unit files and every <code>.d</code> drop-in directory.</li>
+<li>Review privilege settings in enabled units: User, Group, NoNewPrivileges, CapabilityBoundingSet, AmbientCapabilities.</li>
+<li>Check ExecStart and ExecStartPre paths: absolute, root-owned, non-writable by service users.</li>
+<li>Audit timer units like cron jobs: command, user, and writability of everything they touch.</li>
+<li>Mask or disable unneeded services; verify they stay down after reboot.</li>
+<li>Add unit paths to integrity monitoring and re-audit on a schedule.</li>
+</ol>
+<h2>1. Unit file trust: ownership, writability, drop-ins</h2>
+<p>The trust chain is: package files in <code>/usr/lib/systemd/system</code> (do not hand-edit), admin config in <code>/etc/systemd/system</code>, ephemeral in <code>/run/systemd/system</code>. Drop-ins in <code>/etc/systemd/system/&lt;name&gt;.d/*.conf</code> merge silently, so auditing the unit without its drop-ins is auditing half the configuration.</p>
+<pre><code class="language-bash">find /etc/systemd/system /run/systemd/system -type f -name &quot;*.conf&quot; -o -type f -name &quot;*.service&quot; -o -type f -name &quot;*.timer&quot; 2&gt;/dev/null | head -30
+find /etc/systemd/system -type f ! -user root -o -type f -perm -0002 2&gt;/dev/null | head -10
+systemctl cat cron.service 2&gt;/dev/null | head -30</code></pre>
+<p>Expected: all unit files and drop-ins root-owned and non-world-writable; <code>systemctl cat</code> shows the merged result you expect, with no surprise drop-ins. Any non-root-writable unit file or unknown drop-in is investigated as potential persistence before anything else. After any change, run <code>systemctl daemon-reload</code> and verify the merged view again.</p>
+<h2>2. Privilege settings in your own units</h2>
+<p>When you write or override a unit, set the privilege floor explicitly. Run as a dedicated unprivileged user, forbid privilege gains, and bound capabilities to the minimum.</p>
+<pre><code class="language-ini">[Service]
+User=appsvc
+Group=appsvc
+NoNewPrivileges=true
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+ProtectSystem=strict
+ReadWritePaths=/var/lib/myapp</code></pre>
+<p><code>NoNewPrivileges=true</code> is the single highest-value line: it prevents the service and its children from ever gaining new privileges (via setuid, file capabilities, or LSM transitions). <code>User=</code>/<code>Group=</code> drop root at start; <code>CapabilityBoundingSet</code> limits which capabilities can ever be held. Verify with <code>systemctl show &lt;unit&gt; -p User,NoNewPrivileges,CapabilityBoundingSet</code> and confirm the process actually runs as the intended user with <code>ps -o user= -p &lt;pid&gt;</code>.</p>
+<h2>3. ExecStart path hygiene</h2>
+<p>Every path a unit executes must be absolute, root-owned, and writable only by root. A relative path, a PATH lookup, or a writable script in ExecStart is a privilege escalation waiting for the next boot.</p>
+<pre><code class="language-bash">systemctl show myapp.service -p ExecStart,ExecStartPre,ExecReload | tr &#x27;;&#x27; &#x27;\n&#x27; | head -10
+stat -c &quot;%a %U %n&quot; /usr/local/bin/myapp /opt/myapp/start.sh 2&gt;/dev/null</code></pre>
+<p>Expected: absolute paths only, each binary and its parent directories root-owned and non-writable by the service user. Check parent directories too: a root-owned script in a world-writable directory is still hijackable. Never use bare command names in ExecStart (no PATH lookup happens, but reviewers and future editors assume safety that is not enforced); always spell out the full path.</p>
+<h2>4. Timer auditing: the systemd cron</h2>
+<p>Timers are cron with better logging and the same abuse potential. Audit every timer&#x27;s command line, user, and the writability of the executed paths, exactly as you would audit cron.</p>
+<pre><code class="language-bash">systemctl list-timers --all --no-pager --no-legend | awk &#x27;{print $NF}&#x27; | while read t; do
+  echo &quot;== $t&quot;; systemctl show &quot;$t&quot; -p Unit 2&gt;/dev/null
+done | head -20
+for s in $(systemctl list-timers --all --no-legend --no-pager | awk &#x27;{print $NF}&#x27; | sed &#x27;s/.timer$/.service/&#x27;); do
+  systemctl show &quot;$s&quot; -p ExecStart,User 2&gt;/dev/null | grep -q . &amp;&amp; echo &quot;$s: $(systemctl show &quot;$s&quot; -p ExecStart,User 2&gt;/dev/null)&quot;
+done | head -20</code></pre>
+<p>Example output shape: each timer mapped to its service, ExecStart, and User. Flag any timer whose service runs as root and executes a path writable by non-root users. Also check <code>Persistent=true</code> timers that catch up after downtime (an attacker can use these to guarantee execution) and timers with randomized delays used to hide in noise. Unknown timers follow the incident-response-first rule: preserve, investigate, then disable.</p>
+<h2>5. Disabling and masking unneeded services</h2>
+<p>Every enabled service is attack surface and a potential persistence slot. Disable what the role does not need; mask what must never run.</p>
+<pre><code class="language-bash">systemctl list-unit-files --type=service --state=enabled | head -30
+systemctl disable --now avahi-daemon.service 2&gt;/dev/null
+systemctl mask telnet.socket 2&gt;/dev/null
+systemctl list-unit-files --type=service | grep -E &quot;masked|enabled&quot; | wc -l</code></pre>
+<p><code>disable</code> stops autostart; <code>mask</code> symlinks to <code>/dev/null</code> so nothing (including dependencies) can start it. Verify after reboot that masked units stayed down. Keep a per-role allowed-services list; anything enabled that is not on the list is a finding. Remember masking is a guardrail, not a boundary: it stops accidental and dependency starts, not direct binary execution by an attacker who already has shell.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Package upgrades replace files in <code>/usr/lib/systemd/system</code> but preserve <code>/etc/systemd/system</code> overrides and drop-ins; always customize via drop-ins so upgrades do not silently revert your hardening.</li>
+<li><code>systemctl cat</code> shows the merged configuration, but <code>systemctl show</code> shows runtime properties; use <code>cat</code> for auditing what is configured and <code>show</code> for verifying privilege settings took effect.</li>
+<li>User units (<code>~/.config/systemd/user/</code>) run as the user and are a persistence vector that system-level audits miss; include user units in the audit on multi-user systems, especially for service accounts.</li>
+<li>Transient units created via the D-Bus API (<code>systemd-run --scope</code>, API calls) do not live in unit files at all; auditd rules on the systemd D-Bus interface and <code>systemctl list-units --all</code> catch these where file audits cannot.</li>
+<li><code>NoNewPrivileges=true</code> breaks services that legitimately need setuid helpers or capability transitions (some container runtimes, <code>ping</code> wrappers); test per service and document exceptions rather than dropping the directive fleet-wide.</li>
+<li>Timer accuracy (<code>AccuracySec</code>) and randomized delays mean a malicious timer may not fire on a predictable schedule; when hunting, look at the unit definition, not at whether you observed it fire.</li>
+<li>On systems with SELinux, unit file contexts matter: a correctly written unit with the wrong SELinux label may fail or behave unexpectedly, so check <code>ls -Z</code> on custom units when troubleshooting denials.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If audit finds an unknown unit, drop-in, or timer, escalate to incident response workflow: preserve the files and journal entries, determine how they arrived, and check for related indicators before disabling.</li>
+<li>If a vendor or package unit requires dangerous settings (root user, writable ExecStart path), escalate to the vendor as a security issue and apply a drop-in mitigation in the meantime; do not hand-edit package files.</li>
+<li>If disabling a service breaks a hidden dependency (monitoring agent, backup client), re-enable with documentation rather than leaving the host unmonitored; the allowed-services list gets updated, not silently violated.</li>
+<li>If user units or D-Bus transient units are outside your monitoring coverage, escalate the gap to the security team: file-only integrity monitoring has a blind spot that needs a runtime control.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Unit file security is monitored through integrity and behavior. AIDE or auditd watches on <code>/etc/systemd/system</code> (including <code>.d</code> directories) alert on any unit modification; <code>systemctl list-timers</code> and enabled-unit diffs on a schedule catch new persistence; journal entries for unit starts (<code>systemd[1]: Started ...</code>) give a timeline. MITRE T1543 (Create or Modify System Process) is the technique this counters, and unexpected unit changes are treated as compromise indicators until proven otherwise. Centralize the journal so that an attacker who modifies units cannot erase the record of the service starts that followed.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1543 Create or Modify System Process: https://attack.mitre.org/techniques/T1543/</li>
+<li>MITRE ATT&amp;CK T1053 Scheduled Task/Job: https://attack.mitre.org/techniques/T1053/</li>
+<li>systemd.unit manual: https://www.freedesktop.org/software/systemd/man/systemd.unit.html</li>
+<li>systemd.service manual: https://www.freedesktop.org/software/systemd/man/systemd.service.html</li>
+<li>systemd.timer manual: https://www.freedesktop.org/software/systemd/man/systemd.timer.html</li>
+<li>CIS distribution benchmarks (service and cron-equivalent sections): https://www.cisecurity.org/cis-benchmarks/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

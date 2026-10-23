@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: binary-anti-analysis-bypass-debugger-evasion</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>binary-anti-analysis-bypass-debugger-evasion</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a binary detects debuggers during authorized lab</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="binary-anti-analysis-bypass.html">binary-anti-analysis-bypass</a></div><div class="deps"><span class="kind">requires:</span> <a href="binary-anti-analysis-bypass.html">binary-anti-analysis-bypass</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="malware-sandbox-analysis.html">malware-sandbox-analysis</a> <a href="binary-patching-techniques.html">binary-patching-techniques</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>x64dbg</td><td>2025.06</td></tr><tr><td>ScyllaHide</td><td>1.4</td></tr><tr><td>Ghidra</td><td>11.3</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Debugger detection is the first gate most protected binaries check: &quot;am I being watched?&quot; The checks range from one API call to layered tricks with exceptions and timing. This sub-skill catalogs the detection methods and the matching bypass for each, for the parent anti-analysis-bypass skill. Scope: bypass debugger detection only on binaries you are authorized to analyze, in an isolated lab, during authorized DFIR, malware research, or defensive testing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Reproduce: run free vs under debugger; confirm the behavior gap.</li>
+<li>Hunt statically: imports and strings naming debugger checks.</li>
+<li>Classify each check: PEB flag, API query, window/process scan,</li>
+<p>exception trick, timing.</p>
+<li>Apply the matching bypass, one check at a time.</li>
+<li>Verify the sample proceeds; look for the next check.</li>
+<li>Document the bypass set for reproducibility.</li>
+</ol>
+<h2>1. PEB flag checks</h2>
+<pre><code class="language-text">IsDebuggerPresent()  -&gt; reads PEB.BeingDebugged (offset 0x02)
+PEB.NtGlobalFlag     -&gt; 0x70 when debugged (offset 0x68/0xBC)
+Heap flags           -&gt; heap ForceFlags when debugged</code></pre>
+<p>Manual bypass in x64dbg: open the PEB (dump at FS:[0x30] 32-bit or GS:[0x60] 64-bit), zero BeingDebugged, clear NtGlobalFlag to 0, and fix heap flags. Script it so every attach starts clean:</p>
+<pre><code class="language-text">x64dbg script shape:
+  mov byte ptr fs:[30h+2], 0     ; BeingDebugged = FALSE
+  ; repeat for NtGlobalFlag and heap Flags/ForceFlags</code></pre>
+<p>This defeats IsDebuggerPresent and direct PEB readers with no code patches to the sample.</p>
+<h2>2. API query checks</h2>
+<pre><code class="language-text">CheckRemoteDebuggerPresent(hProcess, &amp;flag)
+NtQueryInformationProcess(hProcess, ProcessDebugPort, ...)  -&gt; nonzero port
+NtQueryInformationProcess(hProcess, ProcessDebugObjectHandle, ...)
+NtQuerySystemInformation(SystemKernelDebuggerInformation)</code></pre>
+<p>Bypass options: ScyllaHide hooks these and returns clean values (easiest); or hook them yourself; or patch each call site to skip the check. ScyllaHide&#x27;s NtQueryInformationProcess options cover the ProcessDebugPort, ProcessDebugObjectHandle, and ProcessDebugFlags classes that matter.</p>
+<h2>3. ScyllaHide profiles</h2>
+<ol>
+<li>In x64dbg: Plugins, ScyllaHide, Options.</li>
+<li>Select the profile matching your debugger (x64dbg).</li>
+<li>Enable: PEB BeingDebugged, PEB NtGlobalFlag, PEB HeapFlags,</li>
+<p>NtQueryInformationProcess, NtSetInformationThread (anti-thread-hide defense), GetTickCount (optional), and window hooks.</p>
+<li>Apply, then restart the target under the debugger.</li>
+</ol>
+<p>Verify per check: attach, break at the check, and confirm it returns &quot;not debugged&quot;. If one check still fires, enable the specific option for it rather than turning everything on blindly; minimal hiding is more stable.</p>
+<h2>4. Window, process, and driver scans</h2>
+<pre><code class="language-text">FindWindowA(&quot;x64dbg&quot;, NULL) / FindWindowA(&quot;OLLYDBG&quot;, NULL)
+CreateToolhelp32Snapshot + Process32First/Next scanning for
+  windbg.exe, ollydbg.exe, x64dbg.exe, ida.exe
+DeviceIoControl / driver checks for known analysis drivers</code></pre>
+<p>Bypasses: ScyllaHide&#x27;s window hooks hide debugger windows; rename your debugger executable and window titles for process scans; for driver checks, patch the comparison or hook the query. Static hunt tells you which names it scans for:</p>
+<pre><code class="language-bash">floss sample.exe | grep -iE &quot;ollydbg|x64dbg|windbg|ida\.exe|immunity&quot; | sort -u</code></pre>
+<h2>5. Exception tricks</h2>
+<pre><code class="language-text">INT3 (0xCC):       debugger swallows the breakpoint exception;
+                   without a debugger the SEH handler runs.
+INT2D:             kernel breakpoint; debugger-specific behavior.
+OutputDebugString: with no debugger, sets LastError to a value;
+                   with a debugger, does not (GetLastError trick).</code></pre>
+<p>Bypasses: configure x64dbg&#x27;s exception handling to pass these to the program (Options, Exceptions: ignore INT3 outside your own breakpoints); for OutputDebugString, ScyllaHide handles the LastError semantics. Test by breaking at the trick and stepping: the program&#x27;s handler must run, not the debugger&#x27;s.</p>
+<h2>6. Timing-assisted debugger detection</h2>
+<p>Single-stepping and breakpoints distort timing; checks like GetTickCount deltas or rdtsc around a function detect the slowdown. Bypass: avoid stepping through the check (run to a breakpoint after it), use hardware breakpoints (no INT3 overhead), or hook the timing API to return consistent values. See the timing-checks sub-skill for the full treatment.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Layered checks calling each other: patching one reveals the next;</li>
+<p>budget time for three or more layers.</p>
+<li>Checks in TLS callbacks before main: set the debugger to break on</li>
+<p>module load, not on entry point.</p>
+<li>Anti-attach (DebugActiveProcess blocked): the sample debugs itself</li>
+<p>or its child; analyze the child or patch the self-debug.</p>
+<li>ScyllaHide detected: some samples fingerprint the hooks; fall back</li>
+<p>to manual PEB patching plus call-site patches.</p>
+</ul>
+<ul>
+<li>Debugger checks hidden inside packed layers: unpack first, or the check list is incomplete.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If every hiding method is detected, escalate to hypervisor-level</li>
+<p>tracing or bare-metal analysis with remote logging.</p>
+<li>If the sample&#x27;s anti-debug is a commercial protector&#x27;s, assess</li>
+<p>whether defeating it is in scope before investing days.</p>
+</ul>
+<ul>
+<li>If the binary uses a protector&#x27;s anti-debug as part of licensing on software you are assessing, confirm the assessment scope covers defeating it before investing further.</li>
+<li>If checks are timed to the debugger attach window, escalate to a scripted attach-and-hide so the window is hit reliably.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Debugger checks are dual-use signals: in malware they indicate evasion intent (log the specific checks as family fingerprints); in your own software they are tamper resistance to evaluate during assessments. For the SOC, a process calling CheckRemoteDebuggerPresent then exiting is worth a hunt query: legitimate software rarely does this. Keep your ScyllaHide profiles and PEB scripts versioned with the lab docs so every analyst hides the same way.</p>
+<h2>Key references</h2>
+<ul>
+<li>ScyllaHide:</li>
+<p>https://github.com/x64dbg/ScyllaHide</p>
+<li>x64dbg documentation:</li>
+<p>https://x64dbg.com/</p>
+<li>MITRE ATT&amp;CK: T1622 (Debugger Evasion)</li>
+<li>Practical Malware Analysis (Sikorski and Honig), Chapter 17</li>
+<p>(anti-debugging techniques)</p>
+<li>Microsoft PEB documentation:</li>
+<p>https://learn.microsoft.com/en-us/windows/win32/api/winternl/ns-winternl-peb</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

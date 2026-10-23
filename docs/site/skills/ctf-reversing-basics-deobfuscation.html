@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-reversing-basics-deobfuscation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-reversing-basics-deobfuscation</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF reversing binary or authorized lab binary is</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-reversing-basics.html">ctf-reversing-basics</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-reversing-basics.html">ctf-reversing-basics</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ghidra-basics.html">ghidra-basics</a> <a href="ctf-reversing-basics.html">ctf-reversing-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>GDB</td><td>15.2</td></tr><tr><td>Ghidra</td><td>11.3</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>binutils</td><td>2.42</td></tr><tr><td>Frida</td><td>16.5</td></tr></tbody></table><p>Obfuscation hides the real program behind packing, encryption, or control-flow tricks so that static analysis sees a stub instead of the logic. CTF authors use it to force dynamic analysis and to add stages to a challenge. This sub-skill covers the authorized deobfuscation workflow: recognizing the obfuscation type, removing or bypassing each layer, and recovering analyzable code or data. Scope is CTF competitions, lab binaries, and software you have explicit permission to analyze.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the obfuscation: section names (<code>UPX0</code>, <code>UPX1</code>), tiny</li>
+<p><code>.text</code> with huge entropy, missing imports, or garbage strings.</p>
+<li>If UPX-packed, try <code>upx -d</code> first; it is instant when it works.</li>
+<li>For custom packers, run to the original entry point (OEP) in gdb and</li>
+<p>dump the unpacked memory regions.</p>
+<li>For string encryption, find the decrypt routine, break after it, and</li>
+<p>dump the plaintext buffers.</p>
+<li>For control-flow flattening, ignore the dispatcher and trace only the</li>
+<p>blocks that touch input and the success message.</p>
+<li>For custom VMs, map the opcode handlers, then reimplement or trace</li>
+<p>the VM in Python or Frida.</p>
+<li>Re-run triage (strings, Ghidra) on the recovered code or dumped data.</li>
+<li>Document each layer removed so teammates can reproduce the pipeline.</li>
+</ol>
+<h2>1. UPX and simple packers</h2>
+<p>UPX is the most common CTF packer and the easiest to defeat.</p>
+<pre><code class="language-bash"># Detect
+strings ./rev | grep -i upx
+readelf -S ./rev | grep -E &quot;UPX|Name&quot;
+#   [ 1] UPX0   [ 2] UPX1   -&gt; packed
+
+# Unpack (works unless the header was tampered with)
+upx -d ./rev -o ./rev.unpacked
+file ./rev.unpacked &amp;&amp; strings -n 8 ./rev.unpacked | head -20</code></pre>
+<p>If <code>upx -d</code> fails with a header error, the author modified the UPX magic to block naive unpacking: restore the magic bytes with a hex editor (the <code>UPX!</code> marker near the overlay) or fall back to runtime dumping below.</p>
+<h2>2. Runtime dumping of custom packers</h2>
+<p>When no unpacker exists, let the packer unpack itself, then steal the result from memory.</p>
+<pre><code class="language-bash">gdb -q ./rev
+(gdb) set disable-randomization on
+# Step 1: find the OEP. The stub usually ends with a jmp to the unpacked code.
+# Watch for: a big loop (decompression), then jmp rax / jmp to a new region.
+(gdb) break *0x401000        # entry point; step through the stub
+(gdb) run
+(gdb) stepi                  # repeat until you see jmp into freshly written memory
+# Step 2: at the OEP (first instruction of real code), dump memory
+(gdb) info proc mappings     # note rwx/rx regions and addresses
+(gdb) dump binary memory /tmp/dump.bin 0x555555554000 0x555555556000</code></pre>
+<p>A faster heuristic: <code>gcore</code> the process right after the unpacking loop finishes, then analyze the core with Ghidra (import the dumped segments). Confirm you reached the OEP by checking that <code>strings</code> on the dump shows the prompt text (<code>Enter password</code>) that was invisible before.</p>
+<h2>3. Defeating string encryption</h2>
+<p>Encrypted strings appear as high-entropy blobs in <code>.rodata</code>, and the binary decrypts them at startup or just before use.</p>
+<ol>
+<li>In Ghidra, find the function called early that loops over <code>.rodata</code></li>
+<p>with XOR or ADD operations; it usually takes (address, length, key).</p>
+<li>Note its output buffer address (often <code>.bss</code>).</li>
+<li>In gdb, break on the instruction after the decrypt call returns.</li>
+<li>Dump the buffer: <code>x/s</code> for single strings, <code>dump binary memory</code> for</li>
+<p>tables.</p>
+</ol>
+<pre><code class="language-bash">(gdb) break *0x5555555552c8   # after decrypt_strings() returns
+(gdb) run
+(gdb) x/5s 0x555555557060     # decrypted strings appear here
+# &quot;Enter the flag: &quot; &quot;Correct! &quot; &quot;Wrong! &quot; ...</code></pre>
+<p>If decryption happens lazily (per string, just before printing), hook the print function with Frida and log its argument instead; you get plaintext without finding the decrypt routine at all.</p>
+<h2>4. Control-flow flattening</h2>
+<p>Flattening rewrites functions into one loop over a state variable with a giant switch; the decompiler shows a single <code>while(1)</code> with dozens of cases. Do not read it linearly.</p>
+<ul>
+<li>In the Function Graph view, identify the dispatcher block (the switch</li>
+<p>header) and ignore it.</p>
+<li>Find blocks that reference your input buffer or the success string;</li>
+<p>those are the only blocks that matter.</p>
+<li>Trace execution dynamically: break on the interesting blocks and log</li>
+<p>the state variable to learn the real execution order.</p>
+<li>Reconstruct the original order from the trace, then read just those</li>
+<p>blocks in sequence.</p>
+</ul>
+<p>For automated help, symbolic execution (angr) can sometimes solve flattened checks without manual reading, but in CTFs the dynamic trace approach is usually faster.</p>
+<h2>5. Custom virtual machines</h2>
+<p>Some challenges compile the check into bytecode for a bespoke VM. The binary contains: a bytecode array, a dispatch loop, and handler functions.</p>
+<ol>
+<li>Find the dispatch loop: a loop with an indirect jump or a switch on</li>
+<p><code>bytecode[pc++]</code>.</p>
+<li>Enumerate handlers: each case is an opcode (PUSH, XOR, JZ, CMP, OUT).</li>
+<li>Label 10 to 20 handlers; that is usually enough to understand the</li>
+<p>program.</p>
+<li>Write a Python VM that executes the bytecode and prints the flag, or</li>
+<p>use Frida to hook the dispatch loop and log <code>(pc, opcode, stack)</code>.</p>
+</ol>
+<pre><code class="language-python">#!/usr/bin/env python3
+# Skeleton: reimplement the VM once handlers are labeled
+bytecode = open(&quot;bytecode.bin&quot;, &quot;rb&quot;).read()
+stack, pc, out = [], 0, bytearray()
+while True:
+    op = bytecode[pc]; pc += 1
+    if op == 0x01:   # PUSH imm8
+        stack.append(bytecode[pc]); pc += 1
+    elif op == 0x02: # XOR top two
+        a, b = stack.pop(), stack.pop(); stack.append(a ^ b)
+    elif op == 0x03: # OUT: append top to output
+        out.append(stack.pop())
+    elif op == 0xFF: # HALT
+        break
+print(out)</code></pre>
+<h2>6. Common anti-analysis tricks and bypasses</h2>
+<ul>
+<li><code>ptrace(PTRACE_TRACEME)</code>: LD_PRELOAD a stub returning 0, or patch the</li>
+<p>binary&#x27;s check.</p>
+<li>Timing checks (<code>rdtsc</code> deltas, <code>alarm</code>): run under Frida instead of</li>
+<p>single-stepping, or NOP the check after locating it.</p>
+<li><code>/proc/self/status</code> TracerPid inspection: hide with the same</li>
+<p>LD_PRELOAD trick, intercepting <code>open</code>/<code>read</code> on that path.</p>
+<li>Junk code and opaque predicates: dynamic tracing reveals which</li>
+<p>branches actually execute; statically, look for conditions that are constant (<code>(x*x) &lt; 0</code> is never true for real x... except it can be with overflow, so verify dynamically).</p>
+<li>Stripped VM handlers: label by behavior after one traced run, not by</li>
+<p>guessing from disassembly.</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>The packer is UPX but the binary still shows garbage strings after</li>
+<p><code>upx -d</code>: there is a second layer (string encryption); continue with section 3.</p>
+<li>Runtime dump has no ELF headers: Ghidra can still analyze raw dumps;</li>
+<p>create a memory map manually or use the dumped bytes as a blob for string and constant extraction.</p>
+<li>The VM bytecode is itself encrypted: find the bytecode decrypt</li>
+<p>(runs before the VM loop) and dump the plaintext bytecode first.</p>
+<li>OEP finding loops forever: the stub may be a protector with</li>
+<p>anti-dump; try breaking on <code>mprotect</code>/<code>mmap</code> syscalls with strace to see when regions become executable, then dump there.</p>
+<li>The binary detects the sandbox itself (not just the debugger): run it</li>
+<p>on bare metal or a different VM platform; CTF anti-analysis sometimes fingerprints the hypervisor.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No OEP pattern visible (the stub jumps through several layers):</li>
+<p>use <code>strace -e mprotect</code> to watch executable regions appear, and dump each new RX region.</p>
+<li>Handlers number in the hundreds: do not label them all; trace one</li>
+<p>real execution with Frida Stalker and label only executed handlers.</p>
+<li>The challenge combines packing, string encryption, AND a VM: peel</li>
+<p>strictly outside-in, verifying each layer&#x27;s output before attacking the next; skipping layers causes confusion about which garbage is whose.</p>
+<li>Time is short: check whether the flag or key material is visible in</li>
+<p>the packed binary&#x27;s overlay or resources; authors sometimes leave the answer in the outer layer.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders meet these techniques in malware: packers (UPX, Themida), string encryption, and VM-based protectors are standard malware evasion. Sandboxes counter with runtime dumping (exactly section 2), API tracing, and memory scanning for unpacked payloads. EDR detections key on the behaviors: <code>mprotect</code> RWX transitions, process hollowing patterns, and decrypted payloads in memory. For CTF players, the takeaway is that every layer is removable with patience; for defenders, that no client-side obfuscation survives a determined analyst, so critical logic belongs server-side.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1027 (Obfuscated Files or Information) and T1140</li>
+<p>(Deobfuscate/Decode Files or Information).</p>
+<li>MITRE ATT&amp;CK T1620 (Reflective Code Loading): runtime unpacking.</li>
+<li>CWE-798 (Use of Hard-coded Credentials): keys hidden in packers.</li>
+<li>UPX documentation: https://upx.github.io/</li>
+<li>Frida Stalker (code tracing): https://frida.re/docs/stalker/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

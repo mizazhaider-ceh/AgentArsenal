@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-report-writing-proof-of-concept-format</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-report-writing-proof-of-concept-format</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to present the proof of concept for an in-scope bug bounty finding in the format triagers can replay. Covers the PoC evidence standard (raw HTTP requests over screenshots, clean-state numbered steps, exact values), per-bug-class PoC patterns (XSS, IDOR, SSRF, SQLi, auth flaws, file upload, business logic), screen recording for multi-step flows, redacting other users&#x27; data, and the per-finding evidence folder layout. Authorized targets only.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bugbounty-report-writing.html">bugbounty-report-writing</a></div><div class="deps"><span class="kind">requires:</span> <a href="bugbounty-report-writing.html">bugbounty-report-writing</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bugbounty-report-writing-impact-statements.html">bugbounty-report-writing-impact-statements</a> <a href="bugbounty-report-writing-cvss-scoring.html">bugbounty-report-writing-cvss-scoring</a> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>The proof of concept is the part of the report the triager actually replays. A PoC they can copy, paste, and run gets triaged in minutes; a PoC made of screenshots and prose gets queued behind everything else. This sub-skill sets the evidence standard: raw HTTP first, numbered steps from a clean state, exact values, per-class patterns, and recordings for flows that need them. Present PoCs only for vulnerabilities found inside program scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>During testing, save the raw request and response of the proving step (Burp save item, or copy as curl).</li>
+<li>Reproduce the finding once more from a clean browser profile, following your own notes literally.</li>
+<li>Write numbered steps from that clean state, with exact URLs, accounts, and payloads.</li>
+<li>Paste the raw HTTP request for the proving step into the report as text.</li>
+<li>Screenshot the moment of impact (the other user&#x27;s data, the alert in the victim session).</li>
+<li>For multi-step or stored flows, record a short screen capture walking the steps.</li>
+<li>Redact any real third-party data, then file everything in the per-finding evidence folder.</li>
+</ol>
+<h2>1. The PoC evidence standard</h2>
+<p>Every PoC has three layers, in this order of importance:</p>
+<ol>
+<li>Replayable text: the raw HTTP request, exact commands, exact payload strings. This is what the triager copies.</li>
+<li>Numbered steps: the narrative that turns the request into a scenario (which account, which profile, what to click, what you should see).</li>
+<li>Visual proof: screenshots or video of the impact moment. This confirms, it does not replace layers 1 and 2.</li>
+</ol>
+<pre><code class="language-http">POST /api/v1/tickets HTTP/1.1
+Host: support.example.com
+Authorization: Bearer eyJhbGciOi...&lt;attacker-token&gt;
+Content-Type: application/json
+Content-Length: 68
+
+{&quot;subject&quot;:&quot;&lt;svg onload=alert(document.domain)&gt;&quot;,&quot;body&quot;:&quot;help&quot;}</code></pre>
+<p>Steps that reference it: &quot;1. Log in as attacker@example.com. 2. Send the request above (Repeater or curl). 3. In a separate profile logged in as admin@example.com, open Admin &gt; Ticket queue. 4. The alert fires, proving script execution in the admin session.&quot;</p>
+<h2>2. Per-bug-class PoC patterns</h2>
+<ul>
+<li>XSS (reflected): the exact URL with payload, plus the reflection context noted (&quot;reflected unencoded inside a double-quoted attribute&quot;). One URL the triager can open.</li>
+<li>XSS (stored): the submission request, then the trigger location and the victim session that fires it. Include the recording; stored flows confuse in text alone.</li>
+<li>IDOR: two requests side by side, yours and the victim&#x27;s object, showing the 200 with another user&#x27;s data. State both account names.</li>
+<li>SSRF: the request that makes the server fetch, plus the collaborator or request-bin log showing the incoming connection with timestamp. Then the internal target and what it returned, redacted as needed.</li>
+<li>SQLi: the boolean or time-based proof (two requests, true versus false condition, with response difference or timing), not a full dump. Minimal proof, e.g. the output of a single <code>SELECT user()</code> style query.</li>
+<li>Authentication flaws: the reset or login flow steps with the token values (yours, expiring, test accounts only) and the exact point where the check fails.</li>
+<li>File upload: the upload request, the storage location, and the fetch proving execution or disclosure. Use a harmless marker file, never a real shell on a production target.</li>
+<li>Business logic: the sequence of requests with the manipulated values highlighted (price 0, quantity -1, steps out of order) and the resulting state (order confirmed at 0.00).</li>
+</ul>
+<h2>3. Recordings and screenshots</h2>
+<ul>
+<li>Screenshot the impact moment only: the alert dialog, the other user&#x27;s data on screen, the admin action completed. Three good screenshots beat thirty.</li>
+<li>Record multi-step flows (stored XSS trigger, checkout manipulation, OAuth dance) as short silent screen captures. No narration needed; the steps speak.</li>
+<li>Keep recordings under two minutes. Trim ruthlessly; triagers watch at 2x or not at all.</li>
+<li>Redact: blur other users&#x27; names, emails, amounts, and anything that is not your test data. Redaction is part of the PoC, not an afterthought.</li>
+</ul>
+<h2>4. The evidence folder</h2>
+<p>One folder per finding, created during testing:</p>
+<pre><code>findings/2026-10-23-stored-xss-tickets/
+  notes.md        # what you tried, what failed, timestamps
+  request.txt     # raw proving request
+  response.txt    # raw proving response
+  impact.png      # screenshot of the impact moment
+  walkthrough.mp4 # short recording for multi-step flows</code></pre>
+<p>When the triager asks a follow-up in two weeks, this folder has the answer. When you hunt the same pattern next month, it is your template.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The PoC needs timing (race conditions): include the script or Turbo Intruder config, the parallelism used, and how many attempts it took. &quot;Won 3 of 10 runs&quot; is honest and triageable.</li>
+<li>The PoC only works in your session: it is not a PoC yet. Rebuild from a clean profile until it works cold, then write it up.</li>
+<li>The proving step touches real user data: stop at the field names. &quot;Returns full name, email, and order history of user 8842&quot; proves it; the contents do not need to leave the target.</li>
+<li>Video files are too large for the platform: host per the program&#x27;s guidance or link a trimmed version; never let size be the reason the PoC is missing.</li>
+<li>The triager cannot reproduce: check your steps against a truly clean state (new profile, fresh accounts), and ask what differs on their side before assuming they are wrong.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A PoC the triager cannot replay after two honest attempts: rebuild it from scratch in a fresh environment. The bug is usually session state you forgot to document.</li>
+<li>The platform mangles your raw HTTP (smart quotes, line endings): attach request.txt as a file as well as pasting it, so there is always a byte-exact copy.</li>
+<li>Complex chains: split the PoC into labeled phases (Phase 1: get token, Phase 2: escalate) with a checkpoint observable after each.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Replayable PoCs let defenders reproduce in staging in minutes, which is the single biggest accelerator of fix time. Text beats video for this.</li>
+<li>The per-class patterns in section 2 double as defender test cases: run them against staging after the fix to confirm remediation.</li>
+<li>Redaction discipline in PoCs models how the program should handle reporter-submitted data containing user information.</li>
+<li>Evidence folders are audit trails: they show exactly what the hunter did, which supports both payout decisions and safe harbor reviews.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>HackerOne report guidance: https://docs.hackerone.com</li>
+<li>Bugcrowd researcher documentation: https://docs.bugcrowd.com</li>
+<li>PortSwigger Web Security Academy: https://portswigger.net/web-security</li>
+<li>OWASP Testing Guide: https://owasp.org/www-project-web-security-testing-guide/</li>
+<li>CWE database: https://cwe.mitre.org/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

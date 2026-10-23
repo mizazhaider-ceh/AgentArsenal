@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-duplicate-avoidance</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-duplicate-avoidance</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a finding is validated on an in-scope bug bounty target and you need to check it is not already known before writing the report. Covers searching disclosed reports (HackerOne Hacktivity, Bugcrowd disclosures, program changelogs), searching your own submission history, reading disclosure timelines to judge who reported first, program-specific duplicate patterns (same bug class across sibling endpoints), and what to do when you land a duplicate (hunt siblings, note the pattern). Authorized targets only.</p><h2>Sub-skills</h2><ul><li><a href="bugbounty-duplicate-avoidance-disclosure-timelines.html">bugbounty-duplicate-avoidance-disclosure-timelines</a> <span class="muted">v1.0.0: Use when disclosed reports exist for your in-scope program and you need to judge whether they cover your exact finding. Covers reading discl</span></li><li><a href="bugbounty-duplicate-avoidance-program-specific-dupes.html">bugbounty-duplicate-avoidance-program-specific-dupes</a> <span class="muted">v1.0.0: Use when hunting a specific in-scope program repeatedly and you need to learn its duplicate personality. Covers building a per-program dupli</span></li><li><a href="bugbounty-duplicate-avoidance-search-techniques.html">bugbounty-duplicate-avoidance-search-techniques</a> <span class="muted">v1.0.0: Use when you have fingerprinted an in-scope finding and need to search thoroughly for prior reports before submitting. Covers building searc</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a> <a href="bugbounty-methodology.html">bugbounty-methodology</a> <a href="bugbounty-report-writing.html">bugbounty-report-writing</a> <a href="bugbounty-methodology-reporting-phase.html">bugbounty-methodology-reporting-phase</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Duplicates are the most expensive non-finding in bug bounty: all the work, none of the payout. Every validated finding gets a duplicate check before it becomes a report, against disclosed reports, the program&#x27;s own history, and your notes. This skill gives you the search techniques, the timeline reading, and the program-specific patterns that keep your submissions original. Check duplicates only for vulnerabilities found inside program scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Write a one-line fingerprint of your finding: bug class, component, endpoint, effect.</li>
+<li>Search disclosed reports for the program: HackerOne Hacktivity, Bugcrowd disclosures, the program&#x27;s changelog or known-issues page.</li>
+<li>Search your own submission history and notes for the same pattern on this program.</li>
+<li>Search broader: same bug class disclosed on similar programs, which hints the pattern is well known.</li>
+<li>Read disclosure timelines to judge whether an existing report covers your exact finding or just a sibling.</li>
+<li>If it is a duplicate: do not submit. Hunt the sibling endpoints for the same pattern instead.</li>
+<li>If it is original: submit promptly. Speed matters once validation is done.</li>
+<li>Log the finding&#x27;s fingerprint in your notes regardless of outcome, so future checks are fast.</li>
+</ol>
+<h2>1. The fingerprint</h2>
+<p>Before searching, compress the finding to one searchable line:</p>
+<pre><code>stored-xss | support.example.com | /api/v1/tickets subject | fires in admin queue</code></pre>
+<p>Search each element separately and together: the bug class alone (&quot;stored XSS&quot; + program name), the component (&quot;ticket subject&quot;), and the endpoint. Different hunters title differently, so vary the terms: &quot;XSS,&quot; &quot;cross-site scripting,&quot; &quot;script injection&quot; all get a pass.</p>
+<h2>2. Where to search</h2>
+<ul>
+<li>HackerOne Hacktivity: filter by the program, then search the bug class and component. Disclosed reports show titles and often the vulnerable area.</li>
+<li>Bugcrowd: disclosed submissions and the program&#x27;s brief page, which sometimes lists out-of-scope-by-duplicate patterns.</li>
+<li>The program&#x27;s own changelog, status page, or known-issues list: fixed versions and release notes reveal what was already reported.</li>
+<li>Your notes: grep your per-program finding logs for the bug class and endpoint. Your own past submissions are the duplicates you control.</li>
+<li>Search engines: <code>&quot;program name&quot; &quot;bug class&quot;</code> occasionally surfaces write-ups hunters published after disclosure.</li>
+</ul>
+<pre><code class="language-bash"># Example: grep your own history before submitting
+grep -ri &quot;stored.xss&quot; ~/bb/example.com/findings/ | head -20
+grep -ri &quot;tickets&quot; ~/bb/example.com/submissions.log | head -20</code></pre>
+<h2>3. Reading disclosure timelines</h2>
+<p>A disclosed report is a duplicate of yours only if it covers the same vulnerability, not just the same class:</p>
+<ul>
+<li>Same endpoint and same parameter: duplicate. Move on.</li>
+<li>Same bug class, different endpoint: usually not a duplicate. Programs pay per vulnerable location unless their policy says otherwise. Hunt the siblings.</li>
+<li>Same endpoint, different bug class: not a duplicate. An XSS on a page with a known IDOR is a separate report.</li>
+<li>Vague disclosed title (&quot;XSS in support portal&quot;): treat as possibly covering yours. Weigh the risk: submitting into a likely duplicate costs triage goodwill; skipping a possibly-original finding costs a payout. When the title is vague and your endpoint is specific, many hunters submit with a note referencing the disclosed report.</li>
+</ul>
+<p>Check dates: a report disclosed last month about code that changed since may mean your finding is a regression, which is a fresh report, not a duplicate.</p>
+<h2>4. Program-specific duplicate patterns</h2>
+<p>Programs develop duplicate personalities. Learn each program&#x27;s:</p>
+<ul>
+<li>Known-duplicate classes: some programs have received 200 reflected XSS reports; the 201st needs a twist (stored, admin context, chained impact) to be worth submitting.</li>
+<li>Sibling policies: some programs mark the second IDOR on a sibling endpoint as a duplicate of the first; others pay per endpoint. Their past triage decisions, visible in disclosed reports, tell you which.</li>
+<li>Auto-duplicate tooling: some programs run scanners and auto-close known patterns. Check whether your finding&#x27;s class appears in their &quot;commonly reported, auto-closed&quot; list before investing in the write-up.</li>
+</ul>
+<p>When you do hit a duplicate, the pattern is the prize: one disclosed IDOR means the same broken authorization pattern probably exists on five more endpoints. Hunt the siblings immediately; the original reporter&#x27;s fix may not have covered them.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The finding is a duplicate but the original was never fixed: still a duplicate for payout, but a polite note to the program that it regressed or persists can earn goodwill and sometimes a re-open.</li>
+<li>You and another hunter submit nearly simultaneously: the earlier submission wins. This is why validated findings get submitted promptly, not batched for weeks.</li>
+<li>The disclosed report is redacted heavily: you cannot tell if it covers your endpoint. Submit with a clear fingerprint and let triage decide; note the possibly-related disclosure in your report.</li>
+<li>Internal duplicates (your own past submissions): keep a submissions.log per program with fingerprints and dates. Checking it takes ten seconds and saves the embarrassment of self-duplicating.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Duplicate rate is high on a program: shift from common classes (reflected XSS, missing headers) to business logic and access control, where duplicates are rarer and payouts higher.</li>
+<li>A sibling of a disclosed finding looks fixed but bypassable: that is a new finding (fix bypass), not a duplicate. Report it as a follow-up with the bypass evidence.</li>
+<li>You suspect the program marks valid findings as duplicates to avoid payout: document everything, stay professional, and take your hunting to programs with better reputations. Do not accuse; just leave.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Publish disclosed reports with specific-enough titles that hunters can self-check duplicates; vague titles waste everyone&#x27;s time.</li>
+<li>Maintain a known-issues list: hunters who can check it will, and your triage queue shrinks.</li>
+<li>When you fix a bug class, fix the siblings too, then disclose the pattern. Each undisclosed sibling is a future duplicate report you will triage for free.</li>
+<li>Track duplicate rates per bug class as a signal: classes with 90 percent duplicates are classes your scanners or your disclosure clarity should handle before humans do.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>HackerOne Hacktivity: https://hackerone.com/hacktivity</li>
+<li>HackerOne disclosure guidelines: https://docs.hackerone.com</li>
+<li>Bugcrowd researcher documentation: https://docs.bugcrowd.com</li>
+<li>CVSS v3.1 specification: https://www.first.org/cvss/</li>
+<li>OWASP Testing Guide: https://owasp.org/www-project-web-security-testing-guide/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

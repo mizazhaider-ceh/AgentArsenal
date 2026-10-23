@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mobile-frida-scripting-native-code-tracing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mobile-frida-scripting-native-code-tracing</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when the security logic you need to understand lives in</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="mobile-frida-scripting.html">mobile-frida-scripting</a></div><div class="deps"><span class="kind">requires:</span> <a href="mobile-frida-scripting.html">mobile-frida-scripting</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="mobile-frida-scripting.html">mobile-frida-scripting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Frida</td><td>16.5</td></tr><tr><td>frida-tools</td><td>12.4</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>Ghidra</td><td>11.2</td></tr></tbody></table><p>Native code tracing follows execution into compiled libraries where Java and Objective-C hooks cannot reach: JNI bridges, bundled crypto, license validators, and obfuscated routines. Frida&#x27;s Interceptor and Stalker give you breakpoints and instruction traces without a debugger. This sub-skill covers resolving native targets, reading registers and memory at hook points, and scoping Stalker traces so they stay usable. Authorized targets only, on test devices you control.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the native library and function from static analysis</li>
+<p>(Ghidra, strings, JNI name mangling).</p>
+<li>Confirm the library is loaded at runtime and resolve the export</li>
+<p>address.</p>
+<li>Attach a minimal Interceptor hook that logs entry and the return</li>
+<p>value.</p>
+<li>Add register and memory reads for the arguments you care about.</li>
+<li>For control-flow questions, run a scoped Stalker trace on one</li>
+<p>thread and one function.</p>
+<li>Correlate the trace with the Ghidra disassembly to name the basic</li>
+<p>blocks that executed.</p>
+<li>Dump interesting buffers to files for offline analysis.</li>
+<li>Record addresses as offsets from the module base, since ASLR moves</li>
+<p>them every launch.</p>
+</ol>
+<h2>1. Resolving native targets</h2>
+<pre><code class="language-javascript">// Find the library and list candidate exports
+var lib = Process.findModuleByName(&#x27;libtarget.so&#x27;);
+if (lib === null) {
+    console.log(&#x27;[-] libtarget.so not loaded yet&#x27;);
+} else {
+    console.log(&#x27;[*] base: &#x27; + lib.base + &#x27; size: &#x27; + lib.size);
+    lib.enumerateExports().forEach(function (e) {
+        if (/check|verify|decrypt|license/i.test(e.name)) {
+            console.log(&#x27;[*] &#x27; + e.type + &#x27; &#x27; + e.name + &#x27; @ &#x27; +
+                e.address.sub(lib.base) + &#x27; (offset)&#x27;);
+        }
+    });
+}
+
+// JNI functions follow a mangled naming convention you can predict
+// Java_com_example_target_Native_check -&gt; search directly:
+var check = lib.getExportByName(&#x27;Java_com_example_target_Native_check&#x27;);
+console.log(&#x27;[*] check @ offset &#x27; + check.sub(lib.base));</code></pre>
+<p>Always record offsets, not absolute addresses: ASLR randomizes the base every launch, but the offset is stable per build. Your report and your Ghidra annotations should use offsets.</p>
+<p>If the export is not listed, the function may be static (local) inside the library. Find it by pattern: hook the JNI entry point and Stalker trace into the library, or search memory for a known constant the function references.</p>
+<h2>2. Interceptor on native functions with register reads</h2>
+<pre><code class="language-javascript">// Trace a native check function: arguments are in registers on ARM64
+Interceptor.attach(check, {
+    onEnter: function (args) {
+        // JNI signature: (JNIEnv* env, jobject thiz, ...) so real args start at args[2]
+        console.log(&#x27;[*] native check entered&#x27;);
+        console.log(&#x27;    arg0 (env):  &#x27; + args[0]);
+        console.log(&#x27;    arg1 (thiz): &#x27; + args[1]);
+        // Dump the first 64 bytes of the buffer argument
+        console.log(hexdump(args[2], { length: 64, header: true, ansi: false }));
+        // Save registers for the onLeave handler
+        this.bufArg = args[2];
+    },
+    onLeave: function (retval) {
+        console.log(&#x27;[*] native check returned: &#x27; + retval);
+        // Force pass during authorized testing
+        // retval.replace(1);
+    }
+});</code></pre>
+<p>On ARM64, integer and pointer arguments arrive in x0-x7, which Frida exposes as <code>args[0]</code> through <code>args[7]</code>. Floating point arguments use separate registers and need <code>this.context.d0</code> style reads via the <code>this.context</code> object available in the handlers.</p>
+<p>Example output shape:</p>
+<pre><code>[*] native check entered
+    arg0 (env):  0x7b8c2a1000
+    arg1 (thiz): 0x12c080060
+              0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+00000000  7b 22 74 6f 6b 65 6e 22 3a 22 65 79 4a 68 62 47  {&quot;token&quot;:&quot;eyJhbG
+[*] native check returned: 0x0</code></pre>
+<p>The hexdump shows the plaintext token entering native code, which answers &quot;what does the native layer actually receive&quot; definitively.</p>
+<h2>3. Reading memory safely</h2>
+<pre><code class="language-javascript">// Guard every read: native pointers can be null or garbage
+function safeReadString(ptr) {
+    try {
+        if (ptr.isNull()) return &#x27;&lt;null&gt;&#x27;;
+        return Memory.readUtf8String(ptr, 256);
+    } catch (e) {
+        return &#x27;&lt;unreadable: &#x27; + e.message + &#x27;&gt;&#x27;;
+    }
+}
+
+function safeReadBytes(ptr, len) {
+    try {
+        return Memory.readByteArray(ptr, len);
+    } catch (e) {
+        console.log(&#x27;[-] read failed: &#x27; + e.message);
+        return null;
+    }
+}</code></pre>
+<p>Wrap reads in try/catch as a habit. A crashing agent on a hooked hot path can destabilize the app and cost you the test session. Prefer <code>Memory.readByteArray</code> plus offline analysis over huge console dumps.</p>
+<h2>4. Scoped Stalker tracing</h2>
+<pre><code class="language-javascript">// Trace one function on the current thread, then stop
+var target = lib.getExportByName(&#x27;verify_license&#x27;);
+
+Interceptor.attach(target, {
+    onEnter: function (args) {
+        console.log(&#x27;[*] starting Stalker on thread &#x27; + Process.getCurrentThreadId());
+        Stalker.follow(Process.getCurrentThreadId(), {
+            events: {
+                call: true,   // log calls, cheaper than full compile events
+                ret: false,
+                exec: false,
+                block: false,
+                compile: false
+            },
+            onReceive: function (events) {
+                var calls = Stalker.parse(events, { annotate: true });
+                calls.forEach(function (c) {
+                    console.log(&#x27;[*] call -&gt; &#x27; + DebugSymbol.fromAddress(c[1]));
+                });
+            }
+        });
+        this.tracing = true;
+    },
+    onLeave: function (retval) {
+        if (this.tracing) {
+            Stalker.unfollow(Process.getCurrentThreadId());
+            Stalker.flush();
+            console.log(&#x27;[*] trace complete, return: &#x27; + retval);
+        }
+    }
+});</code></pre>
+<p>Rules for usable traces: one thread only, one function scope, call events instead of compile events unless you need basic blocks, and always unfollow. An unbounded Stalker trace on a busy app produces gigabytes and teaches nothing.</p>
+<p>To map the trace back to Ghidra, convert each logged address to a module offset (<code>address.sub(lib.base)</code>) and look it up in the disassembly. The executed call targets name the real control flow through obfuscated dispatchers.</p>
+<h2>5. Tracing JNI boundaries</h2>
+<pre><code class="language-javascript">// Hook RegisterNatives to learn dynamic JNI mappings
+var RegisterNatives = Module.getExportByName(&#x27;libart.so&#x27;, &#x27;_ZN3art3JNI15RegisterNativesEP7_JNIEnvP7_jclassPK15JNINativeMethodi&#x27;);
+Interceptor.attach(RegisterNatives, {
+    onEnter: function (args) {
+        var methods = args[2];
+        var count = args[3].toInt32();
+        console.log(&#x27;[*] RegisterNatives, &#x27; + count + &#x27; methods&#x27;);
+        for (var i = 0; i &lt; count; i++) {
+            var entry = methods.add(i * Process.pointerSize * 3);
+            var name = Memory.readUtf8String(Memory.readPointer(entry));
+            var sig = Memory.readUtf8String(Memory.readPointer(entry.add(Process.pointerSize)));
+            var fn = Memory.readPointer(entry.add(Process.pointerSize * 2));
+            console.log(&#x27;    &#x27; + name + sig + &#x27; -&gt; &#x27; + fn);
+        }
+    }
+});</code></pre>
+<p>Apps that register JNI methods dynamically defeat static name-based lookup. This hook reveals the true name-to-address mapping at runtime, and every address it prints becomes a hook target for section 2.</p>
+<h2>6. Dumping buffers to files</h2>
+<pre><code class="language-javascript">// Write a captured buffer to the device, then pull it
+Interceptor.attach(check, {
+    onLeave: function (retval) {
+        var out = safeReadBytes(this.bufArg, 256);
+        if (out) {
+            var path = &#x27;/data/local/tmp/native-dump.bin&#x27;;
+            var f = new File(path, &#x27;wb&#x27;);
+            f.write(out);
+            f.close();
+            console.log(&#x27;[*] dumped 256 bytes to &#x27; + path);
+        }
+    }
+});</code></pre>
+<pre><code class="language-bash">adb pull /data/local/tmp/native-dump.bin ./
+xxd native-dump.bin | head -20</code></pre>
+<p>Offline analysis of the dump (entropy check, structure parsing) complements the live trace and keeps the agent lightweight.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The library is not loaded when your agent runs. Defer hooking:</li>
+<p>watch <code>dlopen</code> or <code>android_dlopen_ext</code> and install hooks when the target module appears, or trigger the feature that loads it first.</p>
+<li>The function is stripped and has no export name. Work from offsets</li>
+<p>found in Ghidra, resolved as <code>lib.base.add(0x1234)</code>, and verify with a logging-only hook before adding logic.</p>
+<li>Stalker output is empty. The thread id may be wrong (hooks run on</li>
+<p>the calling thread, so capture it in onEnter), or the function returned before Stalker attached. Start the follow inside onEnter as shown.</p>
+<li>The app uses multiple threads for the sensitive operation. Trace</li>
+<p>each thread separately, or hook the thread creation point and follow the new thread from there.</p>
+<li>Reading a register gives garbage. Confirm the calling convention:</li>
+<p>ARM64 passes the first eight arguments in x0-x7, but variadic or large struct arguments behave differently. Check the Ghidra decompilation for the true signature.</p>
+<li>The native code detects the hook via integrity checks. This is the</li>
+<p>escalation point: hook the integrity check first, or trace without patching by using Stalker alone.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need instruction-level detail through an obfuscated routine.</li>
+<p>Enable compile events in Stalker for that one function, accept the slowdown, and map executed blocks back to Ghidra. Keep the window as short as possible.</p>
+<li>The target uses anti-debugging (ptrace, timing checks) that also</li>
+<p>trips on Frida. Hook the anti-debug functions to no-op them before installing your real hooks; the parent skill covers hook ordering.</p>
+<li>The crypto is custom and you need the algorithm, not just the key.</li>
+<p>Trace with Stalker, extract the executed basic blocks, and reconstruct the round function in Ghidra or Python offline.</p>
+<li>The engagement needs this trace repeatable. Save the agent with</li>
+<p>module offsets (not absolute addresses) and the exact build version, and note the Ghidra addresses they correspond to.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Native hooks are harder for an app to detect than managed hooks, but not invisible: timing checks around crypto operations, integrity verification of code pages, and detection of Stalker&#x27;s code cache can all fire. Defenders layer these with server-side checks so that even a fully traced client cannot mint valid tokens. Your report should describe what the native layer actually did with the data you traced (key usage, validation logic) and whether defeating it changed any server-side outcome. A native check that the server re-verifies is defense in depth working as intended.</p>
+<h2>Key references</h2>
+<ul>
+<li>Frida Stalker documentation:</li>
+<p>https://frida.re/docs/stalker/</p>
+<li>Frida JavaScript API (Interceptor, Memory, Stalker):</li>
+<p>https://frida.re/docs/javascript-api/</p>
+<li>ARM64 procedure call standard (register usage):</li>
+<p>https://developer.arm.com/documentation/ihi0055/latest</p>
+<li>Android JNI tips and RegisterNatives:</li>
+<p>https://developer.android.com/training/articles/perf-jni</p>
+<li>Ghidra documentation:</li>
+<p>https://ghidra-sre.org/</p>
+<li>OWASP MSTG reverse engineering chapters:</li>
+<p>https://mas.owasp.org/MSTG/</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mobile-ios-static</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mobile-ios-static</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to statically analyze an iOS application</p><h2>Sub-skills</h2><ul><li><a href="mobile-ios-static-ipa-extraction.html">mobile-ios-static-ipa-extraction</a> <span class="muted">v1.0.0: Use when you need to obtain an analyzable IPA file for iOS</span></li><li><a href="mobile-ios-static-objection-workflows.html">mobile-ios-static-objection-workflows</a> <span class="muted">v1.0.0: Use when you want fast read-oriented runtime inspection of</span></li><li><a href="mobile-ios-static-plist-and-strings-analysis.html">mobile-ios-static-plist-and-strings-analysis</a> <span class="muted">v1.0.0: Use when you need to squeeze every finding out of an iOS</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ios-basics.html">ios-basics</a> <a href="ios-dynamic-analysis.html">ios-dynamic-analysis</a> <a href="mobile-frida-scripting.html">mobile-frida-scripting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Frida</td><td>16.5</td></tr><tr><td>objection</td><td>1.11</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>Ghidra</td><td>11.2</td></tr><tr><td>class-dump</td><td>3.5</td></tr></tbody></table><p>iOS static analysis is the examination of an app&#x27;s package, binaries, and configuration without executing it. You extract the IPA, map its layout, read its property lists and entitlements, hunt for hardcoded secrets, and recover class interfaces from the Mach-O binary. Static work gives you the attack surface inventory that dynamic testing then confirms: every URL scheme, every network security exception, every embedded key. This skill covers the authorized workflow end to end. Only analyze apps you are permitted to assess: a client&#x27;s in-scope build, your own organization&#x27;s App Store binary, or a lab target. Never pull apart someone else&#x27;s commercial app to steal logic or keys.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Acquire the IPA through an authorized channel: a test build from the</li>
+<p>client, Apple Configurator for your own organization&#x27;s app, or decryption on your jailbroken test device with frida-ios-dump.</p>
+<li>Verify integrity: hash the IPA, note the version, and record where it</li>
+<p>came from.</p>
+<li>Unzip and map the layout: Payload, the .app bundle, Frameworks,</li>
+<p>embedded.mobileprovision.</p>
+<li>Review Info.plist and entitlements for URL schemes, ATS exceptions,</li>
+<p>background modes, and privacy permissions.</p>
+<li>Run strings and secret-hunting patterns over the binary and resources.</li>
+<li>Run class-dump to recover the Objective-C interface, and load the</li>
+<p>binary in Ghidra for deeper review.</p>
+<li>Check data protection flags, keychain accessibility classes, and</li>
+<p>transport security settings.</p>
+<li>Write findings with evidence: file, offset or key, value redacted, and</li>
+<p>severity tied to OWASP MASVS.</p>
+</ol>
+<h2>1. Acquiring the IPA on authorized terms</h2>
+<p>The cleanest source is the client: an ad-hoc or enterprise-signed build, or TestFlight access for the exact version in scope. For your own organization&#x27;s published app, Apple Configurator on a Mac can download the IPA to your workstation. On a jailbroken test device that you own, the app must be decrypted first because App Store binaries are FairPlay encrypted.</p>
+<pre><code class="language-bash"># Hash and record the IPA before you touch it
+shasum -a 256 target.ipa
+unzip -l target.ipa | head -30
+
+# Decrypt on your own jailbroken test device (authorized target only)
+# frida-ios-dump needs frida-server running on the device
+python3 dump.py -u &lt;device-udid&gt; com.example.target
+# Produces ./target-1.2.3.ipa, decrypted and ready for analysis</code></pre>
+<p>Record the bundle version from the filename or Info.plist and keep the original IPA untouched. Every finding later references this exact build.</p>
+<p>Example layout listing you should see:</p>
+<pre><code>Archive:  target.ipa
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  2026-10-01 10:00   Payload/
+        0  2026-10-01 10:00   Payload/Target.app/
+  1843200  2026-10-01 10:00   Payload/Target.app/Target
+     4821  2026-10-01 10:00   Payload/Target.app/Info.plist
+     9102  2026-10-01 10:00   Payload/Target.app/embedded.mobileprovision
+        0  2026-10-01 10:00   Payload/Target.app/Frameworks/</code></pre>
+<p>If unzip shows an encrypted binary (class-dump fails with a cryptid error), the IPA is still FairPlay encrypted and must be decrypted on a device you own before analysis continues.</p>
+<h2>2. IPA layout: what lives where</h2>
+<p>Unzip into a working directory and learn the bundle structure. Each location answers different questions.</p>
+<pre><code class="language-bash">mkdir -p analysis &amp;&amp; cd analysis
+unzip -q ../target.ipa
+find Payload -maxdepth 2 | sort | head -40
+
+# The main binary shares the app&#x27;s name
+ls -la Payload/Target.app/Target
+
+# Check the binary is arm64 Mach-O and whether it is encrypted
+file Payload/Target.app/Target
+otool -l Payload/Target.app/Target | grep -A4 LC_ENCRYPTION_INFO</code></pre>
+<p>Key locations and what to look for in each:</p>
+<ul>
+<li><code>Payload/Target.app/Target</code>: the main Mach-O binary, class-dump and</li>
+<p>strings target.</p>
+<li><code>Payload/Target.app/Info.plist</code>: bundle config, URL schemes, ATS.</li>
+<li><code>Payload/Target.app/embedded.mobileprovision</code>: provisioning profile,</li>
+<p>decode it for entitlements and device allowances.</p>
+<li><code>Payload/Target.app/Frameworks/</code>: bundled third-party frameworks,</li>
+<p>each worth its own strings pass for SDK keys.</p>
+<li><code>Payload/Target.app/*.lproj/</code>: localization strings, sometimes</li>
+<p>containing debug text or internal labels.</p>
+<li><code>Payload/SwiftSupport/</code> (if present): Swift standard libraries,</li>
+<p>useful for version fingerprinting.</p>
+</ul>
+<p>Decode the provisioning profile to confirm the signing identity matches what the client claims:</p>
+<pre><code class="language-bash">security cms -D -i Payload/Target.app/embedded.mobileprovision \
+  | plutil -p - | grep -E &quot;Name|TeamName|Entitlements&quot; | head -20</code></pre>
+<h2>3. Info.plist and entitlements review</h2>
+<p>The Info.plist is the app&#x27;s configuration surface. Read it as a plist, not as text, so binary plists parse correctly.</p>
+<pre><code class="language-bash"># Pretty-print the whole plist
+plutil -p Payload/Target.app/Info.plist | head -80
+
+# Pull the keys that matter most for security review
+/usr/libexec/PlistBuddy -c &quot;Print :CFBundleIdentifier&quot; Payload/Target.app/Info.plist
+/usr/libexec/PlistBuddy -c &quot;Print :CFBundleShortVersionString&quot; Payload/Target.app/Info.plist
+/usr/libexec/PlistBuddy -c &quot;Print :NSAppTransportSecurity&quot; Payload/Target.app/Info.plist
+/usr/libexec/PlistBuddy -c &quot;Print :CFBundleURLTypes&quot; Payload/Target.app/Info.plist
+/usr/libexec/PlistBuddy -c &quot;Print :LSApplicationQueriesSchemes&quot; Payload/Target.app/Info.plist
+/usr/libexec/PlistBuddy -c &quot;Print :UIBackgroundModes&quot; Payload/Target.app/Info.plist</code></pre>
+<p>Example output shape for a transport security review:</p>
+<pre><code>NSAppTransportSecurity =&gt; {
+  NSAllowsArbitraryLoads =&gt; true
+  NSExceptionDomains =&gt; {
+    api.example.com =&gt; {
+      NSExceptionAllowsInsecureHTTPLoads =&gt; true
+    }
+  }
+}</code></pre>
+<p><code>NSAllowsArbitraryLoads = true</code> disables App Transport Security globally and is a finding on its own. Per-domain exceptions need justification: a media CDN exception differs from an API exception. <code>NSAllowsLocalNetworking</code> is normal for development but should not ship in production builds.</p>
+<p>URL schemes (<code>CFBundleURLTypes</code>) are entry points: any app on the device can open them. Note every scheme and test it later with objection or Frida during dynamic analysis. Background modes (<code>audio</code>, <code>fetch</code>, <code>remote-notification</code>) widen what the app can do unattended.</p>
+<p>Entitlements come from the code signature, not the plist:</p>
+<pre><code class="language-bash">codesign -d --entitlements - Payload/Target.app/Target 2&gt;/dev/null</code></pre>
+<p>Look for <code>get-task-allow</code> (debuggable build, should be false in production), <code>com.apple.developer.associated-domains</code> (universal links), keychain access groups, and push notification environment (<code>development</code> versus <code>production</code>).</p>
+<h2>4. Strings, secrets, and entropy hunting</h2>
+<p>The fastest wins in iOS static analysis come from strings. Run a broad pass, then targeted patterns for secrets.</p>
+<pre><code class="language-bash">BIN=Payload/Target.app/Target
+
+# Baseline strings, minimum length 6 to cut noise
+strings -a -n 6 &quot;$BIN&quot; &gt; strings.txt
+wc -l strings.txt
+
+# URLs and endpoints
+grep -Eo &#x27;https?://[^&quot;&#x27;&quot;&#x27;&quot;&#x27; ]+&#x27; strings.txt | sort -u | head -30
+
+# Candidate secrets: AWS keys, generic API keys, tokens
+grep -Eo &#x27;AKIA[0-9A-Z]{16}&#x27; strings.txt | sort -u
+grep -Eoi &#x27;(api[_-]?key|secret|token|passwd|password)[\&quot;&#x27;&quot;&#x27;&quot;&#x27;:= ]+[A-Za-z0-9_\-]{8,}&#x27; strings.txt | head -20
+
+# Firebase, analytics, and SDK configuration endpoints
+grep -Eo &#x27;[a-z0-9-]+\.firebaseio\.com&#x27; strings.txt | sort -u
+grep -Eo &#x27;sk_(live|test)_[A-Za-z0-9]+&#x27; strings.txt | sort -u</code></pre>
+<p>High-entropy strings often hide keys that pattern matching misses. A small Python pass scores them:</p>
+<pre><code class="language-python">import math, re
+from collections import Counter
+
+def entropy(s):
+    counts = Counter(s)
+    return -sum(c / len(s) * math.log2(c / len(s)) for c in counts.values())
+
+with open(&#x27;strings.txt&#x27;) as f:
+    for line in f:
+        s = line.strip()
+        if len(s) &gt;= 20 and entropy(s) &gt; 4.5:
+            print(f&quot;{entropy(s):.2f}  {s[:80]}&quot;)</code></pre>
+<p>Example output shape:</p>
+<pre><code>5.12  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6...
+4.87  9f2c4a7e1b3d5f608a2c4e6b8d0a2f4c6e8b0d2a4f6c8e0b2d4f6a8c0e2b4d6</code></pre>
+<p>Base64 blobs that decode to JSON with <code>alg</code> and <code>typ</code> fields are JWT secrets or test tokens. Verify whether they are live credentials before reporting severity: a test key in a debug build is a note, a production API secret in a release build is a finding.</p>
+<p>Also sweep the Frameworks directory, since SDK keys usually live in bundled libraries rather than the main binary:</p>
+<pre><code class="language-bash">for f in Payload/Target.app/Frameworks/*.framework/*; do
+  [ -f &quot;$f&quot; ] &amp;&amp; strings -a -n 6 &quot;$f&quot; | grep -Eoi &#x27;(api[_-]?key|secret)[\&quot;&#x27;&quot;&#x27;&quot;&#x27;:= ]+[A-Za-z0-9_\-]{8,}&#x27; | head -3
+done</code></pre>
+<h2>5. Class-dump: recovering the Objective-C interface</h2>
+<p>class-dump reads the Objective-C runtime metadata in the Mach-O binary and reconstructs headers: classes, methods, properties, protocols. This is your map for Frida hooking later.</p>
+<pre><code class="language-bash"># Dump headers for the main binary
+class-dump -H Payload/Target.app/Target -o headers/
+
+# Count what you got
+find headers -name &#x27;*.h&#x27; | wc -l
+grep -rl &quot;password\|token\|secret\|keychain&quot; headers/ | head -10
+
+# Dump a bundled framework too
+class-dump -H Payload/Target.app/Frameworks/Analytics.framework/Analytics -o headers-analytics/</code></pre>
+<p>Example header fragment you should expect:</p>
+<pre><code class="language-objc">@interface LoginManager : NSObject
+{
+    NSString *_authToken;
+    NSURLSession *_session;
+}
+- (void)loginWithUsername:(id)arg1 password:(id)arg2 completion:(id)arg3;
+- (BOOL)isAuthenticated;
+- (_Bool)validatePIN:(id)arg1;
+@end</code></pre>
+<p>Method names like <code>validatePIN:</code> or <code>isAuthenticated</code> are direct hooks targets for the mobile-frida-scripting skill. Ivar names like <code>_authToken</code> tell you what to search memory for at runtime. Protocols reveal delegate callbacks that handle sensitive flows.</p>
+<p>class-dump only works on Objective-C metadata. Pure Swift classes appear as mangled symbols; for those, the mangled names still leak structure:</p>
+<pre><code class="language-bash"># Swift symbols keep readable fragments after demangling
+nm Payload/Target.app/Target | grep -i &quot;login&quot; | head -10
+xcrun swift-demangle &lt;&lt;&lt; &quot;_\$s6Target12LoginManagerC5login8username8password10completionySS_SSySo13NSError_pCSgtF&quot;</code></pre>
+<h2>6. Mach-O and Swift notes for the static analyst</h2>
+<p>When class-dump output is thin, the binary may be Swift-heavy or stripped. Check what the toolchain left behind.</p>
+<pre><code class="language-bash"># Linked libraries: which security frameworks are actually used
+otool -L Payload/Target.app/Target | head -30
+
+# Look for Security.framework (keychain, cert handling) and LocalAuthentication (biometrics)
+otool -L Payload/Target.app/Target | grep -E &quot;Security|LocalAuthentication|CryptoKit&quot;
+
+# PIE, stack canaries, ARC: hardening flags
+otool -hv Payload/Target.app/Target | head -5
+
+# Bitcode and Swift version markers
+strings -a Payload/Target.app/Target | grep -m2 &quot;swiftlang&quot;</code></pre>
+<p>In Ghidra, import the binary, let auto-analysis finish, and start from the strings window: cross-reference an interesting string (an endpoint, an error message) to the function that uses it. That function is usually the network client or the validation routine you will hook later.</p>
+<p>Swift binaries resist class-dump, but the method dispatch tables and protocol witness tables still name types. Search Ghidra&#x27;s symbol tree for fragments like <code>Token</code>, <code>Auth</code>, <code>Crypto</code>, <code>PIN</code>, and <code>Biometric</code>.</p>
+<h2>7. Data protection and transport security flags</h2>
+<p>Two plist-level checks close out the static pass: how files are protected at rest, and how traffic is protected in flight.</p>
+<pre><code class="language-bash"># Data protection entitlement on the binary
+codesign -d --entitlements - Payload/Target.app/Target 2&gt;/dev/null \
+  | grep -A2 &quot;DataProtection&quot;
+
+# Search code and config for explicit file protection classes
+grep -rn &quot;NSFileProtection&quot; Payload/ --include=&quot;*.plist&quot; | head
+strings -a Payload/Target.app/Target | grep -E &quot;NSFileProtection[A-Za-z]+&quot; | sort -u</code></pre>
+<p><code>NSFileProtectionComplete</code> is the strongest class; anything weaker for sensitive files is a finding. The absence of any data protection class means files default to the device default, which is weaker than Complete.</p>
+<p>For transport security, combine the ATS plist review from section 3 with a code-level check for disabled certificate validation:</p>
+<pre><code class="language-bash"># Code signs of disabled TLS validation (confirm at runtime before reporting)
+strings -a Payload/Target.app/Target | grep -E &quot;allowInvalidCertificates|validatesSecureCertificate|canAuthenticateAgainstProtectionSpace&quot; | sort -u</code></pre>
+<p><code>allowInvalidCertificates = YES</code> in shipped code breaks certificate validation entirely. Treat a strings hit as a lead, then confirm with the Frida SSL pinning bypass skill whether traffic is actually interceptable.</p>
+<h2>8. Turning findings into report entries</h2>
+<p>Every static finding needs four things: location, evidence, impact, and severity anchored to OWASP MASVS. A finding without a file path and a redacted evidence snippet is a rumor.</p>
+<p>Template:</p>
+<pre><code>Finding: Hardcoded API secret in main binary
+Location: Payload/Target.app/Target (strings offset, build 1.2.3)
+Evidence: key prefix &quot;sk_live_...&quot; (full value redacted, verified live via
+  test request with client approval)
+Impact: anyone extracting the IPA can call the payment API as the app
+Severity: High (MASVS-STORAGE-1, MSTG-STORAGE-3)
+Fix: move the secret server-side or scope it to a publishable key</code></pre>
+<p>Severity guidance: hardcoded production credentials are High; ATS disabled globally is Medium to High depending on data handled; verbose logging strings are Low unless they log PII; debug endpoints left in release builds are Medium. Always state whether you verified the finding at runtime or whether it still needs dynamic confirmation.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The IPA is FairPlay encrypted and you have no jailbroken test device.</li>
+<p>You cannot statically analyze the binary. Ask the client for an unencrypted test build, which is standard practice on authorized iOS engagements.</p>
+<li>class-dump returns almost nothing. The app is likely Swift-only or</li>
+<p>the Objective-C metadata was stripped. Pivot to Ghidra and to strings-led analysis, and plan heavier Frida instrumentation.</p>
+<li>The binary is packed or uses a commercial obfuscator. Strings are</li>
+<p>garbage and class names are randomized. Document the obfuscation as a resilience control, then move to dynamic analysis where the code must decrypt itself to run.</p>
+<li>Info.plist keys are present but the features seem unused. Plist</li>
+<p>entries can be stale. Confirm at runtime whether the URL scheme or background mode is actually registered before reporting it as live attack surface.</p>
+<li>Secrets found in strings belong to third-party SDKs (analytics keys,</li>
+<p>crash reporting tokens). These are usually low severity by design, but check the SDK&#x27;s docs: some keys are publishable, some are not. Report the distinction.</p>
+<li>Multiple app targets or app extensions live in the same IPA</li>
+<p>(watchOS app, widgets, share extension). Each extension is its own binary with its own Info.plist and entitlements. Sweep them all; extensions are frequently less hardened than the main app.</p>
+<li>The provisioning profile shows a wildcard App ID. Fine for</li>
+<p>development, but production apps handling sensitive data should use explicit App IDs so keychain access groups stay scoped.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You found what looks like a production credential in the binary.</li>
+<p>Stop and verify with the client before testing it. Do not call third-party APIs with extracted secrets without written approval, and rotate the finding into the report immediately rather than sitting on it.</p>
+<li>The app uses certificate pinning plus jailbreak detection and you</li>
+<p>cannot get runtime confirmation of a static lead. Document the lead as unverified, note the controls that blocked confirmation, and hand the exact hook points to the dynamic phase.</p>
+<li>Static analysis suggests the app talks to undocumented backend</li>
+<p>endpoints. Confirm scope with the client before probing them: an endpoint in the binary is not automatically in scope.</p>
+<li>The binary contains signs of malware-like behavior (SMS interception</li>
+<p>strings, overlay permissions) in a client app. Escalate to the engagement lead before writing it up; it may be a compromised SDK or a misattributed binary.</p>
+<li>Time is short and the IPA is large. Prioritize Info.plist review,</li>
+<p>strings secret hunting, and class-dump of classes with security relevant names. Those three produce most findings per hour.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Static analysis leaves no trace on the app itself, since you never run it. Defenders counter static analysis with the controls you are assessing: Swift and symbol stripping to shrink class-dump output, commercial obfuscators to randomize names and encrypt strings, server-side secrets instead of embedded keys, ATS enforcement with no exceptions, and complete data protection classes. When you write the report, credit the controls that worked: an app with no hardcoded secrets, strict ATS, and complete file protection has a solid static posture, and saying so makes the real findings land harder. Note that obfuscation slows analysis but does not stop it; the durable defenses are architectural, moving secrets and decisions server-side.</p>
+<h2>Key references</h2>
+<ul>
+<li>OWASP MASVS (Mobile Application Security Verification Standard):</li>
+<p>storage, cryptography, and network requirements to anchor severity. https://mas.owasp.org/MASVS/</p>
+<li>OWASP MSTG iOS testing guide: static analysis procedures for iOS.</li>
+<p>https://mas.owasp.org/MSTG/</p>
+<li>Apple developer docs on Info.plist keys and ATS:</li>
+<p>https://developer.apple.com/documentation/bundleresources/information_property_list</p>
+<li>Apple docs on data protection and keychain:</li>
+<p>https://developer.apple.com/documentation/security/</p>
+<li>Frida documentation (for the dynamic follow-up):</li>
+<p>https://frida.re/docs/home/</p>
+<li>objection documentation (iOS runtime exploration):</li>
+<p>https://github.com/sensepost/objection</p>
+<li>class-dump project page: http://stevenygard.com/projects/class-dump/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

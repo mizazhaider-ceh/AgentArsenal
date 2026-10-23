@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mobile-android-dynamic-intent-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mobile-android-dynamic-intent-analysis</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to test Android inter-component</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="mobile-android-dynamic.html">mobile-android-dynamic</a></div><div class="deps"><span class="kind">requires:</span> <a href="mobile-android-dynamic.html">mobile-android-dynamic</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="mobile-android-dynamic.html">mobile-android-dynamic</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>adb</td><td>35.0</td></tr><tr><td>Frida</td><td>16.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Intents are Android&#x27;s inter-process messages, and exported components are the app&#x27;s public API on the device. Any app, including an attacker&#x27;s, can send intents to exported components, so each one must validate its input. This sub-skill is the method for inventorying exported components from the manifest and proving which ones mishandle crafted input, using only adb and the activity manager. Authorized targets only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Extract and parse AndroidManifest.xml; list every component with</li>
+<p>exported=true or with intent filters.</p>
+<li>For each exported component, note its intent filters, permissions,</li>
+<p>and expected extras from static analysis.</p>
+<li>Send benign intents first to learn the expected input shape.</li>
+<li>Send crafted inputs: malformed extras, injection strings, path</li>
+<p>traversal, oversized values.</p>
+<li>Test deep links and app links with hostile URLs.</li>
+<li>Probe content providers with query, insert, and update operations.</li>
+<li>Watch logcat for crashes and stack traces throughout.</li>
+<li>Write findings with the exact am command that reproduces each one.</li>
+</ol>
+<h2>1. Manifest inventory</h2>
+<pre><code class="language-bash"># Dump the manifest from the installed package
+adb shell dumpsys package com.example.target | grep -A30 &quot;Activity Resolver Table&quot; | head -50
+
+# Or parse the APK offline with apktool (authorized test build)
+apktool d target.apk -o apk-out
+grep -B2 -A8 &quot;android:exported=\&quot;true\&quot;&quot; apk-out/AndroidManifest.xml | head -60</code></pre>
+<p>Example output shape you are looking for:</p>
+<pre><code class="language-xml">&lt;activity android:name=&quot;.DeepLinkHandler&quot; android:exported=&quot;true&quot;&gt;
+    &lt;intent-filter&gt;
+        &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt;
+        &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
+        &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot; /&gt;
+        &lt;data android:scheme=&quot;example&quot; android:host=&quot;pay&quot; /&gt;
+    &lt;/intent-filter&gt;
+&lt;/activity&gt;
+&lt;provider android:name=&quot;.DataProvider&quot;
+    android:authorities=&quot;com.example.target.provider&quot;
+    android:exported=&quot;true&quot; /&gt;</code></pre>
+<p>Every <code>exported=&quot;true&quot;</code> component is in scope for this sub-skill. Components with intent filters are exported by default on older targetSdk versions, so check those too.</p>
+<h2>2. Activity and deep link testing</h2>
+<pre><code class="language-bash"># Start an exported activity directly
+adb shell am start -n com.example.target/.DebugActivity
+
+# Pass extras the way the app expects them, then mutate
+adb shell am start -n com.example.target/.ProfileActivity --es user_id &quot;123&quot;
+
+# Deep link with hostile parameters
+adb shell am start -a android.intent.action.VIEW \
+  -d &quot;example://pay?amount=9999&amp;to=attacker&quot;
+
+# Path traversal attempt in a deep link that loads files
+adb shell am start -a android.intent.action.VIEW \
+  -d &quot;example://docs?file=../../../../etc/hosts&quot;
+
+# Injection probes in string extras
+adb shell am start -n com.example.target/.SearchActivity \
+  --es query &quot;&#x27; OR &#x27;1&#x27;=&#x27;1&quot;</code></pre>
+<p>Example output shape for a crash that becomes a finding:</p>
+<pre><code># logcat
+E/AndroidRuntime: FATAL EXCEPTION: main
+E/AndroidRuntime: java.lang.NumberFormatException: For input string: &quot;9999x&quot;
+E/AndroidRuntime:   at com.example.target.PayHandler.onCreate(PayHandler.java:58)</code></pre>
+<p>The stack trace names the vulnerable handler and line. Even a plain crash is a robustness finding; a crash that leaks a file path or SQL error is more.</p>
+<h2>3. Broadcast receivers and services</h2>
+<pre><code class="language-bash"># Send a broadcast to an exported receiver
+adb shell am broadcast -a com.example.target.ACTION_SYNC --es token &quot;abc&quot;
+
+# Ordered broadcast with a result receiver (tests priority handling)
+adb shell am broadcast -a com.example.target.ACTION_UPDATE --ez force true
+
+# Start and stop an exported service with extras
+adb shell am startservice -n com.example.target/.SyncService --es url &quot;https://test.example/&quot;
+adb shell am stopservice -n com.example.target/.SyncService</code></pre>
+<p>Watch for receivers that act on unauthenticated broadcasts: a sync receiver that starts network operations or a receiver that writes files based on broadcast extras is trusting every app on the device. If the manifest declares a permission on the component, test whether your test app without that permission is actually blocked.</p>
+<h2>4. Content provider probing</h2>
+<p>Exported providers are the most dangerous component class because they expose structured data.</p>
+<pre><code class="language-bash"># List providers and their authorities
+adb shell dumpsys package com.example.target | grep -A5 &quot;Provider Resolver Table&quot;
+
+# Query a provider (read test)
+adb shell content query --uri content://com.example.target.provider/users
+
+# Probe for SQL injection in selection arguments
+adb shell content query --uri content://com.example.target.provider/users \
+  --where &quot;name=&#x27;x&#x27; OR &#x27;1&#x27;=&#x27;1&quot;
+
+# Test path traversal in the URI
+adb shell content query --uri content://com.example.target.provider/../../etc/hosts</code></pre>
+<p>Example output shape for a leaked provider:</p>
+<pre><code># content query output
+Row: 0 _id=1, name=alice, email=alice@example.com, token=eyJhbGciOi...
+Row: 1 _id=2, name=bob, email=bob@example.com, token=eyJhbGciOi...</code></pre>
+<p>Any other app on the device can run the same command. A provider that returns tokens or PII to an unauthenticated query is a High finding.</p>
+<p>Also test write operations carefully on the authorized build:</p>
+<pre><code class="language-bash"># Insert and update probes (only on test data, with client approval)
+adb shell content insert --uri content://com.example.target.provider/notes \
+  --bind name:s:test --bind body:s:probe
+adb shell content delete --uri content://com.example.target.provider/notes --where &quot;name=&#x27;test&#x27;&quot;</code></pre>
+<h2>5. Pending intents and intent hijacking review</h2>
+<pre><code class="language-bash"># Static lead: find PendingIntent creation in decompiled code, then verify at runtime
+# Hook PendingIntent.send to log what the app hands to other apps</code></pre>
+<pre><code class="language-javascript">Java.perform(function () {
+    var PI = Java.use(&#x27;android.app.PendingIntent&#x27;);
+    PI.send.overload(&#x27;android.content.Context&#x27;, &#x27;int&#x27;, &#x27;android.content.Intent&#x27;)
+        .implementation = function (ctx, code, intent) {
+            console.log(&#x27;[*] PendingIntent.send: &#x27; + intent.toUri(0));
+            return this.send(ctx, code, intent);
+        };
+});</code></pre>
+<p>A mutable PendingIntent with an implicit intent lets a malicious app intercept or rewrite it. The fix is <code>FLAG_IMMUTABLE</code> and explicit intents; verify the flags at the hook.</p>
+<h2>6. Fuzzing methodically</h2>
+<p>For components that take structured extras, generate cases instead of hand-writing each one:</p>
+<pre><code class="language-python"># fuzz-intents.py: generate am commands for an exported activity
+payloads = [
+    &quot;&#x27; OR &#x27;1&#x27;=&#x27;1&quot;,
+    &quot;../../../../etc/passwd&quot;,
+    &quot;A&quot; * 10000,
+    &quot;%s%s%s%s&quot;,
+    &quot;\u0000&quot;,
+    &quot;file:///etc/hosts&quot;,
+    &quot;javascript:alert(1)&quot;,
+]
+for p in payloads:
+    print(f&quot;adb shell am start -n com.example.target/.ViewerActivity --es url \&quot;{p}\&quot;&quot;)</code></pre>
+<pre><code class="language-bash">python3 fuzz-intents.py &gt; fuzz.sh
+bash fuzz.sh 2&gt;&amp;1 | head -20
+# Watch logcat in a second terminal for crashes
+adb logcat --pid=$(adb shell pidof com.example.target) | grep -iE &quot;exception|fatal&quot;</code></pre>
+<p>Deduplicate crashes by stack trace: ten payloads crashing in the same handler are one finding, not ten.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The component is exported but requires a permission your shell</li>
+<p>lacks. Note the permission as a partial control and test from a test app holding the permission if the client approves; signature permissions genuinely block third-party apps.</p>
+<li>Deep links work in the browser but not via am start. The intent</li>
+<p>filter may require BROWSABLE plus a specific action; replicate the exact intent the browser sends, which you can capture with an intent-interception test app.</p>
+<li>The provider query returns empty but the app clearly has data.</li>
+<p>The provider may check the calling package at runtime. Hook the query method with Frida to see the check, and note it as a defense-in-depth control rather than a vulnerability.</p>
+<li>Fuzzing crashes the system UI or the device. Keep fuzzing on an</li>
+<p>emulator snapshot you can restore, and throttle to a few cases per second.</p>
+<li>The manifest is obfuscated or the APK uses split installs. Parse</li>
+<p>the base APK&#x27;s manifest; dynamic feature modules can add components at runtime, which you inventory with dumpsys after triggering the feature.</p>
+<li>Custom permissions with protectionLevel=&quot;normal&quot; guard a</li>
+<p>component. Any app can request normal permissions, so this is no protection; only signature-level permissions count.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>An exported provider leaks data or allows writes. Capture the</li>
+<p>exact content commands, confirm with a second run, and report as High; this is remotely reachable by any on-device malware.</p>
+<li>A deep link handler passes input to WebView.loadUrl or</li>
+<p>Runtime.exec. Prove the injection with a benign payload (your test domain, a calculator-style marker), never a real exploit, and report immediately.</p>
+<li>The component set keeps growing as features load. Re-run the</li>
+<p>dumpsys inventory after exercising major features and diff against the baseline.</p>
+<li>You suspect intent spoofing between the app&#x27;s own components</li>
+<p>(exported=&quot;false&quot; bypass via task affinity). Test taskAffinity hijacking on the authorized build and report if activities can be overlaid.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Intent attacks come from other apps on the device, so the defense is entirely in the manifest and in input validation: export nothing that does not need it, guard exported components with signature permissions where possible, validate every extra as untrusted input, and never put sensitive actions behind an unauthenticated broadcast. Your report should list every exported component with a verdict (safe, needs validation, vulnerable), because an inventory with verdicts is what the client&#x27;s developers can act on.</p>
+<h2>Key references</h2>
+<ul>
+<li>Android intents and intent filters:</li>
+<p>https://developer.android.com/guide/components/intents-filters</p>
+<li>Android app manifest element reference:</li>
+<p>https://developer.android.com/guide/topics/manifest/manifest-intro</p>
+<li>Content provider basics:</li>
+<p>https://developer.android.com/guide/topics/providers/content-provider-basics</p>
+<li>OWASP MSTG platform interaction testing:</li>
+<p>https://mas.owasp.org/MSTG/</p>
+<li>OWASP MASVS platform requirements:</li>
+<p>https://mas.owasp.org/MASVS/</p>
+<li>CWE-926 (Improper Export of Android Application Components):</li>
+<p>https://cwe.mitre.org/data/definitions/926.html</p>
+<li>CWE-927 (Use of Implicit Intent for Sensitive Communication):</li>
+<p>https://cwe.mitre.org/data/definitions/927.html</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

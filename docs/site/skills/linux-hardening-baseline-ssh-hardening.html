@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-hardening-baseline-ssh-hardening</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-hardening-baseline-ssh-hardening</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hardening OpenSSH on a Linux server or auditing an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a> <a href="linux-hardening.html">linux-hardening</a> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>OpenSSH</td><td>9.6</td></tr><tr><td>fail2ban</td><td>1.0.2</td></tr><tr><td>auditd</td><td>3.1</td></tr></tbody></table><p>SSH is the remote front door of nearly every Linux server, which makes its configuration the highest-leverage hardening work you can do. This sub-skill covers the complete defensive SSH baseline: authentication policy, user scoping, cryptographic algorithm selection, session limits, verification of the effective configuration, and brute force defenses. Everything here is defensive hardening for systems you own or administer. The parent skill places SSH in the wider baseline; this file is the deep, command-level reference.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Back up the current config: <code>cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak-$(date +%F)</code>.</li>
+<li>Set the authentication policy: key-only, no root login, no password or challenge-response auth.</li>
+<li>Scope who may connect with <code>AllowUsers</code> or <code>AllowGroups</code>; deny everyone else by default.</li>
+<li>Pin strong ciphers, MACs, and key exchange algorithms; disable weak and legacy ones.</li>
+<li>Set session hygiene: idle timeouts, max auth tries, max sessions, disabled tunneling features you do not use.</li>
+<li>Validate syntax with <code>sshd -t</code>, restart carefully (keep one existing session open), and verify effective settings with <code>sshd -T</code>.</li>
+<li>Add brute force defense (fail2ban or equivalent) and confirm it is banning with a controlled test.</li>
+</ol>
+<h2>1. Authentication policy: keys only, no root</h2>
+<p>The core of SSH hardening is removing the password guessing surface entirely. Public key authentication plus disabled root login eliminates the two most attacked vectors.</p>
+<pre><code class="language-bash">grep -iE &quot;^(PermitRootLogin|PasswordAuthentication|PubkeyAuthentication|ChallengeResponseAuthentication|UsePAM)&quot; /etc/ssh/sshd_config</code></pre>
+<p>Set in <code>/etc/ssh/sshd_config</code>:</p>
+<pre><code>PermitRootLogin no
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+PubkeyAuthentication yes
+UsePAM yes</code></pre>
+<p><code>UsePAM yes</code> stays on because PAM provides session setup and account checks even without password auth. After changing, verify the effective configuration as root with <code>sshd -T | grep -iE &quot;permitrootlogin|passwordauthentication|pubkeyauthentication&quot;</code>, which resolves includes and Match blocks. Expected: <code>permitrootlogin no</code>, <code>passwordauthentication no</code>, <code>pubkeyauthentication yes</code>.</p>
+<h2>2. Scoping access with AllowUsers and AllowGroups</h2>
+<p>Even with keys only, restrict which accounts can use SSH at all. An allowlist means a compromised or forgotten account without a key still cannot get a shell.</p>
+<pre><code>AllowGroups ssh-users</code></pre>
+<p>Then ensure every human and automation account that needs SSH is in <code>ssh-users</code>, and nothing else is. Verify with <code>sshd -T | grep -i allowusers</code> and by attempting a login as a non-listed user (it must fail before authentication). Prefer groups over users: group membership is managed centrally and survives staff changes better than editing sshd_config per person.</p>
+<h2>3. Cryptographic algorithm selection</h2>
+<p>Defaults in modern OpenSSH are good, but explicit pinning protects against downgrade pressure and documents intent. Disable CBC ciphers, weak MACs, and SHA1 key exchange.</p>
+<pre><code>Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512
+HostKeyAlgorithms ssh-ed25519,rsa-sha2-512,rsa-sha2-256</code></pre>
+<p>Generate and prefer ed25519 host keys (<code>ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key</code>) and remove DSA host keys entirely. Verify the negotiated algorithms for a real connection with <code>ssh -vv user@host 2&gt;&amp;1 | grep -iE &quot;kex|cipher|mac&quot;</code>. Note: pinning too aggressively can lock out old automation clients; check client versions before deploying the strict list.</p>
+<h2>4. Session hygiene and feature lockdown</h2>
+<p>Limit what an authenticated session can do, and kill idle sessions before they become forgotten open doors.</p>
+<pre><code>ClientAliveInterval 300
+ClientAliveCountMax 2
+MaxAuthTries 3
+MaxSessions 3
+LoginGraceTime 60
+X11Forwarding no
+AllowTcpForwarding no
+PermitTunnel no
+PermitEmptyPasswords no</code></pre>
+<p>Disable <code>X11Forwarding</code> and <code>AllowTcpForwarding</code> unless a documented use case needs them; forwarding turns an SSH account into a network pivot. <code>ClientAliveInterval 300</code> with count 2 drops idle sessions after about 10 minutes. Verify with <code>sshd -T | grep -iE &quot;clientalive|maxauthtries|x11forwarding|allowtcpforwarding&quot;</code>.</p>
+<h2>5. Brute force defense with fail2ban</h2>
+<p>Key-only auth already defeats password guessing, but fail2ban still adds value: it slows reconnaissance, reduces log noise, and protects any remaining password surface (or other services).</p>
+<pre><code class="language-bash">systemctl enable --now fail2ban
+fail2ban-client status sshd
+fail2ban-client get sshd banip --with-time 2&gt;/dev/null | head -5</code></pre>
+<p>Example output shape: <code>Status for the jail: sshd</code> with current bans listed. Tune <code>maxretry</code> and <code>bantime</code> in <code>/etc/fail2ban/jail.local</code> (never edit <code>jail.conf</code> directly), and set <code>ignoreip</code> for your management networks and bastion hosts so you cannot lock yourself out. Test from a controlled source with intentional failures and confirm the ban appears; an untested jail is a hope, not a control.</p>
+<h2>6. Safe restart and rollback</h2>
+<p>The classic SSH hardening outage is locking yourself out with a bad config. The procedure: validate syntax, keep one session open, restart, test a new session, and only then close the old one.</p>
+<pre><code class="language-bash">sshd -t &amp;&amp; echo &quot;syntax OK&quot;
+systemctl restart sshd
+sleep 2; systemctl is-active sshd
+ssh -o PreferredAuthentications=publickey user@localhost &quot;echo login-ok&quot;</code></pre>
+<p>Example output shape: <code>syntax OK</code>, <code>active</code>, <code>login-ok</code>. If the test login fails, <code>cp</code> the backup back and restart again. For fleet rollouts, do this host by host with automation that verifies the new session before closing the old (Ansible&#x27;s <code>wait_for</code> plus a test task), never a blind mass restart.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>sshd_config</code> supports <code>Include</code> directives and <code>Match</code> blocks that override global settings; always verify with <code>sshd -T</code> (effective config) rather than grepping the file, because a Match block can silently re-enable password auth for a subnet.</li>
+<li>Distro defaults differ: Debian enables <code>KbdInteractiveAuthentication</code> via PAM in ways that can surprise, and RHEL ships different default ciphers; read your distro&#x27;s default config before assuming upstream OpenSSH defaults.</li>
+<li>Changing the SSH port is obscurity, not security; it reduces log noise but must never be presented as a control, and it complicates firewall rules and monitoring, so only do it for noise reduction with eyes open.</li>
+<li>Automation accounts (Ansible, backups, monitoring) need their keys deployed before you disable password auth; coordinate the key rollout first or you will break every scheduled job at once.</li>
+<li><code>AllowUsers</code>/<code>AllowGroups</code> with a typo locks out everyone including you; test the exact spelling with <code>sshd -T</code> and a real login attempt before closing your safety session.</li>
+<li>Old embedded devices or vendor appliances may only support legacy algorithms; inventory SSH clients before pinning the strict cipher list, and isolate legacy clients behind a bastion instead of weakening the whole fleet.</li>
+<li>fail2ban on IPv6 needs the jail to handle v6 addresses, and aggressive bantimes on NAT-heavy networks can ban whole offices; tune <code>maxretry</code> upward and <code>bantime</code> downward where many users share source IPs.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If the server must keep password authentication for a legacy integration, escalate to a formal risk acceptance: document the business reason, add fail2ban with strict limits, enforce strong password policy, and set a removal date.</li>
+<li>If you discover existing brute force campaigns in the logs during hardening, preserve the log evidence and check for successful logins before assuming the hardening fixed an already-compromised host.</li>
+<li>If a config change breaks production access, roll back immediately from the backup, then root-cause in staging; never debug sshd_config on a production box you are locked out of.</li>
+<li>If compliance requires specific algorithms or settings that conflict with your baseline, the compliance requirement wins; record the deviation and its justification in the baseline log.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Hardened SSH is monitored SSH. Defenders watch <code>/var/log/auth.log</code> (Debian) or <code>/var/log/secure</code> (RHEL) for <code>Failed password</code>, <code>Invalid user</code>, and <code>Accepted</code> lines; a spike in failures is reconnaissance, and any <code>Accepted</code> outside expected users or hours is an incident. MITRE ATT&amp;CK T1110 (Brute Force) is mitigated by key-only auth plus fail2ban, and T1078 (Valid Accounts) by AllowGroups scoping and key hygiene. Auditd rules on <code>/etc/ssh/sshd_config</code> detect unauthorized config changes, and periodic <code>sshd -T</code> diffs against the baseline catch drift. Centralize the logs: an attacker who gains access will try to clean local logs first.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1110 Brute Force: https://attack.mitre.org/techniques/T1110/</li>
+<li>MITRE ATT&amp;CK T1078 Valid Accounts: https://attack.mitre.org/techniques/T1078/</li>
+<li>OpenSSH sshd_config manual: https://man7.org/linux/man-pages/man5/sshd_config.5.html</li>
+<li>Mozilla OpenSSH security guidelines: https://infosec.mozilla.org/guidelines/openssh</li>
+<li>fail2ban manual: https://fail2ban.readthedocs.io/</li>
+<li>CIS distribution benchmarks (SSH sections): https://www.cisecurity.org/cis-benchmarks/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

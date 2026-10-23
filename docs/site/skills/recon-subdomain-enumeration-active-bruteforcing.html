@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-subdomain-enumeration-active-bruteforcing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-subdomain-enumeration-active-bruteforcing</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when passive sources are exhausted and you are authorized for active DNS enumeration on the target domain. Covers wildcard detection before trusting results, brute forcing with dnsx and shuffledns, wordlist selection and custom wordlist building from discovered names, resolver choice and polite rate limiting, filtering wildcard noise, and validating hits. Authorized targets only, only brute force domains you are permitted to test actively.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="recon-subdomain-enumeration.html">recon-subdomain-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="recon-subdomain-enumeration.html">recon-subdomain-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-active.html">recon-active</a> <a href="recon-subdomain-enumeration-passive-sources.html">recon-subdomain-enumeration-passive-sources</a> <a href="recon-subdomain-enumeration-permutation-techniques.html">recon-subdomain-enumeration-permutation-techniques</a> <a href="dns-enumeration.html">dns-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>dnsx</td><td>1.2</td></tr><tr><td>shuffledns</td><td>1.1</td></tr><tr><td>massdns</td><td>1.0</td></tr><tr><td>dig</td><td>9.18</td></tr></tbody></table><p>Active brute forcing resolves dictionary guesses against the target domain to find names no database lists. It generates DNS query volume, so it requires authorization for active testing and polite rates. This sub-skill covers the active brute forcing layer of recon-subdomain-enumeration: wildcard handling, tooling, wordlists, resolvers, and validation. Only brute force domains your authorization covers.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the authorization covers active DNS enumeration, and record it in SCOPE.txt.</li>
+<li>Probe for wildcard DNS with a random name; record the wildcard IP if present.</li>
+<li>Pick the wordlist: start with subdomains-top1million, then build a custom list from discovered naming patterns.</li>
+<li>Choose resolvers: a trusted public resolver list, never the target&#x27;s authoritative servers at volume.</li>
+<li>Run dnsx (moderate) or shuffledns with massdns (large), with rate limits set.</li>
+<li>Filter results against the wildcard IP and response fingerprints.</li>
+<li>Merge validated hits into the consolidated list and probe with httpx.</li>
+</ol>
+<h2>1. Wildcard detection</h2>
+<p>Run this before every brute force campaign; a missed wildcard poisons the whole result set:</p>
+<pre><code class="language-bash">dig +short qwer-no-such-name-98765.example.com A @1.1.1.1
+dig +short another-random-zz112233.example.com A @1.1.1.1</code></pre>
+<p>If both return the same IP, the domain has wildcard DNS: every guess will resolve. Record the IP. dnsx and shuffledns filter wildcard responses automatically, but the manual probe tells you the ground truth first. Also check per-label wildcards (<code>*.dev.example.com</code>) when brute forcing specific sub-labels; wildcards can exist at any level.</p>
+<h2>2. dnsx for moderate runs</h2>
+<p>dnsx is the workhorse for wordlists up to a few hundred thousand names:</p>
+<pre><code class="language-bash">dnsx -d example.com \
+  -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt \
+  -silent -resp -o dnsx-hits.txt -t 100 -rl 200 -retry 2
+wc -l dnsx-hits.txt
+head -5 dnsx-hits.txt</code></pre>
+<p>Example output shape:</p>
+<pre><code>vpn.example.com [&quot;203.0.113.20&quot;]
+jenkins.example.com [&quot;203.0.113.21&quot;]
+grafana.example.com [&quot;203.0.113.21&quot;]</code></pre>
+<p>Flags that matter: <code>-t</code> threads, <code>-rl</code> rate limit per second, <code>-retry</code> for flaky networks. <code>-resp</code> records the resolving IP, which you need for wildcard filtering and for spotting interesting infrastructure (multiple names on one IP, names on unexpected ASNs).</p>
+<h2>3. shuffledns and massdns for large runs</h2>
+<p>For million-plus wordlists, shuffledns driving massdns is far faster:</p>
+<pre><code class="language-bash"># resolvers.txt: trusted public resolvers, one per line
+shuffledns -d example.com -list /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-2000000.txt \
+  -r resolvers.txt -o shuffled-hits.txt -t 5000</code></pre>
+<p>Validate <code>resolvers.txt</code> first: dead resolvers silently shrink results. Keep a known-good list (e.g. from the trickest public resolver lists) and re-validate periodically. shuffledns handles wildcard filtering natively; still do the manual probe from section 1 so you can sanity-check its filtering.</p>
+<h2>4. Wordlist strategy</h2>
+<p>Wordlist choice decides the yield more than tooling:</p>
+<ul>
+<li>Start broad: <code>subdomains-top1million-110000.txt</code> from SecLists catches the common names fast.</li>
+<li>Go deep on promising targets: the 2-million variant, then combined lists.</li>
+<li>Build custom from discoveries: extract the naming patterns from confirmed names and generate variants. If the target uses <code>svc-&lt;name&gt;-prod</code>, your wordlist should contain their service names with that pattern, not generic words.</li>
+</ul>
+<pre><code class="language-bash"># Extract second labels from confirmed names to learn the vocabulary
+cut -d. -f1 confirmed.txt | sort | uniq -c | sort -rn | head -30
+# Build targeted guesses: append discovered prefixes to service words
+for prefix in dev staging prod test qa uat; do
+  while read -r svc; do echo &quot;$prefix-$svc&quot;; echo &quot;$svc-$prefix&quot;; done &lt; services.txt
+done &gt; custom-wordlist.txt
+wc -l custom-wordlist.txt</code></pre>
+<p>Also mine job postings, tech blogs, and the target&#x27;s own documentation for service names (jenkins, gitlab, vault, consul, kibana): internal tooling subdomains follow the stack the company advertises.</p>
+<h2>5. Validation and merging</h2>
+<p>Filter, deduplicate, and confirm each hit is real:</p>
+<pre><code class="language-bash"># Drop wildcard-IP hits and dedupe
+grep -v &quot;WILDCARD_IP&quot; dnsx-hits.txt shuffled-hits.txt | sort -u &gt; brute-validated.txt
+# Re-resolve once through a public resolver to confirm
+cut -d&#x27; &#x27; -f1 brute-validated.txt | sed &#x27;s/ \[.*//&#x27; | sort -u &gt; brute-names.txt
+dnsx -l brute-names.txt -silent -resp -o brute-confirmed.txt
+wc -l brute-confirmed.txt</code></pre>
+<p>Names that resolve consistently across two runs and two resolver sets are confirmed. Merge into the master candidate list for httpx probing.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Wildcard at a sub-label (<code>*.dev.example.com</code>): brute forcing <code>dev.example.com</code> names needs per-label wildcard detection; filter against the sub-label wildcard IP.</li>
+<li>Resolver rate limiting: symptoms are shrinking hit counts on re-runs. Lower <code>-rl</code>, rotate resolvers, or split the wordlist across runs.</li>
+<li>The target&#x27;s DNS drops high-volume queries: that is the authorization boundary talking. Slow down rather than pushing through; dropped queries mean missed names, not just slow runs.</li>
+<li>Empty results on a domain you know has subdomains: check the wordlist encoding, the resolver health, and whether you are appending the domain correctly (a <code>-d</code> flag mistake resolves garbage).</li>
+<li>DNS over HTTPS resolvers in dnsx: supported via <code>-r</code> with https:// URLs; useful when port 53 is filtered on your network.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Brute forcing plateaus: switch to permutations of confirmed names (see the permutation sub-skill), which exploit the target&#x27;s naming convention instead of generic dictionaries.</li>
+<li>Still plateaued: enumerate the ASN&#x27;s netblocks and reverse-DNS sweep the ranges; PTR records often name hosts that forward DNS never lists.</li>
+<li>Yield is zero on a large org: verify the domain spelling and authorization first; then consider that the org may live mostly on a different root domain (acquisitions, rebrands) and re-scope.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Active brute forcing is visible: high-volume, dictionary-ordered DNS queries at the resolver, and at the target&#x27;s authoritative servers if you query them directly. This is why authorization and pacing matter.</li>
+<li>Defenders can detect enumeration patterns: query entropy analysis, NXDOMAIN rate spikes, and known wordlist ordering. Alert on these, but expect authorized hunters too.</li>
+<li>Wildcard DNS pollutes attacker results but does not hide names from certificate transparency; it is not a substitute for CT monitoring.</li>
+<li>Rate limiting DNS at the authoritative server slows enumeration but also degrades legitimate use; prefer monitoring and alerting over aggressive blocking.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>dnsx documentation: https://github.com/projectdiscovery/dnsx</li>
+<li>shuffledns documentation: https://github.com/projectdiscovery/shuffledns</li>
+<li>massdns documentation: https://github.com/blechschmidt/massdns</li>
+<li>SecLists DNS wordlists: https://github.com/danielmiessler/SecLists</li>
+<li>MITRE ATT&amp;CK T1590.002 DNS: https://attack.mitre.org/techniques/T1590/002/</li>
+<li>BIND 9 dig documentation: https://www.isc.org/bind/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

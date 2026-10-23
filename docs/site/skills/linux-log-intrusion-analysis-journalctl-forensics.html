@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-log-intrusion-analysis-journalctl-forensics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-log-intrusion-analysis-journalctl-forensics</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when doing forensic analysis with journalctl on a Linux</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a> <a href="linux-systemd-security.html">linux-systemd-security</a> <a href="linux-log-intrusion-analysis-auth-log-triage.html">linux-log-intrusion-analysis-auth-log-triage</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>systemd</td><td>255</td></tr><tr><td>auditd</td><td>3.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>The systemd journal records what the system did: which services started, which timers fired, which sessions opened, and what the kernel saw. In forensics, it answers the questions auth logs cannot: what ran, when, and in what order. This sub-skill covers the defensive analyst&#x27;s journalctl method: scoping queries by time and boot, filtering by unit and priority, hunting persistence artifacts, extracting evidence cleanly, and verifying the journal has not been tampered with. For hosts you are authorized to investigate; defensive only. The parent skill sets the investigation strategy; this file is the journalctl field manual.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Establish journal coverage: list boots, check storage mode, note the earliest entry.</li>
+<li>Verify integrity before trusting anything: <code>journalctl --verify</code> and collector comparison.</li>
+<li>Scope queries to the incident window with <code>--since</code>/<code>--until</code> and to the relevant boot with <code>-b</code>.</li>
+<li>Hunt persistence: new units, timer firings, cron activity, and service starts in the window.</li>
+<li>Correlate execution: session openings, privilege changes, and kernel events around each suspicious start.</li>
+<li>Extract evidence with stable output options (<code>-o short-precise</code>, <code>--no-pager</code>, JSON export) into the case directory.</li>
+<li>Document every query and its result so the analysis is reproducible.</li>
+</ol>
+<h2>1. Establishing coverage and integrity</h2>
+<p>Before analysis, know what the journal contains and whether it is trustworthy. A volatile journal or a tampered one changes everything about the investigation.</p>
+<pre><code class="language-bash">journalctl --list-boots --no-pager | head -10
+journalctl --disk-usage
+journalctl --verify 2&gt;&amp;1 | tail -5</code></pre>
+<p>Example output shape: boot list with IDs and time ranges (gaps in the sequence are significant), disk usage showing whether retention policy held, and verify output reporting seal status. If <code>--list-boots</code> misses boots you expect, or <code>--verify</code> reports failures, record the integrity verdict before proceeding: findings built on a tampered journal need collector corroboration for every claim.</p>
+<h2>2. Time-bounded and boot-scoped queries</h2>
+<p>Unbounded journal queries on a busy host return noise. Scope ruthlessly: incident window first, then the specific boot.</p>
+<pre><code class="language-bash">journalctl --since &quot;2026-10-22 18:00&quot; --until &quot;2026-10-23 06:00&quot; --no-pager -o short-precise | head -30
+journalctl -b -1 --no-pager -p warning | head -20
+journalctl -b 0 -u sshd.service --no-pager | tail -20</code></pre>
+<p><code>-b -1</code> selects the previous boot (critical when the incident spans a reboot, which intrusions often do to activate persistence). <code>-o short-precise</code> gives microsecond timestamps for ordering events that log within the same second. Always record the exact query with each evidence excerpt; &quot;journalctl showed X&quot; is not reproducible, the full command line is.</p>
+<h2>3. Hunting persistence in the journal</h2>
+<p>Persistence mechanisms announce themselves in the journal when they activate: units starting, timers firing, cron running jobs. Hunt the window for what should not be there.</p>
+<pre><code class="language-bash">journalctl --since &quot;2026-10-22 00:00&quot; --no-pager | grep -iE &quot;started.*\.service|starting.*\.service&quot; | grep -viE &quot;systemd|dbus|network|sshd|cron\.service&quot; | head -20
+journalctl -u cron.service --no-pager --since &quot;2026-10-22 00:00&quot; | grep -iE &quot;CMD|RELOAD&quot; | head -20
+journalctl --no-pager | grep -iE &quot;\.timer&quot; | tail -20</code></pre>
+<p>Example output shape: service starts outside the known set, cron job executions with command lines, timer activations. For each unknown service start, pull the unit definition (<code>systemctl cat</code>) and check its ExecStart paths for writability and legitimacy. A timer firing an unknown unit at 03:00, or cron executing a base64 blob, goes straight into the timeline as suspected persistence.</p>
+<h2>4. Correlating sessions, privilege, and kernel events</h2>
+<p>Execution leaves a multi-source trail. Tie session openings to what ran inside them and to kernel-level observations.</p>
+<pre><code class="language-bash">journalctl --since &quot;2026-10-22 18:00&quot; --no-pager | grep -iE &quot;new session|session opened|pam_unix.*session&quot; | head -15
+journalctl -k --since &quot;2026-10-22 18:00&quot; --no-pager -p warning | head -15
+journalctl --since &quot;2026-10-22 18:00&quot; --no-pager | grep -iE &quot;sudo:.*COMMAND|useradd|passwd.*changed&quot; | head -15</code></pre>
+<p>Example output shape: session IDs with owning users and times, kernel warnings (module loads, OOM kills, audit denials), and privilege/account events. Correlate by timestamp: a new session at 02:14, a module load at 02:15, and a new unit start at 02:16 is a story, not three facts. Kernel module loads outside maintenance windows deserve special attention as possible rootkit activity.</p>
+<h2>5. Evidence extraction and structured output</h2>
+<p>Evidence must be stable, complete, and attributable. Use output modes designed for it, and export to the case directory.</p>
+<pre><code class="language-bash">journalctl --since &quot;2026-10-22 18:00&quot; --until &quot;2026-10-23 06:00&quot; -o export &gt; /root/ir-evidence/journal-window.export
+journalctl -b -1 -p err -o json-pretty &gt; /root/ir-evidence/journal-prevboot-err.json 2&gt;/dev/null
+journalctl --no-pager -o short-precise -u sshd.service --since &quot;2026-10-22 00:00&quot; &gt; /root/ir-evidence/sshd-window.log</code></pre>
+<p><code>-o export</code> preserves all fields including cursor and monotonic timestamps; JSON output feeds timeline tooling. For each export, record the command, the hostname, the journal&#x27;s boot ID, and a hash of the file (<code>sha256sum</code>), so the evidence chain is intact. Analyze from these exports rather than re-querying the live journal, which keeps the analysis reproducible even if the live logs rotate.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The journal may be volatile (<code>Storage=volatile</code>) or absent entirely on minimal images; in that case pivot immediately to rsyslog files, the central collector, and auditd logs, and record the journal gap as a visibility finding.</li>
+<li><code>--verify</code> requires the sealing key setup to mean much; without FSS, verification only checks structural integrity, so pair it with collector comparison for real tamper detection.</li>
+<li>Huge journals make full-window greps slow; prefer <code>-u</code> unit filters and <code>-p</code> priority filters to narrow before grepping, and use <code>--since</code>/<code>--until</code> aggressively.</li>
+<li>Corrupted journal files (from crashes or tampering) cause journalctl to stop reading at the corruption point; <code>journalctl --verify</code> identifies the bad file, and the readable portion is still evidence, so extract what is readable and note the boundary.</li>
+<li>Timezone handling: journalctl displays local time by default; use <code>--utc</code> when correlating with UTC sources, and document which you used, because mixed-timezone timelines create false ordering.</li>
+<li>Services that log to their own files instead of the journal (databases, some daemons with <code>StandardOutput=file</code>) leave journal gaps that look like inactivity; know each critical service&#x27;s logging path before concluding nothing happened.</li>
+<li><code>journalctl -b -1</code> fails if the previous boot&#x27;s journal was not persisted; check <code>--list-boots</code> first rather than assuming the boot exists.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If the journal shows signs of tampering (verify failures, collector mismatches, missing boots), escalate to full incident response: the adversary is actively doing Indicator Removal and the timeline must be rebuilt from off-host sources.</li>
+<li>If persistence artifacts are confirmed (unknown units, timers, cron jobs), escalate for containment before cleanup: understand the full persistence set first, because removing one mechanism while another remains just re-infects.</li>
+<li>If kernel module loads or suspicious driver activity appears, escalate for memory forensics consideration: rootkits hide from disk and log analysis, and the decision to take a memory image is time-sensitive.</li>
+<li>If the journal window does not cover the incident, escalate the visibility gap and pivot the investigation to network logs, EDR telemetry, and the central collector rather than declaring the host clean.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Journal forensics is the deep-dive form of a continuous detection practice. Defenders run the same hunts on a schedule: new unit starts, timer activations outside the known set, session anomalies, and kernel warnings, all baselined against normal. MITRE T1543/T1053 (persistence via system processes and scheduled tasks) are what the persistence hunts detect; T1070 (Indicator Removal) is what the integrity checks counter. The journal&#x27;s value as evidence depends entirely on the hardening in the journal-security sub-skill: persistent storage, sealing, and central forwarding turn journalctl from a convenience tool into a forensic instrument. Alert on journal gaps and verification failures as detection events in their own right, not just as investigation prerequisites.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1543 Create or Modify System Process: https://attack.mitre.org/techniques/T1543/</li>
+<li>MITRE ATT&amp;CK T1053 Scheduled Task/Job: https://attack.mitre.org/techniques/T1053/</li>
+<li>MITRE ATT&amp;CK T1070 Indicator Removal: https://attack.mitre.org/techniques/T1070/</li>
+<li>journalctl manual: https://www.freedesktop.org/software/systemd/man/journalctl.html</li>
+<li>systemd.journal-fields manual: https://www.freedesktop.org/software/systemd/man/systemd.journal-fields.html</li>
+<li>NIST SP 800-92 Guide to Computer Security Log Management: https://csrc.nist.gov/publications/detail/sp/800-92/final</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

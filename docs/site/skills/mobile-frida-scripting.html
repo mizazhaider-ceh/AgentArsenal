@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mobile-frida-scripting</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mobile-frida-scripting</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to write custom Frida instrumentation for</p><h2>Sub-skills</h2><ul><li><a href="mobile-frida-scripting-function-hooking.html">mobile-frida-scripting-function-hooking</a> <span class="muted">v1.0.0: Use when you need precise control over individual methods</span></li><li><a href="mobile-frida-scripting-native-code-tracing.html">mobile-frida-scripting-native-code-tracing</a> <span class="muted">v1.0.0: Use when the security logic you need to understand lives in</span></li><li><a href="mobile-frida-scripting-ssl-pinning-bypass.html">mobile-frida-scripting-ssl-pinning-bypass</a> <span class="muted">v1.0.0: Use when a mobile app&#x27;s HTTPS traffic stays encrypted in</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="mobile-ios-static.html">mobile-ios-static</a> <a href="android-dynamic.html">android-dynamic</a> <a href="ios-dynamic-analysis.html">ios-dynamic-analysis</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Frida</td><td>16.5</td></tr><tr><td>frida-tools</td><td>12.4</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>Node.js</td><td>22.0</td></tr><tr><td>objection</td><td>1.11</td></tr></tbody></table><p>Frida scripting is writing small JavaScript agents that inject into a running mobile app and change or observe its behavior: hooking methods, dumping arguments, forcing return values, and tracing native code. It is the precision tool beneath objection&#x27;s convenience commands. This skill teaches the agent patterns that work reliably on real apps: correct bridges for each platform, overload handling, safe logging, and the TypeScript workflow for larger scripts. Everything here assumes an authorized target: your client&#x27;s in-scope app, your organization&#x27;s build, or a lab target, on a test device you control.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Verify the Frida toolchain: workstation and device versions match,</li>
+<p>frida-server or gadget is running.</p>
+<li>Confirm the target process with frida-ps and attach once with a</li>
+<p>hello-world agent.</p>
+<li>Identify hook targets from static analysis (class-dump, method</li>
+<p>lists) and note exact signatures including overloads.</p>
+<li>Write the agent: bridge (Java or ObjC), hook, log, and an RPC export</li>
+<p>for interactive control.</p>
+<li>Test with spawn and --no-pause, watching for crashes on launch.</li>
+<li>Iterate: add argument dumping, return value control, and backtraces.</li>
+<li>For native targets, resolve exports and attach Interceptor with</li>
+<p>onEnter and onLeave handlers.</p>
+<li>Save the working script with the app version in the filename and</li>
+<p>note what it proved.</p>
+</ol>
+<h2>1. Environment setup and the first attach</h2>
+<pre><code class="language-bash"># Install the toolchain (Python 3.12 assumed)
+pip install frida-tools==12.4
+
+# Versions must match between workstation and device
+frida --version
+frida-ps -U | head -5
+
+# Hello world agent, saved as hello.js
+cat &gt; hello.js &lt;&lt;&#x27;EOF&#x27;
+console.log(&#x27;[*] agent loaded, arch: &#x27; + Process.arch);
+EOF
+
+# Attach to a running app by name
+frida -U -n Target -l hello.js
+
+# Or spawn it fresh (better for early hooks)
+frida -U -f com.example.target -l hello.js --no-pause</code></pre>
+<p>If attach fails, check the three usual suspects in order: version mismatch, frida-server not running or crashed, and the app refusing to run on the test device (root or jailbreak detection). The sub-skill on SSL pinning bypass covers the spawn pattern you will reuse constantly.</p>
+<h2>2. Java bridge: hooking Android methods</h2>
+<pre><code class="language-javascript">// hooks-android.js: the Java.perform wrapper is mandatory
+Java.perform(function () {
+    // Resolve the class; use the exact name from static analysis
+    var LoginManager = Java.use(&#x27;com.example.target.LoginManager&#x27;);
+
+    // Hook a method and log arguments plus return value
+    LoginManager.isAuthenticated.implementation = function () {
+        var result = this.isAuthenticated();
+        console.log(&#x27;[*] isAuthenticated() -&gt; &#x27; + result);
+        return result;
+    };
+
+    // Overloads need explicit signatures
+    LoginManager.login.overload(&#x27;java.lang.String&#x27;, &#x27;java.lang.String&#x27;,
+        &#x27;com.example.target.Callback&#x27;).implementation = function (u, p, cb) {
+        console.log(&#x27;[*] login called for user: &#x27; + u);
+        // Call through normally during observation
+        this.login(u, p, cb);
+    };
+
+    // Enumerate all methods when static analysis was thin
+    var methods = LoginManager.class.getDeclaredMethods();
+    methods.forEach(function (m) { console.log(&#x27;[*] method: &#x27; + m.toString()); });
+});</code></pre>
+<p>Run it:</p>
+<pre><code class="language-bash">frida -U -f com.example.target -l hooks-android.js --no-pause</code></pre>
+<p>Example output shape:</p>
+<pre><code>[*] agent loaded
+[*] method: public boolean com.example.target.LoginManager.isAuthenticated()
+[*] login called for user: test@example.com
+[*] isAuthenticated() -&gt; false</code></pre>
+<p>Forcing a return value during an authorized test (for example, to see what the app does after login without valid credentials) is one line: replace <code>return result;</code> with <code>return true;</code>. Keep such modifications clearly labeled in your notes, since they change app behavior.</p>
+<h2>3. ObjC bridge: hooking iOS methods</h2>
+<pre><code class="language-javascript">// hooks-ios.js: ObjC.choose finds live instances, Interceptor hooks IMPs
+if (ObjC.available) {
+    // Hook by class and selector using the ObjC bridge
+    var LoginManager = ObjC.classes.LoginManager;
+    Interceptor.attach(LoginManager[&#x27;- isAuthenticated&#x27;].implementation, {
+        onEnter: function (args) {
+            console.log(&#x27;[*] isAuthenticated called on &#x27; + args[0]);
+        },
+        onLeave: function (retval) {
+            console.log(&#x27;[*] isAuthenticated returned &#x27; + retval);
+        }
+    });
+
+    // Enumerate methods of a class (mirrors the Android example)
+    var methods = Object.getOwnPropertyNames(LoginManager)
+        .filter(function (m) { return m.indexOf(&#x27;- &#x27;) === 0 || m.indexOf(&#x27;+ &#x27;) === 0; });
+    console.log(&#x27;[*] methods: &#x27; + JSON.stringify(methods.slice(0, 10)));
+}</code></pre>
+<p>Note the selector syntax: <code>- isAuthenticated</code> for instance methods, <code>+ sharedManager</code> for class methods. Arguments arrive in <code>args[0]</code> (self), <code>args[1]</code> (selector), <code>args[2]</code> onward. Convert NSString arguments for readable logs:</p>
+<pre><code class="language-javascript">onEnter: function (args) {
+    var str = ObjC.Object(args[2]).toString();
+    console.log(&#x27;[*] got string arg: &#x27; + str);
+}</code></pre>
+<h2>4. Interceptor on native exports</h2>
+<p>When the interesting logic lives in a <code>.so</code> or dylib, hook the native function directly.</p>
+<pre><code class="language-javascript">// Wait for the library, then hook by export name
+function hookNative() {
+    var lib = Process.findModuleByName(&#x27;libtarget.so&#x27;);
+    if (!lib) { console.log(&#x27;[-] lib not loaded yet&#x27;); return; }
+    var check = lib.getExportByName(&#x27;Java_com_example_target_Native_check&#x27;);
+    Interceptor.attach(check, {
+        onEnter: function (args) {
+            console.log(&#x27;[*] native check called&#x27;);
+            // Dump a byte buffer argument
+            console.log(hexdump(args[1], { length: 32 }));
+        },
+        onLeave: function (retval) {
+            console.log(&#x27;[*] native check returned &#x27; + retval);
+            // Force pass during authorized testing
+            retval.replace(1);
+        }
+    });
+}
+Java.perform(hookNative);  // run after the runtime is ready</code></pre>
+<p>For iOS dylibs the pattern is identical with <code>Process.findModuleByName</code> and the C function name. When the export name is unknown, enumerate:</p>
+<pre><code class="language-javascript">Process.findModuleByName(&#x27;libtarget.so&#x27;).enumerateExports()
+    .filter(function (e) { return e.name.indexOf(&#x27;check&#x27;) !== -1; })
+    .forEach(function (e) { console.log(e.name + &#x27; @ &#x27; + e.address); });</code></pre>
+<h2>5. Tracing with Stalker</h2>
+<p>Stalker follows code execution at the instruction level. Use it to find which code runs during a feature, or to trace through obfuscated native code.</p>
+<pre><code class="language-javascript">// Trace a single function with Stalker and log basic blocks
+var target = Module.getExportByName(&#x27;libtarget.so&#x27;, &#x27;check_license&#x27;);
+Stalker.follow(Process.getCurrentThreadId(), {
+    events: { compile: true },
+    onReceive: function (events) {
+        var parsed = Stalker.parse(events);
+        console.log(&#x27;[*] executed &#x27; + parsed.length + &#x27; basic blocks&#x27;);
+    }
+});
+Interceptor.attach(target, {
+    onEnter: function () { /* stalker already following */ },
+    onLeave: function () { Stalker.unfollow(Process.getCurrentThreadId()); }
+});</code></pre>
+<p>Stalker output is voluminous; always scope it to one thread and one function, and unfollow promptly. For call-graph questions, combine with backtraces instead:</p>
+<pre><code class="language-javascript">console.log(Thread.backtrace(this.context, Backtracer.ACCURATE)
+    .map(DebugSymbol.fromAddress).join(&#x27;\n&#x27;));</code></pre>
+<h2>6. The TypeScript workflow with frida-compile</h2>
+<p>Scripts beyond a hundred lines deserve modules and types.</p>
+<pre><code class="language-bash">npm install -g frida-compile
+mkdir agent &amp;&amp; cd agent &amp;&amp; npm init -y &amp;&amp; npm install frida-compile
+
+# agent.ts
+cat &gt; agent.ts &lt;&lt;&#x27;EOF&#x27;
+import { log } from &quot;./util.js&quot;;
+Java.perform(() =&gt; {
+    const LoginManager = Java.use(&#x27;com.example.target.LoginManager&#x27;);
+    LoginManager.isAuthenticated.implementation = function () {
+        const r: boolean = this.isAuthenticated();
+        log(`isAuthenticated -&gt; ${r}`);
+        return r;
+    };
+});
+EOF
+
+frida-compile agent.ts -o _agent.js
+frida -U -f com.example.target -l _agent.js --no-pause</code></pre>
+<p>TypeScript catches signature mistakes at compile time instead of as silent runtime no-ops, which is the most common Frida debugging trap: a hook that never fires usually has a wrong class name, wrong overload, or a bridge entered before the runtime was ready.</p>
+<h2>7. RPC exports for interactive control</h2>
+<p>Expose functions to the Python side so you can call into the app interactively.</p>
+<pre><code class="language-javascript">// rpc-agent.js
+rpc.exports = {
+    dumpToken: function () {
+        var token = null;
+        Java.perform(function () {
+            var mgr = Java.use(&#x27;com.example.target.LoginManager&#x27;);
+            // call a getter on a live instance via Java.choose
+            Java.choose(&#x27;com.example.target.LoginManager&#x27;, {
+                onMatch: function (instance) { token = instance.getToken(); },
+                onComplete: function () {}
+            });
+        });
+        return token;
+    }
+};</code></pre>
+<pre><code class="language-python"># driver.py
+import frida
+session = frida.get_usb_device().attach(&#x27;Target&#x27;)
+script = session.create_script(open(&#x27;rpc-agent.js&#x27;).read())
+script.load()
+print(script.exports_sync.dump_token())</code></pre>
+<p>This pattern turns Frida into a scripting API for the app: dump state, invoke methods, and feed results into the rest of your test harness.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The hook never fires and there is no error. The class name is wrong,</li>
+<p>the overload signature is wrong, or the code path never runs. Log <code>Java.enumerateLoadedClasses</code> filtered by your target substring to confirm the class is actually loaded.</p>
+<li>The app crashes on spawn with your agent. Hook later: attach to the</li>
+<p>running app instead of spawning, or delay hooks with setTimeout so initialization completes first.</p>
+<li>Anti-Frida code detects the injection (port scan, maps check) and</li>
+<p>kills the app. Rename frida-server, run it on a nonstandard port, and inject later in the lifecycle. Document the detection as a working resilience control.</p>
+<li>Overload resolution throws &quot;has more than one overload&quot;. List</li>
+<p>overloads with <code>method.overloads.forEach</code> and pick the exact signature; guessing wastes cycles.</p>
+<li>Stalker slows the app to a crawl. Narrow the follow to the target</li>
+<p>thread and function, use <code>events: { call: true }</code> instead of full compile events, and unfollow as soon as you have the trace.</p>
+<li>TypeScript compile errors reference frida types you never imported.</li>
+<p>The @types/frida-gum package provides them; install it as a devDependency.</p>
+<li>iOS selector names contain colons and spaces (<code>- loginWithUsername:password:</code>).</li>
+<p>Quote them exactly as <code>ObjC.classes.Foo[&#x27;- loginWithUsername:password:&#x27;]</code>; a missing colon is a silent miss.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You need a bypass the generic scripts do not cover. Read the</li>
+<p>decompiled check (Ghidra or class-dump output), identify the exact method or native function, and write the targeted hook. The pinning bypass sub-skill has the platform patterns.</p>
+<li>The app uses heavy obfuscation and method names are meaningless.</li>
+<p>Switch to behavior-led hooking: hook framework APIs (network, crypto, storage) instead of app methods, and let the app reveal itself.</p>
+<li>Multiple analysts need the same instrumentation. Move the agent to</li>
+<p>the TypeScript workflow, check it into the engagement repo, and version it with the app build it targets.</p>
+<li>Frida cannot attach at all (hardened device, no gadget path).</li>
+<p>Escalate to the engagement lead: either the client provides a debuggable build or dynamic instrumentation is out of scope, and the report says so explicitly.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Apps detect Frida through open port 27042 scans, the frida-server process name, injected libraries visible in memory maps, and timing checks around sensitive operations. Defenders should assume a determined analyst bypasses each of these on a test device; the durable response is server-side authorization, certificate pinning, short-lived tokens, and no trust in client-side checks. As the tester, every bypass you perform is itself evidence about defense depth: note how long each control resisted and what finally defeated it. Never use these techniques outside the authorized target and device.</p>
+<h2>Key references</h2>
+<ul>
+<li>Frida JavaScript API documentation:</li>
+<p>https://frida.re/docs/javascript-api/</p>
+<li>Frida iOS and Android guides:</li>
+<p>https://frida.re/docs/ios/ and https://frida.re/docs/android/</p>
+<li>Frida CodeShare (community scripts, review before use):</li>
+<p>https://codeshare.frida.re/</p>
+<li>objection documentation: https://github.com/sensepost/objection</li>
+<li>OWASP MSTG instrumentation chapters:</li>
+<p>https://mas.owasp.org/MSTG/</p>
+<li>OWASP MASVS resilience requirements:</li>
+<p>https://mas.owasp.org/MASVS/</p>
+<li>frida-compile project:</li>
+<p>https://github.com/frida/frida-compile</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

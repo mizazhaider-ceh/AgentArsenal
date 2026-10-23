@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mobile-ios-static-ipa-extraction</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mobile-ios-static-ipa-extraction</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to obtain an analyzable IPA file for iOS</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="mobile-ios-static.html">mobile-ios-static</a></div><div class="deps"><span class="kind">requires:</span> <a href="mobile-ios-static.html">mobile-ios-static</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="mobile-ios-static.html">mobile-ios-static</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Frida</td><td>16.5</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>unzip</td><td>6.0</td></tr></tbody></table><p>IPA extraction is getting the app package onto your workstation in a form you can analyze. App Store binaries are FairPlay encrypted and useless for static analysis until decrypted, which requires running code on a device you own. This sub-skill covers the three authorized acquisition paths and the verification steps that prove the IPA is intact and decrypted. Only extract apps you are authorized to assess. Decrypting someone else&#x27;s paid app to pirate or redistribute it is not authorized testing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Ask the client for a test build first; it is the fastest authorized</li>
+<p>path and usually unencrypted.</p>
+<li>If the client points at the App Store, check whether the app is your</li>
+<p>organization&#x27;s (Apple Configurator path) or needs device decryption.</p>
+<li>Prepare your jailbroken test device: install the target app version,</li>
+<p>run frida-server, verify Frida connectivity.</p>
+<li>Decrypt with frida-ios-dump and pull the IPA to your workstation.</li>
+<li>Hash the IPA and confirm the main binary is decrypted (cryptid check).</li>
+<li>Unzip into a working directory and confirm the expected bundle layout.</li>
+<li>Record build, version, source, and hash in your notes before analysis.</li>
+</ol>
+<h2>1. Client-supplied builds</h2>
+<p>Always ask first. A client can usually provide an ad-hoc, enterprise, or TestFlight build of the exact version in scope, signed for your test device&#x27;s UDID. These builds are typically unencrypted and sometimes even include debug symbols, which makes static analysis dramatically easier.</p>
+<pre><code class="language-bash"># What to request from the client
+# - IPA for the exact build in scope (bundle version, e.g. 2.4.1 build 88)
+# - Signed for your test device UDID, or an enterprise distribution cert
+# - Note whether it is a release or debug configuration
+
+# When you receive it, hash immediately and check the signature
+shasum -a 256 client-build.ipa
+unzip -l client-build.ipa | grep -E &quot;Payload/.*\.app/$|Info.plist&quot;</code></pre>
+<p>If the client only offers TestFlight, install it on your test device and use the device decryption path below; TestFlight binaries are still FairPlay encrypted.</p>
+<h2>2. Apple Configurator path (your organization&#x27;s app)</h2>
+<p>For an app your organization publishes, Apple Configurator on a Mac can download the IPA to your workstation without touching a device.</p>
+<pre><code class="language-bash"># Steps in Apple Configurator (GUI, summarized for the runbook):
+# 1. Sign in with an Apple ID in your organization
+# 2. Add the device or use &quot;Add Apps&quot; for the target Apple ID
+# 3. Select the app and choose Add; Configurator downloads the .ipa
+# 4. Find it under ~/Library/Group Containers/*.com.apple.configurator/Library/Caches/
+# 5. Copy it out before Configurator cleans the cache
+
+cp ~/Library/Group\ Containers/K36BKF7T3D.group.com.apple.configurator/Library/Caches/Assets/TemporaryItems/*.ipa ./target.ipa
+shasum -a 256 target.ipa</code></pre>
+<p>This IPA is still FairPlay encrypted, so it goes through the decryption step below on your own device. The advantage is a clean, official copy tied to your organization&#x27;s account.</p>
+<h2>3. Decrypting on your jailbroken test device</h2>
+<p>FairPlay decryption happens at load time on the device, so the standard technique dumps the decrypted binary from memory while the app runs. frida-ios-dump automates this over Frida.</p>
+<pre><code class="language-bash"># On the device: app installed from the App Store, frida-server running
+frida-ps -U | grep -i target
+
+# Dump (run from your frida-ios-dump checkout)
+python3 dump.py -u &lt;device-udid&gt; com.example.target
+
+# Expected output shape
+# [dump.py] start dump
+# [dump.py] app: Target (com.example.target)
+# [dump.py] dumping /var/containers/Bundle/Application/&lt;UUID&gt;/Target.app/Target ...
+# [dump.py] done, output: ./com.example.target-2.4.1.ipa</code></pre>
+<p>The tool repackages the decrypted binary into a fresh IPA. Keep the original App Store install on the device untouched so you can re-dump if the app updates.</p>
+<p>Requirements that commonly bite: the device must be jailbroken (palera1n or Dopamine on a test device you own), frida-server version must match your workstation Frida 16.5, and the app must actually launch (apps with aggressive jailbreak detection may refuse, in which case you need the client build path instead).</p>
+<h2>4. Verifying the binary is decrypted</h2>
+<p>Before any analysis, prove the Mach-O load commands show no encryption. An encrypted binary wastes hours of confusing tool failures.</p>
+<pre><code class="language-bash"># The definitive check: cryptid must be 0
+otool -l Payload/Target.app/Target | grep -B2 -A2 cryptid
+# LC_ENCRYPTION_INFO
+#    cryptoff 16384
+#   cryptsize 131072
+#    cryptid 0        &lt;-- 0 means decrypted, 1 means still encrypted
+
+# Quick heuristic if otool is unavailable
+file Payload/Target.app/Target</code></pre>
+<p>If cryptid is 1, the dump failed silently or you grabbed the wrong file. Re-run the dump while the app is foregrounded, and confirm frida-server did not crash mid-dump (large binaries sometimes need two attempts).</p>
+<h2>5. Unpacking and layout verification</h2>
+<pre><code class="language-bash">mkdir -p work &amp;&amp; cd work
+unzip -q ../com.example.target-2.4.1.ipa
+
+# Sanity checks on the unpacked bundle
+ls Payload/
+codesign -dvv Payload/Target.app/Target 2&gt;&amp;1 | head -8
+plutil -p Payload/Target.app/Info.plist | grep -E &quot;CFBundleIdentifier|CFBundleShortVersionString|CFBundleVersion&quot;</code></pre>
+<p>Example output shape for the version check:</p>
+<pre><code>CFBundleIdentifier =&gt; &quot;com.example.target&quot;
+CFBundleShortVersionString =&gt; &quot;2.4.1&quot;
+CFBundleVersion =&gt; &quot;88&quot;</code></pre>
+<p>The version here must match the version in scope for the engagement. If the App Store updated the app between scoping and testing, re-dump or note the drift in your report. Hand the verified, unpacked directory to the parent skill&#x27;s workflow at step 3.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The app refuses to launch on the jailbroken device because of</li>
+<p>jailbreak detection. You cannot dump what will not run. Fall back to asking the client for an unencrypted test build, which is the normal authorized path anyway.</p>
+<li>frida-ios-dump crashes partway through a large binary. Re-run it;</li>
+<p>partial dumps are common on the first attempt for apps over 100 MB. Make sure the device has free disk space for the repackaged IPA.</p>
+<li>The dump succeeds but class-dump still fails. Recheck cryptid; some</li>
+<p>apps ship multiple binaries (app extensions, watch app) and only the main binary got dumped. Dump each extension bundle separately.</p>
+<li>Apple Configurator no longer shows the cached IPA. Newer Configurator</li>
+<p>versions clean the cache aggressively. Copy the file during the download, or use the device dump path instead.</p>
+<li>The client build and the App Store build differ in version. Analyze</li>
+<p>the version in scope. If the client wants the store build assessed, say so explicitly and re-acquire; do not silently substitute builds.</p>
+<li>You only have a Mac without jailbreak tooling for the device&#x27;s iOS</li>
+<p>version. Check current jailbreak support for the exact iOS version before promising the device path; otherwise commit to the client-build path from the start.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No authorized acquisition path exists: the client will not provide a</li>
+<p>build and you have no jailbreakable test device. Stop. Static analysis of an App Store binary you cannot decrypt is not possible, and sideloading cracks from the internet is never authorized.</p>
+<li>The dumped IPA&#x27;s signing identity does not match the client&#x27;s</li>
+<p>claimed identity. Treat the binary as untrusted, confirm the source with the engagement lead, and do not base findings on it.</p>
+<li>Decryption works but the app phones home with device attestation on</li>
+<p>launch. Note it, keep the device offline during dumps if the client approves, and document any attestation behavior for the dynamic phase.</p>
+<li>Time is short: skip the Configurator path and go straight to asking</li>
+<p>the client for a build. It is the fastest route in nearly every engagement.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>IPA extraction is an analyst-side activity; the app cannot detect being unzipped on your workstation. On the device, jailbreak detection and Frida detection are the app&#x27;s defenses against the dump step itself: an app that refuses to run on a jailbroken device denies you the decrypted binary, which is a legitimate resilience control. From the defender side, the durable protections are not stopping the dump but making it worthless: no hardcoded secrets, certificate pinning, and server-side authorization mean a decrypted IPA yields little. Report which of those held.</p>
+<h2>Key references</h2>
+<ul>
+<li>Frida documentation on iOS deployment:</li>
+<p>https://frida.re/docs/ios/</p>
+<li>frida-ios-dump project:</li>
+<p>https://github.com/AloneMonkey/frida-ios-dump</p>
+<li>Apple Platform Security guide (FairPlay and code signing):</li>
+<p>https://support.apple.com/guide/security/welcome/web</p>
+<li>OWASP MSTG iOS anti-reversing and static analysis notes:</li>
+<p>https://mas.owasp.org/MSTG/</p>
+<li>Apple Configurator documentation:</li>
+<p>https://support.apple.com/apple-configurator</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

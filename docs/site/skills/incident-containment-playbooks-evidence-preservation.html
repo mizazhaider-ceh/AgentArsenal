@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-containment-playbooks-evidence-preservation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-containment-playbooks-evidence-preservation</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you must preserve forensic evidence during</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-containment-playbooks.html">incident-containment-playbooks</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-containment-playbooks.html">incident-containment-playbooks</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-containment-playbooks.html">incident-containment-playbooks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>coreutils</td><td>9.4</td></tr><tr><td>osquery</td><td>5.12.1</td></tr></tbody></table><p>Evidence preservation captures the system&#x27;s state before containment actions change it: memory before reboot, logs before rotation, disk before reimaging. The order of volatility decides the sequence, and every capture gets hashed and logged so it stands up later. This sub-skill covers what to capture, in what order, with which commands, and how to document it. It assumes authorized incident response on your own systems; the same care that makes evidence useful internally is what makes it defensible externally.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Open the evidence directory for the incident and record the</li>
+<p>start time.</p>
+<li>Capture memory first; it is the most volatile.</li>
+<li>Capture live system state: network, processes, users, mounts.</li>
+<li>Image the disk or collect targeted files with hashes.</li>
+<li>Preserve logs locally and confirm central copies exist.</li>
+<li>Hash every artifact and write the manifest.</li>
+<li>Maintain chain of custody from capture to storage.</li>
+<li>Only then proceed with disruptive containment or remediation.</li>
+</ol>
+<h2>1. Order of volatility</h2>
+<p>Capture in this order; each step is more stable than the last:</p>
+<ol>
+<li>Memory (RAM): gone at power-off or reboot.</li>
+<li>Network state: connections, ARP, routes (changes in seconds).</li>
+<li>Running processes and open files.</li>
+<li>Disk: image or targeted collection.</li>
+<li>Logs: local files before rotation deletes them.</li>
+<li>Backups and archives: least volatile, confirm they exist.</li>
+</ol>
+<pre><code class="language-bash">EVID=/evidence/INC-2026-1042
+mkdir -p $EVID
+date -u &gt; $EVID/started-at.txt
+hostname &gt; $EVID/hostname.txt</code></pre>
+<h2>2. Memory capture</h2>
+<pre><code class="language-bash"># Linux: LiME or AVML from your jump bag (pre-staged, tested)
+# AVML example (Microsoft&#x27;s memory acquisition tool)
+./avml $EVID/memory.lime
+ls -lh $EVID/memory.lime
+
+# Fallback if no tool is staged: /dev/mem is not a substitute.
+# Prefer crashing the response over a bad capture: note the gap honestly.
+
+# Windows: WinPmem from the jump bag (run as administrator)
+# winpmem.exe $EVID\memory.raw</code></pre>
+<pre><code class="language-bash"># Hash immediately; the hash is the capture&#x27;s identity
+sha256sum $EVID/memory.lime | tee $EVID/memory.lime.sha256</code></pre>
+<p>Memory contains process contents, network buffers, encryption keys, and injected code that never touches disk. If the commander must choose between memory capture and immediate isolation, capture memory first unless lives or the business are at stake; that tradeoff goes in the incident record in writing.</p>
+<h2>3. Live system state</h2>
+<pre><code class="language-bash"># Network state
+ss -tulpn &gt; $EVID/ss.txt
+ss -tupn state established &gt; $EVID/connections.txt
+ip neigh &gt; $EVID/arp.txt
+ip route &gt; $EVID/routes.txt
+
+# Processes and open files
+ps auxf &gt; $EVID/ps.txt
+lsof -i -P -n &gt; $EVID/lsof-net.txt
+lsof &gt; $EVID/lsof-all.txt 2&gt;/dev/null
+
+# Users and logins
+who &gt; $EVID/who.txt
+w &gt; $EVID/w.txt
+last -n 50 &gt; $EVID/last.txt
+
+# Mounts and loaded modules
+mount &gt; $EVID/mount.txt
+lsmod &gt; $EVID/lsmod.txt</code></pre>
+<pre><code class="language-powershell"># Windows equivalents (run as administrator)
+Get-NetTCPConnection -State Established | Export-Csv C:\Evidence\INC-2026-1042\connections.csv
+Get-Process | Select-Object Name, Id, Path | Export-Csv C:\Evidence\INC-2026-1042\processes.csv
+Get-ScheduledTask | Where-Object {$_.State -ne &#x27;Disabled&#x27;} | Export-Csv C:\Evidence\INC-2026-1042\tasks.csv
+arp -a &gt; C:\Evidence\INC-2026-1042\arp.txt</code></pre>
+<p>These are fast and low-risk; run them before the memory capture finishes if you have two responders, or right after if alone.</p>
+<h2>4. Disk imaging and targeted collection</h2>
+<pre><code class="language-bash"># Full disk image when time and storage allow (read-only source, hash both ends)
+# Identify the disk first; NEVER guess the device name
+lsblk
+dd if=/dev/sda of=$EVID/disk-sda.img bs=4M status=progress conv=noerror,sync
+sha256sum /dev/sda &gt; $EVID/disk-sda-source.sha256
+sha256sum $EVID/disk-sda.img &gt; $EVID/disk-sda-img.sha256</code></pre>
+<p>When a full image is impractical, targeted collection with hashes:</p>
+<pre><code class="language-bash"># Priority files for Linux intrusion cases
+for f in /var/log/auth.log /var/log/syslog /var/log/secure \
+         /etc/passwd /etc/shadow /etc/crontab /root/.bash_history; do
+  [ -f &quot;$f&quot; ] &amp;&amp; cp -p &quot;$f&quot; $EVID/ &amp;&amp; sha256sum &quot;$f&quot; &gt;&gt; $EVID/files.sha256
+done
+# SSH keys and authorized_keys everywhere in scope
+find /home /root -name &quot;authorized_keys&quot; -exec cp -p {} $EVID/ \; 2&gt;/dev/null
+find /home /root -name &quot;authorized_keys&quot; -exec sha256sum {} \; &gt;&gt; $EVID/files.sha256 2&gt;/dev/null
+ls -lh $EVID/</code></pre>
+<p>Use a write blocker for dead-disk imaging; for live collection, <code>cp -p</code> preserves timestamps, which the timeline will need.</p>
+<h2>5. Log preservation</h2>
+<pre><code class="language-bash"># Copy logs before rotation or attacker deletion
+cp -p /var/log/auth.log* /var/log/syslog* $EVID/ 2&gt;/dev/null
+journalctl --since &quot;7 days ago&quot; &gt; $EVID/journal-7d.txt
+
+# Confirm central copies exist (the attacker may have wiped local logs)
+# Check your SIEM for the host&#x27;s recent events; note any gap as a finding
+echo &quot;SIEM check for $(hostname): run manually, record result&quot; &gt;&gt; $EVID/log-notes.txt
+
+# Windows: export the key event logs
+wevtutil epl Security $EVID\Security.evtx
+wevtutil epl System $EVID\System.evtx
+wevtutil epl &quot;Microsoft-Windows-Sysmon/Operational&quot; $EVID\Sysmon.evtx</code></pre>
+<p>A gap between local logs and central logs is itself evidence: missing local logs with intact central logs suggests tampering (T1070), which goes in the timeline.</p>
+<h2>6. Cloud preservation</h2>
+<pre><code class="language-bash"># Snapshot before terminating or rebuilding (cloud console or CLI)
+# Example pattern (adapt to your cloud):
+# aws ec2 create-snapshot --volume-id vol-0abc123 --description &quot;INC-2026-1042 web-03&quot;
+# aws ec2 create-image --instance-id i-0abc123 --name &quot;INC-2026-1042-web-03&quot; --no-reboot
+
+# Preserve cloud trail and flow logs: they age out
+# Copy the relevant window to evidence storage immediately</code></pre>
+<p>Cloud instances are cattle until they are evidence; snapshot first, then you may terminate. Note the snapshot ids in the incident record.</p>
+<h2>7. Manifest and chain of custody</h2>
+<pre><code class="language-bash"># One manifest per host, hashing everything
+cd $EVID &amp;&amp; sha256sum * &gt; MANIFEST.sha256
+cat &gt; CHAIN-OF-CUSTODY.md &lt;&lt;&#x27;EOF&#x27;
+# Chain of custody: INC-2026-1042 / web-03
+Captured by: &lt;name&gt; at &lt;UTC time&gt;
+Method: live capture per evidence-preservation playbook
+Storage: &lt;evidence server path&gt;, access restricted to IR team
+Transfers: (log every copy or move with date and person)
+Hashes: MANIFEST.sha256 (verify on receipt)
+EOF
+sha256sum MANIFEST.sha256 CHAIN-OF-CUSTODY.md &gt;&gt; MANIFEST.sha256</code></pre>
+<p>Every person who handles the evidence signs the log. Evidence that cannot show an unbroken chain is evidence you cannot use.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The host is unstable and may crash during capture. Take memory</li>
+<p>first and fast; a partial memory image beats none, and note the instability.</p>
+<li>Disk encryption (LUKS, BitLocker) with keys in memory. Capture</li>
+<p>memory before anything else; without the keys, the disk image is unreadable. Record the recovery key escrow status.</p>
+<li>The attacker is actively deleting logs during your capture.</li>
+<p>Prioritize the central SIEM copies and note the deletion as T1070 in the timeline.</p>
+<li>No jump bag and no capture tools staged. Improvise with the</li>
+<p>built-in commands in section 3, note the missing memory capture as a gap, and fix the jump bag afterward.</p>
+<li>The system clock is wrong. Record the offset (<code>date -u</code> versus</li>
+<p>a known-good source); the timeline analysis will need it.</p>
+<li>Legal hold applies. Confirm with legal before any deletion or</li>
+<p>reimaging anywhere in scope, including &quot;routine&quot; log rotation.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Evidence suggests the attacker is still active and watching.</li>
+<p>Coordinate captures to avoid tipping them off if the commander chose stealth; otherwise capture fast and openly.</p>
+<li>The volume of evidence exceeds your storage or bandwidth. Triage</li>
+<p>with the forensics lead: memory and targeted files first, full disk images for the most critical hosts only.</p>
+<li>Chain of custody is broken (someone moved files without</li>
+<p>logging). Document the break honestly; hidden breaks are worse than acknowledged ones.</p>
+<li>External forensics firm is engaged. Hand over hashes and the</li>
+<p>manifest first, then the data; let them verify on receipt.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Evidence preservation is pure defender tradecraft: the better your captures, the shorter the investigation and the stronger the lessons learned. The peacetime investments are a tested jump bag, pre-staged capture tools on a hardened share, evidence storage with restricted access, and responders who have practiced the order of volatility until it is reflex. Attackers know responders sometimes skip preservation in the rush; the discipline of capturing first is what separates a response from a cleanup.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent playbook: incident-containment-playbooks (this repo)</li>
+<li>NIST SP 800-86 (forensic techniques):</li>
+<p>https://csrc.nist.gov/publications/detail/sp/800-86/final</p>
+<li>NIST SP 800-61 Rev. 2: https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final</li>
+<li>SANS FOR508 concepts (order of volatility):</li>
+<p>https://www.sans.org/cyber-security-courses/advanced-incident-response-threat-hunting-training/</p>
+<li>AVML (memory acquisition): https://github.com/microsoft/avml</li>
+<li>MITRE ATT&amp;CK T1070 (Indicator Removal):</li>
+<p>https://attack.mitre.org/</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

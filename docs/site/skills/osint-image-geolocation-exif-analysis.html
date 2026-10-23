@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: osint-image-geolocation-exif-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>osint-image-geolocation-exif-analysis</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a photo in an authorized investigation may</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="osint-image-geolocation.html">osint-image-geolocation</a></div><div class="deps"><span class="kind">requires:</span> <a href="osint-image-geolocation.html">osint-image-geolocation</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-image-geolocation.html">osint-image-geolocation</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>ExifTool</td><td>12.9</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>ImageMagick</td><td>7.1</td></tr></tbody></table><p>EXIF analysis reads the metadata cameras and phones embed in image files: GPS coordinates, timestamps, device model, and settings. It is the fastest path to a geolocation when present, and its absence is itself information about provenance. This sub-skill covers extraction, interpretation, verification, and the common ways metadata lies. Authorized investigations only; handle images of people per your case privacy policy.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Hash the original and work on a copy.</li>
+<li>Dump all metadata with ExifTool and save it to the case file.</li>
+<li>Read GPS tags first: position, altitude, and GPS timestamp.</li>
+<li>Read timestamps: creation, modification, and timezone offsets.</li>
+<li>Read device and software tags for provenance clues.</li>
+<li>Extract the embedded thumbnail and compare it with the image.</li>
+<li>Check for signs of stripping or manipulation.</li>
+<li>Convert coordinates to decimal and verify against visual</li>
+<p>evidence.</p>
+</ol>
+<h2>1. Full metadata dump</h2>
+<pre><code class="language-bash"># Everything, grouped and sorted for reading
+exiftool -G -s photo.jpg &gt; exif-full.txt
+wc -l exif-full.txt
+
+# Human-readable summary of the interesting groups
+exiftool -EXIF:all -GPS:all -XMP:all photo.jpg | head -60</code></pre>
+<p>Example output shape:</p>
+<pre><code>[EXIF]    Make                            : Google
+[EXIF]    Model                           : Pixel 8
+[EXIF]    DateTimeOriginal                : 2026:10:20 14:32:11
+[EXIF]    CreateDate                      : 2026:10:20 14:32:11
+[GPS]     GPSLatitude                     : 50 deg 51&#x27; 1.08&quot; N
+[GPS]     GPSLongitude                    : 4 deg 21&#x27; 6.12&quot; E
+[GPS]     GPSAltitude                     : 32 m Above Sea Level
+[GPS]     GPSDateStamp                    : 2026:10:20
+[GPS]     GPSTimeStamp                    : 12:32:11
+[XMP]     Creator                         : darkcoder</code></pre>
+<p>Note the GPS timestamp is UTC (12:32) while the EXIF time is local (14:32, UTC+2). That two-hour offset is itself a timezone clue; mismatched offsets suggest the metadata was edited or the device clock was wrong.</p>
+<h2>2. GPS tags in depth</h2>
+<pre><code class="language-bash"># Decimal coordinates ready for maps
+exiftool -GPSPosition -n photo.jpg
+# -n prints in decimal: 50.850300, 4.351700
+
+# All GPS fields including accuracy and processing method
+exiftool -GPS:all photo.jpg</code></pre>
+<p>Fields to check beyond the position:</p>
+<ul>
+<li><code>GPSAltitude</code>: inconsistent altitude (say, 3000 m for a street</li>
+<p>photo) suggests spoofing or a stale fix.</p>
+<li><code>GPSProcessingMethod</code>: GPS versus CELLID versus WLAN; cell and</li>
+<p>wifi fixes are coarser.</p>
+<li><code>GPSDOP</code>: dilution of precision; high DOP means a weak fix.</li>
+<li><code>GPSDateStamp</code> versus <code>DateTimeOriginal</code>: a photo whose GPS date</li>
+<p>differs from its capture date reused an old location fix.</p>
+</ul>
+<pre><code class="language-python"># coords.py: decimal conversion and a maps link for the case file
+lat, lon = 50.850300, 4.351700
+print(f&quot;https://www.openstreetmap.org/?mlat={lat}&amp;mlon={lon}#map=18/{lat}/{lon}&quot;)</code></pre>
+<h2>3. Timestamps and timezones</h2>
+<pre><code class="language-bash"># All date fields, with timezone offsets where present
+exiftool -time:all -d &quot;%Y-%m-%d %H:%M:%S%z&quot; photo.jpg
+
+# File system dates for comparison (can differ after copying)
+exiftool -FileModifyDate -FileCreateDate photo.jpg</code></pre>
+<p>Interpretation rules:</p>
+<ul>
+<li><code>DateTimeOriginal</code> is the capture moment in the device&#x27;s local</li>
+<p>time; the offset (<code>+02:00</code>) may be present in newer files.</p>
+<li><code>GPSDateStamp</code>/<code>GPSTimeStamp</code> are always UTC; the difference to</li>
+<p><code>DateTimeOriginal</code> gives the device&#x27;s UTC offset at capture.</p>
+<li><code>FileModifyDate</code> newer than the EXIF dates means the file was</li>
+<p>edited or re-saved after capture; treat metadata as less trustworthy from that point.</p>
+<li><code>CreateDate</code> differing from <code>DateTimeOriginal</code> by seconds is</li>
+<p>normal (shutter versus file write); differing by hours is not.</p>
+</ul>
+<h2>4. Thumbnail extraction and comparison</h2>
+<pre><code class="language-bash"># Extract the embedded thumbnail
+exiftool -b -ThumbnailImage photo.jpg &gt; thumb.jpg
+identify thumb.jpg
+
+# Compare visually: the thumbnail sometimes predates edits to the main image</code></pre>
+<p>If the thumbnail shows a different scene than the main image, the photo was edited and the metadata may describe the original. That mismatch is a finding about provenance, and the thumbnail itself may be the more truthful artifact.</p>
+<h2>5. Detecting stripped or manipulated metadata</h2>
+<pre><code class="language-bash"># What metadata groups exist at all
+exiftool -G1 -s photo.jpg | cut -d: -f1 | sort | uniq -c
+
+# Software tag often names the editor
+exiftool -Software -CreatorTool -HistorySoftwareAgent photo.jpg
+
+# Check for resave signatures: JPEG quantization tables change on re-encode
+exiftool -JPEGDigest photo.jpg</code></pre>
+<p>Signs of manipulation: EXIF present but GPS selectively removed (suggests deliberate stripping), <code>Software: Adobe Photoshop</code> with original timestamps intact (edited but honest), quantization tables indicating multiple re-encodes (provenance chain through platforms), or metadata that contradicts the pixels (winter clothing with a July timestamp).</p>
+<p>Platform behavior to know: major social networks and messaging apps strip GPS and most EXIF on upload; some keep basic dimensions and orientation. An image &quot;from WhatsApp&quot; with full GPS is suspicious, not lucky.</p>
+<h2>6. Verification against the pixels</h2>
+<p>Metadata is a claim; the image is the evidence. Cross-check:</p>
+<ol>
+<li>Plot the GPS point: does the street-level imagery match the</li>
+<p>photo&#x27;s buildings and signs.</p>
+<li>Compare the timestamp with the sun angle (shadow sub-skill).</li>
+<li>Compare the device model with the image characteristics</li>
+<p>(resolution matches the sensor).</p>
+<li>Check the timezone offset against the claimed location&#x27;s</li>
+<p>offset on that date (daylight saving transitions catch fabrications).</p>
+</ol>
+<pre><code class="language-bash"># Quick consistency summary for the case file
+cat &gt; exif-verdict.md &lt;&lt;&#x27;EOF&#x27;
+## EXIF verdict: photo.jpg
+GPS: 50.8503 N, 4.3517 E (GPS fix, DOP low)
+Time: 2026-10-20 14:32 local (+02:00), GPS UTC 12:32 (consistent)
+Device: Pixel 8, resolution matches sensor
+Edits: none indicated (no Software tag, single encode)
+Pixel cross-check: PENDING (visual analysis)
+Trust: high, pending visual confirmation
+EOF</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>No EXIF at all (stripped by platform). Normal for social media</li>
+<p>images; proceed to visual analysis and note the provenance.</p>
+<li>GPS present but the photo is a screenshot. The coordinates are</li>
+<p>where the screenshot was taken, not what it depicts; verify what the image actually shows.</p>
+<li>Timestamps in the future or in 1970. Device clock errors are</li>
+<p>common; do not build a timeline on a single bad timestamp.</p>
+<li>Multiple conflicting date fields. Trust GPSDateStamp (UTC,</li>
+<p>satellite-derived) over device-local fields when they disagree.</p>
+<li>HEIC or RAW formats. ExifTool handles both, but thumbnails and</li>
+<p>GPS placement differ; check the format-specific tags.</p>
+<li>Metadata in a language you cannot read (XMP titles, comments).</li>
+<p>Translate for the record; titles sometimes name the location outright.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Metadata places the photo at a private residence and the case</li>
+<p>does not authorize locating individuals. Stop the geolocation and escalate the scope question; do not refine the position.</p>
+<li>Signs of deliberate fabrication (edited GPS, mismatched</li>
+<p>thumbnail). Document the manipulation indicators carefully; fabricated metadata is itself evidence in fraud or disinformation cases.</p>
+<li>The image is part of a legal case. Preserve the original with</li>
+<p>hashes, keep the ExifTool version on record, and avoid any operation that rewrites the file.</p>
+<li>Timestamps are critical and contradictory. Escalate to a</li>
+<p>timeline specialist rather than picking the convenient one; choosing wrong corrupts the whole case timeline.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>EXIF is trivially stripped, which is why platforms do it by default, and trivially forged, which is why investigators verify against pixels. The defender guidance is simple: strip metadata before publishing any photo, check what your camera embeds by default, and remember that thumbnails and XMP survive some &quot;metadata removers&quot; that only clear EXIF. For investigators, the defender view is humility: metadata is the easiest evidence to fake, so it starts every analysis and never ends one.</p>
+<h2>Key references</h2>
+<ul>
+<li>ExifTool documentation and tag names:</li>
+<p>https://exiftool.org/</p>
+<li>EXIF standard reference: https://www.cipa.jp/std/documents/e/DC-008-2012_E.pdf</li>
+<li>Parent workflow: osint-image-geolocation (this repo)</li>
+<li>Bellingcat image verification guides:</li>
+<p>https://www.bellingcat.com/resources/</p>
+<li>OpenStreetMap: https://www.openstreetmap.org/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: osint-username-enumeration-cross-platform-correlation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>osint-username-enumeration-cross-platform-correlation</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when automated username checks return candidate</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="osint-username-enumeration.html">osint-username-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="osint-username-enumeration.html">osint-username-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-username-enumeration.html">osint-username-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>curl</td><td>8.5</td></tr></tbody></table><p>Cross-platform correlation turns a pile of same-name profiles into an attributed footprint, or into a set of unrelated collisions. One data point never proves identity; independent points that agree do. This sub-skill covers the independent pivots: avatars, bios, timestamps, links, and style, plus how to combine them into a confidence rating that survives scrutiny. Public information only, authorized investigations only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Collect the candidate profiles from the parent workflow into one</li>
+<p>working set with URLs and screenshots.</p>
+<li>Download avatars and compare with perceptual hashing.</li>
+<li>Extract bios and search distinctive phrases across the web.</li>
+<li>Pull activity timestamps and infer the operator&#x27;s timezone.</li>
+<li>Map explicit links between profiles (bio links, cross-posts).</li>
+<li>Compare writing style markers on long-form content.</li>
+<li>Score each account: confirmed, likely, or unrelated, with reasons.</li>
+<li>Write the attribution memo with evidence per account.</li>
+</ol>
+<h2>1. Avatar comparison</h2>
+<pre><code class="language-bash">mkdir -p avatars &amp;&amp; cd avatars
+# Download public avatars (public profile images only)
+curl -sL &quot;https://github.com/darkcoder.png&quot; -o avatar-github.png
+curl -sL &quot;https://example-forum.com/avatar/darkcoder.png&quot; -o avatar-forum.png</code></pre>
+<pre><code class="language-python"># avatar-compare.py: perceptual hash comparison
+from PIL import Image
+import imagehash
+import itertools
+
+hashes = {}
+for name in [&#x27;avatar-github.png&#x27;, &#x27;avatar-forum.png&#x27;, &#x27;avatar-reddit.png&#x27;]:
+    try:
+        hashes[name] = imagehash.phash(Image.open(name))
+    except FileNotFoundError:
+        print(f&quot;missing {name}, skipping&quot;)
+
+for a, b in itertools.combinations(hashes, 2):
+    dist = hashes[a] - hashes[b]
+    verdict = &quot;SAME&quot; if dist &lt;= 5 else &quot;different&quot;
+    print(f&quot;{a} vs {b}: distance {dist} -&gt; {verdict}&quot;)</code></pre>
+<p>Example output shape:</p>
+<pre><code>avatar-github.png vs avatar-forum.png: distance 2 -&gt; SAME
+avatar-github.png vs avatar-reddit.png: distance 28 -&gt; different</code></pre>
+<p>A distance under 5 on pHash means near-identical images despite resizing or recompression. Caveat: default avatars and popular meme images produce false matches, so an avatar match is one vote, not a verdict. Always pair it with another pivot.</p>
+<h2>2. Bio and phrase pivots</h2>
+<pre><code class="language-bash"># Save each bio verbatim in the case file, then search distinctive phrases
+# A unique phrase in quotes is the strongest text pivot
+curl -sL &quot;https://api.github.com/users/darkcoder&quot; | python3 -c \
+  &quot;import json,sys; print(json.load(sys.stdin).get(&#x27;bio&#x27;))&quot;
+# Example: &quot;Embedded systems. I break UARTs for fun. No DMs.&quot;</code></pre>
+<p>Search the exact distinctive phrase in a web search engine, quoted. If the same unusual sentence appears on three profiles, that is a strong link, stronger than a shared common phrase like &quot;software developer&quot;. Also pivot on:</p>
+<ul>
+<li>Personal site domains listed in bios (then check the domain&#x27;s</li>
+<p>other references).</p>
+<li>Contact emails or handles in bios (&quot;tg: darkcoder_ops&quot;).</li>
+<li>PGP keys, crypto donation addresses, or sponsor links shared</li>
+<p>across profiles.</p>
+</ul>
+<pre><code class="language-bash"># Check whether a personal site links back to the other profiles
+curl -sL &quot;https://darkcoder.dev&quot; | grep -oiE &quot;(github|twitter|reddit)\.com/[a-z0-9_]+&quot; | sort -u</code></pre>
+<p>A bio link from A to B plus a bio link from B to A is mutual confirmation, the gold standard of this technique.</p>
+<h2>3. Timezone inference from timestamps</h2>
+<pre><code class="language-python"># tz-infer.py: histogram of posting hours across profiles
+from datetime import datetime
+from collections import Counter
+
+# Collect UTC timestamps of public posts per profile (from APIs or page data)
+posts = {
+    &#x27;github&#x27;: [&#x27;2026-10-20T14:03:00Z&#x27;, &#x27;2026-10-21T09:15:00Z&#x27;],
+    &#x27;forum&#x27;: [&#x27;2026-10-20T15:40:00Z&#x27;, &#x27;2026-10-22T10:02:00Z&#x27;],
+}
+hours = Counter()
+for profile, stamps in posts.items():
+    for s in stamps:
+        hours[datetime.fromisoformat(s.replace(&#x27;Z&#x27;, &#x27;+00:00&#x27;)).hour] += 1
+
+for h in sorted(hours):
+    print(f&quot;{h:02d}:00 UTC  {&#x27;#&#x27; * hours[h]}&quot;)</code></pre>
+<p>Example output shape:</p>
+<pre><code>09:00 UTC  ##
+10:00 UTC  #
+14:00 UTC  #
+15:00 UTC  #</code></pre>
+<p>Activity concentrated in 08:00-18:00 UTC suggests a European operator; a matching quiet window across profiles supports same-operator attribution, while wildly different active windows weakens it. This is a supporting pivot, never a primary one, since schedulers and travel distort it.</p>
+<h2>4. Link graph</h2>
+<p>Build the explicit connection map:</p>
+<pre><code class="language-bash"># For each confirmed or candidate profile, record outbound identity links
+# Store as a simple edge list in the case file
+cat &gt; links.csv &lt;&lt;&#x27;EOF&#x27;
+from,to,evidence
+github:darkcoder,twitter:darkcoder_ops,&quot;bio links twitter&quot;
+twitter:darkcoder_ops,github:darkcoder,&quot;bio links github, pinned tweet&quot;
+forum:darkcoder,github:darkcoder,&quot;signature links github&quot;
+EOF
+column -t -s, links.csv</code></pre>
+<p>Mutual links (A links B and B links A) are the strongest structural evidence. One-way links are weaker but still useful. A profile with no links to any other candidate stays at &quot;likely&quot; at best.</p>
+<h2>5. Writing style markers</h2>
+<p>For long-form content (forum posts, blog, READMEs), compare stable markers: distinctive misspellings, punctuation habits (double spaces, em dash usage), greeting and sign-off formulas, and jargon choices. This is manual, qualitative work; do it on samples of at least a few hundred words per profile.</p>
+<pre><code class="language-bash"># Pull a sample of public posts for side-by-side reading
+curl -s &quot;https://example-forum.com/user/darkcoder/posts&quot; -o forum-posts.html
+# Extract text and read, do not automate authorship attribution claims</code></pre>
+<p>Never present style similarity as proof on its own. It corroborates; it does not convict.</p>
+<h2>6. Confidence rating</h2>
+<p>| Rating | Requirement | |---|---| | Confirmed | Two or more independent pivots agree (for example, avatar match plus mutual bio links), no contradictions | | Likely | One strong pivot (mutual link, identical rare phrase) with no contradictions | | Unrelated | Contradicting pivots (different faces in photos, disjoint timezones, different topics over years) | | Unknown | Insufficient data; do not guess |</p>
+<p>Write one paragraph per account stating the rating and the pivots behind it. The memo should let a reviewer reach the same conclusion from the same evidence.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The operator deliberately separates identities (work versus</li>
+<p>personal). Respect the separation in your analysis unless the authorization explicitly asks to test the boundary; linking them in a report has real consequences for the subject.</p>
+<li>Avatars are AI-generated or stock images reused by many people.</li>
+<p>Reverse image search the avatar first; if it appears on dozens of unrelated profiles, discard the avatar pivot entirely.</p>
+<li>Timestamps are sparse (a handful of posts). Do not infer</li>
+<p>timezones from fewer than twenty data points; note insufficient data instead.</p>
+<li>Bios are empty on most profiles. Fall back to content topics and</li>
+<p>link graphs; empty bios are common and prove nothing either way.</p>
+<li>The subject reuses a handle but the accounts are clearly different</li>
+<p>people (name collision). Document the collision explicitly so no one later treats the set as one person.</p>
+<li>One profile is private. You cannot use its content; note its</li>
+<p>existence and the public metadata only (username, avatar if public, follower counts where visible).</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Correlation suggests the accounts belong to someone other than the</li>
+<p>investigation subject (wrong-person risk). Stop, re-verify the seed data with the case owner, and do not publish the attribution until resolved.</p>
+<li>You uncover non-public personal data during correlation (address,</li>
+<p>workplace, family). Minimize collection, note it only if the authorization covers it, and escalate handling to the case owner.</p>
+<li>The attribution will be used in proceedings. Raise the bar to</li>
+<p>&quot;confirmed&quot; on at least two pivots per account, archive every source page, and have a second reviewer check the memo.</p>
+<li>Evidence points to coordinated inauthentic behavior (many linked</li>
+<p>accounts acting together). This outgrows username enumeration; escalate to the threat-intel workflow for network analysis.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Correlation is how investigators defeat identity separation, so the defense is genuine separation: distinct handles, distinct avatars, no cross-links, separate posting patterns per context, and awareness that distinctive phrases are fingerprints. For investigation teams, the defender view cuts both ways: run this workflow on your own public footprint to find the links you did not know you left, and use dedicated research accounts so your correlations do not leak back to you.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent methodology: osint-username-enumeration (this repo)</li>
+<li>OSINT methodology: osint-methodology (this repo)</li>
+<li>Bellingcat verification and geolocation guides:</li>
+<p>https://www.bellingcat.com/resources/</p>
+<li>ImageHash (perceptual hashing library):</li>
+<p>https://github.com/JohannesBuchner/imagehash</p>
+<li>Web Archive for historical bios:</li>
+<p>https://web.archive.org/</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

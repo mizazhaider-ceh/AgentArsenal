@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-timeline-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-timeline-analysis</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to reconstruct what happened and when</p><h2>Sub-skills</h2><ul><li><a href="incident-timeline-analysis-log-correlation.html">incident-timeline-analysis-log-correlation</a> <span class="muted">v1.0.0: Use when you must join events across different log</span></li><li><a href="incident-timeline-analysis-plaso-timelines.html">incident-timeline-analysis-plaso-timelines</a> <span class="muted">v1.0.0: Use when you need to build forensic timelines from disk</span></li><li><a href="incident-timeline-analysis-super-timeline-analysis.html">incident-timeline-analysis-super-timeline-analysis</a> <span class="muted">v1.0.0: Use when multiple host timelines must be merged into one</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="log-forensics.html">log-forensics</a> <a href="memory-forensics.html">memory-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Plaso</td><td>20241006</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>jq</td><td>1.7</td></tr><tr><td>Wireshark</td><td>4.2</td></tr></tbody></table><p>Timeline analysis reconstructs the incident as a sequence: first access, lateral movement, persistence, exfiltration, each with a timestamp and a source. Without a timeline, an investigation is a pile of logs; with one, it is a story you can defend. This skill covers building timelines with Plaso, correlating across log sources, handling timezones and skew, and the super-timeline review that finds the attacker&#x27;s working hours. Authorized systems only, and every timestamp gets a source citation.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory the log sources: hosts, central syslog, EDR, proxy,</li>
+<p>firewall, cloud trail.</p>
+<li>Record each source&#x27;s timezone and any known clock skew.</li>
+<li>Build per-host timelines with Plaso&#x27;s log2timeline.</li>
+<li>Merge into a super-timeline with psort and a common timezone.</li>
+<li>Correlate: join authentication, network, and process events on</li>
+<p>time and entity.</p>
+<li>Annotate attacker actions with ATT&amp;CK techniques and confidence.</li>
+<li>Identify first and last activity, gaps, and working-hour</li>
+<p>patterns.</p>
+<li>Export the narrative timeline for the report with source</li>
+<p>citations.</p>
+</ol>
+<h2>1. Source inventory and time hygiene</h2>
+<pre><code class="language-bash">cat &gt; sources.md &lt;&lt;&#x27;EOF&#x27;
+## Timeline sources: INC-2026-1042
+| Source | Host | TZ | Skew | Notes |
+|---|---|---|---|---|
+| /var/log/auth.log | web-03 | UTC | +0s (NTP ok) | local copy + SIEM |
+| Security.evtx | ws-11 | UTC+2 | -47s (measured) | exported via wevtutil |
+| EDR telemetry | fleet | UTC | +0s | console export |
+| Squid proxy | proxy-01 | UTC | +0s | 90-day retention |
+| CloudTrail | aws | UTC | +0s | confirm no gaps |
+EOF</code></pre>
+<p>Measure skew before you trust ordering: compare <code>date -u</code> on the host against a reference at capture time, and record the offset. A 47-second skew reorders events that happened within a minute of each other; without the correction, your &quot;attacker did X then Y&quot; may be backwards.</p>
+<h2>2. Building timelines with Plaso</h2>
+<pre><code class="language-bash"># Install Plaso (20241006) per the project docs; then:
+# Build a timeline from a disk image or a log directory
+log2timeline.py --storage-file web-03.plaso /evidence/INC-2026-1042/disk-sda.img
+
+# Or from collected log files directly
+log2timeline.py --storage-file logs.plaso /evidence/INC-2026-1042/*.log
+
+# Check what the storage file contains
+pinfo.py web-03.plaso | head -30</code></pre>
+<p>Example output shape from pinfo:</p>
+<pre><code>Events generated: 184,203
+First event: 2026-10-18 06:12:44 UTC
+Last event: 2026-10-23 09:41:02 UTC
+Parsers: syslog, apache_access, chrome_history, ...</code></pre>
+<p>Filter to the incident window with psort:</p>
+<pre><code class="language-bash"># Export the incident window as CSV in UTC
+psort.py -o csv --slice &quot;2026-10-20 00:00:00&quot; &quot;2026-10-23 12:00:00&quot; \
+  -w timeline-window.csv web-03.plaso
+
+# Narrow to security-relevant parsers
+psort.py -o csv -w auth-events.csv &quot;--filter&quot; &quot;parser is &#x27;syslog&#x27; and message contains &#x27;sshd&#x27;&quot; \
+  web-03.plaso</code></pre>
+<p>The plaso-timelines sub-skill covers parser selection, storage management, and large-timeline performance.</p>
+<h2>3. Log correlation across sources</h2>
+<p>One source rarely tells the story. Join them on time and entity:</p>
+<pre><code class="language-bash"># SSH logins on web-03 around the suspected intrusion
+grep -E &quot;Accepted|Failed password&quot; /evidence/INC-2026-1042/auth.log | head -20</code></pre>
+<pre><code class="language-python"># correlate.py: join proxy requests with auth logins by time window
+import re
+from datetime import datetime, timedelta
+
+def parse_auth(line):
+    m = re.search(r&#x27;(\w{3}\s+\d+ \d+:\d+:\d+).*Accepted \w+ for (\w+) from ([\d.]+)&#x27;, line)
+    if m:
+        return datetime.strptime(f&quot;2026 {m.group(1)}&quot;, &quot;%Y %b %d %H:%M:%S&quot;), m.group(2), m.group(3)
+
+logins = [parse_auth(l) for l in open(&#x27;auth.log&#x27;)]
+logins = [l for l in logins if l]
+
+# Proxy log format: timestamp, src_ip, method, url (adapt to yours)
+for line in open(&#x27;proxy.log&#x27;):
+    parts = line.split()
+    ts = datetime.strptime(parts[0] + &#x27; &#x27; + parts[1], &quot;%Y-%m-%d %H:%M:%S&quot;)
+    for login_ts, user, ip in logins:
+        if parts[2] == ip and abs((ts - login_ts).total_seconds()) &lt; 600:
+            print(f&quot;{ts} {user}@{ip} -&gt; {parts[4]}  (within 10 min of login)&quot;)
+            break</code></pre>
+<p>Example output shape:</p>
+<pre><code>2026-10-21 03:12:44 ops@198.51.100.23 -&gt; http://evil.example.com/stage2.ps1  (within 10 min of login)</code></pre>
+<p>A login from an unusual IP followed minutes later by a download from an attacker domain is the correlation that turns two log lines into an intrusion narrative. The log-correlation sub-skill covers join patterns for EDR process trees, firewall flows, and cloud trail.</p>
+<h2>4. Super-timeline analysis</h2>
+<p>Merge host timelines into one view and read it like an analyst, not a grep:</p>
+<pre><code class="language-bash"># Merge multiple plaso storage files into one sorted timeline
+psort.py -o csv -w super-timeline.csv web-03.plaso ws-11.plaso db-01.plaso
+
+# Sort and dedupe, then look at the incident window hour by hour
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import csv
+from collections import Counter
+hours = Counter()
+with open(&#x27;super-timeline.csv&#x27;) as f:
+    for row in csv.DictReader(f):
+        hours[row[&#x27;datetime&#x27;][:13]] += 1
+for h in sorted(hours):
+    print(f&quot;{h}:00  {&#x27;#&#x27; * min(hours[h]//10, 60)} {hours[h]}&quot;)
+EOF</code></pre>
+<p>Example output shape:</p>
+<pre><code>2026-10-21 02:00  ######################################## 412
+2026-10-21 03:00  ########## 98
+2026-10-21 04:00  ## 21</code></pre>
+<p>Attacker working hours emerge: bursts of activity at 02:00-04:00 local time, quiet during business hours. Gaps matter too: a six-hour silence between initial access and lateral movement suggests manual operation, while seconds-apart events suggest automation. Annotate the bursts with what happened in each.</p>
+<h2>5. Annotation and confidence</h2>
+<p>Every timeline entry that supports a claim gets an annotation:</p>
+<pre><code>2026-10-21 03:12:44 UTC | web-03 | sshd Accepted password for ops from 198.51.100.23
+  -&gt; T1078 Valid Accounts (initial access candidate). Confidence: medium.
+     Source: auth.log (local) corroborated by SIEM. Note: ops denies this login.
+2026-10-21 03:14:02 UTC | web-03 | cron entry added for /tmp/.x/sysd
+  -&gt; T1053 Scheduled Task (persistence). Confidence: high.
+     Source: disk image timeline + file hash matches known malware family.</code></pre>
+<p>Confidence rules: high needs two independent sources or one source plus corroborating context; medium is a single reliable source; low is inference. Never promote a low-confidence entry to a report claim without saying so.</p>
+<h2>6. Exporting the narrative</h2>
+<p>The report timeline is not the raw CSV; it is the curated sequence with one line per attacker action, each cited:</p>
+<pre><code>## Incident timeline (UTC, times verified against NTP)
+- Oct 20 22:41: initial access, VPN login for svc-deploy from 198.51.100.23 (T1078)
+- Oct 21 03:12: SSH to web-03 as ops, password auth (T1021)
+- Oct 21 03:14: persistence via cron on web-03 (T1053)
+- Oct 21 03:31: lateral movement to db-01 over SMB (T1021.002)
+- Oct 21 04:02: database dump to /tmp/.x/dump.sql (T1005)
+- Oct 21 04:20: exfiltration to 198.51.100.23:443, 2.1 GB (T1048)
+- Oct 23 09:00: detection, analyst triage begins</code></pre>
+<p>First activity to last: 30 hours. Dwell time, data volume, and the technique chain go in the executive summary; the annotated CSV goes in the appendix.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Logs are missing for part of the window (rotation, deletion).</li>
+<p>Mark the gap explicitly on the timeline; a gap during attacker activity hours is itself evidence (T1070).</p>
+<li>Two sources disagree on order by seconds. Apply the measured</li>
+<p>skew; if still ambiguous, present both orders and note the uncertainty rather than picking one silently.</p>
+<li>The timeline has millions of events. Filter by the incident</li>
+<p>hosts and window first, then by attacker-controlled entities (IPs, usernames, file paths); do not read it linearly.</p>
+<li>Timestamps are in local time with no zone info (Windows evtx</li>
+<p>before conversion). Convert everything to UTC at import and record the conversion.</p>
+<li>The attacker&#x27;s activity blends with admin activity (stolen</li>
+<p>admin credentials). Distinguish by source IP, unusual hours, and tooling (admin uses the jump host; the attacker does not).</p>
+<li>CloudTrail shows gaps. Check whether logging was disabled</li>
+<p>(T1562) versus retention expiry; the distinction changes the investigation.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The timeline shows data exfiltration before detection. Escalate</li>
+<p>to legal and leadership immediately; notification clocks may be running and the scope just changed.</p>
+<li>First activity predates your log retention. State the blind</li>
+<p>spot plainly, preserve what exists, and consider engaging external forensics for deeper recovery (carving, backups).</p>
+<li>The timeline implicates an insider (valid credentials, business</li>
+<p>hours, knowledge of internals). Handle with extra care: limit who sees the draft, involve HR and legal per policy, and do not confront the individual yourself.</p>
+<li>Multiple plausible narratives fit the timeline. Present each</li>
+<p>with its supporting and contradicting evidence; the commander&#x27;s job is to choose, yours is to keep the options honest.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Timeline analysis is the defender&#x27;s rear-view mirror: it tells you how the attacker moved so you can close each path. The peacetime investments that make timelines possible are centralized, time-synchronized logging with retention that exceeds your detection time, and EDR process telemetry that fills the gaps between log lines. After every incident, the timeline&#x27;s gaps become detection engineering tasks: each missing log source is a sensor to deploy, each manual correlation is a SIEM rule to write.</p>
+<h2>Key references</h2>
+<ul>
+<li>Plaso documentation: https://plaso.readthedocs.io/</li>
+<li>log2timeline and psort usage: https://plaso.readthedocs.io/en/latest/</li>
+<li>NIST SP 800-86 (timeline analysis in forensics):</li>
+<p>https://csrc.nist.gov/publications/detail/sp/800-86/final</p>
+<li>MITRE ATT&amp;CK (technique annotation): https://attack.mitre.org/</li>
+<li>Companion skills: incident-containment-playbooks,</li>
+<p>incident-breach-scoping (this repo)</p>
+<li>Timesketch (collaborative timeline analysis):</li>
+<p>https://timesketch.org/</p>
+<li>SANS FOR508 (timeline analysis methods):</li>
+<p>https://www.sans.org/cyber-security-courses/advanced-incident-response-threat-hunting-training/</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

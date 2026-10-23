@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-asn-netblock</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-asn-netblock</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized reconnaissance needs to move from domain names to the organization&#x27;s network infrastructure. Covers finding the target&#x27;s autonomous system numbers (whois, Team Cymru, BGP data), mapping the netblocks an ASN announces, enumerating live hosts inside those netblocks, and pivoting from netblocks back to hostnames via reverse DNS and certificate data. Authorized targets only, only enumerate networks you are permitted to test.</p><h2>Sub-skills</h2><ul><li><a href="recon-asn-netblock-asn-lookup.html">recon-asn-netblock-asn-lookup</a> <span class="muted">v1.0.0: Use when you know some of the target&#x27;s IPs or domains and need to identify their autonomous system numbers. Covers IP-to-ASN lookup via Team</span></li><li><a href="recon-asn-netblock-bgp-data.html">recon-asn-netblock-bgp-data</a> <span class="muted">v1.0.0: Use when you have the target&#x27;s ASN and need the full list of prefixes it announces on the internet. Covers pulling announced prefixes from R</span></li><li><a href="recon-asn-netblock-netblock-enumeration.html">recon-asn-netblock-netblock-enumeration</a> <span class="muted">v1.0.0: Use when you have the filtered in-scope prefix list and need to find the live hosts inside each netblock. Covers reverse DNS sweeps with dns</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-passive.html">recon-passive</a> <a href="recon-active.html">recon-active</a> <a href="recon-subdomain-enumeration.html">recon-subdomain-enumeration</a> <a href="bugbounty-scope-recon.html">bugbounty-scope-recon</a> <a href="nmap-methodology.html">nmap-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>whois</td><td>5.5</td></tr><tr><td>dig</td><td>9.18</td></tr><tr><td>nmap</td><td>7.98</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>An autonomous system number identifies the networks an organization operates on the internet. Enumerating the ASN&#x27;s netblocks finds infrastructure that domain-based recon never names: unlabeled hosts, management interfaces, VPN concentrators, and forgotten servers. This skill covers the full ASN-to-hosts pipeline for authorized recon: ASN lookup, BGP announced-prefix mapping, netblock enumeration, and pivoting back to names. Only enumerate networks your authorization covers.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm authorization covers network enumeration, and record the scope in SCOPE.txt.</li>
+<li>Find the target&#x27;s ASN: whois on known IPs, Team Cymru IP-to-ASN, BGP looking glasses.</li>
+<li>Map the ASN&#x27;s announced prefixes from BGP data (RouteViews, RIPEstat, bgp.he.net).</li>
+<li>Filter prefixes to the ones plausibly operated by the target (size, description, history).</li>
+<li>Enumerate live hosts inside in-scope prefixes: reverse DNS sweeps, polite ping and port checks.</li>
+<li>Pivot back to names: PTR records, certificate SANs on discovered IPs, Shodan host data.</li>
+<li>Merge new hosts and names into the master target list with source notes.</li>
+</ol>
+<h2>1. Finding the ASN</h2>
+<p>Start from IPs you already know belong to the target:</p>
+<pre><code class="language-bash"># whois on a known IP reveals the origin ASN
+whois -h whois.cymru.com &quot; -v 203.0.113.45&quot;
+# Example output shape:
+# AS | IP | BGP Prefix | CC | Registry | Allocated | AS Name
+# 64496 | 203.0.113.45 | 203.0.113.0/24 | US | arin | 2008-01-01 | EXAMPLE-CORP
+
+# Or query by ASN directly
+whois -h whois.cymru.com &quot; -v AS64496&quot;</code></pre>
+<p>Team Cymru&#x27;s whois service is the fastest IP-to-ASN lookup. Cross-check with <code>whois 203.0.113.45</code> against the regional registry (ARIN, RIPE, APNIC) for the organization name, and with a BGP looking glass to confirm the prefix is actually announced by that ASN right now, not just registered to it.</p>
+<h2>2. Mapping announced prefixes</h2>
+<p>An ASN may announce dozens of prefixes; you need the list:</p>
+<pre><code class="language-bash"># RIPEstat API: announced prefixes for an ASN
+curl -s &quot;https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS64496&quot; \
+  | jq -r &#x27;.data.prefixes[].prefix&#x27; | sort -u &gt; asn-prefixes.txt
+wc -l asn-prefixes.txt
+head -10 asn-prefixes.txt</code></pre>
+<p>Example output shape:</p>
+<pre><code>203.0.113.0/24
+198.51.100.0/24
+192.0.2.0/23</code></pre>
+<p>Also check bgp.he.net for the ASN&#x27;s prefix list with descriptions, and RouteViews data for announcement history. Filter the list: drop prefixes clearly belonging to customers or downstream allocations (check the whois description and the size; a /8 is not one company&#x27;s office network). Keep only prefixes your authorization covers; an ASN shared with customers means most prefixes are out of scope.</p>
+<h2>3. Netblock enumeration</h2>
+<p>For each in-scope prefix, find the live hosts. Reverse DNS first, it is the quietest:</p>
+<pre><code class="language-bash"># Generate IPs and reverse-resolve (example for a /24)
+python3 -c &quot;import ipaddress; print(&#x27;\n&#x27;.join(str(h) for h in ipaddress.ip_network(&#x27;203.0.113.0/24&#x27;).hosts()))&quot; &gt; block-ips.txt
+# Bulk reverse DNS through a public resolver
+dnsx -l block-ips.txt -silent -ptr -resp -o ptr.txt
+grep -v &quot;NXDOMAIN&quot; ptr.txt | head -20</code></pre>
+<p>Example output shape:</p>
+<pre><code>203.0.113.10 -&gt; vpn.example.com
+203.0.113.21 -&gt; jenkins.example.com
+203.0.113.44 -&gt; (no PTR)</code></pre>
+<p>PTR records often name hosts that forward DNS never lists. For hosts without PTR, polite liveness checks where authorized:</p>
+<pre><code class="language-bash">nmap -sn -T3 --max-retries 1 -iL block-ips.txt -oG ping.gnmap
+grep &quot;Up&quot; ping.gnmap | cut -d&#x27; &#x27; -f2 &gt; block-live.txt</code></pre>
+<p>Then check what the live hosts serve: certificates on open TLS ports give SANs, and Shodan host data gives banners without you scanning.</p>
+<h2>4. Pivoting back to names</h2>
+<p>Every discovered IP gets pivoted back to the domain world:</p>
+<pre><code class="language-bash"># Certificates on the IP often name subdomains (SNI-less handshake)
+echo | openssl s_client -connect 203.0.113.44:443 2&gt;/dev/null \
+  | openssl x509 -noout -ext subjectAltName 2&gt;/dev/null | tr &#x27;,&#x27; &#x27;\n&#x27; | grep DNS
+# Shodan host lookup by IP (passive, uses their index)
+shodan host 203.0.113.44 --fields ip_str,port,hostnames,org</code></pre>
+<p>Hostnames from PTR, SANs, and Shodan merge back into the subdomain candidate list, often revealing names the DNS-based enumeration missed entirely. IPs with no names at all go on the direct-IP testing list, but only if the authorization covers IP-based testing.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The ASN is a hosting provider or CDN: 99 percent of prefixes belong to customers. Only enumerate prefixes the target actually operates; when unsure, treat the prefix as out of scope.</li>
+<li>Anycast prefixes: the same prefix announced from many places. Host enumeration on anycast space is unreliable; focus on the unicast prefixes.</li>
+<li>Prefixes announced but not routed to you: some prefixes are announced for DDoS mitigation or backup. If you cannot reach them, note it and move on.</li>
+<li>Stale BGP data: verify announcements are current with a looking glass before spending enumeration time on a withdrawn prefix.</li>
+<li>IPv6 prefixes: enumerate them too; organizations often leave IPv6 space far less hardened, but the address space is too large to sweep, so rely on DNS and certificate pivots instead of brute force.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Netblock enumeration stalls: pivot on the discovered IPs in Shodan and Censys for banners and certificate history, which often names neighboring hosts.</li>
+<li>A prefix yields interesting hosts just outside your authorization: stop at the boundary and ask. Network-adjacent is not in-scope.</li>
+<li>The target operates multiple ASNs (common after acquisitions): repeat the pipeline per ASN, keeping separate prefix lists and scope notes.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>ASN enumeration is passive until the host enumeration step; whois and BGP queries touch registries, not the target.</li>
+<li>Ping sweeps and reverse-DNS sweeps of whole netblocks are visible and noisy. Keep them inside authorized prefixes and at polite rates.</li>
+<li>Defenders: know your ASN footprint. Audit announced prefixes for ones you forgot, and ensure PTR records do not leak sensitive hostnames (db-backup-prod is a label, not a secret, but it helps attackers prioritize).</li>
+<li>Monitor for enumeration patterns against your netblocks: sequential PTR queries and ping sweeps are the signature.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>Team Cymru IP to ASN: https://www.team-cymru.com/ip-asn-mapping</li>
+<li>RIPEstat API docs: https://stat.ripe.net/docs/data_api</li>
+<li>bgp.he.net: https://bgp.he.net</li>
+<li>RouteViews: http://www.routeviews.org</li>
+<li>ARIN whois: https://www.arin.net</li>
+<li>MITRE ATT&amp;CK T1590.003 Network Trust Dependencies: https://attack.mitre.org/techniques/T1590/003/</li>
+<li>nmap documentation: https://nmap.org/book/man.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

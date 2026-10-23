@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: osint-breach-data-breach-notification</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>osint-breach-data-breach-notification</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when breach exposure is confirmed and affected users</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="osint-breach-data.html">osint-breach-data</a></div><div class="deps"><span class="kind">requires:</span> <a href="osint-breach-data.html">osint-breach-data</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-breach-data.html">osint-breach-data</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>curl</td><td>8.5</td></tr></tbody></table><p>Breach notification is the operational end of breach data work: telling the right people, forcing the resets, and proving it is done. Slow or vague notification turns a manageable exposure into an incident. This sub-skill covers the notification list, the message, the reset mechanics, and the tracking that closes the loop. It assumes the exposure is confirmed and the case scope authorizes contacting the affected users.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Build the notification list from the triaged breach data,</li>
+<p>deduplicated by person.</p>
+<li>Prioritize: privileged accounts and plaintext exposures first.</li>
+<li>Draft the notification: what happened, what to do, by when, who</li>
+<p>to contact.</p>
+<li>Get legal and comms review for customer-facing notices.</li>
+<li>Send notifications and force password resets in the same motion.</li>
+<li>Revoke sessions and verify MFA enrollment per account.</li>
+<li>Track every account to confirmed remediation.</li>
+<li>Close the case with metrics: notified, reset, MFA-verified.</li>
+</ol>
+<h2>1. Building the notification list</h2>
+<pre><code class="language-python"># notify-list.py: from triage to per-person notification list
+import json, csv
+from collections import defaultdict
+
+data = json.load(open(&#x27;merged.json&#x27;))[&#x27;results&#x27;]
+people = defaultdict(lambda: {&#x27;breaches&#x27;: set(), &#x27;plaintext&#x27;: False, &#x27;privileged&#x27;: False})
+for r in data:
+    email = r[&#x27;email&#x27;].lower()
+    people[email][&#x27;breaches&#x27;].add(r[&#x27;breach&#x27;])
+    if r.get(&#x27;password_plaintext&#x27;):
+        people[email][&#x27;plaintext&#x27;] = True
+    if any(k in email for k in [&#x27;admin&#x27;, &#x27;ops&#x27;, &#x27;svc&#x27;, &#x27;root&#x27;]):
+        people[email][&#x27;privileged&#x27;] = True
+
+with open(&#x27;notify-list.csv&#x27;, &#x27;w&#x27;, newline=&#x27;&#x27;) as f:
+    w = csv.writer(f)
+    w.writerow([&#x27;email&#x27;, &#x27;breaches&#x27;, &#x27;plaintext&#x27;, &#x27;privileged&#x27;, &#x27;priority&#x27;])
+    for email, info in sorted(people.items()):
+        prio = &#x27;P1&#x27; if (info[&#x27;privileged&#x27;] and info[&#x27;plaintext&#x27;]) else \
+               &#x27;P2&#x27; if info[&#x27;plaintext&#x27;] else &#x27;P3&#x27;
+        w.writerow([email, &#x27;;&#x27;.join(sorted(info[&#x27;breaches&#x27;])),
+                    info[&#x27;plaintext&#x27;], info[&#x27;privileged&#x27;], prio])
+
+print(f&quot;{len(people)} people to notify&quot;)</code></pre>
+<p>Example output shape:</p>
+<pre><code>38 people to notify
+# notify-list.csv head:
+# ops@example.com,VendorBreach2023,True,True,P1
+# alice@example.com,Collection#1,True,False,P2</code></pre>
+<p>One row per person, even if they appear in five breaches; nobody needs five emails about the same password hygiene.</p>
+<h2>2. The notification message</h2>
+<p>Internal template (adapt the voice to your organization):</p>
+<pre><code>Subject: Action required: reset your password by &lt;date&gt;
+
+Hi &lt;name&gt;,
+
+Your work email appeared in a public data breach (&lt;breach name&gt;,
+&lt;breach date&gt;). We have expired your password as a precaution.
+
+What to do now:
+1. Set a new password at &lt;SSO portal link&gt; before &lt;date&gt;.
+2. Make it unique: do not reuse it anywhere else.
+3. Confirm MFA is enabled when prompted.
+
+If you used this password on other sites, change it there too.
+Questions: contact the service desk at &lt;contact&gt;.
+
+This is a legitimate security notice. We will never ask for your
+password by email.</code></pre>
+<p>Rules: say what happened plainly, give one clear action with a deadline, link only to known-good internal portals, and include the anti-phishing line. Never include the leaked password in the notice.</p>
+<h2>3. Forced resets and session revocation</h2>
+<p>Notification without enforcement is a suggestion. Pair them:</p>
+<pre><code class="language-bash"># Pattern: expire passwords via your identity provider API (IdP-specific)
+# Example shape with a generic IdP API:
+curl -s -X POST -H &quot;Authorization: Bearer $IDP_TOKEN&quot; \
+  &quot;https://idp.example.local/api/v1/users/ops@example.com/expire-password&quot;
+
+# Revoke sessions so the old credential stops working everywhere
+curl -s -X POST -H &quot;Authorization: Bearer $IDP_TOKEN&quot; \
+  &quot;https://idp.example.local/api/v1/users/ops@example.com/revoke-sessions&quot;</code></pre>
+<p>Order per account: notify, expire, revoke sessions, then verify the new password and MFA at next login. For service accounts, rotate the secret and update consumers in the same change window; an expired service credential with no updated consumer is an outage.</p>
+<h2>4. Tracking to completion</h2>
+<pre><code class="language-bash"># remediation.csv is the source of truth; update it from IdP reports
+cat &gt; remediation.csv &lt;&lt;&#x27;EOF&#x27;
+email,notified_at,reset_at,mfa_verified,status,notes
+ops@example.com,2026-10-23T10:00Z,2026-10-23T10:40Z,yes,closed,&quot;was domain admin; sessions reviewed, no anomalies&quot;
+alice@example.com,2026-10-23T10:00Z,,,open,&quot;reminder sent 2026-10-24&quot;
+EOF
+
+# Daily check: who is still open past the deadline
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import csv
+from datetime import datetime, timezone
+now = datetime.now(timezone.utc)
+for row in csv.DictReader(open(&#x27;remediation.csv&#x27;)):
+    if row[&#x27;status&#x27;] == &#x27;open&#x27;:
+        print(f&quot;OVERDUE-CHECK: {row[&#x27;email&#x27;]} notified {row[&#x27;notified_at&#x27;]} - {row[&#x27;notes&#x27;]}&quot;)
+EOF</code></pre>
+<p>Chase opens on a schedule: reminder at 48 hours, manager escalation at 5 days, access suspension per policy after that. An untracked notification program quietly fails; the CSV is what keeps it honest.</p>
+<h2>5. Customer notification duties</h2>
+<p>When the breach touches customer data, the rules change: legal timelines, regulator notices, and public communication. Involve legal before drafting anything external, and prepare:</p>
+<ul>
+<li>What data was exposed, for whom, and when (facts only).</li>
+<li>What you are doing (resets, monitoring, MFA offers).</li>
+<li>What customers should do (reset, watch for phishing).</li>
+<li>A dedicated contact channel, not the general support queue.</li>
+</ul>
+<p>Never minimize in writing (&quot;no evidence of misuse&quot; is a hostage to fortune). State what you know, what you are doing, and when you will update.</p>
+<h2>6. Closing metrics</h2>
+<pre><code>Notified: 38/38 (100%)
+Reset confirmed: 36/38 (95%), 2 escalated to managers
+MFA verified: 34/38 (89%), 4 enrolled during this cycle
+Mean time to reset: 31 hours
+Plaintext exposures closed: 12/12
+Purge of working plaintext data: completed 2026-11-23</code></pre>
+<p>The metrics go to leadership and into the case file. They also set the baseline for the next cycle: notification programs improve when measured.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The user left the organization. Disable the account instead of</li>
+<p>notifying; confirm disabled status and check for recent logins.</p>
+<li>The email belongs to a shared mailbox or role account. Notify the</li>
+<p>owning team, rotate the credential, and record the team as the responsible party.</p>
+<li>The user claims they never had that password. Believe the reset,</li>
+<p>not the debate: expire it anyway, since the breach row ties the email to a password whether or not the user remembers it.</p>
+<li>Notification emails bounce. Fall back to the manager chain and</li>
+<p>the service desk; document the alternate channel.</p>
+<li>The breach notice triggers a phishing wave imitating your</li>
+<p>notification. Warn users in the original notice (&quot;we will never ask for your password&quot;), and have the service desk ready.</p>
+<li>Legal holds the customer notice for review past the regulatory</li>
+<p>deadline. Document the tension in writing; missing a statutory deadline needs a conscious, recorded decision.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Resets reveal active compromise (the account was being used by</li>
+<p>someone else). Stop the notification routine for that account and invoke incident response; it is now a live intrusion.</p>
+<li>A P1 account owner is unresponsive past the deadline. Escalate to</li>
+<p>their leadership and consider suspending access; an exposed privileged credential cannot wait on convenience.</p>
+<li>Customer data exposure triggers regulatory clocks. Escalate to</li>
+<p>legal and executive leadership immediately with the facts as known; do not wait for the full triage to finish.</p>
+<li>The notification itself becomes a media event. Hand external</li>
+<p>communication to the designated spokespeople; the response team sticks to facts and remediation.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Notification programs are a detective control: they assume breaches happen and minimize the window between exposure and reset. The mature version is continuous: domain monitoring on breach feeds, automatic flagging of exposed accounts, and self-service reset flows that make the whole cycle fast. Measure it, because &quot;we notify people about breaches&quot; without metrics is a policy, not a program. And every cycle should feed back into prevention: the accounts that keep appearing are the ones that need MFA, passwordless, or privilege reduction.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent workflow: osint-breach-data (this repo)</li>
+<li>Have I Been Pwned notification services:</li>
+<p>https://haveibeenpwned.com/</p>
+<li>NIST SP 800-63B: https://pages.nist.gov/800-63-3/sp800-63b.html</li>
+<li>CISA MFA guidance:</li>
+<p>https://www.cisa.gov/topics/cybersecurity-best-practices/multifactor-authentication</p>
+<li>OWASP Credential Stuffing Prevention:</li>
+<p>https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

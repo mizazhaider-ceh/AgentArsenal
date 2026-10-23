@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-forensics-challenges-disk-image-triage</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-forensics-challenges-disk-image-triage</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">90/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF forensics challenge provides a disk image, or</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-forensics-challenges.html">ctf-forensics-challenges</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-forensics-challenges.html">ctf-forensics-challenges</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="memory-forensics.html">memory-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>CyberChef</td><td>latest</td></tr></tbody></table><p>Disk images preserve filesystems, including deleted files, unallocated space, and metadata that never appears in a live listing. CTF disk challenges hide flags in deleted files, slack space, hidden partitions, and alternate streams. This sub-skill covers the authorized Sleuth Kit workflow for triaging images without altering them: partition mapping, file enumeration, targeted recovery, carving, and timeline building. Scope is CTF competitions, lab images, and media you are authorized to examine. Never write to the original image; work on copies.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Copy the image to a working file; compute a hash of the original for</li>
+<p>your notes.</p>
+<li>Enumerate partitions (<code>mmls</code>, <code>fdisk -l</code>); note filesystem types and</li>
+<p>offsets.</p>
+<li>List files per partition with <code>fls -r -p</code>; scan for interesting</li>
+<p>names (flag, secret, backup, .zip).</p>
+<li>List deleted entries with <code>fls -r -d</code>; deleted files are the most</li>
+<p>common CTF hiding spot.</p>
+<li>Recover candidates with <code>icat</code> by inode number and inspect them.</li>
+<li>Carve unallocated space (<code>blkls | strings</code>) for fragments of</li>
+<p>deleted content.</p>
+<li>Build a timeline (<code>fls -m</code> plus <code>mactime</code>) to answer &quot;what happened</li>
+<p>when&quot; challenges.</p>
+<li>Check filesystem extras: NTFS alternate data streams, ADS, volume</li>
+<p>shadow copies, ext4 journal remnants.</p>
+</ol>
+<h2>1. Partition enumeration</h2>
+<pre><code class="language-bash"># Sleuth Kit media management (works on raw dd images)
+mmls disk.img
+# DOS Partition Table
+# Offset Sector: 0
+# Units are in 512-byte sectors
+#      Slot      Start        End          Length       Description
+#      000:  Meta            0000000000   0000000000   0000000001   Primary Table (#0)
+#      001:  -------         0000000000   0000002047   0000002048   Unallocated
+#      002:  000:000         0000002048   0002097151   0002095104   Linux (0x83)
+
+fdisk -l disk.img   # cross-check; shows sizes in human units
+
+# For E01 (Expert Witness) images, convert first or use ewf-tools
+ewfinfo disk.E01 | head -30</code></pre>
+<p>The offset matters: Sleuth Kit tools take <code>-o &lt;sector&gt;</code> for partitioned images (<code>fls -o 2048 disk.img</code>). Record which partition holds the OS; CTF flags usually live on the data partition, not the boot partition.</p>
+<h2>2. File listing: live and deleted</h2>
+<pre><code class="language-bash"># Recursive listing with full paths, partition at sector 2048
+fls -r -p -o 2048 disk.img | head -50
+# r/r 1234:  home/user/flag.txt
+# r/r * 5678: home/user/deleted_secret.txt   &lt;- * marks deleted entries
+
+# Deleted files only (the money command for CTF disk challenges)
+fls -r -d -o 2048 disk.img
+
+# Details: sizes, times, inode numbers
+fls -l -r -o 2048 disk.img | head -30
+
+# Search the listing for interesting names
+fls -r -p -o 2048 disk.img | grep -i -E &quot;flag|secret|passw|backup|\.zip$|\.png$&quot; | head -20</code></pre>
+<p>Inode numbers from <code>fls</code> feed directly into <code>icat</code>. The <code>*</code> prefix on deleted entries is the fastest visual triage: scan the deleted list before reading the live tree.</p>
+<h2>3. Targeted recovery with icat</h2>
+<pre><code class="language-bash"># Extract file by inode number (from fls output)
+icat -o 2048 disk.img 5678 &gt; /tmp/recovered.txt
+file /tmp/recovered.txt &amp;&amp; head -c 500 /tmp/recovered.txt
+
+# Recover all deleted files in one loop
+mkdir -p /tmp/deleted
+fls -r -d -o 2048 disk.img | grep -o -E &quot;^\S+ \* [0-9]+&quot; | awk &#x27;{print $3}&#x27; | while read ino; do
+  icat -o 2048 disk.img &quot;$ino&quot; &gt; &quot;/tmp/deleted/inode_$ino.bin&quot; 2&gt;/dev/null
+done
+ls -la /tmp/deleted &amp;&amp; file /tmp/deleted/* | head -20</code></pre>
+<p>Partial overwrites happen: a deleted file&#x27;s blocks may be reused, so a recovered file can be truncated or mixed with newer data. When <code>icat</code> output looks half-right, carve the raw blocks around it with <code>blkcat</code>.</p>
+<h2>4. Carving unallocated space</h2>
+<pre><code class="language-bash"># Dump unallocated blocks, then strings and flag-grep
+blkls -o 2048 disk.img | strings -n 8 &gt; /tmp/unalloc_strings.txt
+grep -i -E &quot;flag\{[^}]+\}|password|BEGIN.*PRIVATE KEY&quot; /tmp/unalloc_strings.txt | head -20
+
+# File carving for deleted images/archives in unallocated space
+blkls -o 2048 disk.img &gt; /tmp/unalloc.bin
+binwalk /tmp/unalloc.bin | head -20
+foremost -i /tmp/unalloc.bin -o /tmp/carved -q &amp;&amp; ls /tmp/carved/* | head
+
+# Slack space: file tails beyond logical EOF in the last block
+# (Sleuth Kit exposes this via icat -s on some versions; otherwise blkcat the tail block)</code></pre>
+<p>Unallocated carving finds content whose metadata is fully gone: chat fragments, deleted documents, browser artifacts. In CTFs the flag is sometimes split: half in a deleted file, half in unallocated space.</p>
+<h2>5. Timeline building</h2>
+<pre><code class="language-bash"># Bodyfile format: one line per file with MAC times
+fls -r -m &quot;/&quot; -o 2048 disk.img &gt; /tmp/body.txt
+
+# Human-readable timeline, sorted
+mactime -b /tmp/body.txt -d &gt; /tmp/timeline.csv
+head -30 /tmp/timeline.csv
+
+# Focus on a window (e.g. the hour the challenge says the incident happened)
+grep &quot;2026-10-2[23]&quot; /tmp/timeline.csv | head -40</code></pre>
+<p>Timelines answer &quot;what did the attacker touch&quot;: files created, modified, or accessed in a tight window cluster around the interesting activity. Sort by modified time descending to see the most recently changed files first.</p>
+<h2>6. Filesystem extras</h2>
+<pre><code class="language-bash"># NTFS alternate data streams (flag:hidden.txt style hiding)
+fls -r -o 2048 disk.img | grep -i &quot;:.*\$DATA&quot; | head
+icat -o 2048 disk.img 1234:secret.txt &gt; /tmp/ads.bin   # stream syntax
+
+# NTFS: check for additional data streams on an interesting file
+istat -o 2048 disk.img 1234 | grep -A5 -i &quot;stream\|ads&quot;
+
+# Volume Shadow Copies (Windows): list and diff
+# (vssadmin parsing needs the image mounted or libvshadow tooling)
+
+# ext4: check the journal for recently deleted metadata
+# debugfs -R &quot;logdump&quot; /dev/loop0  (on a loop-mounted read-only copy)</code></pre>
+<p>Also check: <code>$Recycle.Bin</code> / <code>.Trash</code> contents, browser profile directories, shell history files (<code>.bash_history</code> often survives and contains the flag-handling commands), and scheduled task or cron artifacts.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The image is a full disk with an unfamiliar partition scheme (GPT):</li>
+<p><code>mmls</code> handles GPT; adjust <code>-o</code> offsets per partition entry.</p>
+<li>Filesystem is corrupted by design: <code>fsstat -o 2048 disk.img</code> shows</li>
+<p>superblock details; Sleuth Kit often reads through minor corruption that stops normal mounting.</p>
+<li>The image is compressed (qcow2, vmdk): convert with `qemu-img</li>
+<p>convert` to raw first.</p>
+<li>E01 with compression and hashes: verify with <code>ewfverify</code> before</li>
+<p>analysis so a corrupt segment does not waste hours.</p>
+<li>Timestamps are all zeroed (anti-forensics): fall back to content</li>
+<p>carving; ordering comes from block allocation sequence, not times.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li><code>fls</code> shows nothing useful and unallocated carving is empty: the</li>
+<p>flag may be in a hidden partition (<code>mmls</code> unallocated gaps), in firmware-like regions outside partitions, or the image is a decoy and the real artifact is elsewhere in the bundle.</p>
+<li>Deleted file recovery yields garbage: blocks were overwritten;</li>
+<p>check the journal (ext4) or USN journal (NTFS) for filenames and partial content instead.</p>
+<li>The challenge expects registry analysis (Windows): export hives</li>
+<p>with <code>icat</code> (SAM, SYSTEM, SOFTWARE, NTUSER.DAT) and parse offline with registry tools.</p>
+<li>Timeline is too noisy: filter to one directory subtree or one file</li>
+<p>type; CTF timelines usually have one obvious burst of activity.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders perform this same triage during incident response: deleted file recovery reveals attacker tooling, timelines reconstruct the intrusion, and carving finds wiped logs. Anti-forensics (timestomping, secure deletion, journal wiping) is itself an indicator. Detections focus on the behaviors: mass deletion, shadow copy deletion (<code>vssadmin delete shadows</code>), and clearing event logs. Durable defenses: immutable backups, centralized logging (so local deletion does not blind you), and file integrity monitoring on critical paths.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1070 (Indicator Removal), T1005 (Data from Local</li>
+<p>System).</p>
+<li>Sleuth Kit wiki and tool docs: https://wiki.sleuthkit.org/</li>
+<li>NIST SP 800-86 (Guide to Integrating Forensic Techniques into</li>
+<p>Incident Response).</p>
+<li>Carrier, &quot;File System Forensic Analysis&quot;: the reference for</li>
+<p>filesystem internals.</p>
+<li>SANS FOR508 course materials (disk forensics process and tool</li>
+<p>workflows).</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

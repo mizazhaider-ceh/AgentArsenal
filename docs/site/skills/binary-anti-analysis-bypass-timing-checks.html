@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: binary-anti-analysis-bypass-timing-checks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>binary-anti-analysis-bypass-timing-checks</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a binary uses time to detect analysis, covering long</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="binary-anti-analysis-bypass.html">binary-anti-analysis-bypass</a></div><div class="deps"><span class="kind">requires:</span> <a href="binary-anti-analysis-bypass.html">binary-anti-analysis-bypass</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="malware-sandbox-analysis.html">malware-sandbox-analysis</a> <a href="binary-patching-techniques.html">binary-patching-techniques</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>x64dbg</td><td>2025.06</td></tr><tr><td>ScyllaHide</td><td>1.4</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>CAPE Sandbox</td><td>2.5</td></tr></tbody></table><p>Time is the cheapest anti-analysis: Sleep(600000) costs the author one line and costs the analyst ten minutes per run. Timing checks also detect the analyst directly: breakpoints freeze time, single-stepping stretches it, and emulation distorts rdtsc. This sub-skill covers recognizing each timing primitive and defeating it. Scope: bypass timing checks only on binaries you are authorized to analyze, in an isolated lab, during authorized DFIR, malware research, or defensive testing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Note the symptom: instant exit after a delay, no behavior in short</li>
+<p>runs, exits when stepped.</p>
+<li>Hunt statically: Sleep, GetTickCount, QueryPerformanceCounter,</li>
+<p>rdtsc bytes (0F 31), NtDelayExecution.</p>
+<li>Classify: stall (sleep out the clock), delta check (detect the</li>
+<p>debugger), or both.</p>
+<li>Bypass: extend timeout, patch the sleep, hook the clock, or avoid</li>
+<p>stepping through the check.</p>
+<li>Verify: behavior appears promptly; beacon timestamps confirm.</li>
+<li>Document the bypass with the report.</li>
+</ol>
+<h2>1. Stall tactics: sleeps and delays</h2>
+<pre><code class="language-text">Sleep(600000)              10-minute stall, outlasts default sandboxes
+NtDelayExecution(neg 10min) kernel-level equivalent
+Loop of Sleep(1000) x 600  same effect, harder to patch in one place
+WaitForSingleObject(timeout) stall disguised as synchronization</code></pre>
+<p>Bypasses, easiest first:</p>
+<ol>
+<li><strong>Longer detonation</strong>: submit with a 15-minute timeout. No patching,</li>
+<p>always valid, just slow.</p>
+<li><strong>Patch the sleep</strong>: NOP the call or zero its argument in the</li>
+<p>debugger. Immediate.</p>
+<li><strong>Hook Sleep</strong>: intercept and return instantly; cleaner than</li>
+<p>patching when sleeps are scattered.</p>
+</ol>
+<pre><code class="language-text">Patch shape:
+  Before:  68 00 09 27 00   push 0x270900 (600000 ms)
+           FF 15 .. .. ..   call Sleep
+  After:   68 00 00 00 00   push 0
+           FF 15 .. .. ..   call Sleep</code></pre>
+<p>For looped sleeps, patch the loop counter or break the loop condition rather than each Sleep call.</p>
+<h2>2. Tick-count delta checks</h2>
+<pre><code class="language-text">t0 = GetTickCount();
+&lt;operation that should be fast&gt;
+t1 = GetTickCount();
+if (t1 - t0 &gt; THRESHOLD) exit();   // a breakpoint froze time</code></pre>
+<p>Also seen with QueryPerformanceCounter and timeGetTime. The check detects breakpoints and single-stepping inside the measured region.</p>
+<p>Bypasses:</p>
+<ul>
+<li><strong>Do not step through it</strong>: set a breakpoint after the check and run</li>
+<p>to it; the delta stays small.</p>
+<li><strong>Hook GetTickCount</strong>: return t0 + epsilon always, so deltas never</li>
+<p>trip. ScyllaHide has a GetTickCount option.</p>
+<li><strong>Patch the comparison</strong>: flip the conditional jump after the delta</li>
+<p>check so it never exits.</p>
+</ul>
+<p>Static hunt: look for two GetTickCount calls with a subtraction and compare between them; the threshold constant tells you how sensitive it is (small threshold = aggressive, trips on any debugger pause).</p>
+<h2>3. rdtsc checks</h2>
+<pre><code class="language-text">rdtsc                    ; 0F 31, reads timestamp counter
+mov [t0], eax
+&lt;operation&gt;
+rdtsc
+sub eax, [t0]
+cmp eax, THRESHOLD
+ja  debugger_found</code></pre>
+<p>rdtsc detects single-stepping (each step costs thousands of cycles) and emulation (emulators distort the counter). Variants use rdtscp or compare ratios of rdtsc to GetTickCount.</p>
+<p>Bypasses:</p>
+<ul>
+<li>x64dbg can intercept rdtsc (set options to handle it); the</li>
+<p>returned values stay consistent.</p>
+<li>Run, do not step, through measured regions.</li>
+<li>Patch the comparison after the delta, same as tick-count checks.</li>
+<li>For ratio checks (rdtsc vs GetTickCount), hook both consistently</li>
+<p>or patch the final verdict.</p>
+</ul>
+<h2>4. Sandbox-timeout evasion patterns</h2>
+<p>Beyond raw sleeps, samples detect short detonations indirectly:</p>
+<ul>
+<li><strong>Delayed C2</strong>: first beacon scheduled 20+ minutes out; short runs</li>
+<p>see nothing. Fix: long timeout or patch the schedule.</p>
+<li><strong>Reboot persistence then wait</strong>: the payload only runs after</li>
+<p>reboot; detonate with a reboot step.</p>
+<li><strong>Idle detection</strong>: GetLastInputInfo waits for user inactivity</li>
+<p>(ironically) or activity before running. Fix: simulate input in the sandbox profile.</p>
+</ul>
+<pre><code class="language-bash"># Confirm delayed beaconing from a long pcap
+tshark -r long.pcap -Y &quot;dns&quot; -T fields -e frame.time_epoch -e dns.qry.name \
+  | sort -n | head -5
+# first C2 DNS at T+1200s -&gt; the sample waited 20 minutes</code></pre>
+<h2>5. Validation</h2>
+<ol>
+<li>Baseline: short run shows nothing; note the exact quiet duration.</li>
+<li>Bypassed: behavior (beacon, drop, injection) appears within seconds</li>
+<p>of start.</p>
+<li>Timestamp proof: first beacon at T+5s instead of T+600s, from the</li>
+<p>pcap, not from memory.</p>
+<li>Revert: restore the sleep, confirm quiet again.</li>
+</ol>
+<p>Document which primitive was bypassed and how; &quot;patched Sleep at file offset 0x1234&quot; reproduces, &quot;made it faster&quot; does not.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Nested timing: a sleep, then a delta check, then another sleep.</li>
+<p>Defeat outside-in and re-test after each.</p>
+<li>Timing checks on the C2&#x27;s schedule (beacon only at certain hours):</li>
+<p>set the VM clock or patch the schedule comparison.</p>
+<li>Anti-hook timing: the sample measures its own Sleep to detect</li>
+<p>hooking (hooked Sleep returns too fast). Then patch the argument instead of hooking, or extend the real timeout.</p>
+<li>Kernel-mode timing: user-mode hooks do not affect</li>
+<p>NtDelayExecution measured in kernel; patch at the call site.</p>
+</ul>
+<ul>
+<li>Sleep calls with randomized durations: patching one constant is not enough; hook the API or extend the timeout instead.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If timing is enforced by a remote server (C2 only responds after</li>
+<p>a delay), lab bypasses cannot help; note it and analyze the offline-capable parts.</p>
+<li>If the sample combines timing with VM checks such that no lab</li>
+<p>configuration satisfies it, escalate to bare-metal analysis.</p>
+</ul>
+<ul>
+<li>If the sample&#x27;s schedule depends on a C2 command (the server tells it when to act), lab bypasses cannot trigger it; note the gap and analyze the offline-capable parts.</li>
+<li>If timing checks are enforced in a driver or kernel component, escalate: user-mode techniques do not reach them.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Timing behavior is detection signal: a process that sleeps 10 minutes before its first network connection is suspicious regardless of what follows; EDR rules on sleep-then-beacon patterns catch whole classes. Log the timing profile per family (stall duration, beacon delay); when a new sample shares the profile, that is a clustering signal. For sandbox operators, the lesson is operational: default 2-minute timeouts miss an entire class of malware, so tier timeouts by triage priority.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK: T1497.003 (Time Based Evasion)</li>
+<li>x64dbg documentation:</li>
+<p>https://x64dbg.com/</p>
+<li>ScyllaHide:</li>
+<p>https://github.com/x64dbg/ScyllaHide</p>
+<li>CAPE Sandbox documentation (timeout configuration):</li>
+<p>https://capev2.readthedocs.io/</p>
+<li>Practical Malware Analysis (Sikorski and Honig), Chapter 17</li>
+<p>(anti-debugging: timing checks)</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

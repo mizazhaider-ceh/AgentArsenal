@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-subdomain-enumeration</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-subdomain-enumeration</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when starting authorized reconnaissance on a target domain and you need the complete subdomain enumeration playbook. Covers passive collection (subfinder, amass passive, certificate transparency, DNS datasets), active brute forcing (dnsx, shuffledns, wordlists), permutation and alteration techniques, resolving and validating results, wildcard detection, and consolidating everything into one clean target list. Authorized targets only, only enumerate domains you are permitted to test.</p><h2>Sub-skills</h2><ul><li><a href="recon-subdomain-enumeration-active-bruteforcing.html">recon-subdomain-enumeration-active-bruteforcing</a> <span class="muted">v1.0.0: Use when passive sources are exhausted and you are authorized for active DNS enumeration on the target domain. Covers wildcard detection bef</span></li><li><a href="recon-subdomain-enumeration-passive-sources.html">recon-subdomain-enumeration-passive-sources</a> <span class="muted">v1.0.0: Use when you need subdomains without sending any packets to the target&#x27;s infrastructure. Covers the full passive source stack, subfinder wit</span></li><li><a href="recon-subdomain-enumeration-permutation-techniques.html">recon-subdomain-enumeration-permutation-techniques</a> <span class="muted">v1.0.0: Use when passive and brute force enumeration plateau and you need to mutate known names into undiscovered ones on an authorized target domai</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-passive.html">recon-passive</a> <a href="recon-active.html">recon-active</a> <a href="recon-cert-transparency.html">recon-cert-transparency</a> <a href="dns-enumeration.html">dns-enumeration</a> <a href="bugbounty-methodology.html">bugbounty-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>subfinder</td><td>2.6</td></tr><tr><td>amass</td><td>4.2</td></tr><tr><td>dnsx</td><td>1.2</td></tr><tr><td>httpx</td><td>1.6</td></tr><tr><td>shuffledns</td><td>1.1</td></tr></tbody></table><p>Subdomain enumeration turns one domain into the full list of names worth testing. It runs in three layers: passive sources that never touch the target, active brute forcing that resolves guesses, and permutations that mutate known names into undiscovered ones. This skill covers the complete playbook plus validation: wildcard detection, resolution, and consolidation into one clean list. Only enumerate domains you are authorized to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm authorization and write the scope (domains, rules) into SCOPE.txt before collecting anything.</li>
+<li>Collect passively: subfinder, amass in passive mode, crt.sh, and DNS datasets.</li>
+<li>Check for wildcard DNS with a random-name probe before trusting any resolution results.</li>
+<li>Brute force actively with dnsx or shuffledns and a good wordlist, through a public resolver.</li>
+<li>Generate permutations from the names you found (alterations, additions, common patterns).</li>
+<li>Resolve every candidate, filter against the wildcard IP, and deduplicate.</li>
+<li>Probe the resolved names with httpx for live web services.</li>
+<li>Write the consolidated list: subdomain, IP, status, title, technology. This feeds all later phases.</li>
+</ol>
+<h2>1. Passive collection</h2>
+<p>Passive sources query third-party databases, not the target:</p>
+<pre><code class="language-bash">mkdir -p recon/example.com &amp;&amp; cd recon/example.com
+subfinder -d example.com -silent -o subfinder.txt
+amass enum -passive -d example.com -o amass-passive.txt
+curl -s &quot;https://crt.sh/?q=%25.example.com&amp;output=json&quot; \
+  | jq -r &#x27;.[].name_value&#x27; | sed &#x27;s/^\*\.//&#x27; | sort -u &gt; crtsh.txt</code></pre>
+<p>Add API keys to subfinder and amass configs (VirusTotal, AlienVault OTX, Shodan, SecurityTrails) to widen coverage; without keys you get a fraction of the sources. Let amass passive finish; it takes 10 to 30 minutes across dozens of sources.</p>
+<h2>2. Wildcard detection first</h2>
+<p>Before trusting any active result, probe for wildcard DNS:</p>
+<pre><code class="language-bash">dig +short this-name-definitely-not-real-xyz123.example.com A @1.1.1.1</code></pre>
+<p>If it returns an IP, the domain uses a wildcard: every guessed name will appear to resolve. Record the wildcard IP and filter all later results against it. Tools like dnsx and shuffledns can filter wildcard responses automatically, but verify with the manual probe first so you know what you are filtering.</p>
+<h2>3. Active brute forcing</h2>
+<p>Resolve wordlist guesses through a public resolver, never the target&#x27;s authoritative server at high volume:</p>
+<pre><code class="language-bash">dnsx -d example.com -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt \
+  -silent -resp -o bruteforce.txt -t 100 -rl 200</code></pre>
+<p>Example output shape:</p>
+<pre><code>api.example.com [&quot;203.0.113.10&quot;]
+dev-api.example.com [&quot;203.0.113.11&quot;]
+staging.example.com [&quot;203.0.113.12&quot;]</code></pre>
+<p>For larger runs, shuffledns with massdns is faster:</p>
+<pre><code class="language-bash">shuffledns -d example.com -list subdomains-top1million.txt -r resolvers.txt -o shuffled.txt</code></pre>
+<p>Use a trusted public resolver list for <code>-r</code> (not the target&#x27;s). Keep the rate sane: <code>-rl 200</code> is polite; thousands of queries per second against a small target&#x27;s infrastructure is not passive-adjacent, it is a scan, and belongs under the authorization for active testing.</p>
+<h2>4. Permutation techniques</h2>
+<p>Permutations mutate known names into names nobody listed:</p>
+<pre><code class="language-bash"># dnsgen-style alterations from your confirmed list
+dnsgen -l confirmed.txt -w /dev/null &gt; permutations.txt
+# Common manual patterns worth adding:
+# dev-api, api-dev, api2, api-v2, old-api, api-old, api-staging,
+# internal-api, api-internal, corp-api, api-test, test-api
+dnsx -l permutations.txt -silent -resp -o permuted-resolved.txt -t 100</code></pre>
+<p>Also try: environment prefixes (dev, staging, qa, prod, test, uat), numbered variants (api1, api2, v1, v2), hyphen versus no-hyphen forms, and service names from job postings or the target&#x27;s tech stack (jenkins, grafana, kibana, gitlab as subdomains). Naming conventions repeat; once you learn a target&#x27;s pattern, permutations write themselves.</p>
+<h2>5. Consolidation</h2>
+<p>Merge all layers, resolve once, probe for live web:</p>
+<pre><code class="language-bash">cat subfinder.txt amass-passive.txt crtsh.txt bruteforce.txt permuted-resolved.txt \
+  | sed &#x27;s/ \[.*//&#x27; | sort -u &gt; all-candidates.txt
+dnsx -l all-candidates.txt -silent -resp -o resolved-final.txt
+cut -d&#x27; &#x27; -f1 resolved-final.txt | httpx -silent -o live.txt \
+  -title -tech-detect -status-code -follow-redirects
+wc -l all-candidates.txt resolved-final.txt live.txt</code></pre>
+<p><code>live.txt</code> is the deliverable: every live web host with title and technology. Save the intermediate files; when a new technique appears next month, you re-run from candidates, not from zero.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Wildcard DNS everywhere: filter resolved results against the wildcard IP, and treat names that only exist because of the wildcard as unconfirmed until httpx shows distinct content.</li>
+<li>crt.sh floods with CDN certificate names: keep only names matching the target domain that actually resolve.</li>
+<li>Brute forcing returns nothing new: your wordlist does not match the target&#x27;s naming convention. Mine the confirmed names for patterns and build a custom wordlist from them.</li>
+<li>Rate limiting from the resolver: drop <code>-t</code> and <code>-rl</code>, or rotate resolvers. Getting blocked by 1.1.1.1 mid-run corrupts results silently.</li>
+<li>Internationalized or odd names: punycode shows up in CT logs; decode before resolving.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>All three layers stall: pivot to certificate hash searches in Shodan, ASN neighbor enumeration, web archives for dead names that reveal patterns, and code search for the domain in public repos.</li>
+<li>The target has thousands of subdomains: prioritize by technology and title from httpx (login pages, admin panels, old software versions) instead of treating the list as flat.</li>
+<li>Enumeration is done when new runs add nothing: freeze the list, timestamp it, and move to service and content enumeration.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Passive collection is invisible to the target; active brute forcing is visible as DNS query volume at the resolver and, if you query authoritatively, at the target&#x27;s nameservers.</li>
+<li>Wildcard DNS is a defender choice with a cost: it hides nothing (CT logs still list names) and it pollutes attacker results, but it also breaks naive monitoring of &quot;new subdomain&quot; alerts. Prefer explicit records plus CT monitoring.</li>
+<li>Monitor certificate transparency for your own domains: every new cert is a new subdomain the world knows about. Alert on names you did not issue.</li>
+<li>DNS query logging at the resolver or authoritative server shows enumeration patterns: high-entropy, high-volume, dictionary-ordered queries. That is what your brute forcing looks like; keep it authorized and paced.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>subfinder documentation: https://github.com/projectdiscovery/subfinder</li>
+<li>OWASP Amass documentation: https://github.com/owasp-amass/amass</li>
+<li>dnsx documentation: https://github.com/projectdiscovery/dnsx</li>
+<li>httpx documentation: https://github.com/projectdiscovery/httpx</li>
+<li>shuffledns documentation: https://github.com/projectdiscovery/shuffledns</li>
+<li>crt.sh: https://crt.sh</li>
+<li>SecLists DNS wordlists: https://github.com/danielmiessler/SecLists</li>
+<li>MITRE ATT&amp;CK T1590.002 DNS: https://attack.mitre.org/techniques/T1590/002/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

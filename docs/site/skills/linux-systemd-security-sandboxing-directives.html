@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-systemd-security-sandboxing-directives</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-systemd-security-sandboxing-directives</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when sandboxing Linux services with systemd directives on</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-systemd-security.html">linux-systemd-security</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-systemd-security.html">linux-systemd-security</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-systemd-security.html">linux-systemd-security</a> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>systemd</td><td>255</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Systemd can sandbox a service with a few unit file lines, constraining what a compromised process can touch: the filesystem, its own privileges, the syscalls it may invoke, and the network. This is defense in depth at its most practical: even if an attacker exploits the service, the sandbox decides what the exploit can reach. This sub-skill is the directive-level reference for defenders: what each sandboxing family does, safe starting templates, how to test without breaking services, and how to measure improvement. For systems you own or administer; purely defensive.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Pick a target service, starting with network-exposed ones; record its baseline <code>systemd-analyze security</code> score.</li>
+<li>Apply filesystem directives first (lowest breakage risk): ProtectSystem, ProtectHome, PrivateTmp.</li>
+<li>Add privilege directives: NoNewPrivileges, User/Group, CapabilityBoundingSet.</li>
+<li>Add syscall and namespace restrictions: SystemCallFilter, ProtectKernelTunables, PrivateDevices, RestrictAddressFamilies.</li>
+<li>Restart the service and run its full functional test; check the journal for denials.</li>
+<li>Re-run <code>systemd-analyze security</code> and record the improvement.</li>
+<li>Roll the working set out via drop-ins in <code>/etc/systemd/system/&lt;unit&gt;.d/</code> so package upgrades preserve them.</li>
+</ol>
+<h2>1. Filesystem isolation directives</h2>
+<p>These control which parts of the filesystem the service can see and write. They are the safest starting point because most services declare their data paths clearly.</p>
+<pre><code class="language-ini">[Service]
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/myapp /var/log/myapp
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true</code></pre>
+<p><code>ProtectSystem=strict</code> mounts the entire OS tree read-only except paths listed in <code>ReadWritePaths</code>; <code>ProtectHome=true</code> hides home directories (<code>read-only</code> variant exposes them read-only); <code>PrivateTmp=true</code> gives the service its own <code>/tmp</code> invisible to others. Verify with <code>systemd-analyze security &lt;unit&gt; | grep -iE &quot;protectsystem|privatetmp&quot;</code> and by testing the service&#x27;s actual file operations. If the service fails, the journal usually shows exactly which path was denied; add it to <code>ReadWritePaths</code> or <code>BindPaths</code> rather than loosening the directive.</p>
+<h2>2. Privilege and capability directives</h2>
+<p>These decide what privileges the service process can ever hold. Apply them after the filesystem layer, because they interact with how the service drops privileges itself.</p>
+<pre><code class="language-ini">[Service]
+User=appsvc
+Group=appsvc
+NoNewPrivileges=true
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+SecureBits=keep-caps</code></pre>
+<p><code>NoNewPrivileges=true</code> blocks all future privilege gains and is the highest-value single line. <code>CapabilityBoundingSet</code> limits the capability set; an empty value (<code>CapabilityBoundingSet=</code>) drops all capabilities. Check the service&#x27;s actual needs first: <code>grep -r cap /proc/&lt;pid&gt;/status</code> shows <code>CapEff</code> for the running process, and <code>capsh --decode</code> translates it. A web server typically needs only <code>CAP_NET_BIND_SERVICE</code> (or none, if behind a proxy on a high port); anything more gets justified in writing.</p>
+<h2>3. System call filtering</h2>
+<p><code>SystemCallFilter</code> restricts which syscalls the service may invoke, enforced by seccomp. This blunts entire exploit classes: a filter that denies <code>mount</code>, <code>ptrace</code>, and module syscalls removes common privilege escalation primitives even if the attacker gets code execution.</p>
+<pre><code class="language-ini">[Service]
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged @resources
+SystemCallArchitectures=native
+SystemCallErrorNumber=EPERM</code></pre>
+<p>Start from the predefined sets (<code>@system-service</code> is a sane baseline for daemons) and subtract dangerous groups with <code>~</code>. <code>SystemCallArchitectures=native</code> blocks 32-bit compat syscalls often used to dodge filters. Test thoroughly: an over-tight filter kills the service with cryptic <code>EPERM</code> failures, so develop the filter in staging while watching the journal, and use <code>SystemCallLog=</code> during tuning to see what would be denied before enforcing.</p>
+<h2>4. Network, device, and namespace restrictions</h2>
+<p>These directives cut the service off from kernel interfaces and networks it does not need.</p>
+<pre><code class="language-ini">[Service]
+PrivateDevices=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=yes
+LockPersonality=true
+MemoryDenyWriteExecute=true
+RestrictRealtime=true</code></pre>
+<p><code>PrivateDevices=true</code> gives a minimal <code>/dev</code> (no physical device nodes); <code>RestrictAddressFamilies</code> limits socket types (a local-only service gets just <code>AF_UNIX</code>); <code>MemoryDenyWriteExecute=true</code> blocks writable-executable memory mappings (breaks JITs, which is the point for non-JIT services). Verify each family against the service&#x27;s real behavior: a service that only talks to localhost PostgreSQL needs <code>AF_UNIX</code> (socket) or <code>AF_INET</code> (TCP), not both, and the journal will show denials if you cut too deep.</p>
+<h2>5. DynamicUser and stateless services</h2>
+<p><code>DynamicUser=yes</code> allocates a throwaway UID at service start and wipes it at stop: the service cannot persist state as a user, cannot be given file ownership out of band, and gets a private <code>/tmp</code> automatically.</p>
+<pre><code class="language-ini">[Service]
+DynamicUser=yes
+StateDirectory=myapp
+CacheDirectory=myapp
+LogsDirectory=myapp</code></pre>
+<p>Pair it with <code>StateDirectory=</code>/<code>CacheDirectory=</code>/<code>LogsDirectory=</code>, which systemd creates owned by the dynamic user. This is ideal for stateless network services and wrong for anything needing stable UIDs, shared group access, or supplementary groups. Verify the dynamic UID with <code>ps -o user= -C myapp</code> showing a high-numbered dynamic user, and confirm state survives restarts via the declared directories.</p>
+<h2>6. Measuring with systemd-analyze security</h2>
+<p>The analyzer scores a unit&#x27;s exposure from 0 (safe) to 10 across its sandboxing settings. Use it as a before/after metric and a checklist, not as a verdict.</p>
+<pre><code class="language-bash">systemd-analyze security myapp.service | tail -20
+systemd-analyze security --offline=true /etc/systemd/system/myapp.service 2&gt;/dev/null | grep -E &quot;Overall|EXPOSURE&quot;</code></pre>
+<p>Example output shape: per-directive pass/fail lines plus an overall exposure rating. Work through the failures top to bottom, applying the directive families from sections 1-4 in order, re-running the analyzer after each change. A database needing raw devices will never score perfectly; document the justified residual exposure instead of chasing zero.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Directives combine in subtle ways: <code>ProtectSystem=strict</code> plus <code>ReadWritePaths</code> requires every write path enumerated, and <code>PrivateUsers=true</code> (user namespaces) changes how file ownership appears inside the service, so add one family at a time and test.</li>
+<li><code>MemoryDenyWriteExecute=true</code> breaks language runtimes with JIT (Java, Node.js, Python with certain extensions); exempt JIT services explicitly and note the exception rather than silently dropping the directive fleet-wide.</li>
+<li><code>SystemCallFilter</code> with <code>~</code> subtraction is order-sensitive and set-based: verify the effective filter with <code>systemd-analyze</code> or by observing denials, because the mental model of &quot;default minus these&quot; is easy to get wrong.</li>
+<li><code>RestrictAddressFamilies</code> with only <code>AF_UNIX</code> breaks services doing DNS resolution over UDP; if the service needs outbound DNS, keep <code>AF_INET</code>/<code>AF_INET6</code> and restrict at the firewall instead.</li>
+<li><code>DynamicUser=yes</code> is incompatible with <code>User=</code>/<code>Group=</code> and with services that must own files outside their declared directories; migrating an existing stateful service to DynamicUser requires a data migration plan.</li>
+<li>Sandboxing applies to the service&#x27;s children too, which breaks services that spawn helpers needing broader access (backup agents, plugin systems); use <code>ExecStartPre</code> sparingly and test the full process tree.</li>
+<li>The analyzer&#x27;s heuristics lag behind new directives and kernel features; a directive it does not recognize is not necessarily useless, and a green score is not proof of containment, so pair measurement with functional and adversarial testing.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If sandboxing breaks a production service and the cause is not obvious from the journal, revert to the last working directive set immediately, then reproduce in staging with <code>SystemCallLog=</code> and strace-style debugging; never iterate on production.</li>
+<li>If a vendor service cannot run under meaningful sandboxing (needs full host access by design), escalate the risk acceptance: document why, isolate the host&#x27;s role, and add compensating monitoring.</li>
+<li>If different services on one host need conflicting sandboxing (one needs JIT, another needs strict memory policy), that is fine: directives are per-unit, so there is no conflict to resolve, only per-service documentation.</li>
+<li>If the analyzer shows high residual exposure after all applicable directives, escalate the service itself for review: some services are inherently hard to sandbox and may need architectural changes (splitting privileges, moving to a container) rather than more unit lines.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Sandboxing directives are preventive, but they also generate detection signal: denied syscalls and filesystem accesses appear in the journal (and in auditd when seccomp logging is enabled), so a sudden burst of denials from a previously quiet service is an anomaly worth investigating (it may be an exploit attempt hitting the sandbox). MITRE mitigations map across techniques: sandboxing blunts execution (T1059), persistence helpers (T1543/T1053 need fewer privileges to matter less), and privilege escalation (T1068 loses its primitives when dangerous syscalls are filtered). Track the analyzer exposure score per critical service over time as a hardening metric, and alert on unit changes that remove sandboxing directives, which is both a misconfiguration and a possible attacker action to weaken containment before exploiting.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK mitigations catalog: https://attack.mitre.org/mitigations/</li>
+<li>systemd.exec manual (all sandboxing directives): https://www.freedesktop.org/software/systemd/man/systemd.exec.html</li>
+<li>systemd-analyze manual: https://www.freedesktop.org/software/systemd/man/systemd-analyze.html</li>
+<li>systemd.resource-control manual: https://www.freedesktop.org/software/systemd/man/systemd.resource-control.html</li>
+<li>CIS distribution benchmarks (service hardening sections): https://www.cisecurity.org/cis-benchmarks/</li>
+<li>Linux seccomp and SystemCallFilter concepts: https://man7.org/linux/man-pages/man2/seccomp.2.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

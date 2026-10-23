@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-cert-transparency-certstream-monitoring</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-cert-transparency-certstream-monitoring</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need real-time alerts on newly issued certificates for an authorized target domain during an engagement. Covers running certstream as a long-lived monitor, filtering the firehose for your target domains, logging hits with timestamps, alerting on suspicious patterns (lookalikes, unexpected issuers, staging names), and correlating new certificates with DNS and httpx probing. Authorized targets only, only monitor domains you are permitted to test.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="recon-cert-transparency.html">recon-cert-transparency</a></div><div class="deps"><span class="kind">requires:</span> <a href="recon-cert-transparency.html">recon-cert-transparency</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-cert-transparency-crtsh-workflows.html">recon-cert-transparency-crtsh-workflows</a> <a href="recon-cert-transparency-subdomain-extraction.html">recon-cert-transparency-subdomain-extraction</a> <a href="recon-passive.html">recon-passive</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>certstream streams certificates the moment they are logged to certificate transparency, hours or days before crt.sh indexes them for search. Running it during an engagement catches new subdomains as the target creates them: staging hosts, new services, infrastructure moves, in real time. This sub-skill covers operating certstream as a monitor for recon-cert-transparency. Only monitor domains you are authorized to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Install certstream and validate the stream with a short test run.</li>
+<li>Write the filter: your target domains plus lookalike patterns you want to watch.</li>
+<li>Run the monitor as a long-lived background process with logging to a timestamped file.</li>
+<li>On each hit: log it, resolve the name, probe it with httpx.</li>
+<li>Review the log daily for patterns: bursts of issuance, new naming conventions, unexpected issuers.</li>
+<li>Correlate hits with your other recon: a new cert plus a new DNS record is confirmed new infrastructure.</li>
+<li>Keep the monitor running for the whole engagement; stop it cleanly at close.</li>
+</ol>
+<h2>1. Basic monitor setup</h2>
+<pre><code class="language-bash">pip install certstream
+# Test the stream briefly before committing to a long run
+timeout 30 certstream --json | head -3 | python3 -m json.tool | head -40</code></pre>
+<p>The stream is a firehose: thousands of certificates per minute globally. Never run it unfiltered; the filter is the whole point. The JSON per certificate includes <code>leaf_cert.all_domains</code>, <code>leaf_cert.issuer</code>, and the chain, which is everything the filter needs.</p>
+<h2>2. Targeted filter script</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+# ct-monitor.py: watch certstream for target domains
+import sys, json, datetime
+
+TARGETS = [&quot;example.com&quot;]           # authorized domains only
+WATCH_ALIKE = [&quot;examp1e&quot;, &quot;exarnple&quot;]  # lookalike watchlist (brand protection notes)
+
+def matches(domain):
+    d = domain.lower().lstrip(&quot;*.&quot;)
+    return any(d == t or d.endswith(&quot;.&quot; + t) for t in TARGETS)
+
+for line in sys.stdin:
+    try:
+        msg = json.loads(line)
+    except json.JSONDecodeError:
+        continue
+    if msg.get(&quot;message_type&quot;) != &quot;certificate_update&quot;:
+        continue
+    leaf = msg[&quot;data&quot;][&quot;leaf_cert&quot;]
+    domains = leaf.get(&quot;all_domains&quot;, [])
+    hits = [d for d in domains if matches(d)]
+    alike = [d for d in domains if any(w in d.lower() for w in WATCH_ALIKE)]
+    ts = datetime.datetime.utcnow().isoformat()
+    for d in hits:
+        print(f&quot;{ts} TARGET {d} issuer={leaf.get(&#x27;issuer&#x27;, {}).get(&#x27;O&#x27;, &#x27;?&#x27;)}&quot;, flush=True)
+    for d in alike:
+        print(f&quot;{ts} LOOKALIKE {d}&quot;, flush=True)</code></pre>
+<pre><code class="language-bash">certstream --json 2&gt;/dev/null | python3 ct-monitor.py | tee ct-hits.log</code></pre>
+<p>Lookalike hits are brand-protection notes, not targets: log them for the report&#x27;s defensive section, do not enumerate them.</p>
+<h2>3. Running it long-lived</h2>
+<pre><code class="language-bash"># Run in background with nohup, restart on failure via a simple loop
+nohup bash -c &#x27;while true; do certstream --json 2&gt;/dev/null | python3 ct-monitor.py | tee -a ct-hits.log; sleep 10; done&#x27; &gt;/dev/null 2&gt;&amp;1 &amp;
+echo $! &gt; ct-monitor.pid
+# Daily review
+grep &quot; $(date +%Y-%m-%d)&quot; ct-hits.log | sort | uniq -c | sort -rn | head -20</code></pre>
+<p>certstream connections drop; the loop reconnects. Check the process is alive daily (<code>ps -p $(cat ct-monitor.pid)</code>), because a dead monitor silently misses everything. At engagement close, kill it and archive the log with your recon notes.</p>
+<h2>4. Triaging hits</h2>
+<p>Not every new certificate matters. Triage each:</p>
+<ul>
+<li>New subdomain, resolves, serves content: highest value. Probe with httpx immediately; new infrastructure is often misconfigured.</li>
+<li>New subdomain, does not resolve yet: infrastructure being staged. Note it, re-check daily; it may go live mid-engagement.</li>
+<li>Renewal of a known name: noise, unless the issuer changed (infrastructure move) or the SAN list changed (new names bundled in).</li>
+<li>Wildcard renewal: noise for enumeration, but note the date; fresh wildcards sometimes precede new deployments.</li>
+</ul>
+<pre><code class="language-bash"># Quick triage: resolve the new name and probe
+newname=&quot;new-staging.example.com&quot;
+dig +short &quot;$newname&quot; A @1.1.1.1
+echo &quot;$newname&quot; | httpx -silent -title -status-code -tech-detect</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The stream lags or replays: certstream occasionally redelivers. Dedupe hits by certificate fingerprint if your log shows repeats.</li>
+<li>Your filter misses internationalized names: normalize punycode before matching, or add the xn-- forms to TARGETS.</li>
+<li>The target uses many unrelated domains (acquisitions): extend TARGETS only to domains your authorization covers. When in doubt, the lookalike list is for notes, not testing.</li>
+<li>certstream service deprecation risk: if the public endpoint ever goes away, fall back to polling crt.sh diffs (see the crtsh-workflows sub-skill) on a tight schedule.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A burst of new certificates appears (dozens in an hour): the target is deploying or migrating. Increase httpx probing cadence on the new names; migration windows are misconfiguration windows.</li>
+<li>A certificate appears for a lookalike domain with the target&#x27;s branding: potential phishing setup. Note it for the defensive findings section with the issuance timestamp; do not interact with it beyond passive observation.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Run this same monitor defensively: alert on any certificate for your domains that your team did not issue. It is the cheapest compromise and shadow-IT detector available.</li>
+<li>Alert on lookalike domain certificates too: they are the earliest signal of phishing infrastructure, often days before the phishing starts.</li>
+<li>Log which CA issued each certificate: an unexpected issuer for your domain is a red flag for CA account compromise.</li>
+<li>certstream monitoring is passive and invisible to attackers; they cannot tell you are watching the logs.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>certstream-python: https://github.com/CaliDog/certstream-python</li>
+<li>certstream service: https://certstream.calidog.io</li>
+<li>RFC 6962 Certificate Transparency: https://www.rfc-editor.org/rfc/rfc6962.html</li>
+<li>crt.sh: https://crt.sh</li>
+<li>MITRE ATT&amp;CK T1593.003 Digital Certificates: https://attack.mitre.org/techniques/T1593/003/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

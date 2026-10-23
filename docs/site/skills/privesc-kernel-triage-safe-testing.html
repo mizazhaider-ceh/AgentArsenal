@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-kernel-triage-safe-testing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-kernel-triage-safe-testing</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when an authorized engagement has a shortlisted kernel</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-kernel-triage.html">privesc-kernel-triage</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-kernel-triage.html">privesc-kernel-triage</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a> <a href="privesc-windows.html">privesc-windows</a> <a href="privesc-kernel-triage-exploit-db-matching.html">privesc-kernel-triage-exploit-db-matching</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>gcc</td><td>13.2.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Running a kernel exploit is the point of no return in privilege escalation: success gives you the highest privilege on the box, failure can crash it. This sub-skill imposes a testing protocol for authorized engagements: authorization checkpoints, snapshots and recovery plans, exploit failure-mode analysis, one-shot minimal payloads, careful compilation, post-attempt monitoring, and honest documentation of both success and failure. Kernel exploits without this discipline are how engagements lose targets. Authorized penetration tests, labs, and CTFs only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm explicit authorization for kernel exploitation in the rules of engagement; if it is forbidden, stop here.</li>
+<li>Verify the snapshot, image, or reset path and the recovery procedure with whoever owns the target.</li>
+<li>Re-read the shortlisted exploit source end to end, mapping its failure modes and cleanup behavior.</li>
+<li>Compile for the exact target architecture on your attack box when target tooling is missing.</li>
+<li>Deploy a one-shot minimal payload: prove privilege with <code>id</code> or a marker file, not a retrying reverse shell.</li>
+<li>Monitor <code>dmesg</code> and system responsiveness during and after the attempt.</li>
+<li>Confirm or rule out, stabilize, clean up artifacts, and document the attempt with timestamps.</li>
+</ol>
+<h2>1. Authorization and recovery checkpoints</h2>
+<p>These are gates, not suggestions. Do not proceed past a failed gate.</p>
+<ul>
+<li>Written authorization: the rules of engagement or lab instructions explicitly permit kernel exploitation on this target. Verbal permission gets confirmed in writing.</li>
+<li>Recovery path: a VM snapshot, disk image, or lab reset button exists, and you have tested or confirmed it restores the box.</li>
+<li>Recovery owner: you know who reboots or restores the target and how long it takes, so a crash becomes an incident with a plan, not a surprise.</li>
+<li>Container check: if the target is a container, kernel exploitation affects the host and needs host-level authorization, which is a separate, higher gate.</li>
+</ul>
+<p>Record each gate&#x27;s status in your notes with a timestamp before compiling anything.</p>
+<h2>2. Reading failure modes in exploit source</h2>
+<p>Before running, map exactly how the exploit can fail by reading the code.</p>
+<pre><code class="language-bash">grep -n -iE &quot;panic|oops|die\(|exit\(|fork\(|while *\(1\)&quot; exploit.c | head -20</code></pre>
+<p>Classify what you find: clean exit on version mismatch (safe), infinite retry loops (noisy, crash-prone), writes to arbitrary kernel memory without validation (corruption risk), and missing cleanup of modified kernel structures (instability after success). Prefer exploits that check the target version first and exit quietly on mismatch. If the code modifies kernel function pointers or credentials structures, understand what it restores afterward; exploits that leave the kernel in a half-patched state cause delayed crashes.</p>
+<h2>3. Compiling for the target</h2>
+<p>Match the toolchain output to the target architecture and kernel expectations.</p>
+<pre><code class="language-bash">gcc -o exploit exploit.c -static 2&gt;&amp;1 | head -20
+file exploit</code></pre>
+<p>Example output shape: <code>exploit: ELF 64-bit LSB executable, x86-64</code> must match <code>uname -m</code> on the target. Static linking avoids missing-library failures on minimal targets but inflates size; dynamic linking is fine when the target has a standard libc. Cross-compile when the target lacks gcc: <code>x86_64-linux-gnu-gcc</code> or <code>aarch64-linux-gnu-gcc</code> on your attack box. Transfer the binary and verify its integrity with a checksum before executing.</p>
+<h2>4. One-shot minimal payloads</h2>
+<p>The first run proves the primitive with the smallest possible blast radius.</p>
+<pre><code class="language-bash">./exploit id &gt; /tmp/kout.txt 2&gt;&amp;1; echo &quot;exit: $?&quot; &gt;&gt; /tmp/kout.txt
+cat /tmp/kout.txt</code></pre>
+<p>Example success shape: <code>uid=0(root) gid=0(root) groups=0(root)</code> in the output. A minimal payload does one thing: demonstrate uid 0. Do not start with a reverse shell that retries connections in a loop; if the primitive works, escalate to your operational payload afterward. Run exactly once, then evaluate before any retry: check <code>dmesg</code> for oops messages, check that the system still responds, and only then decide whether a second attempt is justified.</p>
+<h2>5. Monitoring during and after the attempt</h2>
+<p>Watch the kernel&#x27;s own diagnostics for confirmation of what happened.</p>
+<pre><code class="language-bash">dmesg | tail -30
+uptime</code></pre>
+<p>Example output shape on a triggered bug: oops traces naming the subsystem, register dumps, or <code>BUG:</code> lines. An oops naming the exact function the exploit targets confirms you reached the vulnerable path even if the exploit failed, which is valuable triage data. <code>uptime</code> and a simple command round-trip confirm the box survived. If the box stops responding, execute the recovery plan immediately and note the exact time of the crash for the report.</p>
+<h2>6. Post-success stability and cleanup</h2>
+<p>A successful kernel exploit may leave the kernel unstable; treat the box as fragile.</p>
+<ul>
+<li>Capture evidence immediately: <code>id</code>, <code>hostname</code>, and the exact exploit command with timestamps.</li>
+<li>Avoid heavy post-exploitation on a box you just exploited at the kernel level; finish the required evidence and stabilize.</li>
+<li>Remove the exploit binary and any marker files unless the rules of engagement require leaving them for the blue team to find.</li>
+<li>Note any lingering effects (disabled mitigations, modified sysctls the exploit changed) and restore them where possible.</li>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>Race-condition exploits may need specific system load or timing; a failed first attempt does not always mean the target is patched, but each retry multiplies crash risk, so cap retries explicitly.</li>
+<li>Some exploits require running as a particular user or with specific resource limits; check <code>ulimit -a</code> against the exploit&#x27;s assumptions.</li>
+<li>Kernel address space layout randomization means exploits that defeat KASLR need an info leak first; verify the leak step works before the write step.</li>
+<li>On Windows, driver-based exploits need the vulnerable driver loaded; a reboot or driver update between enumeration and testing invalidates the plan.</li>
+<li>Exploit binaries transferred as text or through shells can corrupt; always checksum after transfer and before execution.</li>
+<li>Timezone and clock skew do not matter for most exploits, but certificate or token based payloads after success might care; keep it in mind for post-exploitation.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If the exploit fails cleanly with a version mismatch message, trust it: the target is not vulnerable to this candidate, so document and move to the next shortlisted item.</li>
+<li>When dmesg shows you reached the vulnerable path but the exploit failed, the bug may be real with a broken exploit; weigh writing a targeted fix against the engagement&#x27;s time budget.</li>
+<li>If the box crashes, execute the recovery plan, document the crash honestly, and do not retry the same exploit without understanding the failure.</li>
+<li>When all shortlisted candidates are exhausted, close the kernel path with written verdicts and return to misconfiguration vectors or credential attacks.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Kernel exploitation is the noisiest technique in the privesc set: oops messages, auditd gaps during crashes, EDR kernel telemetry, and often a full outage. Defenders detect it through kernel log monitoring, crash analysis, and behavioral alerts on exploit-like process patterns. From the authorized tester side, this noise is expected and accepted within the authorization: the protocol in this sub-skill exists to keep the noise bounded (one-shot payloads, no retry storms) and to give the blue team exact timestamps and artifacts for their detection validation.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1068 (Exploitation for Privilege Escalation)</li>
+<li>Exploit-DB: https://www.exploit-db.com</li>
+<li>Google Project Zero writeups (exploit reliability analysis): https://googleprojectzero.blogspot.com</li>
+<li>Linux kernel oops documentation: https://www.kernel.org/doc/html/latest/admin-guide/bug-hunting.html</li>
+<li>GCC cross-compilation docs: https://gcc.gnu.org/onlinedocs/gcc/Cross-Compiler.html</li>
+<li>Microsoft driver signing and verification: https://learn.microsoft.com/en-us/windows-hardware/drivers/install/driver-signing</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

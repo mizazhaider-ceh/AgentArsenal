@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-windows-vectors</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-windows-vectors</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you hold a low-privilege Windows shell or session on</p><h2>Sub-skills</h2><ul><li><a href="privesc-windows-vectors-registry-and-scheduled-tasks.html">privesc-windows-vectors-registry-and-scheduled-tasks</a> <span class="muted">v1.0.0: Use when authorized Windows privilege escalation turns to the</span></li><li><a href="privesc-windows-vectors-service-misconfigurations.html">privesc-windows-vectors-service-misconfigurations</a> <span class="muted">v1.0.0: Use when authorized Windows privilege escalation focuses on</span></li><li><a href="privesc-windows-vectors-token-manipulation.html">privesc-windows-vectors-token-manipulation</a> <span class="muted">v1.0.0: Use when authorized Windows privilege escalation depends on</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-windows.html">privesc-windows</a> <a href="privesc-kernel-triage.html">privesc-kernel-triage</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>winpeas</td><td>2024</td></tr><tr><td>PowerShell</td><td>7.4</td></tr><tr><td>accesschk</td><td>6.1</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>Windows privilege escalation rewards methodical enumeration: most wins come from misconfigurations (services, scheduled tasks, registry, tokens, stored credentials), not zero-days. This skill is the parent map of Windows escalation vectors for authorized penetration tests, labs, and CTFs only. Never apply these techniques to systems you do not have explicit written permission to test. The method is always the same: stabilize the session, enumerate automatically with WinPEAS, verify every finding by hand with native tools, exploit the lowest-noise reliable path, and capture evidence. Deep dives live in the sub-skills.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Stabilize the session and record the baseline: <code>whoami /priv</code>, <code>whoami /groups</code>, hostname, OS build, domain membership.</li>
+<li>Run WinPEAS and exfiltrate the output; never page through thousands of lines inside a fragile shell.</li>
+<li>Work the vector classes in order: services, scheduled tasks, registry autoruns, tokens and privileges, DLL hijacking, stored credentials, kernel.</li>
+<li>Verify each candidate by hand with native commands (<code>sc qc</code>, <code>schtasks /query</code>, <code>reg query</code>, <code>icacls</code>) before exploiting.</li>
+<li>Exploit the quietest reliable vector first; misconfiguration abuse rarely crashes the host.</li>
+<li>Confirm with <code>whoami /priv</code> showing elevated groups, capture proof, and record exact commands for the report.</li>
+<li>If the target is a domain member, keep privesc and lateral movement evidence separate in your notes.</li>
+</ol>
+<h2>1. Service misconfigurations</h2>
+<p>Windows services running as SYSTEM with weak configurations are the classic vector: unquoted service paths, writable service binaries, and weak service ACLs.</p>
+<pre><code class="language-powershell">wmic service get name,displayname,pathname,startmode | findstr /i /v &quot;C:\Windows\\&quot;
+sc qc VulnService</code></pre>
+<p>Example output shape: a <code>BINARY_PATH_NAME</code> like <code>C:\Program Files\Vuln App\service.exe</code> without quotes means Windows tries <code>C:\Program.exe</code>, then <code>C:\Program Files\Vuln.exe</code>, then the real path; a writable <code>C:\Program Files\Vuln.exe</code> you plant gets executed as SYSTEM. Weak service ACLs (<code>sc sdshow</code> or accesschk) let you reconfigure the binary path directly. Full coverage is in the <code>privesc-windows-vectors-service-misconfigurations</code> sub-skill.</p>
+<h2>2. Tokens and privilege abuse</h2>
+<p>Your token&#x27;s privileges decide which impersonation attacks are possible. <code>SeImpersonatePrivilege</code> on a service account is historically a straight path to SYSTEM.</p>
+<pre><code class="language-powershell">whoami /priv</code></pre>
+<p>Example output shape: a list where <code>SeImpersonatePrivilege</code> shows as Enabled means token impersonation attacks apply; <code>SeAssignPrimaryTokenPrivilege</code>, <code>SeBackupPrivilege</code>, and <code>SeLoadDriverPrivilege</code> are similarly powerful. The <code>privesc-windows-vectors-token-manipulation</code> sub-skill covers privilege enumeration, impersonation attack families, and the authorization boundaries around them.</p>
+<h2>3. Registry autoruns and AlwaysInstallElevated</h2>
+<p>Registry keys that launch programs at logon or boot, and the AlwaysInstallElevated policy pair, are persistent escalation paths.</p>
+<pre><code class="language-powershell">reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
+reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated</code></pre>
+<p>When both AlwaysInstallElevated values are 1, any user can install an MSI as SYSTEM; generating an MSI that adds a user or drops a payload is the standard authorized-lab technique. Writable Run keys or the Startup folder let you plant executables that run at next logon. Details are in <code>privesc-windows-vectors-registry-and-scheduled-tasks</code>.</p>
+<h2>4. Scheduled tasks with weak ACLs</h2>
+<p>Tasks running as SYSTEM whose definition files or executed binaries are writable let you hijack the next run.</p>
+<pre><code class="language-powershell">schtasks /query /fo LIST /v | findstr /i &quot;taskname run.as.author&quot;
+icacls &quot;C:\Windows\System32\Tasks\VulnTask&quot;</code></pre>
+<p>Example output shape: a task authored to run as SYSTEM executing <code>C:\Tasks\backup.bat</code> where the batch file or its directory grants you write access. Overwrite the script, wait for or trigger the schedule (<code>schtasks /run /tn VulnTask</code> when permitted), and collect SYSTEM. Also check tasks with stored credentials and tasks referencing missing binaries in writable paths.</p>
+<h2>5. DLL hijacking</h2>
+<p>Services and SYSTEM processes that load DLLs from writable directories, or that fail to find a DLL, let you inject code as SYSTEM.</p>
+<pre><code class="language-powershell">accesschk.exe -dqv &quot;C:\Program Files\VulnApp&quot;</code></pre>
+<p>Use Process Monitor (procmon) on a lab replica to find <code>NAME NOT FOUND</code> DLL loads by SYSTEM processes, then place a hostile DLL with <code>DllMain</code> spawning your payload at the missing path. Ordering matters: application directory first, then system directories, then PATH. Always verify the DLL actually loads as SYSTEM before relying on it.</p>
+<h2>6. Stored credentials</h2>
+<p>Windows stores credentials in many places; each one is a potential password for a stronger account.</p>
+<pre><code class="language-powershell">cmdkey /list
+reg query &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon&quot;
+findstr /si password *.xml *.ini *.txt C:\ 2&gt;nul</code></pre>
+<p>Checklist: unattended install files (<code>Unattend.xml</code>, <code>sysprep.inf</code>) with base64 or plaintext passwords, Group Policy Preferences <code>cpassword</code> (decryptable with the public AES key), registry AutoLogon passwords, saved RDP credentials (<code>cmdkey</code>), IIS <code>applicationHost.config</code>, and WinSCP/PuTTY stored sessions. Try every recovered credential against local admin and domain accounts within the authorized scope.</p>
+<h2>7. Kernel and driver triage</h2>
+<p>Kernel exploits are the last resort on Windows too: they risk blue screens and EDR behavioral alerts.</p>
+<pre><code class="language-powershell">systeminfo | findstr /i &quot;OS Name OS Version&quot;
+driverquery /v | findstr /i &quot;vuln&quot;</code></pre>
+<p>Record the exact build number (for example 19045 for Windows 10 22H2) before matching against public exploits, and verify the vulnerable driver or component is actually present. The <code>privesc-kernel-triage</code> skill covers version enumeration, exploit matching, and safe testing discipline.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>WinPEAS output is huge; redirect to a file, exfiltrate, and grep locally for color-coded findings instead of reading it in the shell.</li>
+<li><code>wmic</code> is deprecated on newer Windows; prefer PowerShell <code>Get-CimInstance Win32_Service</code> when wmic is missing.</li>
+<li>Unquoted service paths only work when you can write to one of the earlier-resolved paths; verify with <code>icacls</code> on each candidate directory.</li>
+<li>Token impersonation attacks require specific privileges that hardened service accounts no longer hold; always start from <code>whoami /priv</code> rather than assuming.</li>
+<li>UAC means even local administrators run with a filtered token; check <code>whoami /groups</code> for the mandatory label and whether the session is elevated.</li>
+<li>Stored credential files may be decoys in CTFs; validate each credential with an actual logon attempt inside scope before building chains on it.</li>
+<li>EDR on a real engagement will flag common privesc tooling; prefer native binaries (LOLBins) and document tool usage for the report.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If services, tasks, and registry are clean, pivot to application-layer vectors: writable web roots, database credentials in config files, and backup files containing SAM or SYSTEM hives.</li>
+<li>When you land as a second low-privilege user (service account, another local user), re-run the full enumeration from the new context; new privileges unlock new vectors.</li>
+<li>If local privesc stalls but the host is domain-joined, authorized scope may allow pivoting to domain enumeration for misconfigured delegation or kerberoastable accounts; keep the two phases clearly separated in notes.</li>
+<li>Harvested credentials are often the fastest path: try them against WinRM, SMB, RDP, and <code>runas</code> within scope before exploit code.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Every vector here has a defender counterpart: service ACL auditing, Sysmon process creation logging, registry Run key monitoring, Credential Guard, LAPS for local admin passwords, and blocking the public AES key usage for GPP passwords. From the authorized tester side, assume Sysmon or EDR logs process creation and registry writes; prefer native tools, minimize dropped files, and document every action for the report. Kernel exploits are the noisiest option and the most likely to crash the host or trigger behavioral blocks.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1548 (Abuse Elevation Control Mechanism), T1053.005 (Scheduled Task), T1547 (Boot or Logon Autostart Execution), T1003 (OS Credential Dumping)</li>
+<li>WinPEAS: https://github.com/peass-ng/PEASS-ng</li>
+<li>LOLBAS (living off the land binaries): https://lolbas-project.github.io</li>
+<li>HackTricks Windows Privilege Escalation: https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation</li>
+<li>Microsoft service security docs: https://learn.microsoft.com/en-us/windows/win32/services/service-security-and-access-rights</li>
+<li>AccessChk: https://learn.microsoft.com/en-us/sysinternals/downloads/accesschk</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

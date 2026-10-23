@@ -47,6 +47,7 @@ DOMAIN_COLORS = {
     "cloud": "#00bbf9",
     "crypto": "#c8b6ff",
     "bugbounty": "#ffd166",
+    "ctf": "#ff5d8f",
 }
 
 FALLBACK_COLORS = [

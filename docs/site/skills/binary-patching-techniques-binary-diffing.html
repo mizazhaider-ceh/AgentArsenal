@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: binary-patching-techniques-binary-diffing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>binary-patching-techniques-binary-diffing</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to find exactly what changed between two</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="binary-patching-techniques.html">binary-patching-techniques</a></div><div class="deps"><span class="kind">requires:</span> <a href="binary-patching-techniques.html">binary-patching-techniques</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="binary-patching.html">binary-patching</a> <a href="binary-anti-analysis-bypass.html">binary-anti-analysis-bypass</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Diaphora</td><td>2.0</td></tr><tr><td>Ghidra</td><td>11.3</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Binary diffing answers &quot;what changed&quot; without source code: which functions were added, removed, or modified between two builds. For defenders, the killer application is patch analysis: diffing a vulnerable binary against its patched version locates the exact fix, which reveals the vulnerability and tells you what to hunt for in your environment. This sub-skill covers the diffing workflow from quick byte checks to function-level analysis. Scope: diff only binaries you are authorized to analyze, in an isolated lab, during authorized security research, DFIR, or patch assessment.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the two binaries are comparable: same architecture, same</li>
+<p>product, adjacent versions.</p>
+<li>Byte-level first pass: sizes, hashes, and a quick cmp sample.</li>
+<li>Function-level diff with Diaphora or Ghidra Version Tracking.</li>
+<li>Review modified functions sorted by lowest similarity (most</li>
+<p>changed first).</p>
+<li>For patch analysis, read each changed function for the security</li>
+<p>fix pattern.</p>
+<li>For variant tracking, note added/removed functions and changed</li>
+<p>constants (C2, keys, intervals).</p>
+<li>Write the diff report: what changed, where, and what it means.</li>
+</ol>
+<h2>1. Byte-level first pass</h2>
+<pre><code class="language-bash">ls -l v1.exe v2.exe
+sha256sum v1.exe v2.exe
+
+# How different are they, roughly?
+cmp -l v1.exe v2.exe | wc -l
+# 12 differing bytes  -&gt; tiny patch, likely a hotfix
+# 48000 differing bytes -&gt; major rebuild or different toolchain</code></pre>
+<p>A tiny diff on a security update is the ideal patch-analysis target: the fix is in those few bytes. A huge diff means the vendor rebuilt everything; function-level diffing still works but takes longer.</p>
+<h2>2. Function-level diffing with Diaphora</h2>
+<pre><code class="language-bash"># Export both binaries (Ghidra or IDA), then diff
+python3 diaphora.py v1.sqlite v2.sqlite -o diff_results.sqlite</code></pre>
+<p>Diaphora matches functions by heuristics (name, CFG hash, constants) and scores similarity 1.0 (identical) to 0.0 (unrelated). Review order:</p>
+<ol>
+<li><strong>Modified, low similarity</strong> (0.3-0.8): the real changes; read each.</li>
+<li><strong>Added functions</strong>: new features or new mitigations.</li>
+<li><strong>Removed functions</strong>: dead code removal or deleted vulnerable code.</li>
+<li><strong>Modified, high similarity</strong> (0.95+): usually compiler noise;</li>
+<p>skim only.</p>
+</ol>
+<p>Example output shape:</p>
+<pre><code class="language-text">Modified (similarity &lt; 0.9):
+  sub_401200  0.62  validate_input      &lt;- read first
+  sub_405500  0.81  parse_header
+Added:     sub_40a000  check_bounds     &lt;- new mitigation?
+Removed:   sub_403300  old_parser</code></pre>
+<h2>3. Ghidra Version Tracking</h2>
+<p>Ghidra&#x27;s built-in alternative: create two programs, then use Version Tracking to correlate functions. It is interactive and visual: matched functions link, unmatched ones stand out. Best for small binaries or when you want to read the decompiler side by side. For large binaries or batch work, Diaphora&#x27;s scripted output scales better.</p>
+<h2>4. Patch analysis: finding the fix</h2>
+<p>When v2 is the patched version of vulnerable v1:</p>
+<pre><code class="language-text">Reading a fix in the diff:
+  v1:  memcpy(dst, src, len);            // no bounds check
+  v2:  if (len &gt; sizeof(dst)) return -1;
+       memcpy(dst, src, len);
+  -&gt; the vulnerability was a stack buffer overflow in validate_input;
+     the fix is a bounds check; the trigger is len &gt; sizeof(dst).</code></pre>
+<p>From the fix, derive: the vulnerable function&#x27;s inputs (what attacker data reaches it), the trigger condition (for detection and hunting), and whether the fix is complete (does another path reach the same memcpy?). Write a detection for the trigger: the patch tells you exactly what malicious input looks like.</p>
+<h2>5. Malware variant tracking</h2>
+<p>Diffing two samples of the &quot;same&quot; family shows the author&#x27;s changelog:</p>
+<pre><code class="language-text">Typical variant diff findings:
+  Changed constants: C2 domain, XOR key, beacon interval, mutex
+  Modified functions: string decoder (new key schedule), C2 routine
+  Added functions:   new persistence method, new evasion check
+  Removed functions: dead C2 protocol, old packer stub</code></pre>
+<p>Changed constants are immediate IOC updates. A new evasion check in the diff warns that your sandbox needs a new bypass. An unchanged core with rotated strings means your structural YARA rules still work; rotated imports mean they may not.</p>
+<h2>6. Verifying your own patches</h2>
+<p>After patching (parent skill), diff original vs patched:</p>
+<pre><code class="language-bash">cmp -l original.exe patched.exe</code></pre>
+<p>Expect exactly your patch bytes and nothing else. Any extra differences mean the patching tool modified more than intended; rebuild the patched copy from a clean original.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Different compilers or optimization levels between versions create</li>
+<p>noise diffs; focus on low-similarity functions and changed constants.</p>
+<li>Stripped vs unstripped: function names missing in one binary hurt</li>
+<p>matching; Diaphora&#x27;s heuristic matching still works but review more.</p>
+<li>Packed binaries: diff the unpacked payloads, not the stubs; stub</li>
+<p>diffs are meaningless.</p>
+<li>.NET assemblies: diff at the IL/metadata level (dnDiff-style)</li>
+<p>rather than native bytes.</p>
+</ul>
+<ul>
+<li>Binaries built with profile-guided optimization reorder functions aggressively; rely on CFG matching, not addresses.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If the diff suggests a vulnerability being actively exploited and</li>
+<p>your environment is unpatched, escalate to incident response with the trigger condition; do not wait for the full writeup.</p>
+<li>If variant diffing reveals a fundamentally new capability (not just</li>
+<p>rotated constants), escalate the family assessment: it may need new detections, not just IOC updates.</p>
+</ul>
+<ul>
+<li>If the diff is entirely noise (different toolchain), obtain a same-toolchain build or escalate for manual review of candidate functions.</li>
+<li>If patch analysis reveals an unpatched variant still in your environment, escalate to incident response immediately.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Patch diffing is proactive defense: the day a vendor ships a security update, diffing tells you what was fixed, which tells you what to hunt for in logs from before the patch. Build this into the patch cycle for critical software: diff on release day, hunt for exploitation indicators the same day. For malware, variant diffs keep detections current with minimal analyst time; automate the diff and flag only the interesting changes for human review.</p>
+<h2>Key references</h2>
+<ul>
+<li>Diaphora:</li>
+<p>https://github.com/joxeankoret/diaphora</p>
+<li>Ghidra Version Tracking documentation:</li>
+<p>https://ghidra-sre.org/</p>
+<li>MITRE ATT&amp;CK: T1587 (Develop Capabilities), for the attacker-side</li>
+<p>context of variant development</p>
+<li>&quot;Patch diffing&quot; methodology references in vendor security research</li>
+<p>blogs (search per vendor for their patch analysis writeups)</p>
+</ul>
+<ul>
+<li>BinDiff (function-level binary diffing):</li>
+<p>https://github.com/google/bindiff</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

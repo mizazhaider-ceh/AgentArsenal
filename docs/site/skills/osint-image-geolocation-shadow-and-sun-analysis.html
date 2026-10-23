@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: osint-image-geolocation-shadow-and-sun-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>osint-image-geolocation-shadow-and-sun-analysis</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a photo&#x27;s shadows and sunlight can constrain</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="osint-image-geolocation.html">osint-image-geolocation</a></div><div class="deps"><span class="kind">requires:</span> <a href="osint-image-geolocation.html">osint-image-geolocation</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-image-geolocation.html">osint-image-geolocation</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>ImageMagick</td><td>7.1</td></tr><tr><td>ExifTool</td><td>12.9</td></tr></tbody></table><p>Shadow and sun analysis turns sunlight into a clock and a compass. A shadow&#x27;s direction gives the sun&#x27;s azimuth; its length relative to the object gives the sun&#x27;s elevation; together with a date they constrain time and latitude. This sub-skill covers the measurements, the math, and the cross-checks, with worked examples. It assumes an outdoor daytime photo in an authorized case.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify a vertical object with a sharp, complete shadow on flat</li>
+<p>ground.</p>
+<li>Measure the object and shadow lengths in pixels; compute the</li>
+<p>ratio.</p>
+<li>Convert the ratio to solar elevation with the tangent relation.</li>
+<li>Read shadow direction for the sun&#x27;s azimuth and the hemisphere</li>
+<p>rule.</p>
+<li>Compare with the EXIF timestamp and claimed location using</li>
+<p>SunCalc.</p>
+<li>Note uncertainties: slope, object lean, measurement error.</li>
+<li>Write the conclusion with the calculation shown.</li>
+</ol>
+<h2>1. Measuring in the image</h2>
+<pre><code class="language-bash"># Crop the shadow region for measurement
+convert work.jpg -crop 1200x800+800+1600 shadow.jpg
+
+# Measure pixel lengths along the object and its shadow
+# Use any image viewer with a ruler, or measure coordinates and compute:
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import math
+# Pixel coordinates: object base (x1,y1) to top (x2,y2); shadow tip (x3,y3)
+obj_base, obj_top = (400, 700), (400, 300)
+shadow_tip = (700, 700)
+obj_len = math.dist(obj_base, obj_top)
+shad_len = math.dist(obj_base, shadow_tip)
+print(f&quot;object {obj_len:.0f}px, shadow {shad_len:.0f}px, ratio {shad_len/obj_len:.2f}&quot;)
+EOF</code></pre>
+<p>Example output shape:</p>
+<pre><code>object 400px, shadow 560px, ratio 1.40</code></pre>
+<p>Measure on flat ground with the object truly vertical. A leaning pole or a sloped street biases the ratio; pick the cleanest object-shadow pair in the frame, and measure two if available to check agreement.</p>
+<h2>2. Solar elevation from the ratio</h2>
+<p>The geometry: for a vertical object of height h casting shadow length s on flat ground, tan(elevation) = h / s.</p>
+<pre><code class="language-python"># elevation.py
+import math
+ratio = 1.40  # shadow length / object height
+elevation = math.degrees(math.atan(1 / ratio))
+print(f&quot;solar elevation: {elevation:.1f} degrees&quot;)
+# solar elevation: 35.5 degrees</code></pre>
+<p>Interpretation guide:</p>
+<ul>
+<li>Elevation near 90: sun overhead, midday, tropical latitudes.</li>
+<li>Elevation 30-50: mid-morning or mid-afternoon at temperate</li>
+<p>latitudes.</p>
+<li>Elevation under 15: near sunrise or sunset; long dramatic</li>
+<p>shadows.</p>
+<li>Elevation 0 or negative: the photo cannot be sunlit at that</li>
+<p>time; check the timestamp claim.</p>
+</ul>
+<p>Uncertainty of a few degrees is normal from pixel measurement; that translates to roughly 15-30 minutes of time uncertainty, which you state rather than hide.</p>
+<h2>3. Direction: the hemisphere rule</h2>
+<ul>
+<li>Northern hemisphere: at solar noon the sun is due south, so</li>
+<p>shadows point north. Morning shadows point west-ish, evening shadows east-ish.</p>
+<li>Southern hemisphere: mirrored; noon shadows point south.</li>
+<li>Equator: near the equinoxes the sun passes nearly overhead and</li>
+<p>shadows are short at noon.</p>
+</ul>
+<pre><code class="language-bash"># Determine the shadow&#x27;s compass direction from the image if north is known
+# (from a map of the confirmed street, or a visible landmark of known bearing)
+# Then: sun azimuth = shadow direction + 180 degrees</code></pre>
+<p>If the visual analysis already fixed the street orientation, the shadow direction gives the sun&#x27;s azimuth directly, which pins the time much tighter than elevation alone.</p>
+<h2>4. Cross-checking with SunCalc and EXIF</h2>
+<pre><code class="language-bash"># Get the EXIF timestamp and GPS for the cross-check
+exiftool -DateTimeOriginal -GPSPosition -n photo.jpg
+# DateTimeOriginal : 2026:10:20 14:32:11+02:00
+# GPS Position     : 50.8503, 4.3517</code></pre>
+<p>Then verify on SunCalc (suncalc.org): enter the coordinates and date, and read the sun&#x27;s elevation and azimuth at 14:32 local. Agreement within a few degrees confirms the timestamp; large disagreement means the timestamp, the location, or the photo&#x27;s authenticity is wrong.</p>
+<pre><code class="language-python"># rough-check.py: approximate solar noon sanity check without external data
+# At 50.85 N on Oct 20, solar noon is roughly 12:00 UTC adjusted for longitude:
+# solar_noon_utc ≈ 12:00 - lon/15 hours = 12:00 - 0.29h ≈ 11:43 UTC = 13:43 local (+2)
+# Photo at 14:32 local is ~50 min after solar noon: sun in the southwest, elevation
+# moderate. Shadows should point northeast. Compare with the image.
+print(&quot;expected: shadows pointing northeast, sun in southwest&quot;)</code></pre>
+<p>This rough check catches gross fabrications (a &quot;noon&quot; photo with sunset shadows) before you spend time on precision.</p>
+<h2>5. Worked example</h2>
+<p>Photo: street scene, Brussels, 2026-10-20 14:32 local (+02:00).</p>
+<ol>
+<li>Lamp post: 400 px tall, shadow 560 px, ratio 1.40, elevation</li>
+<p>35.5 degrees.</p>
+<li>Street runs east-west (confirmed on the map); shadows fall to</li>
+<p>the north-east side of the posts, so the sun is in the south-west.</p>
+<li>SunCalc for 50.8503 N, 4.3517 E on 2026-10-20 at 14:32 local:</li>
+<p>elevation ~28 degrees, azimuth ~215 degrees (south-west).</p>
+<li>Measured 35.5 versus computed 28: within rough-measurement</li>
+<p>tolerance given pixel error and possible slight slope.</p>
+<li>Conclusion: timestamp and location consistent with the shadows.</li>
+<p>Confidence: supporting evidence, not standalone proof.</p>
+</ol>
+<p>Write the example in this format in the case file: measurements, computation, external check, conclusion, tolerance.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Overcast sky: no sharp shadows. The method does not apply; note</li>
+<p>it and move on rather than forcing measurements on diffuse shading.</p>
+<li>Multiple light sources (street lamps at dusk). Shadows may come</li>
+<p>from artificial light; check for multiple shadow directions, which betray mixed lighting.</p>
+<li>The photo is near the equator at noon: shadows vanish and the</li>
+<p>method gives no constraint. Say so.</p>
+<li>Fisheye or wide-angle distortion bends straight shadows. Measure</li>
+<p>near the image center where distortion is minimal, or correct the lens profile first.</p>
+<li>The object is not vertical (a leaning sign, a person mid-step).</li>
+<p>Reject the measurement; a bad object is worse than no object.</p>
+<li>Reflections (glass facades, water) create false shadow-like</li>
+<p>features. Verify the shadow connects to the object&#x27;s base on the ground plane.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Shadows contradict the EXIF timestamp badly (morning shadows on</li>
+<p>an &quot;evening&quot; photo). Treat the timestamp as suspect, re-verify the location independently, and flag possible manipulation to the case owner.</p>
+<li>The analysis is time-critical to the case (alibi verification).</li>
+<p>Have a second analyst independently measure and compute; do not let one person&#x27;s pixel ruler decide an alibi.</p>
+<li>No usable shadows and the time question matters. Escalate to</li>
+<p>other time clues: shop opening states, traffic density, sky color, or clock faces visible in the frame.</p>
+<li>The photo may be synthetic. Impossible sun geometry (two shadow</li>
+<p>directions from one sun, shadows detached from objects) is a strong synthetic indicator; escalate to media forensics.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Shadow analysis is hard to defeat deliberately because people do not think about sun geometry when taking photos, which is exactly why investigators value it. The defense is the same as for all geolocation: control backgrounds, strip metadata, and consider what a photo reveals before publishing. For analysts, the defender view is a caution about overprecision: pixel measurements have real error bars, and a geolocation that depends on a two-degree elevation difference is not a geolocation but a guess with math on it.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent workflow: osint-image-geolocation (this repo)</li>
+<li>SunCalc: https://www.suncalc.org/</li>
+<li>NOAA solar calculator: https://gml.noaa.gov/grad/solcalc/</li>
+<li>Bellingcat shadow analysis references:</li>
+<p>https://www.bellingcat.com/resources/</p>
+<li>ExifTool (for the timestamp side): https://exiftool.org/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

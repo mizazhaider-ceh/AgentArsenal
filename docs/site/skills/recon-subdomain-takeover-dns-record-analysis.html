@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-subdomain-takeover-dns-record-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-subdomain-takeover-dns-record-analysis</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have an in-scope subdomain list and need to find takeover candidates in the DNS records. Covers enumerating CNAME, A, and NS records at scale with dig, spotting dangling CNAMEs (targets that no longer resolve), expired cloud IP assignments, dead delegated nameservers, and building the candidate list with evidence per record. Authorized targets only, only analyze domains you are permitted to test.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="recon-subdomain-takeover.html">recon-subdomain-takeover</a></div><div class="deps"><span class="kind">requires:</span> <a href="recon-subdomain-takeover.html">recon-subdomain-takeover</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-subdomain-takeover-cloud-service-fingerprints.html">recon-subdomain-takeover-cloud-service-fingerprints</a> <a href="dns-enumeration.html">dns-enumeration</a> <a href="recon-subdomain-enumeration.html">recon-subdomain-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>dig</td><td>9.18</td></tr><tr><td>dnsx</td><td>1.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Takeover candidates hide in DNS records: CNAMEs pointing at gone services, A records on released cloud IPs, NS delegations to dead nameservers. Systematic record analysis across the whole subdomain list finds them all instead of the lucky few. This sub-skill covers the DNS analysis step of recon-subdomain-takeover. Only analyze domains you are authorized to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Take the confirmed in-scope subdomain list as input.</li>
+<li>Pull CNAME, A, and NS records for every name with dig through a public resolver.</li>
+<li>Build the CNAME map: subdomain to target, and flag targets that do not resolve.</li>
+<li>Check A records against known cloud IP ranges for reassignment risk.</li>
+<li>Check NS delegations for dead or claimable nameservers.</li>
+<li>Write the candidate list: record, target, why it is suspicious, timestamp.</li>
+<li>Hand candidates to fingerprinting for verification.</li>
+</ol>
+<h2>1. Bulk record collection</h2>
+<pre><code class="language-bash"># CNAME map for the whole confirmed list
+while read -r sub; do
+  target=$(dig +short &quot;$sub&quot; CNAME @1.1.1.1 | head -1)
+  [ -n &quot;$target&quot; ] &amp;&amp; echo &quot;$sub $target&quot;
+done &lt; confirmed.txt &gt; cname-map.txt
+
+# A records alongside, for cloud IP checks
+dnsx -l confirmed.txt -silent -a -resp -o a-records.txt -t 50
+
+# NS records for delegated subdomains
+while read -r sub; do
+  ns=$(dig +short &quot;$sub&quot; NS @1.1.1.1 | tr &#x27;\n&#x27; &#x27; &#x27;)
+  [ -n &quot;$ns&quot; ] &amp;&amp; echo &quot;$sub NS: $ns&quot;
+done &lt; confirmed.txt &gt; ns-map.txt
+
+wc -l cname-map.txt a-records.txt ns-map.txt</code></pre>
+<p>Run these through a public resolver, not the target&#x27;s authoritative servers. Save all three maps; the fingerprinting step needs the CNAME targets, and the report needs the raw record evidence.</p>
+<h2>2. Dangling CNAME detection</h2>
+<p>A CNAME target that does not resolve is the classic takeover signal:</p>
+<pre><code class="language-bash"># For each unique CNAME target, check if it resolves
+cut -d&#x27; &#x27; -f2 cname-map.txt | sort -u &gt; cname-targets.txt
+while read -r t; do
+  ip=$(dig +short &quot;$t&quot; A @1.1.1.1 | head -1)
+  if [ -z &quot;$ip&quot; ]; then echo &quot;DANGLING: $t&quot;; else echo &quot;alive: $t -&gt; $ip&quot;; fi
+done &lt; cname-targets.txt &gt; cname-status.txt
+grep DANGLING cname-status.txt</code></pre>
+<p>Example output shape:</p>
+<pre><code>DANGLING: example-blog.herokuapp.com.
+DANGLING: old-docs.s3-website-us-east-1.amazonaws.com.
+alive: shops.myshopify.com. -&gt; 23.227.38.65</code></pre>
+<p>Also flag CNAME targets on known-takeoverable service domains even when they resolve: a resolving <code>*.herokuapp.com</code> may still be an unclaimed app slot serving the &quot;no such app&quot; page. Resolution is necessary but not sufficient; fingerprinting decides.</p>
+<h2>3. A records and cloud IP reassignment</h2>
+<p>A records pointing at cloud provider ranges deserve a second look when the hostname suggests the resource may be gone:</p>
+<pre><code class="language-bash"># Example: list A records and eyeball cloud ranges
+cat a-records.txt | head -20
+# Spot-check ownership signals: reverse DNS of the IP
+dig +short -x 203.0.113.87 @1.1.1.1</code></pre>
+<p>Signals of a released resource: the PTR shows a generic cloud hostname rather than the organization&#x27;s name, the IP serves nothing or someone else&#x27;s content, and historical data shows the IP previously served the organization. Confirm carefully: an A record on a cloud IP that still serves the organization&#x27;s content is just cloud hosting, not a finding. The finding needs the resource-gone evidence, usually from the fingerprint step.</p>
+<h2>4. Dead delegated nameservers</h2>
+<p>Subdomain NS delegations are the overlooked takeover vector:</p>
+<pre><code class="language-bash">cat ns-map.txt
+# For each delegated nameserver, check it resolves and serves the zone
+ns=&quot;ns1.old-provider.example&quot;
+dig +short &quot;$ns&quot; A @1.1.1.1 || echo &quot;DEAD NS: $ns&quot;
+dig @&quot;$ns&quot; delegated.example.com SOA +short 2&gt;/dev/null || echo &quot;NS not serving: $ns&quot;</code></pre>
+<p>A dead nameserver that is claimable at a registrar (expired domain) means whoever registers it controls the delegated zone. Verify the domain&#x27;s registration status with whois before calling it claimable; a dead-but-registered nameserver is a reliability issue, not a takeover.</p>
+<h2>5. The candidate list</h2>
+<pre><code class="language-bash"># candidates-takeover.txt format: subdomain | record | target | signal | date
+# blog.example.com | CNAME | example-blog.herokuapp.com. | target NXDOMAIN | 2026-10-23
+# docs.example.com | CNAME | old-docs.s3-website-us-east-1.amazonaws.com. | target NXDOMAIN | 2026-10-23
+# shop.example.com | CNAME | shops.myshopify.com. | service domain, needs fingerprint | 2026-10-23
+wc -l candidates-takeover.txt</code></pre>
+<p>Each line carries its evidence pointer (the dig output file and timestamp). Candidates with only a weak signal go in a separate watch list, not the verification queue.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>CNAME chains (CNAME to CNAME to service): follow the full chain; the dangling link may be two hops down. <code>dig +trace</code> or repeated dig calls resolve the chain.</li>
+<li>The CNAME target resolves via wildcard at the provider: some providers wildcard their whole service domain, so resolution proves nothing. Fingerprinting is the decider there.</li>
+<li>GeoDNS or split-horizon answers: the record you see depends on where you query from. Note the resolver used; a target that looks dangling from one region may be alive in another.</li>
+<li>Large subdomain lists: the per-name dig loop is slow. Batch with dnsx where possible and parallelize the loop with xargs -P for the rest.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>DNS analysis finds nothing: check historical DNS (SecurityTrails, passive DNS) for CNAMEs that existed last year and were removed. A removed CNAME to a still-unclaimed service name can be re-pointed by the organization or is already fixed; either way the history teaches the pattern.</li>
+<li>A candidate&#x27;s service domain is unfamiliar: research whether that service allows endpoint claiming before spending verification effort. Not every SaaS with a CNAME is takeoverable.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>The candidate list is also the defender&#x27;s audit list: every dangling record is a fix ticket. Automate this exact analysis on a schedule.</li>
+<li>Monitor DNS changes: a new CNAME to an external service should trigger a review, and a deleted service should trigger DNS cleanup in the same change ticket.</li>
+<li>Log which of your names delegate to external nameservers; those delegations are trust decisions, review them like firewall rules.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>BIND 9 dig documentation: https://www.isc.org/bind/</li>
+<li>dnsx documentation: https://github.com/projectdiscovery/dnsx</li>
+<li>Can I take over XYZ: https://github.com/EdOverflow/can-i-take-over-xyz</li>
+<li>MITRE ATT&amp;CK T1590.002 DNS: https://attack.mitre.org/techniques/T1590/002/</li>
+<li>HackerOne takeover guidance: https://docs.hackerone.com</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

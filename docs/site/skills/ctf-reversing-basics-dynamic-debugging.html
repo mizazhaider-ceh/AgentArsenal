@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-reversing-basics-dynamic-debugging</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-reversing-basics-dynamic-debugging</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when dynamically analyzing a CTF reversing binary or an</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-reversing-basics.html">ctf-reversing-basics</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-reversing-basics.html">ctf-reversing-basics</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ghidra-basics.html">ghidra-basics</a> <a href="ctf-reversing-basics.html">ctf-reversing-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>GDB</td><td>15.2</td></tr><tr><td>Frida</td><td>16.5</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>binutils</td><td>2.42</td></tr></tbody></table><p>Dynamic debugging runs the program and inspects it while it executes, which answers questions static analysis cannot: what values are actually computed, what do decrypted strings look like, and what exactly is compared against your input. This sub-skill covers the authorized gdb workflow for CTF reversing: strategic breakpoints, memory inspection, runtime dumping of hidden data, anti-debug bypasses, and Frida as the fallback when gdb is blocked. Scope is CTF competitions, lab binaries, and software you have explicit permission to analyze.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Get the check function&#x27;s address from Ghidra (image-base offset) and</li>
+<p>translate it for the PIE runtime base if needed.</p>
+<li>Start the binary in gdb with a known input (e.g. 32 <code>A</code> characters)</li>
+<p>and break at the check function entry.</p>
+<li>Inspect the input buffer and the expected buffer side by side</li>
+<p>(<code>x/32bx</code> on both pointers).</p>
+<li>Step through the comparison loop once to learn the transform</li>
+<p>(watch one byte go through XOR, add, or table lookup).</p>
+<li>Break on <code>strcmp</code>/<code>memcmp</code> instead when the check delegates to libc;</li>
+<p>print both arguments to see the exact expected value.</p>
+<li>For encrypted strings or tables, break right after the decryption</li>
+<p>routine returns and dump the output buffer.</p>
+<li>If the binary detects gdb (ptrace), bypass it (patch, LD_PRELOAD, or</li>
+<p>Frida) and repeat the session.</p>
+<li>Copy runtime values into the Python solver and verify the output.</li>
+</ol>
+<h2>1. Breakpoints that solve challenges</h2>
+<p>Most reversing challenges are solved with three breakpoint types.</p>
+<pre><code class="language-bash">gdb -q ./rev
+# PIE: disable ASLR for stable addresses while learning
+(gdb) set disable-randomization on
+
+# 1. Break at the check function (address from Ghidra, image base + offset)
+(gdb) break *0x5555555552a0
+# with ASLR disabled and no PIE, Ghidra image-base addresses work directly
+
+# 2. Break on library comparison calls and print both sides
+(gdb) break strcmp
+(gdb) commands
+&gt; silent
+&gt; printf &quot;strcmp(%s, %s)\n&quot;, $rdi, $rsi
+&gt; continue
+&gt; end
+
+# 3. Break on memcmp with explicit lengths
+(gdb) break memcmp
+(gdb) commands
+&gt; silent
+&gt; x/s $rdi
+&gt; x/s $rsi
+&gt; printf &quot;len=%d\n&quot;, $rdx
+&gt; continue
+&gt; end
+
+(gdb) run &lt;&lt;&lt; &quot;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&quot;</code></pre>
+<p>The <code>strcmp</code>/<code>memcmp</code> argument dump is the single highest-value dynamic technique: it prints the program&#x27;s expected value directly, no reversing of the transform needed.</p>
+<h2>2. Inspecting memory and registers</h2>
+<p>Learn the small set of gdb commands that covers 95 percent of reversing needs.</p>
+<pre><code class="language-bash">(gdb) info registers          # all registers; watch rax after comparisons
+(gdb) x/32bx $rsi             # 32 bytes hex at rsi (typical buffer arg)
+(gdb) x/s $rdi                # C string at rdi
+(gdb) x/16gx $rsp             # 16 giant words at stack pointer
+(gdb) x/10i $pc               # next 10 instructions
+(gdb) print/d $rax            # decimal value of rax
+(gdb) stepi                   # one instruction
+(gdb) nexti                   # one instruction, stepping over calls
+(gdb) finish                  # run until current function returns</code></pre>
+<p>TUI mode (<code>gdb -tui</code>) shows source or disassembly alongside; <code>layout regs</code> keeps registers visible while stepping. When a loop processes your input byte by byte, <code>stepi</code> through two iterations and note which instruction transforms the byte; that instruction IS the algorithm.</p>
+<h2>3. Dumping runtime-computed data</h2>
+<p>Decryption routines and key schedules produce values that never appear in the binary statically. Capture them live.</p>
+<pre><code class="language-bash"># Break right AFTER the decrypt call returns (address from Ghidra)
+(gdb) break *0x555555555310
+(gdb) run
+# at the breakpoint, rax (or the known out-pointer register) holds the buffer
+(gdb) x/s $rax
+# &quot;flag{decrypted_at_runtime}&quot;  -&gt; copy this, challenge may end here
+
+# Dump a computed 256 byte table to a file for the solver
+(gdb) dump binary memory /tmp/table.bin $rax $rax+256</code></pre>
+<pre><code class="language-bash"># Then in Python:
+table = open(&quot;/tmp/table.bin&quot;, &quot;rb&quot;).read()</code></pre>
+<p>For multi-stage decryption (string decrypted just before use), use a hardware watchpoint on the buffer or break on the print function and read its argument.</p>
+<h2>4. Defeating ptrace anti-debugging</h2>
+<p>CTF binaries sometimes call <code>ptrace(PTRACE_TRACEME)</code> and exit if a debugger is present. Options, easiest first:</p>
+<pre><code class="language-bash"># Option A: patch the check. Find the ptrace call in Ghidra, note that
+# it tests the return value; in gdb, force the success path:
+(gdb) break *0x5555555551c3    # instruction after the ptrace call
+(gdb) run
+# or: set $rax = 0 right after the call returns
+
+# Option B: LD_PRELOAD a fake ptrace that always succeeds
+cat &gt; /tmp/noptrace.c &lt;&lt;&#x27;EOF&#x27;
+long ptrace(int req, int pid, void *a, void *b) { return 0; }
+EOF
+gcc -shared -fPIC -o /tmp/noptrace.so /tmp/noptrace.c
+LD_PRELOAD=/tmp/noptrace.so gdb -q ./rev</code></pre>
+<p>Option C: skip gdb entirely and use Frida to hook the check function; Frida&#x27;s injection does not trip naive <code>ptrace</code> checks.</p>
+<h2>5. Frida hooks as a gdb alternative</h2>
+<p>Frida instruments without stopping the process, which defeats timing checks and many anti-debug tricks.</p>
+<pre><code class="language-javascript">// hook.js: log memcmp arguments in a CTF binary
+Interceptor.attach(Module.getExportByName(null, &quot;memcmp&quot;), {
+    onEnter(args) {
+        this.a = args[0].readCString();
+        this.b = args[1].readCString();
+        this.n = args[2].toInt32();
+    },
+    onLeave(retval) {
+        console.log(`memcmp(&quot;${this.a}&quot;, &quot;${this.b}&quot;, ${this.n}) = ${retval}`);
+    }
+});</code></pre>
+<pre><code class="language-bash">frida -q -l hook.js -f ./rev -- &lt;&lt;&lt; &quot;AAAAAAAAAAAAAAAA&quot;
+# memcmp(&quot;AAAAAAAAAAAAAAAA&quot;, &quot;s3cr3t_expected...&quot;, 32) = 65</code></pre>
+<p>The logged expected value often ends the challenge. Frida also traces decryption: hook the decrypt function and dump its output buffer on return.</p>
+<h2>6. strace and ltrace for behavior triage</h2>
+<p>Before deep debugging, watch system and library calls.</p>
+<pre><code class="language-bash"># Files opened, network, process behavior
+strace -f -e trace=openat,read,write ./rev &lt;&lt;&lt; &quot;test&quot; 2&gt;&amp;1 | head -40
+
+# Library calls with arguments: reveals strcmp/memcmp usage instantly
+ltrace -e strcmp+memcmp ./rev &lt;&lt;&lt; &quot;AAAAAAAAAAAAAAAA&quot;
+# memcmp(&quot;AAAAAAAAAAAAAAAA&quot;, &quot;real_expected_value&quot;, 32) = 65</code></pre>
+<p>If <code>ltrace</code> already shows the expected value, the challenge is done; write it down and move on. Time management matters in competitions.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The binary forks: use <code>set follow-fork-mode child</code> to trace the</li>
+<p>child, or <code>set detach-on-fork off</code> to debug both.</p>
+<li>Input comes from a file or argv: adjust the <code>run</code> invocation</li>
+<p>(<code>run $(cat input)</code> or <code>run input.txt</code>) instead of stdin redirection.</p>
+<li>The check runs in a thread: <code>info threads</code>, then <code>thread N</code> plus</li>
+<p><code>break ... thread N</code> to target the right one.</p>
+<li>gdb <code>run</code> with heredoc hangs on interactive prompts: feed input via</li>
+<p>a file (<code>run &lt; /tmp/in.txt</code>) for repeatability.</p>
+<li>Stripped binary, no symbols for <code>strcmp</code>: break on the PLT entry</li>
+<p>address from Ghidra (<code>break *0x...plt</code>) instead of by name.</p>
+<li>Frida fails on static binaries: fall back to gdb; Frida needs</li>
+<p>dynamic symbols or manual address computation from the image base.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Breakpoints never hit: the address is wrong (PIE base mismatch) or</li>
+<p>the code path is not reached; verify with <code>info breakpoints</code> hit counts and a breakpoint on <code>main</code> first.</p>
+<li>The expected value changes per run (randomized check): the program</li>
+<p>generates the check at runtime; dump it fresh each run and solve dynamically, or find the PRNG seed.</p>
+<li>Anti-debug is more than ptrace (timing checks, /proc/self/status</li>
+<p>tracerpid): patch each check or move the whole analysis to Frida with <code>Stalker</code> for tracing.</p>
+<li>Values are correct but the solver still fails: check for a trailing</li>
+<p>transform after the loop (a final XOR on the whole buffer is a classic), or an off-by-one in the copied expected bytes.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders use these exact dynamic techniques in malware sandboxes: breakpoints on suspicious API calls, memory dumps of decrypted payloads, and API tracing. Malware fights back with the same anti-debug tricks (ptrace, timing, VM detection) that CTF binaries imitate. EDR products detect debugging through kernel callbacks and anomalous <code>ptrace</code> usage. For CTF players the lesson is operational: dynamic analysis is the fastest path through obfuscation, so learn the gdb and Frida workflows until they are muscle memory.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1027 (Obfuscated Files or Information) and T1056-adjacent</li>
+<p>input capture concepts; dynamic analysis maps to T1005-adjacent behaviors in sandboxes.</p>
+<li>CWE-798 (Use of Hard-coded Credentials): what runtime dumps reveal.</li>
+<li>GDB 15 manual: https://sourceware.org/gdb/documentation/</li>
+<li>Frida documentation: https://frida.re/docs/home/</li>
+<li>ltrace/strace manuals: https://www.ltrace.org/ and man strace.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

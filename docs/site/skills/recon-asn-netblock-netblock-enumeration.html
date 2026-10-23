@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-asn-netblock-netblock-enumeration</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-asn-netblock-netblock-enumeration</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have the filtered in-scope prefix list and need to find the live hosts inside each netblock. Covers reverse DNS sweeps with dnsx, polite ping and port checks with nmap, banner and certificate pivots back to hostnames, handling large prefixes without blind sweeping, and merging discovered hosts into the master target list. Authorized targets only, only enumerate prefixes you are permitted to test.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="recon-asn-netblock.html">recon-asn-netblock</a></div><div class="deps"><span class="kind">requires:</span> <a href="recon-asn-netblock.html">recon-asn-netblock</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-asn-netblock-bgp-data.html">recon-asn-netblock-bgp-data</a> <a href="recon-asn-netblock-asn-lookup.html">recon-asn-netblock-asn-lookup</a> <a href="recon-active.html">recon-active</a> <a href="nmap-methodology.html">nmap-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>dnsx</td><td>1.2</td></tr><tr><td>nmap</td><td>7.98</td></tr><tr><td>httpx</td><td>1.6</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Netblock enumeration finds the live hosts inside an authorized prefix: reverse DNS for names, liveness checks for hosts without names, and service pivots to identify what each host is. This is the noisiest recon step, so it runs last, inside authorized prefixes only, at polite rates. This sub-skill covers the enumeration for recon-asn-netblock. Only enumerate prefixes your authorization covers.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Take prefixes-final.txt from the BGP filtering step; confirm each is still in scope.</li>
+<li>Expand each prefix to its IP list.</li>
+<li>Reverse-DNS sweep the IPs with dnsx through a public resolver; record every PTR name.</li>
+<li>For IPs without PTR, run polite ping sweeps where the authorization allows active checks.</li>
+<li>For live hosts, identify services: top-ports scan at a gentle rate, then certificate and banner pivots.</li>
+<li>Pivot every IP back to names: PTR, TLS SANs, Shodan host data.</li>
+<li>Merge hosts and new names into the master target list with source notes.</li>
+</ol>
+<h2>1. Expanding prefixes</h2>
+<pre><code class="language-bash"># Expand all final prefixes to IP lists (example: two /24s)
+while read -r p; do
+  python3 -c &quot;import ipaddress; print(&#x27;\n&#x27;.join(str(h) for h in ipaddress.ip_network(&#x27;$p&#x27;).hosts()))&quot;
+done &lt; prefixes-final.txt | sort -u &gt; netblock-ips.txt
+wc -l netblock-ips.txt</code></pre>
+<p>For prefixes larger than a /22, do not expand blindly: 65,000 IPs is a sweep, not recon. For large prefixes, enumerate via targeted means first (known hostnames resolved into the range, certificate pivots, Shodan net searches) and sweep only the sub-ranges where those cluster.</p>
+<h2>2. Reverse DNS sweep</h2>
+<p>PTR records are the quietest host discovery: one DNS query per IP, through a public resolver:</p>
+<pre><code class="language-bash">dnsx -l netblock-ips.txt -silent -ptr -resp -o ptr-sweep.txt -t 100 -rl 300
+# Keep only IPs that returned a name
+awk &#x27;$2 != &quot;&quot; &amp;&amp; $2 != &quot;[NXDOMAIN]&quot;&#x27; ptr-sweep.txt &gt; ptr-hits.txt
+wc -l ptr-hits.txt
+head -15 ptr-hits.txt</code></pre>
+<p>Example output shape:</p>
+<pre><code>203.0.113.10 vpn.example.com
+203.0.113.21 jenkins.example.com
+203.0.113.25 mail2.example.com</code></pre>
+<p>PTR names often include hosts that forward DNS never lists: management interfaces, backup hosts, numbered infrastructure. Every new name goes back into the subdomain candidate list for httpx probing.</p>
+<h2>3. Liveness for unnamed hosts</h2>
+<p>Where the authorization permits active checks, find which IPs are up:</p>
+<pre><code class="language-bash">nmap -sn -T3 --max-retries 1 --max-rtt-timeout 500ms \
+  -iL netblock-ips.txt -oG ping-sweep.gnmap
+grep &quot;Up&quot; ping-sweep.gnmap | cut -d&#x27; &#x27; -f2 &gt; netblock-live.txt
+wc -l netblock-live.txt</code></pre>
+<p>Keep it gentle: <code>-T3</code>, single retry, and no port scanning in this pass. The goal is a live-host list, not a service map yet. If the authorization forbids even ping sweeps, skip this step; the PTR sweep and passive pivots still produce value.</p>
+<h2>4. Service identification on live hosts</h2>
+<p>For live hosts, a restrained top-ports pass plus pivots:</p>
+<pre><code class="language-bash">nmap -sV --top-ports 100 -T3 --max-retries 1 \
+  -iL netblock-live.txt -oA netblock-services
+grep -E &quot;open&quot; netblock-services.gnmap | head -30</code></pre>
+<p>Then pivot per host without more scanning:</p>
+<pre><code class="language-bash"># TLS certificates on open 443/8443 name the hosted domains
+# Shodan host data gives banners passively
+shodan host 203.0.113.44 --fields ip_str,port,hostnames,org 2&gt;/dev/null</code></pre>
+<p>Prioritize hosts by strangeness: odd open ports, old software banners, hostnames suggesting admin or staging. Those go to the top of the later testing queue.</p>
+<h2>5. Merging into the master list</h2>
+<pre><code class="language-bash"># New names from PTR go back to subdomain candidates
+cut -d&#x27; &#x27; -f2 ptr-hits.txt | sort -u &gt; ptr-names.txt
+cat ptr-names.txt &gt;&gt; all-candidates.txt &amp;&amp; sort -u all-candidates.txt -o all-candidates.txt
+# Live IPs with no names: direct-IP list (only if IP testing is authorized)
+comm -23 &lt;(sort netblock-live.txt) &lt;(cut -d&#x27; &#x27; -f1 ptr-hits.txt | sort -u) &gt; unnamed-live.txt
+wc -l ptr-names.txt unnamed-live.txt</code></pre>
+<p>Every asset carries its source note (ptr-sweep, ping-sweep, shodan-pivot) so later phases know how it was found and how fresh it is.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The prefix is mostly empty (cloud-allocated but unused): a handful of live hosts in a /24 is normal for cloud space. Do not re-sweep hoping for more.</li>
+<li>PTR sweep returns generic cloud names (ec2-...amazonaws.com): those confirm occupancy but add no intelligence; rely on certificate and Shodan pivots instead.</li>
+<li>The sweep triggers an abuse complaint or block: stop immediately, note what rate caused it, and continue only with passive pivots. Report the incident to your engagement lead.</li>
+<li>IPv6 prefixes: never sweep; use DNS, CT logs, and certificate pivots exclusively. The space is too large for any sweep to be meaningful or polite.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Netblock yields nothing new: the prefix may be genuinely sparse. Cross-check with Shodan&#x27;s net search (<code>net:203.0.113.0/24</code>) which sometimes sees hosts your sweep missed due to ICMP filtering.</li>
+<li>Interesting hosts sit just outside the authorized prefix: stop at the boundary. Note them as a scope question with evidence, do not probe them.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Sequential PTR sweeps and ping sweeps are the classic netblock-enumeration signature: monitor for them and alert, distinguishing authorized hunters (expected during engagements) from unknown sources.</li>
+<li>PTR records leak hostnames: audit yours. <code>db-backup-prod</code> in a PTR record tells an attacker exactly what to prioritize.</li>
+<li>Unused IP space that suddenly gets swept is often a precursor to targeted work; correlate sweep alerts with other recon signals.</li>
+<li>Keep prefix authorizations tight: hunters enumerate what the scope allows, so scope precision directly controls sweep volume against your network.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>dnsx documentation: https://github.com/projectdiscovery/dnsx</li>
+<li>nmap documentation: https://nmap.org/book/man.html</li>
+<li>Shodan CLI documentation: https://developer.shodan.io</li>
+<li>RIPEstat API docs: https://stat.ripe.net/docs/data_api</li>
+<li>MITRE ATT&amp;CK T1590.002 DNS: https://attack.mitre.org/techniques/T1590/002/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

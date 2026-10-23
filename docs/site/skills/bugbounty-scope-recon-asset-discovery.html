@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-scope-recon-asset-discovery</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-scope-recon-asset-discovery</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a program&#x27;s scope statement is written and you need to turn it into a concrete asset inventory without crossing the lines. Covers expanding wildcard domains into verified subdomain lists, expanding CIDR ranges into live IPs, extracting API hosts and endpoints from web JavaScript and mobile apps, verifying each asset actually belongs to the scope, and building the final in-scope inventory file. Authorized targets only, only test assets the program explicitly lists in scope.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bugbounty-scope-recon.html">bugbounty-scope-recon</a></div><div class="deps"><span class="kind">requires:</span> <a href="bugbounty-scope-recon.html">bugbounty-scope-recon</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-subdomain-enumeration.html">recon-subdomain-enumeration</a> <a href="recon-asn-netblock.html">recon-asn-netblock</a> <a href="recon-cert-transparency.html">recon-cert-transparency</a> <a href="bugbounty-scope-recon-scope-boundary-mapping.html">bugbounty-scope-recon-scope-boundary-mapping</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>subfinder</td><td>2.6</td></tr><tr><td>amass</td><td>4.2</td></tr><tr><td>dnsx</td><td>1.2</td></tr><tr><td>httpx</td><td>1.6</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>Asset discovery converts scope lines like &quot;*.example.com&quot; and &quot;203.0.113.0/24&quot; into a concrete inventory of testable assets: verified subdomains, live IPs, API hosts, and mobile app endpoints. Every discovered asset gets checked against the scope before it enters the inventory. This sub-skill covers only the discovery step of bugbounty-scope-recon. Only discover and test assets the program lists in scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Read SCOPE.txt and list each scope line as a discovery task (wildcard, CIDR, app, API).</li>
+<li>For each wildcard domain: enumerate subdomains passively, then resolve and keep only names under the scoped domain.</li>
+<li>For each CIDR range: expand to IPs, verify current ownership with whois, then check liveness politely.</li>
+<li>For mobile apps: extract API hosts and endpoints from the app package and its traffic.</li>
+<li>For APIs: collect base URLs from web JavaScript and documentation, and verify they are in scope.</li>
+<li>Deduplicate everything into one inventory file with a source note per asset.</li>
+<li>Hand the inventory to scope boundary mapping for the in, out, and gray verdicts.</li>
+</ol>
+<h2>1. Wildcard domains to verified subdomains</h2>
+<pre><code class="language-bash">subfinder -d example.com -silent -o subfinder.txt
+amass enum -passive -d example.com -o amass.txt
+curl -s &quot;https://crt.sh/?q=%25.example.com&amp;output=json&quot; \
+  | jq -r &#x27;.[].name_value&#x27; | sed &#x27;s/^\*\.//&#x27; | sort -u &gt; crtsh.txt
+cat subfinder.txt amass.txt crtsh.txt | sort -u &gt; candidates.txt
+# Keep only names actually under the scoped domain, then resolve
+grep -E &#x27;(^|\.)example\.com$&#x27; candidates.txt | sort -u &gt; scoped-names.txt
+dnsx -l scoped-names.txt -silent -resp -o resolved.txt
+wc -l candidates.txt scoped-names.txt resolved.txt</code></pre>
+<p>Example output shape:</p>
+<pre><code>812 candidates.txt
+764 scoped-names.txt
+301 resolved.txt</code></pre>
+<p>The 48 names dropped between candidates and scoped-names were lookalikes or parent-domain artifacts; dropping them is the point. Record per-asset source notes: which tool found each name, so you can re-verify later.</p>
+<h2>2. CIDR ranges to live IPs</h2>
+<p>Expand the range, verify ownership has not changed, then check liveness gently:</p>
+<pre><code class="language-bash">python3 -c &quot;import ipaddress; print(&#x27;\n&#x27;.join(str(h) for h in ipaddress.ip_network(&#x27;203.0.113.0/24&#x27;).hosts()))&quot; &gt; range-ips.txt
+# Spot-check ownership of the range before scanning it
+whois 203.0.113.0 | grep -iE &quot;orgname|netname|descr&quot; | head -5
+# Liveness check at a polite rate (ping sweep only where the program allows scanning)
+nmap -sn -T3 --max-retries 1 -iL range-ips.txt -oG ping-sweep.gnmap
+grep &quot;Up&quot; ping-sweep.gnmap | cut -d&#x27; &#x27; -f2 &gt; live-ips.txt
+wc -l live-ips.txt</code></pre>
+<p>If whois shows the range now belongs to someone else, stop: the scope is stale and those IPs are not yours to test. Report the mismatch to the program as a scope question.</p>
+<h2>3. Mobile apps and API hosts</h2>
+<p>Mobile apps are in scope as applications, but the hosts they talk to need verification:</p>
+<pre><code class="language-bash"># Unpack the APK and extract candidate hosts (on your own machine, from the store copy)
+apktool d app.apk -o app-unpacked
+grep -rhoE &#x27;https?://[a-zA-Z0-9.\-]+\.[a-z]+&#x27; app-unpacked/ | sort -u &gt; app-hosts.txt
+# Also capture the app&#x27;s traffic through your proxy during normal use
+# and merge the observed hosts into app-hosts.txt
+cat app-hosts.txt</code></pre>
+<p>For web APIs, harvest base URLs from JavaScript and docs:</p>
+<pre><code class="language-bash">grep -rhoE &#x27;https://[a-zA-Z0-9.\-]+\.example\.com(/[a-zA-Z0-9/_\-\.]*)?&#x27; js/ \
+  | sort -u &gt; api-hosts.txt
+# Check for swagger/openapi specs that enumerate the whole API
+httpx -l resolved.txt -silent -path /swagger.json -mc 200 -o swagger-found.txt</code></pre>
+<p>Every extracted host goes through the same scope check: is the name or IP inside the stated scope. App-discovered hosts outside the listed scope are gray until the program confirms.</p>
+<h2>4. Building the inventory</h2>
+<p>Merge all verified assets into one file with source notes:</p>
+<pre><code class="language-bash">{
+  echo &quot;# In-scope asset inventory for example.com, built 2026-10-23&quot;
+  echo &quot;# Format: asset | type | source&quot;
+  awk &#x27;{print $1&quot; | subdomain | subfinder/amass/crtsh&quot;}&#x27; resolved.txt
+  awk &#x27;{print $1&quot; | ip | range-203.0.113.0/24&quot;}&#x27; live-ips.txt
+} | sort -u &gt; inventory.txt
+wc -l inventory.txt
+head -10 inventory.txt</code></pre>
+<p>This inventory is the input to scope boundary mapping. Anything not in this file does not get tested.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>A wildcard subdomain resolves to a third-party SaaS IP: the name is in scope, the provider&#x27;s infrastructure is not. Test the app behavior, not the provider.</li>
+<li>crt.sh floods the list with CDN certificate names: filter to names that resolve and match the scoped domain.</li>
+<li>The CIDR range is huge (a /16): do not sweep it blindly. Ask the program which parts are actually theirs, and start with the hosts your other sources already named.</li>
+<li>The mobile app pins certificates: proxying its traffic needs a rooted test device or repackaging, and repackaging may violate the program&#x27;s app testing rules. Read the mobile testing section of the policy first.</li>
+<li>An API host from the app is a generic cloud endpoint (e.g. a firebaseio or S3 URL): the program&#x27;s data there may be in scope but the platform is not. Confirm with the program before touching shared infrastructure.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Discovery inside the scope stalls: pivot on what you have (certificate hashes, ASN neighbors, web archives) but keep every pivot target inside the scope lines.</li>
+<li>The scope looks smaller than the company&#x27;s real footprint: document the gap precisely (acquired domains, rebrands) and ask the program to expand scope. Precise asks get yeses.</li>
+<li>A discovered asset is clearly the program&#x27;s but unlisted: gray list, ask in writing, do not test meanwhile.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Passive discovery (subfinder, crt.sh, amass passive) is invisible to the target; the defender sees nothing.</li>
+<li>Ping sweeps and liveness checks do touch the target: keep them inside the authorized range and at polite rates, exactly as the policy allows.</li>
+<li>Defenders should expect hunters to enumerate everything the scope implies; a scope that implies a /16 will get a /16&#x27;s worth of attention. Scope narrowly if you want narrow testing.</li>
+<li>Keep the inventory file: it is your proof of what you considered in scope if anyone asks later.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>subfinder documentation: https://github.com/projectdiscovery/subfinder</li>
+<li>OWASP Amass documentation: https://github.com/owasp-amass/amass</li>
+<li>dnsx documentation: https://github.com/projectdiscovery/dnsx</li>
+<li>httpx documentation: https://github.com/projectdiscovery/httpx</li>
+<li>apktool documentation: https://ibotpeaches.github.io/Apktool/</li>
+<li>HackerOne scope documentation: https://docs.hackerone.com</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

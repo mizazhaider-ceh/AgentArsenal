@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-crypto-challenges-rsa-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-crypto-challenges-rsa-attacks</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">90/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF crypto challenge provides RSA parameters (n,</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-crypto-challenges.html">ctf-crypto-challenges</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-crypto-challenges.html">ctf-crypto-challenges</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ctf-crypto-challenges.html">ctf-crypto-challenges</a> <a href="ctf-web-challenges.html">ctf-web-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>CyberChef</td><td>latest</td></tr></tbody></table><p>RSA in CTFs is never attacked mathematically in the hard sense; it is attacked through implementation mistakes the challenge author planted: tiny exponents, shared moduli, factorable n, small private exponents, and broadcast encryption. This sub-skill covers the authorized attack checklist in the order that solves the most challenges per minute, with working Python for each and RsaCtfTool as the automation backstop. Scope is CTF competitions and lab exercises only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Parse the parameters: n, e, c (and any extra: multiple ciphertexts,</li>
+<p>multiple moduli, leaked bits, signatures).</p>
+<li>Try the instant wins: small-e root when m^e &lt; n, trivial factoring</li>
+<p>when n is small.</p>
+<li>Check cross-challenge gcd: shared primes across challenges or</li>
+<p>services are the most common multi-part CTF RSA flaw.</p>
+<li>Try common modulus (same n, coprime e values) with the extended</li>
+<p>Euclidean attack.</p>
+<li>Try Wiener&#x27;s attack when d may be small (e large relative to n).</li>
+<li>Try Hastad broadcast when the same message went to 3+ recipients</li>
+<p>with e = 3.</p>
+<li>Run RsaCtfTool with --private and let it try the long tail.</li>
+<li>Decrypt, convert int to bytes, and check the flag format.</li>
+</ol>
+<h2>1. Small exponent root attack</h2>
+<p>When e is small (3, 5, 7) and the message is short, c = m^e may be smaller than n, so no modular reduction happened and m is the integer e-th root of c.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+def iroot(k, c):
+    &quot;&quot;&quot;Integer k-th root via binary search.&quot;&quot;&quot;
+    lo, hi = 0, 1 &lt;&lt; ((c.bit_length() // k) + 1)
+    while lo &lt; hi:
+        mid = (lo + hi) // 2
+        if mid**k &lt; c: lo = mid + 1
+        else: hi = mid
+    return lo
+
+n = 0x...; e = 3; c = 0x...
+m = iroot(e, c)
+if pow(m, e) == c:
+    flag = m.to_bytes((m.bit_length() + 7) // 8, &quot;big&quot;)
+    print(&quot;recovered:&quot;, flag)
+else:
+    print(&quot;no small-e root: reduction happened, try other attacks&quot;)</code></pre>
+<p>Also try when e = 3 and c is only slightly above n: small multiples (c + k*n for small k) may be perfect cubes; loop k up to a few million.</p>
+<h2>2. Factoring weak moduli</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+import math, random
+
+def pollard_rho(n):
+    if n % 2 == 0: return 2
+    while True:
+        c = random.randrange(1, n)
+        f = lambda x: (x*x + c) % n
+        x = y = 2; d = 1
+        while d == 1:
+            x = f(x); y = f(f(y))
+            d = math.gcd(abs(x-y), n)
+        if d != n: return d
+
+n = 0x...
+p = pollard_rho(n); q = n // p
+print(&quot;p =&quot;, hex(p)); print(&quot;q =&quot;, hex(q))
+phi = (p-1)*(q-1)
+d = pow(e, -1, phi)
+m = pow(c, d, n)
+print(m.to_bytes((m.bit_length()+7)//8, &quot;big&quot;))</code></pre>
+<p>Pollard Rho factors CTF-sized weak moduli (under ~120 digits, or primes with special form) in seconds. For close primes (q near p), Fermat&#x27;s method is faster: <code>a = isqrt(n)</code>, then check <code>a*a - n</code> for perfect squares. For n under ~512 bits with no structure, try factordb or online factor databases before local ECM.</p>
+<h2>3. Cross-challenge gcd: shared primes</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+import math
+# collect every n from the challenge set (and past challenges by the same author)
+moduli = [0x..., 0x..., 0x...]
+for i in range(len(moduli)):
+    for j in range(i+1, len(moduli)):
+        g = math.gcd(moduli[i], moduli[j])
+        if g != 1:
+            print(f&quot;shared prime between n[{i}] and n[{j}]: {hex(g)}&quot;)
+            p = g; q = moduli[i] // p
+            # now decrypt challenge i with phi = (p-1)*(q-1)</code></pre>
+<p>This is the highest-value check in multi-RSA CTF sets: one gcd loop breaks every challenge sharing a prime. Always run it before deeper attacks.</p>
+<h2>4. Common modulus attack</h2>
+<p>Same n, same message, two coprime exponents e1, e2: recover m without factoring.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+def egcd(a, b):
+    if b == 0: return (a, 1, 0)
+    g, x, y = egcd(b, a % b)
+    return (g, y, x - (a // b) * y)
+
+n = 0x...; e1 = 0x10001; e2 = 0x...; c1 = 0x...; c2 = 0x...
+_, a, b = egcd(e1, e2)   # a*e1 + b*e2 = 1
+# handle negative exponents with modular inverse
+m1 = pow(c1, a, n) if a &gt; 0 else pow(pow(c1, -1, n), -a, n)
+m2 = pow(c2, b, n) if b &gt; 0 else pow(pow(c2, -1, n), -b, n)
+m = (m1 * m2) % n
+print(m.to_bytes((m.bit_length()+7)//8, &quot;big&quot;))</code></pre>
+<h2>5. Wiener&#x27;s small-d attack</h2>
+<p>When d &lt; n^0.25 (and e is large), the continued fraction convergents of e/n reveal d.</p>
+<pre><code class="language-bash"># RsaCtfTool has Wiener built in; fastest path:
+python3 RsaCtfTool.py --publickey pub.pem --uncipherfile cipher.bin --private</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+# Sketch: convergents of e/n, test each denominator as candidate d
+from fractions import Fraction
+def convergents(num, den):
+    convs = []
+    while den:
+        q = num // den
+        convs.append(q)
+        num, den = den, num - q*den
+    # build convergents k/d from partial quotients, test each d:
+    # check (e*d - 1) % k == 0 and phi candidate factors n
+    return convs
+# (full Wiener test per candidate: standard 30-line implementation)</code></pre>
+<p>In practice use RsaCtfTool or owiener; hand-rolling Wiener is error prone under time pressure.</p>
+<h2>6. Hastad broadcast attack</h2>
+<p>Same message encrypted with e = 3 under three (or e) different moduli: combine with CRT, then take the integer cube root.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+def crt(remainders, moduli):
+    M = 1
+    for m in moduli: M *= m
+    x = 0
+    for r, m in zip(remainders, moduli):
+        Mi = M // m
+        x += r * Mi * pow(Mi, -1, m)
+    return x % M
+
+ns = [0x..., 0x..., 0x...]   # distinct moduli
+cs = [0x..., 0x..., 0x...]   # same plaintext, e=3
+c_crt = crt(cs, ns)          # equals m^3 exactly (m^3 &lt; n1*n2*n3)
+m = iroot(3, c_crt)          # iroot from section 1
+print(m.to_bytes((m.bit_length()+7)//8, &quot;big&quot;))</code></pre>
+<p>Generalizes to e ciphertexts for exponent e. Padding (even PKCS#1 v1.5) usually defeats this; CTF broadcast challenges use textbook RSA.</p>
+<h2>7. RsaCtfTool automation</h2>
+<pre><code class="language-bash"># Private key recovery attempts (tries Wiener, small-e, Fermat, etc.)
+python3 RsaCtfTool.py -n 0xC0FFEE --uncipher 0xDEADBEEF -e 65537 --private
+
+# With a public key file and encrypted file
+python3 RsaCtfTool.py --publickey pubkey.pem --uncipherfile flag.enc --private
+
+# Pastctf-style: dump all parameters it can find
+python3 RsaCtfTool.py --publickey pubkey.pem --dumpkey</code></pre>
+<p>Run it in the background while you hand-check the fast attacks; it covers the long tail (Boneh-Durfee, partial key exposure, CRT faults) that is slow to hand-roll.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>e = 65537 and n strong: textbook attacks fail; the flaw is in the</li>
+<p>protocol (chosen ciphertext, padding oracle, faulty signing) or the key handling (private exponent leaked in source).</p>
+<li>The challenge gives a signature, not a ciphertext: verify-then-</li>
+<p>forge attacks (Bleichenbacher e=3 forgery, small-e signature malleability) apply instead of decryption attacks.</p>
+<li>Multiple test cases share one n with related messages</li>
+<p>(m2 = m1 + delta): Franklin-Reiter / Coppersmith related-message attack; RsaCtfTool covers it.</p>
+<li>n is prime (not a product): then &quot;RSA&quot; is just modular</li>
+<p>exponentiation; solve the discrete log if the group is small, or the challenge is about something else entirely.</p>
+<li>The challenge hands you d or phi directly in a &quot;broken&quot; keygen:</li>
+<p>verify the values satisfy e*d = 1 mod phi before trusting them; authors plant red herrings.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Nothing factors and no parameter flaw found: re-read the source</li>
+<p>for the real flaw (bad PRNG like <code>random</code> module, nonce reuse in a custom scheme, private key in an error message).</p>
+<li>RsaCtfTool runs long with no result: cap it and pivot; CTF RSA is</li>
+<p>designed to fall to one clean idea, not to a 2-hour lattice attack.</p>
+<li>Partial private key bits leaked: Coppersmith needs enough known</li>
+<p>bits (about a quarter); fewer bits means the intended path is different.</p>
+<li>The modulus is huge (4096-bit) and e is 65537: look for</li>
+<p>implementation flaws (CRT fault injection via a signing oracle, timing) rather than math.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders prevent all of this with boring correctness: 2048-bit+ moduli from a vetted CSPRNG, e = 65537, OAEP padding (never textbook RSA), unique keys per system, and no private key material in logs or errors. Detection of weak RSA in the wild uses certificate and key scanning (small keys, shared primes across devices, CVE-2008-0166 Debian weak keys). Code review flags <code>random</code> for key generation, hardcoded primes, and textbook <code>pow(m, e, n)</code> encryption. CTF RSA trains the exact recognition skills needed to spot these in audits.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1552 (Unsecured Credentials) for key handling flaws.</li>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm).</li>
+<li>CWE-330 (Use of Insufficiently Random Values).</li>
+<li>CWE-798 (Use of Hard-coded Credentials).</li>
+<li>RsaCtfTool: https://github.com/RsaCtfTool/RsaCtfTool</li>
+<li>&quot;Twenty Years of Attacks on the RSA Cryptosystem&quot; (Boneh): the</li>
+<p>survey behind the checklist.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

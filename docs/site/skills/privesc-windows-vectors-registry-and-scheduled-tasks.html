@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-windows-vectors-registry-and-scheduled-tasks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-windows-vectors-registry-and-scheduled-tasks</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized Windows privilege escalation turns to the</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-windows-vectors.html">privesc-windows-vectors</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-windows-vectors.html">privesc-windows-vectors</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-windows.html">privesc-windows</a> <a href="privesc-windows-vectors-service-misconfigurations.html">privesc-windows-vectors-service-misconfigurations</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>winpeas</td><td>2024</td></tr><tr><td>PowerShell</td><td>7.4</td></tr><tr><td>accesschk</td><td>6.1</td></tr></tbody></table><p>The registry and the Task Scheduler both launch programs with elevated privileges on triggers you can predict: logon, boot, and schedules. On an authorized engagement, writable autorun keys, the AlwaysInstallElevated policy pair, and weakly permissioned scheduled tasks are reliable SYSTEM paths. This sub-skill covers enumerating both stores, verifying writability by hand, exploiting the classic patterns, and staying within scope. Authorized penetration tests, labs, and CTFs only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate autorun locations: HKLM and HKCU Run and RunOnce keys, plus the Startup folders.</li>
+<li>Check the AlwaysInstallElevated values in both the HKLM and HKCU policy hives.</li>
+<li>Enumerate scheduled tasks with <code>schtasks /query /v</code> and PowerShell, noting the run-as account and the executed binary.</li>
+<li>Verify writability by hand: <code>reg query</code> plus ACL inspection on keys, <code>icacls</code> on task files and binaries.</li>
+<li>Exploit the simplest candidate: plant an autorun entry, build an MSI for AlwaysInstallElevated, or hijack a writable task binary.</li>
+<li>Trigger or wait for execution, confirm SYSTEM, clean up the planted entries, and document everything.</li>
+</ol>
+<h2>1. Registry autorun enumeration</h2>
+<p>Check every standard autorun location and note which ones you can write to.</p>
+<pre><code class="language-powershell">reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
+reg query HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</code></pre>
+<p>Example output shape: value entries like <code>Updater  REG_SZ  C:\Program Files\App\updater.exe</code>. HKLM entries run for all users at logon with elevated context when triggered by privileged logons; HKCU entries run as the hive owner. Check the ACL on each key:</p>
+<pre><code class="language-powershell">accesschk.exe -kqv &quot;HKLM\Software\Microsoft\Windows\CurrentVersion\Run&quot;</code></pre>
+<p>If your user can write to an HKLM Run key, add a value pointing at your payload; it executes at the next privileged logon. Also check the Startup folders:</p>
+<pre><code class="language-powershell">dir &quot;C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp&quot;
+icacls &quot;C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp&quot;</code></pre>
+<h2>2. AlwaysInstallElevated</h2>
+<p>When both policy values are set to 1, Windows Installer runs MSI packages as SYSTEM for any user.</p>
+<pre><code class="language-powershell">reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
+reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated</code></pre>
+<p>Example output shape: both queries returning <code>AlwaysInstallElevated  REG_DWORD  0x1</code> means the vector is live. The authorized-lab technique is generating an MSI that executes your payload (the classic pattern adds a local user or writes a marker), then installing it:</p>
+<pre><code class="language-cmd">msiexec /quiet /i C:\Users\app\pwn.msi</code></pre>
+<p>The install runs as SYSTEM. This is configuration abuse, not exploitation of a bug, which is why it appears so often in labs and why defenders must explicitly disable it via Group Policy.</p>
+<h2>3. Writable registry paths read by privileged software</h2>
+<p>Beyond autoruns, privileged software reads many registry values: service image paths, installer source lists, and application settings.</p>
+<pre><code class="language-powershell">reg query HKLM\SYSTEM\CurrentControlSet\Services\VulnService /v ImagePath
+accesschk.exe -kqv &quot;HKLM\System\CurrentControlSet\Services\VulnService&quot;</code></pre>
+<p>If a service&#x27;s registry key is writable, you can rewrite its <code>ImagePath</code> exactly like a weak service ACL, then restart the service. The same logic applies to any privileged program that reads a path or command line from a writable key. Enumerate candidate keys with WinPEAS registry checks and verify each by hand.</p>
+<h2>4. Scheduled task enumeration</h2>
+<p>List tasks with full verbosity and filter for privileged run-as accounts.</p>
+<pre><code class="language-cmd">schtasks /query /fo LIST /v | findstr /i /c:&quot;TaskName&quot; /c:&quot;Run As User&quot; /c:&quot;Task To Run&quot;</code></pre>
+<pre><code class="language-powershell">Get-ScheduledTask | Get-ScheduledTaskInfo | Select-Object TaskName, LastRunTime, NextRunTime</code></pre>
+<p>Example output shape: a task named <code>\Maintenance\Cleanup</code> with <code>Run As User: NT AUTHORITY\SYSTEM</code> and <code>Task To Run: C:\Scripts\cleanup.bat</code>. The task XML lives under <code>C:\Windows\System32\Tasks</code>; check its ACL and the ACL of everything it executes:</p>
+<pre><code class="language-powershell">icacls &quot;C:\Windows\System32\Tasks\Maintenance\Cleanup&quot;
+icacls &quot;C:\Scripts\cleanup.bat&quot;
+icacls &quot;C:\Scripts&quot;</code></pre>
+<h2>5. Exploiting weak scheduled tasks</h2>
+<p>The patterns mirror services: writable script, writable directory in the path, or weak task file ACL.</p>
+<pre><code class="language-powershell">icacls &quot;C:\Scripts\cleanup.bat&quot;</code></pre>
+<p>Example: <code>BUILTIN\Users:(I)(M)</code> on the batch file means you can overwrite it. Plant a payload that writes proof, then trigger the task if permitted or wait for the schedule:</p>
+<pre><code class="language-cmd">schtasks /run /tn &quot;\Maintenance\Cleanup&quot;
+type C:\Users\app\proof.txt</code></pre>
+<p>If the task file itself is writable, you can rewrite the task definition to point at your binary, though this is noisier. Tasks may also store credentials (<code>schtasks /query /v</code> shows the run-as user; the password is stored encrypted but the task runs with those rights regardless). Always restore the original script after success.</p>
+<h2>6. Startup folder planting</h2>
+<p>The Startup folders execute at logon with the logging-on user&#x27;s privileges, which is a persistence and escalation path when administrators log on.</p>
+<pre><code class="language-powershell">icacls &quot;C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp&quot;
+dir &quot;$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup&quot;</code></pre>
+<p>A writable common Startup folder means your payload runs at the next logon of any user, including administrators. On an engagement this is typically a persistence technique after you already hold privilege, but in labs with auto-logon administrators it is a direct escalation. Verify with the AutoLogon registry values whether privileged logons actually occur.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>AlwaysInstallElevated requires both hives set to 1; one hive alone is not exploitable, so check both before investing time.</li>
+<li>Scheduled tasks with <code>Run only when user is logged on</code> will not fire for SYSTEM contexts you expect; read the full task settings, not just the trigger summary.</li>
+<li>Task Scheduler on hardened hosts requires exact XML validity; hand-editing task files often breaks the task, so prefer overwriting the executed binary over rewriting the task.</li>
+<li>Registry Run keys under HKLM need an actual privileged logon to fire; on servers where nobody logs on interactively, the payload may never execute within the engagement window.</li>
+<li><code>schtasks /run</code> demands the right to run the task on demand; if denied, you must wait for the schedule, so note <code>NextRunTime</code> in your plan.</li>
+<li>MSI installs via AlwaysInstallElevated are logged loudly in the Application log; there is no quiet variant, so align with the rules of engagement.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If autoruns and tasks are clean, check logon scripts assigned via Group Policy or the userinit value: <code>reg query &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon&quot; /v Userinit</code>.</li>
+<li>When the task binary is not writable but its directory is, plant a DLL alongside it for hijacking or drop a same-named binary earlier in a writable PATH entry.</li>
+<li>If you can write to a task file but not execute on demand, combine with social timing: schedule-adjacent maintenance windows in labs often trigger tasks predictably.</li>
+<li>Pivot to the sibling sub-skills when this class is clean: service misconfigurations follow identical writable-component logic.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders should monitor Run key writes (Sysmon Event ID 13), alert on new scheduled tasks (Event ID 4698) and task modifications, enforce AlwaysInstallElevated disabled via Group Policy, and audit ACLs on task files and script directories. From the authorized tester side, registry and task modifications are among the most logged actions on Windows; every write lands in the Security log, so document exact timestamps and restore every planted value during cleanup.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1547.001 (Registry Run Keys / Startup Folder), T1053.005 (Scheduled Task), T1548.002 (Bypass User Account Control)</li>
+<li>Microsoft schtasks docs: https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks</li>
+<li>Autoruns reference locations: https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns</li>
+<li>HackTricks registry section: https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation#registry</li>
+<li>AlwaysInstallElevated background: https://learn.microsoft.com/en-us/windows/win32/msi/alwaysinstallelevated</li>
+<li>Sysmon Event ID 13 (registry value set): https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

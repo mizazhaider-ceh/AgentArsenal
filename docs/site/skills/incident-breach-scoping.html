@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-breach-scoping</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-breach-scoping</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you must determine the full blast radius of a</p><h2>Sub-skills</h2><ul><li><a href="incident-breach-scoping-data-exfiltration-assessment.html">incident-breach-scoping-data-exfiltration-assessment</a> <span class="muted">v1.0.0: Use when you must determine what data left the network</span></li><li><a href="incident-breach-scoping-initial-access-identification.html">incident-breach-scoping-initial-access-identification</a> <span class="muted">v1.0.0: Use when you must find how the attacker first got in</span></li><li><a href="incident-breach-scoping-lateral-movement-mapping.html">incident-breach-scoping-lateral-movement-mapping</a> <span class="muted">v1.0.0: Use when you must trace the attacker&#x27;s path between</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="threat-intel.html">threat-intel</a> <a href="incident-containment-playbooks.html">incident-containment-playbooks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Wireshark</td><td>4.2</td></tr><tr><td>Zeek</td><td>7.0</td></tr><tr><td>osquery</td><td>5.12.1</td></tr><tr><td>Velociraptor</td><td>0.72</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Breach scoping answers the questions eradication depends on: how the attacker got in, where they went, what they touched, and what they took. Scope too narrow and eradication misses persistence; scope too wide and the business bleeds from overreaction. This skill covers the disciplined scoping method: initial access, lateral movement mapping, account and privilege inventory, persistence sweep, and exfiltration assessment, ending in a scope statement with explicit confidence. Never start eradication on a partially scoped incident; you will just teach the attacker to hide better.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Freeze the current understanding: patient zero, entry vector</li>
+<p>hypothesis, known-affected hosts.</p>
+<li>Identify initial access: the first attacker-controlled event with</li>
+<p>evidence.</p>
+<li>Map lateral movement: every host-to-host path with timestamps.</li>
+<li>Inventory compromised accounts, their privileges, and what each</li>
+<p>could reach.</p>
+<li>Sweep all in-scope hosts for persistence mechanisms.</li>
+<li>Assess data staging and exfiltration: what was collected, how</li>
+<p>much left, through which channel.</p>
+<li>Write the scope statement: confirmed, likely, and excluded, each</li>
+<p>with confidence.</p>
+<li>Get the commander&#x27;s sign-off before eradication starts.</li>
+</ol>
+<h2>1. Initial access identification</h2>
+<p>Work backward from the first known malicious event to the entry:</p>
+<pre><code class="language-bash"># On patient zero: what is the earliest attacker artifact
+# Check web logs for exploitation, auth logs for logins, mail for phishing
+grep -E &quot;40[034]|50[0-9]&quot; /var/log/apache2/access.log | head -20
+grep -iE &quot;accepted|failed password&quot; /var/log/auth.log | head -20
+
+# VPN and remote access logs: first contact often comes from here
+grep &quot;198.51.100.23&quot; /var/log/vpn.log | head -5</code></pre>
+<pre><code class="language-bash"># EDR hunt: first execution of attacker tooling fleet-wide (Velociraptor pattern)
+# Query: processes whose hash matches the known malware, ordered by start time</code></pre>
+<p>Common entry vectors and their evidence:</p>
+<ul>
+<li>Phishing: email gateway logs, user reports, macro execution in</li>
+<p>EDR (T1566).</p>
+<li>VPN or remote service: auth logs showing a new IP, impossible</li>
+<p>travel, or off-hours access (T1078).</p>
+<li>Web exploitation: WAF and access logs with injection strings,</li>
+<p>followed by a web shell file on disk (T1190).</p>
+<li>Supply chain or trusted relationship: harder; look for the</li>
+<p>earliest anomalous vendor connection.</p>
+</ul>
+<p>The initial-access-identification sub-skill covers each vector&#x27;s evidence in depth. The entry vector determines the eradication: patch the vulnerability, fix the phishing path, or rotate the abused trust.</p>
+<h2>2. Lateral movement mapping</h2>
+<p>For each compromised host, find where the attacker went next:</p>
+<pre><code class="language-bash"># SSH lateral movement: outbound SSH from a server is suspicious
+grep -E &quot;Accepted&quot; /var/log/auth.log | grep -v &quot;from 10.0.0&quot; | head -20
+
+# Windows: network logons (type 3) and RDP (type 10) from the host
+# Event 4624, LogonType 10 = RDP; correlate source IPs</code></pre>
+<pre><code class="language-bash"># EDR: process ancestry showing remote execution tools
+# Hunt for: psexec, wmiexec, smbexec, winrs, ssh with odd parents
+osqueryi &quot;SELECT name, cmdline, parent FROM processes WHERE name IN (&#x27;psexec.exe&#x27;,&#x27;wmic.exe&#x27;,&#x27;ssh&#x27;) AND parent NOT IN (&#x27;explorer.exe&#x27;,&#x27;sshd&#x27;);&quot;</code></pre>
+<pre><code class="language-bash"># Network: Zeek conn.log for host-to-host flows on admin ports
+zeek -r capture.pcap
+cat conn.log | zeek-cut id.orig_h id.resp_h id.resp_p proto \
+  | awk &#x27;$3==445 || $3==3389 || $3==22&#x27; | sort | uniq -c | sort -rn | head -20</code></pre>
+<p>Example output shape:</p>
+<pre><code>12 192.168.30.15 192.168.30.20 445 tcp
+ 8 192.168.30.15 192.168.30.31 3389 tcp</code></pre>
+<p>Build the movement graph: nodes are hosts, edges are timestamped connections with the technique (SMB, RDP, SSH, WMI). The lateral-movement-mapping sub-skill details the per-protocol evidence. Every edge is a host that joins the scope until proven clean.</p>
+<h2>3. Account and privilege inventory</h2>
+<pre><code class="language-bash"># Which accounts did the attacker use or create
+# New accounts around the intrusion window
+awk -F: &#x27;{print $1}&#x27; /etc/passwd &gt; passwd-now.txt
+# ... compare against a known-good baseline or backup
+
+# Recent password changes and new SSH keys
+find /home /root -name &quot;authorized_keys&quot; -newermt &quot;2026-10-20&quot; 2&gt;/dev/null
+grep -E &quot;password changed&quot; /var/log/auth.log | head
+
+# Privilege: what could each compromised account reach
+# Domain admins, cloud roles, database grants, VPN groups</code></pre>
+<pre><code class="language-powershell"># Windows: recent account creation (event 4720) and privilege grants (4728)
+Get-WinEvent -FilterHashtable @{LogName=&#x27;Security&#x27;; ID=4720} -MaxEvents 20 |
+  Select-Object TimeCreated, Message</code></pre>
+<p>For each compromised account record: first malicious use, last malicious use, privilege level, and reachable systems. An attacker with a domain admin hash for six hours has a different scope than one with a helpdesk account for six minutes. Assume the attacker used every privilege the account had.</p>
+<h2>4. Persistence sweep</h2>
+<p>Check every in-scope host for every persistence mechanism; the attacker&#x27;s return ticket hides here:</p>
+<pre><code class="language-bash"># Linux persistence checklist
+crontab -l; ls -la /etc/cron.d/ /var/spool/cron/crontabs/ 2&gt;/dev/null
+systemctl list-unit-files --state=enabled | grep -vE &quot;^\s*(ssh|network)&quot; | head -20
+ls -la /etc/systemd/system/ | grep -v &quot;^d&quot;
+grep -r &quot;authorized_keys&quot; /home /root --include=&quot;authorized_keys&quot; -l 2&gt;/dev/null
+ls -la /etc/ld.so.preload 2&gt;/dev/null; cat /etc/ld.so.preload 2&gt;/dev/null</code></pre>
+<pre><code class="language-powershell"># Windows persistence checklist
+Get-ScheduledTask | Where-Object {$_.State -ne &#x27;Disabled&#x27;} | Select-Object TaskName, Author
+Get-ItemProperty &quot;HKLM:\Software\Microsoft\Windows\CurrentVersion\Run&quot;
+Get-WinEvent -FilterHashtable @{LogName=&#x27;System&#x27;; ID=7045} -MaxEvents 20</code></pre>
+<p>Compare against baselines: a scheduled task authored by SYSTEM last week is normal; one authored yesterday by a compromised account is not. Unknown persistence found during the sweep expands the scope to every host sharing the deployment mechanism (GPO, config management, golden image).</p>
+<h2>5. Data staging and exfiltration assessment</h2>
+<pre><code class="language-bash"># Staging: large archives created near the intrusion window
+find /tmp /var/tmp /dev/shm -type f -size +100M -newermt &quot;2026-10-20&quot; -ls 2&gt;/dev/null
+# Look for archiving tools in EDR process history: 7z, rar, tar with odd args
+
+# Exfiltration: Zeek conn.log byte counts to external hosts
+cat conn.log | zeek-cut id.orig_h id.resp_h orig_bytes resp_bytes \
+  | awk &#x27;$1 ~ /^192\.168\./&#x27; | sort -k4 -rn | head -10</code></pre>
+<p>Example output shape:</p>
+<pre><code>192.168.30.15  198.51.100.23  1240  2214592512</code></pre>
+<p>2.2 GB outbound to an external host from a database server is the exfiltration under assessment. Correlate the volume with the staged archive size and the database size: matching sizes confirm what left. The data-exfiltration-assessment sub-skill covers channel identification (DNS tunneling, cloud uploads, email) and volume analysis.</p>
+<h2>6. The scope statement</h2>
+<pre><code>## Scope statement: INC-2026-1042 (v3, 2026-10-23 14:00 UTC)
+Entry: VPN credential stuffing against svc-deploy (high confidence)
+Confirmed compromised: web-03, db-01, ws-11 (forensic evidence)
+Likely affected: file-02 (SMB session from web-03, under review)
+Excluded: mail-01, vpn-01 (no attacker indicators in 30d of logs)
+Accounts: svc-deploy, ops (both disabled, rotated)
+Data: customer database (2.1 GB) exfiltrated 2026-10-21 04:20 UTC (high)
+  Legal notified: yes, 2026-10-23 11:00 UTC
+Persistence found: cron on web-03 (removed), none elsewhere (sweep complete)
+Blind spots: VPN logs before 2026-07-25 unavailable (retention)
+Eradication: APPROVED by &lt;commander&gt; at 14:05 UTC</code></pre>
+<p>Version the scope statement; it changes as the investigation progresses, and the version history shows due diligence. The commander&#x27;s sign-off on the scope is what authorizes eradication to begin.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The attacker used legitimate admin tools (LOLBins), leaving</li>
+<p>little malware to find. Scope from behavior (logons, network flows, data movement), not from binaries.</p>
+<li>Cloud and on-prem are both involved. Scope both; attackers do</li>
+<p>not respect your architecture diagrams. Check cloud role assumptions alongside host logons.</p>
+<li>The initial access vector is never found. Scope from the</li>
+<p>earliest confirmed activity and say so; &quot;entry unknown, earliest activity X&quot; is an honest scope, and it drives the eradication to cover all plausible entries.</p>
+<li>Dwell time is months, not hours. Expand log sources to backups</li>
+<p>and archives; the scope statement must carry the uncertainty of the early window.</p>
+<li>The scope includes a third party (vendor, customer). Involve</li>
+<p>legal before sharing findings; your scope statement may become a notification letter.</p>
+<li>Evidence was destroyed (logs wiped, hosts reimaged by</li>
+<p>well-meaning admins). Scope from what survives plus network telemetry; mark destroyed areas as unknown, not clean.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Scoping reveals data theft with regulatory notification clocks.</li>
+<p>Escalate to legal and executive leadership immediately with the facts as known; do not wait for perfect certainty.</p>
+<li>The attacker is still active and scoping is incomplete. Freeze</li>
+<p>eradication, extend containment, and brief the commander on the tradeoff between speed and completeness.</p>
+<li>Scope keeps expanding with each sweep. Consider engaging</li>
+<p>external forensics; a second team scopes in parallel while yours holds containment.</p>
+<li>The scope implicates an insider. Restrict the scope statement&#x27;s</li>
+<p>distribution, involve HR and legal per policy, and keep the investigation team small.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Scoping is where defenders learn the true shape of their exposure: every lateral path the attacker used is a segmentation failure, every reused credential is a hygiene failure, every blind spot is a logging failure. The peacetime program that makes scoping fast is network diagrams that match reality, credential inventories, EDR everywhere, and log retention longer than the attacker&#x27;s dwell time. After the incident, each scope finding becomes architecture work: the SMB path gets segmented, the service account gets scoped down, the log gap gets a forwarder.</p>
+<h2>Key references</h2>
+<ul>
+<li>NIST SP 800-61 Rev. 2: https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final</li>
+<li>MITRE ATT&amp;CK (technique per scope element):</li>
+<p>https://attack.mitre.org/</p>
+<li>SANS FOR508 (scoping and lateral movement):</li>
+<p>https://www.sans.org/cyber-security-courses/advanced-incident-response-threat-hunting-training/</p>
+<li>Zeek documentation: https://docs.zeek.org/</li>
+<li>Companion skills: incident-containment-playbooks,</li>
+<p>incident-timeline-analysis (this repo)</p>
+<li>Wireshark documentation: https://www.wireshark.org/docs/</li>
+<li>CISA incident reporting guidance: https://www.cisa.gov/report</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

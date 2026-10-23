@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: osint-username-enumeration-sherlock-workflows</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>osint-username-enumeration-sherlock-workflows</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to run Sherlock effectively as part of a</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="osint-username-enumeration.html">osint-username-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="osint-username-enumeration.html">osint-username-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-username-enumeration.html">osint-username-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Sherlock</td><td>0.14.0</td></tr><tr><td>curl</td><td>8.5</td></tr></tbody></table><p>Sherlock checks a username against hundreds of sites and reports where it exists. It is fast, but raw output is noisy and its site list decays as platforms change. This sub-skill is the operator&#x27;s manual: installation, tuning, proxy use, custom site lists, and output parsing that turns a scan into triage-ready data. Public profiles only, within an authorized investigation.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Install or update Sherlock and note the version for the case file.</li>
+<li>Prepare the handle list: primary plus variants from the parent</li>
+<p>skill.</p>
+<li>Run with JSON output, a sane timeout, and a case-named output</li>
+<p>file.</p>
+<li>Parse the JSON into a triage table: claimed, unclaimed, errors.</li>
+<li>Manually verify claimed hits, starting with high-value platforms.</li>
+<li>Re-run failures and errors separately with longer timeouts.</li>
+<li>Save the command line, version, date, and raw output with the case.</li>
+<li>Schedule a re-scan only if the case justifies it.</li>
+</ol>
+<h2>1. Installation and updating</h2>
+<pre><code class="language-bash"># From source keeps the site list current
+git clone https://github.com/sherlock-project/sherlock.git
+cd sherlock
+pip install -r requirements.txt
+python3 sherlock --version
+
+# Or the packaged install
+pip install sherlock-project
+sherlock --version</code></pre>
+<p>The site list lives in a JSON data file in the repo. Before a case, pull the latest and diff it so you know what changed:</p>
+<pre><code class="language-bash">cd sherlock &amp;&amp; git pull
+git log --oneline -3 -- sherlock_project/resources/data.json</code></pre>
+<p>Note the commit hash in the case file. A site added last week can explain a hit that an older scan missed, and reproducibility matters if results go to a report.</p>
+<h2>2. Tuned scan commands</h2>
+<pre><code class="language-bash"># Standard case scan: JSON output, 20s timeout, named output
+sherlock darkcoder \
+  --json --output ./cases/2026-10-darkcoder/sherlock.json \
+  --timeout 20 \
+  --print-found
+
+# Multiple handles in one invocation
+sherlock darkcoder darkcoder123 d4rkcoder \
+  --json --output ./cases/2026-10-darkcoder/sherlock-variants.json
+
+# Sensitive case: route through Tor to avoid leaking the investigation
+# (Tor must be running locally first)
+sherlock darkcoder --proxy socks5://127.0.0.1:9050 --timeout 40
+
+# Limit to specific sites for a focused re-check
+sherlock darkcoder --site GitHub --site Reddit --site Twitter</code></pre>
+<p>Example JSON output shape (one entry):</p>
+<pre><code class="language-json">{
+  &quot;GitHub&quot;: {
+    &quot;url_main&quot;: &quot;https://github.com/&quot;,
+    &quot;url_user&quot;: &quot;https://github.com/darkcoder&quot;,
+    &quot;status&quot;: {&quot;claimed&quot;: &quot;Claimed&quot;},
+    &quot;http_status&quot;: 200,
+    &quot;response_time_s&quot;: 0.84
+  }
+}</code></pre>
+<p>Parse it into a triage list:</p>
+<pre><code class="language-bash">python3 - &lt;&lt;&#x27;EOF&#x27;
+import json
+with open(&#x27;sherlock.json&#x27;) as f:
+    data = json.load(f)
+claimed, failed = [], []
+for site, info in data.items():
+    s = info.get(&#x27;status&#x27;, {}).get(&#x27;claimed&#x27;)
+    if s == &#x27;Claimed&#x27;:
+        claimed.append((site, info[&#x27;url_user&#x27;]))
+    elif &#x27;http_status&#x27; not in info:
+        failed.append(site)
+print(f&quot;CLAIMED ({len(claimed)}):&quot;)
+for site, url in sorted(claimed):
+    print(f&quot;  [ ] {site}: {url}&quot;)
+print(f&quot;\nERRORS/NO-RESPONSE ({len(failed)}): {&#x27;, &#x27;.join(sorted(failed)[:10])}&quot;)
+EOF</code></pre>
+<p>The checkbox format turns directly into the verification checklist for the parent skill&#x27;s manual review step.</p>
+<h2>3. Custom site lists</h2>
+<p>When the case involves niche platforms (a gaming forum, a regional site), add them:</p>
+<pre><code class="language-json">// custom-sites.json: Sherlock site entry format
+{
+  &quot;ExampleForum&quot;: {
+    &quot;url&quot;: &quot;https://forum.example.com/user/{}&quot;,
+    &quot;urlMain&quot;: &quot;https://forum.example.com/&quot;,
+    &quot;username_claimed&quot;: &quot;darkcoder&quot;,
+    &quot;username_unclaimed&quot;: &quot;noonewouldeverusethis12345&quot;
+  }
+}</code></pre>
+<p>Sherlock determines &quot;claimed&quot; by comparing the response against the known-claimed and known-unclaimed probes, so include both. Test the custom entry against a known existing and a known missing account before trusting it in a case.</p>
+<h2>4. Handling errors and retries</h2>
+<p>Network errors are not negatives. Separate them:</p>
+<pre><code class="language-bash"># Re-run only the sites that errored, with a longer timeout
+# (extract the failed site names from the triage script, then:)
+sherlock darkcoder --site GitHub --site Reddit --timeout 60</code></pre>
+<p>Common error causes: the site rate-limited the scan (slow down, add delays), the site changed its URL scheme (check the data file or the site manually), or the exit node is blocked (rotate Tor circuits with a new identity). Never interpret a timeout as &quot;account does not exist&quot; in the case file; mark it unknown and verify manually.</p>
+<h2>5. Repeat scans and change detection</h2>
+<pre><code class="language-bash"># Monthly re-scan for long-running cases, diffed against the baseline
+sherlock darkcoder --json --output ./cases/2026-10-darkcoder/sherlock-nov.json
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import json
+old = json.load(open(&#x27;sherlock.json&#x27;))
+new = json.load(open(&#x27;sherlock-nov.json&#x27;))
+def claimed(d):
+    return {s for s, i in d.items() if i.get(&#x27;status&#x27;, {}).get(&#x27;claimed&#x27;) == &#x27;Claimed&#x27;}
+added = claimed(new) - claimed(old)
+removed = claimed(old) - claimed(new)
+print(&quot;New accounts since baseline:&quot;, sorted(added) or &quot;none&quot;)
+print(&quot;Removed accounts since baseline:&quot;, sorted(removed) or &quot;none&quot;)
+EOF</code></pre>
+<p>New accounts mid-investigation can indicate the subject is active; removed accounts may indicate cleanup. Both are worth a case note.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>A site returns &quot;claimed&quot; for every username (broken detection).</li>
+<p>Test with the unclaimed probe; if it also claims, exclude the site and report the data file issue upstream.</p>
+<li>The handle contains characters Sherlock rejects. Check the</li>
+<p>regex in the data file; some sites allow dots or unicode that the generic check mishandles, so verify those manually.</p>
+<li>Corporate network blocks or throttles the scan. Run from the</li>
+<p>approved research network or VM per your organization&#x27;s policy, not by circumventing controls.</p>
+<li>The scan itself notifies the subject (some platforms log profile</li>
+<p>views or the scan triggers alerts). For sensitive cases, prefer the Tor path and discuss operational security with the case owner before scanning.</p>
+<li>Sherlock&#x27;s site count differs between installs. The pip package</li>
+<p>lags the git repo; for cases, always use git HEAD and record the commit.</p>
+<li>JSON output is malformed after an interrupted run. Re-run rather</li>
+<p>than hand-editing; partial JSON silently drops sites.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Scan results will support legal or disciplinary action. Freeze the</li>
+<p>exact command, version, commit hash, and raw output; do not re-scan casually afterward, since results may change.</p>
+<li>You discover the handle is tied to criminal infrastructure in a</li>
+<p>threat intel case. Preserve the output immediately and escalate to the case owner before any further active checking.</p>
+<li>A custom site you added is actually behind authentication or</li>
+<p>returns private data. Remove it from the case workflow; Sherlock is for public profile existence checks only.</p>
+<li>The volume of hits suggests an organized identity (dozens of</li>
+<p>consistent accounts). Escalate the correlation phase: this is now a full footprint mapping, not a quick check.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Sherlock scans are visible to sites as rapid sequential profile requests from one IP, which is why operational security (Tor, rate limits, approved research infrastructure) matters for sensitive cases. Defensively, the lesson is handle hygiene from the parent skill: unique handles per context, no bio cross-links, and periodic self-scans with this exact workflow to see what an investigator would find. If your organization runs these checks on personnel or vendors, document the authorization clearly; the tool is neutral, the context is everything.</p>
+<h2>Key references</h2>
+<ul>
+<li>Sherlock project and site data file:</li>
+<p>https://github.com/sherlock-project/sherlock</p>
+<li>Maigret (deeper checks, sibling workflow):</li>
+<p>https://github.com/soxoj/maigret</p>
+<li>Parent skill methodology: osint-username-enumeration (this repo)</li>
+<li>Bellingcat verification guidance:</li>
+<p>https://www.bellingcat.com/resources/</p>
+<li>Tor Project (for sensitive-case routing):</li>
+<p>https://www.torproject.org/</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

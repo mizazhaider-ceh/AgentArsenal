@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-subdomain-takeover</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-subdomain-takeover</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized reconnaissance finds DNS records pointing at third-party services and you need to check for subdomain takeover. Covers how takeovers happen (dangling CNAMEs, expired cloud resources, unclaimed service endpoints), DNS record analysis to find candidates, fingerprinting cloud and SaaS services for claimable states, safe verification methods that prove the issue without harm, and documenting findings for in-scope bug bounty programs. Authorized targets only, only test domains you are permitted to test.</p><h2>Sub-skills</h2><ul><li><a href="recon-subdomain-takeover-claiming-and-verification.html">recon-subdomain-takeover-claiming-and-verification</a> <span class="muted">v1.0.0: Use when a takeover candidate is fingerprinted as claimable on an in-scope target and the program permits verification. Covers the permissio</span></li><li><a href="recon-subdomain-takeover-cloud-service-fingerprints.html">recon-subdomain-takeover-cloud-service-fingerprints</a> <span class="muted">v1.0.0: Use when DNS analysis has produced takeover candidates and you need to fingerprint the cloud or SaaS service behind each one. Covers fetchin</span></li><li><a href="recon-subdomain-takeover-dns-record-analysis.html">recon-subdomain-takeover-dns-record-analysis</a> <span class="muted">v1.0.0: Use when you have an in-scope subdomain list and need to find takeover candidates in the DNS records. Covers enumerating CNAME, A, and NS re</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-subdomain-enumeration.html">recon-subdomain-enumeration</a> <a href="recon-active.html">recon-active</a> <a href="dns-enumeration.html">dns-enumeration</a> <a href="bugbounty-methodology.html">bugbounty-methodology</a> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>dig</td><td>9.18</td></tr><tr><td>subjack</td><td>0.0</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>httpx</td><td>1.6</td></tr></tbody></table><p>Subdomain takeover happens when a DNS record points at a third-party service that no longer serves the organization: a deleted cloud bucket, an expired app deployment, an unclaimed SaaS endpoint. Whoever claims the dangling endpoint controls content on the organization&#x27;s subdomain. This skill covers finding and safely verifying takeovers during authorized recon: DNS analysis, service fingerprinting, and proof methods that stay inside the rules. Only test domains you are authorized to test, and never claim a resource outside a program that explicitly permits takeover verification.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the authorization covers takeover verification; some programs restrict claiming even on in-scope names.</li>
+<li>Enumerate DNS records for every in-scope subdomain: CNAME, A, NS, and their targets.</li>
+<li>Flag dangling records: CNAMEs to unresolvable or unclaimed services, A records to expired cloud IPs, NS to dead nameservers.</li>
+<li>Fingerprint each candidate: fetch it and match the response against known service fingerprints.</li>
+<li>Verify safely: prove claimability with the least invasive method the program allows (often a benign proof file, never defacement).</li>
+<li>Document: the DNS record, the fingerprint match, the verification evidence, timestamps.</li>
+<li>Report per the program&#x27;s process; do not hold a claimed resource longer than needed.</li>
+</ol>
+<h2>1. How takeovers happen</h2>
+<p>The pattern is always the same: the organization stops using a service but leaves the DNS pointing at it.</p>
+<ul>
+<li>Dangling CNAME: <code>blog.example.com</code> CNAMEs to <code>example-blog.herokuapp.com</code>, but the Heroku app was deleted. Anyone can create an app with that name and serve content on <code>blog.example.com</code>.</li>
+<li>Expired cloud resource: an A record points at an Elastic IP or cloud VM that was released; the IP is now assigned to someone else, or available to claim.</li>
+<li>Unclaimed SaaS: CNAMEs to services like Shopify, Tumblr, or status-page providers where the account was never created or was deleted.</li>
+<li>Dead nameservers: NS records pointing at nameservers that no longer exist or are claimable at a registrar.</li>
+</ul>
+<p>The impact ranges from phishing on a trusted domain to cookie theft on sibling subdomains. Programs pay well for takeovers because the proof is unambiguous.</p>
+<h2>2. DNS record analysis for candidates</h2>
+<pre><code class="language-bash"># CNAME targets for every confirmed subdomain
+while read -r sub; do
+  target=$(dig +short &quot;$sub&quot; CNAME @1.1.1.1 | head -1)
+  [ -n &quot;$target&quot; ] &amp;&amp; echo &quot;$sub -&gt; $target&quot;
+done &lt; confirmed.txt &gt; cnames.txt
+wc -l cnames.txt
+head -10 cnames.txt</code></pre>
+<p>Example output shape:</p>
+<pre><code>blog.example.com -&gt; example-blog.herokuapp.com.
+shop.example.com -&gt; shops.myshopify.com.
+docs.example.com -&gt; example-docs.s3-website-us-east-1.amazonaws.com.</code></pre>
+<p>Flag candidates: CNAME targets containing known-takeoverable service domains (herokuapp, s3-website, azurewebsites, github.io, tumblr, shopify where unclaimed), targets that do not resolve at all (NXDOMAIN on the CNAME target means the service endpoint is gone), and A records pointing at cloud IP ranges worth checking for reassignment. Also check NS records for delegated subdomains whose nameservers are dead.</p>
+<h2>3. Fingerprinting the candidate</h2>
+<p>Fetch the candidate subdomain and match the response against known service fingerprints:</p>
+<pre><code class="language-bash">curl -sk -m 15 https://blog.example.com/ -o body.html -w &quot;%{http_code}\n&quot;
+head -c 600 body.html
+# Known fingerprints (examples):
+# Heroku: &quot;No such app&quot; / &quot;There&#x27;s nothing here, yet.&quot;
+# GitHub Pages: &quot;There isn&#x27;t a GitHub Pages site here.&quot;
+# S3 website: &quot;NoSuchBucket&quot; with BucketName in XML
+# Tumblr: &quot;There&#x27;s nothing here.&quot; with tumblr branding
+grep -oiE &quot;no such app|there isn&#x27;t a github pages site|NoSuchBucket|there&#x27;s nothing here&quot; body.html</code></pre>
+<p>A fingerprint match means the service endpoint is unclaimed and almost certainly claimable. No match does not clear the candidate: services change their error pages, so also check for NXDOMAIN on the CNAME target and try the service&#x27;s own lookup (e.g. the S3 bucket name in the CNAME either exists or it does not).</p>
+<h2>4. Safe verification</h2>
+<p>Verification proves you could claim it. Rules:</p>
+<ul>
+<li>Only verify when the program permits takeover proof. Some programs accept fingerprint plus NXDOMAIN evidence without claiming; prefer that when offered.</li>
+<li>If claiming is allowed: claim it, place one benign proof file (a text file with your handle and the date, or the program&#x27;s requested canary), screenshot, then release or hand over per the program&#x27;s instructions. Never deface, never serve phishing content, never keep it.</li>
+<li>Never claim a resource you cannot release, and never claim outside the exact in-scope name.</li>
+<li>For expired cloud IPs: do not spin up infrastructure on a stranger&#x27;s former IP to &quot;prove&quot; anything beyond what the program asks. DNS plus fingerprint evidence usually suffices.</li>
+</ul>
+<p>Document everything with timestamps: the dig output, the fingerprint match, the proof file, the release. Takeover reports live or die on this evidence chain.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The CNAME target resolves but serves a generic parking page: the service may be claimed by someone else already, or the organization may have repointed sloppily. Check the page carefully; a squatter&#x27;s page is a different finding (report it as suspicious, do not fight them for it).</li>
+<li>Fingerprint matches but the service says the name is taken: someone claimed it first. Document the dangling record anyway; the organization still needs to fix the DNS.</li>
+<li>The program forbids claiming entirely: submit with DNS evidence plus fingerprint match. Many programs accept this as a complete report.</li>
+<li>Wildcard DNS plus a dangling CNAME: verify the specific name, not the wildcard; the wildcard may mask the record.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Fingerprint is inconclusive: check the CNAME target&#x27;s resolution (NXDOMAIN is strong evidence), query the service&#x27;s API for the endpoint name where one exists, and look for historical screenshots in web archives showing the service previously served there.</li>
+<li>Multiple dangling records on one program: report each separately with its own evidence; takeovers are per-endpoint findings.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Audit your DNS regularly for dangling records: every CNAME to a service you no longer use is a takeover waiting to happen. Automate the check.</li>
+<li>Monitor certificate transparency for your subdomains: a new certificate issued for a dangling name by someone else means the takeover already happened.</li>
+<li>When decommissioning a service, remove the DNS record first, then delete the service. The order matters: DNS pointing at a live-then-deleted service is the vulnerability window.</li>
+<li>For cloud resources with DNS pointing at them, use elastic IPs or reserved addresses you control, or accept the risk explicitly with monitoring.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>subjack: https://github.com/haccer/subjack</li>
+<li>HackerOne takeover guidance: https://docs.hackerone.com</li>
+<li>Bugcrowd researcher documentation: https://docs.bugcrowd.com</li>
+<li>OWASP Testing Guide: https://owasp.org/www-project-web-security-testing-guide/</li>
+<li>MITRE ATT&amp;CK T1590.002 DNS: https://attack.mitre.org/techniques/T1590/002/</li>
+<li>Can I take over XYZ (service fingerprint list): https://github.com/EdOverflow/can-i-take-over-xyz</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

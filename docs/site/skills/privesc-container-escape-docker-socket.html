@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-container-escape-docker-socket</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-container-escape-docker-socket</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing container deployments for exposed Docker</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-container-escape.html">privesc-container-escape</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-container-escape.html">privesc-container-escape</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-container-escape.html">privesc-container-escape</a> <a href="privesc-container-escape-privileged-containers.html">privesc-container-escape-privileged-containers</a> <a href="linux-container-hardening.html">linux-container-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Docker</td><td>25.0</td></tr><tr><td>auditd</td><td>3.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>The Docker socket (<code>/var/run/docker.sock</code>) is the control plane of the Docker daemon, and mounting it into a container hands that container the keys to the host. This is one of the most commonly found high-severity container misconfigurations in assessments, usually introduced so a container can &quot;manage its siblings&quot; (CI agents, monitoring sidecars, portainer-style dashboards). This sub-skill is deliberately written at the assessment and detection level: it teaches you to find the misconfiguration, rate its impact accurately, recognize its abuse in defender telemetry, and recommend fixes. It does not provide an exploitation procedure. The finding maps to MITRE ATT&amp;CK T1611 (Escape to Host), and in almost every rating scheme it lands at critical because daemon access is equivalent to host root.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>From inside each in-scope container, check for the socket&#x27;s presence: <code>ls -la /var/run/docker.sock</code> and socket entries in <code>/proc/self/mountinfo</code>.</li>
+<li>From the orchestrator side (where authorized), audit workload definitions for socket mounts: compose files, <code>docker inspect</code> output, pod specs, and Helm charts.</li>
+<li>Classify the exposure: socket mounted read-write versus read-only, and which container user can reach it.</li>
+<li>Rate the impact: a reachable daemon socket is host-level compromise by design, so document it as critical with the reasoning spelled out.</li>
+<li>Check defender telemetry for signs of prior abuse: daemon logs, auditd socket activity, and unexpected container lifecycle events.</li>
+<li>Write the remediation: remove the mount, replace the use case with a least-privilege pattern, and consider rootless Docker.</li>
+<li>Verify the fix: re-run the detection checks and confirm the socket is no longer reachable from any workload container.</li>
+</ol>
+<h2>1. Detecting a mounted socket from inside the container</h2>
+<p>The check is simple and safe: look for the socket file and confirm how it is mounted. This is read-only inspection, appropriate even in production-adjacent assessments.</p>
+<pre><code class="language-bash">ls -la /var/run/docker.sock 2&gt;/dev/null
+cat /proc/self/mountinfo | grep -i &quot;docker.sock&quot;
+stat -c &quot;%a %U %G&quot; /var/run/docker.sock 2&gt;/dev/null</code></pre>
+<p>Example output shape: <code>srw-rw---- 1 root docker /var/run/docker.sock</code> plus a mountinfo line binding the host&#x27;s <code>/var/run/docker.sock</code> into the container confirms the exposure. Note the permissions: if the container user is in the <code>docker</code> group (or runs as root), the socket is usable to that user. Record the mount mode (rw versus ro) and the container UID, because both feed the impact rating.</p>
+<h2>2. Auditing workload definitions for socket mounts</h2>
+<p>Finding one exposed container is a finding; finding the pattern across a fleet is a systemic issue. Audit the definitions that create containers.</p>
+<pre><code class="language-bash">grep -rn &quot;docker.sock&quot; /opt/stacks /srv/docker ~/docker 2&gt;/dev/null | head -20
+docker inspect $(docker ps -q) 2&gt;/dev/null | grep -B3 -A3 &quot;docker.sock&quot; | head -30</code></pre>
+<p>Example output shape: compose files with <code>- /var/run/docker.sock:/var/run/docker.sock</code> under <code>volumes</code>, or <code>docker inspect</code> output showing a bind mount with source <code>/var/run/docker.sock</code>. In Kubernetes the equivalent is a <code>hostPath</code> volume pointing at the socket (rare, but check pod specs the same way). Common legitimate-seeming reasons you will see in comments: CI runners building images, log shippers, and management UIs. Each one needs a safer replacement pattern, which is covered in remediation.</p>
+<h2>3. What the finding means for impact rating</h2>
+<p>Rate this finding on what the socket permits, not on what you demonstrated. The Docker daemon API allows starting containers with arbitrary host mounts and privileged flags, which means anyone who can talk to the daemon can obtain host root. That makes a reachable socket a critical, host-level finding in virtually every assessment, equivalent in impact to a privileged container. Adjust the rating only on reachability facts: a socket mounted read-only into a container still permits most daemon operations (the read-only flag does not restrict the API the way people assume), while a socket reachable only by a non-root container user without group access is a lower but still high finding. State the rating rationale explicitly: &quot;daemon API access equals host root, therefore critical&quot;, so the report reader does not have to infer it.</p>
+<h2>4. How defenders detect socket abuse</h2>
+<p>You assess the misconfiguration, but you should also know what its abuse looks like in telemetry, both to check for prior compromise and to advise the blue team.</p>
+<pre><code class="language-bash">journalctl -u docker.service --since &quot;7 days ago&quot; | grep -iE &quot;create|start|exec&quot; | tail -20
+ausearch -k docker_socket 2&gt;/dev/null | tail -10
+docker events --since 24h 2&gt;/dev/null | head -20</code></pre>
+<p>Indicators of abuse include: containers created with host path mounts or <code>--privileged</code> that do not match any known deployment pipeline, <code>docker exec</code> sessions at unusual hours, images pulled from untrusted registries just before a suspicious container start, and auditd records of processes inside containers connecting to the socket. A standing detection is an auditd watch on the socket path plus alerting on daemon API calls that create privileged containers or mount host paths. Recommend the client add both if they are missing.</p>
+<h2>5. Remediation patterns</h2>
+<p>Every remediation here follows the same principle: the workload almost never needs the full daemon API, so replace the socket with the narrowest mechanism that serves the real use case.</p>
+<ul>
+<li>Remove the mount entirely where it was added for convenience rather than need; most &quot;management&quot; containers work fine against a remote, authenticated daemon API instead.</li>
+<li>For CI image builds, use rootless builders (Kaniko, Buildah in rootless mode, buildkit with user namespaces) instead of Docker-in-Docker with the host socket.</li>
+<li>For monitoring, use the daemon&#x27;s metrics endpoint or a read-only socket proxy that whitelists safe API paths rather than exposing the raw socket.</li>
+<li>For management UIs, run them outside the container fleet or behind mutual TLS to a dedicated daemon, never with the host socket mounted.</li>
+<li>Adopt rootless Docker where the workload allows it: a compromised rootless daemon is contained to an unprivileged user, which collapses the impact of a socket exposure from host root to user-level.</li>
+<li>Enforce the rule in policy: admission control or CI linting that fails any workload definition mounting <code>/var/run/docker.sock</code> (or any <code>hostPath</code> to daemon sockets) before it deploys.</li>
+</ul>
+<h2>6. Verifying the fix</h2>
+<p>Remediation is not done when the config changes; it is done when the detection checks come back clean. Re-run the inside-container socket check on every affected workload after redeploy, re-grep the workload definitions, and confirm in <code>docker inspect</code> output that no bind mount references the socket. Where a socket proxy was introduced, verify from inside the container that privileged operations are rejected while the intended read operations succeed. Record the before and after state in the report so the fix is auditable.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The socket may be mounted at a nonstandard path inside the container (for example <code>/tmp/docker.sock</code> with <code>DOCKER_HOST</code> set); check the <code>DOCKER_HOST</code> environment variable and any custom mount paths, not just the default location.</li>
+<li>Docker contexts and TCP listeners (<code>tcp://0.0.0.0:2375</code> without TLS) are the network equivalent of a mounted socket; audit daemon flags and <code>daemon.json</code> for exposed TCP ports as part of the same finding family.</li>
+<li>Podman and containerd expose their own sockets (<code>/run/podman/podman.sock</code>, containerd&#x27;s API socket); the same assessment logic applies, so do not stop at Docker&#x27;s path on mixed runtimes.</li>
+<li>A socket mounted read-only still exposes the full daemon API in practice; do not downgrade the finding on the read-only flag alone, because the API does not honor mount-level read-only the way file access does.</li>
+<li>In Docker Desktop, the socket inside containers reaches a Linux VM&#x27;s daemon, not the physical host; the impact is still critical for that VM and everything in it, so describe the actual boundary reached.</li>
+<li>Some agents legitimately need limited daemon access (backup tools listing containers); route these through a filtering proxy and document the allowlist rather than granting the raw socket.</li>
+<li>Socket presence in a build container that is ephemeral and destroyed after each CI run is still a finding, but its exploitability window is short; note the lifetime in the rating rationale.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If assessment telemetry shows signs of prior socket abuse (unknown privileged containers, off-hours daemon activity), escalate immediately: the engagement shifts from misconfiguration assessment to suspected compromise, and the client needs incident response, not just a report finding.</li>
+<li>If the socket is reachable from an internet-facing workload, raise the severity narrative: the attack path no longer requires an initial container foothold, and the client should treat it as an emergency fix.</li>
+<li>If the same socket mount pattern appears across many workloads, escalate from single finding to systemic control failure and recommend policy-level enforcement rather than per-workload fixes.</li>
+<li>If scope does not include the host or orchestrator, document the finding from the container-side evidence alone and mark orchestrator-level verification as a recommended follow-up rather than exceeding scope.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>The defender&#x27;s view of this misconfiguration has three layers. At deploy time, CI linting and admission controllers (OPA Gatekeeper, Kyverno) should reject any workload mounting the Docker socket or equivalent daemon sockets. At runtime, Falco rules can alert on unexpected processes connecting to the socket or on containers started with host mounts and privileged flags outside the deployment pipeline. At the host level, auditd watches on <code>/var/run/docker.sock</code> plus daemon audit logging give a forensic trail of who talked to the daemon and what they asked it to do. The single most effective control is the deploy-time deny rule: no workload definition containing a daemon socket mount should ever reach a cluster.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1611 Escape to Host: https://attack.mitre.org/techniques/T1611/</li>
+<li>Docker daemon security documentation: https://docs.docker.com/engine/security/</li>
+<li>Docker daemon socket and API security: https://docs.docker.com/engine/api/</li>
+<li>Rootless Docker documentation: https://docs.docker.com/engine/security/rootless/</li>
+<li>CIS Docker Benchmark (socket and daemon checks): https://www.cisecurity.org/cis-benchmarks/</li>
+<li>Falco container runtime threat detection: https://falco.org/docs/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-breach-scoping-data-exfiltration-assessment</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-breach-scoping-data-exfiltration-assessment</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you must determine what data left the network</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-breach-scoping.html">incident-breach-scoping</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-breach-scoping.html">incident-breach-scoping</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-breach-scoping.html">incident-breach-scoping</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Zeek</td><td>7.0</td></tr><tr><td>Wireshark</td><td>4.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>jq</td><td>1.7</td></tr></tbody></table><p>Data exfiltration assessment determines what the attacker stole: what data, how much, through which channel, and when. It is the finding with the biggest consequences, because it triggers legal notification duties and defines the incident&#x27;s real cost. This sub-skill covers finding staged data, measuring what left, naming the channel, and writing the assessment at the confidence level the evidence supports. Authorized investigations only; handle any recovered data as sensitively as the original.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Look for staging: archives and collections created in the</li>
+<p>incident window.</p>
+<li>Measure outbound volumes to external hosts with Zeek and flow</li>
+<p>data.</p>
+<li>Identify the channel per transfer: HTTPS, DNS, cloud, email.</li>
+<li>Correlate staged sizes with transferred sizes and source data</li>
+<p>sizes.</p>
+<li>Determine what the data was: database dumps, file shares,</li>
+<p>mailboxes.</p>
+<li>Establish the exfiltration window: first to last byte.</li>
+<li>Write the assessment: what, how much, how, when, confidence.</li>
+<li>Hand the assessment to legal for notification decisions.</li>
+</ol>
+<h2>1. Finding staged data</h2>
+<pre><code class="language-bash"># Large files created in the incident window, in temp and odd locations
+find /tmp /var/tmp /dev/shm /var/www -type f -size +50M \
+  -newermt &quot;2026-10-20&quot; -ls 2&gt;/dev/null
+
+# Archives by extension, anywhere recently modified
+find / -type f \( -name &quot;*.7z&quot; -o -name &quot;*.rar&quot; -o -name &quot;*.zip&quot; \
+  -o -name &quot;*.tar.gz&quot; \) -newermt &quot;2026-10-20&quot; -ls 2&gt;/dev/null | head -20
+
+# EDR: archiving tool executions in the window
+# Hunt: 7z.exe, rar.exe, tar with output to temp paths</code></pre>
+<p>Example output shape:</p>
+<pre><code>1843200 -rw-r--r-- 1 www-data www-data 2214592512 Oct 21 04:02 /tmp/.x/dump.sql.gz</code></pre>
+<p>A 2.1 GB gzip in a hidden temp directory, created minutes before a large outbound transfer, is staging. Note the owner (<code>www-data</code>): it tells you which compromised account did the collecting. Do not delete staged files; they are evidence of what was taken, and sometimes the only copy of the exact dataset.</p>
+<h2>2. Measuring outbound volume</h2>
+<pre><code class="language-bash"># Zeek conn.log: top external destinations by bytes sent (resp_bytes from our side is received;
+# orig_bytes is what WE sent -&gt; exfil direction for internal orig_h)
+zeek-cut id.orig_h id.resp_h id.resp_p proto orig_bytes &lt; conn.log | \
+  awk &#x27;$1 ~ /^192\.168\./ &amp;&amp; $5 &gt; 1000000&#x27; | \
+  sort -k5 -rn | head -15</code></pre>
+<p>Example output shape:</p>
+<pre><code>192.168.30.15  198.51.100.23  443  tcp  2214592512
+192.168.30.15  198.51.100.23  443  tcp  184320</code></pre>
+<p>One host sent 2.1 GB to one external IP on 443. Compare with the staged file size (2,214,592,512 bytes): an exact or near-exact match confirms the staged archive is what left. Also check the baseline: what does this host normally send to external hosts. A database server that normally sends kilobytes and suddenly sent gigabytes needs no baseline to be suspicious, but the baseline strengthens the report.</p>
+<pre><code class="language-bash"># Firewall or NetFlow equivalent when Zeek is unavailable
+# Top talkers by bytes in the incident window (flow log format varies)</code></pre>
+<h2>3. Identifying the channel</h2>
+<pre><code class="language-bash"># HTTPS exfil: check the TLS SNI and certificate in the capture
+tshark -r capture.pcap -Y &quot;tls.handshake.extensions_server_name&quot; \
+  -T fields -e tls.handshake.extensions_server_name | sort | uniq -c | sort -rn | head
+
+# DNS tunneling: high query volumes, long labels, odd record types
+zeek-cut query qtype_name &lt; dns.log | \
+  awk &#x27;length($1) &gt; 50&#x27; | head -10
+# Also: dns.log request counts per host
+zeek-cut id.orig_h query &lt; dns.log | awk &#x27;{print $1}&#x27; | sort | uniq -c | sort -rn | head -5</code></pre>
+<p>Channel signatures:</p>
+<ul>
+<li>HTTPS to an attacker IP or fresh domain: the common case,</li>
+<p>blends with normal traffic.</p>
+<li>DNS tunneling: thousands of queries with long encoded labels,</li>
+<p>often TXT or NULL records; slow but firewall-friendly.</p>
+<li>Cloud uploads: traffic to storage endpoints (S3, Drive,</li>
+<p>Dropbox) from servers that never upload there normally.</p>
+<li>Email: messages with large attachments from compromised</li>
+<p>mailboxes; check the mail gateway logs.</p>
+</ul>
+<pre><code class="language-bash"># Cloud upload check: which external storage endpoints did internal hosts reach
+zeek-cut id.orig_h id.resp_h &lt; conn.log | \
+  awk &#x27;$2 ~ /(s3|blob|storage|dropbox|drive)/&#x27; | sort | uniq -c | head</code></pre>
+<p>Name the channel precisely; &quot;exfiltrated over HTTPS to 198.51.100.23&quot; directs the blocking and the legal analysis differently than &quot;exfiltrated via DNS tunneling&quot;.</p>
+<h2>4. Correlating staged, transferred, and source sizes</h2>
+<pre><code class="language-python"># exfil-correlate.py: tie the numbers together
+staged = 2214592512      # /tmp/.x/dump.sql.gz
+transferred = 2214592512 # Zeek orig_bytes to 198.51.100.23
+db_size = 2281701376     # production database size
+
+print(f&quot;staged == transferred: {staged == transferred}&quot;)
+print(f&quot;staged/db ratio: {staged/db_size:.2%}&quot;)
+# staged == transferred: True
+# staged/db ratio: 97.06%</code></pre>
+<p>A 97 percent ratio with matching transfer size means: the attacker dumped nearly the whole database and got it all out. That is the sentence leadership and legal need. If the numbers do not match, say what is unexplained: partial transfer, compression differences, or multiple staged files.</p>
+<h2>5. Determining what the data was</h2>
+<pre><code class="language-bash"># Identify the staged archive&#x27;s contents without extracting sensitive data widely
+7z l /tmp/.x/dump.sql.gz 2&gt;/dev/null | head -20
+# For a SQL dump: read the table names from the head, not the rows
+zcat /tmp/.x/dump.sql.gz | grep -m5 &quot;CREATE TABLE&quot;
+
+# File share staging: list names and sizes, not contents
+tar tzf /tmp/.x/docs.tgz 2&gt;/dev/null | head -30</code></pre>
+<p>Example output shape:</p>
+<pre><code>CREATE TABLE `customers` (
+CREATE TABLE `orders` (
+CREATE TABLE `payment_methods` (</code></pre>
+<p>Table names define the notification scope: customers plus payment methods is a different legal event than orders alone. Work with the data owner to classify; the analyst names the tables, the business names the sensitivity.</p>
+<h2>6. The exfiltration window</h2>
+<pre><code class="language-bash"># First to last byte: from Zeek with timestamps
+zeek-cut ts id.orig_h id.resp_h orig_bytes &lt; conn.log | \
+  awk &#x27;$2==&quot;192.168.30.15&quot; &amp;&amp; $3==&quot;198.51.100.23&quot;&#x27; | \
+  head -1; \
+zeek-cut ts id.orig_h id.resp_h orig_bytes &lt; conn.log | \
+  awk &#x27;$2==&quot;192.168.30.15&quot; &amp;&amp; $3==&quot;198.51.100.23&quot;&#x27; | \
+  tail -1</code></pre>
+<pre><code>2026-10-21 04:05:11  192.168.30.15  198.51.100.23  1460
+2026-10-21 04:20:13  192.168.30.15  198.51.100.23  2214592512</code></pre>
+<p>Fifteen minutes, 2.1 GB, in the attacker&#x27;s active window from the super-timeline. The window bounds the &quot;when&quot; for notifications and shows whether exfiltration finished (transfer size equals staged size: yes, it finished).</p>
+<h2>7. Writing the assessment</h2>
+<pre><code>## Exfiltration assessment: INC-2026-1042
+What: production customer database (tables: customers, orders, payment_methods)
+How much: 2.1 GB (97% of database by size)
+Channel: HTTPS POST to 198.51.100.23:443 (fresh IP, no prior contact)
+Window: 2026-10-21 04:05 to 04:20 UTC (15 minutes)
+Staging: /tmp/.x/dump.sql.gz on web-03 (preserved as evidence)
+Confidence: HIGH (staged size == transferred size, table names confirmed)
+Legal notified: 2026-10-23 11:00 UTC
+Unknowns: whether the attacker also took file shares (no staging found, no anomalous
+  SMB volume observed; monitoring continues)</code></pre>
+<p>State unknowns explicitly. &quot;No evidence of further exfiltration&quot; is honest; &quot;no further exfiltration occurred&quot; is a claim the evidence may not support.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Exfiltration was slow and low-volume (drip over weeks). Volume</li>
+<p>analysis still works aggregated by destination; the window is long and the confidence lower per day.</p>
+<li>The channel was DNS tunneling with no Zeek dns.log. Firewall</li>
+<p>query logs or resolver logs are the fallback; without them, note the visibility gap.</p>
+<li>Staging was cleaned up but the transfer remains in flow data.</li>
+<p>Size-match against source data sizes; the transfer volume plus the source inventory bounds what left.</p>
+<li>The data was encrypted before exfiltration. You cannot name the</li>
+<p>tables from the ciphertext; scope from what the staging host could read and what shrank or was accessed.</p>
+<li>Multiple exfiltration channels in one incident. Assess each</li>
+<p>separately; attackers often use a fast channel for the bulk and a slow one for persistence of access.</p>
+<li>The &quot;exfiltration&quot; was actually a backup to a new destination.</li>
+<p>Verify with the backup team before declaring; false exfiltration alarms burn credibility.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The assessment confirms regulated data left (health,</li>
+<p>financial, personal data under GDPR or similar). Escalate to legal immediately; notification clocks run from discovery, and your assessment is the discovery record.</p>
+<li>The volume suggests the entire dataset is gone. Brief executive</li>
+<p>leadership with the assessment, not a summary of a summary; they need the numbers.</p>
+<li>You cannot determine what was taken (encrypted, cleaned</li>
+<p>staging). Escalate the uncertainty itself: the notification decision may have to assume the worst, and that is legal&#x27;s call with your evidence.</p>
+<li>Exfiltration is ongoing during the assessment. Tell the</li>
+<p>commander at once; killing the channel may be worth burning the investigation&#x27;s stealth.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Exfiltration is the last chance to catch an intrusion, and the detections are well understood: alerts on large outbound transfers to new destinations, DNS query volume anomalies, uploads to unsanctioned cloud storage, and data-loss-prevention rules on the crown jewels. The defender program from this assessment is egress filtering with allow-lists for servers, byte-threshold alerting tuned per host role, and canary data that pages when touched. Every exfiltration that succeeded is a detection that did not exist; build it now, while the channel is fresh in everyone&#x27;s mind.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent scoping workflow: incident-breach-scoping (this repo)</li>
+<li>MITRE ATT&amp;CK exfiltration (T1048, T1041, T1071):</li>
+<p>https://attack.mitre.org/</p>
+<li>Zeek documentation: https://docs.zeek.org/</li>
+<li>Wireshark documentation: https://www.wireshark.org/docs/</li>
+<li>NIST SP 800-61 Rev. 2: https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final</li>
+<li>CISA incident reporting: https://www.cisa.gov/report</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

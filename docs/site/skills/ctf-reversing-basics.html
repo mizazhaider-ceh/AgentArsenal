@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-reversing-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-reversing-basics</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when competing in a CTF reverse engineering challenge,</p><h2>Sub-skills</h2><ul><li><a href="ctf-reversing-basics-deobfuscation.html">ctf-reversing-basics-deobfuscation</a> <span class="muted">v1.0.0: Use when a CTF reversing binary or authorized lab binary is</span></li><li><a href="ctf-reversing-basics-dynamic-debugging.html">ctf-reversing-basics-dynamic-debugging</a> <span class="muted">v1.0.0: Use when dynamically analyzing a CTF reversing binary or an</span></li><li><a href="ctf-reversing-basics-static-analysis-ghidra.html">ctf-reversing-basics-static-analysis-ghidra</a> <span class="muted">v1.0.0: Use when statically analyzing a CTF reversing binary or an</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ghidra-basics.html">ghidra-basics</a> <a href="ctf-pwn-basics.html">ctf-pwn-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Ghidra</td><td>11.3</td></tr><tr><td>GDB</td><td>15.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>binutils</td><td>2.42</td></tr><tr><td>Frida</td><td>16.5</td></tr></tbody></table><p>Reverse engineering is reading a program to understand what it does without source code, usually to find how it validates a flag, hides a secret, or transforms input. This skill covers the standard authorized CTF reversing workflow: quick triage to classify the binary, static analysis in Ghidra to read the logic, dynamic analysis in gdb to observe runtime values, handling the obfuscation tricks CTF authors love, and writing a solver that reproduces the flag. Everything here applies to CTF competitions, lab binaries, and software you have explicit permission to analyze.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Triage the file: <code>file</code>, <code>strings</code>, <code>checksec</code>, and <code>ltrace</code>/<code>strace</code></li>
+<p>to classify it (native, packed, .NET, script bundled, VM).</p>
+<li>Look for the flag format or input prompt in strings; many easy</li>
+<p>challenges end here.</p>
+<li>Open the binary in Ghidra, run auto-analysis, and find <code>main</code> (via</li>
+<p><code>entry</code> -&gt; <code>__libc_start_main</code> argument on Linux).</p>
+<li>Read the decompilation of the input-checking function; rename</li>
+<p>variables and add comments as you understand them.</p>
+<li>Identify the transform: XOR loop, arithmetic, table lookup, hash</li>
+<p>compare, or custom VM; note constants and expected values.</p>
+<li>If static reading stalls, run the binary under gdb, break at the</li>
+<p>check function, and inspect registers and memory with real input.</p>
+<li>Write a Python solver that inverts the transform (reverse the XOR,</li>
+<p>brute force the key, or reimplement the algorithm).</p>
+<li>Validate the solver output matches the expected flag format before</li>
+<p>submitting.</p>
+</ol>
+<h2>1. Triage: file, strings, and behavior</h2>
+<p>Two minutes of triage often classifies the whole challenge.</p>
+<pre><code class="language-bash">file ./rev
+# ELF 64-bit LSB executable, x86-64 ... not stripped  -&gt; native, symbols present
+# ELF 64-bit ... stripped                              -&gt; native, harder
+# PE32 executable                                      -&gt; Windows binary (use wine or a VM)
+
+strings -n 8 ./rev | head -40
+# look for: flag{, &quot;Enter password&quot;, &quot;Correct&quot;, &quot;Wrong&quot;, suspicious base64
+
+checksec ./rev          # protections matter less for reversing, but note PIE for gdb
+
+# watch what it does without reading code
+echo &quot;test&quot; | strace -f -e trace=read,write ./rev 2&gt;&amp;1 | head -30
+ltrace -e strcmp,memcmp ./rev &lt;&lt;&lt; &quot;test&quot;   # reveals comparison calls and args</code></pre>
+<p>If <code>strings</code> shows <code>UPX</code> markers or section names like <code>UPX0</code>/<code>UPX1</code>, the binary is packed: <code>upx -d ./rev -o ./rev_unpacked</code> and restart triage on the unpacked file.</p>
+<h2>2. Ghidra static analysis essentials</h2>
+<p>Ghidra&#x27;s auto-analysis plus decompiler view is the fastest path to understanding.</p>
+<ol>
+<li>Import the binary, let analysis finish, open the CodeBrowser.</li>
+<li>In the Symbol Tree, find <code>main</code> (or <code>entry</code>, then follow the first</li>
+<p>argument of <code>__libc_start_main</code>).</p>
+<li>Read the decompiler panel: look for input functions (<code>scanf</code>, <code>fgets</code>,</li>
+<p><code>read</code>), then the checking logic after them.</p>
+<li>Rename variables (press <code>L</code>): <code>local_28</code> becomes <code>user_input</code>,</li>
+<p><code>local_10</code> becomes <code>expected</code>.</p>
+<li>Follow cross-references (right-click -&gt; References) on interesting</li>
+<p>strings like <code>&quot;Correct!&quot;</code> to land on the check function.</p>
+<li>For data tables, hover to see bytes; right-click -&gt; Data -&gt; Array to</li>
+<p>view a 256 byte substitution table properly.</p>
+</ol>
+<p>Typical flag-check shape in decompilation:</p>
+<pre><code class="language-c">fgets(user_input, 64, stdin);
+for (i = 0; i &lt; 32; i++) {
+    if ((user_input[i] ^ 0x42) != expected[i]) {
+        puts(&quot;Wrong!&quot;);
+        return 1;
+    }
+}
+puts(&quot;Correct!&quot;);</code></pre>
+<p>The solver inverts it: <code>flag[i] = expected[i] ^ 0x42</code>. Read <code>expected</code> from Ghidra&#x27;s listing (the <code>.rodata</code> bytes) and script the rest.</p>
+<h2>3. Dynamic analysis with gdb</h2>
+<p>When static reading is ambiguous (computed values, anti-debug timing), watch the program run.</p>
+<pre><code class="language-bash">gdb -q ./rev
+(gdb) break main
+(gdb) run &lt;&lt;&lt; &quot;AAAAAAAAAAAAAAAA&quot;
+(gdb) break *0x5555555551a9     # address of the check loop from Ghidra
+(gdb) continue
+(gdb) x/32bx $rsi               # inspect the buffer being checked
+(gdb) info registers rax rdi    # watch comparison results
+(gdb) stepi / nexti             # walk the transform instruction by instruction</code></pre>
+<p>Useful patterns: break on <code>strcmp</code>/<code>memcmp</code> and print arguments (<code>x/s $rdi</code>, <code>x/s $rsi</code>) to see exactly what the program compares your input against; this alone solves many challenges. For <code>ptrace</code>-based anti-debugging, patch the check out (set <code>$rax = 0</code> after the ptrace call) or use Frida to hook instead of gdb.</p>
+<h2>4. Common transforms and solver patterns</h2>
+<p>Most CTF reversing challenges use a small set of transforms. Recognize the shape, then invert it.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+# Pattern A: single-byte XOR with constant key
+expected = bytes.fromhex(&quot;...&quot;)  # copied from Ghidra .rodata
+flag = bytes(b ^ 0x42 for b in expected)
+
+# Pattern B: multi-byte repeating XOR key
+key = b&quot;secret&quot;
+flag = bytes(b ^ key[i % len(key)] for i, b in enumerate(expected))
+
+# Pattern C: arithmetic (add/sub with wraparound) -&gt; invert the operation
+flag = bytes(((b - 7) &amp; 0xff) for b in expected)   # program did (c + 7) &amp; 0xff
+
+# Pattern D: position-dependent (i added to each byte)
+flag = bytes(((b - i) &amp; 0xff) for i, b in enumerate(expected))
+
+# Pattern E: substitution table (256 byte S-box in .rodata)
+sbox = bytes([...])              # copied from Ghidra
+inv = bytes(sbox.index(b) for b in range(256))
+flag = bytes(inv[b] for b in expected)</code></pre>
+<p>When the transform is not invertible by inspection (hash compare like <code>sha256(input) == digest</code>), the intended path is usually brute force over a small input space or a keygen-me where you reimplement the algorithm; check the input length first.</p>
+<h2>5. Handling obfuscation</h2>
+<p>CTF authors add layers: packing, string encryption, control-flow flattening, and custom VMs.</p>
+<ul>
+<li>Packed (UPX, custom): unpack first (<code>upx -d</code>); for custom packers,</li>
+<p>let it run to the original entry point in gdb, then dump memory (<code>gcore</code> or <code>dump binary memory</code>).</p>
+<li>Encrypted strings: find the decryption routine (called early, loops</li>
+<p>over <code>.rodata</code>), break after it in gdb, and read the decrypted strings from memory.</p>
+<li>Control-flow flattening: the decompiler shows one giant switch loop;</li>
+<p>focus on the basic blocks that touch input and the success string, ignore dispatcher noise.</p>
+<li>Custom VM: identify the opcode dispatch table and handlers, then either</li>
+<p>reimplement the VM in Python or hook it with Frida to log execution.</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>Stripped Go or Rust binaries: huge, unfamiliar control flow; search</li>
+<p>strings for the prompt text and work backward from there instead of reading <code>main</code>.</p>
+<li>The binary is a PyInstaller bundle: extract with <code>pyinstxtractor</code>,</li>
+<p>then decompile the <code>.pyc</code> with <code>uncompyle6</code> or <code>pycdc</code>.</p>
+<li>.NET assemblies: use <code>ilspyc</code> or dnSpy-style decompilers, not Ghidra;</li>
+<p>the logic is usually plain C#.</p>
+<li>Input is read from argv or a file, not stdin: check <code>main</code>&#x27;s argument</li>
+<p>handling and any <code>fopen</code> calls before assuming interactive input.</p>
+<li>The check runs in a child process or thread: attach gdb with</li>
+<p><code>set follow-fork-mode child</code> or break on <code>clone</code>.</p>
+<li>Anti-debug <code>ptrace</code>: the program exits under gdb; bypass by patching</li>
+<p>the binary, using <code>LD_PRELOAD</code> to fake ptrace, or switching to Frida instrumentation.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Ghidra decompilation is unreadable (flattened or virtualized): drop</li>
+<p>to the disassembly view and trace data flow manually, or switch to dynamic analysis and let the program show you the values.</p>
+<li>The transform uses unknown constants from memory: break in gdb right</li>
+<p>before the check and dump the buffers; runtime values beat static guessing.</p>
+<li>Solver output is close but not the flag format: check for off-by-one</li>
+<p>in the loop bound, an extra newline in expected data, or a final transform applied after the loop you reversed.</p>
+<li>Custom crypto you cannot invert: look for the encryption routine being</li>
+<p>called with known plaintext (chosen-plaintext in the binary itself), which often leaks the key schedule.</p>
+<li>Time is running out: search strings for partial flags, try the</li>
+<p>challenge author&#x27;s handle as XOR key, and check for <code>flag.txt</code> embedded as a resource.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders encounter reversing from the other side: malware analysts use exactly these techniques on hostile binaries, inside isolated sandboxes, with network access cut. For software protection, defenders use the same obfuscation (packing, control-flow flattening, white-box crypto) to raise the cost of analysis, plus license checks and tamper detection. Detection of malicious reversing activity focuses on debugging artifacts (unexpected <code>ptrace</code>, debuggers attached to production processes) and on telemetry from EDR tools watching process memory dumps. The durable lesson: never embed secrets in client-side code; any check the client performs can be read and inverted.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1027 (Obfuscated Files or Information) and T1140</li>
+<p>(Deobfuscate/Decode Files or Information): the obfuscation half.</p>
+<li>CWE-798 (Use of Hard-coded Credentials): embedded secrets and keys.</li>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm): weak</li>
+<p>custom transforms.</p>
+<li>Ghidra documentation: https://ghidra-sre.org/documentation.html</li>
+<li>GDB manual: https://sourceware.org/gdb/documentation/</li>
+<li>&quot;Practical Malware Analysis&quot; (Sikorski and Honig): chapters on static</li>
+<p>and dynamic analysis transfer directly to CTF reversing.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

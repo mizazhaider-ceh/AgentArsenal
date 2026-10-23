@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-duplicate-avoidance-program-specific-dupes</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-duplicate-avoidance-program-specific-dupes</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">90/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hunting a specific in-scope program repeatedly and you need to learn its duplicate personality. Covers building a per-program duplicate profile (known-duplicate classes, sibling payout policy, auto-closed patterns), learning from the program&#x27;s triage history in disclosed reports, adapting your hunting to low-duplicate classes like business logic and access control, and turning a duplicate hit into a sibling-hunting session. Authorized targets only.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bugbounty-duplicate-avoidance.html">bugbounty-duplicate-avoidance</a></div><div class="deps"><span class="kind">requires:</span> <a href="bugbounty-duplicate-avoidance.html">bugbounty-duplicate-avoidance</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bugbounty-duplicate-avoidance-search-techniques.html">bugbounty-duplicate-avoidance-search-techniques</a> <a href="bugbounty-duplicate-avoidance-disclosure-timelines.html">bugbounty-duplicate-avoidance-disclosure-timelines</a> <a href="bugbounty-methodology.html">bugbounty-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Every program has a duplicate personality: the classes everyone reports, the sibling policy they actually enforce, the patterns their tooling auto-closes. Hunters who learn it stop wasting submissions and start aiming where duplicates are rare. This sub-skill covers building and using a per-program duplicate profile. Profile only programs whose scope authorizes your testing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Create a per-program profile file: program-duplicates.md in the program workspace.</li>
+<li>Mine disclosed reports for the program: list bug classes, endpoints, payouts, and duplicate-marked reports.</li>
+<li>Record the sibling policy as observed: per-endpoint payouts versus marked-duplicate siblings.</li>
+<li>List auto-closed or commonly-reported classes from the program brief and triage behavior.</li>
+<li>Aim hunting time at low-duplicate classes: business logic, access control chains, SSRF, second-order issues.</li>
+<li>When you hit a duplicate, log the pattern and immediately hunt its siblings.</li>
+<li>Update the profile after every submission outcome.</li>
+</ol>
+<h2>1. Building the duplicate profile</h2>
+<p>One file per program, updated after every triage outcome:</p>
+<pre><code class="language-markdown"># Example Corp - duplicate profile (updated 2026-10-23)
+
+## Known-duplicate classes (submit only with a twist)
+- Reflected XSS on marketing pages (12 disclosed, all low or duplicate)
+- Missing security headers alone (brief lists as commonly reported)
+- Verbose server banners
+
+## Sibling policy (observed)
+- IDOR: paid per endpoint (3 disclosed, distinct endpoints, all paid)
+- XSS: second report on sibling page marked duplicate once (2026-08)
+
+## Auto-closed / scanner-handled
+- Open S3 buckets (program runs own scanning, auto-duplicates)
+
+## Low-duplicate hunting grounds
+- Business logic in checkout (0 disclosed)
+- API mass assignment (1 disclosed, 2025)
+- SSRF in webhook features (0 disclosed)</code></pre>
+<p>Build it from disclosed reports, the program brief, and your own submission outcomes. Ten minutes of profiling saves hours of duplicate write-ups.</p>
+<h2>2. Reading triage behavior</h2>
+<p>Disclosed reports are the program&#x27;s revealed preferences:</p>
+<ul>
+<li>Payout per class and per endpoint: shows what they value and whether siblings pay.</li>
+<li>Reports marked duplicate with visible originals: shows exactly where their duplicate line sits.</li>
+<li>Time from report to triage per class: fast triage on a class means they care about it; slow triage means it is noise to them.</li>
+<li>Comments from the program: occasionally state the duplicate policy explicitly (&quot;we treat sibling endpoints as one issue&quot;).</li>
+</ul>
+<p>When the brief says &quot;we have received many XSS reports,&quot; believe it: your reflected XSS needs stored impact, an admin context, or a chain to be worth the write-up.</p>
+<h2>3. Aiming where duplicates are rare</h2>
+<p>Duplicate rates are lowest where scanners and casual hunters cannot go:</p>
+<ul>
+<li>Business logic: price, quantity, workflow order, race conditions. Zero disclosed in most programs because each needs manual reasoning.</li>
+<li>Access control chains: two low-severity issues composed into account takeover. The components are known; the composition is original.</li>
+<li>SSRF in specific features: webhooks, importers, PDF generators. Each feature is a fresh attack surface.</li>
+<li>Second-order issues: stored data rendered in a different component (admin panel, export, email template). The injection point is known; the sink is not.</li>
+<li>Mobile-only or API-only endpoints: fewer hunters look there, so disclosure trails are thin.</li>
+</ul>
+<p>This is not about avoiding work; it is about aiming effort where originality lives.</p>
+<h2>4. Turning a duplicate into sibling hunts</h2>
+<p>A duplicate verdict is a map, not a loss:</p>
+<ol>
+<li>Log the duplicate pattern: class, component, endpoint, why it was known.</li>
+<li>List every sibling: same component on other endpoints, same endpoint pattern on other components, same bug class in adjacent features.</li>
+<li>Test the siblings in one focused session, fastest-first.</li>
+<li>For each sibling, run the duplicate check again: some siblings are known, some are not.</li>
+<li>Submit the original ones promptly, referencing the pattern but not the duplicate report&#x27;s details.</li>
+</ol>
+<p>One disclosed IDOR has repeatedly meant five more on sibling endpoints. The hunters who profit from disclosures are the ones who read them as hunting guides.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The program&#x27;s sibling policy is unwritten and inconsistent: default to submitting clearly distinct endpoints with a note, and let triage teach you. Log every outcome to sharpen the profile.</li>
+<li>A class is known-duplicate but you found a genuinely novel variant (new sink, new privilege boundary): submit it as the variant it is, with the novelty stated up front so triage does not reflex-mark it.</li>
+<li>The program changes its duplicate policy: re-profile. Policies tighten as programs mature; what paid per-endpoint last year may be one-issue-now.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Duplicate rate stays high despite profiling: the program may be over-hunted for your style. Rotate to a newer or less popular program where your methodology is fresher.</li>
+<li>You suspect valid findings are marked duplicate to avoid payout: document, stay professional, leave quietly. Reputation markets punish bad programs without your help.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Publish your duplicate policy explicitly: per-endpoint or per-issue, which classes are auto-handled. Explicit policy cuts duplicate submissions more than any tooling.</li>
+<li>When you fix a reported bug, fix and disclose the sibling sweep: every undisclosed sibling is a future report you triage for free.</li>
+<li>Track duplicate rate per class per quarter: rising duplicates in a class mean your disclosure or your automated handling needs work, not that hunters are lazy.</li>
+<li>New programs should expect high duplicate rates early; it decays as the disclosure trail grows. Plan triage capacity accordingly.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>HackerOne Hacktivity: https://hackerone.com/hacktivity</li>
+<li>HackerOne disclosure guidelines: https://docs.hackerone.com</li>
+<li>Bugcrowd researcher documentation: https://docs.bugcrowd.com</li>
+<li>OWASP Testing Guide: https://owasp.org/www-project-web-security-testing-guide/</li>
+<li>MITRE ATT&amp;CK T1596 Search Open Websites/Domains: https://attack.mitre.org/techniques/T1596/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

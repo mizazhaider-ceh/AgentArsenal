@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: osint-username-enumeration-handle-enumeration</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>osint-username-enumeration-handle-enumeration</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a subject&#x27;s primary handle is known but their</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="osint-username-enumeration.html">osint-username-enumeration</a></div><div class="deps"><span class="kind">requires:</span> <a href="osint-username-enumeration.html">osint-username-enumeration</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-username-enumeration.html">osint-username-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Sherlock</td><td>0.14.0</td></tr><tr><td>curl</td><td>8.5</td></tr></tbody></table><p>Handle enumeration is the systematic generation and testing of username variants: the typos, suffixes, and platform adaptations a person accumulates over years. Most people do not invent a fresh identity per site; they mutate one. This sub-skill covers generating those mutations methodically, pruning the impossible ones with platform rules, and chasing renamed accounts through history. Public data only, authorized investigations only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Start from the confirmed primary handle and any known aliases.</li>
+<li>Generate variants: affixes, separators, leetspeak, truncations,</li>
+<p>and common typos.</p>
+<li>Prune variants against platform username policies.</li>
+<li>Check variants with Sherlock and targeted manual searches.</li>
+<li>Search handle fragments in web search engines for unindexed</li>
+<p>mentions.</p>
+<li>Chase renames: archives, quotes of old handles, commit history.</li>
+<li>Verify each discovered variant with the correlation sub-skill.</li>
+<li>Record the variant map: which handles are live, renamed, or dead.</li>
+</ol>
+<h2>1. Variant generation</h2>
+<pre><code class="language-python"># variants.py: systematic handle mutation
+import itertools
+
+base = &quot;darkcoder&quot;
+variants = set()
+
+# Affixes and separators
+for affix in [&quot;&quot;, &quot;_&quot;, &quot;.&quot;, &quot;-&quot;, &quot;x&quot;, &quot;the&quot;, &quot;real&quot;, &quot;official&quot;]:
+    variants.add(affix + base)
+    variants.add(base + affix)
+for num in [&quot;1&quot;, &quot;12&quot;, &quot;123&quot;, &quot;007&quot;, &quot;69&quot;, &quot;2000&quot;]:
+    variants.add(base + num)
+
+# Leetspeak substitutions
+leet = str.maketrans({&quot;a&quot;: &quot;4&quot;, &quot;e&quot;: &quot;3&quot;, &quot;i&quot;: &quot;1&quot;, &quot;o&quot;: &quot;0&quot;, &quot;s&quot;: &quot;5&quot;})
+variants.add(base.translate(leet))
+
+# Truncations (platform length limits force these)
+for n in [8, 10, 12]:
+    variants.add(base[:n])
+
+# Common typos: doubled letters, adjacent key swaps
+variants.add(base.replace(&quot;oo&quot;, &quot;o&quot;))
+variants.add(&quot;drakcoder&quot;)  # transposition
+
+print(f&quot;{len(variants)} variants&quot;)
+print(&quot;\n&quot;.join(sorted(variants)[:20]))</code></pre>
+<p>Example output shape:</p>
+<pre><code>47 variants
+d4rkc0der
+darkcode
+darkcoder
+darkcoder007
+darkcoder123
+darkcoderx
+drakcoder
+realdarkcoder
+thedarkcoder</code></pre>
+<p>Prioritize: the subject&#x27;s own observed patterns beat generic lists. If their known alias is <code>darkcoder_dev</code>, weight the <code>_dev</code> and <code>.dev</code> families first.</p>
+<h2>2. Platform policy pruning</h2>
+<pre><code class="language-python"># prune.py: drop variants a platform cannot accept
+policies = {
+    &#x27;github&#x27;:   {&#x27;min&#x27;: 1, &#x27;max&#x27;: 39, &#x27;allow&#x27;: set(&#x27;abcdefghijklmnopqrstuvwxyz0123456789-&#x27;)},
+    &#x27;twitter&#x27;:  {&#x27;min&#x27;: 1, &#x27;max&#x27;: 15, &#x27;allow&#x27;: set(&#x27;abcdefghijklmnopqrstuvwxyz0123456789_&#x27;)},
+    &#x27;reddit&#x27;:   {&#x27;min&#x27;: 3, &#x27;max&#x27;: 20, &#x27;allow&#x27;: set(&#x27;abcdefghijklmnopqrstuvwxyz0123456789-_&#x27;)},
+}
+
+def valid(handle, policy):
+    h = handle.lower()
+    return (policy[&#x27;min&#x27;] &lt;= len(h) &lt;= policy[&#x27;max&#x27;]
+            and set(h) &lt;= policy[&#x27;allow&#x27;])
+
+for site, pol in policies.items():
+    ok = [v for v in variants if valid(v, pol)]
+    print(f&quot;{site}: {len(ok)} plausible variants&quot;)</code></pre>
+<p>Example output shape:</p>
+<pre><code>github: 41 plausible variants
+twitter: 33 plausible variants
+reddit: 38 plausible variants</code></pre>
+<p>Pruning focuses manual effort: a 20-character variant cannot be a Reddit username, so do not waste verification time there. Keep the policy table in the case file; platforms change rules and your pruning must be auditable.</p>
+<h2>3. Checking variants at scale</h2>
+<pre><code class="language-bash"># Feed the top variants to Sherlock (keep batches small for rate limits)
+head -12 variants.txt | tr &#x27;\n&#x27; &#x27; &#x27; &gt; batch1.txt
+sherlock $(cat batch1.txt) --json --output ./cases/variants-batch1.json --timeout 20
+
+# Triage: which variants claimed anything at all
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import json
+data = json.load(open(&#x27;variants-batch1.json&#x27;))
+# Sherlock multi-user output nests per username; flatten for triage
+print(json.dumps({k: v for k, v in list(data.items())[:3]}, indent=1)[:800])
+EOF</code></pre>
+<p>Work in small batches and verify between batches; a confirmed variant often reveals the subject&#x27;s mutation pattern, letting you generate the next batch smarter instead of brute-forcing the whole list.</p>
+<h2>4. Fragment search in web engines</h2>
+<p>Usernames appear in places Sherlock never checks: paste sites, forum quotes, commit logs, old bios.</p>
+<pre><code class="language-bash"># Search distinctive fragments (use the engine&#x27;s web UI or API per your policy)
+# Queries to try, quoted for precision:
+#   &quot;darkcoder&quot; site:example-forum.com
+#   &quot;darkcoder_dev&quot;
+#   &quot;darkcoder&quot; &quot;formerly&quot;</code></pre>
+<pre><code class="language-bash"># GitHub commit search via the public API (authenticated for better limits)
+curl -s -H &quot;Accept: application/vnd.github+json&quot; \
+  &quot;https://api.github.com/search/commits?q=author:darkcoder&quot; | \
+  python3 -c &quot;import json,sys; [print(i[&#x27;commit&#x27;][&#x27;author&#x27;][&#x27;name&#x27;], i[&#x27;html_url&#x27;]) for i in json.load(sys.stdin)[&#x27;items&#x27;][:10]]&quot;</code></pre>
+<p>Commit author names are a rich source of handle variants: people commit as <code>DarkCoder</code>, <code>darkcoder@laptop</code>, or an old handle long after renaming the account.</p>
+<h2>5. Chasing renames and deletions</h2>
+<pre><code class="language-bash"># GitHub username history is not public via API, but archives help
+curl -s &quot;https://archive.org/wayback/available?url=github.com/darkcoder&quot; | python3 -m json.tool
+
+# Forum quotes preserve old handles: search for the rename announcement pattern
+#   &quot;darkcoder&quot; &quot;renamed&quot; / &quot;formerly known as&quot;</code></pre>
+<p>Also check: gaming platforms that show previous names on the profile, code hosts where old commit emails persist, and package registries (npm, PyPI) where the author field rarely gets updated. Each old handle restarts the parent workflow, since its accounts may still be live.</p>
+<h2>6. The variant map</h2>
+<pre><code>Primary: darkcoder (confirmed, active)
+Variants:
+  darkcoder_dev  -&gt; confirmed (GitHub org member, avatar match)
+  d4rkcoder      -&gt; likely (forum, same PGP key)
+  thedarkcoder   -&gt; unrelated (different avatar, topics, timezone)
+Renamed:
+  oldcoder99     -&gt; renamed to darkcoder in 2021 (archive snapshot 2021-03-14)
+Dead:
+  darkcoder123   -&gt; account deleted (profile 404 since 2024)</code></pre>
+<p>The map is the deliverable: it shows the search was exhaustive, records negative results, and gives the next investigator a starting point instead of a mystery.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The variant list explodes combinatorially. Cap it: prioritize</li>
+<p>observed patterns, then common mutations, then brute force only for the highest-value platforms.</p>
+<li>A variant is claimed but belongs to a different person (collision).</li>
+<p>The correlation sub-skill decides; never assume a variant match is the subject.</p>
+<li>The subject uses completely unrelated handles per context. Variant</li>
+<p>enumeration cannot bridge that gap; only correlation pivots (avatar, bio, links) from a confirmed account can.</p>
+<li>Platform policies changed since your table was written. Re-check</li>
+<p>the policy before pruning in a new case; a rule change can invalidate old pruning.</p>
+<li>Search engines return stale results for renamed accounts. Verify</li>
+<p>the live profile before recording a variant as active.</p>
+<li>The investigation scope covers only the primary handle. Do not</li>
+<p>expand to variants without the case owner&#x27;s approval; each new handle is new collection.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Variant discovery reveals accounts clearly outside the authorized</li>
+<p>scope (family members, unrelated persons). Exclude them from the case file beyond a one-line note, and do not investigate further.</p>
+<li>A discovered variant is actively used for wrongdoing within a</li>
+<p>threat intel scope. Preserve evidence and escalate to the case owner immediately.</p>
+<li>The variant map keeps growing without converging. Set a stopping</li>
+<p>rule with the case owner (for example, two batches with no new confirmations) to keep the investigation bounded.</p>
+<li>Results feed legal proceedings. Every variant needs the same</li>
+<p>evidence standard as the primary: archived pages, timestamps, and correlation notes.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Variant patterns are predictable, which is why investigators exploit them and why defenders should break them: use unrelated handles per context, never reuse affix patterns (<code>_dev</code>, <code>_real</code>) across identities you want separated, and clean up old accounts instead of abandoning them (abandoned accounts get hijacked and then attributed to you). Audit your own variants with this workflow annually; the typos you would never choose are exactly the ones an investigator generates first.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent workflow: osint-username-enumeration (this repo)</li>
+<li>Correlation method: osint-username-enumeration-cross-platform-correlation (this repo)</li>
+<li>Sherlock: https://github.com/sherlock-project/sherlock</li>
+<li>GitHub REST API docs: https://docs.github.com/en/rest</li>
+<li>Web Archive: https://web.archive.org/</li>
+<li>Bellingcat resources: https://www.bellingcat.com/resources/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

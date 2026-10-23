@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-systemd-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-systemd-security</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when securing systemd on a Linux server from a defensive</p><h2>Sub-skills</h2><ul><li><a href="linux-systemd-security-journal-security.html">linux-systemd-security-journal-security</a> <span class="muted">v1.0.0: Use when securing systemd journal logging on Linux servers you</span></li><li><a href="linux-systemd-security-sandboxing-directives.html">linux-systemd-security-sandboxing-directives</a> <span class="muted">v1.0.0: Use when sandboxing Linux services with systemd directives on</span></li><li><a href="linux-systemd-security-unit-file-security.html">linux-systemd-security-unit-file-security</a> <span class="muted">v1.0.0: Use when auditing or hardening systemd unit files on a Linux</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>systemd</td><td>255</td></tr><tr><td>auditd</td><td>3.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Systemd is the init system, the service manager, and the logging pipeline on most Linux servers, which makes it both a prime persistence target for attackers and the best lever defenders have for containing services. This parent skill covers the defensive systemd security posture in three parts: keeping unit files themselves trustworthy, sandboxing what services can do, and securing the journal so logs survive an incident. Everything here is defensive hardening for systems you own or administer. The sub-skills go deep on unit file security, sandboxing directives, and journal security; this file is the strategy and the cross-cutting workflow.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory units: list enabled services and timers, and justify each one for the host&#x27;s role.</li>
+<li>Audit unit file trust: ownership, writability, and drop-in overrides for every enabled unit.</li>
+<li>Apply sandboxing directives per service, starting with the network-exposed ones (web, mail, dns, ssh-adjacent tooling).</li>
+<li>Harden the journal: persistent storage, sane retention, forwarding to a central collector, and access controls.</li>
+<li>Verify with <code>systemd-analyze security</code> per unit and re-run after every change.</li>
+<li>Bake the hardened units into provisioning so new hosts inherit them.</li>
+<li>Monitor: alert on unit file changes, new timers, and journal gaps.</li>
+</ol>
+<h2>1. Why systemd is a security boundary</h2>
+<p>Attackers love systemd because persistence is one <code>systemctl enable</code> away (MITRE T1543, T1053), and defenders love it because a few unit directives can sandbox a service better than most hand-rolled wrappers. Treat every unit file as security-sensitive configuration: who can write it decides who can get root at next boot.</p>
+<pre><code class="language-bash">systemctl list-unit-files --state=enabled --type=service | wc -l
+systemctl list-timers --all --no-pager | head -20
+systemd-analyze security sshd.service | tail -5</code></pre>
+<p>Example output shape: the enabled service count (know your number per role; growth without a change ticket is a signal), the timer list (attackers hide in timers), and the <code>systemd-analyze security</code> exposure score for a key service. Run the timer list regularly: it is the cheapest persistence audit on the system.</p>
+<h2>2. Unit file trust: ownership and overrides</h2>
+<p>Unit files live in <code>/lib/systemd/system</code> (package-owned, do not edit), <code>/etc/systemd/system</code> (admin overrides), and <code>/run/systemd/system</code> (ephemeral). Only root should write any of them, and drop-ins in <code>/etc/systemd/system/&lt;unit&gt;.d/</code> deserve the same scrutiny as the unit itself because they silently modify behavior.</p>
+<pre><code class="language-bash">find /etc/systemd/system -type f ! -user root 2&gt;/dev/null | head -10
+find /etc/systemd/system /lib/systemd/system -type f -perm -0002 2&gt;/dev/null | head -10
+systemctl cat sshd.service | head -40</code></pre>
+<p>Expected: everything root-owned, nothing world-writable, and <code>systemctl cat</code> showing exactly the unit plus drop-ins you expect. An unexpected drop-in (for example one adding <code>ExecStartPre=/tmp/evil.sh</code>) is a persistence finding; treat unknown unit modifications as compromise indicators first.</p>
+<h2>3. Sandboxing: the directive toolkit</h2>
+<p>Systemd&#x27;s sandboxing directives (<code>ProtectSystem</code>, <code>PrivateTmp</code>, <code>ProtectHome</code>, <code>CapabilityBoundingSet</code>, <code>SystemCallFilter</code>, <code>DynamicUser</code>, and more) constrain a compromised service&#x27;s blast radius. The strategy: start with filesystem protections (cheap, rarely break things), then capabilities and syscall filters (test carefully), and measure with <code>systemd-analyze security</code> before and after. Full directive reference lives in the sandboxing sub-skill.</p>
+<pre><code class="language-bash">systemd-analyze security nginx.service 2&gt;/dev/null | grep -E &quot;Overall|EXPOSURE&quot; | head -3
+grep -E &quot;^(ProtectSystem|PrivateTmp|NoNewPrivileges)&quot; /lib/systemd/system/nginx.service 2&gt;/dev/null</code></pre>
+<p>Example output shape: an exposure level (the analyzer rates 0-10) plus the directives present. Aim to move network-exposed services from the red zone toward green, one directive at a time, testing the service after each change. Sandboxing that breaks the service gets reverted; sandboxing is risk reduction, not a purity test.</p>
+<h2>4. Journal security: logs that survive incidents</h2>
+<p>Systemd&#x27;s journal is the local log store, and attackers target it (MITRE T1070, Indicator Removal). Harden it: persistent storage so logs survive reboot, rate limiting so a flood cannot DoS logging, forwarding to an off-host collector so local tampering does not erase the trail, and restricted read access. Full detail lives in the journal-security sub-skill.</p>
+<pre><code class="language-bash">grep -E &quot;^(Storage|SystemMaxUse|ForwardToSyslog|RateLimit)&quot; /etc/systemd/journald.conf
+journalctl --disk-usage
+ls -ld /var/log/journal</code></pre>
+<p>Expected: <code>Storage=persistent</code>, bounded disk use, forwarding enabled to your collector, and <code>/var/log/journal</code> owned by root with group <code>systemd-journal</code> at 2755. Verify forwarding actually arrives at the collector; a forwarding directive that silently fails is worse than none because it creates false confidence.</p>
+<h2>5. Timers as the new cron: audit them like cron</h2>
+<p>Systemd timers replaced cron for many tasks, and they inherit cron&#x27;s abuse potential with better logging. Audit them with the same rigor: who created them, what they run, and whether the executed paths are writable by non-root.</p>
+<pre><code class="language-bash">systemctl list-timers --all --no-pager
+for t in $(systemctl list-timers --all --no-legend --no-pager | awk &#x27;{print $NF}&#x27;); do systemctl cat &quot;$t&quot; 2&gt;/dev/null | grep -E &quot;ExecStart|User=&quot;; done | head -20</code></pre>
+<p>Example output shape: each timer&#x27;s command line and user. Any timer running a writable script as root is the systemd equivalent of the classic cron privesc, so check script ownership exactly as you would for cron. Unknown timers get the same incident-response-first treatment as unknown cron jobs.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>systemd-analyze security</code> scores are heuristic, not gospel: a 9.6 &quot;unsafe&quot; rating on a database that legitimately needs raw disk access is expected, so use the score as a prioritization aid and document justified exceptions.</li>
+<li>Sandboxing directives interact: <code>ProtectSystem=strict</code> with <code>ReadWritePaths</code> needs every write path listed or the service fails in confusing ways, so add directives incrementally and test rather than copying a maximal template blindly.</li>
+<li>Drop-in overrides in <code>/etc/systemd/system/&lt;unit&gt;.d/</code> survive package upgrades that replace the main unit file, which is both the correct way to customize and a persistence mechanism attackers abuse; audit the <code>.d</code> directories, not just the units.</li>
+<li>Container environments often run systemd incompletely or not at all; the journal and unit hardening here applies to the host and full VMs, while containers need the container-hardening approach instead.</li>
+<li><code>DynamicUser=yes</code> breaks services that need stable UIDs, persistent state keyed by user, or supplementary group memberships; it is excellent for stateless services and wrong for databases, so apply per-service.</li>
+<li>Journal rate limiting (<code>RateLimitIntervalSec</code>, <code>RateLimitBurst</code>) can drop log lines during genuine traffic spikes; tune against real peak load or you will lose the exact logs you need during an incident.</li>
+<li>Masked units (<code>systemctl mask</code>) can still be started via direct binary execution; masking is a guardrail against accidental or dependency-triggered starts, not a security boundary against a determined local attacker.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If you find an unknown enabled service, timer, or unit drop-in, treat it as potential persistence: preserve the unit files and journal entries first, then investigate, and only then disable.</li>
+<li>If sandboxing breaks a production service, revert the last directive, document the incompatibility, and apply the remaining directives; partial sandboxing with a documented gap beats a reverted-everything rollback.</li>
+<li>If journal forwarding to the collector fails, escalate to the logging team immediately: silent log loss during normal operations means zero visibility during an incident.</li>
+<li>If a vendor unit file ships dangerously permissive settings, prefer a drop-in override in <code>/etc</code> over editing the package file (which upgrades will clobber), and file the issue with the vendor.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Systemd is both the thing being defended and a detection source. Defenders monitor unit file integrity (AIDE watches on <code>/etc/systemd/system</code>), alert on new timers and newly enabled services, and centralize the journal so local tampering is visible as a gap. MITRE mappings: T1543 (Create or Modify System Process) and T1053 (Scheduled Task/Job) are the persistence techniques systemd enables and that unit auditing counters; T1070 (Indicator Removal) is what journal hardening counters; sandboxing directives are mitigations across execution and privilege escalation techniques. The <code>systemd-analyze security</code> score per service, tracked over time, is a simple metric for the hardening program&#x27;s progress.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1543 Create or Modify System Process: https://attack.mitre.org/techniques/T1543/</li>
+<li>MITRE ATT&amp;CK T1053 Scheduled Task/Job: https://attack.mitre.org/techniques/T1053/</li>
+<li>systemd.exec manual (sandboxing directives): https://www.freedesktop.org/software/systemd/man/systemd.exec.html</li>
+<li>systemd.unit manual: https://www.freedesktop.org/software/systemd/man/systemd.unit.html</li>
+<li>systemd-analyze manual: https://www.freedesktop.org/software/systemd/man/systemd-analyze.html</li>
+<li>CIS distribution benchmarks (systemd and service sections): https://www.cisecurity.org/cis-benchmarks/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

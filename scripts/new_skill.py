@@ -23,7 +23,7 @@ DOMAINS = [
     "cloud", "crypto", "bugbounty",
     "mobile", "binary", "malware", "soc", "osint", "defensive",
     "ai-security", "hardware", "ics-scada", "blockchain",
-    "automotive", "privacy", "memory",
+    "automotive", "privacy", "memory", "ctf",
 ]
 
 SLUG_RE = re.compile(r"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$")

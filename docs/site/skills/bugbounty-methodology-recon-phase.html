@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-methodology-recon-phase</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-methodology-recon-phase</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you are in the reconnaissance phase of an in-scope bug bounty hunt and need the exact ordered pipeline. Covers passive subdomain collection (subfinder, amass passive, certificate transparency), DNS resolution and live-host probing (dnsx, httpx), paced port scanning, content discovery (ffuf), JavaScript endpoint harvesting, and building the consolidated target list that feeds application mapping. Authorized targets only, only test assets the program lists in scope.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bugbounty-methodology.html">bugbounty-methodology</a></div><div class="deps"><span class="kind">requires:</span> <a href="bugbounty-methodology.html">bugbounty-methodology</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-subdomain-enumeration.html">recon-subdomain-enumeration</a> <a href="recon-cert-transparency.html">recon-cert-transparency</a> <a href="recon-active.html">recon-active</a> <a href="recon-passive.html">recon-passive</a> <a href="nmap-methodology.html">nmap-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>subfinder</td><td>2.6</td></tr><tr><td>amass</td><td>4.2</td></tr><tr><td>dnsx</td><td>1.2</td></tr><tr><td>httpx</td><td>1.6</td></tr><tr><td>ffuf</td><td>2.1</td></tr></tbody></table><p>The recon phase turns a program&#x27;s scope statement into a concrete target list: every subdomain, every live host, every open port, every hidden path, every JavaScript endpoint. Do it in order of increasing intensity, passive first, and record everything; recon output becomes the appendix of your reports and the map for the exploitation phase. This sub-skill covers only the recon phase of bugbounty-methodology. Only enumerate assets the program lists in scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Create the program workspace and write SCOPE.txt with the exact authorized assets.</li>
+<li>Collect subdomains passively: subfinder, amass in passive mode, crt.sh.</li>
+<li>Merge, deduplicate, and resolve every name with dnsx through a public resolver.</li>
+<li>Probe resolved hosts with httpx for live web services, titles, technologies, and status codes.</li>
+<li>Run paced port scanning on the most interesting hosts with nmap.</li>
+<li>Run content discovery with ffuf on live web hosts, one host at a time, polite rate.</li>
+<li>Harvest JavaScript files and extract API endpoints, keys, and hidden parameters.</li>
+<li>Consolidate everything into one target list (hosts, ports, paths, endpoints) and hand it to the mapping phase.</li>
+</ol>
+<h2>1. Passive subdomain collection</h2>
+<p>Start with sources that never touch the target&#x27;s infrastructure:</p>
+<pre><code class="language-bash">mkdir -p ~/bb/target.com &amp;&amp; cd ~/bb/target.com
+subfinder -d target.com -silent -o subfinder.txt
+amass enum -passive -d target.com -o amass-passive.txt
+curl -s &quot;https://crt.sh/?q=%25.target.com&amp;output=json&quot; \
+  | jq -r &#x27;.[].name_value&#x27; | sed &#x27;s/^\*\.//&#x27; | sort -u &gt; crtsh.txt
+wc -l subfinder.txt amass-passive.txt crtsh.txt</code></pre>
+<p>Example output shape:</p>
+<pre><code>245 subfinder.txt
+389 amass-passive.txt
+512 crtsh.txt</code></pre>
+<p>Amass passive can take 10 to 30 minutes as it queries dozens of sources; let it finish. Add API keys (AlienVault OTX, VirusTotal, Shodan) to the Amass config to widen coverage.</p>
+<h2>2. Resolution and live-host probing</h2>
+<p>Merge, deduplicate, then resolve once through a public resolver:</p>
+<pre><code class="language-bash">cat subfinder.txt amass-passive.txt crtsh.txt | sort -u &gt; all-subs.txt
+dnsx -l all-subs.txt -silent -resp -o resolved.txt
+wc -l all-subs.txt resolved.txt</code></pre>
+<p>Then probe for live web services and fingerprint them:</p>
+<pre><code class="language-bash">cut -d&#x27; &#x27; -f1 resolved.txt | httpx -silent -o live.txt \
+  -title -tech-detect -status-code -follow-redirects
+cat live.txt</code></pre>
+<p>Example output shape:</p>
+<pre><code>https://portal.target.com [200] [Customer Portal] [nginx,Vue.js]
+https://api.target.com [401] [Unauthorized] [cloudflare,Node.js]
+https://legacy.target.com [200] [Welcome to Legacy] [Apache/2.4.41,PHP/7.4.3]</code></pre>
+<p>The legacy host on old PHP is already a lead. Old software versions in banners are recon gold; record every version string.</p>
+<h2>3. Paced port scanning</h2>
+<p>Only scan hosts you confirmed in scope, at a polite rate, and never with aggressive timing against a bounty target:</p>
+<pre><code class="language-bash">nmap -sV --top-ports 1000 -T3 --max-retries 2 \
+  -iL &lt;(cut -d&#x27; &#x27; -f1 resolved.txt) -oA nmap-top1000
+grep -E &quot;open| Discovered&quot; nmap-top1000.gnmap | head -40</code></pre>
+<p>For web-heavy programs, a focused service scan on the live web hosts is usually more valuable than a full port sweep of everything. Respect any program rule about scanning intensity; when the policy says &quot;no automated scanners,&quot; port scanning is what they mean.</p>
+<h2>4. Content discovery</h2>
+<p>One host at a time, medium wordlist, polite rate, and match on the interesting status codes:</p>
+<pre><code class="language-bash">ffuf -u https://portal.target.com/FUZZ \
+  -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt \
+  -mc 200,201,204,301,302,307,401,403 -t 20 -p 0.2 \
+  -o ffuf-portal.json</code></pre>
+<p>A 403 on <code>/admin</code> is more interesting than a 200 on <code>/about</code>. Record every non-404 path; 401 and 403 responses confirm the path exists and may be reachable with different auth or headers. Also fuzz for virtual hosts when the server hosts many sites:</p>
+<pre><code class="language-bash">ffuf -u https://portal.target.com -H &quot;Host: FUZZ.target.com&quot; \
+  -w subdomains-top1million.txt -mc 200,301,302 -fs 1234 -o ffuf-vhost.json</code></pre>
+<h2>5. JavaScript endpoint harvesting</h2>
+<p>Collect every JS file the application loads, then mine it:</p>
+<pre><code class="language-bash"># Gather JS URLs from live hosts (example with one host)
+httpx -l live.txt -silent -json | jq -r &#x27;.url&#x27; &gt; urls.txt
+# fetch each page, extract script src values, download them, then:
+grep -rhoE &#x27;&quot;(/[a-zA-Z0-9/_\-\.?=&amp;%]+)&quot;&#x27; js/ | sort -u &gt; js-endpoints.txt
+grep -rhoE &#x27;(api[_-]?key|secret|token)[&quot;&#x27;\&#x27;&#x27;]?\s*[:=]\s*[&quot;&#x27;\&#x27;&#x27;][^&quot;&#x27;\&#x27;&#x27;]+&#x27; js/ | sort -u &gt; js-secrets.txt
+head -30 js-endpoints.txt</code></pre>
+<p>Endpoints found in JavaScript are authorized testing surface when the host is in scope. Look for <code>/api/v1/internal</code>, <code>/debug</code>, versioned endpoints, and GraphQL paths. Keys found here are leads for broken authentication testing, not findings by themselves.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Wildcard DNS makes every guessed name resolve: test with a random string like <code>no-such-xyz123.target.com</code> first, and filter resolved lists against the wildcard IP.</li>
+<li>crt.sh returns thousands of junk entries for CDN-shared certificates: keep only names that resolve and belong to the target, drop CDN provider names.</li>
+<li>httpx shows hundreds of hosts with identical titles (parking pages, default configs): fingerprint the default page size and filter it out.</li>
+<li>ffuf drowns you in false positives on wildcard-responding apps: calibrate with <code>-fs</code> on the response size of a random path first.</li>
+<li>Amass passive stalls: run it with fewer sources or rely on subfinder plus crt.sh; a smaller clean list beats a huge dirty one.</li>
+<li>The program forbids active scanning entirely: stay passive (this section&#x27;s steps 1 to 2 plus JS analysis of publicly loaded files) and say so in your methodology notes.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Passive lists stop growing: pivot on certificate hashes in Shodan, the org&#x27;s ASN netblocks, web archives for dead subdomains that reveal naming patterns, and code search for the domain string in public repos.</li>
+<li>Live hosts are all behind a WAF with identical fingerprints: hunt the origin via historical DNS, certificate SANs on odd ports, and favicon hashes in Shodan.</li>
+<li>Content discovery plateaus: switch to parameter discovery on known endpoints and API schema files (swagger.json, openapi.yaml, .graphql) instead of more path fuzzing.</li>
+<li>Recon is done when new runs add nothing: freeze the target list, timestamp it, and move to application mapping. Recon that never ends is procrastination.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Passive collection (subfinder, crt.sh, amass passive) is invisible to the target; queries hit third-party databases.</li>
+<li>dnsx resolution through public resolvers and httpx probing do touch the target: they look like normal browsing at low rates, but aggressive concurrency looks like a scan. Keep rates polite.</li>
+<li>Port scanning is the noisiest step: the target&#x27;s IDS will log it. Stay within program rules on scan intensity; that is what the rules are for.</li>
+<li>Defenders monitor certificate transparency too: assume they see the same subdomain data you do, and expect newly issued certs on odd subdomains to be watched.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>subfinder documentation: https://github.com/projectdiscovery/subfinder</li>
+<li>OWASP Amass documentation: https://github.com/owasp-amass/amass</li>
+<li>httpx documentation: https://github.com/projectdiscovery/httpx</li>
+<li>dnsx documentation: https://github.com/projectdiscovery/dnsx</li>
+<li>ffuf documentation: https://github.com/ffuf/ffuf</li>
+<li>crt.sh: https://crt.sh</li>
+<li>HackerOne documentation on recon: https://docs.hackerone.com</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

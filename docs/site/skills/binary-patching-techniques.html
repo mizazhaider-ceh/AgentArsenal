@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: binary-patching-techniques</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>binary-patching-techniques</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to modify a compiled binary&#x27;s behavior in</p><h2>Sub-skills</h2><ul><li><a href="binary-patching-techniques-binary-diffing.html">binary-patching-techniques-binary-diffing</a> <span class="muted">v1.0.0: Use when you need to find exactly what changed between two</span></li><li><a href="binary-patching-techniques-keygenning.html">binary-patching-techniques-keygenning</a> <span class="muted">v1.0.0: Use when you are authorized to analyze a software license</span></li><li><a href="binary-patching-techniques-nop-and-jump-patching.html">binary-patching-techniques-nop-and-jump-patching</a> <span class="muted">v1.0.0: Use when you need the precise mechanics of NOP and jump</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="binary-patching.html">binary-patching</a> <a href="binary-anti-analysis-bypass.html">binary-anti-analysis-bypass</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>x64dbg</td><td>2025.06</td></tr><tr><td>Ghidra</td><td>11.3</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>Diaphora</td><td>2.0</td></tr></tbody></table><p>Binary patching changes what a compiled program does by editing its machine code: flipping a conditional jump so a check always passes, replacing instructions with NOPs to remove a call, or rewriting a comparison. In defensive work it is how you neutralize a malware sample&#x27;s anti-analysis check in your own lab so the sandbox can observe it, how you test a patch&#x27;s effect between two builds, and how you verify a license validation routine during authorized software assessment. This skill covers finding the right bytes, making minimal patches, and verifying the result. Scope: patch only binaries you are authorized to modify, in an isolated lab, for authorized analysis, testing, or research. Never use patching to circumvent licensing, DRM, or protections on software you are not authorized to alter.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the goal precisely: which check to neutralize or which behavior</li>
+<p>to change, and why the analysis needs it.</p>
+<li>Locate the target in disassembly: find the comparison or call behind</li>
+<p>the behavior (string references and cross-references are fastest).</p>
+<li>Understand the branch: which jump implements the decision, and what the</li>
+<p>fall-through vs taken paths do.</p>
+<li>Choose the minimal patch: flip one jump, NOP one call, or patch one</li>
+<p>comparison.</p>
+<li>Apply the patch in the debugger first (non-destructive), test the</li>
+<p>behavior change.</p>
+<li>If the change is correct, write it to a patched copy of the file</li>
+<p>(never overwrite the original sample).</p>
+<li>Verify: hash both files, diff behavior, and document exactly which</li>
+<p>bytes changed and why.</p>
+</ol>
+<h2>1. Finding the target: from behavior to bytes</h2>
+<p>Start from something observable: a string, an API call, or a dialog.</p>
+<pre><code class="language-text">x64dbg workflow:
+  1. Search strings for the check&#x27;s message (&quot;Trial expired&quot;, &quot;Debugger detected&quot;)
+  2. Follow the cross-reference to the code that uses it
+  3. Read upward: the comparison and conditional jump above the message
+     is your target
+
+Example disassembly shape:
+  00401230  cmp eax, 1          ; is the license valid? (1 = yes)
+  00401233  jne 00401250        ; no -&gt; show &quot;Trial expired&quot;
+  00401235  ...licensed path...</code></pre>
+<p>In Ghidra, use the decompiler view to confirm your reading: the branch you plan to flip should correspond to a clean <code>if (!licensed)</code> in the pseudocode. If the decompiler shows something convoluted, you may be looking at the wrong branch; re-verify with string references before patching.</p>
+<h2>2. NOP and jump patching</h2>
+<p>Two minimal primitives cover most lab needs:</p>
+<p><strong>Flip the jump.</strong> A conditional jump becomes its opposite or an unconditional one:</p>
+<pre><code class="language-text">Before:  74 1B        je  00401250   ; jump if equal (licensed path skipped)
+After:   EB 1B        jmp 00401250   ; always take the licensed path</code></pre>
+<p>Common flips: <code>74</code> (je) to <code>75</code> (jne), <code>74</code> to <code>EB</code> (jmp), <code>75</code> to <code>EB</code>. One byte changes, everything else stays aligned.</p>
+<p><strong>NOP the call.</strong> Replace a call with NOPs to remove its effect:</p>
+<pre><code class="language-text">Before:  E8 3A 10 00 00   call anti_debug_check
+After:   90 90 90 90 90   nop x5 (one NOP per byte of the call)</code></pre>
+<p>In x64dbg: select the instruction, press Space, type <code>nop</code>, and the assembler fills the right count. Then File, Patch file, save as a copy. Always patch a copy: keep the original hash for your records and for reproducibility.</p>
+<h2>3. Patching comparisons and return values</h2>
+<p>Sometimes the cleanest patch is at the source: the function that returns the verdict.</p>
+<pre><code class="language-text">Target:  check_license() returns 0 (invalid) or 1 (valid)
+Patch:   at function start, insert:
+           B8 01 00 00 00   mov eax, 1
+           C3               ret
+         (overwrites the first 6 bytes; pad the rest with NOPs if the
+          original prologue was longer)</code></pre>
+<p>This is more robust than flipping every caller: one patch covers all call sites. Verify the function has no other side effects you need (some checks also initialize state; NOPing them can crash the program). When in doubt, flip the caller&#x27;s jump instead of gutting the callee.</p>
+<h2>4. Binary diffing: what changed between versions</h2>
+<pre><code class="language-bash"># Diaphora-style workflow: export both binaries, diff the databases
+# In Ghidra: Version Tracking can also correlate functions across versions
+
+# Quick byte-level first pass
+cmp -l v1.exe v2.exe | head -20</code></pre>
+<p>Example output shape:</p>
+<pre><code class="language-text">  12345  74  75     ; byte 0x12345: 0x74 (je) -&gt; 0x75 (jne)
+  12346  1B  1B</code></pre>
+<p>Diffing answers: did the vendor fix the vulnerability (compare patched vs unpatched to find the fix location, a standard defensive technique for writing detections), did the malware author change the C2 routine between variants, or which functions are new. Function-level diffing (Diaphora, Ghidra Version Tracking) shows added/removed/modified functions with similarity scores; focus manual review on modified functions with low similarity.</p>
+<h2>5. Keygenning concepts for license analysis</h2>
+<p>During authorized assessment of license validation (your own product, a client engagement with written permission), the analysis pattern is:</p>
+<ol>
+<li>Find the validation routine (string references to &quot;invalid key&quot;,</li>
+<p>&quot;activation&quot;).</p>
+<li>Read the algorithm: what transformation turns a key into a verdict</li>
+<p>(checksum, RSA signature check, server round-trip).</p>
+<li>Reimplement the check in Python to understand it, not to produce</li>
+<p>working keys for unlicensed use.</p>
+</ol>
+<pre><code class="language-python"># Example: understanding a checksum-based check (analysis only)
+def check(key: str) -&gt; bool:
+    digits = [int(c) for c in key if c.isdigit()]
+    return sum(digits) % 7 == 0 and len(digits) == 16</code></pre>
+<p>The deliverable of authorized license analysis is a report on the scheme&#x27;s strength (is it a local checksum an attacker trivially replicates, or a server-side signature), not a key generator. If the assessment scope does not explicitly include key generation, stop at the analysis.</p>
+<h2>6. Verifying patches</h2>
+<pre><code class="language-bash">sha256sum original.exe patched.exe
+# record both hashes
+
+# Behavior check in the isolated lab:
+# run the patched copy, confirm the target behavior changed and nothing
+# else broke (smoke-test the main workflows)</code></pre>
+<p>Verification checklist: the intended behavior changed (the check no longer triggers), the program still starts and its main functions work, no new crashes in a 5-minute smoke test, and the patch is documented with file offsets, before/bytes, and rationale. If the program has integrity checks (checksums its own code), the patch will be detected at runtime; that is itself a finding about the program&#x27;s tamper resistance.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Patches that shift alignment: x86 is variable-length, so replacing a</li>
+<p>5-byte call with a 2-byte jump leaves 3 bytes that must be NOP-filled; never leave partial instructions.</p>
+<li>Relative jumps: flipping je to jmp keeps the same displacement bytes,</li>
+<p>but rewriting a jump to a new target requires recalculating the relative offset.</p>
+<li>Integrity checks: packers and protectors often checksum their code.</li>
+<p>Patch after unpacking, or patch the checksum routine first (document the chain).</p>
+<li>ASLR and rebasing: file offsets are stable, virtual addresses are not.</li>
+<p>Record patches as file offsets (or RVAs), never as absolute addresses.</p>
+<li>Patches in shared code: a function used by both the check and normal</li>
+<p>logic cannot be gutted safely; patch the caller instead.</p>
+<li>Signed binaries: patching breaks the signature. That is expected in a</li>
+<p>lab; never redistribute a patched signed binary.</p>
+<li>Multi-architecture: 64-bit calling conventions and instruction</li>
+<p>encodings differ; verify each patch in the target bitness.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If the target is protected by a commercial protector (VMProtect,</li>
+<p>Themida) and patching requires devirtualization, escalate scope: that is a project, not a patch session.</p>
+<li>If patching is needed to analyze malware but the anti-analysis is</li>
+<p>layered (debugger checks plus timing plus VM checks), patch one layer at a time and re-test; escalate to the anti-analysis-bypass skill for the systematic approach.</p>
+<li>If a patch causes crashes you cannot explain after reasonable effort,</li>
+<p>revert to the debugger-only patch and analyze dynamically instead of producing a patched file.</p>
+<li>If the engagement scope is ambiguous about whether patching is</li>
+<p>allowed, stop and get written clarification before proceeding.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Patch-diffing is a defensive superpower: comparing a patched and unpatched binary locates the exact vulnerability fix, which tells you what to hunt for in your environment (did anyone exploit it before the patch?). For malware, the patches you apply in the lab (neutralized anti-analysis) should be documented so the next analyst reproduces your results; publish the patched hash alongside the original with a clear label. When you find that a license or integrity check is trivially patchable during an authorized assessment, the finding is a hardening recommendation (server-side validation, code signing verification, anti-tamper), not an exploitation guide.</p>
+<h2>Key references</h2>
+<ul>
+<li>x64dbg documentation:</li>
+<p>https://x64dbg.com/</p>
+<li>Ghidra documentation:</li>
+<p>https://ghidra-sre.org/</p>
+<li>Diaphora (binary diffing):</li>
+<p>https://github.com/joxeankoret/diaphora</p>
+<li>Intel 64 and IA-32 Architectures Software Developer Manuals</li>
+<p>(instruction encoding reference): https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html</p>
+<li>Practical Binary Analysis (Dennis Andriesse), Chapters 6-7</li>
+<p>(disassembly and binary instrumentation concepts)</p>
+<li>MITRE ATT&amp;CK: T1622 (Debugger Evasion, for the checks being patched</li>
+<p>in malware labs)</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

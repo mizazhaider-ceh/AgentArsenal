@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-competition-playbook-time-management</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-competition-playbook-time-management</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge yellow">85/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when managing time during a CTF competition as a player</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-competition-playbook.html">ctf-competition-playbook</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-competition-playbook.html">ctf-competition-playbook</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ctf-competition-playbook.html">ctf-competition-playbook</a> <a href="ctf-web-challenges.html">ctf-web-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Time is the only resource you cannot get back in a CTF. Skilled players lose events by spending 4 hours on a 100-point challenge while three 200-point quick wins sit untouched. This sub-skill sets the time rules: how long to try, when to ask for help, when to quit, and how to pace a team across the event. Scope is authorized competitions only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Start every challenge with a time budget based on its points and</li>
+<p>your triage guess (quick win: 30 min, medium: 90 min, hard: 3h).</p>
+<li>Set a visible timer or checkpoint; when it rings, assess honestly.</li>
+<li>At 45 minutes with no meaningful progress: ask for help or swap</li>
+<p>owners (the fresh-eyes rule).</p>
+<li>At the budget limit with only partial progress: decide persist or</li>
+<p>abandon using the expected-value check (section 4).</p>
+<li>Log time spent in the notes; hidden time debt is how events are</li>
+<p>lost.</p>
+<li>Protect breaks and sleep in long events; schedule them like</li>
+<p>challenges.</p>
+<li>In the final 60 minutes: no new challenges, only finishing and</li>
+<p>verifying.</p>
+<li>After the event, compare budgets to actuals and calibrate for next</li>
+<p>time.</p>
+</ol>
+<h2>1. Time budgets by challenge type</h2>
+<p>| Triage guess | Budget | Checkpoint | |---|---|---| | Quick win (low pts, source given) | 30 min | 15 min: do I see the bug? | | Medium (standard category work) | 90 min | 45 min: help-or-swap rule | | Hard (high pts, novel) | 3 h | 90 min: persist-or-abandon | | Unknown | 45 min | 20 min: re-triage, do not drift |</p>
+<p>Budgets are per owner, not per challenge; a swap resets the helper&#x27;s clock but the challenge keeps its total. Write the budget in the notes entry when you claim a challenge.</p>
+<h2>2. The 45-minute help-or-swap rule</h2>
+<p>No meaningful progress in 45 minutes means one of three things: the triage guess was wrong, you are missing a tool or technique, or you need fresh eyes. The rule:</p>
+<ol>
+<li>Post a structured help request (see the team-roles sub-skill).</li>
+<li>If help unblocks you within 15 minutes, continue with a new</li>
+<p>45-minute budget.</p>
+<li>If not, swap owners: you take one of their stuck challenges, they</li>
+<p>take yours. Both get fresh eyes, nobody &quot;fails&quot;.</p>
+<li>Log the swap in the notes with the reason; patterns in swaps</li>
+<p>reveal triage weaknesses.</p>
+</ol>
+<p>Enforce this socially before the event: agree that swapping is normal and smart, not a defeat. The rule only works if nobody feels judged.</p>
+<h2>3. Sleep and energy in 24h+ events</h2>
+<ul>
+<li>Plan sleep before the event: two 3-hour blocks beat one 6-hour</li>
+<p>block for coverage, and beat zero sleep for performance.</p>
+<li>Schedule explicitly: &quot;izaz sleeps 02:00-05:00, mariam 05:00-08:00&quot;.</li>
+<p>Unscheduled sleep happens at the worst moment.</p>
+<li>Keep one person on triage during sleep blocks: they watch for new</li>
+<p>challenge releases and bloods, and keep notes current.</p>
+<li>Handoff before sleeping: every owned challenge gets status,</li>
+<p>findings, and next step in the notes.</p>
+<li>Food and movement: eat real meals, stand up hourly; the</li>
+<p>performance drop from skipping meals is measurable by hour 16.</p>
+</ul>
+<p>Solo players in long events: sleep is mandatory, not optional. A 4-hour block at the natural low point (02:00-06:00) preserves more points than grinding through it.</p>
+<h2>4. Persist or abandon: the expected-value check</h2>
+<p>At the budget limit, answer honestly:</p>
+<ol>
+<li>Points remaining divided by estimated time to finish: is the rate</li>
+<p>better than the average untouched challenge?</p>
+<li>Is the blocker knowledge (I need to learn X) or luck (I need to</li>
+<p>guess Y)? Knowledge blockers sometimes clear with one hint; luck blockers rarely do.</p>
+<li>Has anyone else on the team solved something similar this event?</li>
+<p>If yes, persist with their help. If no, the challenge may be genuinely hard.</p>
+<li>Are there untouched quick wins? If yes, abandon and take them;</li>
+<p>points per hour almost always favors the quick win.</p>
+</ol>
+<p>Abandoned is not deleted: mark it <code>stuck</code>, keep the notes, and revisit only if everything else is done.</p>
+<h2>5. Pacing across categories</h2>
+<ul>
+<li>Front-load your strongest categories: points early fund morale</li>
+<p>and unlock gated challenges.</p>
+<li>Do not let one category consume the whole team: cap any single</li>
+<p>challenge at its budget even if &quot;it feels close&quot;.</p>
+<li>Watch the scoreboard: categories where many teams score are</li>
+<p>tractable; categories where nobody scores are either hard or broken, so discount them.</p>
+<li>Bloods (first solves) are worth chasing in your best category</li>
+<p>early; they are worth ignoring elsewhere.</p>
+</ul>
+<h2>6. The final hour protocol</h2>
+<ul>
+<li>T-60: captain announces the stop. No new challenges, no new</li>
+<p>techniques on stuck ones.</p>
+<li>T-60 to T-30: finish partials. A 90-percent solve submitted beats</li>
+<p>a 100-percent solve in your head.</p>
+<li>T-30 to T-10: verification sweep. Re-read every notes entry</li>
+<p>marked solving or verifying; submit anything unsubmitted.</p>
+<li>T-10 to end: no changes. Watch the scoreboard, confirm points</li>
+<p>landed, save everything.</p>
+</ul>
+<p>The most common final-hour mistake is starting &quot;one quick thing&quot; at T-45. The rule is absolute because willpower is depleted.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>A challenge is &quot;almost done&quot; past its budget: grant one 20-minute</li>
+<p>extension, once. If it is still not done, it was not almost done.</p>
+<li>The event releases new challenges mid-way: triage them in a</li>
+<p>10-minute batch; do not let each release interrupt deep work.</p>
+<li>You are solo and everything is stuck: take a 15-minute walk;</li>
+<p>the break resets fixation more reliably than another hour of staring.</p>
+<li>A dependency blocks you (waiting for a teammate&#x27;s output): timebox the</li>
+<p>wait to 20 minutes, then work the next best challenge; idle waiting is the worst use of event time.</p>
+<li>You feel guilty resting while others work: rest is scheduled team</li>
+<p>strategy, not slacking; the roster exists so nobody has to feel guilty.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The whole team is over budget everywhere: call a re-triage;</li>
+<p>the initial difficulty map was wrong, and a fresh pass finds the misjudged challenges.</p>
+<li>Morale collapses: the captain names small wins explicitly</li>
+<p>(&quot;three solves in the last hour, we are climbing&quot;); progress visibility restores energy faster than pep talks.</p>
+<li>A key player burns out: enforce their rest immediately; a rested</li>
+<p>player tomorrow is worth more than a broken one tonight.</p>
+<li>The event extends or shortens unexpectedly: the captain re-issues time</li>
+<p>calls immediately against the new end time; the final-hour protocol always anchors to the real clock.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Organizers watch for time anomalies as integrity signals: solves at inhuman speed, or flag submissions in patterns suggesting automation beyond the rules. Legitimate teams show human pacing: bursts of activity, sleep gaps, and gradual progress. Keeping honest time logs in your notes doubles as evidence of fair play if questions arise.</p>
+<h2>Key references</h2>
+<ul>
+<li>CTFtime (event formats and durations): https://ctftime.org/</li>
+<li>Trail of Bits CTF wiki: https://github.com/trailofbits/ctf-wiki</li>
+<li>Deep Work (Cal Newport): timeboxing and attention management</li>
+<p>principles that transfer directly to competition pacing.</p>
+<li>picoCTF time management tips (beginner event pacing):</li>
+<p>https://picoctf.org/</p>
+<li>&quot;Make Time&quot; (Knapp and Zeratsky): prioritization tactics that map to</li>
+<p>challenge selection under a clock.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

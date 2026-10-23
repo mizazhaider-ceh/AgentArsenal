@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-containment-playbooks-network-segmentation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-containment-playbooks-network-segmentation</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when an incident requires cutting off attacker</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-containment-playbooks.html">incident-containment-playbooks</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-containment-playbooks.html">incident-containment-playbooks</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-containment-playbooks.html">incident-containment-playbooks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>iptables</td><td>1.8</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>Wireshark</td><td>4.2</td></tr></tbody></table><p>Network segmentation as a containment action means redrawing the network&#x27;s trust boundaries mid-incident: affected hosts go into a quarantine segment, attacker paths between segments get cut, and malicious domains get sinkholed. Done in peacetime it is architecture; done mid-incident it is surgery. This sub-skill covers the quarantine VLAN pattern, the firewall rules that enforce it, and the validation that proves lateral movement is actually dead. Authorized infrastructure only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the current segments and the paths the attacker could be</li>
+<p>using (from scoping and network telemetry).</p>
+<li>Define the quarantine segment: VLAN id, subnet, and exactly what</li>
+<p>it may reach.</p>
+<li>Move affected hosts into quarantine at the switch or via NAC.</li>
+<li>Cut inter-segment attacker paths: SMB, RDP, WinRM, SSH between</li>
+<p>segments at the firewalls.</p>
+<li>Sinkhole attacker domains on the internal resolver.</li>
+<li>Validate: no flows between quarantine and production except the</li>
+<p>allowed forensics paths.</p>
+<li>Monitor the quarantine for reconnection attempts and new</li>
+<p>infections.</p>
+<li>Log every change with the incident id for rollback.</li>
+</ol>
+<h2>1. Quarantine VLAN design</h2>
+<pre><code class="language-bash"># Quarantine segment plan (example addressing)
+# VLAN 400: 192.168.400.0/24, gateway 192.168.400.1
+# Allowed destinations:
+#   - Forensics network 203.0.113.0/24 (evidence, SIEM, EDR)
+#   - Nothing else, including no internet and no production VLANs
+cat &gt; quarantine-plan.md &lt;&lt;&#x27;EOF&#x27;
+## Quarantine VLAN 400 (INC-2026-1042)
+Subnet: 192.168.400.0/24
+Members: web-03 (moved 10:15), db-01 (moved 10:18)
+Allowed: 203.0.113.0/24 (forensics)
+Denied: everything else
+DHCP: disabled in quarantine (static assignments only)
+Review: after eradication, before re-admission
+EOF</code></pre>
+<p>Disable DHCP in quarantine: a host that renews and gets a production address has escaped. Static assignments, documented per host.</p>
+<h2>2. Moving hosts into quarantine</h2>
+<pre><code class="language-bash"># Managed switch CLI pattern (adapt to your platform)
+# configure terminal
+# vlan 400
+#  name QUARANTINE-INC-2026-1042
+# interface GigabitEthernet1/0/12
+#  description web-03 QUARANTINED INC-2026-1042
+#  switchport mode access
+#  switchport access vlan 400
+#  spanning-tree portfast
+# end
+# show vlan id 400</code></pre>
+<p>For wireless or NAC-managed ports, push the quarantine authorization instead of touching the switch:</p>
+<pre><code class="language-bash"># NAC quarantine pattern (platform-specific; concept shown)
+# Set the endpoint&#x27;s authorization profile to QUARANTINE, which assigns
+# VLAN 400 and a restrictive ACL at the next re-authentication.
+# Force re-auth: bounce the port or send a CoA (change of authorization).</code></pre>
+<p>Virtual machines move at the hypervisor: change the port group to the quarantine port group, which is instant and cannot be reverted by guest malware. Prefer hypervisor moves for VMs over in-guest firewall rules.</p>
+<h2>3. Inter-segment firewall rules</h2>
+<p>On the firewall or router between segments, cut the lateral movement protocols. Be surgical: killing all inter-segment traffic may break the business worse than the attacker does.</p>
+<pre><code class="language-bash"># Example: core firewall between server segments
+# Drop the classic lateral movement ports from quarantine to anywhere
+iptables -A FORWARD -s 192.168.400.0/24 -p tcp --dport 445 -j DROP \
+  -m comment --comment &quot;INC-2026-1042 no SMB out of quarantine&quot;
+iptables -A FORWARD -s 192.168.400.0/24 -p tcp --dport 3389 -j DROP \
+  -m comment --comment &quot;INC-2026-1042 no RDP out of quarantine&quot;
+iptables -A FORWARD -s 192.168.400.0/24 -p tcp --dport 5985:5986 -j DROP \
+  -m comment --comment &quot;INC-2026-1042 no WinRM out of quarantine&quot;
+iptables -A FORWARD -s 192.168.400.0/24 -p tcp --dport 22 -j DROP \
+  -m comment --comment &quot;INC-2026-1042 no SSH out of quarantine&quot;
+
+# Allow only the forensics network
+iptables -A FORWARD -s 192.168.400.0/24 -d 203.0.113.0/24 -j ACCEPT \
+  -m comment --comment &quot;INC-2026-1042 forensics access&quot;
+iptables -A FORWARD -s 192.168.400.0/24 -j DROP \
+  -m comment --comment &quot;INC-2026-1042 quarantine default deny&quot;</code></pre>
+<p>Order matters: the forensics allow must precede the default deny. Save the ruleset before and after (<code>iptables-save</code>) for rollback.</p>
+<h2>4. DNS sinkholing</h2>
+<pre><code class="language-bash"># dnsmasq sinkhole for attacker domains (internal resolver)
+cat &gt;&gt; /etc/dnsmasq.d/sinkhole-INC-2026-1042.conf &lt;&lt;&#x27;EOF&#x27;
+address=/evil.example.com/203.0.113.99
+address=/cdn-evil.example.net/203.0.113.99
+EOF
+systemctl reload dnsmasq
+
+# 203.0.113.99: run a logging listener to see which hosts still query
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import socket
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((&#x27;203.0.113.99&#x27;, 80))
+s.listen(10)
+print(&quot;sinkhole listener up; logging connection attempts&quot;)
+while True:
+    conn, addr = s.accept()
+    print(f&quot;SINKHOLE HIT from {addr[0]}&quot;)
+    conn.close()
+EOF</code></pre>
+<p>Example output shape:</p>
+<pre><code>sinkhole listener up; logging connection attempts
+SINKHOLE HIT from 192.168.400.15
+SINKHOLE HIT from 192.168.30.44</code></pre>
+<p>A hit from outside quarantine (192.168.30.44) means the scope is bigger than thought: that host needs investigation and probably quarantine too. The sinkhole is both containment and a detection tripwire.</p>
+<h2>5. Validating the segmentation</h2>
+<pre><code class="language-bash"># From a quarantined host: production must be unreachable
+ping -c1 192.168.30.10 ; echo &quot;exit: $?&quot;   # expect failure
+curl -m 5 http://192.168.30.10 ; echo &quot;exit: $?&quot;  # expect failure
+
+# Forensics network must be reachable
+ping -c1 203.0.113.10 ; echo &quot;exit: $?&quot;    # expect success
+
+# From the firewall: confirm the drops are hitting
+iptables -L FORWARD -n -v | grep &quot;INC-2026-1042&quot;
+# Packet counters on the DROP rules should increment if anything tries
+
+# Packet capture on the quarantine gateway for 5 minutes: look for
+# anything that is not forensics-bound
+tcpdump -i eth400 -w quarantine-check.pcap &amp;
+sleep 300; kill %1
+tshark -r quarantine-check.pcap -T fields -e ip.dst | sort | uniq -c | sort -rn | head</code></pre>
+<p>Example output shape:</p>
+<pre><code>    412 203.0.113.10
+     37 203.0.113.11
+      2 192.168.30.10</code></pre>
+<p>Two packets toward production deserve investigation: what sent them, and did the firewall drop them (check the counter). Clean captures are evidence that the segmentation holds.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The attacker is already in the forensics-allowed network. Then</li>
+<p>the quarantine&#x27;s exception becomes the attack path; re-examine the allow-list and consider a dedicated, freshly built forensics network.</p>
+<li>Flat network with no VLAN capability (small office, legacy</li>
+<p>gear). Fall back to host firewall isolation on every affected host plus switch port shutdowns; it is coarser but workable.</p>
+<li>The quarantine VLAN has no path to the backup system. Accept the</li>
+<p>gap explicitly or add a one-way backup allow with logging; do not quietly break backups.</p>
+<li>NAC is misconfigured and the quarantine profile does not apply.</li>
+<p>Verify the port&#x27;s actual VLAN after every move (<code>show interfaces status</code>); trust the switch output, not the NAC GUI.</p>
+<li>Encrypted lateral movement (SSH, RDP) cannot be inspected, only</li>
+<p>blocked. Blocking is the containment; inspection belongs to host forensics.</p>
+<li>Cloud VPCs: security groups and NACLs replace VLANs. Snapshot</li>
+<p>before changing, since a wrong NACL can isolate your own access to the console path.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Segmentation reveals the attacker in a segment you cannot</li>
+<p>quarantine (OT network, PCI zone, cloud production). Escalate to the commander and the business owner; some segments need a planned outage, not a surprise VLAN move.</p>
+<li>The sinkhole lights up with dozens of internal hosts. The scope</li>
+<p>just exploded; freeze further moves, re-scope from the sinkhole data, and brief leadership before the next wave.</p>
+<li>A business-critical flow crosses the cut you made. The commander</li>
+<p>weighs attacker risk against outage cost in writing; the usual compromise is a narrow, logged exception for that flow, not reopening the segment.</p>
+<li>You need to keep the segmentation for weeks (long eradication).</li>
+<p>Formalize it: change tickets, monitoring dashboards, and a re-admission plan, so emergency config becomes managed config.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Mid-incident segmentation works best where peacetime segmentation already exists: moving a host between existing VLANs is a port change, while creating segmentation during an incident is a project. The strategic lesson is to segment before you need it: servers by role, workstations from servers, OT from IT, with deny-by-default between them. Exercise the quarantine move quarterly; the team that has done it three times does it in minutes at 3 AM.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent playbook: incident-containment-playbooks (this repo)</li>
+<li>NIST SP 800-61 Rev. 2: https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final</li>
+<li>NIST SP 800-207 (Zero Trust Architecture, segmentation context):</li>
+<p>https://csrc.nist.gov/publications/detail/sp/800-207/final</p>
+<li>MITRE ATT&amp;CK T1021 (Remote Services), T1048 (Exfiltration):</li>
+<p>https://attack.mitre.org/</p>
+<li>Wireshark documentation: https://www.wireshark.org/docs/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

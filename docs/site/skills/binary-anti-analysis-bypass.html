@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: binary-anti-analysis-bypass</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>binary-anti-analysis-bypass</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a binary under authorized lab analysis resists</p><h2>Sub-skills</h2><ul><li><a href="binary-anti-analysis-bypass-debugger-evasion.html">binary-anti-analysis-bypass-debugger-evasion</a> <span class="muted">v1.0.0: Use when a binary detects debuggers during authorized lab</span></li><li><a href="binary-anti-analysis-bypass-timing-checks.html">binary-anti-analysis-bypass-timing-checks</a> <span class="muted">v1.0.0: Use when a binary uses time to detect analysis, covering long</span></li><li><a href="binary-anti-analysis-bypass-vm-and-sandbox-detection.html">binary-anti-analysis-bypass-vm-and-sandbox-detection</a> <span class="muted">v1.0.0: Use when a binary fingerprints virtual machines or</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="malware-sandbox-analysis.html">malware-sandbox-analysis</a> <a href="binary-patching-techniques.html">binary-patching-techniques</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>x64dbg</td><td>2025.06</td></tr><tr><td>ScyllaHide</td><td>1.4</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>Wireshark</td><td>4.2</td></tr><tr><td>Ghidra</td><td>11.3</td></tr></tbody></table><p>Defensive binaries and malware both use anti-analysis: checks that detect debuggers, virtual machines, and sandboxes, then hide behavior or exit. For the analyst this is a gate, not a verdict; a sample that quits in the sandbox is usually evading, not benign. This skill covers recognizing the common checks, defeating each class with the right technique, and proving the bypass worked. Scope: bypass anti-analysis only on binaries you are authorized to analyze, inside an isolated lab, during authorized DFIR, malware research, or defensive testing. These techniques exist so analysts can observe hostile code safely; never use them to evade detection on systems you do not own.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Establish the baseline: run the sample in the sandbox and in the</li>
+<p>debugger, record exactly how it misbehaves (instant exit, no network, error message).</p>
+<li>Identify the check statically: search for debugger, VM, and timing</li>
+<p>APIs and strings (see technique sections).</p>
+<li>Pick the bypass class: hide the debugger (ScyllaHide, PEB patch),</li>
+<p>patch the check, hook the API, or harden the environment.</p>
+<li>Apply one bypass at a time and re-run; behavior change proves which</li>
+<p>check was gating.</p>
+<li>Iterate until the sample shows its real behavior (network, dropped</li>
+<p>files, injection).</p>
+<li>Document every bypass applied: the next analyst must reproduce your</li>
+<p>environment to reproduce your results.</p>
+<li>Re-run the full analysis pipeline (sandbox, memory capture) with the</li>
+<p>bypasses in place.</p>
+</ol>
+<h2>1. Debugger evasion: the API checks</h2>
+<p>The classic checks and their signatures:</p>
+<pre><code class="language-text">IsDebuggerPresent()            -&gt; PEB.BeingDebugged flag
+CheckRemoteDebuggerPresent()   -&gt; kernel query
+NtQueryInformationProcess(ProcessDebugPort) -&gt; debug port set
+FindWindow(&quot;x64dbg&quot;, ...) / FindWindow(&quot;OLLYDBG&quot;) -&gt; window title scan
+OutputDebugString + GetLastError trick -&gt; debugger consumes the string
+int 3 / int 2D exceptions      -&gt; debugger swallows them</code></pre>
+<p>Static hunt:</p>
+<pre><code class="language-bash"># Strings and imports that name the check
+floss sample.exe | grep -iE &quot;debug|DbgUi|NtQueryInformationProcess&quot; | sort -u</code></pre>
+<p>Bypass ladder, easiest first:</p>
+<ol>
+<li><strong>ScyllaHide</strong>: enable the profile matching your debugger (x64dbg),</li>
+<p>tick PEB flags, NtQueryInformationProcess, and window hooks. This defeats most API checks with zero patching.</p>
+<li><strong>Manual PEB patch</strong>: in x64dbg, dump the PEB and zero BeingDebugged</li>
+<p>(offset 0x2), NtGlobalFlag, and heap flags. Script it so every run starts clean.</p>
+<li><strong>Patch the check</strong>: NOP the call or force its return to false</li>
+<p>(see binary-patching-techniques). Best when only one check gates.</p>
+<li><strong>Hook the API</strong>: intercept IsDebuggerPresent to always return FALSE.</li>
+<p>Cleanest when several checks call the same API.</p>
+</ol>
+<p>Verify: the sample now proceeds past the point where it exited. If it exits later at a new point, there is a second check; repeat.</p>
+<h2>2. Timing checks: sleep, stalls, and tick counts</h2>
+<pre><code class="language-text">Sleep(600000)                  -&gt; outlasts short sandbox runs
+GetTickCount deltas             -&gt; detects breakpoints (time froze)
+rdtsc deltas                    -&gt; detects single-stepping / emulation
+NtDelayExecution                -&gt; kernel-level sleep</code></pre>
+<p>Static hunt: imports of Sleep, GetTickCount, QueryPerformanceCounter, or inline <code>rdtsc</code> bytes (<code>0F 31</code>).</p>
+<p>Bypasses:</p>
+<ul>
+<li><strong>Longer timeout</strong>: submit to the sandbox with 10+ minutes instead of</li>
+</ul>
+<ol>
+<li>Defeats pure sleeps with no patching.</li>
+</ol>
+<ul>
+<li><strong>Patch the sleep</strong>: in the debugger, NOP the Sleep call or patch its</li>
+<p>argument to 0. One patch, immediate behavior.</p>
+<li><strong>Accelerate time</strong>: hook GetTickCount to return inflated values so</li>
+<p>delta checks pass.</p>
+<li><strong>rdtsc handling</strong>: x64dbg can trap rdtsc; alternatively patch the</li>
+<p>comparison after the second rdtsc to always succeed.</p>
+</ul>
+<pre><code class="language-text">Example patch shape:
+  Before:  FF 15 .. .. .. ..   call Sleep        ; Sleep(600000)
+  After:   90 90 90 90 90 90   nop x6</code></pre>
+<p>Confirm by timestamp: the sample&#x27;s first network beacon should now appear seconds after start instead of minutes.</p>
+<h2>3. VM and sandbox fingerprinting</h2>
+<p>What they check, grouped:</p>
+<pre><code class="language-text">Registry:  HKLM\HARDWARE\...\SystemBiosVersion containing VBOX, QEMU, VMWARE
+Files:     C:\windows\system32\drivers\vmmouse.sys, vmhgfs.sys, VBoxGuest
+Processes: vmtoolsd.exe, vboxservice.exe, qemu-ga.exe
+MAC:       08:00:27 (VirtualBox), 00:05:69 / 00:0C:29 / 00:50:56 (VMware)
+WMI:       Win32_ComputerSystem Manufacturer = &quot;innotek GmbH&quot;, &quot;VMware, Inc.&quot;
+CPUID:     hypervisor bit (bit 31 of ECX, leaf 1)</code></pre>
+<p>Bypass strategy is environmental, not per-sample:</p>
+<ol>
+<li>Rename or remove guest-tool artifacts from the analysis VM image.</li>
+<li>Change the virtual MAC to a real vendor OUI.</li>
+<li>Scrub registry strings the sample checks (snapshot a hardened image</li>
+<p>once, reuse it).</p>
+<li>For CPUID hypervisor bit: some hypervisors can mask it; otherwise</li>
+<p>patch the check in the sample.</p>
+</ol>
+<p>Static hunt to learn exactly which artifact a sample checks:</p>
+<pre><code class="language-bash">floss sample.exe | grep -iE &quot;vbox|vmware|qemu|virtual|xen&quot; | sort -u</code></pre>
+<p>Example output shape:</p>
+<pre><code class="language-text">VBoxGuest
+SELECT * FROM Win32_ComputerSystem
+08:00:27</code></pre>
+<p>That output tells you the exact three things to scrub or spoof. Always let the sample tell you what it checks before you harden blindly.</p>
+<h2>4. Stalling and logic bombs</h2>
+<p>Beyond sleeps: samples that require user interaction (mouse movement, document scroll), require a reboot to continue (RunOnce staging), or wait for a date. Handle each:</p>
+<ul>
+<li>Interaction checks: enable simulated user activity in the sandbox</li>
+<p>profile; in manual analysis, move the mouse and click while stepping.</p>
+<li>Reboot staging: let the VM reboot with the snapshot chain intact, or</li>
+<p>manually run the staged payload from its persistence location.</p>
+<li>Date checks: set the VM clock forward in a snapshot (never on the</li>
+<p>host), or patch the GetSystemTime comparison.</p>
+</ul>
+<h2>5. Validating the bypass</h2>
+<p>A bypass is proven, not assumed. Validation protocol:</p>
+<ol>
+<li>Baseline run (no bypass): record behavior (exit code, API count,</li>
+<p>network events).</p>
+<li>Bypass run: record the same metrics.</li>
+<li>The delta must show new malicious behavior (beacons, drops, injection),</li>
+<p>not just a longer run doing nothing.</p>
+<li>Revert the bypass and confirm the sample goes quiet again</li>
+<p>(proves the bypass caused the change, not luck).</p>
+</ol>
+<pre><code class="language-bash"># Compare sandbox API call volume as a rough signal
+jq &#x27;[.behavior.processes[].calls | length] | add&#x27; baseline.json
+jq &#x27;[.behavior.processes[].calls | length] | add&#x27; bypassed.json</code></pre>
+<p>If the bypassed run shows 10x the API calls and new network traffic, the gate is open. Document the exact bypass set with the report; &quot;sample analyzed with ScyllaHide default profile plus Sleep patched at file offset 0x1234&quot; is reproducible, &quot;we got it working&quot; is not.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Layered checks: debugger check, then timing check, then VM check in</li>
+<p>sequence. Defeat one at a time; patching all at once hides which one mattered and can break the sample.</p>
+<li>Checks in TLS callbacks or entry-point obfuscation: the check runs</li>
+<p>before main(). Set breakpoints on module load, not on main.</p>
+<li>Samples that behave differently under any debugger even with hiding:</li>
+<p>fall back to sandbox-only analysis with a hardened image, or to bare-metal detonation.</p>
+<li>Anti-bypass: some samples detect ScyllaHide&#x27;s hooks. Then patch the</li>
+<p>check directly instead of hiding the debugger.</p>
+<li>Legitimate protectors: commercial software uses the same techniques</li>
+<p>(Themida, VMProtect). The bypass methods are identical; the authorization boundary is what differs.</p>
+<li>Over-patching: NOPing too aggressively can remove initialization the</li>
+<p>payload needs. Patch minimally and smoke-test.</p>
+<li>64-bit PEB offsets differ from 32-bit; use the right offsets for the</li>
+<p>target bitness or your manual PEB patch hits the wrong field.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If the sample detects every hiding technique and patching breaks it,</li>
+<p>escalate to bare-metal analysis or to tracing via Intel PT / hypervisor introspection; some samples only yield to invisible observation.</p>
+<li>If bypass reveals worm-like spreading or destructive behavior,</li>
+<p>escalate to the incident lead before continuing; the analysis environment gets tighter, not looser.</p>
+<li>If the anti-analysis is custom and undocumented after serious effort,</li>
+<p>escalate to a reverse engineer for a dedicated unpacking/dev obfuscation pass.</p>
+<li>If you cannot determine whether a check is anti-analysis or legitimate</li>
+<p>tamper protection on software you are assessing, stop and clarify scope before bypassing further.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Every evasion technique you bypass is a detection idea. IsDebuggerPresent before network activity is itself suspicious; WMI queries for VM vendor strings in a process that then exits is a sandbox-evasion signal worth a Sigma rule. Feed the specific artifacts (registry keys queried, MAC OUIs checked, window titles scanned) to threat intel: they fingerprint the malware family as surely as a C2 domain. For defenders hardening their own detection lab, this skill runs in reverse: build the hardened image once (scrubbed artifacts, realistic MAC, guest tools removed) and every future detonation benefits. Track evasion trends across samples; a sudden rise in a new check (a novel timing trick) is intel about the tooling your adversaries are adopting.</p>
+<h2>Key references</h2>
+<ul>
+<li>x64dbg documentation:</li>
+<p>https://x64dbg.com/</p>
+<li>ScyllaHide (anti-anti-debug plugin):</li>
+<p>https://github.com/x64dbg/ScyllaHide</p>
+<li>MITRE ATT&amp;CK: T1622 (Debugger Evasion), T1497 (Virtualization/Sandbox</li>
+<p>Evasion), T1497.001 (System Checks), T1497.003 (Time Based Evasion)</p>
+<li>Practical Malware Analysis (Sikorski and Honig), Chapter 16</li>
+<p>(anti-disassembly) and Chapter 17 (anti-debugging concepts)</p>
+<li>MITRE ATT&amp;CK T1497 sub-techniques:</li>
+<p>https://attack.mitre.org/techniques/T1497/</p>
+<li>Al-Khaser (open-source anti-analysis test tool, for validating your</li>
+<p>hardened lab): https://github.com/LordNoteworthy/al-khaser</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

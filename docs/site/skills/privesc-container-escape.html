@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-container-escape</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-container-escape</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized testing lands you inside a container and</p><h2>Sub-skills</h2><ul><li><a href="privesc-container-escape-capabilities-abuse.html">privesc-container-escape-capabilities-abuse</a> <span class="muted">v1.0.0: Use when authorized container escape testing shows a container</span></li><li><a href="privesc-container-escape-docker-socket.html">privesc-container-escape-docker-socket</a> <span class="muted">v1.0.0: Use when assessing container deployments for exposed Docker</span></li><li><a href="privesc-container-escape-privileged-containers.html">privesc-container-escape-privileged-containers</a> <span class="muted">v1.0.0: Use when authorized container escape testing reveals a privileged</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a> <a href="privesc-linux-vectors.html">privesc-linux-vectors</a> <a href="linux-container-hardening.html">linux-container-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>docker</td><td>25.0</td></tr><tr><td>kubectl</td><td>1.29</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A container is not a security boundary by itself: it is kernel namespaces plus cgroups, and misconfigurations punch holes straight through to the host. This skill maps container escape vectors for authorized penetration tests, labs, and CTFs only. Escaping a container compromises the host and every workload on it, so treat escape testing as host-level exploitation: it needs explicit authorization, and in production it is usually out of scope. The workflow is detect, audit the container&#x27;s privileges and mounts, verify each escape primitive by hand, exploit the quietest path, and document host impact carefully. Deep dives live in the sub-skills.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Detect containerization: <code>/.dockerenv</code>, <code>/proc/1/cgroup</code>, hostname patterns, and limited <code>/proc</code> visibility.</li>
+<li>Identify the runtime and orchestrator: Docker, containerd, CRI-O, Kubernetes service account tokens.</li>
+<li>Audit the container&#x27;s power: privileged flag, capabilities (<code>capsh --print</code>), mounts (<code>mount</code>, <code>/proc/mounts</code>), and exposed sockets.</li>
+<li>Check for the classic escape primitives: docker socket mounted, host filesystem mounted, privileged mode, dangerous capabilities.</li>
+<li>Verify each primitive by hand before exploiting: confirm the socket responds, confirm the mount is writable, confirm the capability is effective.</li>
+<li>Exploit the quietest reliable primitive, confirm host access with a marker, and capture evidence.</li>
+<li>Document host impact precisely: what host paths were reachable and what host-level actions were taken.</li>
+</ol>
+<h2>1. Detecting the container and runtime</h2>
+<p>Establish what you are inside before planning the escape.</p>
+<pre><code class="language-bash">ls -la /.dockerenv 2&gt;/dev/null
+cat /proc/1/cgroup 2&gt;/dev/null | head -5
+cat /proc/self/mountinfo | grep -i docker | head -5
+ls /var/run/secrets/kubernetes.io/serviceaccount/ 2&gt;/dev/null</code></pre>
+<p>Example output shape: <code>/.dockerenv</code> existing plus cgroup paths containing <code>docker</code> confirms Docker; a serviceaccount token directory confirms a Kubernetes pod. Also check <code>hostname</code> (Docker sets random hex hostnames) and whether <code>docker</code>, <code>crictl</code>, or <code>kubectl</code> binaries exist inside the container.</p>
+<h2>2. Privileged mode and dangerous mounts</h2>
+<p>A privileged container has almost no boundary left; dangerous mounts are the next best thing.</p>
+<pre><code class="language-bash">capsh --print | head -5
+mount | grep -v cgroup | head -20</code></pre>
+<p>Example output shape: <code>capsh</code> showing a full bounding set including <code>cap_sys_admin</code> suggests privileged mode; <code>mount</code> showing <code>/host</code> or <code>/</code> mounted from the host device, or <code>/var/run/docker.sock</code> in the list, is the escape primitive. Writable host mounts mean direct host file access: read <code>/etc/shadow</code> through the mount or write to host cron. The <code>privesc-container-escape-privileged-containers</code> sub-skill covers the full privileged audit.</p>
+<h2>3. Docker socket abuse</h2>
+<p>A mounted Docker socket is remote root on the host&#x27;s container runtime: anyone who can talk to it can start a privileged container with the host filesystem mounted.</p>
+<pre><code class="language-bash">ls -la /var/run/docker.sock
+curl -s --unix-socket /var/run/docker.sock http://localhost/version</code></pre>
+<p>Example output shape: the version endpoint returning JSON with <code>Version: 25.0</code> confirms the socket is live. The escape is launching a container with host mounts and chrooting into the host filesystem. Full technique, including socket API calls without the docker CLI, is in <code>privesc-container-escape-docker-socket</code>.</p>
+<h2>4. Capability abuse</h2>
+<p>Granted capabilities are granular root powers; several are escape-equivalent on their own.</p>
+<pre><code class="language-bash">capsh --print | grep -i bounding
+grep Cap /proc/self/status</code></pre>
+<p><code>CAP_SYS_ADMIN</code> enables mount and namespace manipulation escapes; <code>CAP_SYS_PTRACE</code> allows injecting into host processes when the PID namespace is shared or via host proc mounts; <code>CAP_DAC_READ_SEARCH</code> reads any host file through a mounted proc or sys; <code>CAP_SYS_MODULE</code> loads kernel modules on the shared host kernel. The <code>privesc-container-escape-capabilities-abuse</code> sub-skill maps each dangerous capability to its escape chain.</p>
+<h2>5. Kubernetes pod escapes</h2>
+<p>Pods add orchestrator-layer primitives on top of container escapes.</p>
+<pre><code class="language-bash">cat /var/run/secrets/kubernetes.io/serviceaccount/token 2&gt;/dev/null | cut -c1-40
+env | grep -i -E &quot;kuber|service_host|service_port&quot;</code></pre>
+<p>A mounted service account token plus network access to the API server means querying the API for your pod&#x27;s permissions; overly broad RBAC (cluster-admin bindings, pod exec rights, secrets read) converts to cluster compromise. Also check for hostPath volumes, projected tokens, and node-level access. Escape within the authorized scope only; cluster-wide actions need explicit approval.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Some containers mount the docker socket read-only or with SELinux labels that block access; verify with an actual API call, not just <code>ls</code>.</li>
+<li><code>capsh</code> output inside user namespaces can be misleading; cross-check with <code>/proc/self/status</code> capability masks decoded against capability names.</li>
+<li>Distroless and minimal containers lack <code>curl</code>, <code>capsh</code>, and even a shell; use available binaries or exfiltrate <code>/proc</code> files for local analysis.</li>
+<li>Read-only root filesystems block payload drops inside the container but do not block escapes through mounts and sockets.</li>
+<li>Seccomp and AppArmor profiles can neuter capability-based escapes even when the capability is granted; test the primitive rather than assuming.</li>
+<li>Kubernetes network policies may block pod-to-API-server traffic; verify connectivity before assuming the service account token is useful.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If no escape primitive exists, treat the container as a beachhead: enumerate internal networks, reachable services, and mounted secrets for lateral movement within scope.</li>
+<li>When the socket is absent but the container is privileged, the cgroup release_agent path (lab contexts) or host device access may still apply.</li>
+<li>If capabilities are minimal and mounts are clean, check for writable hostPath volumes and overly permissive service account RBAC in Kubernetes.</li>
+<li>Combine primitives: a read-only host mount plus <code>CAP_DAC_READ_SEARCH</code> still yields full host file disclosure.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders prevent escapes by never mounting the docker socket, never running privileged containers, dropping all capabilities and adding back only what is needed, using read-only root filesystems, and enforcing seccomp and AppArmor profiles. Runtime security monitoring (Falco rules for socket access, unexpected mounts, and privilege use) detects escape attempts. From the authorized tester side, escape testing is host-impacting by definition: keep payloads minimal, avoid host modifications beyond proof markers, and document every host-level action with timestamps for the report.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1611 (Escape to Host), T1609 (Container Administration Command)</li>
+<li>Docker security docs: https://docs.docker.com/engine/security/</li>
+<li>Kubernetes RBAC docs: https://kubernetes.io/docs/reference/access-authn-authz/rbac/</li>
+<li>HackTricks container escapes: https://book.hacktricks.xyz/linux-hardening/privilege-escalation/docker-breakout</li>
+<li>Center for Internet Security Docker Benchmark: https://www.cisecurity.org/benchmark/docker</li>
+<li>Falco container runtime rules: https://falco.org/docs/rules/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

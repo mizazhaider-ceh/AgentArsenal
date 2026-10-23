@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-duplicate-avoidance-search-techniques</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-duplicate-avoidance-search-techniques</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have fingerprinted an in-scope finding and need to search thoroughly for prior reports before submitting. Covers building search queries from the finding fingerprint, searching HackerOne Hacktivity and Bugcrowd disclosures effectively, grepping your own per-program history, using search engines for hunter write-ups, and varying terminology so differently-titled duplicates still surface. Authorized targets only.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="bugbounty-duplicate-avoidance.html">bugbounty-duplicate-avoidance</a></div><div class="deps"><span class="kind">requires:</span> <a href="bugbounty-duplicate-avoidance.html">bugbounty-duplicate-avoidance</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bugbounty-duplicate-avoidance-disclosure-timelines.html">bugbounty-duplicate-avoidance-disclosure-timelines</a> <a href="bugbounty-duplicate-avoidance-program-specific-dupes.html">bugbounty-duplicate-avoidance-program-specific-dupes</a> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Searching is a skill: the duplicate you miss is the payout you lose. Different hunters title the same bug differently, disclosures get redacted, and your own history is the fastest check you have. This sub-skill covers the search techniques for the duplicate check step of bugbounty-duplicate-avoidance: query construction, where to look, terminology variation, and searching your own records. Search only for findings on in-scope targets.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Write the fingerprint: bug class, component, endpoint, effect, one line.</li>
+<li>Generate query variants: formal terms, slang terms, component names, endpoint paths.</li>
+<li>Search your own history first: submissions.log and findings folders for this program (fastest, highest hit rate for self-dupes).</li>
+<li>Search HackerOne Hacktivity filtered to the program with each query variant.</li>
+<li>Search Bugcrowd disclosures and the program brief page.</li>
+<li>Search web engines for hunter write-ups naming the program and bug class.</li>
+<li>Record the search: queries run, hits reviewed, verdict (clear or duplicate).</li>
+</ol>
+<h2>1. Building queries from the fingerprint</h2>
+<p>From the fingerprint, generate at least six queries by varying each axis:</p>
+<pre><code>Fingerprint: stored-xss | support.example.com | /api/v1/tickets subject | admin queue
+
+Queries:
+1. &quot;Example Corp&quot; stored XSS
+2. &quot;Example Corp&quot; &quot;cross-site scripting&quot;
+3. &quot;Example Corp&quot; ticket XSS
+4. &quot;Example Corp&quot; &quot;support portal&quot; XSS
+5. site:hackerone.com &quot;Example Corp&quot; XSS
+6. &quot;example.com&quot; XSS writeup</code></pre>
+<p>Vary the bug class terms: &quot;XSS,&quot; &quot;cross-site scripting,&quot; &quot;script injection,&quot; &quot;HTML injection.&quot; Vary the component: &quot;ticket,&quot; &quot;support portal,&quot; &quot;helpdesk.&quot; Vary the program name: legal name, brand name, domain. One axis fixed while others vary catches the reports titled differently from yours.</p>
+<h2>2. Searching your own history first</h2>
+<p>Your own submissions are the duplicates you can prevent in ten seconds:</p>
+<pre><code class="language-bash"># Per-program log: fingerprint, date, status
+cat ~/bb/example.com/submissions.log
+# Example line: 2026-09-14 | stored-xss | tickets subject | submitted | triaged-medium
+
+# Grep findings and notes for the class and the endpoint
+grep -ril &quot;xss&quot; ~/bb/example.com/findings/ | head
+grep -ri &quot;ticket&quot; ~/bb/example.com/submissions.log</code></pre>
+<p>Keep the log format fixed: date, bug class, component, endpoint, status. Fixed format makes grep reliable. Log every submission the day you submit it, including the fingerprint; memory of what you submitted six months ago is unreliable.</p>
+<h2>3. Platform disclosure search</h2>
+<p>HackerOne Hacktivity: filter to the program first, then search. Read titles and the disclosed summaries; note the vulnerable area each names. Sort by recent: a two-year-old disclosure about rewritten code is weaker evidence of duplication than last month&#x27;s.</p>
+<p>Bugcrowd: check disclosed submissions and the program brief. Some briefs list &quot;commonly reported issues&quot; which function as a pre-announced duplicate list; treat those classes as submit-only-with-a-twist.</p>
+<p>The program&#x27;s own channels: changelog, status page, security.txt history, release notes. A fixed version number next to your component is a strong duplicate signal; a rewrite of the component since disclosure weakens it.</p>
+<h2>4. Web search for write-ups</h2>
+<p>Hunters publish write-ups after disclosure, often with more technical detail than the platform disclosure:</p>
+<pre><code>&quot;example.com&quot; bug bounty writeup XSS
+&quot;Example Corp&quot; hackerone XSS
+&quot;support.example.com&quot; vulnerability</code></pre>
+<p>Write-ups name exact endpoints and payloads, which lets you compare precisely against your fingerprint. They also reveal the program&#x27;s triage behavior: what they paid, what they marked duplicate, how they worded the fix.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>No disclosed reports exist for the program: search your history and the program&#x27;s changelog only, then submit. New or private programs have thin disclosure trails; that is normal.</li>
+<li>Disclosures are heavily redacted: compare on bug class plus component; when you cannot rule it out, note the possibly-related disclosure in your report and let triage decide.</li>
+<li>The same hunter discloses the same class repeatedly: read their write-ups; they are effectively publishing the program&#x27;s duplicate map for free.</li>
+<li>Search results are polluted by other companies with similar names: add the domain to every query to disambiguate.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Searches keep coming back ambiguous: timebox the search to 30 minutes. Beyond that, the expected value of more searching drops below the expected value of submitting with a clear fingerprint and a note.</li>
+<li>You find a write-up describing your exact bug on a different program: not a duplicate, but a strong hint the pattern is common. Check the siblings on your program extra carefully before submitting.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Hunters who search well submit fewer duplicates, which directly shrinks your triage queue. Encourage it: keep disclosures searchable and specific.</li>
+<li>Publish write-up-friendly disclosures: specific component names and fixed versions let the next hunter self-check instead of submitting blind.</li>
+<li>Monitor which of your disclosures get cited in hunter write-ups; those are the patterns the community now knows, so expect sibling-hunting there.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>HackerOne Hacktivity: https://hackerone.com/hacktivity</li>
+<li>HackerOne disclosure guidelines: https://docs.hackerone.com</li>
+<li>Bugcrowd researcher documentation: https://docs.bugcrowd.com</li>
+<li>OWASP Testing Guide: https://owasp.org/www-project-web-security-testing-guide/</li>
+<li>MITRE ATT&amp;CK T1596 Search Open Websites/Domains: https://attack.mitre.org/techniques/T1596/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

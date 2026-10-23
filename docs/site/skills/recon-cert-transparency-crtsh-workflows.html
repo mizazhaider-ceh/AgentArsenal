@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-cert-transparency-crtsh-workflows</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-cert-transparency-crtsh-workflows</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when crt.sh is your main certificate transparency interface for authorized recon on a target domain. Covers the web UI for spot checks, the JSON API for pipelines (wildcard, exact, and identity searches), handling pagination on large result sets, extracting issuer and validity metadata, and troubleshooting the slow or rate-limited responses crt.sh is known for. Authorized targets only, only query domains you are permitted to test.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="recon-cert-transparency.html">recon-cert-transparency</a></div><div class="deps"><span class="kind">requires:</span> <a href="recon-cert-transparency.html">recon-cert-transparency</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-cert-transparency-subdomain-extraction.html">recon-cert-transparency-subdomain-extraction</a> <a href="recon-cert-transparency-certstream-monitoring.html">recon-cert-transparency-certstream-monitoring</a> <a href="recon-passive.html">recon-passive</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>curl</td><td>8.5</td></tr><tr><td>jq</td><td>1.7</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>crt.sh is the standard free interface to certificate transparency logs, run as a public service. It offers a web UI and a JSON API over the same database. This sub-skill covers using both well for recon-cert-transparency: query types, pagination, metadata extraction, and surviving its performance quirks. Only query domains you are authorized to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Start with the web UI for one spot check to validate your query shape.</li>
+<li>Move to the JSON API for repeatable pipeline queries; save raw JSON every run.</li>
+<li>Run three query shapes: wildcard (<code>%25.</code>), bare domain, and exact-match where needed.</li>
+<li>Handle pagination on large result sets; do not silently accept a truncated page.</li>
+<li>Extract names plus metadata (issuer, not_before, serial) in one pass.</li>
+<li>Diff against your previous run to find newly issued certificates.</li>
+<li>Log query dates; CT data grows and your notes should show when each snapshot was taken.</li>
+</ol>
+<h2>1. Web UI spot checks</h2>
+<p>Open <code>https://crt.sh/?q=%25.example.com</code> in a browser for a quick look. The UI shows the certificate list with identity, issuer, and validity dates, and it is the fastest way to validate that a query shape returns what you expect before scripting it. Use the UI to answer one-off questions (&quot;did they issue anything this week&quot;) and the API for everything repeatable.</p>
+<h2>2. JSON API query shapes</h2>
+<pre><code class="language-bash"># Wildcard: all names under the domain (the workhorse query)
+curl -s &quot;https://crt.sh/?q=%25.example.com&amp;output=json&quot; -o wild.json
+
+# Bare domain: certificates issued for the root itself
+curl -s &quot;https://crt.sh/?q=example.com&amp;output=json&quot; -o bare.json
+
+# Identity search: certificates where the organization field matches
+curl -s &quot;https://crt.sh/?Identity=Example%20Ltd&amp;output=json&quot; -o org.json</code></pre>
+<p>The Identity search catches certificates on unrelated domains issued to the same organization, which sometimes reveals acquisitions or shadow infrastructure. Remember the authorization boundary: names outside your scoped domains are leads for scope questions, not targets.</p>
+<p>Each JSON entry includes <code>issuer_ca_id</code>, <code>issuer_name</code>, <code>name_value</code>, <code>not_before</code>, <code>not_after</code>, <code>serial</code>, and more. Save the raw files; re-parsing beats re-querying.</p>
+<h2>3. Pagination on large results</h2>
+<p>crt.sh caps rows per response. For large domains, a single query silently truncates:</p>
+<pre><code class="language-bash"># Check result counts between runs to detect truncation
+jq length wild.json
+# If the count looks capped, page explicitly. crt.sh supports
+# PostgreSQL-style paging on some endpoints; otherwise split the
+# query by time window using not_before ranges, or fall back to
+# an alternative CT API (e.g. censys certificates search) for the remainder.</code></pre>
+<p>Practical approach: query once, note the count and the date range covered, and if the newest entries stop suspiciously early, split by year using date-bounded queries and merge. Document the coverage (&quot;2020-2026, ~48k rows across 3 queries&quot;) so future you trusts the snapshot.</p>
+<h2>4. Metadata extraction in one pass</h2>
+<pre><code class="language-bash"># Names plus issuer plus validity, deduplicated, newest first
+jq -r &#x27;.[] | &quot;\(.not_before) | \(.issuer_name | split(&quot;=&quot;)[-1]) | \(.name_value)&quot;&#x27; wild.json \
+  | tr &#x27;[:upper:]&#x27; &#x27;[:lower:]&#x27; \
+  | sort -u | sort -r &gt; crtsh-meta.txt
+head -20 crtsh-meta.txt</code></pre>
+<p>Example output shape:</p>
+<pre><code>2026-10-20 | lets encrypt | new-staging.example.com
+2026-10-18 | digicert | api.example.com
+2026-09-02 | lets encrypt | legacy-app.example.com</code></pre>
+<p>Read this for: new issuances (top of the sorted list), issuer diversity (many CAs suggests decentralized issuance, possibly shadow IT), and short validity periods (ACME automation versus manual processes).</p>
+<h2>5. Diffing runs for new certificates</h2>
+<pre><code class="language-bash"># Previous run: crtsh-names-old.txt. Current: crtsh-names.txt
+comm -13 &lt;(sort crtsh-names-old.txt) &lt;(sort crtsh-names.txt) &gt; crtsh-new.txt
+cat crtsh-new.txt</code></pre>
+<p>New names between runs are the highest-signal output of CT monitoring: they represent infrastructure created since your last check. During an engagement, run the wildcard query daily and diff. Each new name goes straight into resolution and httpx probing.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>crt.sh times out or returns 500s: it does under load. Retry with exponential backoff, run at off-peak hours, and keep the last good snapshot so a failed run never leaves you empty-handed.</li>
+<li>Rate limiting after many queries: space queries minutes apart; crt.sh is a free service and aggressive polling gets throttled.</li>
+<li>JSON with embedded newlines in name_value: use jq&#x27;s raw output carefully and split multi-name entries on newlines before deduping.</li>
+<li>Identity search returns unrelated orgs with similar names: verify with the domain filter before treating anything as a lead.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>crt.sh cannot cover a huge domain&#x27;s full history: supplement with alternative CT search APIs (Censys certificates, commercial CT monitors) for the remainder, and note the coverage gap.</li>
+<li>You need programmatic access at scale: run your own CT log mirror client against the public log list instead of hammering crt.sh.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>crt.sh is public: defenders see the same data. Set up alerts on your own domains for certificates you did not issue.</li>
+<li>Querying crt.sh leaves no trace on the target; it is fully passive. The only logs are crt.sh&#x27;s own.</li>
+<li>If your CT monitoring spots a certificate you did not authorize, treat it as a potential CA compromise or account takeover and investigate immediately.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>crt.sh: https://crt.sh</li>
+<li>crt.sh query interface docs: https://crt.sh/?q=example.com</li>
+<li>RFC 6962 Certificate Transparency: https://www.rfc-editor.org/rfc/rfc6962.html</li>
+<li>Google CT log list: https://www.gstatic.com/ct/log_list/v3/log_list.json</li>
+<li>Censys certificates search: https://search.censys.io</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

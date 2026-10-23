@@ -3,7 +3,7 @@
 ```mermaid
 mindmap
   root((AgentArsenal
-156 skills, 28 domains,
+285 skills, 29 domains,
 25 agents, 16 brains, 8 playbooks))
     ad
       ad-enumeration

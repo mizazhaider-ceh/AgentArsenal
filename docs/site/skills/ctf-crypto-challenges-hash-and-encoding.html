@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-crypto-challenges-hash-and-encoding</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-crypto-challenges-hash-and-encoding</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">98/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF crypto challenge involves password hashes,</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-crypto-challenges.html">ctf-crypto-challenges</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-crypto-challenges.html">ctf-crypto-challenges</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ctf-crypto-challenges.html">ctf-crypto-challenges</a> <a href="ctf-forensics-challenges.html">ctf-forensics-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>hashcat</td><td>6.2.6</td></tr><tr><td>John the Ripper</td><td>1.9.0-jumbo</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>CyberChef</td><td>latest</td></tr></tbody></table><p>Hashes and encodings are the plumbing of CTF crypto: flags hashed with weak algorithms, secrets hidden behind five encoding layers, and MACs built on raw MD5. This sub-skill covers the authorized methodology for both halves: identifying and cracking hashes efficiently, and peeling encoding layers mechanically. Scope is CTF competitions and lab exercises only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the hash or encoding: length, charset, prefix markers</li>
+<p>(<code>$2y$</code>, <code>$6$</code>, <code>{SHA}</code>), CyberChef Magic for unknowns.</p>
+<li>If it is an encoding, peel layers mechanically (section 4) before</li>
+<p>assuming crypto.</p>
+<li>If it is a hash, run a wordlist attack first (rockyou covers most</li>
+<p>CTF preimages).</p>
+<li>Escalate to masks and rules matching the challenge theme when</li>
+<p>wordlists fail.</p>
+<li>For MAC-style constructions (<code>md5(secret + message)</code>), test length</li>
+<p>extension instead of cracking.</p>
+<li>For slow hashes (bcrypt), keep the candidate space tiny or find</li>
+<p>the flaw elsewhere.</p>
+<li>Verify cracked output against the flag format; partial matches</li>
+<p>usually mean a wrong hash mode.</p>
+<li>Note the algorithm and mode for the writeup; hash challenges are</li>
+<p>easy points when the mode is right.</p>
+</ol>
+<h2>1. Hash identification</h2>
+<pre><code class="language-bash"># Length and charset cheat sheet
+# 32 hex chars  -&gt; MD5(0), NTLM(1000), md5crypt(500)
+# 40 hex chars  -&gt; SHA1(100)
+# 56 hex chars  -&gt; SHA224(1300)
+# 64 hex chars  -&gt; SHA256(1400), SHA3-256(17400)
+# 96 hex chars  -&gt; SHA384(10800)
+# 128 hex chars -&gt; SHA512(1700)
+# $2y$/$2a$...  -&gt; bcrypt(3200)
+# $6$...        -&gt; sha512crypt(1800)
+# $1$...        -&gt; md5crypt(500)
+
+# hashid-style identification (or CyberChef &quot;Detect File Type&quot; style heuristics)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import re
+h = open(&quot;hash.txt&quot;).read().strip()
+print(&quot;len:&quot;, len(h))
+print(&quot;hex:&quot;, bool(re.fullmatch(r&quot;[0-9a-fA-F]+&quot;, h)))
+print(&quot;b64:&quot;, bool(re.fullmatch(r&quot;[A-Za-z0-9+/=]+&quot;, h)))
+print(&quot;prefix:&quot;, h[:4])
+EOF</code></pre>
+<p>When in doubt, try the top 3 candidates for the length in hashcat rather than identifying perfectly; a wrong mode just fails fast.</p>
+<h2>2. Cracking: wordlist, mask, rules</h2>
+<pre><code class="language-bash"># Wordlist first: rockyou solves most CTF hashes
+hashcat -m 0 hashes.txt /usr/share/wordlists/rockyou.txt --force
+
+# Show cracked results
+hashcat -m 0 hashes.txt --show
+
+# Mask attack when the preimage pattern is known (e.g. flag{...} or 4 digits)
+hashcat -m 0 -a 3 &#x27;flag{?l?l?l?l}&#x27; --force
+hashcat -m 1400 -a 3 &#x27;?d?d?d?d?d?d&#x27; --force
+
+# Rule-based mangling on a small custom wordlist (challenge theme words)
+hashcat -m 0 hashes.txt theme_words.txt -r /usr/share/hashcat/rules/best64.rule --force
+
+# John the Ripper auto-detects formats; good for crypt-style hashes
+john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
+john --show hashes.txt</code></pre>
+<p>Speed notes: NTLM and raw MD5 crack at billions per second on GPU; bcrypt at tens per second, so bcrypt challenges always have tiny preimages or a flaw elsewhere. Match the effort to the algorithm.</p>
+<h2>3. Length extension attacks</h2>
+<p>When the construction is <code>hash(secret || message)</code> with MD5, SHA1, or SHA256, append data without knowing the secret.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+# Concept: H(secret || msg || padding || extension) is computable from H(secret || msg)
+# Use a length-extension tool (hashpump / hash_extender) rather than hand-rolling:
+#
+# hashpump usage:
+#   Input: original hex digest, original message, secret length guess, data to append
+#   Output: forged digest + forged message</code></pre>
+<pre><code class="language-bash"># hashpump (install per your environment)
+hashpump -s 5d41402abc4b2a76b9719d911017c592 -d &#x27;data&#x27; -k 16 -a &#x27;evil&#x27;
+# try secret lengths 8..32; the server accepting one of them confirms the guess
+
+# hash_extender (Python alternative)
+python3 hash_extender.py --data-format=hex --secret-min=8 --secret-max=32 \
+  --data=&#x27;data&#x27; --append=&#x27;evil&#x27; --signature=5d41402abc4b2a76b9719d911017c592 --out-data-format=html</code></pre>
+<p>This breaks naive <code>md5(key + message)</code> MACs in CTF web/crypto hybrids. HMAC is immune; the attack only works on raw Merkle-Damgard hashes.</p>
+<h2>4. Encoding layer peeling</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Peel stacked encodings until the plaintext or flag appears.&quot;&quot;&quot;
+import base64, binascii, codecs
+
+def try_peel(s):
+    candidates = []
+    def ok(x): return isinstance(x, str) and x and all(32 &lt;= ord(c) &lt; 127 or c in &quot;\n\r\t&quot; for c in x[:80])
+    for name, fn in [
+        (&quot;base64&quot;, lambda x: base64.b64decode(x).decode()),
+        (&quot;base32&quot;, lambda x: base64.b32decode(x).decode()),
+        (&quot;hex&quot;, lambda x: bytes.fromhex(x).decode()),
+        (&quot;reverse&quot;, lambda x: x[::-1]),
+        (&quot;rot13&quot;, lambda x: codecs.decode(x, &quot;rot_13&quot;)),
+        (&quot;url&quot;, lambda x: __import__(&quot;urllib.parse&quot;).unquote(x)),
+    ]:
+        try:
+            out = fn(s)
+            if out != s and ok(out): candidates.append((name, out))
+        except Exception: pass
+    return candidates
+
+s = open(&quot;blob.txt&quot;).read().strip()
+for depth in range(12):
+    peels = try_peel(s)
+    if not peels:
+        print(&quot;stuck at:&quot;, s[:120]); break
+    name, s = peels[0]
+    print(f&quot;[{depth}] {name}: {s[:80]}&quot;)
+    if &quot;flag{&quot; in s or &quot;CTF{&quot; in s:
+        print(&quot;FLAG FOUND:&quot;, s); break</code></pre>
+<p>CyberChef&#x27;s Magic operation does this interactively and also tries XOR, URL, and HTML entity layers. When the blob is binary (not text), check <code>file</code> output after each peel; a peel that yields gzip/zlib data means decompress next.</p>
+<h2>5. Recognizing short-preimage brute force</h2>
+<p>Some challenges hash a short secret (4-8 chars) with a strong hash; the intended solve is brute force, not wordlists.</p>
+<pre><code class="language-bash"># hashcat mask for 6-char lowercase+digits SHA256
+hashcat -m 1400 abc123hash.txt -a 3 &#x27;?l?l?l?l?l?l&#x27; -1 &#x27;?l?d&#x27; --force
+
+# Python for tiny spaces with a custom alphabet (challenge-themed charset)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import hashlib, itertools, string
+target = bytes.fromhex(open(&quot;hash.txt&quot;).read().strip())
+alpha = string.ascii_lowercase + string.digits
+for n in (4, 5, 6):
+    for tup in itertools.product(alpha, repeat=n):
+        cand = &quot;&quot;.join(tup).encode()
+        if hashlib.sha256(cand).digest() == target:
+            print(&quot;found:&quot;, cand); raise SystemExit
+    print(&quot;length&quot;, n, &quot;exhausted&quot;)
+EOF</code></pre>
+<p>Estimate the space first: 36^6 is 2 billion, too slow in Python but fine in hashcat on GPU; 36^8 is out of reach, so the intended path is different (wordlist, flaw, or oracle).</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The &quot;hash&quot; is actually HMAC with an unknown key: cracking is</li>
+<p>impossible; look for key leakage or length extension on a related raw-hash construction instead.</p>
+<li>Salted hashes (<code>salt$hash</code>): hashcat handles common salt formats;</li>
+<p>for custom salting, read the source and replicate the construction in Python with a wordlist loop.</p>
+<li>The encoding blob decodes to more encoding: keep peeling; CTF</li>
+<p>authors stack 5-10 layers and the flag format check tells you when to stop.</p>
+<li>Case-sensitive base64 with missing padding: add <code>=</code> padding before</li>
+<p>decoding; some challenges strip it deliberately.</p>
+<li>The digest length matches nothing standard: it may be truncated (half</li>
+<p>MD5 is common in CTFs); try truncated variants of the top candidates.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Wordlist plus masks fail on a fast hash: the preimage may be</li>
+<p>random-looking (then it is not meant to be cracked; find the flaw), or the mode is wrong (NTLM vs MD5 give different results for the same password; try both).</p>
+<li>Length extension guesses all fail: the secret length range may be</li>
+<p>wider, or the construction is HMAC (immune); re-read the source.</p>
+<li>bcrypt will not crack in competition time: the password is in the</li>
+<p>challenge materials (config, comment, another artifact); search there instead of burning GPU hours.</p>
+<li>The hash cracks but the preimage is not the flag: the preimage may be</li>
+<p>a key for the next stage (XOR key, archive password); try it as input to the surrounding challenge before moving on.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders use hash identification and cracking legitimately: auditing password databases for weak passwords, verifying that dumps cannot be cracked quickly (a red-team service, not an attack on others). The defensive lessons are direct: store passwords with argon2id/bcrypt/ scrypt with proper work factors, never raw MD5/SHA; use HMAC, not raw hash, for MACs; and treat any crackable hash exposure as a breach requiring password resets. Detection focuses on credential stuffing with cracked passwords and on code that still uses broken hashes.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1110 (Brute Force) and T1552.001 (Credentials In</li>
+<p>Files).</p>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm).</li>
+<li>CWE-916 (Use of Password Hash With Insufficient Computational</li>
+<p>Effort).</p>
+<li>CWE-759 (Use of a One-Way Hash without a Salt).</li>
+<li>hashcat example hashes: https://hashcat.net/wiki/doku.php?id=example_hashes</li>
+<li>CyberChef: https://gchq.github.io/CyberChef/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

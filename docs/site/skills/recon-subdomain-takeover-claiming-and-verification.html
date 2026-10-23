@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-subdomain-takeover-claiming-and-verification</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-subdomain-takeover-claiming-and-verification</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a takeover candidate is fingerprinted as claimable on an in-scope target and the program permits verification. Covers the permission check before any claiming, the least-invasive claiming procedure (benign proof file only, never defacement), evidence to capture at each step, releasing or handing over the resource promptly, and how to report when the program forbids claiming. Authorized targets only, claim only with explicit program permission.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="recon-subdomain-takeover.html">recon-subdomain-takeover</a></div><div class="deps"><span class="kind">requires:</span> <a href="recon-subdomain-takeover.html">recon-subdomain-takeover</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-subdomain-takeover-cloud-service-fingerprints.html">recon-subdomain-takeover-cloud-service-fingerprints</a> <a href="recon-subdomain-takeover-dns-record-analysis.html">recon-subdomain-takeover-dns-record-analysis</a> <a href="bugbounty-report-writing.html">bugbounty-report-writing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>curl</td><td>8.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Claiming is the proof step of a takeover finding, and it is the step with the most rules. Claim only with the program&#x27;s explicit permission, only the exact in-scope name, only a benign proof, and release it promptly. Many programs accept fingerprint plus DNS evidence without any claiming; prefer that whenever it is offered. This sub-skill covers safe verification for recon-subdomain-takeover. Never claim a resource outside explicit program permission.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Check permission: does the program allow takeover claiming, and under what conditions. Get it in writing if ambiguous.</li>
+<li>If claiming is forbidden: submit with DNS plus fingerprint evidence. Done; skip the rest.</li>
+<li>If allowed: claim the exact endpoint name from the dangling record, nothing broader.</li>
+<li>Place one benign proof file: your handle, the date, and a note that it is a security research proof. No other content.</li>
+<li>Capture evidence: the claimed resource, the proof file served on the organization&#x27;s subdomain, timestamps.</li>
+<li>Release the resource immediately after evidence capture, or hand it over per the program&#x27;s instructions.</li>
+<li>Write the report with the full evidence chain and the release confirmation.</li>
+</ol>
+<h2>1. The permission check</h2>
+<p>Before touching any claim flow, confirm all three:</p>
+<ul>
+<li>The name is in scope: the exact subdomain from your candidate list, verified against the program&#x27;s scope.</li>
+<li>The program permits takeover verification: check the policy&#x27;s takeover section. Some programs say &quot;proof via screenshot of the service dashboard is enough&quot;; some say &quot;do not claim, report the dangling record.&quot; Follow the stricter reading when ambiguous, and ask in writing when silent.</li>
+<li>You can release what you claim: if the service has no clean deletion or transfer path, do not claim. An unreleasable claim is a liability, not a proof.</li>
+</ul>
+<p>Log the permission basis in your notes: policy quote plus date, or the program&#x27;s message. This is your authorization record for the most sensitive step of the finding.</p>
+<h2>2. Least-invasive claiming</h2>
+<p>The claim itself is service-specific (create the Heroku app with the exact name, create the S3 bucket, claim the GitHub Pages repo), but the discipline is universal:</p>
+<ul>
+<li>Claim the exact endpoint name from the dangling record. Not a variant, not a broader resource.</li>
+<li>Use an account clearly tied to your researcher identity, not an anonymous throwaway. Programs need to know who held their subdomain.</li>
+<li>The moment the claim succeeds, deploy the single proof file. Example content:</li>
+</ul>
+<pre><code>Subdomain takeover proof of concept
+Researcher: &lt;your handle&gt;
+Date: 2026-10-23
+Program: &lt;program name&gt;
+This is a benign security research proof. No other content was served.
+Contact: &lt;your program contact or email&gt;</code></pre>
+<ul>
+<li>Nothing else goes on the resource: no analytics, no redirects, no JavaScript, no branding. A proof file is a proof file.</li>
+</ul>
+<h2>3. Evidence capture</h2>
+<p>Capture in order, with timestamps:</p>
+<ol>
+<li>The DNS record as found (dig output showing the dangling CNAME).</li>
+<li>The fingerprint match (the unclaimed error page body before claiming).</li>
+<li>The service dashboard or API response confirming your claim of the exact name.</li>
+<li>The proof file served on the organization&#x27;s subdomain: <code>curl -s https://blog.example.com/proof.txt</code> output plus a screenshot.</li>
+<li>The release: dashboard showing deletion, or the transfer confirmation, with timestamp.</li>
+</ol>
+<pre><code class="language-bash"># Evidence commands, run in sequence and saved to the finding folder
+dig +short blog.example.com CNAME @1.1.1.1 | tee evidence/1-dns.txt
+curl -sk -m 15 https://blog.example.com/ -o evidence/2-before.html
+# ... claim via the service ...
+curl -s https://blog.example.com/proof.txt | tee evidence/4-proof.txt
+date -u | tee evidence/5-released.txt</code></pre>
+<p>This chain, DNS to fingerprint to claim to proof to release, is what makes the report unambiguous.</p>
+<h2>4. Release and handover</h2>
+<p>Release immediately after evidence capture; do not hold the subdomain &quot;in case.&quot; If the service supports transfer, offer the program the transfer instead of deletion, per their preference. Confirm the release served: after deletion, the subdomain should return to the unclaimed fingerprint or NXDOMAIN, proving you no longer control it. Screenshot that final state too. Never hand the claimed resource to anyone except the program.</p>
+<h2>5. Reporting without claiming</h2>
+<p>When the program forbids claiming, the report is still complete with:</p>
+<ul>
+<li>The DNS record evidence (dangling CNAME with NXDOMAIN target, or equivalent).</li>
+<li>The fingerprint match (unclaimed error page body).</li>
+<li>The service-side availability signal where one exists (NoSuchBucket, NXDOMAIN).</li>
+<li>A clear statement: &quot;Claiming was not performed per program policy; the DNS and fingerprint evidence above demonstrates the endpoint is unclaimed.&quot;</li>
+</ul>
+<p>Programs that forbid claiming accept this routinely. Do not treat &quot;no claim&quot; as a weaker report; it is the policy-compliant report.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Someone else claimed it first (squatter): do not contest it. Document the dangling record and the squatter&#x27;s content with a timestamp, report it as a suspicious takeover-in-progress, and let the program handle it.</li>
+<li>The claim flow requires a paid tier or identity verification you do not have: stop. Report with DNS plus fingerprint evidence instead of working around the barrier.</li>
+<li>The proof file does not serve (caching, propagation delay): wait for DNS and CDN propagation, verify with curl bypassing cache, and only then conclude. Do not deploy workarounds that expand the footprint.</li>
+<li>The program asks you to hold the claim during triage: get the request in writing, set a calendar reminder to follow up, and release the moment they confirm or go quiet past the agreed window.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Claiming reveals a deeper issue (the service account or bucket contains the organization&#x27;s leftover data): stop, do not read further than needed to characterize it, and report immediately with minimal detail. Leftover data in a claimable resource is a separate, sensitive finding.</li>
+<li>The release fails (service will not delete): contact the program urgently with the claim details so they can intervene with the provider. Document every attempt.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Require researcher identity on claims: anonymous takeovers of your subdomains are indistinguishable from attacks. Programs should state the claiming rules explicitly.</li>
+<li>Monitor CT logs for your subdomains: a certificate issued to someone else for your dangling name means the takeover completed without you knowing.</li>
+<li>Build the release into your process: when a hunter reports a takeover, the fix is DNS cleanup first, then verifying no squatter holds the endpoint name at the provider.</li>
+<li>Time-box researcher holds: agree the hold duration up front so subdomains do not sit claimed indefinitely.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>Can I take over XYZ: https://github.com/EdOverflow/can-i-take-over-xyz</li>
+<li>HackerOne takeover guidance: https://docs.hackerone.com</li>
+<li>Bugcrowd researcher documentation: https://docs.bugcrowd.com</li>
+<li>OWASP Testing Guide: https://owasp.org/www-project-web-security-testing-guide/</li>
+<li>MITRE ATT&amp;CK T1590.002 DNS: https://attack.mitre.org/techniques/T1590/002/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

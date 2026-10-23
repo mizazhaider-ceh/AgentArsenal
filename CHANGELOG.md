@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Skill expansion wave 5: 39 new top-level skills and 117 new sub-skills
+  (285 skills and 227 sub-skills total, avg quality 96.1/100). New `ctf`
+  domain (7 skills: pwn, reversing, web, forensics, crypto, osint,
+  competition playbook). Thin domains bulked up: bugbounty (+4),
+  recon (+4), privesc (+4), linux (+3), mobile (+3), malware (+6),
+  binary (+2), osint (+3), incident (+3). All artifacts pass
+  `scripts/validate.py` (14 checks) and score above the 70 gate.
 - Team Q (Wave 4): tool freshness checking. `scripts/freshness_check.py`
   scans every skill's frontmatter tool pins and `last_verified` date,
   raising FUTURE_TOOL, RETIRED_TOOL, AGING_TOOL, and OLD_VERIFICATION

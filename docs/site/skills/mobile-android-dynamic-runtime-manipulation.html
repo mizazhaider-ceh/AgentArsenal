@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mobile-android-dynamic-runtime-manipulation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mobile-android-dynamic-runtime-manipulation</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to change an Android app&#x27;s behavior at</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="mobile-android-dynamic.html">mobile-android-dynamic</a></div><div class="deps"><span class="kind">requires:</span> <a href="mobile-android-dynamic.html">mobile-android-dynamic</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="mobile-android-dynamic.html">mobile-android-dynamic</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Frida</td><td>16.5</td></tr><tr><td>adb</td><td>35.0</td></tr><tr><td>objection</td><td>1.11</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Runtime manipulation changes what the app does instead of just watching it: forcing a login check to pass, rewriting a server response before the UI sees it, or skipping a license gate. It answers &quot;what happens if&quot; questions that observation cannot. This sub-skill covers the techniques and, just as importantly, the discipline: every behavior-changing hook is labeled, reversible, and scoped to the authorized test build. Never manipulate apps or accounts outside the engagement scope; changing behavior on someone else&#x27;s production app is not testing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the question: which check, and what should happen after it</li>
+<p>passes.</p>
+<li>Locate the exact method from static analysis or runtime</li>
+<p>enumeration.</p>
+<li>Write an observation-only hook first and confirm it fires on the</li>
+<p>real flow.</p>
+<li>Add the modification (forced return, rewritten argument), labeled</li>
+<p>MODIFIES BEHAVIOR in the script header.</p>
+<li>Trigger the flow and record what the app does differently.</li>
+<li>Check whether the server independently validates; note the result.</li>
+<li>Restore the original behavior (reload the script without the</li>
+<p>modification) and confirm the app returns to normal.</p>
+<li>Write the finding: what was forced, what it unlocked, and whether</li>
+<p>the server stopped it.</p>
+</ol>
+<h2>1. Forcing return values</h2>
+<pre><code class="language-javascript">// manipulate.js: every behavior change labeled at the top
+// MODIFIES BEHAVIOR: forces auth and license checks to pass (authorized test build only)
+Java.perform(function () {
+    // 1. Force login state
+    var Session = Java.use(&#x27;com.example.target.SessionManager&#x27;);
+    Session.isLoggedIn.implementation = function () {
+        console.log(&#x27;[*] isLoggedIn forced -&gt; true&#x27;);
+        return true;
+    };
+
+    // 2. Force license validation
+    var License = Java.use(&#x27;com.example.target.LicenseValidator&#x27;);
+    License.validate.overload(&#x27;java.lang.String&#x27;).implementation = function (key) {
+        console.log(&#x27;[*] validate(&quot;&#x27; + key.slice(0, 8) + &#x27;...&quot;) forced -&gt; true&#x27;);
+        return true;
+    };
+
+    // 3. Skip a timed gate (e.g. trial countdown)
+    var Trial = Java.use(&#x27;com.example.target.TrialManager&#x27;);
+    Trial.getDaysRemaining.implementation = function () {
+        return 999;
+    };
+});</code></pre>
+<pre><code class="language-bash">frida -U -f com.example.target -l manipulate.js --no-pause</code></pre>
+<p>After forcing, navigate the app and record which screens and API calls become reachable. The security question is always what the server does next: if the API serves premium data to a forced client, the authorization flaw is server-side and critical.</p>
+<h2>2. Rewriting arguments and responses</h2>
+<pre><code class="language-javascript">Java.perform(function () {
+    // Rewrite the user id sent to the API (test horizontal access control)
+    var Api = Java.use(&#x27;com.example.target.ApiClient&#x27;);
+    Api.getProfile.overload(&#x27;java.lang.String&#x27;).implementation = function (userId) {
+        var target = &#x27;user-1337&#x27;;  // second test account provided by the client
+        console.log(&#x27;[*] getProfile: &#x27; + userId + &#x27; -&gt; &#x27; + target);
+        return this.getProfile(target);
+    };
+
+    // Rewrite a server response before the app parses it
+    var Parser = Java.use(&#x27;com.example.target.ResponseParser&#x27;);
+    Parser.parse.overload(&#x27;java.lang.String&#x27;).implementation = function (json) {
+        console.log(&#x27;[*] original response: &#x27; + json.slice(0, 120));
+        var modified = json.replace(&#x27;&quot;isAdmin&quot;:false&#x27;, &#x27;&quot;isAdmin&quot;:true&#x27;);
+        return this.parse(modified);
+    };
+});</code></pre>
+<p>Use client-provided test accounts for IDOR-style checks, never real user identifiers. The forced <code>isAdmin</code> rewrite tests whether the app trusts the client; the finding lands only if the server also honors the tampered role.</p>
+<h2>3. Manipulating fields and activity state</h2>
+<pre><code class="language-javascript">Java.perform(function () {
+    // Flip a boolean field on a live activity
+    Java.choose(&#x27;com.example.target.MainActivity&#x27;, {
+        onMatch: function (activity) {
+            var field = activity.class.getDeclaredField(&#x27;debugMode&#x27;);
+            field.setAccessible(true);
+            field.setBoolean(activity, true);
+            console.log(&#x27;[*] debugMode enabled on live activity&#x27;);
+        },
+        onComplete: function () {}
+    });
+});</code></pre>
+<pre><code class="language-bash"># Activity-level manipulation without Frida
+# Bring any activity to the foreground, including non-exported ones on debug builds
+adb shell am start -n com.example.target/.AdminActivity
+
+# Simulate configuration changes the app may handle insecurely
+adb shell am broadcast -a android.intent.action.BATTERY_LOW</code></pre>
+<p>Changing activity state with <code>am start</code> on non-exported activities works on debuggable builds; on release builds the activity manager enforces the exported flag, which is itself worth verifying.</p>
+<h2>4. Time and trial manipulation</h2>
+<pre><code class="language-javascript">Java.perform(function () {
+    // Freeze System.currentTimeMillis for trial logic under test
+    var System = Java.use(&#x27;java.lang.System&#x27;);
+    var fixedTime = 1760000000000;  // a fixed instant for the test window
+    System.currentTimeMillis.implementation = function () {
+        return fixedTime;
+    };
+});</code></pre>
+<pre><code class="language-bash"># Device-level alternative: change the clock (affects everything, use carefully)
+adb shell &quot;su -c &#x27;date 101512002026.00&#x27;&quot;</code></pre>
+<p>Clock manipulation tests trial expiry, token lifetimes, and certificate validity windows. Always restore the clock afterward; a wrong device clock breaks TLS validation for every subsequent test.</p>
+<h2>5. objection shortcuts for quick manipulation</h2>
+<pre><code># Force common boolean returns without writing scripts
+android hooking set_return_value com.example.target.SessionManager.isLoggedIn true
+
+# List methods first if you are unsure of the name
+android hooking list_methods com.example.target.SessionManager</code></pre>
+<p>objection&#x27;s one-liner covers simple boolean gates in seconds. For anything with arguments or object returns, write the Frida script.</p>
+<h2>6. Verifying server-side enforcement</h2>
+<p>The manipulation is only half the test. After forcing the client:</p>
+<ol>
+<li>Perform the now-unlocked action (open premium content, call the</li>
+<p>admin API).</p>
+<li>Watch the proxy: does the server return the data or reject with</li>
+<p>401 or 403.</p>
+<li>If the server rejects, the client check was defense in depth and</li>
+<p>the server is correctly authoritative. Note it as a positive.</p>
+<li>If the server complies, you have an authorization finding. Capture</li>
+<p>the request and response as evidence.</p>
+</ol>
+<pre><code class="language-bash"># Example: forced premium screen triggers this API call (from Burp history)
+# GET /api/v2/premium/content -&gt; 200 with content  =&gt; finding
+# GET /api/v2/premium/content -&gt; 403 Forbidden     =&gt; server enforces correctly</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Forcing a return value crashes the app later in the flow. The real</li>
+<p>method had side effects (caching, callbacks) that the forced path skipped. Hook narrower: force the value only for the specific call you are testing, using a counter or a caller check.</p>
+<li>The check runs in native code, so the Java hook never fires. Move</li>
+<p>to the native-code-tracing sub-skill and force the native return instead.</p>
+<li>The app re-checks on every screen, not just at login. A single</li>
+<p>forced login is not enough; keep the hook installed for the whole session and note the re-check frequency.</p>
+<li>Server-side enforcement makes the manipulation pointless for data</li>
+<p>access but still useful for UI review. Say so explicitly rather than claiming a finding the server already prevents.</p>
+<li>Multiple processes (the app uses isolated services). Frida attaches</li>
+<p>to one process; spawn with <code>--realm</code> or attach to the specific process name shown by frida-ps.</p>
+<li>The modification persists across sessions because you patched the</li>
+<p>APK instead of hooking. Prefer hooks (reversible, in-memory) over patches for behavior tests; patches are for persistent lab setups.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Manipulation reveals that the server trusts client-supplied roles</li>
+<p>or ids. This is the critical finding: stop, capture clean evidence with client test accounts, and report promptly rather than exploring further.</p>
+<li>The app detects your hooks and wipes local data (some banking apps</li>
+<p>do this). Restore from your baseline snapshot, note the defensive behavior as effective, and continue with observation-only hooks.</p>
+<li>You need to simulate a full malicious server, not just rewrite one</li>
+<p>response. Point the app at a test harness with the proxy&#x27;s map-local rules, keeping everything inside the authorized lab network.</p>
+<li>The engagement scope is unclear about how far manipulation may go.</li>
+<p>Ask before forcing payment flows, license checks on paid features, or anything that could cost the client money.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Runtime manipulation is what client-side defenses exist to slow: integrity checks, hook detection, and server-side re-validation. Every forced check that the server then rejects is the architecture working correctly, and your report should credit it. The durable defense is never trusting the client: authorize every action server-side, keep tokens short-lived and bound, and treat any client-supplied privilege flag as untrusted input. As the tester, your manipulation log doubles as a map of which client controls exist and how quickly each fell.</p>
+<h2>Key references</h2>
+<ul>
+<li>Frida JavaScript API: https://frida.re/docs/javascript-api/</li>
+<li>objection hooking commands:</li>
+<p>https://github.com/sensepost/objection</p>
+<li>OWASP MSTG tampering and reverse engineering:</li>
+<p>https://mas.owasp.org/MSTG/</p>
+<li>OWASP MASVS resilience and authorization:</li>
+<p>https://mas.owasp.org/MASVS/</p>
+<li>Android activity lifecycle and am commands:</li>
+<p>https://developer.android.com/guide/components/activities/activity-lifecycle</p>
+<li>CWE-602 (Client-Side Enforcement of Server-Side Security):</li>
+<p>https://cwe.mitre.org/data/definitions/602.html</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-subdomain-takeover-cloud-service-fingerprints</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-subdomain-takeover-cloud-service-fingerprints</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when DNS analysis has produced takeover candidates and you need to fingerprint the cloud or SaaS service behind each one. Covers fetching candidate responses safely, matching against known service fingerprints (Heroku, GitHub Pages, S3, Azure, Shopify, Tumblr, and more), handling services that changed their error pages, checking bucket and app name availability via service APIs, and recording fingerprint evidence for the report. Authorized targets only.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="recon-subdomain-takeover.html">recon-subdomain-takeover</a></div><div class="deps"><span class="kind">requires:</span> <a href="recon-subdomain-takeover.html">recon-subdomain-takeover</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-subdomain-takeover-dns-record-analysis.html">recon-subdomain-takeover-dns-record-analysis</a> <a href="recon-subdomain-takeover-claiming-and-verification.html">recon-subdomain-takeover-claiming-and-verification</a> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>curl</td><td>8.5</td></tr><tr><td>httpx</td><td>1.6</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Fingerprinting decides whether a dangling DNS record is actually claimable: the service&#x27;s own error page tells you the endpoint is unclaimed. This sub-skill covers matching candidate subdomains against known cloud and SaaS fingerprints for recon-subdomain-takeover, safely and with evidence. Only fingerprint candidates on domains you are authorized to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Take the candidate list from DNS record analysis.</li>
+<li>Fetch each candidate over HTTPS (and HTTP as a fallback) with timeouts, saving status code and body.</li>
+<li>Match bodies and status codes against the known fingerprint table.</li>
+<li>For ambiguous responses, check the CNAME target&#x27;s resolution and the service&#x27;s own availability signals.</li>
+<li>Record match or no-match with the exact evidence (status, body snippet, timestamp).</li>
+<li>Sort candidates into claimable, uncertain, and cleared.</li>
+<li>Hand claimable candidates to the claiming and verification step.</li>
+</ol>
+<h2>1. Fetching candidates safely</h2>
+<pre><code class="language-bash">while read -r line; do
+  sub=$(echo &quot;$line&quot; | cut -d&#x27;|&#x27; -f1 | tr -d &#x27; &#x27;)
+  code=$(curl -sk -m 15 -o &quot;fp-$sub.html&quot; -w &quot;%{http_code}&quot; &quot;https://$sub/&quot;)
+  echo &quot;$sub $code $(wc -c &lt; fp-$sub.html) bytes&quot;
+done &lt; candidates-takeover.txt &gt; fp-status.txt
+cat fp-status.txt</code></pre>
+<p>One request per candidate, short timeout, no aggressive retries. You are reading an error page, not load testing. Save every body; the report needs the exact snippet, and fingerprints change over time so today&#x27;s body is tomorrow&#x27;s evidence.</p>
+<h2>2. The fingerprint table</h2>
+<p>Match response bodies against these known signatures (verify against the current can-i-take-over-xyz list, since providers change pages):</p>
+<p>| Service | CNAME pattern | Unclaimed fingerprint | |---|---|---| | Heroku | *.herokussl.com, *.herokuapp.com | &quot;No such app&quot;, &quot;There&#x27;s nothing here, yet.&quot; | | GitHub Pages | *.github.io | &quot;There isn&#x27;t a GitHub Pages site here.&quot; | | AWS S3 website | *.s3-website-*.amazonaws.com | &quot;NoSuchBucket&quot; XML with BucketName | | Azure | *.azurewebsites.net, *.cloudapp.net | NXDOMAIN on target or Azure 404 page | | Shopify | *.myshopify.com | &quot;Sorry, this shop is currently unavailable&quot; (only when never claimed) | | Tumblr | *.tumblr.com | &quot;There&#x27;s nothing here.&quot; / &quot;Not found&quot; | | Pantheon | *.pantheonsite.io | &quot;404 error unknown site&quot; | | Fastly | various | &quot;Fastly error: unknown domain&quot; | | Surge.sh | *.surge.sh | &quot;project not found&quot; |</p>
+<pre><code class="language-bash"># Batch match against the common fingerprints
+grep -liE &quot;no such app|there&#x27;s nothing here|there isn&#x27;t a github pages site|NoSuchBucket|unknown domain|project not found&quot; fp-*.html</code></pre>
+<p>A match is strong evidence of claimability. Record which pattern matched and the exact body snippet.</p>
+<h2>3. Service-side availability checks</h2>
+<p>For some services, the service itself tells you whether the endpoint name is free:</p>
+<ul>
+<li>S3: request the bucket URL directly. <code>NoSuchBucket</code> means the bucket name is unclaimed; <code>AccessDenied</code> means it exists but is private (not takeoverable, move on).</li>
+<li>Heroku: the &quot;No such app&quot; page is the signal; no API check needed.</li>
+<li>GitHub Pages: the fingerprint page is definitive for unclaimed.</li>
+<li>Azure: NXDOMAIN on the <code>*.azurewebsites.net</code> target is the strongest signal, since Azure holds names briefly after deletion.</li>
+</ul>
+<pre><code class="language-bash"># S3 bucket check example: bucket name from the CNAME target
+curl -s &quot;https://old-docs.s3-website-us-east-1.amazonaws.com/&quot; | head -c 300
+# NoSuchBucket with &lt;BucketName&gt;old-docs&lt;/BucketName&gt; =&gt; unclaimed</code></pre>
+<p>Never attempt to create the resource as a &quot;check.&quot; Availability probing via normal reads is fine; claiming belongs to the verification step and only with program permission.</p>
+<h2>4. Sorting the candidates</h2>
+<pre><code class="language-bash"># claimable.txt: fingerprint matched, ready for verification
+# uncertain.txt: ambiguous response, needs deeper checks
+# cleared.txt: clearly claimed or alive, with reason</code></pre>
+<p>Uncertain cases get: a second fetch with HTTP/1.1 versus HTTP/2 (some fingerprints differ), a check of the CNAME target&#x27;s own resolution, and a look at web archives for what the name served historically. If it served the organization&#x27;s content last year and now serves a generic page, the service was deleted and the fingerprint may just be a new error page variant; treat as likely claimable and verify carefully.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The provider changed its error page since the fingerprint list was written: fall back to first principles. NXDOMAIN on the CNAME target plus no content served is claimable regardless of page text.</li>
+<li>The response is a WAF or CDN generic error: the fingerprint is masked. Check the CNAME target resolution directly and the service-side signals from section 3.</li>
+<li>Multiple services could match (CNAME chain through two providers): fingerprint each hop; the claimable one is the terminal unclaimed endpoint.</li>
+<li>The candidate serves the organization&#x27;s real content: cleared, not a finding. Note it as verified-alive so nobody re-checks it next quarter.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Fingerprints are inconclusive across the board: escalate to the claiming step only for the strongest candidates (NXDOMAIN targets), and report the rest as informational dangling records with the evidence you have.</li>
+<li>A new service not in any fingerprint list: research its claiming model from its docs before concluding anything. Unknown services get reported as suspicious DNS, not as confirmed takeovers.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>This fingerprint table is also a defensive checklist: if your DNS points at any listed service you no longer use, you are vulnerable right now.</li>
+<li>Monitor your subdomains&#x27; HTTP responses for fingerprint strings: an automated check that alerts when <code>blog.example.com</code> starts serving &quot;No such app&quot; catches takeovers within minutes.</li>
+<li>When decommissioning a service on any listed platform, delete the DNS record in the same change as the service deletion. The gap between the two is the vulnerability window.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>Can I take over XYZ: https://github.com/EdOverflow/can-i-take-over-xyz</li>
+<li>subjack: https://github.com/haccer/subjack</li>
+<li>httpx documentation: https://github.com/projectdiscovery/httpx</li>
+<li>HackerOne takeover guidance: https://docs.hackerone.com</li>
+<li>MITRE ATT&amp;CK T1590.002 DNS: https://attack.mitre.org/techniques/T1590/002/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

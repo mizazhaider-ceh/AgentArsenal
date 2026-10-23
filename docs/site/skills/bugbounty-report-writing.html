@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-report-writing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-report-writing</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">90/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a validated in-scope finding needs to become a report that gets triaged fast and paid fairly. Covers the full report standard triagers reward (specific title, justified severity, two-sentence summary, numbered reproduction steps with raw HTTP requests, concrete impact, remediation paragraph), one-vulnerability-per-report discipline, evidence collection habits during testing, writing for a tired triager, handling triager questions, and polite retest etiquette. Authorized targets only, report only vulnerabilities found inside program scope.</p><h2>Sub-skills</h2><ul><li><a href="bugbounty-report-writing-cvss-scoring.html">bugbounty-report-writing-cvss-scoring</a> <span class="muted">v1.0.0: Use when a program asks for CVSS with your report and you need a defensible score for an in-scope finding. Covers the CVSS v3.1 base metrics</span></li><li><a href="bugbounty-report-writing-impact-statements.html">bugbounty-report-writing-impact-statements</a> <span class="muted">v1.0.0: Use when you have a working proof of concept on an in-scope target and need to write the impact section that justifies your severity. Covers</span></li><li><a href="bugbounty-report-writing-proof-of-concept-format.html">bugbounty-report-writing-proof-of-concept-format</a> <span class="muted">v1.0.0: Use when you need to present the proof of concept for an in-scope bug bounty finding in the format triagers can replay. Covers the PoC evide</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a> <a href="bugbounty-methodology.html">bugbounty-methodology</a> <a href="bugbounty-methodology-reporting-phase.html">bugbounty-methodology-reporting-phase</a> <a href="bugbounty-report-writing-impact-statements.html">bugbounty-report-writing-impact-statements</a> <a href="bugbounty-report-writing-proof-of-concept-format.html">bugbounty-report-writing-proof-of-concept-format</a> <a href="bugbounty-report-writing-cvss-scoring.html">bugbounty-report-writing-cvss-scoring</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Reports are the product. Programs pay for clear, reproducible, honestly-severed reports on real in-scope vulnerabilities, and they remember hunters who waste triage time. This skill is the complete reporting standard: what to include, how to structure it, how to write impact that justifies the severity, how to present proof of concept, and how to behave through triage and retest. Report only vulnerabilities found on targets the program lists in scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Triage the finding first: clean-session reproduction, real impact confirmed, duplicate search done.</li>
+<li>Write a specific, searchable title naming the bug class, location, and effect.</li>
+<li>State severity with one sentence of justification tied to the program&#x27;s bounty table.</li>
+<li>Summarize in two sentences: what is broken, why it matters.</li>
+<li>Give numbered reproduction steps from a clean state, with exact raw HTTP requests.</li>
+<li>State the impact concretely: what an attacker gains, whose data, which privilege.</li>
+<li>Add a one-paragraph remediation aimed at the developer who will fix it.</li>
+<li>Attach evidence (screenshots, short video) supporting the written steps, never replacing them.</li>
+<li>Submit one vulnerability per report, track it, answer questions fast, retest fixes politely.</li>
+</ol>
+<h2>1. The report template</h2>
+<p>Use this structure for every report. Triagers scan for these headings:</p>
+<pre><code>TITLE: Stored XSS in support ticket subject executes in admin panel
+
+SEVERITY: High. Stored script executes in the session of any admin
+viewing the ticket queue, enabling admin session theft.
+
+SUMMARY:
+The support ticket subject field stores unsanitized HTML and renders it
+in the admin ticket queue. Any admin viewing the queue executes attacker
+JavaScript in their session.
+
+REPRODUCTION:
+1. Log in as attacker@example.com / &lt;password&gt;.
+2. POST /api/v1/tickets with subject: &lt;svg onload=alert(document.domain)&gt;
+   (full request below).
+3. Log in as admin in a separate browser profile.
+4. Open Admin &gt; Ticket queue. The alert fires.
+
+RAW REQUEST:
+POST /api/v1/tickets HTTP/1.1
+Host: support.example.com
+...
+
+IMPACT:
+An attacker who submits a ticket can execute JavaScript in any admin
+session that views the queue, stealing admin session tokens and taking
+over the admin panel, including user PII visible there.
+
+REMEDIATION:
+Encode ticket subject output in the admin queue template (context-aware
+output encoding), and validate the subject server-side against an
+allowlist of safe characters on submission.</code></pre>
+<h2>2. Titles and summaries</h2>
+<p>The title is searchable: future duplicate checks and your own records depend on it. Formula: bug class + location + effect. &quot;Stored XSS in support ticket subject executes in admin panel.&quot; Not &quot;XSS vulnerability&quot; and not &quot;Critical security issue in your app.&quot;</p>
+<p>The summary is two sentences: what is broken, why it matters. If the triager reads only the title and summary, they should know whether to keep reading. Write it last, after the reproduction steps are solid.</p>
+<h2>3. Reproduction steps</h2>
+<p>Numbered, from a clean state, with exact values:</p>
+<ul>
+<li>State the starting point: which account, which browser profile, which URL.</li>
+<li>Include the raw HTTP request for the proving step, with real headers and body. Screenshots of requests are not a substitute; triagers copy text, not images.</li>
+<li>Note any prerequisites: &quot;requires two accounts,&quot; &quot;requires the admin to view the queue,&quot; &quot;fires within 60 seconds.&quot;</li>
+<li>End with the observable proof: what you saw that demonstrates the impact (the other user&#x27;s data, the alert in the victim session).</li>
+</ul>
+<p>Test your own steps once more before submitting, following them literally as written. If you cannot follow them cold, neither can the triager.</p>
+<h2>4. Impact and remediation</h2>
+<p>Impact answers: what does an attacker gain, concretely. Name the data, the privilege, the action. &quot;Read any user&#x27;s invoices including names and amounts&quot; beats &quot;IDOR vulnerability.&quot; See bugbounty-report-writing-impact-statements for the full method.</p>
+<p>Remediation is one paragraph for the developer: the fix class, where to apply it, and what to verify. &quot;Add a server-side ownership check on invoice_id against the session user in the invoice controller, and audit the other /api/v1/* endpoints for the same pattern.&quot; Avoid prescribing exact code unless you are sure; describe the control.</p>
+<h2>5. Evidence and attachments</h2>
+<p>Collect during testing, not after: raw request and response for the proving step, a screenshot of the moment of impact, and a short screen recording for multi-step or stored flows. Redact other users&#x27; real data. Keep a per-finding folder: <code>findings/2026-10-23-idor-invoices/</code> with request.txt, response.txt, screenshots, notes.md. See bugbounty-report-writing-proof-of-concept-format for the evidence standard.</p>
+<h2>6. Triage behavior and retests</h2>
+<p>Answer triager questions within a day, precisely, about the exact step they asked. If severity comes back lower than claimed, cite the policy once, stay factual, and accept the call. After a fix is marked, retest the exact steps plus close variants promptly and politely, confirm or demonstrate the bypass with equal quality, thank the triager, and move on.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The finding needs chaining to matter: document each link&#x27;s evidence separately, then the chain, as one report. Programs pay for demonstrated chains.</li>
+<li>The impact depends on user interaction (phishing an admin): say so plainly and price the severity accordingly. Do not imply it is worse than it is.</li>
+<li>You realize post-submit the finding is weaker: update the report honestly before triage finishes. Corrections build trust.</li>
+<li>The program marks it duplicate: note the pattern, hunt siblings, and check the disclosure timeline so your next similar find lands first.</li>
+<li>The program goes quiet past SLA: one polite follow-up, then move on. Never threaten disclosure.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Repeated rejections on one program: rotate programs. Your reporting skill transfers; their risk appetite does not.</li>
+<li>A fix bypass becomes a variant class: confirm the bypass, sweep sibling endpoints once, and report the pattern as a follow-up on the original report.</li>
+<li>A report is rejected as intended behavior: learn that program&#x27;s appetite and adjust what you submit there. Different programs pay for different things.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Good reports are defensive assets: the remediation paragraph turns one report into a codebase-wide fix. Write it for the implementing developer.</li>
+<li>Raw HTTP in reports lets defenders replay issues in staging without guessing, which shortens fix time measurably.</li>
+<li>Honest severity trains correct prioritization; inflated severity trains defenders to discount you.</li>
+<li>Polite, fast retests confirm fixes actually landed, which is a defensive win beyond the payout.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>HackerOne report guidance: https://docs.hackerone.com</li>
+<li>Bugcrowd researcher documentation: https://docs.bugcrowd.com</li>
+<li>CVSS v3.1 specification: https://www.first.org/cvss/</li>
+<li>OWASP Testing Guide: https://owasp.org/www-project-web-security-testing-guide/</li>
+<li>CWE database: https://cwe.mitre.org/</li>
+<li>PortSwigger Web Security Academy: https://portswigger.net/web-security</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-systemd-security-journal-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-systemd-security-journal-security</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when securing systemd journal logging on Linux servers you</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="linux-systemd-security.html">linux-systemd-security</a></div><div class="deps"><span class="kind">requires:</span> <a href="linux-systemd-security.html">linux-systemd-security</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-systemd-security.html">linux-systemd-security</a> <a href="linux-log-intrusion-analysis.html">linux-log-intrusion-analysis</a> <a href="linux-hardening-baseline.html">linux-hardening-baseline</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>systemd</td><td>255</td></tr><tr><td>auditd</td><td>3.1</td></tr><tr><td>rsyslog</td><td>8.2312</td></tr></tbody></table><p>Logs are the record an incident investigation depends on, which is exactly why attackers target them first (MITRE T1070, Indicator Removal). The systemd journal is the local log store on most servers, so its security properties (persistence, integrity, off-host copies, access control) decide whether you will have evidence when it matters. This sub-skill covers hardening journald defensively: configuration, tamper evidence via sealing, central forwarding, access controls, and tamper detection. For systems you own or administer; no exploitation content. The parent skill sets the strategy; this file is the journal-level reference.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Set <code>Storage=persistent</code> and sane retention limits in <code>journald.conf</code>; verify with <code>journalctl --disk-usage</code>.</li>
+<li>Configure rate limiting to survive log floods without losing the events that matter.</li>
+<li>Enable Forward Secure Sealing (FSS) for tamper-evident journals on high-value hosts.</li>
+<li>Forward journal entries to a central collector (syslog/TLS or your SIEM pipeline) and verify arrival.</li>
+<li>Restrict journal read access: <code>systemd-journal</code> group membership only for those who need it.</li>
+<li>Establish a tamper-detection routine: verify seals periodically and watch for journal gaps or rotations that do not match policy.</li>
+<li>Document the retention and forwarding design so investigators know what exists and for how long.</li>
+</ol>
+<h2>1. journald.conf hardening</h2>
+<p>The journal defaults favor convenience; hardening favors survival. Set storage, retention, and rate limits explicitly.</p>
+<pre><code class="language-bash">grep -vE &quot;^#|^$&quot; /etc/systemd/journald.conf
+journalctl --disk-usage
+ls -ld /var/log/journal</code></pre>
+<p>Recommended settings in <code>/etc/systemd/journald.conf</code>:</p>
+<pre><code>Storage=persistent
+SystemMaxUse=1G
+SystemKeepFree=2G
+MaxFileSec=1month
+MaxRetentionSec=6month
+RateLimitIntervalSec=30s
+RateLimitBurst=10000
+ForwardToSyslog=yes</code></pre>
+<p><code>Storage=persistent</code> keeps logs across reboots in <code>/var/log/journal</code> (volatile otherwise, which loses everything on reboot). Retention bounds disk use while keeping enough history for investigations; size these to your incident response needs, not to disk convenience. Verify after <code>systemctl restart systemd-journald</code>: <code>journalctl --disk-usage</code> should show bounded use, and <code>/var/log/journal</code> should be root-owned, group <code>systemd-journal</code>, mode 2755.</p>
+<h2>2. Forward Secure Sealing for tamper evidence</h2>
+<p>FSS cryptographically seals journal files at intervals so that later tampering is detectable. It does not prevent deletion (nothing local can), but it makes silent modification evident.</p>
+<pre><code class="language-bash">journalctl --setup-keys 2&gt;&amp;1 | head -5
+journalctl --verify 2&gt;&amp;1 | tail -10</code></pre>
+<p><code>--setup-keys</code> generates a sealing key (guard the printed verification key: it goes to the investigators, not onto the host). <code>--verify</code> checks the seal chain and reports gaps or tampering. Schedule periodic verification from a trusted host, because verifying on the potentially compromised host itself has obvious limits. Note the operational cost: key management and verification tooling, which is why FSS fits high-value hosts (bastions, domain-adjacent systems, PCI scope) rather than every VM.</p>
+<h2>3. Forwarding to a central collector</h2>
+<p>The strongest journal protection is an off-host copy made in near real time. An attacker who owns the host can tamper with local journals; they cannot easily reach back into the collector.</p>
+<pre><code class="language-bash">grep -E &quot;ForwardToSyslog|ForwardToWall&quot; /etc/systemd/journald.conf
+logger -p authpriv.info &quot;journal-forward-test $(date +%s)&quot;
+sleep 2</code></pre>
+<p>With <code>ForwardToSyslog=yes</code>, journal entries flow to rsyslog/syslog-ng, which forwards over TLS to the central collector. Verify end to end: emit a test marker with <code>logger</code>, then confirm it appears in the collector within seconds. Monitor the forwarding path itself: a silent forwarding failure is a visibility outage, so alert on collector-side gaps per host (no events for N minutes means investigate, not assume quiet).</p>
+<h2>4. Access control on journal reads</h2>
+<p>Journal access is governed by group membership and ACLs on <code>/var/log/journal</code>. Keep the reader set small: every account that can read auth logs can study your authentication patterns.</p>
+<pre><code class="language-bash">getent group systemd-journal
+ls -la /var/log/journal/ | head -5
+journalctl --no-pager -n 3 2&gt;&amp;1 | head -5</code></pre>
+<p>Only members of <code>systemd-journal</code> (plus root and adm where applicable) should read the journal. Audit membership with <code>getent group systemd-journal</code> and remove accounts that do not need it. Unprivileged users see only their own logs by default, which is the correct posture; do not broaden it for convenience. On multi-tenant hosts, this boundary matters more, not less.</p>
+<h2>5. Detecting tampering and gaps</h2>
+<p>Tamper detection combines seal verification, gap analysis, and rotation auditing. No single check catches everything, so layer them.</p>
+<pre><code class="language-bash">journalctl --verify 2&gt;&amp;1 | grep -iE &quot;fail|tamper|gap&quot; | head -10
+journalctl --list-boots | head -10
+journalctl -p err --since &quot;24 hours ago&quot; | wc -l</code></pre>
+<p><code>--verify</code> reports seal failures; <code>--list-boots</code> shows boot coverage (missing boots in the expected range suggest deletion or volatile-storage loss); unexpected drops in event volume suggest filtering or tampering. Cross-check against the central collector: entries present centrally but missing locally (beyond retention policy) indicate local tampering, while entries missing in both suggest the source never logged. Investigate either pattern.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>Storage=volatile</code> is the default on some minimal images and containers; logs vanish on reboot, which destroys forensic value, so explicitly set persistent storage on every host that matters and verify after provisioning.</li>
+<li>FSS verification keys must be stored off-host; a key kept on the same host it seals provides no tamper evidence against an attacker with root, which defeats the purpose.</li>
+<li>Rate limiting drops messages above the burst threshold; during a genuine incident flood (or an intentional flood by an attacker hiding activity), the dropped lines may be the important ones, so size bursts to real peak load and alert on rate-limit engagement.</li>
+<li>Forwarding over plain syslog without TLS exposes log contents (including potentially sensitive entries) on the network; always use TLS to the collector and validate certificates.</li>
+<li>Journal disk limits (<code>SystemMaxUse</code>) cause rotation that deletes the oldest logs; an attacker generating huge log volume can force rotation of the evidence, which is why central forwarding (not just local retention) is the real control.</li>
+<li><code>journalctl --verify</code> on large journals is slow and I/O heavy; schedule verification off-peak and consider verifying only sealed high-value journals rather than the entire store.</li>
+<li>Time synchronization matters: journal entries with wrong timestamps (NTP failure, attacker clock manipulation) break correlation; monitor NTP health as part of log integrity, because unsynchronized logs are unreliable evidence.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If seal verification fails or collector comparison shows local-only gaps, escalate to incident response immediately: treat it as potential Indicator Removal (T1070) until proven otherwise, and preserve the journal files before further investigation.</li>
+<li>If forwarding to the collector stops, escalate to the logging team as a visibility outage with incident-response priority; do not assume the host is simply quiet.</li>
+<li>If retention settings cannot meet the investigation window the business requires (compliance mandates a year, disk allows a month), escalate the capacity gap with costed options rather than silently accepting short retention.</li>
+<li>If FSS key management has no owner, do not deploy sealing: unowned keys get lost, and unverifiable seals are worse than no seals because they imply assurance that does not exist.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Journal security serves detection in two directions. Outward: the journal is the data source for intrusion analysis (the log-intrusion-analysis skills consume it), so its integrity determines whether detections are trustworthy. Inward: tampering with the journal is itself a high-value signal, and defenders watch for it via seal verification, collector comparison, and auditd watches on <code>/var/log/journal</code>. MITRE T1070 (Indicator Removal) covers clearing logs, deleting files, and disabling logging; the defenses here (persistent storage, sealing, off-host forwarding, access control) are the corresponding mitigations. The defender&#x27;s summary: assume local logs are hostile-witness testimony, trust but verify against the central copy, and treat any gap as evidence until explained.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1070 Indicator Removal: https://attack.mitre.org/techniques/T1070/</li>
+<li>journald.conf manual: https://www.freedesktop.org/software/systemd/man/journald.conf.html</li>
+<li>journalctl manual (verify, sealing): https://www.freedesktop.org/software/systemd/man/journalctl.html</li>
+<li>Forward Secure Sealing details: https://www.freedesktop.org/software/systemd/man/journald.conf.html (Seal=)</li>
+<li>rsyslog reliable forwarding: https://www.rsyslog.com/doc/</li>
+<li>CIS distribution benchmarks (logging and auditing sections): https://www.cisecurity.org/cis-benchmarks/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

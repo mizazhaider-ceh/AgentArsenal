@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-osint-challenges</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-osint-challenges</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when competing in a CTF OSINT challenge, practicing in a</p><h2>Sub-skills</h2><ul><li><a href="ctf-osint-challenges-image-geolocation.html">ctf-osint-challenges-image-geolocation</a> <span class="muted">v1.0.0: Use when a CTF OSINT challenge provides a photo that must be</span></li><li><a href="ctf-osint-challenges-metadata-analysis.html">ctf-osint-challenges-metadata-analysis</a> <span class="muted">v1.0.0: Use when a CTF OSINT or forensics challenge provides files</span></li><li><a href="ctf-osint-challenges-username-hunting.html">ctf-osint-challenges-username-hunting</a> <span class="muted">v1.0.0: Use when a CTF OSINT challenge provides a username, handle,</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-methodology.html">osint-methodology</a> <a href="ctf-competition-playbook.html">ctf-competition-playbook</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>ExifTool</td><td>12.90</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>CyberChef</td><td>latest</td></tr></tbody></table><p>OSINT challenges hide flags in public information: social profiles, photos with location clues, file metadata, archived pages, and public records. The winning pattern is breadth first (enumerate every source the clue could live in), then depth on the promising lead, then verification (two independent sources before submitting). This skill covers the authorized competition methodology with concrete tools and search techniques. Scope is CTF competitions, lab exercises, and information you are authorized to collect; it never covers private data, unauthorized access, or harassment.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Read the challenge text precisely; every word is a potential</li>
+<p>search term, username, or coordinate hint.</p>
+<li>Classify the artifact: username, image, document, URL, or vague</li>
+<p>description, and pick the matching sub-skill path.</p>
+<li>Enumerate broadly: search engines (with operators), platform</li>
+<p>searches, archives (Wayback Machine), and metadata.</p>
+<li>Follow the strongest lead: one confirmed profile or location beats</li>
+<p>ten maybes.</p>
+<li>Pivot: usernames repeat across platforms, photos contain landmarks,</li>
+<p>documents contain authors.</p>
+<li>Verify with a second independent source before submitting (two</li>
+<p>sources or it did not happen).</p>
+<li>Respect the rules: no interacting with real people (no DMs, no</li>
+<p>friend requests), no attempting logins, public data only.</p>
+<li>Record sources and queries for the writeup; OSINT writeups need</li>
+<p>reproducibility.</p>
+</ol>
+<h2>1. Search engine operators for CTF OSINT</h2>
+<pre><code class="language-bash"># Google/Bing dorks that solve CTF OSINT fast
+# site:github.com &quot;&lt;username&gt;&quot;
+# site:linkedin.com/in &quot;&lt;full name&gt;&quot;
+# &quot;&lt;username&gt;&quot; -site:twitter.com      # exclude noisy domains
+# filetype:pdf &quot;&lt;event name&gt;&quot;         # documents
+# inurl:profile &quot;&lt;username&gt;&quot;
+
+# Automate multi-engine username checks (see username-hunting sub-skill)
+# and archive lookups:
+curl -s &quot;http://archive.org/wayback/available?url=example.com/page&quot; | python3 -m json.tool
+curl -s &quot;https://web.archive.org/cdx/search/cdx?url=example.com/*&amp;output=json&amp;limit=20&quot; | head -30</code></pre>
+<p>Search the exact challenge strings in quotes first; CTF authors reuse handles and phrases across events, and quoted search finds the original.</p>
+<h2>2. Image triage for location and identity</h2>
+<pre><code class="language-bash"># Metadata first: GPS coordinates end many challenges immediately
+exiftool photo.jpg | grep -i -E &quot;gps|create date|camera|software|comment|author&quot;
+
+# Reverse image search: upload to the major engines and compare results
+# (Google Lens, Bing Visual Search, TinEye, Yandex Images)
+# Yandex is notably strong on faces and Eastern European locations;
+# use it for person-identification style challenges within the rules.
+
+# If no metadata: note landmarks, signs, license plates, vegetation,
+# architecture style, and language on signage; feed these to the
+# image-geolocation sub-skill workflow.</code></pre>
+<p>Never enhance or identify real private individuals beyond the challenge scope; CTF OSINT targets fictional or consenting personas, and the rules usually forbid contacting anyone.</p>
+<h2>3. Document and file metadata</h2>
+<pre><code class="language-bash">exiftool -a -u document.pdf | head -60
+# Author, Creator, Producer, CreateDate, GPS, embedded thumbnails
+
+# Office documents: unzip and read the XML
+unzip -p doc.docx docProps/core.xml
+unzip -p doc.docx docProps/app.xml
+
+# PDF: check for hidden layers and embedded files
+pdfinfo document.pdf
+strings document.pdf | grep -i -E &quot;author|flag&quot; | head
+
+# Audio/video: same exiftool pass; check encoder strings for usernames
+exiftool video.mp4 | grep -i -E &quot;encoder|author|comment|gps&quot;</code></pre>
+<p>Metadata often contains the author&#x27;s handle, software usernames, or GPS; each is a pivot into the username-hunting or geolocation workflows.</p>
+<h2>4. Public records and archives</h2>
+<ul>
+<li>Wayback Machine: past versions of challenge-linked pages often</li>
+<p>contain the flag or the clue that was later removed.</p>
+<li>GitHub: search code and commits for the username; commit emails</li>
+<p>leak real names, and old commits contain removed secrets.</p>
+<li>Certificate transparency (crt.sh): subdomains of challenge domains</li>
+<p>reveal staging or admin hosts.</p>
+<li>DNS history and WHOIS: creation dates and registrant handles for</li>
+<p>attribution-style challenges.</p>
+</ul>
+<pre><code class="language-bash"># crt.sh subdomain enumeration for a challenge domain
+curl -s &quot;https://crt.sh/?q=%25.example-ctf.com&amp;output=json&quot; | \
+  python3 -c &quot;import json,sys; [print(r[&#x27;name_value&#x27;]) for r in json.load(sys.stdin)]&quot; | sort -u | head -20</code></pre>
+<h2>5. Verification before submission</h2>
+<p>OSINT answers feel certain and are often wrong. Require:</p>
+<ul>
+<li>Two independent sources agreeing (e.g. EXIF GPS plus a matching</li>
+<p>Street View landmark).</p>
+<li>The flag format matches the event&#x27;s pattern.</li>
+<li>No contradiction from a source you already checked (a profile</li>
+<p>saying &quot;moved to Berlin in 2020&quot; kills a 2024 Paris geolocation).</p>
+</ul>
+<p>When sources conflict, trust primary artifacts (metadata, archived pages) over secondary claims (bios, comments).</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The challenge persona is fictional: in-event OSINT uses planted</li>
+<p>profiles; treat them like real OSINT but expect the trail to be short and deliberate.</p>
+<li>Search engines return nothing: try alternative spellings,</li>
+<p>leetspeak variants, and other languages; also check platform internal search, which indexes what Google does not.</p>
+<li>The image has no EXIF and no landmarks: look at shadows (sun</li>
+<p>angle gives latitude hints), license plates, and tiny text; enhance carefully without inventing details.</p>
+<li>Rate limits on APIs (GitHub, social platforms): use authenticated</li>
+<p>tokens where allowed and cache results; do not hammer endpoints.</p>
+<li>The challenge mixes OSINT with another category (a hash in a profile</li>
+<p>bio): solve each half with its own skill and keep the pivots labeled by source.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Every lead dead-ends: re-read the challenge text for the clue you</li>
+<p>skimmed (a date, a version number, a misspelling); CTF OSINT always has a planted starting thread.</p>
+<li>The trail points at a real person: stop and check the rules; most</li>
+<p>events forbid real-person targeting, and the intended path is elsewhere.</p>
+<li>Attribution is ambiguous between two candidates: look for the</li>
+<p>discriminator (a unique photo, a specific date) rather than collecting more weak matches.</p>
+<li>Time is short: prioritize metadata and archives; they are the two</li>
+<p>fastest high-yield sources in CTF OSINT.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders practice OSINT defensively: auditing what public data exposes about their organization (employee handles, photo metadata, document authors, exposed subdomains) and removing it. Detection of hostile OSINT is hard because it uses public sources, so defense focuses on reducing the attack surface: strip metadata before publishing, use separate professional and personal handles, and monitor certificate transparency for lookalike domains. For individuals: review photo backgrounds, disable geotagging, and audit old profiles.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1593 (Search Open Websites/Domains) and T1598</li>
+<p>(Phishing for Information)-adjacent search techniques; the reconnaissance tactics family (TA0043).</p>
+<li>OSINT Framework: https://osintframework.com/</li>
+<li>Bellingcat&#x27;s open source investigation toolkit:</li>
+<p>https://www.bellingcat.com/resources/</p>
+<li>Wayback Machine: https://web.archive.org/</li>
+<li>ExifTool: https://exiftool.org/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

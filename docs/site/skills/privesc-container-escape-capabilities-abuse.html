@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-container-escape-capabilities-abuse</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-container-escape-capabilities-abuse</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized container escape testing shows a container</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-container-escape.html">privesc-container-escape</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-container-escape.html">privesc-container-escape</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-container-escape.html">privesc-container-escape</a> <a href="privesc-container-escape-privileged-containers.html">privesc-container-escape-privileged-containers</a> <a href="privesc-linux-vectors.html">privesc-linux-vectors</a> <a href="linux-container-hardening.html">linux-container-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>capsh</td><td>2.44</td></tr><tr><td>Docker</td><td>25.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Capabilities split root&#x27;s power into pieces, and Docker hands containers a default subset. When a deployment adds capabilities back (often cargo-culted from a Stack Overflow answer), each added piece can be an escape primitive. This sub-skill covers enumerating a container&#x27;s effective capabilities during an authorized engagement, judging which ones are dangerous, and demonstrating impact with minimal, reversible actions. It is the fine-grained companion to the privileged-containers sub-skill: privileged mode is all capabilities at once, this is the audit of the individual ones. Scope is authorized penetration tests, labs, and CTFs only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Dump the effective capability set: <code>capsh --print</code> and <code>CapEff</code> from <code>/proc/self/status</code>.</li>
+<li>Decode the hex mask into named capabilities so the finding names the exact primitive (script it if <code>capsh</code> is missing).</li>
+<li>Compare against the Docker default set; every capability beyond the default is a finding.</li>
+<li>Rank the extras by danger: CAP_SYS_ADMIN, CAP_SYS_PTRACE, and CAP_DAC_READ_SEARCH are the classic escape trio.</li>
+<li>Verify each dangerous capability with the smallest possible proof action (mount, read, or trace) and record the result.</li>
+<li>Check how the capability was granted (compose file, pod securityContext, runtime flags) so the report can point at the configuration line.</li>
+<li>Write each capability up separately with its ATT&amp;CK mapping, because remediation is per-capability (drop it) rather than one big fix.</li>
+</ol>
+<h2>1. Enumerating effective capabilities</h2>
+<p>Start with the raw data: what the kernel actually granted this process, not what the config claims.</p>
+<pre><code class="language-bash">capsh --print 2&gt;/dev/null | head -8
+grep Cap /proc/self/status
+cat /proc/self/status | grep -i capeff</code></pre>
+<p>Example output shape: <code>CapEff: 00000000a80425fb</code> for a standard Docker container versus <code>000001ffffffffff</code> for full privileges. If <code>capsh</code> is absent, decode the mask in Python against the capability list from <code>capabilities(7)</code>. Record both the hex value and the decoded names; reviewers trust findings that show their work.</p>
+<h2>2. CAP_SYS_ADMIN: the near-root capability</h2>
+<p>CAP_SYS_ADMIN covers mount, namespace manipulation, cgroup configuration, and a long tail of other privileged operations. In a container it is the most common path to escape: mounting the host filesystem or a cgroup with a malicious <code>release_agent</code> (in lab contexts), or creating namespaces to reach host resources.</p>
+<pre><code class="language-bash">python3 -c &quot;
+import os
+caps = int(open(&#x27;/proc/self/status&#x27;).read().split(&#x27;CapEff:&#x27;)[1].split()[0], 16)
+SYS_ADMIN = 21
+print(&#x27;CAP_SYS_ADMIN effective:&#x27;, bool(caps &amp; (1 &lt;&lt; SYS_ADMIN)))
+&quot;
+mount -t tmpfs none /tmp/captest 2&gt;&amp;1 | head -2; umount /tmp/captest 2&gt;/dev/null</code></pre>
+<p>Example output shape: <code>CAP_SYS_ADMIN effective: True</code> plus a successful tmpfs mount proves the capability is live. For the report, a successful mount syscall is sufficient proof of the primitive; you do not need to complete a full escape to rate the finding as host-impacting. Keep proof actions to harmless mounts on empty directories and clean them up.</p>
+<h2>3. CAP_SYS_PTRACE and process inspection</h2>
+<p>CAP_SYS_PTRACE lets a process trace and inspect other processes, which in a container can mean reading secrets from sibling processes or, where PID namespace sharing is enabled, host processes.</p>
+<pre><code class="language-bash">ps aux | head -5
+cat /proc/1/cmdline 2&gt;/dev/null | tr &#x27;\0&#x27; &#x27; &#x27;; echo
+ls /proc/ | grep -E &quot;^[0-9]+$&quot; | wc -l</code></pre>
+<p>Example output shape: visibility into processes outside the container&#x27;s own tree, or the ability to read another process&#x27;s memory maps and environment (where secrets live), confirms the capability matters here. If only the container&#x27;s own processes are visible, the capability is present but blunted by namespace isolation: record that nuance, because it changes the impact rating from escape to information disclosure.</p>
+<h2>4. CAP_DAC_READ_SEARCH and file access</h2>
+<p>CAP_DAC_READ_SEARCH bypasses file read permission checks and directory search restrictions. In a container with host paths mounted (even read-only mounts of configuration), it turns limited visibility into broad host file disclosure.</p>
+<pre><code class="language-bash">ls /host 2&gt;/dev/null; ls / 2&gt;/dev/null | head
+find / -maxdepth 3 -name &quot;shadow&quot; 2&gt;/dev/null | head -5</code></pre>
+<p>Example output shape: successfully listing or reading files that the container&#x27;s UID would normally be denied (host <code>/etc/shadow</code> content through a mount, other tenants&#x27; files on shared volumes) proves the bypass. Pair this check with the mount audit from the privileged-containers sub-skill: the capability alone is less useful without a host path to point it at, and the report should say which mounts made it dangerous.</p>
+<h2>5. The supporting cast: NET_RAW, SYSLOG, and the rest</h2>
+<p>Several other capabilities matter in container assessments even though they rarely escape alone.</p>
+<pre><code class="language-bash">capsh --print 2&gt;/dev/null | grep -iE &quot;net_raw|syslog|sys_module|mknod|sys_time|net_admin&quot;</code></pre>
+<p>CAP_NET_RAW enables packet crafting and sniffing on attached networks (lateral movement aid, MITRE T1040). CAP_SYSLOG permits reading kernel logs that may leak host information. CAP_SYS_MODULE would allow loading kernel modules, which is a direct host compromise if the module interface is reachable. CAP_MKNOD plus device cgroup access can recreate host device nodes. Assess each one found beyond the Docker default set, and remember that combinations (for example NET_ADMIN plus SYS_ADMIN) are worse than the sum of their parts.</p>
+<h2>6. Tracing the grant back to configuration</h2>
+<p>A finding is only fixable if the report names the line that granted the capability. Check the usual suspects.</p>
+<pre><code class="language-bash">grep -ri &quot;cap_add\|capabilities:&quot; /opt/docker* /srv 2&gt;/dev/null | head -10
+grep -ri &quot;add:&quot; /etc/docker/daemon.json 2&gt;/dev/null</code></pre>
+<p>From outside the container (with orchestrator access in scope), inspect the workload definition: <code>docker inspect &lt;id&gt; | grep -A15 CapAdd</code>, <code>kubectl get pod &lt;p&gt; -o yaml | grep -B2 -A8 capabilities</code>, or the compose file&#x27;s <code>cap_add</code> block. The remediation for every finding here is the same shape: drop the capability unless a named feature needs it, and prefer <code>cap_drop: [ALL]</code> with explicit <code>cap_add</code> for the minimum required set.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Capabilities can be granted in the bounding set but not the effective set of your shell; always test from the process that will actually use the primitive, because a capability that is not effective is not exploitable from where you stand.</li>
+<li>User namespaces remap capabilities: a full-looking mask inside a user-namespaced container is scoped to that namespace and usually cannot touch the host, so cross-check with an actual device or mount test before rating impact.</li>
+<li><code>capsh --print</code> output differs between libcap versions in how it names newer capabilities (for example <code>cap_checkpoint_restore</code>); decode the hex mask yourself when names look unfamiliar rather than guessing.</li>
+<li>Some runtimes add capabilities for their own features (containerd and CRI-O defaults differ slightly from Docker&#x27;s); compare against the runtime&#x27;s documented default set, not just Docker&#x27;s, to avoid false positives.</li>
+<li>Seccomp profiles can block the syscalls a capability would otherwise allow (mount blocked despite CAP_SYS_ADMIN); test the syscall, not just the capability bit, and record layered defenses as risk reducers.</li>
+<li>In Kubernetes, capabilities can come from the pod securityContext, a SecurityContextConstraint, or a mutating admission webhook; check all three layers before concluding where to fix it.</li>
+<li>Dropped capabilities in a parent process are inherited as dropped by children; if your shell lacks the capability but the workload&#x27;s main process has it, the finding still stands for the workload, so enumerate from the workload process, not just your shell.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If CAP_SYS_ADMIN is confirmed effective with mount ability, treat the container as host-compromisable and confirm host-level scope with the engagement lead before demonstrating anything beyond a harmless proof mount.</li>
+<li>If capability abuse leads to host credential access (cloud instance metadata, service account tokens), report locations only, do not exfiltrate values, and follow the engagement&#x27;s credential handling rules.</li>
+<li>If the grant came from a cluster-wide policy (admission webhook, SCC) rather than one workload, escalate the finding to systemic: every workload under that policy is affected, and the fix belongs in the policy, not the pod spec.</li>
+<li>If testing in production-adjacent environments, prefer configuration evidence (decoded mask plus the granting config line) over live proof actions, and get explicit approval for each proof action in writing.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders catch capability abuse through admission-time policy and runtime detection. OPA Gatekeeper and Kyverno can deny pods requesting capabilities outside an allowlist; Pod Security Standards (restricted profile) drop all capabilities by default. At runtime, Falco rules detect unexpected capability use such as mount syscalls from containers or ptrace activity across container boundaries. Auditd with rules on <code>capset</code>, <code>mount</code>, and <code>ptrace</code> syscalls gives host-level visibility, and <code>docker inspect</code> output in CI can be scanned for <code>CapAdd</code> entries before deployment. The preventive posture is simple and effective: default to dropping all capabilities, add back only named ones with a documented reason, and alert on any workload requesting CAP_SYS_ADMIN as a high-severity policy violation.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1611 Escape to Host: https://attack.mitre.org/techniques/T1611/</li>
+<li>MITRE ATT&amp;CK T1068 Exploitation for Privilege Escalation: https://attack.mitre.org/techniques/T1068/</li>
+<li>Linux capabilities manual: https://man7.org/linux/man-pages/man7/capabilities.7.html</li>
+<li>Docker runtime privilege options: https://docs.docker.com/engine/containers/run/</li>
+<li>Kubernetes container securityContext: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/</li>
+<li>Pod Security Standards: https://kubernetes.io/docs/concepts/security/pod-security-standards/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

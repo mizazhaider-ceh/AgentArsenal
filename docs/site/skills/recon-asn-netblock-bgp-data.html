@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-asn-netblock-bgp-data</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-asn-netblock-bgp-data</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have the target&#x27;s ASN and need the full list of prefixes it announces on the internet. Covers pulling announced prefixes from RIPEstat and bgp.he.net, reading announcement history from RouteViews, distinguishing the target&#x27;s own prefixes from customer or downstream allocations, handling anycast and stale announcements, and producing the filtered prefix list for netblock enumeration. Authorized targets only.</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="recon-asn-netblock.html">recon-asn-netblock</a></div><div class="deps"><span class="kind">requires:</span> <a href="recon-asn-netblock.html">recon-asn-netblock</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-asn-netblock-asn-lookup.html">recon-asn-netblock-asn-lookup</a> <a href="recon-asn-netblock-netblock-enumeration.html">recon-asn-netblock-netblock-enumeration</a> <a href="recon-passive.html">recon-passive</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>curl</td><td>8.5</td></tr><tr><td>jq</td><td>1.7</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>BGP data shows which IP prefixes an ASN actually announces to the internet right now, and which it announced historically. That turns an ASN number into a concrete list of netblocks to enumerate. This sub-skill covers reading BGP data for recon-asn-netblock: sources, filtering, and the traps (customer prefixes, anycast, stale data). Only map prefixes for ASNs you are authorized to enumerate.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Take the verified ASN inventory from the ASN lookup step.</li>
+<li>Pull current announced prefixes from RIPEstat for each ASN.</li>
+<li>Cross-check with bgp.he.net for prefix descriptions and neighbor context.</li>
+<li>Check announcement history via RouteViews for prefixes that appeared or vanished.</li>
+<li>Filter: drop customer allocations, downstream re-announcements, and anycast where noted.</li>
+<li>Verify each kept prefix is currently announced via a looking glass.</li>
+<li>Write the filtered prefix list with a keep/drop reason per prefix.</li>
+</ol>
+<h2>1. RIPEstat announced prefixes</h2>
+<pre><code class="language-bash">curl -s &quot;https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS64496&quot; \
+  | jq -r &#x27;.data.prefixes[] | &quot;\(.prefix) \(.timelines[0].starttime // &quot;?&quot;)&quot;&#x27; \
+  | sort -u &gt; bgp-prefixes.txt
+wc -l bgp-prefixes.txt
+cat bgp-prefixes.txt</code></pre>
+<p>Example output shape:</p>
+<pre><code>192.0.2.0/23 2021-03-14T00:00:00
+198.51.100.0/24 2015-06-11T00:00:00
+203.0.113.0/24 2008-01-01T00:00:00</code></pre>
+<p>The start time shows how long each prefix has been announced: long-stable prefixes are the core network; recently appeared ones may be new acquisitions or new deployments worth prioritizing. Save the raw JSON; re-parsing beats re-querying.</p>
+<h2>2. bgp.he.net context</h2>
+<p>bgp.he.net renders the ASN&#x27;s prefixes with descriptions, plus the upstream and downstream neighbors:</p>
+<ul>
+<li>Read each prefix&#x27;s description: &quot;EXAMPLE-CORP-CUSTOMERS&quot; versus &quot;EXAMPLE-CORP-INFRA&quot; tells you which to keep.</li>
+<li>Check the neighbor list: heavy downstream customer cones mean most prefixes are not the target&#x27;s own.</li>
+<li>Note anycast flags: anycast prefixes enumerate unreliably and usually belong to shared services.</li>
+</ul>
+<p>Use it as the human-readable cross-check against the RIPEstat machine list. When they disagree on whether a prefix is currently announced, trust the fresher source and verify with a looking glass.</p>
+<h2>3. Announcement history with RouteViews</h2>
+<pre><code class="language-bash"># RIPEstat also exposes historical announcement data per prefix
+curl -s &quot;https://stat.ripe.net/data/bgplay/data.json?resource=203.0.113.0/24&quot; -o bgplay.json
+# Look for origin ASN changes over time: a prefix that moved between
+# ASNs changed hands, which matters for ownership confidence</code></pre>
+<p>History answers: did this prefix always belong to this ASN, did it appear recently (new acquisition), did it disappear and come back (reallocated). A prefix announced by the target&#x27;s ASN for ten years is high-confidence; one that appeared last month needs an ownership double-check before enumeration.</p>
+<h2>4. Filtering to the target&#x27;s own prefixes</h2>
+<p>The keep/drop decision per prefix:</p>
+<ul>
+<li>Keep: description names the target, long stable announcement, size consistent with an org network (/24 to /20 typical for enterprise; larger needs justification).</li>
+<li>Drop: description names customers or &quot;pool,&quot; downstream ASN re-announcing it, known CDN or cloud prefixes inside a shared ASN.</li>
+<li>Investigate: no description, recent appearance, odd size. Check whois on the prefix and the announcement history before deciding.</li>
+</ul>
+<pre><code class="language-bash"># prefix-decisions.txt format: prefix | KEEP/DROP | reason
+# 203.0.113.0/24 | KEEP | EXAMPLE-CORP-INFRA, stable since 2008
+# 198.51.100.0/24 | DROP | EXAMPLE-CORP-CUSTOMERS pool
+# 192.0.2.0/23 | KEEP | no descr, stable 5y, whois shows org; asked, confirmed in scope
+grep &quot;KEEP&quot; prefix-decisions.txt | cut -d&#x27;|&#x27; -f1 | tr -d &#x27; &#x27; &gt; prefixes-final.txt
+wc -l prefixes-final.txt</code></pre>
+<p>When the ASN is a provider&#x27;s, expect to drop most prefixes. That is correct; enumerating customer space is out of scope by definition.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The ASN announces a huge aggregate (a /16 or larger): do not sweep it blindly. Break it into announced more-specifics first; if none exist, ask the program which parts are theirs.</li>
+<li>Prefixes visible in RIPEstat but not in your region&#x27;s view: BGP views differ. Check two sources (RIPEstat plus a looking glass in another region) before declaring a prefix withdrawn.</li>
+<li>IPv6 prefixes: include them in the inventory; enumerate via DNS and certificate pivots rather than sweeping, since the space is too large.</li>
+<li>Private-use or reserved prefixes in the list: data artifacts; drop them.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>BGP data is thin for the ASN (few prefixes, sparse history): the org may be mostly cloud-hosted. Pivot to cloud IP range data (published JSON by AWS, Azure, GCP) correlated with the target&#x27;s domains instead.</li>
+<li>Filtering drops everything: the ASN path may be wrong for this target, or the target may genuinely own no announced space. Re-verify the ASN lookup step before concluding.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>BGP queries are fully passive: registries and stat APIs, never the target.</li>
+<li>Defenders: audit your announced prefixes regularly. Forgotten announcements are a classic shadow-infrastructure source, and stale registry descriptions mislead everyone including your own team.</li>
+<li>Monitor for unauthorized announcements of your prefixes (hijacks): BGP monitoring is a defensive control, and the same data hunters use for recon serves it.</li>
+<li>Keep prefix descriptions accurate: they are the first thing anyone, friendly or not, reads about your network.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>RIPEstat API docs: https://stat.ripe.net/docs/data_api</li>
+<li>bgp.he.net: https://bgp.he.net</li>
+<li>RouteViews: http://www.routeviews.org</li>
+<li>Team Cymru BGP tools: https://www.team-cymru.com</li>
+<li>MITRE ATT&amp;CK T1590.003 Network Trust Dependencies: https://attack.mitre.org/techniques/T1590/003/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

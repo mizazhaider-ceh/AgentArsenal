@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-breach-scoping-initial-access-identification</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-breach-scoping-initial-access-identification</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you must find how the attacker first got in</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-breach-scoping.html">incident-breach-scoping</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-breach-scoping.html">incident-breach-scoping</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-breach-scoping.html">incident-breach-scoping</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Wireshark</td><td>4.2</td></tr><tr><td>osquery</td><td>5.12.1</td></tr></tbody></table><p>Initial access identification finds the attacker&#x27;s first foothold: the phish that worked, the VPN account that fell, the web flaw that gave a shell. Everything downstream (lateral movement, persistence, exfiltration) depends on getting this right, because eradication must close the actual door, not a decoy. This sub-skill covers the evidence for each common vector and how to rank competing hypotheses. Authorized investigations on your own systems only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Establish the earliest confirmed malicious event (the anchor).</li>
+<li>List plausible entry vectors for the environment.</li>
+<li>Pull the evidence for each vector in the window before the</li>
+<p>anchor.</p>
+<li>Rank hypotheses by evidence strength, not by narrative appeal.</li>
+<li>Confirm the leading hypothesis with a second independent source.</li>
+<li>Identify what must change to close the vector (patch, reset,</li>
+<p>filter).</p>
+<li>Record the entry in the scope statement with confidence.</li>
+<li>Hand the closed vector to eradication as a requirement.</li>
+</ol>
+<h2>1. Phishing evidence</h2>
+<pre><code class="language-bash"># Email gateway: messages to patient zero&#x27;s user before the anchor
+# (adapt to your gateway&#x27;s log format; concept shown)
+grep &quot;alice@example.com&quot; /var/log/mail-gateway.log | head -20
+
+# What to look for: first-time senders, lookalike domains, attachments, link clicks
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import re
+suspicious = []
+for line in open(&#x27;mail-gateway.log&#x27;):
+    if &#x27;alice@example.com&#x27; in line and re.search(r&#x27;\.(zip|iso|lnk|html?)(\s|$)&#x27;, line):
+        suspicious.append(line.strip())
+print(f&quot;{len(suspicious)} messages with risky attachments to patient zero&quot;)
+for s in suspicious[:5]:
+    print(&quot; &quot;, s[:160])
+EOF</code></pre>
+<pre><code class="language-bash"># EDR: macro or script execution around the anchor time on patient zero
+# Hunt: winword.exe or excel.exe spawning powershell, wscript, or mshta
+# osquery on the host:
+osqueryi &quot;SELECT name, cmdline, parent FROM processes WHERE parent IN (&#x27;winword.exe&#x27;,&#x27;excel.exe&#x27;);&quot;</code></pre>
+<p>Example output shape:</p>
+<pre><code>3 messages with risky attachments to patient zero
+  Oct 20 09:14:02 from invoices@examp1e-billing.com subject &quot;Overdue invoice&quot; attach invoice.zip</code></pre>
+<p>A clicked phishing link or opened attachment hours before the first malware execution is the classic T1566 chain. Confirm with the user&#x27;s account of what they clicked; users usually remember the invoice email.</p>
+<h2>2. VPN and remote access analysis</h2>
+<pre><code class="language-bash"># VPN logins before the anchor: new IPs, new ASNs, impossible travel
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import re
+from collections import defaultdict
+logins = defaultdict(list)
+for line in open(&#x27;vpn.log&#x27;):
+    m = re.search(r&#x27;(\d{4}-\d{2}-\d{2} \d+:\d+:\d+).*user=(\w+).*ip=([\d.]+)&#x27;, line)
+    if m:
+        logins[m.group(2)].append((m.group(1), m.group(3)))
+for user, events in sorted(logins.items()):
+    ips = {ip for _, ip in events}
+    if len(ips) &gt; 2:
+        print(f&quot;{user}: {len(events)} logins from {len(ips)} IPs&quot;)
+        for ts, ip in events[:6]:
+            print(f&quot;   {ts} {ip}&quot;)
+EOF</code></pre>
+<p>Example output shape:</p>
+<pre><code>svc-deploy: 47 logins from 5 IPs
+   2026-10-20 22:41:03 198.51.100.23
+   2026-10-20 22:41:09 198.51.100.23</code></pre>
+<p>Forty-seven logins in minutes from one IP is credential stuffing, not a user typo. Check whether the account had MFA: stuffing succeeds where MFA is absent or bypassable. The fix is MFA enforcement plus the password reset, not just the reset.</p>
+<h2>3. Web exploitation traces</h2>
+<pre><code class="language-bash"># WAF and access logs: injection strings before the anchor
+grep -E &quot;union.*select|&#x27;\s*or\s*&#x27;|/etc/passwd|\.\./&quot; /var/log/apache2/access.log | head -20
+
+# Then: the web shell or dropper the exploitation planted
+find /var/www -name &quot;*.php&quot; -newermt &quot;2026-10-19&quot; -ls 2&gt;/dev/null
+find /var/www -name &quot;*.jsp&quot; -newermt &quot;2026-10-19&quot; -ls 2&gt;/dev/null
+
+# Correlate: exploitation timestamp -&gt; file creation timestamp -&gt; first execution
+ls -la --time-style=full-iso /var/www/html/uploads/shell.php</code></pre>
+<p>Example output shape:</p>
+<pre><code>-rw-r--r-- 1 www-data www-data 2341 2026-10-20 21:58:11 shell.php</code></pre>
+<p>Exploitation at 21:55, shell dropped at 21:58, first execution at 22:03: that is T1190 with a clean chain. The eradication requirement is the patch (or WAF rule plus patch), the shell&#x27;s removal, and a review of what the web user could reach.</p>
+<h2>4. Credential stuffing and password spraying</h2>
+<pre><code class="language-bash"># Auth logs: many usernames from one IP (spraying) or many passwords for one user (stuffing)
+grep &quot;Failed password&quot; /var/log/auth.log | awk &#x27;{print $(NF-3)}&#x27; | sort | uniq -c | sort -rn | head -10</code></pre>
+<p>Example output shape:</p>
+<pre><code>   312 198.51.100.23
+    14 203.0.113.77</code></pre>
+<p>312 failures from one IP is not background noise; it is the entry attempt. Check whether any succeeded (the &quot;Accepted&quot; line for the same IP), and treat the success as the anchor if it precedes other malicious events.</p>
+<h2>5. Supply chain and trusted relationship</h2>
+<p>The hardest vector: a vendor&#x27;s compromised update or a trusted partner&#x27;s credentials. Evidence is indirect:</p>
+<ul>
+<li>Malware signed with a valid vendor certificate.</li>
+<li>First execution from a software updater process in EDR ancestry.</li>
+<li>The entry host has no phishing, no VPN anomaly, no web</li>
+<p>exploitation, yet malware appeared after an update window.</p>
+</ul>
+<pre><code class="language-bash"># EDR ancestry: what launched the malware
+# Look for: updater.exe, installer processes, or remote admin tools as parents</code></pre>
+<p>Do not declare supply chain lightly; it has vendor and legal consequences. It is the hypothesis of last resort, reached by eliminating the others, and it gets its own verification effort.</p>
+<h2>6. Ranking hypotheses</h2>
+<pre><code>Hypothesis                          Evidence                              Confidence
+VPN stuffing (svc-deploy)           47 logins, new IP, no MFA, anchor+0h  HIGH
+Phishing (alice)                    1 risky email, no click evidence       LOW
+Web exploitation                    no injection strings in window         EXCLUDED
+Supply chain                        no updater ancestry                    EXCLUDED</code></pre>
+<p>Rank by evidence, kill hypotheses with negative evidence, and keep the losers in the record. &quot;We excluded web exploitation because the WAF logs show no injection in the 72h window&quot; is what makes the leading hypothesis credible.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Multiple plausible entries in the same window. The attacker may</li>
+<p>have tried several; confirm which one produced the first execution, and close all attempted vectors, not just the successful one.</p>
+<li>The anchor is wrong (earlier activity found later). Re-run the</li>
+<p>vector analysis against the new anchor; entry hypotheses are anchor-relative.</p>
+<li>Logs for the entry window are gone (rotation or deletion). Note</li>
+<p>the gap, work from EDR and network telemetry, and mark the entry confidence down accordingly.</p>
+<li>The entry used valid credentials at normal hours (insider or</li>
+<p>credential theft with patience). Behavioral evidence (unusual data access, new tooling) replaces the anomaly of timing.</p>
+<li>Patient zero is a shared or service account. Attribute through</li>
+<p>source IPs and session data, not the account name; shared accounts need their user mapping reconstructed.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The entry vector is a zero-day or an unpatched vulnerability</li>
+<p>with no fix. Escalate for emergency mitigation (WAF rules, feature disablement) and vendor engagement; eradication cannot wait for the patch.</p>
+<li>Phishing entry suggests a wider campaign against your users.</li>
+<p>Escalate to the security awareness team and consider a fleet-wide hunt for the same lure.</p>
+<li>The entry implicates a vendor or partner. Involve legal before</li>
+<p>contacting them; your evidence must be solid and your communication careful.</p>
+<li>You cannot identify the entry after full analysis. Escalate the</li>
+<p>unknown-entry scope to the commander; eradication then covers all plausible vectors, which is expensive but necessary.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Every entry vector maps to a preventive control: phishing to email filtering and user training plus MFA, VPN stuffing to MFA and lockout policies, web exploitation to patching and WAF, credential attacks to password hygiene and anomaly detection. The defender program that emerges from this analysis is layered by vector, and the metric is time-to-close per vector after identification. The strategic view: initial access is the cheapest phase to defeat, because every vector has a well-understood control; the expensive failures are the ones where the control existed but was not enforced.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent scoping workflow: incident-breach-scoping (this repo)</li>
+<li>MITRE ATT&amp;CK initial access tactics (T1566, T1078, T1190):</li>
+<p>https://attack.mitre.org/</p>
+<li>NIST SP 800-61 Rev. 2: https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final</li>
+<li>CISA phishing guidance: https://www.cisa.gov/topics/cybersecurity-best-practices/phishing</li>
+<li>OWASP web attack descriptions: https://owasp.org/www-community/attacks/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

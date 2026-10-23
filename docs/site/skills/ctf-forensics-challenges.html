@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-forensics-challenges</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-forensics-challenges</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">98/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when competing in a CTF forensics challenge, practicing</p><h2>Sub-skills</h2><ul><li><a href="ctf-forensics-challenges-disk-image-triage.html">ctf-forensics-challenges-disk-image-triage</a> <span class="muted">v1.0.0: Use when a CTF forensics challenge provides a disk image, or</span></li><li><a href="ctf-forensics-challenges-pcap-analysis.html">ctf-forensics-challenges-pcap-analysis</a> <span class="muted">v1.0.0: Use when a CTF forensics challenge provides a packet capture,</span></li><li><a href="ctf-forensics-challenges-steganography.html">ctf-forensics-challenges-steganography</a> <span class="muted">v1.0.0: Use when a CTF forensics challenge hides data inside images,</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="memory-forensics.html">memory-forensics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Wireshark</td><td>4.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>binwalk</td><td>2.3</td></tr><tr><td>Volatility</td><td>3.0</td></tr><tr><td>CyberChef</td><td>latest</td></tr><tr><td>ExifTool</td><td>12.90</td></tr></tbody></table><p>Forensics challenges give you artifacts (captures, images, dumps, files) and hide the flag inside them. The winning pattern is layered: identify what you have, extract everything extractable automatically, then dig manually into the interesting parts. This skill covers the authorized methodology across the main forensics challenge types, with the exact tools, filters, and commands that surface flags fastest. Scope is CTF competitions, lab evidence, and artifacts you are authorized to analyze.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify every file: <code>file</code>, <code>xxd</code> headers, <code>binwalk -E</code> entropy,</li>
+<p>and <code>strings</code> for immediate flag-shaped hits.</p>
+<li>Check metadata first (ExifTool); CTF flags hide in EXIF, comments,</li>
+<p>and document properties.</p>
+<li>Carve embedded files: <code>binwalk -e</code>, <code>foremost</code>, or manual <code>dd</code></li>
+<p>extraction at found offsets.</p>
+<li>For pcaps: check the protocol hierarchy, follow interesting streams,</li>
+<p>and export objects (HTTP, FTP-DATA).</p>
+<li>For disk images: list partitions, mount read-only or parse with</li>
+<p>Sleuth Kit (<code>fls</code>, <code>icat</code>), and check deleted files.</p>
+<li>For memory dumps: run Volatility plugins (processes, network,</li>
+<p>files) and scan for flag patterns in strings.</p>
+<li>For images/audio: run steg tools (zsteg, steghide, binwalk) and</li>
+<p>inspect LSB planes and spectrograms.</p>
+<li>Reassemble: CTF forensics often splits the flag across artifacts;</li>
+<p>collect fragments before assuming you are done.</p>
+</ol>
+<h2>1. File identification and carving</h2>
+<pre><code class="language-bash">file mystery.bin
+xxd mystery.bin | head -5        # magic bytes: PK=zip, \x89PNG=png, FF D8=jpg
+binwalk mystery.bin             # embedded files and offsets
+# DECIMAL       HEXADECIMAL     DESCRIPTION
+# 0             0x0             PNG image, 800 x 600
+# 12345         0x3039          Zip archive data
+
+binwalk -e mystery.bin          # auto-extract to _mystery.bin.extracted/
+# or manual:
+dd if=mystery.bin of=hidden.zip bs=1 skip=12345
+
+# entropy: high entropy regions suggest encryption or compression
+binwalk -E mystery.bin | head -20
+
+# quick flag grep across everything (flag formats vary; try several)
+grep -r -a -o -E &quot;flag\{[^}]+\}|CTF\{[^}]+\}|picoCTF\{[^}]+\}&quot; . 2&gt;/dev/null | head</code></pre>
+<h2>2. Packet capture analysis</h2>
+<pre><code class="language-bash"># Protocol overview: what talks to what
+tshark -r capture.pcap -q -z io,stat,0,tcp,udp
+capinfos capture.pcap           # packet count, duration, capture info
+
+# Follow a TCP stream (the conversation as text)
+tshark -r capture.pcap -q -z follow,tcp,ascii,0 | head -60
+
+# Export files transferred over HTTP / FTP-DATA
+tshark -r capture.pcap --export-objects http,/tmp/http_objs
+tshark -r capture.pcap --export-objects ftp-data,/tmp/ftp_objs
+ls -la /tmp/http_objs /tmp/ftp_objs
+
+# Filter cheat sheet for CTF pcaps
+tshark -r capture.pcap -Y &quot;http.request&quot; -T fields -e http.host -e http.request.uri | sort -u
+tshark -r capture.pcap -Y &quot;dns&quot; -T fields -e dns.qry.name | sort -u          # exfil over DNS?
+tshark -r capture.pcap -Y &quot;ftp-data or tftp&quot;                                 # file transfers
+tshark -r capture.pcap -Y &quot;icmp.data.len &gt; 0&quot; -T fields -e icmp.data         # ICMP exfil</code></pre>
+<p>In Wireshark GUI: Statistics -&gt; Protocol Hierarchy (spot odd protocols), right-click a packet -&gt; Follow -&gt; TCP/UDP/HTTP Stream, File -&gt; Export Objects. Look for: credentials in cleartext (FTP, Telnet, HTTP basic), DNS queries encoding data in subdomain labels, and ICMP payloads.</p>
+<p>Reassembling exfiltration in Python:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+# Example: reassemble data exfiltrated in ICMP payloads
+from scapy.all import rdpcap, ICMP
+pkts = rdpcap(&quot;capture.pcap&quot;)
+data = b&quot;&quot;.join(bytes(p[ICMP].payload) for p in pkts if p.haslayer(ICMP) and p[ICMP].type == 8)
+open(&quot;/tmp/exfil.bin&quot;, &quot;wb&quot;).write(data)</code></pre>
+<h2>3. Disk image triage</h2>
+<pre><code class="language-bash"># Partition layout (never mount read-write; use loop,ro or Sleuth Kit)
+fdisk -l disk.img
+mmls disk.img                 # Sleuth Kit partition list
+
+# File listing including deleted entries
+fls -r -p disk.img | head -40
+fls -r -d disk.img             # deleted files only
+
+# Extract a file by inode
+icat disk.img 1234 &gt; /tmp/recovered.txt
+
+# Strings over unallocated space (deleted content often survives)
+blkls disk.img | strings -n 8 | grep -i -E &quot;flag|password&quot; | head
+
+# Timeline of file activity (great for &quot;what happened when&quot; challenges)
+fls -r -m &quot;/&quot; disk.img &gt; /tmp/bodyfile.txt
+mactime -b /tmp/bodyfile.txt | head -50</code></pre>
+<p>Check slack space, alternate data streams (NTFS), and volume shadow copies when the image is Windows. CTF disk challenges often hide the flag in a deleted file, so <code>fls -d</code> plus <code>icat</code> is the money command.</p>
+<h2>4. Memory dump analysis with Volatility 3</h2>
+<pre><code class="language-bash"># Identify the profile automatically, then triage
+python3 vol.py -f mem.raw windows.info
+python3 vol.py -f mem.raw windows.pslist      # processes
+python3 vol.py -f mem.raw windows.netscan     # network connections
+python3 vol.py -f mem.raw windows.filescan | grep -i flag
+python3 vol.py -f mem.raw windows.cmdline     # command lines (past exfil commands)
+
+# Dump a suspicious process for strings analysis
+python3 vol.py -f mem.raw windows.memmap --pid 1234 --dump
+python3 vol.py -f mem.raw windows.dumpfiles --physaddr 0x...
+
+# Fast flag hunt across the whole dump
+strings -n 6 mem.raw | grep -E &quot;flag\{[^}]+\}&quot; | sort -u | head</code></pre>
+<p>Linux dumps use <code>linux.pslist</code>, <code>linux.bash</code> (shell history), and <code>linux.proc.maps</code>. The bash history plugin alone solves challenges where the attacker typed the flag handling commands.</p>
+<h2>5. Steganography essentials</h2>
+<pre><code class="language-bash"># PNG: check LSB and metadata channels
+zsteg -a image.png                    # tries all LSB orders and channels
+steghide info image.png               # needs passphrase; try empty and challenge words
+exiftool image.png                    # comment/description fields
+
+# JPEG: outguess/steghide territory; also check appended data
+binwalk image.jpg                     # zip/rar appended after EOI marker
+tail -c 100 image.jpg | xxd           # trailing garbage often holds the flag
+
+# Audio: look at the spectrogram (flags drawn in frequency domain)
+# open in Audacity -&gt; Spectrogram view, or:
+sox audio.wav -n spectrogram -o /tmp/spec.png
+# SSTV signals: decode with robot36 / QSSTV when you hear the warble
+
+# Whitespace / unicode stego in text
+cat -A note.txt | head                # trailing spaces/tabs = binary
+python3 -c &quot;
+data = open(&#x27;note.txt&#x27;).read()
+bits = &#x27;&#x27;.join(&#x27;1&#x27; if c == &#x27;\u200b&#x27; else &#x27;0&#x27; for c in data if c in &#x27;\u200b\u200c&#x27;)
+print(bytes(int(bits[i:i+8], 2) for i in range(0, len(bits), 8)))
+&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The pcap is huge: filter early (<code>tshark -Y</code>), work on subsets, and</li>
+<p>use <code>editcap</code> to split by time or packet count.</p>
+<li>Traffic is TLS-encrypted: without the key, pivot to metadata (SNI,</li>
+<p>certificate names, flow sizes, timing); check for a keylog file in the challenge bundle.</p>
+<li>The disk image will not mount: parse with Sleuth Kit directly; the</li>
+<p>filesystem may be intentionally corrupted as part of the challenge.</p>
+<li>Volatility reports no profile: try <code>windows.info</code> anyway, or fall</li>
+<p>back to raw <code>strings</code> plus <code>bulk_extractor</code> style carving.</p>
+<li>The flag is split across artifacts (half in pcap, half in image):</li>
+<p>keep a notes file of fragments; do not close the challenge after one artifact.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li><code>binwalk -e</code> extracts nothing but entropy is high throughout: the</li>
+<p>file may be encrypted; look for the key in accompanying files or metadata before assuming brute force.</p>
+<li>zsteg/steghide find nothing in the image: inspect color planes</li>
+<p>manually, check for appended archives, and try <code>stegseek</code> (rockyou brute force on steghide) as a cheap extra pass.</p>
+<li>The pcap shows only encrypted C2: look at beacon timing and sizes</li>
+<p>for encoded commands, and check DNS for tunneled data.</p>
+<li>Memory strings show the flag partially corrupted: the process may</li>
+<p>have been paged; carve with <code>bulk_extractor</code> or dump the specific process address space and re-grep.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders use these same techniques in incident response: pcap analysis for C2, disk forensics for persistence, memory forensics for fileless malware, and steganalysis for data exfiltration. Detection focuses on the adversary behaviors CTF forensics imitates: DNS tunneling (long subdomains, high query entropy), ICMP exfiltration, and large outbound transfers. The durable defenses are network segmentation with egress filtering, DNS logging with anomaly detection, and endpoint telemetry that makes memory and disk forensics a confirmation step rather than the only visibility.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1048 (Exfiltration Over Alternative Protocol), T1071</li>
+<p>(Application Layer Protocol), T1005 (Data from Local System).</p>
+<li>CWE-200 (Exposure of Sensitive Information to an Unauthorized Actor).</li>
+<li>Wireshark 4.2 docs: https://www.wireshark.org/docs/</li>
+<li>Volatility 3 docs: https://volatility3.readthedocs.io/</li>
+<li>Sleuth Kit wiki: https://wiki.sleuthkit.org/</li>
+<li>zsteg: https://github.com/zed-0xff/zsteg</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

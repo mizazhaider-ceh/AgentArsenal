@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bugbounty-methodology</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bugbounty-methodology</h2><div class="meta"><span class="badge gray">bugbounty</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hunting on an in-scope bug bounty program and you need a complete, repeatable methodology that takes you from scope reading to payout. Covers the five phases of a professional hunt (scope and rules of engagement, reconnaissance, application mapping, systematic exploitation per bug class, and reporting), per-bug-class testing sequences for IDOR, XSS, SQLi, SSRF, authentication flaws, file uploads, and business logic, evidence collection habits, severity triage, and when to stop and move on. Authorized targets only, strictly inside program scope.</p><h2>Sub-skills</h2><ul><li><a href="bugbounty-methodology-exploitation-phase.html">bugbounty-methodology-exploitation-phase</a> <span class="muted">v1.0.0: Use when you have a mapped in-scope target and need the systematic exploitation phase of a bug bounty hunt. Covers the ordered per-bug-class</span></li><li><a href="bugbounty-methodology-recon-phase.html">bugbounty-methodology-recon-phase</a> <span class="muted">v1.0.0: Use when you are in the reconnaissance phase of an in-scope bug bounty hunt and need the exact ordered pipeline. Covers passive subdomain co</span></li><li><a href="bugbounty-methodology-reporting-phase.html">bugbounty-methodology-reporting-phase</a> <span class="muted">v1.0.0: Use when a finding is validated on an in-scope bug bounty target and needs to become a payout-ready report. Covers the triage-before-writing</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bug-bounty-workflow.html">bug-bounty-workflow</a> <a href="bugbounty-scope-recon.html">bugbounty-scope-recon</a> <a href="bugbounty-report-writing.html">bugbounty-report-writing</a> <a href="bugbounty-duplicate-avoidance.html">bugbounty-duplicate-avoidance</a> <a href="recon-subdomain-enumeration.html">recon-subdomain-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>ffuf</td><td>2.1</td></tr><tr><td>nuclei</td><td>3.3</td></tr><tr><td>httpx</td><td>1.6</td></tr></tbody></table><p>Methodology is what separates hunters who get paid from hunters who get lucky once. A bug bounty program rewards repeatable, thorough testing inside its stated scope: read the policy, map the surface, work each bug class systematically across the whole target, validate every finding, and report it cleanly. This skill gives you that end-to-end methodology, the order of operations, and the habits that keep you in good standing with programs. Only test targets the program explicitly lists in scope, and stop the moment you step outside it.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Read the program policy end to end: scope, exclusions, forbidden test types, safe harbor, bounty table, SLA.</li>
+<li>Create a program workspace: SCOPE.txt, target list, credentials for two test accounts, and a notes file.</li>
+<li>Run recon in order: passive sources first, then active enumeration, then content discovery on live hosts.</li>
+<li>Map the application through Burp: every endpoint, parameter, role, and state-changing action before testing anything.</li>
+<li>Test one bug class at a time across the full mapped surface (access control first, then auth, injection, SSRF, file handling, business logic, APIs).</li>
+<li>Validate each candidate finding from a clean session with a second account; discard false positives before they become reports.</li>
+<li>Check for duplicates against disclosed reports and your own notes before writing.</li>
+<li>Write one report per vulnerability: title, severity, reproduction steps, impact, remediation, evidence.</li>
+<li>Track the report through triage; retest fixes politely and confirm.</li>
+</ol>
+<h2>1. Phase one: scope and rules of engagement</h2>
+<p>Scope is the contract that makes your testing legal. Before any tool runs:</p>
+<ul>
+<li>Copy the exact in-scope list into SCOPE.txt: domains, wildcards, IP ranges, mobile apps, APIs. Note what a wildcard really covers (usually only subdomains of the named domain).</li>
+<li>Copy the exclusions too: staging, third-party services, anything named explicitly. Out-of-scope means do not touch, not &quot;test quietly.&quot;</li>
+<li>Note forbidden test types (commonly DoS, social engineering, physical attacks, high-intensity automated scanning) and the safe harbor terms.</li>
+<li>Record the bounty table and any severity guidance so your severity claims match what the program pays for.</li>
+</ul>
+<p>Re-read the policy when the program updates it (they do, often). If you find something in an asset you are unsure about, report it to the program as a question, not as a finding, and stop probing until they confirm.</p>
+<h2>2. Phase two: reconnaissance</h2>
+<p>Recon builds your target list. Work in increasing intensity:</p>
+<pre><code class="language-bash"># Passive subdomain collection
+subfinder -d target.com -silent -o subfinder.txt
+amass enum -passive -d target.com -o amass-passive.txt
+
+# Resolve and probe for live web hosts
+cat subfinder.txt amass-passive.txt | sort -u | dnsx -silent -o resolved.txt
+httpx -l resolved.txt -silent -o live.txt -title -tech-detect -status-code</code></pre>
+<p>Example output shape from httpx:</p>
+<pre><code>https://app.target.com [200] [Login Portal] [nginx,React]
+https://api.target.com [403] [Forbidden] [cloudflare]
+https://old.target.com [200] [Welcome] [Apache/2.4.41]</code></pre>
+<p>Content discovery on live hosts, paced politely:</p>
+<pre><code class="language-bash">ffuf -u https://app.target.com/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -mc 200,301,302,403 -o ffuf-app.json</code></pre>
+<p>Collect every JavaScript file and grep for API endpoints, keys, and hidden parameters. JS files are scope-authorized source code review; endpoints found there are in-scope endpoints.</p>
+<h2>3. Phase three: application mapping</h2>
+<p>Proxy everything through Burp and use the application like a thorough user before attacking it:</p>
+<ul>
+<li>Build the site map: every endpoint with its parameters. Tag each parameter: ID, action, search, upload, redirect, URL-fetch.</li>
+<li>Register two accounts (different roles if possible). Diff what each role can see and do; access control bugs live in the differences.</li>
+<li>List every state-changing request and note its CSRF protection or absence.</li>
+<li>Find the API surface: Swagger or OpenAPI docs, GraphQL endpoints, mobile app traffic. Mobile traffic often exposes more than the web UI.</li>
+</ul>
+<p>Nuclei assists with known-vulnerability and misconfiguration checks:</p>
+<pre><code class="language-bash">nuclei -l live.txt -t ~/nuclei-templates/http/misconfiguration/ -o nuclei-misconfig.txt</code></pre>
+<p>Treat every scanner hit as a lead, not a finding. Validate manually before it becomes a report.</p>
+<h2>4. Phase four: exploitation per bug class</h2>
+<p>Work one class across the whole surface before moving on. Depth per class beats shallow coverage of everything.</p>
+<p>Access control and IDOR: for every object reference (user IDs, order IDs, document UUIDs), substitute another user&#x27;s ID and a sequential neighbor. Test direct references and indirect ones (search filters, export functions, API parameters). Test function-level access: can a low-privilege role call admin endpoints directly.</p>
+<p>Authentication: registration, login, password reset, session handling. Reset tokens must be random, single-use, and short-lived. Check for user enumeration via response differences, missing rate limits, OAuth redirect URI validation, and the state parameter.</p>
+<p>Injection: XSS in every reflected and stored input, then template injection, then SQLi where inputs reach queries. For stored XSS, confirm it fires in another user&#x27;s session.</p>
+<pre><code class="language-bash"># Quick reflected XSS probe pattern (manual, in Burp Repeater)
+# Inject: &quot;&gt;&lt;svg onload=alert(document.domain)&gt;  then observe reflection context</code></pre>
+<p>SSRF: every place the server fetches a URL (webhooks, avatars, PDF generators, importers) gets internal addresses and cloud metadata endpoints. Confirm with a collaborator callback, then show what internal data is reachable.</p>
+<p>File upload: test extension, MIME type, and magic byte validation independently. A file that uploads is not a finding; execution or disclosure from the uploaded file is.</p>
+<p>Business logic: price and quantity tampering, workflow skipping (steps out of order), race conditions on limited resources, coupon or credit abuse. Scanners cannot find these, so they pay well.</p>
+<p>APIs: mass assignment (extra JSON fields), excessive data exposure (fields the UI never shows), missing object-level authorization per endpoint, shadow endpoints (v1, internal, debug).</p>
+<h2>5. Phase five: validation and reporting</h2>
+<p>Triage before writing: reproduce from a clean session, confirm real impact, check duplicates. Then write one report per vulnerability with title, justified severity, summary, numbered reproduction steps with raw HTTP requests, concrete impact, remediation, and evidence attachments. See bugbounty-report-writing for the full reporting standard and bugbounty-duplicate-avoidance before you submit.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The scope is ambiguous: ask the program in writing before testing. A &quot;quick check&quot; outside scope is still outside scope.</li>
+<li>Recon finds nothing new: go deeper on the application instead of wider. Business logic and access control bugs hide where scanners stop.</li>
+<li>You hit a duplicate: note the pattern and hunt its siblings. One disclosed IDOR often means the same broken pattern on five more endpoints.</li>
+<li>The program goes quiet: one polite follow-up after their stated SLA, then move on. Never threaten disclosure to speed triage.</li>
+<li>Rate limiting or WAF blocks you: slow down and never try to evade aggressively. Evasion attempts look like attacks because they are.</li>
+<li>You accidentally touch out-of-scope: stop immediately, document it, and disclose honestly to the program. Honesty preserves safe harbor.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>One bug class is exhausted on a target: rotate to a different asset class in the program (API instead of web, mobile instead of API). Fresh surface, fresh bugs.</li>
+<li>Low-severity findings accumulate: chain them. Information disclosure plus a weak reset flow can become account takeover; programs pay for chains.</li>
+<li>Stuck on validation: reproduce with a second account and a clean browser profile to rule out session confusion, the most common false positive in access control testing.</li>
+<li>Bounty disputes: stay factual, cite the policy and bounty table, and accept the program&#x27;s final call gracefully.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Programs are a defensive investment: scope them to the real attack surface, keep the policy current, and triage quickly. Slow triage trains hunters to leave.</li>
+<li>Every bug class in section 4 maps to defenses: object-level authorization checks, output encoding, parameterized queries, SSRF allowlists with DNS pinning, strict file validation, server-side business logic enforcement.</li>
+<li>Monitor telemetry for hunter behavior: repeated 403s on admin paths, ID enumeration patterns, and collaborator callbacks show what attackers try first. It is free adversary emulation.</li>
+<li>Fix classes, not instances: one IDOR report should trigger an authorization review across the codebase, not a single endpoint patch.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>HackerOne hunter documentation: https://docs.hackerone.com</li>
+<li>Bugcrowd researcher documentation: https://docs.bugcrowd.com</li>
+<li>OWASP Testing Guide: https://owasp.org/www-project-web-security-testing-guide/</li>
+<li>OWASP Top 10 (2021): https://owasp.org/Top10/</li>
+<li>OWASP API Security Top 10: https://owasp.org/API-Security/</li>
+<li>PortSwigger Web Security Academy: https://portswigger.net/web-security</li>
+<li>nuclei-templates project: https://github.com/projectdiscovery/nuclei-templates</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

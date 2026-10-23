@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: mobile-frida-scripting-ssl-pinning-bypass</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>mobile-frida-scripting-ssl-pinning-bypass</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a mobile app&#x27;s HTTPS traffic stays encrypted in</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="mobile-frida-scripting.html">mobile-frida-scripting</a></div><div class="deps"><span class="kind">requires:</span> <a href="mobile-frida-scripting.html">mobile-frida-scripting</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="mobile-frida-scripting.html">mobile-frida-scripting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Frida</td><td>16.5</td></tr><tr><td>objection</td><td>1.11</td></tr><tr><td>Burp Suite</td><td>2024.12</td></tr></tbody></table><p>Certificate pinning hardcodes which server certificates an app trusts, so your proxy&#x27;s CA is rejected even when installed on the device. The bypass replaces the app&#x27;s trust decision at runtime with &quot;accept&quot;, which lets the proxy decrypt traffic for analysis. This sub-skill gives you the platform patterns that cover most apps, the objection shortcuts, and the verification loop. Only bypass pinning on apps and devices you are authorized to test; the technique itself is dual-use, so scope discipline is the whole game.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the symptom: proxy shows CONNECT tunnels or TLS alerts, no</li>
+<p>decrypted HTTPS.</p>
+<li>Identify the pinning implementation from static analysis (OkHttp,</li>
+<p>TrustKit, network security config, NSURLSession, Alamofire).</p>
+<li>Try the objection one-command bypass first; it covers the common</li>
+<p>cases in seconds.</p>
+<li>If objection fails, run the platform Frida agent below matching the</li>
+<p>library in use.</p>
+<li>Verify: repeat an in-app action and confirm decrypted HTTPS in the</li>
+<p>proxy.</p>
+<li>If still encrypted, check for native-code pinning and escalate to a</li>
+<p>targeted hook.</p>
+<li>Record which bypass worked and what it proves about the app&#x27;s</li>
+<p>transport defenses.</p>
+</ol>
+<h2>1. Android: OkHttp and TrustManager bypass</h2>
+<pre><code class="language-javascript">// pinning-android.js: covers OkHttp, TrustManagerFactory, HostnameVerifier
+Java.perform(function () {
+    // OkHttp3 CertificatePinner.check(String, List)
+    try {
+        var Pinner = Java.use(&#x27;okhttp3.CertificatePinner&#x27;);
+        Pinner.check.overload(&#x27;java.lang.String&#x27;, &#x27;java.util.List&#x27;)
+            .implementation = function (host, pins) {
+                console.log(&#x27;[*] OkHttp pinning bypassed for &#x27; + host);
+                return;
+            };
+        // Newer overload with Call parameter
+        Pinner.check.overload(&#x27;java.lang.String&#x27;, &#x27;java.util.List&#x27;).implementation = function () { return; };
+    } catch (e) { console.log(&#x27;[-] OkHttp CertificatePinner not found&#x27;); }
+
+    // TrustManager: replace checkServerTrusted with a no-op
+    try {
+        var X509TrustManager = Java.use(&#x27;javax.net.ssl.X509TrustManager&#x27;);
+        var TrustManager = Java.registerClass({
+            name: &#x27;com.example.PermissiveTrustManager&#x27;,
+            implements: [X509TrustManager],
+            methods: {
+                checkClientTrusted: function (chain, authType) {},
+                checkServerTrusted: function (chain, authType) {},
+                getAcceptedIssuers: function () { return []; }
+            }
+        });
+        var SSLContext = Java.use(&#x27;javax.net.ssl.SSLContext&#x27;);
+        SSLContext.init.overload(&#x27;[Ljavax.net.ssl.KeyManager;&#x27;,
+            &#x27;[Ljavax.net.ssl.TrustManager;&#x27;, &#x27;java.security.SecureRandom&#x27;)
+            .implementation = function (km, tm, sr) {
+                console.log(&#x27;[*] SSLContext.init hooked, injecting permissive TrustManager&#x27;);
+                var permissive = TrustManager.$new();
+                this.init(km, [permissive], sr);
+            };
+    } catch (e) { console.log(&#x27;[-] TrustManager hook failed: &#x27; + e); }
+
+    // HostnameVerifier: accept everything
+    try {
+        var HostnameVerifier = Java.use(&#x27;javax.net.ssl.HostnameVerifier&#x27;);
+        // Hook the default verifier used by HttpsURLConnection
+        var HttpsURLConnection = Java.use(&#x27;javax.net.ssl.HttpsURLConnection&#x27;);
+        HttpsURLConnection.setDefaultHostnameVerifier.implementation = function (v) {
+            console.log(&#x27;[*] setDefaultHostnameVerifier called, keeping permissive&#x27;);
+        };
+    } catch (e) { console.log(&#x27;[-] HostnameVerifier hook skipped&#x27;); }
+});</code></pre>
+<p>Run against the spawned app:</p>
+<pre><code class="language-bash">frida -U -f com.example.target -l pinning-android.js --no-pause</code></pre>
+<h2>2. Android: network security config and TrustKit</h2>
+<p>Apps using <code>network_security_config.xml</code> with <code>&lt;pin-set&gt;</code> do not call OkHttp&#x27;s pinner; the platform validates pins. Hook at the X509TrustManager level as above, which still applies, or patch the config in a repackaged test build (authorized target only):</p>
+<pre><code class="language-bash"># Inspect the config to know what you are bypassing
+# (from the APK: res/xml/network_security_config.xml)
+grep -A8 &quot;pin-set&quot; res/xml/network_security_config.xml</code></pre>
+<p>TrustKit and Appcelerator pin through their own validators. The community bypass scripts bundle hooks for these; when hand-rolling, find the validator class from static analysis (search for TrustKit in the decompiled sources) and no-op its verification method the same way as the OkHttp pinner.</p>
+<h2>3. iOS: NSURLSession and SecTrustEvaluate bypass</h2>
+<pre><code class="language-javascript">// pinning-ios.js: covers NSURLSession delegates and Security.framework
+if (ObjC.available) {
+    // Hook NSURLSession delegate authentication challenges is complex;
+    // the reliable chokepoint is SecTrustEvaluateWithError / SecTrustEvaluate
+    var SecTrustEvaluateWithError = Module.getExportByName(&#x27;Security&#x27;, &#x27;SecTrustEvaluateWithError&#x27;);
+    Interceptor.attach(SecTrustEvaluateWithError, {
+        onEnter: function (args) {
+            console.log(&#x27;[*] SecTrustEvaluateWithError called&#x27;);
+        },
+        onLeave: function (retval) {
+            // BOOL return: force true (1)
+            retval.replace(1);
+            console.log(&#x27;[*] forced trust evaluation to pass&#x27;);
+        }
+    });
+
+    // Alamofire ServerTrustPolicy.evaluate: force success
+    try {
+        var ServerTrustPolicy = ObjC.classes.AFServerTrustPolicy;
+        if (ServerTrustPolicy) {
+            Interceptor.attach(ServerTrustPolicy[&#x27;- evaluateServerTrust:forDomain:&#x27;].implementation, {
+                onLeave: function (retval) { retval.replace(1); }
+            });
+            console.log(&#x27;[*] Alamofire trust policy hooked&#x27;);
+        }
+    } catch (e) { console.log(&#x27;[-] Alamofire not present&#x27;); }
+}</code></pre>
+<pre><code class="language-bash">frida -U -f com.example.target -l pinning-ios.js --no-pause</code></pre>
+<p>For Swift-only networking stacks, the symbol names are mangled; use the native export enumeration from the parent skill to find the trust evaluation function, or fall back to the objection bypass which handles several Swift stacks.</p>
+<h2>4. The objection shortcuts</h2>
+<p>Before hand-rolling, try the built-ins. They encode the same patterns above and take seconds:</p>
+<pre><code># Android
+android sslpinning disable
+android sslpinning disable --quiet
+
+# iOS
+ios sslpinning disable --quiet</code></pre>
+<p>objection prints which hooks it installed. If it reports hooks installed but traffic stays encrypted, the pinning lives somewhere objection does not cover (native code, custom validator), and you move to section 5.</p>
+<h2>5. Native-code pinning</h2>
+<p>When Java and ObjC hooks do nothing, the check is in native code: OpenSSL or BoringSSL verification, or a custom C validator. Strategy:</p>
+<pre><code class="language-javascript">// Find TLS verification functions in native libraries
+Process.enumerateModules().forEach(function (m) {
+    m.enumerateExports().forEach(function (e) {
+        if (/SSL_get_verify_result|verify_callback|X509_verify/i.test(e.name)) {
+            console.log(m.name + &#x27;!&#x27; + e.name + &#x27; @ &#x27; + e.address);
+        }
+    });
+});</code></pre>
+<p>Hook <code>SSL_get_verify_result</code> to return <code>X509_V_OK</code> (0):</p>
+<pre><code class="language-javascript">var f = Module.getExportByName(&#x27;libssl.so&#x27;, &#x27;SSL_get_verify_result&#x27;);
+Interceptor.attach(f, {
+    onLeave: function (retval) {
+        console.log(&#x27;[*] forcing verify result to X509_V_OK&#x27;);
+        retval.replace(0);
+    }
+});</code></pre>
+<p>On iOS the equivalent chokepoint is often <code>SSLHandshake</code> in Security.framework or BoringSSL symbols inside the app binary. This is the escalation point: identify the exact function from Ghidra, then write the targeted hook.</p>
+<h2>6. Verification loop</h2>
+<p>A bypass is only done when the proxy shows plaintext:</p>
+<ol>
+<li>In the app, perform a network action (login, refresh, search).</li>
+<li>In Burp, confirm the request and response bodies are readable.</li>
+<li>Check the TLS handshake in Burp&#x27;s dashboard: it should show Burp&#x27;s</li>
+<p>CA as the issuer, proving traffic flows through the proxy.</p>
+<li>Note any endpoints that still fail: some apps pin only the</li>
+<p>authentication host and leave analytics unpinned, or vice versa.</p>
+</ol>
+<pre><code class="language-bash"># Sanity: confirm the device proxy is actually set
+adb shell settings get global http_proxy
+# Should show your Burp host:port, e.g. 10.0.2.2:8080</code></pre>
+<p>If some hosts decrypt and others do not, the app uses different trust configurations per host. That is worth a report line: inconsistent pinning coverage.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The bypass works but the app then fails server-side attestation</li>
+<p>(Play Integrity, app attestation). Traffic decrypts, but the API rejects requests. Document the attestation as an effective additional control; you have still proven the pinning bypass.</p>
+<li>Multiple pinning libraries in one app (OkHttp plus TrustKit). One</li>
+<p>bypass is not enough; hook each validator, and verify host by host.</p>
+<li>The app uses certificate transparency enforcement on top of</li>
+<p>pinning. Generic bypasses ignore SCT checks; you need the specific transparency validator hook, or test the API directly.</p>
+<li>QUIC or HTTP/3 traffic bypasses the proxy entirely. Force HTTP/1.1</li>
+<p>or HTTP/2 via proxy settings, or hook the socket layer to capture plaintext before encryption.</p>
+<li>WebViews pin independently of the native stack. Hook the WebView&#x27;s</li>
+<p><code>onReceivedSslError</code> (Android) or <code>WKNavigationDelegate</code> (iOS) in addition to the native bypass.</p>
+<li>The app pins a backup pin and rotates. Your bypass does not care</li>
+<p>about pin values since it no-ops the check, but note rotation behavior for the report&#x27;s accuracy.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Every known bypass fails. Decompile the exact trust evaluation</li>
+<p>(search the binary for the pinned hash strings from static analysis), find the function that compares them, and hook it directly. This is normal on hardened banking apps.</p>
+<li>Pinning is enforced in a server-driven config fetched at runtime.</li>
+<p>Hook the config parser or the network client that applies it; the check still executes client-side and is still hookable.</p>
+<li>You cannot get any traffic decrypted and the engagement needs API</li>
+<p>coverage. Ask the client for a build with pinning disabled or with a debug flag; this is a standard ask on authorized tests.</p>
+<li>Time is short: at minimum, run the objection bypass and document</li>
+<p>the result. &quot;Pinning resisted generic bypass&quot; is itself a useful report statement with the right evidence.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Pinning bypass is exactly what the control is meant to resist, so a bypass that takes one objection command is a finding about defense depth, not a clever hack. Stronger defenses layer attestation (Play Integrity, App Attest) and anomaly detection on top of pinning, so that even decrypted traffic cannot be replayed usefully. Report the full chain: pinning bypassed in N minutes with tool X, then attestation accepted or rejected the proxied traffic. Defenders should also know that pinning without server-side authorization is theater against an instrumented client.</p>
+<h2>Key references</h2>
+<ul>
+<li>Frida CodeShare pinning bypass scripts (review before use):</li>
+<p>https://codeshare.frida.re/</p>
+<li>objection SSL pinning commands:</li>
+<p>https://github.com/sensepost/objection</p>
+<li>OWASP MSTG network communication testing:</li>
+<p>https://mas.owasp.org/MSTG/</p>
+<li>OWASP MASVS network requirements:</li>
+<p>https://mas.owasp.org/MASVS/</p>
+<li>Android network security configuration docs:</li>
+<p>https://developer.android.com/training/articles/security-config</p>
+<li>Apple ATS and TLS documentation:</li>
+<p>https://developer.apple.com/documentation/security/preventing_insecure_network_connections</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

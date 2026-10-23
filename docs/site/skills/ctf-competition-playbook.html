@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-competition-playbook</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-competition-playbook</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">93/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when preparing for, competing in, or reviewing a CTF</p><h2>Sub-skills</h2><ul><li><a href="ctf-competition-playbook-challenge-triage.html">ctf-competition-playbook-challenge-triage</a> <span class="muted">v1.0.0: Use when triaging CTF challenges at the start of an event,</span></li><li><a href="ctf-competition-playbook-team-roles-and-comms.html">ctf-competition-playbook-team-roles-and-comms</a> <span class="muted">v1.0.0: Use when organizing a CTF team for an upcoming or live</span></li><li><a href="ctf-competition-playbook-time-management.html">ctf-competition-playbook-time-management</a> <span class="muted">v1.0.0: Use when managing time during a CTF competition as a player</span></li></ul><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ctf-web-challenges.html">ctf-web-challenges</a> <a href="ctf-osint-challenges.html">ctf-osint-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>tmux</td><td>3.4</td></tr><tr><td>git</td><td>2.45</td></tr><tr><td>CyberChef</td><td>latest</td></tr></tbody></table><p>Winning CTFs is mostly logistics: the team that triages well, shares notes cleanly, and spends time on solvable challenges beats the team with slightly better skills and no process. This skill is the operating playbook for authorized competitions: setup before the event, roles and communication during it, triage and time strategy, and review after it. It applies to jeopardy-style CTFs, the format this playbook assumes.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Before the event: set up the shared environment (notes doc, chat</li>
+<p>channels, solver repo, tooling checklist) and assign roles.</p>
+<li>At start: triage all challenges in the first 30 minutes; every</li>
+<p>challenge gets a category, a difficulty guess, and an owner.</p>
+<li>Work in parallel: each player owns challenges, updates status in</li>
+<p>the shared notes, and asks for help early rather than silently stalling.</p>
+<li>Script everything: solvers go in the shared repo immediately, with</li>
+<p>the flag format assertion built in.</p>
+<li>Submit flags carefully: copy exactly, verify the format, confirm</li>
+<p>the points land.</p>
+<li>Re-triage hourly: drop stuck challenges, reassign fresh eyes,</li>
+<p>chase the point categories you are strongest in.</p>
+<li>In the final hour: stop starting new challenges; finish partials</li>
+<p>and double-check unsubmitted flags.</p>
+<li>After the event: write up solves, archive solvers, and review what</li>
+<p>the triage got wrong.</p>
+</ol>
+<h2>1. Pre-competition setup</h2>
+<pre><code class="language-bash"># Shared solver repo layout (one per event)
+/ctf-event/
+  web/  pwn/  rev/  crypto/  forensics/  osint/  misc/
+  notes.md          # live status: challenge, owner, status, notes
+  flags.txt         # submitted flags log (who, what, when, points)
+
+# Tooling checklist (verify before start, not during)
+python3 -c &quot;import pwn; print(pwn.__version__)&quot;   # pwntools
+which gdb ropper RsaCtfTool zsteg steghide binwalk tshark exiftool
+hashcat --version 2&gt;/dev/null | head -1
+# VPN / challenge network access tested; credentials saved in the vault</code></pre>
+<p>Notes template per challenge: name, category, points, owner, status (untouched / looking / stuck / solving / done), key findings, and the solver path. One shared doc beats five private ones.</p>
+<h2>2. Challenge triage in the first 30 minutes</h2>
+<p>Everyone opens every challenge in their categories and spends at most 5 minutes each answering:</p>
+<ul>
+<li>What category and what does it give me (binary? URL? file? text?)?</li>
+<li>Is there source code? (Source means solvable; no source means</li>
+<p>harder.)</p>
+<li>What is the point value relative to effort? (Low points plus source</li>
+<p>usually means quick win.)</p>
+<li>Has anyone on the team seen this pattern before?</li>
+</ul>
+<p>Mark each: <code>quick-win</code>, <code>medium</code>, <code>hard</code>, or <code>skip-for-now</code>. Assign owners to quick wins first; points early build momentum and unlock harder challenges (some events gate categories). Never let two people unknowingly work the same challenge; the notes doc prevents it.</p>
+<h2>3. Time management during the event</h2>
+<ul>
+<li>Timebox stuck challenges: 45 minutes with no progress means asking</li>
+<p>for help or swapping owners, not grinding alone for 3 hours.</p>
+<li>Fresh eyes rule: a teammate reading your notes for 10 minutes</li>
+<p>solves more &quot;stuck&quot; challenges than another hour solo.</p>
+<li>Protect the final hour: no new challenges after T-60 minutes;</li>
+<p>finish partials, verify submissions, and check for unsubmitted flags in notes.</p>
+<li>Sleep in 24h+ events: schedule it; a rested player at hour 20</li>
+<p>outperforms an exhausted one. Keep one person on triage while others rest.</p>
+<li>Track bloods (first solves): they are worth bonus points in many</li>
+<p>events and signal which challenges are tractable.</p>
+</ul>
+<h2>4. Solver scripting discipline</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Template: every solver follows this shape.&quot;&quot;&quot;
+import sys
+
+def solve():
+    # ... exploit / decode / analysis ...
+    return &quot;flag{...}&quot;
+
+if __name__ == &quot;__main__&quot;:
+    flag = solve()
+    assert flag.startswith(&quot;flag{&quot;), f&quot;bad format: {flag}&quot;
+    print(flag)
+    # optional: auto-submit via the platform API when allowed</code></pre>
+<p>Rules: solvers live in the repo from the first working version (not &quot;when clean&quot;), they assert the flag format, and they take the target host as an argument (local vs remote). A solver that only works on one person&#x27;s laptop is a liability at 3am.</p>
+<h2>5. Flag submission hygiene</h2>
+<ul>
+<li>Copy the flag exactly: no trailing whitespace, no missing braces;</li>
+<p>paste into the platform, do not retype.</p>
+<li>Verify the points increased after submitting; platforms glitch.</li>
+<li>Log every submission in flags.txt with timestamp and owner.</li>
+<li>If a flag is rejected, check the format against the event&#x27;s</li>
+<p>pattern before assuming the solve is wrong; many rejections are whitespace or case issues.</p>
+<li>Never share flags outside the team during the event; most events</li>
+<p>treat it as cheating.</p>
+</ul>
+<h2>6. Communication patterns</h2>
+<ul>
+<li>One channel per category plus one for announcements; keep solve</li>
+<p>discussions in the category channel so others can follow.</p>
+<li>Status updates are short: &quot;web/login-bypass: stuck on WAF, trying</li>
+<p>tamper scripts, 20 min&quot; beats silence.</p>
+<li>Ask for help with context: link the notes entry and paste what you</li>
+<p>tried; &quot;this is broken, help&quot; wastes the helper&#x27;s time.</p>
+<li>Celebrate solves briefly and move on; momentum matters more than</li>
+<p>any single flag.</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>Solo competing: triage even harder; you cannot parallelize, so</li>
+<p>quick wins first is mandatory, and skip anything that smells like a time sink.</p>
+<li>The platform is unstable: keep local copies of everything,</li>
+<p>screenshot submitted flags, and have the organizers&#x27; contact ready.</p>
+<li>Challenge files disappear or change: hash downloads on receipt</li>
+<p>(<code>sha256sum</code>) so you can prove what you worked with.</p>
+<li>Teammate goes quiet: check in once, then reassign their</li>
+<p>challenges; do not let work stall on an absent owner.</p>
+<li>Scoreboard watching becomes obsessive: check it at the captain&#x27;s time</li>
+<p>calls only; constant refreshing fragments focus and rarely changes decisions.</p>
+<li>A challenge you solved gets patched mid-event: keep the original files</li>
+<p>and solver; organizers usually re-award or clarify, and your notes prove the solve.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The whole team is stuck across categories: re-triage from zero;</li>
+<p>the initial difficulty guesses were wrong, and a fresh 30-minute pass finds the misjudged quick win.</p>
+<li>One category yields nothing after hours: it may be genuinely hard</li>
+<p>(or broken); cap the investment and redistribute to categories with momentum.</p>
+<li>Suspected broken challenge: document the evidence, contact</li>
+<p>organizers once with specifics, and move on; do not burn the event on it.</p>
+<li>Key platform credentials leak or a teammate&#x27;s machine is compromised:</li>
+<p>rotate credentials immediately, notify organizers, and continue from clean checkouts; do not investigate on the compromised box.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>From the organizer side, this playbook is what fair play looks like: teams solving with their own tooling and notes. Organizers detect rule-breaking through flag sharing patterns (same flag submitted from unrelated teams in sequence), automated solving at inhuman speed without corresponding traffic, and attacks on the platform itself rather than the challenges. Durable event design: unique flags per team, rate-limited submissions, and challenge infrastructure isolated from the scoring platform.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK: the competition playbook maps to defensive</li>
+<p>understanding of T1595 (Active Scanning) and T1190 (Exploit Public-Facing Application) as practiced in authorized events.</p>
+<li>CTFtime (event calendar and team rankings): https://ctftime.org/</li>
+<li>Trail of Bits CTF guide: https://github.com/trailofbits/ctf-wiki</li>
+<li>LiveOverflow CTF methodology videos (triage and workflow).</li>
+<li>DEF CON CTF and picoCTF retrospective writeups (past-event strategy</li>
+<p>and tooling patterns).</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

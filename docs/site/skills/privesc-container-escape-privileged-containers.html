@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-container-escape-privileged-containers</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-container-escape-privileged-containers</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized container escape testing reveals a privileged</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-container-escape.html">privesc-container-escape</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-container-escape.html">privesc-container-escape</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-container-escape.html">privesc-container-escape</a> <a href="privesc-container-escape-capabilities-abuse.html">privesc-container-escape-capabilities-abuse</a> <a href="privesc-linux-vectors.html">privesc-linux-vectors</a> <a href="linux-container-hardening.html">linux-container-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>capsh</td><td>2.44</td></tr><tr><td>Docker</td><td>25.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A privileged container is a container with the safety off: the runtime grants all capabilities, lifts device cgroup restrictions, and relaxes several namespace protections. From an authorized tester&#x27;s view it is the fastest container escape primitive because the boundary is nearly gone. From a defender&#x27;s view it is one of the highest severity misconfigurations a deployment can carry. This sub-skill covers how to confirm privileged mode from inside a container during an authorized engagement, how to demonstrate host impact with the minimum necessary action, and how to document the finding. Scope is authorized penetration tests, labs, and CTFs only. Because a privileged container implies host compromise, treat every test here as host-level exploitation and get host-level authorization first.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm you are in a container and note the runtime (Docker, containerd, CRI-O, Kubernetes) before touching anything.</li>
+<li>Check the effective capability set with <code>capsh --print</code> and look for the full <code>0x000001ffffffffff</code> mask.</li>
+<li>Check device exposure: list <code>/dev</code> for host devices (e.g. <code>/dev/sda</code>, <code>/dev/kvm</code>, <code>/dev/mem</code>) that a normal container never sees.</li>
+<li>Check mounts and cgroups for host paths (<code>/proc/mounts</code>, <code>/proc/self/mountinfo</code>) and relaxed device rules.</li>
+<li>Verify privileged mode indirectly if possible (capability mask is the strongest single signal) and record every check.</li>
+<li>Demonstrate host impact with the quietest primitive available: mount a host block device read-only, or create a marker file through an exposed host path, never destructive writes.</li>
+<li>Capture evidence (command, output, timestamp), revert any changes, and write the finding up as MITRE ATT&amp;CK T1611 with host impact stated explicitly.</li>
+</ol>
+<h2>1. Detecting privileged mode from inside</h2>
+<p>No single file says &quot;privileged&quot;, so you triangulate. The strongest signal is the capability mask: a normal Docker container gets a reduced set, while <code>--privileged</code> grants all 41 capabilities.</p>
+<pre><code class="language-bash">capsh --print | grep -i &quot;current&quot;
+cat /proc/self/status | grep -i cap
+grep Cap /proc/1/status</code></pre>
+<p>Example output shape: <code>Current: = cap_chown,cap_dac_override,...,cap_checkpoint_restore+ep</code> listing every capability, or a <code>CapEff:</code> value of <code>000001ffffffffff</code>. A full mask plus host device nodes in <code>/dev</code> is conclusive in practice. Also check <code>cat /proc/1/cgroup</code> for the runtime and <code>ls /sys/fs/cgroup/devices/</code> permissions: in a privileged container the devices cgroup controller often allows everything.</p>
+<h2>2. Auditing device and mount exposure</h2>
+<p>Privileged containers see host devices that standard containers cannot. Enumerate them and the mounts before deciding what to prove.</p>
+<pre><code class="language-bash">ls -la /dev/ | grep -E &quot;sd[a-z]|vd[a-z]|nvme|mem|kvm|dm-&quot;
+mount | grep -v &quot;^cgroup\|^tmpfs&quot; | head -20
+cat /proc/self/mountinfo | awk &#x27;{print $5, $10}&#x27; | sort -u | head -30</code></pre>
+<p>Example output shape: entries like <code>/dev/sda</code>, <code>/dev/sda1</code>, <code>/dev/mem</code> in <code>/dev</code>, and mountinfo rows showing host block devices mounted into the container. Also run <code>fdisk -l 2&gt;/dev/null | head -20</code> to list host disks visible from inside. If <code>/dev/sda</code> exists and is readable, the host root filesystem is one mount command away, which is the core of the finding.</p>
+<h2>3. Demonstrating host impact safely</h2>
+<p>The goal is proof, not damage. Mount the host disk read-only, list a host-only path, and unmount. If even a read-only mount is out of scope, fall back to the evidence already gathered (capability mask plus device nodes) and describe the impact as confirmed-by-configuration.</p>
+<pre><code class="language-bash">mkdir -p /tmp/hostproof
+mount -o ro /dev/sda1 /tmp/hostproof 2&gt;&amp;1 | head -3
+ls /tmp/hostproof/etc/hostname 2&gt;/dev/null &amp;&amp; cat /tmp/hostproof/etc/hostname
+umount /tmp/hostproof</code></pre>
+<p>Example output shape: <code>cat</code> printing the host&#x27;s hostname, which differs from the container&#x27;s hostname, proving host filesystem access. Always mount read-only (<code>-o ro</code>), always unmount afterwards, and never write to host paths. Document the exact device node, mount options, and the host-identifying value you read.</p>
+<h2>4. Host process and namespace visibility</h2>
+<p>Privileged mode also relaxes other boundaries. Check what else leaked through: host processes, host network, and kernel message access.</p>
+<pre><code class="language-bash">ps aux | head -10
+ls /proc/ | grep -E &quot;^[0-9]+$&quot; | wc -l
+ip addr show | head -20
+dmesg 2&gt;&amp;1 | tail -5</code></pre>
+<p>Example output shape: a <code>ps</code> listing that includes host PIDs outside the container&#x27;s init tree, or <code>ip addr</code> showing the host&#x27;s physical interfaces, indicates further namespace leakage. In many deployments only some of these leak, so record exactly which boundaries held and which did not; that detail is what makes the report credible.</p>
+<h2>5. Kubernetes-flavored privileged pods</h2>
+<p>In Kubernetes, privileged mode comes from <code>securityContext.privileged: true</code> in the pod spec. From inside the pod, confirm with the same capability and device checks, and also look for the service account token, which decides whether a cluster-level escape is also in play.</p>
+<pre><code class="language-bash">ls /var/run/secrets/kubernetes.io/serviceaccount/ 2&gt;/dev/null
+cat /var/run/secrets/kubernetes.io/serviceaccount/namespace 2&gt;/dev/null
+capsh --print 2&gt;/dev/null | head -3</code></pre>
+<p>Example output shape: a <code>namespace</code> file containing e.g. <code>default</code> plus a full capability mask means a privileged pod with a service account, which is a host escape plus potential cluster lateral movement. Treat the token as sensitive evidence: describe its permissions, do not exfiltrate it, and note that reading it is only for scope-confirmed engagements.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The capability mask can look full in some rootless or user-namespace setups where the capabilities are namespaced and far less powerful; cross-check with device node access, because real host devices do not lie about the boundary.</li>
+<li><code>capsh</code> may not be installed in minimal images; fall back to decoding <code>CapEff</code> from <code>/proc/self/status</code> with a small Python snippet, or use <code>grep Cap /proc/1/status</code> and compare against the known full mask <code>000001ffffffffff</code>.</li>
+<li>Device nodes can be present but the mount syscall can still fail if the container has a restricted seccomp profile or AppArmor policy layered on top of privileged mode; a failed mount is a finding about layered defenses, not a failed test.</li>
+<li>On systems using cgroup v2 the devices controller path differs (<code>/sys/fs/cgroup</code> unified hierarchy); check <code>stat -fc %T /sys/fs/cgroup</code> for <code>cgroup2fs</code> and adjust paths instead of assuming the v1 layout.</li>
+<li>Some managed platforms (Fargate, Cloud Run, GKE Autopilot) never allow privileged mode at all; finding it there is impossible by design, so do not burn time re-verifying, note the platform constraint instead.</li>
+<li>Mounting <code>/dev/sda1</code> may fail with &quot;wrong fs type&quot; if the host uses LVM, LUKS, or a partition scheme you did not enumerate; run <code>lsblk</code> or <code>blkid</code> first to pick the right device, and never attempt to unlock encrypted volumes.</li>
+<li>In Docker Desktop or kind clusters the &quot;host&quot; you reach may be a VM, not the physical host; state exactly which layer you reached so the impact rating matches reality.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If privileged mode is confirmed, treat the finding as confirmed host compromise and stop expanding: notify the engagement lead and confirm whether host-level actions stay in scope before going further.</li>
+<li>If the socket or orchestrator API is also reachable from the privileged container, document it as a combined finding (privileged plus control-plane access) because the remediation differs from either issue alone.</li>
+<li>If you can read host credentials (cloud metadata, kubelet credentials, <code>/etc/shadow</code> from a mounted host disk), report their existence and location without exfiltrating the values, and rotate or flag them per the engagement rules.</li>
+<li>If the engagement scope excludes the host, downgrade your proof to configuration-level evidence (capability mask, device list) and explicitly mark host impact as assessed but not demonstrated, with the reason recorded.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders detect privileged container abuse through runtime security tooling and audit trails. Falco rules flag <code>k8s.pod.privileged</code> and container starts with the privileged flag; auditd on the host can log mount syscalls originating from container PIDs. In Kubernetes, admission controllers (OPA Gatekeeper, Kyverno) can deny privileged pods at deploy time, and <code>kubectl</code> audit logs show who created the privileged workload and when. Docker daemon logs and <code>docker events</code> record privileged container creation with the image and user. The strongest preventive control is policy: never allow <code>privileged: true</code> in production, enforce it with admission control, and alert on any privileged container start as a severity-1 event because it is functionally equivalent to host root.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1611 Escape to Host: https://attack.mitre.org/techniques/T1611/</li>
+<li>MITRE ATT&amp;CK T1068 Exploitation for Privilege Escalation: https://attack.mitre.org/techniques/T1068/</li>
+<li>Docker runtime privilege and security docs: https://docs.docker.com/engine/security/</li>
+<li>Kubernetes pod securityContext reference: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/</li>
+<li>Linux capabilities manual page: https://man7.org/linux/man-pages/man7/capabilities.7.html</li>
+<li>Falco privileged container detection rules: https://falco.org/docs/rules/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

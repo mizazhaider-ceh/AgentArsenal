@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-timeline-analysis-super-timeline-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-timeline-analysis-super-timeline-analysis</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when multiple host timelines must be merged into one</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="incident-timeline-analysis.html">incident-timeline-analysis</a></div><div class="deps"><span class="kind">requires:</span> <a href="incident-timeline-analysis.html">incident-timeline-analysis</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-timeline-analysis.html">incident-timeline-analysis</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Plaso</td><td>20241006</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>jq</td><td>1.7</td></tr></tbody></table><p>Super-timeline analysis merges every host&#x27;s timeline into one sorted sequence and reads it as a whole: the attacker&#x27;s path across machines, their working hours, the quiet gaps, and the true first and last events. Individual timelines show trees; the super-timeline shows the forest. This sub-skill covers the merge mechanics, the skew corrections that make the merge trustworthy, and the analytical reading that extracts the incident narrative. Authorized investigations only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Collect per-host Plaso storage files with confirmed timezones</li>
+<p>and measured skew.</p>
+<li>Export each host to deduped CSV in UTC with psort.</li>
+<li>Merge into one super-timeline CSV, sorted by timestamp.</li>
+<li>Correct skew: shift each host&#x27;s events by its measured offset.</li>
+<li>Read the merged timeline in phases: initial access, foothold,</li>
+<p>lateral movement, actions on objectives.</p>
+<li>Extract working hours, dwell time, and gaps.</li>
+<li>Establish first and last attacker activity with confidence</li>
+<p>levels.</p>
+<li>Produce the narrative timeline for the report.</li>
+</ol>
+<h2>1. Merging with psort</h2>
+<pre><code class="language-bash"># Export each host in UTC, deduplicated
+for h in web-03 ws-11 db-01; do
+  psort.py -o csv --dedup -w ${h}-utc.csv ${h}.plaso
+done
+
+# Merge: keep one header, concatenate the rest
+head -1 web-03-utc.csv &gt; super-timeline.csv
+for h in web-03 ws-11 db-01; do
+  tail -n +2 -q ${h}-utc.csv &gt;&gt; super-timeline.csv
+done
+wc -l super-timeline.csv
+
+# Sort by the datetime column (verify the column name first)
+head -1 super-timeline.csv | tr &#x27;,&#x27; &#x27;\n&#x27; | grep -n -i datetime
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import csv
+rows = list(csv.DictReader(open(&#x27;super-timeline.csv&#x27;)))
+rows.sort(key=lambda r: r[&#x27;datetime&#x27;])
+with open(&#x27;super-sorted.csv&#x27;, &#x27;w&#x27;, newline=&#x27;&#x27;) as f:
+    w = csv.DictWriter(f, fieldnames=rows[0].keys())
+    w.writeheader(); w.writerows(rows)
+print(f&quot;{len(rows)} events sorted&quot;)
+EOF</code></pre>
+<p>Example output shape:</p>
+<pre><code>412,508 events sorted
+# super-sorted.csv head:
+# datetime,host,source,parser,message,...
+# 2026-10-18 06:12:44,web-03,syslog,...</code></pre>
+<h2>2. Skew correction across hosts</h2>
+<pre><code class="language-bash"># skew.txt: measured offsets from the source inventory (parent skill)
+cat skew.txt
+# web-03 +0s
+# ws-11 -47s
+# db-01 +12s</code></pre>
+<pre><code class="language-python"># skew-correct.py: shift each host&#x27;s events by its measured offset
+import csv
+from datetime import datetime, timedelta
+
+skew = {&#x27;web-03&#x27;: 0, &#x27;ws-11&#x27;: -47, &#x27;db-01&#x27;: 12}
+rows = list(csv.DictReader(open(&#x27;super-sorted.csv&#x27;)))
+for r in rows:
+    host = r.get(&#x27;host&#x27;, &#x27;&#x27;)
+    if host in skew and skew[host]:
+        ts = datetime.strptime(r[&#x27;datetime&#x27;][:19], &quot;%Y-%m-%d %H:%M:%S&quot;)
+        ts += timedelta(seconds=-skew[host])  # correct to true time
+        r[&#x27;datetime&#x27;] = ts.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;) + r[&#x27;datetime&#x27;][19:]
+        r[&#x27;skew_corrected&#x27;] = &#x27;yes&#x27;
+rows.sort(key=lambda r: r[&#x27;datetime&#x27;])
+with open(&#x27;super-corrected.csv&#x27;, &#x27;w&#x27;, newline=&#x27;&#x27;) as f:
+    w = csv.DictWriter(f, fieldnames=rows[0].keys())
+    w.writeheader(); w.writerows(rows)
+print(&quot;skew corrected and re-sorted&quot;)</code></pre>
+<p>Without this step, a 47-second skew makes ws-11&#x27;s events appear before web-03&#x27;s causally prior events. The corrected timeline is the one the report uses; keep the uncorrected file too, for audit.</p>
+<h2>3. Reading attacker working hours</h2>
+<pre><code class="language-python"># working-hours.py: when is the attacker active (attacker-attributed events)
+import csv, re
+from collections import Counter
+
+attacker_ips = {&#x27;198.51.100.23&#x27;}
+hours = Counter()
+days = Counter()
+for row in csv.DictReader(open(&#x27;super-corrected.csv&#x27;)):
+    msg = row.get(&#x27;message&#x27;, &#x27;&#x27;)
+    if any(ip in msg for ip in attacker_ips):
+        h = row[&#x27;datetime&#x27;][11:13]
+        hours[h] += 1
+        days[row[&#x27;datetime&#x27;][:10]] += 1
+
+print(&quot;Active hours (UTC):&quot;)
+for h in sorted(hours):
+    print(f&quot;  {h}:00  {&#x27;#&#x27; * min(hours[h], 50)} {hours[h]}&quot;)
+print(&quot;Active days:&quot;, dict(sorted(days.items())))</code></pre>
+<p>Example output shape:</p>
+<pre><code>Active hours (UTC):
+  02:00  ######################################## 41
+  03:00  ############################## 30
+  04:00  ############ 12
+Active days: {&#x27;2026-10-20&#x27;: 8, &#x27;2026-10-21&#x27;: 75}</code></pre>
+<p>Interpretation: concentrated 02:00-04:00 UTC activity on one day suggests a manual operator in a UTC-adjacent timezone working a single intrusion session, not a persistent implant beaconing around the clock. That shapes the scoping: look for what was done in that window, not for weeks of beaconing.</p>
+<h2>4. Phase reading: the narrative pass</h2>
+<p>Read the corrected timeline once, start to finish, tagging phases:</p>
+<pre><code class="language-bash"># Extract the incident window for the narrative read
+awk -F, &#x27;$1 &gt;= &quot;2026-10-20 00:00:00&quot; &amp;&amp; $1 &lt;= &quot;2026-10-23 12:00:00&quot;&#x27; \
+  super-corrected.csv &gt; narrative-window.csv
+wc -l narrative-window.csv</code></pre>
+<p>Tag each significant event with its phase and ATT&amp;CK technique:</p>
+<pre><code>2026-10-20 22:41:03 | vpn-01   | VPN login svc-deploy from 198.51.100.23
+  PHASE: initial access | T1078 | confidence: high
+2026-10-21 03:12:44 | web-03   | sshd Accepted ops from 198.51.100.23
+  PHASE: lateral movement | T1021 | confidence: high
+2026-10-21 03:14:02 | web-03   | cron /tmp/.x/sysd created
+  PHASE: persistence | T1053 | confidence: high
+2026-10-21 03:31:19 | db-01    | SMB session from web-03 as ops
+  PHASE: lateral movement | T1021.002 | confidence: medium (single source)
+2026-10-21 04:02:51 | db-01    | /tmp/.x/dump.sql written (2.1 GB)
+  PHASE: collection | T1005 | confidence: high
+2026-10-21 04:20:13 | web-03   | 2.1 GB outbound to 198.51.100.23:443
+  PHASE: exfiltration | T1048 | confidence: high</code></pre>
+<p>The phase tags turn the timeline into the scoping input: each phase is a question (how did they persist, where did they go next) with its evidence attached.</p>
+<h2>5. Gap analysis</h2>
+<pre><code class="language-python"># gaps.py: find quiet periods in attacker-attributed activity
+import csv
+from datetime import datetime
+
+times = []
+for row in csv.DictReader(open(&#x27;super-corrected.csv&#x27;)):
+    if &#x27;198.51.100.23&#x27; in row.get(&#x27;message&#x27;, &#x27;&#x27;):
+        times.append(datetime.strptime(row[&#x27;datetime&#x27;][:19], &quot;%Y-%m-%d %H:%M:%S&quot;))
+times.sort()
+for a, b in zip(times, times[1:]):
+    gap = (b - a).total_seconds() / 3600
+    if gap &gt; 2:
+        print(f&quot;gap {gap:.1f}h between {a} and {b}&quot;)</code></pre>
+<p>Example output shape:</p>
+<pre><code>gap 19.4h between 2026-10-20 22:41:03 and 2026-10-21 03:12:44</code></pre>
+<p>A 19-hour gap between VPN access and the next action: either the attacker waited, or activity happened where you have no logs. Investigate both: check for log gaps on the hosts (missing events suggest deletion, T1070) and consider that the VPN session may have been established by an accomplice or an automated check.</p>
+<h2>6. First and last activity with confidence</h2>
+<pre><code>First attacker activity: 2026-10-20 22:41:03 UTC (VPN login, high confidence)
+  Caveat: VPN logs retained 90 days; earlier access cannot be excluded.
+Last attacker activity: 2026-10-21 04:20:13 UTC (exfiltration complete, high)
+  Caveat: persistence (cron) may still be present; eradication pending.
+Dwell time: ~5.6 hours of active operation.</code></pre>
+<p>&quot;First observed&quot; is not &quot;first occurred&quot;: state the retention limits that bound the claim. The scoping skill uses these bounds to decide how far back the investigation must reach.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Hosts in different timezones with daylight saving transitions</li>
+<p>mid-incident. Convert each host&#x27;s local times using its actual zone rules for that date, not a fixed offset.</p>
+<li>The merged timeline is dominated by noise (millions of routine</li>
+<p>events). Filter to attacker-attributed entities first, then expand around their timestamps; do not read millions of lines.</p>
+<li>Two hosts have the same hostname after a rebuild. Disambiguate</li>
+<p>by MAC, serial, or IP history before merging, or the timeline interleaves two machines&#x27; lives.</p>
+<li>Skew was never measured and hosts are gone (reimaged). Note</li>
+<p>the uncorrected merge as approximate; event order within a minute is unreliable.</p>
+<li>The attacker manipulated timestamps (timestomping). Clusters of</li>
+<p>identical improbable timestamps are the tell; escalate to forensics rather than trusting the order.</p>
+<li>Gaps align exactly with log rotation schedules. That is</li>
+<p>retention, not attacker action; verify against the rotation config before theorizing.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The super-timeline shows the attacker touched systems outside</li>
+<p>the current scope. Escalate immediately; scoping expands and containment may need another wave.</p>
+<li>First activity predates all retention. Escalate the blind spot</li>
+<p>to the commander and consider external forensics for deeper recovery; do not silently truncate the timeline.</p>
+<li>The timeline supports two incompatible narratives (insider</li>
+<p>versus external). Present both with evidence for each; choosing is the commander&#x27;s call, with legal aware.</p>
+<li>Stakeholders want the timeline &quot;simplified&quot; for executives.</li>
+<p>Provide the one-page narrative plus the annotated data as an appendix; never let the simplification drop the caveats.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>The super-timeline is the defender&#x27;s best teacher: it shows every detection that should have fired and did not. After the incident, walk the timeline with the detection team and write a rule for each missed step: the VPN login from a new ASN, the cron persistence, the 2 GB outbound transfer. The peacetime investments that make super-timelines trustworthy are NTP everywhere, centralized logging with long retention, and consistent host naming. A timeline you can build in an hour is a capability; one that takes a week is a project.</p>
+<h2>Key references</h2>
+<ul>
+<li>Parent workflow: incident-timeline-analysis (this repo)</li>
+<li>Plaso and psort: https://plaso.readthedocs.io/</li>
+<li>Timesketch: https://timesketch.org/</li>
+<li>NIST SP 800-86: https://csrc.nist.gov/publications/detail/sp/800-86/final</li>
+<li>MITRE ATT&amp;CK: https://attack.mitre.org/</li>
+<li>SANS FOR508 (timeline methods):</li>
+<p>https://www.sans.org/cyber-security-courses/advanced-incident-response-threat-hunting-training/</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

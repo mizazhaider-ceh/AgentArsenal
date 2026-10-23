@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ctf-competition-playbook-challenge-triage</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../index.html#agents">Agents</a>
+<a href="../index.html#brains">Brains</a>
+<a href="../index.html#playbooks">Playbooks</a>
+<a href="../index.html#decisions">Decisions</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ctf-competition-playbook-challenge-triage</h2><div class="meta"><span class="badge gray">ctf</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when triaging CTF challenges at the start of an event,</p><div class="deps"><span class="kind">sub-skill of:</span> <a href="ctf-competition-playbook.html">ctf-competition-playbook</a></div><div class="deps"><span class="kind">requires:</span> <a href="ctf-competition-playbook.html">ctf-competition-playbook</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ctf-competition-playbook.html">ctf-competition-playbook</a> <a href="ctf-crypto-challenges.html">ctf-crypto-challenges</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Triage is the highest-leverage 30 minutes of a CTF: correctly sorting challenges into quick wins, mediums, and hard-skips determines where every hour goes. This sub-skill covers the authorized triage method: the opening pass, the signals that predict solvability, owner assignment, and the re-triage habit that keeps the team on the best challenges as information arrives. Scope is authorized competitions.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>In the first 30 minutes, open every challenge; spend max 5</li>
+<p>minutes each on the triage questions.</p>
+<li>For each challenge record: category, points, artifacts given,</li>
+<p>source or no source, solve count, and a difficulty guess.</p>
+<li>Flag quick wins: low points plus source, or a pattern the team</li>
+<p>recognizes instantly.</p>
+<li>Flag likely time sinks: high points, no source, novel</li>
+<p>construction, zero solves after hours.</p>
+<li>Assign owners to quick wins first, then mediums; hard challenges</li>
+<p>get one scout, not the whole team.</p>
+<li>Post the triage board in the shared notes where everyone sees it.</li>
+<li>Re-triage hourly and on every new challenge release; update</li>
+<p>guesses with solve-count data.</p>
+<li>Protect the board: one owner per challenge, no unassigned work on</li>
+<p>quick wins.</p>
+</ol>
+<h2>1. The 5-minute triage questions</h2>
+<p>For each challenge, answer fast:</p>
+<ol>
+<li>What do I get? (binary, URL, file bundle, text blob, nothing yet)</li>
+<li>Is there source code? (Yes: difficulty drops a full tier.)</li>
+<li>What category and subcategory? (web/sqli vs web/crypto-hybrid</li>
+<p>need different owners.)</p>
+<li>Points vs the event&#x27;s scale? (150/500 is different from 150/3000.)</li>
+<li>How many solves? (Many solves: tractable. Zero solves after 6</li>
+<p>hours: hard or broken.)</p>
+<li>Do I recognize the pattern? (Seen it: quick win. Novel: budget</li>
+<p>carefully.)</p>
+<li>What is the first concrete step? (If you cannot name one in 30</li>
+<p>seconds, it is not a quick win.)</p>
+</ol>
+<p>If question 7 has no answer, mark it <code>needs-scouting</code> and move on; do not start solving during triage.</p>
+<h2>2. Reading the signals</h2>
+<pre><code class="language-text">Strong quick-win signals:
+  + source code provided, under ~200 lines
+  + low points relative to the event max
+  + high solve count early (the crowd has validated it)
+  + category matches a team strength
+  + challenge name hints the bug (&quot;jwt-none&quot;, &quot;ssti-bakery&quot;)
+
+Strong time-sink signals:
+  - no source, large binary, custom protocol
+  - very high points with few solves
+  - &quot;misc&quot; category with vague description (often long)
+  - requires chaining 3+ techniques
+  - zero solves and no organizer response to questions</code></pre>
+<p>Solve counts are the best mid-event signal: a challenge with 40 solves is proven tractable regardless of your first impression. Re-check counts hourly; a sudden spike means someone published a hint or the intended path clicked for the crowd.</p>
+<h2>3. The triage board</h2>
+<pre><code class="language-text">## Triage board (updated 14:30)
+QUICK WINS (do first)
+  web/jwt-admin      150  src   owner: izaz    status: solving
+  crypto/caesar-salad 100  no-src owner: mariam status: done
+MEDIUM (owners assigned)
+  pwn/heap-note      300  src   owner: izaz    status: stuck (swap at 15:00)
+  rev/vm-me          250  src   owner: chen    status: looking
+HARD / SCOUT ONLY
+  crypto/lattice-4   500  src   one scout: mariam, 60 min cap
+SKIP FOR NOW
+  misc/quantum-dreams 400  vague, 0 solves</code></pre>
+<p>Keep it in the shared notes, top of the file. The captain scans it, not the chat history. Statuses use the fixed vocabulary from the team-roles sub-skill.</p>
+<h2>4. Owner assignment rules</h2>
+<ul>
+<li>Quick wins: assign immediately, strongest matching player first.</li>
+<li>Mediums: assign by category lead&#x27;s judgment; one owner each.</li>
+<li>Hards: one scout with a time cap (60-90 min); the scout&#x27;s job is</li>
+<p>a better difficulty estimate, not a solve.</p>
+<li>Nobody owns two quick wins at once; finish or hand off before</li>
+<p>claiming another.</p>
+<li>Unassigned quick wins are a bug: the captain assigns them within</li>
+<p>the hour.</p>
+</ul>
+<h2>5. Re-triage: hourly and on release</h2>
+<p>Every hour (captain&#x27;s time call), spend 10 minutes:</p>
+<ol>
+<li>Update solve counts on the board.</li>
+<li>Move challenges whose status changed (stuck mediums become</li>
+<p>hard, scouted hards become mediums with a plan).</p>
+<li>Reassign freed owners to the best available work.</li>
+<li>Kill anything over budget with no path (mark honestly).</li>
+</ol>
+<p>On new challenge releases: batch-triage them in 10 minutes, do not let each release interrupt deep work. New releases late in the event are often quick wins designed to keep the scoreboard moving; check them before assuming they are hard.</p>
+<h2>6. Category-specific triage heuristics</h2>
+<ul>
+<li>Web: source provided means read the routes first; the bug is</li>
+<p>usually in the least-reviewed route. No source: check JS and headers before deep fuzzing.</p>
+<li>Pwn: <code>checksec</code> in the first minute; no-NX plus win function is</li>
+<p>the fastest pwn solve that exists.</p>
+<li>Rev: <code>strings</code> and <code>file</code> first; packed or VM means budget up.</li>
+<li>Crypto: parameters tell all; n/e/c with e=3 is a 10-minute</li>
+<p>challenge, custom ciphers need source reading.</p>
+<li>Forensics: <code>file</code> plus <code>binwalk</code> plus <code>strings</code> triages most</li>
+<p>artifacts in 5 minutes; huge pcaps need a plan, not diving in.</p>
+<li>OSINT: the challenge text is the triage; every noun is a search</li>
+<p>seed, and metadata checks take 2 minutes.</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>The event has dynamic scoring: point values drop as solves rise;</li>
+<p>prioritize high-current-value challenges, not original values.</p>
+<li>Gated challenges (unlock by solving others): factor the unlock</li>
+<p>chain into triage; a medium guarding three quick wins outranks a lone hard.</p>
+<li>The team is solo: triage twice as ruthlessly; skip anything</li>
+<p>without a clear first step until quick wins are exhausted.</p>
+<li>The scoreboard hides solve counts: fall back to point values and team</li>
+<p>chatter; ask in the event chat which challenges are tractable.</p>
+<li>A challenge&#x27;s category label is misleading (crypto labeled misc):</li>
+<p>triage by artifacts, not labels; the first 5 minutes reveal the true category.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Triage says everything is hard: the event may be genuinely hard</li>
+<p>(or your triage is calibrated wrong); pick the least-hard medium and timebox a scout, then recalibrate from what you learn.</p>
+<li>A challenge looks broken (contradictory files, impossible</li>
+<p>setup): document evidence, ask organizers once, mark skip, move on; do not let one broken challenge consume triage cycles.</p>
+<li>The board keeps diverging from reality: shorten the re-triage</li>
+<p>interval to 30 minutes until it stabilizes.</p>
+<li>Two scouts disagree on difficulty: trust the one who named a concrete</li>
+<p>first step; vague optimism loses to specific plans.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Organizers design triage signals deliberately: point values, solve counts, and challenge ordering are the intended difficulty communication. They detect unhealthy triage exploitation (like targeting only low-hanging challenges with shared accounts) through account and submission patterns. For defenders, the triage mindset transfers to incident response: triage alerts by severity and tractability first, then allocate analysts, then re-triage as evidence arrives.</p>
+<h2>Key references</h2>
+<ul>
+<li>CTFtime (solve counts and dynamic scoring): https://ctftime.org/</li>
+<li>Trail of Bits CTF wiki: https://github.com/trailofbits/ctf-wiki</li>
+<li>picoCTF practice challenges (triage drills on real difficulty curves):</li>
+<p>https://picoctf.org/</p>
+<li>CTFtime event writeups (how top teams describe their triage):</li>
+<p>https://ctftime.org/</p>
+<li>LiveOverflow CTF methodology videos (triage and workflow).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>
