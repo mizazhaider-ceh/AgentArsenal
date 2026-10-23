@@ -1,24 +1,23 @@
-# Skill of the week: web-sqli
+# Skill of the week: nmap-methodology
 
-Week of 2026-10-23. Domain: `web`.
+Week of 2026-10-23. Domain: `network`.
 
 ## What it is
 
-Use when testing a web application for SQL injection on an authorized engagement. Covers detection and confirmation probes, UNION-based extraction, boolean and time-based blind techniques, error-based extraction, second-order injection, and sqlmap 1.9.2 automation plus full...
+Use when planning or running nmap scans during authorized engagements: host discovery options, TCP SYN, connect, UDP, NULL, FIN, Xmas, and ACK scan types, service and OS detection, timing templates T0 to T5, evasion techniques (fragmentation, decoys, idle scans, source port...
 
 ## Why it shines
 
-The deepest single-skill SQL injection coverage in the arsenal: manual probes, blind extraction, second-order cases, sqlmap automation, and a defender's view.
+The scan-planning backbone behind every recon engagement. If you learn one network skill first, make it this one.
 
 ## Pinned tools
 
-- sqlmap 1.9.2
-- Burp Suite 2026.2
-- Python 3.12
+- nmap 7.98
+- ncat 7.98
 
 ## How to use it
 
-Open `skills/web/web-sqli/SKILL.md` and follow the Quick Workflow
+Open `skills/network/nmap-methodology/SKILL.md` and follow the Quick Workflow
 section. Every skill in the rotation is stable, scored,
 and benchmarked; check `scores.json` and `BENCHMARKS.md`
 for its current numbers.
