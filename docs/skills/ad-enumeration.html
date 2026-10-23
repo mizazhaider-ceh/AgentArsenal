@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ad-enumeration</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ad-enumeration</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when mapping an authorized Active Directory environment during an internal assessment or assumed breach exercise. AD enumeration with kerbrute for Kerberos user discovery, ldapsearch for direct LDAP queries, NetExec modules for SMB, LDAP, and WinRM enumeration, and BloodHound with SharpHound for attack path analysis. Covers domain trusts, SPNs, group memberships, and misconfiguration spotting that feeds Kerberoasting and AS-REP roasting later, with account lockout discipline and OPSEC so enumeration stays quiet and audit-clean.</p><div class="deps"><span class="kind">requires:</span> <a href="recon-active.html">recon-active</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <span class="muted">none</span></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>kerbrute</td><td>1.0.3</td></tr><tr><td>ldapsearch</td><td>2.6.x</td></tr><tr><td>NetExec</td><td>1.4.0</td></tr><tr><td>BloodHound</td><td>4.5.x</td></tr><tr><td>SharpHound</td><td>2.x</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>Active Directory is the keys to most Windows networks, and enumeration is how you learn where the keys are. This skill covers mapping a domain you are authorized to test: finding users without credentials, querying LDAP, enumerating services with NetExec, and collecting the full graph with BloodHound and SharpHound. It assumes you have a network foothold (see recon-active and network-pivoting) and written authorization. Enumeration is not exploitation, but it is noisy: every technique here includes the discipline to avoid account lockouts and needless alerts.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the domain name, domain controllers, and the account lockout policy before touching anything.</li>
+<li>Enumerate valid usernames with kerbrute over Kerberos, no password needed.</li>
+<li>Query LDAP with ldapsearch, anonymously first, then with any credentials you hold.</li>
+<li>Run NetExec enumeration modules across SMB, LDAP, and WinRM.</li>
+<li>Collect with SharpHound and analyze attack paths in BloodHound.</li>
+<li>Record trusts, SPNs, privileged groups, and misconfigurations as leads for the next phase.</li>
+</ol>
+<h2>1. Baseline: domain, controllers, lockout policy</h2>
+<p>Start by identifying the domain and its controllers with DNS, then learn the lockout policy so you never trigger it. SRV records point at domain controllers directly:</p>
+<pre><code class="language-bash">dig +short _ldap._tcp.example.com SRV
+dig +short _kerberos._tcp.example.com SRV
+nmap -sV -p 88,389,445,636 203.0.113.10 -oN dc-ports.txt</code></pre>
+<p>Port 88 is Kerberos, 389 and 636 are LDAP and LDAPS, 445 is SMB. If you have any domain credential, read the lockout policy first; it dictates how aggressive you may be:</p>
+<pre><code class="language-bash">nxc smb 203.0.113.10 -u user -p &#x27;Password1&#x27; --pass-pol</code></pre>
+<p>Note the lockout threshold and observation window. A threshold of 5 with a 30 minute window means you never try more than a couple of guesses per user without waiting. When in doubt, assume the strictest policy.</p>
+<h2>2. Kerberos user enumeration with kerbrute</h2>
+<p>Kerberos pre-authentication fails differently for valid and invalid users, which lets kerbrute enumerate accounts without a single password attempt. This generates no failed logons, so it does not lock accounts, but it is loud on the wire.</p>
+<pre><code class="language-bash">kerbrute userenum -d example.com --dc 203.0.113.10 \
+  /usr/share/seclists/Usernames/xato-net-10-million-usernames.txt \
+  -o kerbrute-users.txt -t 20</code></pre>
+<p>Use a smaller list for the first pass (top 10k names) and expand only if needed. kerbrute distinguishes &quot;valid user&quot; from &quot;invalid user&quot; by the error code the KDC returns; some hardened domains return identical errors for both, in which case user enumeration fails closed and you move on. Save every valid username: the list feeds password spraying (with strict discipline) and AS-REP roasting checks later.</p>
+<h2>3. LDAP queries with ldapsearch</h2>
+<p>LDAP is the directory itself. Try anonymous binding first; many domains still allow it and it reveals the naming context:</p>
+<pre><code class="language-bash">ldapsearch -x -h 203.0.113.10 -s base -b &quot;&quot; &quot;(objectclass=*)&quot; namingContexts</code></pre>
+<p>With the base DN (for example <code>DC=example,DC=com</code>), pull users and groups:</p>
+<pre><code class="language-bash">ldapsearch -x -h 203.0.113.10 -b &quot;DC=example,DC=com&quot; \
+  &quot;(objectClass=user)&quot; sAMAccountName description | grep -i sAMAccountName
+ldapsearch -x -h 203.0.113.10 -b &quot;DC=example,DC=com&quot; \
+  &quot;(objectClass=group)&quot; cn member | head -60</code></pre>
+<p>With credentials, the whole directory opens up. Look for high value attributes: <code>servicePrincipalName</code> (Kerberoastable accounts), users with <code>userAccountControl</code> flags for unconstrained delegation or &quot;do not require Kerberos preauthentication&quot; (AS-REP roastable), and <code>description</code> fields where admins famously leave passwords:</p>
+<pre><code class="language-bash">ldapsearch -x -h 203.0.113.10 -D &quot;user@example.com&quot; -w &#x27;Password1&#x27; \
+  -b &quot;DC=example,DC=com&quot; &quot;(servicePrincipalName=*)&quot; \
+  sAMAccountName servicePrincipalName
+ldapsearch -x -h 203.0.113.10 -D &quot;user@example.com&quot; -w &#x27;Password1&#x27; \
+  -b &quot;DC=example,DC=com&quot; &quot;(userAccountControl:1.2.840.113556.1.4.803:=4194304)&quot; \
+  sAMAccountName</code></pre>
+<p>That bitmask filter finds accounts with pre-authentication disabled. Always use LDAPS (port 636, <code>-ZZ</code> or <code>ldaps://</code>) when credentials are involved so you do not send passwords in cleartext.</p>
+<h2>4. NetExec enumeration modules</h2>
+<p>NetExec (the maintained successor to CrackMapExec) enumerates SMB, LDAP, WinRM, and more from one tool. Start with anonymous and guest access checks, then authenticated enumeration:</p>
+<pre><code class="language-bash">nxc smb 203.0.113.10 -u &#x27;&#x27; -p &#x27;&#x27; --shares
+nxc smb 203.0.113.10 -u &#x27;guest&#x27; -p &#x27;&#x27; --shares --users
+nxc smb 203.0.113.10 -u user -p &#x27;Password1&#x27; --shares --sessions --disks</code></pre>
+<p>Shares with null or guest read access often hold scripts, installers, and notes with credentials. Enumerate users, groups, and password policy over LDAP and SMB:</p>
+<pre><code class="language-bash">nxc ldap 203.0.113.10 -u user -p &#x27;Password1&#x27; --users --groups
+nxc ldap 203.0.113.10 -u user -p &#x27;Password1&#x27; --password-not-required --admin-count
+nxc winrm 203.0.113.0/24 -u user -p &#x27;Password1&#x27;</code></pre>
+<p><code>--password-not-required</code> and <code>--admin-count</code> surface misconfigurations fast: accounts that can log in with no password and users with the adminCount flag set (a sign of past or present privilege). The winrm sweep shows where your credential actually gives command execution, which scopes the next phase honestly.</p>
+<h2>5. BloodHound and SharpHound collection</h2>
+<p>SharpHound collects the domain graph (users, groups, computers, sessions, ACLs, trusts) and BloodHound visualizes attack paths to Domain Admins. Run the collector from any domain-joined context or with credentials:</p>
+<pre><code class="language-bash">SharpHound.exe -c All -d example.com --domaincontroller 203.0.113.10</code></pre>
+<p>From Linux, the Python collector works with credentials:</p>
+<pre><code class="language-bash">bloodhound-python -d example.com -u user -p &#x27;Password1&#x27; \
+  -dc 203.0.113.10 -c All -o bloodhound-out/</code></pre>
+<p>Import the resulting zip or JSON files into BloodHound and start with the built-in queries: &quot;Shortest Path to Domain Admins&quot;, &quot;Shortest Path to Unconstrained Delegation Systems&quot;, and &quot;All Kerberoastable Users&quot;. Read each path hop by hop and verify every edge manually; BloodHound shows what the ACLs allow, not what will actually work, and stale data (old sessions, removed group members) creates phantom paths. Collection touches every domain computer, so run it once, during the agreed window, not repeatedly.</p>
+<h2>6. Reading the results into leads</h2>
+<p>Turn the graph into a prioritized lead list: Kerberoastable service accounts, AS-REP roastable users, unconstrained and constrained delegation, nested group memberships reaching privileged groups, domain trusts (and their direction and transitivity), and readable shares with interesting files. For each lead, note the exact object name, why it matters, and what phase consumes it. Leads without this context rot in the notes.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Kerberos user enumeration fails closed on hardened domains (identical</li>
+<p>errors for valid and invalid users). Accept it and pivot to LDAP and NetExec instead of hammering the KDC.</p>
+<li>LDAP signing and channel binding requirements can break older tools. If</li>
+<p>ldapsearch binds but queries fail, retry over LDAPS or check the tool&#x27;s signing support.</p>
+<li>BloodHound data goes stale fast in large domains. Timestamp your</li>
+<p>collection and re-collect before acting on session-based paths older than a day.</p>
+<li>NetExec modules against many hosts in parallel can look like a password</li>
+<p>spray to the SOC. Throttle with <code>--threads 1</code> style limits when the engagement calls for quiet.</p>
+<li>Non-English or renamed built-in accounts (Administrator renamed) break</li>
+<p>scripts that assume default names. Enumerate by SID endings (-500 for the built-in admin, -512 for Domain Admins) instead of by name.</p>
+<li>Read-only domain controllers and child domains change what your</li>
+<p>credential can see. Map trusts early so you know which domains are even reachable.</p>
+</ul>
+<h2>Escalation</h2>
+<p>When anonymous LDAP is closed and you have no credentials: kerbrute userenum still works without passwords, and RID brute forcing over SMB (<code>nxc smb --rid-brute</code>) enumerates users from the RID pool. When one domain controller refuses, try the others; replication lag and per-DC policies differ. When BloodHound collection is blocked by EDR, fall back to targeted ldapsearch queries for the specific questions you need (group membership, delegation, SPNs) instead of full collection. When the domain uses fine grained password policies, enumerate them (<code>--pass-pol</code> per OU) because the effective lockout threshold may differ from the domain default. If every enumeration path needs credentials you do not have, stop: that is a finding about the domain&#x27;s posture, not a failure, and the report should say so.</p>
+<h2>Detection and defender view</h2>
+<p>Defenders watch AD enumeration closely. Kerberos user enumeration floods the KDC with pre-auth requests and is a classic early warning. LDAP queries for the whole directory, especially <code>servicePrincipalName=*</code> and delegation flags, match attacker reconnaissance patterns in SIEM rules. BloodHound collection is extremely noisy: it contacts every computer and pulls sessions and ACLs, and there are dedicated detections for SharpHound binaries. NetExec scans trigger SMB and WinRM alerting. The professional approach is coordination: agree on an enumeration window with the defensive contact, use the provided test accounts where possible, and never run collection tools outside the window. Your logs of what ran, when, and from where let the blue team separate your activity from a real intruder.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1087.002 Domain Account</li>
+<li>MITRE ATT&amp;CK T1069.002 Domain Groups</li>
+<li>MITRE ATT&amp;CK T1018 Remote System Discovery</li>
+<li>MITRE ATT&amp;CK T1482 Domain Trust Discovery</li>
+<li>MITRE ATT&amp;CK T1135 Network Share Discovery</li>
+<li>MITRE ATT&amp;CK T1558.003 Kerberoasting</li>
+<li>MITRE ATT&amp;CK T1558.004 AS-REP Roasting</li>
+<li>MITRE ATT&amp;CK T1110 Brute Force</li>
+<li>CWE-200 Exposure of Sensitive Information to an Unauthorized Actor</li>
+<li>BloodHound docs: https://bloodhound.readthedocs.io</li>
+<li>NetExec docs: https://www.netexec.wiki</li>
+<li>kerbrute docs: https://github.com/ropnop/kerbrute</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

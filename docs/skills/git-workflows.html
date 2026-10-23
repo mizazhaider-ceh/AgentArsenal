@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: git-workflows</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>git-workflows</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when choosing a branching model for a team, when writing clean atomic commits, when rebasing a feature branch or resolving rebase conflicts, when running a disciplined pull request review, when adding git hooks for pre-commit checks, and when recovering from mistakes such as bad rebases, deleted branches, or bad commits using reflog, reset, revert, and cherry-pick.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <span class="muted">none</span></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>git</td><td>2.43</td></tr></tbody></table><p>This skill covers team-ready git workflows: choosing a branching model, writing clean atomic commits, rebasing safely, running disciplined pull requests, enforcing quality with hooks, and recovering from the mistakes every team eventually makes. The scope is the daily practice of collaborative git, not git internals. Every section gives the exact commands, because workflow advice without commands does not survive contact with a real repository.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Choose the branching model for the repo and write it down where the team can find it.</li>
+<li>Create a short-lived branch from an up-to-date main. One branch, one task.</li>
+<li>Commit in small atomic units with clear messages. Commit early, polish later.</li>
+<li>Rebase onto main regularly so conflicts arrive small and early.</li>
+<li>Run hooks and tests locally before every push.</li>
+<li>Open a small, well-described pull request and get a review.</li>
+<li>Merge with the repo&#x27;s chosen strategy, delete the branch, verify on main.</li>
+</ol>
+<h2>Phase 1: Branching models</h2>
+<p>Pick one per repo. Mixed models in one repo cause the most confusion.</p>
+<p>| Model | How it works | Fits when | |---|---|---| | Trunk-based | Short branches (hours to a day), merge to main constantly, release from main | Small team, good CI, frequent releases | | Feature branch | Branches live days to weeks, PR review, then merge | Larger team, needs review gates per change | | GitFlow-lite | main plus a develop branch, release branches for stabilization | Versioned releases with maintenance branches |</p>
+<p>Trunk-based is the default recommendation. It minimizes merge pain and keeps main always releasable. Whatever you pick, protect main: no direct pushes, require PR review and green CI.</p>
+<pre><code class="language-bash">git checkout -b feat/shorten-urls main
+git branch --show-current
+git push -u origin feat/shorten-urls</code></pre>
+<p>Branch naming convention: <code>feat/...</code>, <code>fix/...</code>, <code>chore/...</code>, <code>docs/...</code>. Short, lowercase, hyphens, no ticket numbers alone (a human should guess the content).</p>
+<h2>Phase 2: Commit hygiene</h2>
+<p>An atomic commit does one thing and leaves the tree working. Future you, and your reviewers, will bisect and revert these.</p>
+<pre><code class="language-bash">git status --short
+git add -p                    # stage hunks selectively, review each one
+git commit -m &quot;feat: add --output json to logfilter&quot;
+git log --oneline -5</code></pre>
+<p>Message format (Conventional Commits style):</p>
+<pre><code class="language-text">feat: add --output json to logfilter
+
+The JSONL output lets CI pipelines parse results without
+fragile text scraping. Text output is unchanged.
+
+Fixes #42.</code></pre>
+<p>Rules: subject line under 72 chars, imperative mood (&quot;add&quot;, not &quot;added&quot;), body explains why, not what (the diff shows what). Separate concerns into separate commits: a refactor commit and a behavior-change commit should never be the same commit.</p>
+<pre><code class="language-bash">git commit --amend --no-edit   # fold a forgotten file into the last commit (unpushed only)
+git rebase -i HEAD~3           # squash, fixup, or reword the last 3 commits</code></pre>
+<p>In the interactive rebase list: <code>pick</code> keeps, <code>squash</code> folds with combined message, <code>fixup</code> folds silently, <code>reword</code> edits the message. Never rewrite commits that someone else has already pulled.</p>
+<h2>Phase 3: Rebasing</h2>
+<p>Rebasing keeps history linear and conflicts small. The golden rule: rebase private branches, merge (or let the platform squash) shared ones.</p>
+<pre><code class="language-bash">git fetch origin
+git rebase origin/main</code></pre>
+<p>When a conflict appears, git stops and marks the files:</p>
+<pre><code class="language-bash">git status --short             # shows UU for conflicted files
+# edit the files, resolve the markers
+git add &lt;resolved-files&gt;
+git rebase --continue
+git rebase --abort             # give up and return to the pre-rebase state
+git rebase --skip              # drop the conflicting commit (use with care)</code></pre>
+<p>During conflict resolution, <code>git diff</code> shows the conflicted state and <code>git log --merge --oneline</code> shows which commits are involved. For generated files (lockfiles, build output), pick a side deliberately and regenerate rather than hand-merging:</p>
+<pre><code class="language-bash">git checkout --theirs package-lock.json
+npm install                    # regenerate properly
+git add package-lock.json
+git rebase --continue</code></pre>
+<p>Keep the branch current: rebase onto main at least daily on active branches. A week-old branch rebased in one go is where painful conflicts come from.</p>
+<h2>Phase 4: Pull request discipline</h2>
+<p>A good PR is small, described, and reviewable. Aim for under 400 changed lines; split anything bigger and propose the split order yourself.</p>
+<p>PR description template:</p>
+<pre><code class="language-text">What: one or two sentences.
+Why: the problem this solves, link the issue.
+How: approach in a few bullets, including what was NOT done.
+Testing: commands run and their result.
+Risk: what could break, and how to verify after merge.</code></pre>
+<p>Review checklist for the author before requesting review:</p>
+<pre><code class="language-bash">git diff origin/main...HEAD --stat   # is it small enough?
+git log origin/main..HEAD --oneline # does each commit make sense alone?
+# tests pass locally, hooks ran, no debug leftovers, no secrets
+rg -n &quot;TODO|FIXME|console\.log|pdb|breakpoint\(\)&quot; --type py -tjs .</code></pre>
+<p>Merge strategies, one per repo: squash (one commit per PR, clean main history), rebase-merge (keeps atomic commits, linear history), or merge commits (preserves exact branch history). Do not mix strategies PR by PR.</p>
+<h2>Phase 5: Hooks</h2>
+<p>Client-side hooks run automatically and catch cheap mistakes before push. They are a convenience, not a security boundary (they can be skipped with <code>--no-verify</code>, so server-side checks still matter).</p>
+<pre><code class="language-bash">cat &gt; .git/hooks/pre-commit &lt;&lt;&#x27;EOF&#x27;
+#!/bin/sh
+# block commits with debug leftovers or private keys
+if git diff --cached --name-only | xargs grep -n &quot;pdb\.set_trace\|breakpoint()\|console\.log&quot; 2&gt;/dev/null; then
+  echo &quot;pre-commit: debug leftovers found, commit blocked&quot;
+  exit 1
+fi
+if git diff --cached --name-only | xargs grep -l &quot;BEGIN .*PRIVATE KEY&quot; 2&gt;/dev/null; then
+  echo &quot;pre-commit: private key staged, commit blocked&quot;
+  exit 1
+fi
+EOF
+chmod +x .git/hooks/pre-commit</code></pre>
+<p>A commit-message hook enforces the format from Phase 2:</p>
+<pre><code class="language-bash">cat &gt; .git/hooks/commit-msg &lt;&lt;&#x27;EOF&#x27;
+#!/bin/sh
+# require conventional-commit style subject line
+head -1 &quot;$1&quot; | grep -Eq &quot;^(feat|fix|docs|chore|refactor|test): .{1,60}$&quot; || {
+  echo &quot;commit-msg: subject must look like &#x27;feat: description&#x27;&quot;
+  exit 1
+}
+EOF
+chmod +x .git/hooks/commit-msg</code></pre>
+<p>For hooks shared across the team, keep them in the repo (for example <code>hooks/</code>) and point git at them:</p>
+<pre><code class="language-bash">git config core.hooksPath hooks/</code></pre>
+<h2>Phase 6: Recovering from mistakes</h2>
+<p>Almost everything in git is recoverable. The rule for every scenario below: stop, do not run more commands blindly, and copy the current state aside if you are unsure.</p>
+<p>Find lost commits with the reflog (a log of where HEAD has been, kept about 90 days):</p>
+<pre><code class="language-bash">git reflog --oneline | head -20
+git reflog show feat/shorten-urls | head -20</code></pre>
+<p>Recover a deleted branch:</p>
+<pre><code class="language-bash">git reflog --oneline | grep &quot;checkout: moving from&quot;
+git branch recovered-branch &lt;sha-from-reflog&gt;</code></pre>
+<p>Undo the last commit but keep the changes staged:</p>
+<pre><code class="language-bash">git reset --soft HEAD~1</code></pre>
+<p>Undo the last commit and unstage everything (keeps working tree files):</p>
+<pre><code class="language-bash">git reset HEAD~1</code></pre>
+<p>Throw away local changes to a file (destructive, files are lost):</p>
+<pre><code class="language-bash">git restore path/to/file
+git clean -fd    # remove untracked files and dirs (destructive)</code></pre>
+<p>Undo a commit that is already pushed: never rewrite, revert instead (creates a new commit that undoes it):</p>
+<pre><code class="language-bash">git revert &lt;sha&gt;
+git push</code></pre>
+<p>Move a commit from the wrong branch to the right one:</p>
+<pre><code class="language-bash">git cherry-pick &lt;sha&gt;        # copy it onto the current branch
+git rebase --onto main &lt;bad-commit&gt;~1 &lt;bad-commit&gt;  # or transplant a range</code></pre>
+<p>Fix the author on recent unpushed commits:</p>
+<pre><code class="language-bash">git rebase -i HEAD~3
+# change &#x27;pick&#x27; to &#x27;edit&#x27; for the bad commits, then for each:
+git commit --amend --author=&quot;Correct Name &lt;correct@example.com&gt;&quot; --no-edit
+git rebase --continue</code></pre>
+<p>Last resort, when the object database still has the data but no ref points to it:</p>
+<pre><code class="language-bash">git fsck --lost-found</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Force-push to a shared branch: announce it in the team channel first, get explicit agreement, never force-push main. Prefer <code>git push --force-with-lease</code>, which refuses if someone else pushed since your last fetch.</li>
+<li>Someone force-pushed over your work: do not rebase blindly. Get the old SHA from the PR page or their reflog, then <code>git cherry-pick</code> your commits onto the new tip.</li>
+<li>Committed to main by accident: <code>git branch rescue</code> to save it, <code>git reset --hard origin/main</code> to restore main, then open a proper PR from the rescue branch.</li>
+<li>Rebase conflict in a binary file: decide with <code>--ours</code> or <code>--theirs</code> deliberately, never hand-edit binaries.</li>
+<li>Huge files committed: remove them with a history-rewriting tool before they spread to every clone, and coordinate the rewrite with the team. Prevention (a pre-commit size check) beats cure.</li>
+<li>Detached HEAD with new commits: <code>git branch rescue</code> immediately to keep them, then move to the branch.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>History is broken and the reflog does not cover it: clone fresh from origin, save your work with <code>git format-patch</code> or plain file copies, and replay it onto the clean clone.</li>
+<li>A secret was committed and pushed: rotate the secret FIRST. It is compromised the moment it leaves your machine. Then purge it from history, force-push with team notice, and check where the old commits may have been cloned.</li>
+<li>A shared branch needs a force-push: announce, get agreement, use <code>--force-with-lease</code>, verify CI is green after.</li>
+<li>You are unsure whether a destructive command is safe: copy the branch (<code>git branch backup-&lt;name&gt;</code>) first. The copy costs nothing and saves everything.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting workflow misuse and repository misconfiguration.</p>
+<ul>
+<li>Secrets in history: sweep with <code>git log --all -S &#x27;BEGIN PRIVATE KEY&#x27; --oneline</code> and <code>git log --all -S &#x27;AKIA&#x27; --oneline</code>. Add a secret scanner to CI so new leaks are caught at PR time.</li>
+<li>Misconfiguration: main branch without protection, no required reviews, no required status checks, signed commits required by policy but not enforced, allowlisted bypasses nobody reviews.</li>
+<li>Client-side hooks are bypassable (<code>--no-verify</code>), so real enforcement belongs server side: pre-receive hooks or platform branch rules.</li>
+<li>Detect process drift: PRs merged without review, direct pushes to main, force-pushes on protected branches. Most platforms expose these in the audit log; review it monthly.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>git-scm.com/docs: git-rebase, git-reflog, git-cherry-pick, git-revert, git-reset, githooks</li>
+<li>Conventional Commits (conventionalcommits.org)</li>
+<li>GitHub flow guide (docs.github.com/en/get-started/using-github/github-flow)</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

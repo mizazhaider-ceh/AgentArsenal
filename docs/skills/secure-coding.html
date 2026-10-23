@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: secure-coding</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>secure-coding</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing or fixing code that handles untrusted input, when choosing safe APIs for SQL, shell, and file access, when implementing password hashing, session tokens, and output encoding, when managing secrets and dependencies, and when you need each practice mapped to its CWE so findings line up with code review and web testing.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="code-reviewer.html">code-reviewer</a> <a href="web-sqli.html">web-sqli</a> <a href="web-xss.html">web-xss</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>python</td><td>3.12</td></tr><tr><td>git</td><td>2.43</td></tr></tbody></table><p>This skill covers defensive coding practices for everyday development: validating input, encoding output, using safe APIs, handling authentication and sessions, managing secrets, and keeping dependencies healthy. Every practice is mapped to its CWE identifier so findings line up with the code-reviewer skill and with web testing skills like web-sqli and web-xss. The scope is language-agnostic principles with concrete Python 3.12 examples, because examples are what survive into real code. It does not cover designing new cryptographic protocols; use vetted primitives and call in a specialist for anything custom.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List every input to the component and mark the trust boundary: what is attacker-controlled?</li>
+<li>Validate at the boundary: type, allowlist, length, and range. Reject, do not sanitize, when possible.</li>
+<li>Choose safe APIs: parameterized queries, argument lists instead of shells, safe path joins.</li>
+<li>Encode output for its context: HTML, JavaScript, URL, shell, and log contexts all differ.</li>
+<li>Centralize authentication: memory-hard password hashing, random session tokens, secure cookies.</li>
+<li>Keep secrets out of code, logs, and error messages. Load from the environment or a secret store.</li>
+<li>Pin and audit dependencies. Fewer dependencies, reviewed updates, no unmaintained packages.</li>
+<li>Fail closed: deny by default, log the event without the secret, and show users a generic error.</li>
+</ol>
+<h2>Phase 1: Input validation</h2>
+<p>Validate where untrusted data enters, not where it is used. An allowlist (what is permitted) beats a denylist (what is blocked), because attackers are creative and your denylist is finite. CWE-20.</p>
+<pre><code class="language-python">import re
+
+USERNAME_RE = re.compile(r&quot;[a-z0-9_]{3,20}&quot;)
+
+def valid_username(value: str) -&gt; bool:
+    return USERNAME_RE.fullmatch(value) is not None
+
+def parse_page(value: str) -&gt; int:
+    page = int(value)          # raises ValueError on garbage: good
+    if not 1 &lt;= page &lt;= 1000:
+        raise ValueError(&quot;page out of range&quot;)
+    return page</code></pre>
+<p>Rules: check type first, then format, then length, then range. Set explicit maximum lengths on every string input; unbounded input is a denial-of-service vector. Normalize Unicode (NFKC) before validation when the input feeds comparisons or filesystem paths. Never trust client-side validation; it is UX, not security.</p>
+<h2>Phase 2: Output encoding</h2>
+<p>Encoding depends on context. HTML-escaping a value placed inside a <code>&lt;script&gt;</code> block does not protect it. Encode at the last moment, for the exact context. CWE-79.</p>
+<pre><code class="language-python">import html
+import urllib.parse
+
+def render_profile(name: str) -&gt; str:
+    return f&quot;&lt;p&gt;Hello, {html.escape(name)}&lt;/p&gt;&quot;   # HTML body context
+
+def build_link(query: str) -&gt; str:
+    return &quot;/search?q=&quot; + urllib.parse.quote(query, safe=&quot;&quot;)  # URL context
+
+def safe_log(value: str) -&gt; str:
+    return value.replace(&quot;\n&quot;, &quot; &quot;).replace(&quot;\r&quot;, &quot; &quot;)  # log context: no newlines</code></pre>
+<p>Log injection (CWE-117): a newline in logged user input lets an attacker forge log lines. Strip or replace <code>\r</code> and <code>\n</code> in anything written to logs. In templates, use the framework&#x27;s autoescaping and never mark user data as safe. In JavaScript contexts, prefer <code>textContent</code> over <code>innerHTML</code>, and JSON-encode server data instead of interpolating it into scripts.</p>
+<h2>Phase 3: Safe data access</h2>
+<p>Use APIs that separate code from data. String-building SQL, shell commands, or file paths from user input is the single most common source of critical findings.</p>
+<p>SQL, parameterized (CWE-89):</p>
+<pre><code class="language-python">import sqlite3
+
+db = sqlite3.connect(&quot;app.db&quot;)
+cur = db.cursor()
+cur.execute(&quot;SELECT * FROM users WHERE name = ?&quot;, (name,))  # data stays data</code></pre>
+<p>Bad pattern for comparison: <code>f&quot;SELECT * FROM users WHERE name = &#x27;{name}&#x27;&quot;</code>. One quote character ends the string and the rest becomes SQL.</p>
+<p>Shell, argument list form (CWE-78):</p>
+<pre><code class="language-python">import subprocess
+
+subprocess.run([&quot;convert&quot;, filename, &quot;out.png&quot;], shell=False, check=True)</code></pre>
+<p>Bad pattern: <code>subprocess.run(&quot;convert &quot; + filename + &quot; out.png&quot;, shell=True)</code>. A filename of <code>x.png; rm -rf ~</code> becomes two commands. Rule: never use <code>shell=True</code> with any part of the command derived from input. If you must build complex pipelines, use <code>shlex.quote</code> on each argument, but prefer the list form.</p>
+<p>File paths, no traversal (CWE-22):</p>
+<pre><code class="language-python">import pathlib
+
+BASE = pathlib.Path(&quot;/srv/uploads&quot;).resolve()
+
+def safe_path(name: str) -&gt; pathlib.Path:
+    candidate = (BASE / name).resolve()
+    if BASE not in candidate.parents and candidate != BASE:
+        raise ValueError(&quot;path escapes upload directory&quot;)
+    return candidate</code></pre>
+<p>Bad pattern: <code>open(&quot;/srv/uploads/&quot; + name)</code> with <code>name = &quot;../../etc/passwd&quot;</code>. Resolve symlinks with <code>.resolve()</code> and verify the result stays under the base directory.</p>
+<h2>Phase 4: Authentication and sessions</h2>
+<p>Get this wrong and nothing else matters. Centralize auth logic in one module; scattered auth checks drift out of sync.</p>
+<p>Password hashing (CWE-916): use a memory-hard, salted KDF. Never MD5, SHA1, or plain SHA256 for passwords; they are too fast and fall to GPUs.</p>
+<pre><code class="language-python">import hashlib, os
+
+def hash_password(password: str) -&gt; bytes:
+    salt = os.urandom(16)
+    dk = hashlib.scrypt(password.encode(), salt=salt, n=2**14, r=8, p=1, dklen=32)
+    return salt + dk
+
+def verify_password(password: str, stored: bytes) -&gt; bool:
+    salt, dk = stored[:16], stored[16:]
+    check = hashlib.scrypt(password.encode(), salt=salt, n=2**14, r=8, p=1, dklen=32)
+    return hmac.compare_digest(check, dk)</code></pre>
+<p>Session tokens (CWE-330): generate with a cryptographic random source, with at least 128 bits of entropy.</p>
+<pre><code class="language-python">import secrets, hmac
+
+session_id = secrets.token_urlsafe(32)   # 256 bits, URL-safe</code></pre>
+<p>Compare secrets with <code>hmac.compare_digest</code>, never <code>==</code>, to avoid timing attacks. Cookies holding sessions get <code>HttpOnly</code>, <code>Secure</code>, and <code>SameSite=Lax</code> (or <code>Strict</code>). Enforce rate limiting and lockout on login endpoints to blunt brute force, and never reveal whether the username or the password was wrong.</p>
+<h2>Phase 5: Secrets management</h2>
+<p>Secrets in code are compromised code. Treat every committed secret as public. CWE-798, CWE-259.</p>
+<pre><code class="language-python">import os
+
+def get_secret(name: str) -&gt; str:
+    value = os.environ.get(name)
+    if not value:
+        raise RuntimeError(f&quot;missing required secret: {name}&quot;)
+    return value
+
+API_KEY = get_secret(&quot;APP_API_KEY&quot;)   # fails fast at startup, never defaults</code></pre>
+<p>Rules: load secrets from environment variables or a secret store (never from the repo, never from client-side code). Fail fast at startup when a required secret is missing; do not fall back to a default. Rotate on a schedule and immediately after any suspected exposure. Redact secrets in logs and error messages with a helper, and scan the repo history for past leaks:</p>
+<pre><code class="language-bash">git log --all -S &#x27;BEGIN PRIVATE KEY&#x27; --oneline
+rg -n -i &quot;(password|secret|api[_-]?key)\s*[:=]\s*[&#x27;\&quot;][^&#x27;\&quot;]{4,}[&#x27;\&quot;]&quot; .</code></pre>
+<p>Sensitive data in logs (CWE-532): no passwords, tokens, session IDs, or full card numbers in application logs. Log the event (&quot;login failed for user X&quot;), not the credential.</p>
+<h2>Phase 6: Dependency hygiene</h2>
+<p>Every dependency is code you did not write but now ship. CWE-1104, CWE-829.</p>
+<pre><code class="language-bash">python3 -m pip install --dry-run -r requirements.txt   # preview before installing
+python3 -m pip freeze | sort &gt; requirements.lock        # pin what you tested</code></pre>
+<p>Rules: pin versions and test what you pin. Prefer well-maintained packages with a real release history over abandoned ones. Review what a new dependency pulls in transitively; a tiny utility package with thirty transitive deps is a supply-chain risk. Subscribe to security advisories for your stack and update on a cadence, not only during incidents. Remove dependencies you no longer use; dead deps still get exploited.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Unicode attacks: normalize with NFKC before validation; watch homoglyphs (lookalike characters) in usernames and domains.</li>
+<li>Time-of-check to time-of-use: validating a path and then opening it can race. Where it matters, operate on open file descriptors rather than re-resolving paths.</li>
+<li>Timing attacks: any comparison of secrets, tokens, or hashes must use constant-time compare.</li>
+<li>SSRF in URL validation: parse the URL, resolve the host, and check it against an allowlist. Block private ranges, link-local addresses (like cloud metadata endpoints), and redirects to unlisted hosts. A regex on the URL string is not enough.</li>
+<li>Error messages: generic to the user (&quot;login failed&quot;), detailed to the server log. Never echo SQL, stack traces, file paths, or framework versions to clients.</li>
+<li>Deserialization: never unpickle, unserialize, or eval untrusted data. Use JSON with explicit schema checks.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No safe API exists for what you need: write one thin wrapper module that the whole codebase must use, and review that wrapper once, carefully. One reviewed choke point beats fifty ad-hoc fixes.</li>
+<li>Legacy code cannot be fixed now: add a compensating control (strict allowlist at the edge, a WAF rule), file it as tracked tech debt with an owner and a deadline, and do not let the deadline slide silently.</li>
+<li>The problem is cryptographic protocol design, novel token schemes, or custom key management: stop and bring in a specialist. Do not invent ciphers, modes, or protocols.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting insecure-coding misuse and pipeline misconfiguration.</p>
+<ul>
+<li>Misuse: validation disabled &quot;temporarily for testing&quot; and never re-enabled, debug mode on in production, secrets committed to env files in the repo, installs without pinned versions.</li>
+<li>Detect in CI: run a SAST scanner on every diff, run a secret scanner on every push, run a dependency audit on a schedule. Gate merges on the results; advisory-only scanners get ignored.</li>
+<li>Detect in production: alert on authentication anomalies (spikes in failed logins, logins from new geographies), on unexpected 500s that may indicate probing, and on processes spawning shells from web handlers.</li>
+<li>Misconfiguration: verbose error pages in production, directory listing enabled, default credentials on deployed services, TLS verification disabled to &quot;fix&quot; a cert error.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>CWE-20 Improper Input Validation, CWE-22 Path Traversal, CWE-78 OS Command Injection, CWE-79 Cross-site Scripting, CWE-89 SQL Injection, CWE-117 Log Injection, CWE-259 Hard-coded Password, CWE-330 Insufficient Randomness, CWE-532 Sensitive Information in Logs, CWE-798 Hard-coded Credentials, CWE-829 Untrusted Inclusion, CWE-916 Weak Password Hashing, CWE-1104 Unmaintained Third-Party Components (cwe.mitre.org)</li>
+<li>OWASP Secure Coding Practices and Cheat Sheet Series: Input Validation, Authentication, Session Management, Cryptographic Storage (cheatsheetseries.owasp.org)</li>
+<li>Python 3.12 docs: secrets, hashlib, html, subprocess, pathlib (docs.python.org/3/library/)</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

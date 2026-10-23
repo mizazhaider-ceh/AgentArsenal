@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: linux-hardening</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>linux-hardening</h2><div class="meta"><span class="badge gray">linux</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hardening a Linux server for production, when locking down SSH with key-only authentication, when writing a default-deny firewall with ufw or nftables, when disabling unneeded services, when enabling automatic security updates, when adding auditd rules for sensitive files, and when running a CIS-style checklist adapted for small teams.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="privesc-linux.html">privesc-linux</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>openssh</td><td>9.6</td></tr><tr><td>ufw</td><td>0.36</td></tr><tr><td>nftables</td><td>1.0</td></tr></tbody></table><p>This skill covers practical Linux server hardening for small teams: SSH lockdown, default-deny firewalling, service minimization, automatic security updates, and basic auditing, finished with a CIS-style checklist you can run on every new box. The scope is a single general-purpose server (Debian/Ubuntu and RHEL families). It is hardening, not incident response: if you suspect the box is already compromised, isolate and investigate first instead of hardening around an attacker. It pairs with privesc-linux, which shows what an attacker does with the misconfigurations this skill removes.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory the box: OS version, listening ports, enabled services, user accounts.</li>
+<li>Harden SSH: key-only authentication, no root login, strong algorithms, limited users. Verify with <code>sshd -T</code>.</li>
+<li>Firewall: default deny inbound, allow only the ports the box actually serves.</li>
+<li>Minimize: disable and mask unneeded services and sockets.</li>
+<li>Updates: enable automatic security updates with a planned reboot strategy.</li>
+<li>Audit: add auditd watches on sensitive files, keep logs persistent and shipped off-box.</li>
+<li>Verify: re-run the inventory, walk the checklist, and sign off.</li>
+</ol>
+<h2>Phase 1: Inventory</h2>
+<p>You cannot harden what you have not listed. Run this on every box before changing anything, and keep the output as your baseline.</p>
+<pre><code class="language-bash">cat /etc/os-release | head -3
+ss -tlnp                                   # listening TCP ports and owning processes
+systemctl list-unit-files --state=enabled  # what starts at boot
+awk -F: &#x27;$3==0{print $1}&#x27; /etc/passwd      # accounts with UID 0 (should be only root)
+lastlog -b 30                              # accounts with recent logins
+sudo -l                                    # who can run what as root</code></pre>
+<p>Any listening port you cannot explain is a finding. Any UID 0 account besides root is a finding. Any enabled service you do not recognize gets investigated before it gets disabled.</p>
+<h2>Phase 2: SSH hardening</h2>
+<p>SSH is the front door. Lock it down in a drop-in config file so package updates never clobber your settings.</p>
+<pre><code class="language-bash">cat &gt; /etc/ssh/sshd_config.d/99-hardening.conf &lt;&lt;&#x27;EOF&#x27;
+PermitRootLogin no
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+ChallengeResponseAuthentication no
+MaxAuthTries 3
+LoginGraceTime 30
+MaxSessions 3
+AllowUsers deploy
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512
+EOF
+sshd -t &amp;&amp; systemctl reload sshd
+sshd -T | grep -Ei &#x27;permitrootlogin|passwordauthentication|kbdinteractive|allowusers&#x27;</code></pre>
+<p>Rules: key-only authentication (password auth off entirely), root login disabled, <code>AllowUsers</code> limited to the accounts that need shell access, weak algorithms removed. Always test from a second SSH session before closing your first one. If the box must expose SSH to the internet, add rate limiting (a firewall rule or fail2ban-style limiter) on top.</p>
+<pre><code class="language-bash">ssh -v deploy@host 2&gt;&amp;1 | grep -i &quot;authenticat&quot;   # confirm key auth is offered and used</code></pre>
+<h2>Phase 3: Firewall, default deny</h2>
+<p>Default deny inbound, explicit allow for what the box serves. Two common toolsets; pick the one your distro uses.</p>
+<p>ufw (Debian/Ubuntu):</p>
+<pre><code class="language-bash">ufw default deny incoming
+ufw default allow outgoing
+ufw allow 22/tcp
+ufw allow 443/tcp
+ufw enable
+ufw status verbose</code></pre>
+<p>nftables (direct ruleset, works everywhere):</p>
+<pre><code class="language-bash">nft add table inet filter
+nft add chain inet filter input &#x27;{ type filter hook input priority 0; policy drop; }&#x27;
+nft add rule inet filter input ct state established,related accept
+nft add rule inet filter input iif lo accept
+nft add rule inet filter input tcp dport 22 accept
+nft add rule inet filter input tcp dport 443 accept
+nft list ruleset</code></pre>
+<p>Verify from outside the box, not just from the box itself:</p>
+<pre><code class="language-bash">ss -tlnp | grep -v &quot;127.0.0.1&quot;     # what is reachable from the network</code></pre>
+<p>Rules: no management ports exposed to the world except through a VPN or bastion. Database ports listen on localhost or a private network only. Document every allowed port and why it exists; an undocumented allow rule is a future incident.</p>
+<h2>Phase 4: Service minimization</h2>
+<p>Every running service is attack surface. Disable what the box does not need, and mask sockets that could be socket-activated back to life.</p>
+<pre><code class="language-bash">systemctl list-unit-files --state=enabled | grep -Ei &quot;avahi|cups|bluetooth|telnet|rpcbind|nfs&quot;
+systemctl disable --now avahi-daemon cups bluetooth
+systemctl mask telnet.socket
+systemctl list-sockets --all | head -20</code></pre>
+<p>Keep a short list of what stays and why (ssh, your app, logging, updates). Revisit the list after every major change to the box&#x27;s role. On containers and minimal images this phase is short; on full server installs it is where most of the wins are.</p>
+<h2>Phase 5: Security updates</h2>
+<p>Unpatched services are the most common initial access vector. Automate security updates; plan reboots for kernel updates.</p>
+<p>Debian/Ubuntu:</p>
+<pre><code class="language-bash">apt install -y unattended-upgrades
+dpkg-reconfigure -plow unattended-upgrades
+grep -r &quot;Unattended-Upgrade&quot; /etc/apt/apt.conf.d/50unattended-upgrades | head -5</code></pre>
+<p>RHEL family:</p>
+<pre><code class="language-bash">dnf install -y dnf-automatic
+systemctl enable --now dnf-automatic.timer
+grep apply_updates /etc/dnf/automatic.conf</code></pre>
+<p>Rules: automatic security updates on, with alerts on failure. Decide the reboot policy up front (automatic in a maintenance window, or manual with a calendar reminder); an unrebooted kernel update is not an applied update. Check monthly that the automation actually ran: <code>grep -i unattended /var/log/unattended-upgrades/*.log</code> or the dnf-automatic equivalent.</p>
+<h2>Phase 6: Auditing and logging</h2>
+<p>Watch the files attackers touch first, keep logs persistent across reboots, and ship them off the box so a compromise cannot erase its own trail.</p>
+<pre><code class="language-bash">apt install -y auditd || dnf install -y audit
+cat &gt; /etc/audit/rules.d/hardening.rules &lt;&lt;&#x27;EOF&#x27;
+-w /etc/passwd -p wa -k identity
+-w /etc/shadow -p wa -k identity
+-w /etc/group -p wa -k identity
+-w /etc/sudoers -p wa -k sudoers
+-w /etc/sudoers.d/ -p wa -k sudoers
+-w /etc/ssh/sshd_config -p wa -k sshd
+-w /etc/shadow -p wa -k identity
+EOF
+augenrules --load
+auditctl -l | head -20
+aureport --summary | head -20</code></pre>
+<p>Also: make journald persistent (<code>Storage=persistent</code> in journald.conf), forward logs to a central server or at least a separate append-only location, and set log rotation so auditd cannot fill the disk (<code>max_log_file</code> in auditd.conf plus monitoring on disk space).</p>
+<p>Suspicious-change checks to run on a schedule:</p>
+<pre><code class="language-bash">find / -xdev -type f -perm -0002 2&gt;/dev/null | head      # world-writable files
+find / -xdev -type f -perm -4000 2&gt;/dev/null            # SUID binaries: know each one
+awk -F: &#x27;($2==&quot;&quot;) {print $1}&#x27; /etc/shadow 2&gt;/dev/null   # accounts with empty password</code></pre>
+<h2>Phase 7: CIS-style checklist for small teams</h2>
+<p>CIS Benchmarks are the industry reference; this is the subset a small team can actually run per box. Check each line, record the result, fix failures.</p>
+<p>| # | Control | Check command | Expected | |---|---|---|---| | 1 | Only root has UID 0 | <code>awk -F: &#x27;$3==0{print $1}&#x27; /etc/passwd</code> | <code>root</code> only | | 2 | No empty passwords | <code>awk -F: &#x27;($2==&quot;&quot;){print $1}&#x27; /etc/shadow</code> | no output | | 3 | SSH root login off | <code>sshd -T \| grep -i permitrootlogin</code> | <code>no</code> | | 4 | SSH password auth off | <code>sshd -T \| grep -i passwordauthentication</code> | <code>no</code> | | 5 | Firewall default deny in | <code>ufw status verbose</code> or <code>nft list ruleset</code> | deny/drop default | | 6 | No unexpected listeners | <code>ss -tlnp</code> | every port documented | | 7 | Unneeded services off | <code>systemctl list-unit-files --state=enabled</code> | only required ones | | 8 | Security updates automatic | service status of unattended-upgrades / dnf-automatic.timer | active | | 9 | auditd running with rules | <code>auditctl -l</code> | watches from Phase 6 | | 10 | No world-writable files | <code>find / -xdev -type f -perm -0002</code> | none outside /tmp | | 11 | SUID binaries known | <code>find / -xdev -type f -perm -4000</code> | each one justified | | 12 | Logs persistent and shipped | journald.conf, forwarder status | persistent, off-box copy |</p>
+<p>Run the checklist on every new box before it serves traffic, and re-run it quarterly. Drift happens; the checklist catches it.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Locking yourself out of SSH: always verify from a second session before closing the first. Keep provider console or serial access credentials somewhere you can reach without SSH.</li>
+<li>Firewall blocking monitoring, backups, or config management: allowlist those source IPs explicitly and document why each exception exists.</li>
+<li>auditd filling the disk: set <code>max_log_file</code>, enable rotation, and alert on disk usage. A full disk is its own outage.</li>
+<li>Disabling IPv6 carelessly: some services bind v6 by default. Test before committing, or firewall v6 identically instead of disabling it.</li>
+<li><code>AllowUsers</code> typos: one wrong username locks out a legitimate admin. Verify with <code>sshd -T | grep allowusers</code> and a test login.</li>
+<li>Hardened algorithms breaking old clients: check which clients connect before removing legacy key exchange. Prefer upgrading the client over keeping weak algorithms.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Locked out of SSH: use the provider console, serial console, or rescue boot to fix <code>sshd_config</code>, then <code>sshd -t</code> before reloading.</li>
+<li>Legitimate traffic blocked by the firewall: add a temporary logging rule, identify the exact port and source, then add a targeted allow. Do not open broad ranges &quot;to make it work&quot;.</li>
+<li>A service breaks after minimization: check <code>journalctl -u &lt;service&gt;</code> and re-enable only what the role needs. The checklist documents what stays for a reason.</li>
+<li>You find signs of compromise (unknown UID 0 accounts, unexpected listeners, altered binaries): stop hardening. Isolate the box, preserve logs and disk image, and switch to incident response. Hardening around an active attacker just warns them.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting hardening misuse and configuration drift.</p>
+<ul>
+<li>Misconfiguration signals: <code>PasswordAuthentication yes</code>, <code>PermitRootLogin yes</code>, empty firewall ruleset, auditd not running, security updates disabled or failing silently.</li>
+<li>Detect drift automatically: a nightly script that diffs <code>sshd -T</code>, <code>nft list ruleset</code> (or <code>ufw status</code>), and the enabled-services list against the signed-off baseline. Any diff pages someone.</li>
+<li>Detect attacker-relevant changes: alerts on new UID 0 accounts, new SUID binaries, new listening ports, and auditd rule tampering. These are the exact primitives privesc-linux teaches; watching them is defense.</li>
+<li>Misuse: shared root passwords instead of personal keys, keys generated once and never rotated, <code>NOPASSWD</code> sudo for broad groups, exceptions to the firewall that nobody remembers approving. Review exceptions quarterly and expire them.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>sshd_config man page and OpenSSH security notes (openssh.com, man sshd_config)</li>
+<li>nftables wiki: ruleset basics and examples (wiki.nftables.org)</li>
+<li>ufw manual (man ufw, Ubuntu Server Guide firewall section)</li>
+<li>CIS Benchmarks for Linux distributions, concept and control structure (cisecurity.org)</li>
+<li>auditd documentation: auditctl, audit.rules, aureport (man pages, distro docs)</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

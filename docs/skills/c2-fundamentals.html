@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: c2-fundamentals</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>c2-fundamentals</h2><div class="meta"><span class="badge gray">c2</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when designing the command and control layer of an authorized red team or adversary emulation exercise. C2 concepts including beaconing, callbacks, and tasking, channel design over HTTPS, DNS, and SMB, malleable profiles that shape traffic, redirectors with nginx, jitter and sleep for OPSEC, and infrastructure hygiene for authorized operations. Covers what each component hides from defenders, how defenders detect it, and the logging you owe the client. Requires network-pivoting for the routing layer that C2 traffic often travels through.</p><div class="deps"><span class="kind">requires:</span> <a href="network-pivoting.html">network-pivoting</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <span class="muted">none</span></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Metasploit Framework</td><td>6.4.x</td></tr><tr><td>nginx</td><td>1.26.x</td></tr><tr><td>OpenSSH</td><td>9.x</td></tr><tr><td>openssl</td><td>3.x</td></tr><tr><td>Python</td><td>3.12.x</td></tr></tbody></table><p>Command and control is how an operator talks to implants during an authorized adversary emulation: tasking goes out, results come back, on a schedule the operator controls. This skill covers C2 fundamentals for red teams working under a signed rules of engagement: beaconing concepts, channel choices, malleable profiles, redirectors, OPSEC basics, and the audit trail you owe the client. It is about infrastructure design and tradecraft, not about building malware. Nothing here is deployed against infrastructure you do not own or have explicit written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the emulation objective and the exact C2 rules in the rules of engagement (allowed channels, hours, targets).</li>
+<li>Choose the channel: HTTPS for blending in, DNS for restrictive egress, SMB for internal hops.</li>
+<li>Stand up the team server on infrastructure you own, with TLS and access controls from minute one.</li>
+<li>Put a redirector in front of it so the team server address never appears in traffic.</li>
+<li>Shape the traffic with a profile: realistic URIs, headers, jitter, and sleep.</li>
+<li>Test the full loop in the lab before the engagement window opens.</li>
+<li>Log every session and tear everything down when the engagement ends.</li>
+</ol>
+<h2>1. Core concepts</h2>
+<p>A C2 loop has four parts. The implant (agent) lives on the in-scope target. The team server issues tasks and stores results. The channel carries both directions. The operator drives it. Beaconing is the heartbeat: the implant checks in on an interval, picks up tasks, and sends back output. Callbacks are the reverse, the server pushing to the implant, which rarely survives egress filtering. Everything in modern C2 is beaconing with variations.</p>
+<p>Two numbers define your noise: sleep (seconds between check-ins) and jitter (random percentage added to sleep). Short sleep with no jitter is a metronome that network anomaly detection spots in minutes. Long sleep with high jitter looks like a human browsing pattern but slows your operation. Start with sleep 60 and jitter 30 for interactive work, and lengthen both when you need to be quiet.</p>
+<pre><code class="language-bash">openssl req -x509 -newkey rsa:4096 -keyout c2.key -out c2.crt \
+  -days 90 -nodes -subj &quot;/CN=cdn-updates.example.net&quot;</code></pre>
+<p>Generate a fresh certificate for every engagement, with a plausible name on a domain you own. Never reuse certificates, domains, or infrastructure between clients; cross-contamination is how one engagement&#x27;s indicators burn the next.</p>
+<h2>2. Channel design</h2>
+<p>HTTPS is the default channel because it blends into normal web traffic and most networks allow it outbound. The implant POSTs to innocuous-looking URIs and the server answers inside normal-looking responses. Terminate TLS on your redirector, not on the team server, so the server&#x27;s real address and certificate never face the target network.</p>
+<p>DNS is the fallback channel for networks that proxy or inspect HTTPS but leave DNS open. It is slow (data hides in subdomain labels and TXT records) and DNS logging makes it highly visible to defenders who look. Use it for check-ins and short tasking, not bulk exfiltration.</p>
+<p>SMB and named pipes carry C2 between internal hosts without touching the network perimeter at all: one internet-facing implant relays for internal ones over the same protocols Windows uses constantly. This is where network-pivoting and C2 meet: the pivot host becomes the egress point and internal implants never talk to the internet directly.</p>
+<p>Match the channel to the egress you actually measured during recon, not to what you hope is open. Test each channel from the target network position before relying on it.</p>
+<h2>3. Profiles: shaping the traffic</h2>
+<p>A malleable profile defines what your C2 traffic looks like on the wire: HTTP method, URIs, headers, user agents, and how data is encoded inside requests and responses. The goal is to resemble ordinary traffic for the environment you are emulating against, not to be invisible.</p>
+<pre><code class="language-python"># Minimal profile concept: what the wire sees per check-in
+profile = {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;uris&quot;: [&quot;/static/js/app.min.js&quot;, &quot;/api/v2/config&quot;, &quot;/assets/logo.png&quot;],
+    &quot;headers&quot;: {&quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64)&quot;,
+                &quot;Accept&quot;: &quot;application/json&quot;},
+    &quot;sleep&quot;: 60,
+    &quot;jitter&quot;: 30,
+}</code></pre>
+<p>Rotate URIs and user agents across beacons so no single pattern repeats every 60 seconds. Encode tasking inside plausible content (JSON config blobs, image metadata) rather than raw base64 in a query string, which is a signature every proxy flags. Keep total beacon size small and irregular; identical byte counts on a fixed schedule are trivially detectable.</p>
+<h2>4. Redirectors</h2>
+<p>A redirector sits between the target and your team server and forwards only traffic that matches your profile. Everything else gets a benign response. This protects the team server&#x27;s address and filters out scanners, sandboxes, and curious analysts who hit your domain.</p>
+<p>A minimal nginx redirector that forwards only your beacon URI and serves a decoy site otherwise:</p>
+<pre><code class="language-nginx">server {
+    listen 443 ssl;
+    server_name cdn-updates.example.net;
+    ssl_certificate /etc/nginx/c2.crt;
+    ssl_certificate_key /etc/nginx/c2.key;
+
+    location /api/v2/config {
+        proxy_pass https://TEAMSERVER_IP:8443;
+        proxy_set_header Host $host;
+    }
+    location / {
+        root /var/www/decoy;
+    }
+}</code></pre>
+<pre><code class="language-bash">sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+curl -sk https://cdn-updates.example.net/api/v2/config -o /dev/null -w &quot;%{http_code}\n&quot;
+curl -sk https://cdn-updates.example.net/ -o /dev/null -w &quot;%{http_code}\n&quot;</code></pre>
+<p>Host the redirector on short-lived infrastructure in the engagement&#x27;s name, harden it like any internet-facing server (updates, firewall, no extra services), and log what it forwards. Domain fronting through major CDNs used to hide the true destination, but providers have largely killed it; do not design around a dead technique. What still works is boring and effective: a clean domain, valid TLS, and traffic that matches the profile.</p>
+<h2>5. OPSEC basics for authorized operations</h2>
+<p>OPSEC in an authorized engagement means staying inside the rules and not burning the client&#x27;s environment or your own infrastructure. Keep beacons inside the agreed hours unless 24/7 is explicitly allowed. Never let an implant talk to infrastructure outside the engagement&#x27;s domain list. Cap exfiltration volumes in the rules of engagement and enforce the cap in the team server config; &quot;we took 40 GB to prove a point&quot; is not a finding, it is an incident. Separate infrastructure per client and per engagement, and never reuse a domain that a previous engagement burned. If the blue team detects you, that is data, not failure: record the detection time and technique in your notes, because measuring detection is often the engagement&#x27;s actual objective.</p>
+<h2>6. Logging and teardown</h2>
+<p>You owe the client a complete record: when each session started, which target it ran on, every task issued, and every byte exfiltrated with its justification. Keep team server logs for the retention period in the contract, then destroy them as agreed. Teardown is a checklist, not a hope: kill every implant session, confirm no beacons remain (watch the redirector logs go silent), delete the redirector and team server infrastructure, revoke the certificates, and release the domains or park them. Verify silence for at least one full beacon interval past the longest sleep you configured before you declare the engagement closed.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Egress proxies that do TLS inspection break naive HTTPS C2 and also</li>
+<p>reveal it immediately. If the target inspects TLS, either the rules of engagement cover it or you switch channels; do not try to bypass the client&#x27;s own security controls without written permission.</p>
+<li>DNS channel throughput collapses on networks with DNS rate limiting.</li>
+<p>Keep DNS tasking tiny and expect multi-minute round trips.</p>
+<li>Sleep and jitter apply per implant; fifty implants beaconing at once is</li>
+<p>still a flood. Stagger initial check-ins and cap concurrent sessions.</p>
+<li>Redirector misconfiguration that proxies everything (no filtering)</li>
+<p>exposes the team server to anyone who finds the domain. Test the decoy response from an unprofiled client before the engagement starts.</p>
+<li>Clock skew between implant and server breaks time-based profile logic.</li>
+<p>Use relative timing (sleep since last beacon), not absolute schedules.</p>
+<li>Losing the team server mid-engagement strands implants. Keep encrypted</li>
+<p>backups of the server state and document a recovery procedure before you need it.</p>
+</ul>
+<h2>Escalation</h2>
+<p>When the primary channel is blocked or detected: fall back to the next channel you tested during recon (HTTPS to DNS is the classic downgrade), lengthen sleep and raise jitter, and reduce tasking to essentials. When a redirector is burned (defenders blocklist the domain), cut it over to a pre-staged spare domain rather than improvising new infrastructure mid-engagement. When implants go silent, do not assume detection; check redirector logs for connection attempts first, because network changes on the client side cause most outages. If the blue team asks you to stop, you stop immediately and start teardown; there is no escalation past that.</p>
+<h2>Detection and defender view</h2>
+<p>Defenders detect C2 at several layers. Network: regular beacon intervals, unusual user agents, JA3 TLS fingerprints that do not match real browsers, DNS query volume and entropy anomalies, and connections to newly registered or low-reputation domains. Endpoint: implant process behavior, injection patterns, and persistence mechanisms. Proxy and TLS inspection: decoded payloads that do not match the claimed content type. Your profile choices decide which of these fire. Assume a competent blue team will find long-running C2; the engagement measures how long it takes and what trips first. Share your indicators with the defensive contact after the engagement so they can build detections from real data.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1071 Application Layer Protocol</li>
+<li>MITRE ATT&amp;CK T1071.001 Web Protocols</li>
+<li>MITRE ATT&amp;CK T1071.004 DNS</li>
+<li>MITRE ATT&amp;CK T1090 Proxy</li>
+<li>MITRE ATT&amp;CK T1132 Data Encoding</li>
+<li>MITRE ATT&amp;CK T1008 Fallback Channels</li>
+<li>MITRE ATT&amp;CK T1043 Commonly Used Port</li>
+<li>MITRE ATT&amp;CK T1568 Dynamic Resolution</li>
+<li>MITRE ATT&amp;CK T1573 Encrypted Channel</li>
+<li>CWE-200 Exposure of Sensitive Information to an Unauthorized Actor</li>
+<li>Metasploit Framework docs: https://docs.metasploit.com</li>
+<li>nginx docs: https://nginx.org/en/docs/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

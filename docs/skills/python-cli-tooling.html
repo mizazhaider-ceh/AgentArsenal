@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: python-cli-tooling</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>python-cli-tooling</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when building command-line tools in Python using only the standard library, when designing an argparse interface with subcommands, when adding --help, --version, --sample, and --output json conventions to a script, when defining typed exit codes for CI pipelines, and when packaging a tool as a single file or zipapp archive with no pip dependencies.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <span class="muted">none</span></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>python</td><td>3.12</td></tr></tbody></table><p>This skill covers building dependable command-line tools in Python 3.12 with zero third-party dependencies. The scope is the full contract of a good CLI: an argparse interface with subcommands, consistent <code>--help</code>, <code>--version</code>, <code>--sample</code>, and <code>--output</code> conventions, typed exit codes that CI pipelines can branch on, clean separation of human output (stdout) and diagnostics (stderr), and single-file distribution via zipapp. Everything here uses the standard library only, so the tool runs on any machine with a bare Python 3.12 interpreter.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the command surface: verbs (subcommands), options, inputs, and outputs.</li>
+<li>Scaffold argparse with subparsers and a shared parent parser for common flags.</li>
+<li>Wire <code>--help</code>, <code>--version</code>, and a <code>--sample</code> command that prints example input.</li>
+<li>Add <code>--output {text,json}</code> and emit one structured record per result.</li>
+<li>Define typed exit codes as an IntEnum and use them on every exit path.</li>
+<li>Add <code>-v</code>/<code>-q</code> logging to stderr. Never mix logs into stdout data.</li>
+<li>Handle stdin, files, and encodings explicitly (UTF-8, streaming line by line).</li>
+<li>Package as a single file or zipapp archive with a shebang.</li>
+<li>Contract-test: <code>--help</code> exits 0, <code>--sample</code> output parses, <code>--output json</code> validates, bad input exits non-zero.</li>
+</ol>
+<h2>Phase 1: argparse skeleton with subcommands</h2>
+<p>One file, subcommands as verbs, common flags on a parent parser so they stay consistent.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;logfilter: filter JSON log lines by level.&quot;&quot;&quot;
+import argparse
+import sys
+
+def build_parser() -&gt; argparse.ArgumentParser:
+    common = argparse.ArgumentParser(add_help=False)
+    common.add_argument(&quot;-v&quot;, &quot;--verbose&quot;, action=&quot;count&quot;, default=0,
+                        help=&quot;increase log verbosity (repeatable)&quot;)
+    common.add_argument(&quot;-q&quot;, &quot;--quiet&quot;, action=&quot;store_true&quot;,
+                        help=&quot;suppress non-essential output&quot;)
+    common.add_argument(&quot;--output&quot;, choices=[&quot;text&quot;, &quot;json&quot;], default=&quot;text&quot;,
+                        help=&quot;output format (default: text)&quot;)
+
+    parser = argparse.ArgumentParser(
+        prog=&quot;logfilter&quot;,
+        description=&quot;Filter JSON log lines by severity level.&quot;)
+    parser.add_argument(&quot;--version&quot;, action=&quot;version&quot;, version=&quot;logfilter 1.0.0&quot;)
+    sub = parser.add_subparsers(dest=&quot;command&quot;, required=True,
+                                metavar=&quot;command&quot;)
+
+    p_filter = sub.add_parser(&quot;filter&quot;, parents=[common],
+                              help=&quot;keep lines at or above a level&quot;)
+    p_filter.add_argument(&quot;--level&quot;, default=&quot;INFO&quot;,
+                          choices=[&quot;DEBUG&quot;, &quot;INFO&quot;, &quot;WARNING&quot;, &quot;ERROR&quot;],
+                          help=&quot;minimum level to keep&quot;)
+    p_filter.add_argument(&quot;input&quot;, nargs=&quot;?&quot;, default=&quot;-&quot;,
+                          help=&quot;input file, or - for stdin (default: -)&quot;)
+    p_filter.set_defaults(func=cmd_filter)
+
+    p_sample = sub.add_parser(&quot;sample&quot;, parents=[common],
+                              help=&quot;print example input and exit&quot;)
+    p_sample.set_defaults(func=cmd_sample)
+    return parser
+
+def main(argv=None) -&gt; int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    return args.func(args)
+
+if __name__ == &quot;__main__&quot;:
+    sys.exit(main())</code></pre>
+<p>Key points: <code>required=True</code> on subparsers makes a bare invocation print help and exit 2 instead of crashing with AttributeError. <code>set_defaults(func=...)</code> dispatches cleanly. <code>nargs=&quot;?&quot;</code> with default <code>&quot;-&quot;</code> gives the Unix stdin convention.</p>
+<h2>Phase 2: The --help, --sample, and --output conventions</h2>
+<p><code>--help</code> and <code>--version</code> come free from argparse. <code>--sample</code> is the convention this skill adds: it prints valid example input so users and tests can exercise the tool without fixtures.</p>
+<pre><code class="language-python">import json
+
+SAMPLE_LINES = [
+    {&quot;ts&quot;: &quot;2026-10-23T04:00:00Z&quot;, &quot;level&quot;: &quot;INFO&quot;, &quot;msg&quot;: &quot;started&quot;},
+    {&quot;ts&quot;: &quot;2026-10-23T04:00:01Z&quot;, &quot;level&quot;: &quot;ERROR&quot;, &quot;msg&quot;: &quot;disk full&quot;},
+]
+
+def cmd_sample(args) -&gt; int:
+    for record in SAMPLE_LINES:
+        print(json.dumps(record))
+    return 0
+
+LEVELS = {&quot;DEBUG&quot;: 10, &quot;INFO&quot;: 20, &quot;WARNING&quot;: 30, &quot;ERROR&quot;: 40}
+
+def cmd_filter(args) -&gt; int:
+    threshold = LEVELS[args.level]
+    stream = sys.stdin if args.input == &quot;-&quot; else open(args.input, encoding=&quot;utf-8&quot;)
+    with stream:
+        for line in stream:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError as exc:
+                log(args, f&quot;skipping bad line: {exc}&quot;)
+                continue
+            if LEVELS.get(record.get(&quot;level&quot;, &quot;&quot;), 0) &gt;= threshold:
+                emit(args, record)
+    return 0
+
+def emit(args, record: dict) -&gt; None:
+    if args.output == &quot;json&quot;:
+        print(json.dumps(record))
+    else:
+        print(f&quot;{record.get(&#x27;ts&#x27;, &#x27;?&#x27;)} [{record.get(&#x27;level&#x27;, &#x27;?&#x27;)}] {record.get(&#x27;msg&#x27;, &#x27;&#x27;)}&quot;)</code></pre>
+<p>Try it:</p>
+<pre><code class="language-bash">python3 logfilter.py sample | python3 logfilter.py filter --level WARNING --output json
+python3 logfilter.py filter --help
+python3 logfilter.py --help</code></pre>
+<p><code>--output json</code> must always be machine-parseable: one JSON object per line (JSONL) or a single JSON array. Never print log lines, progress bars, or warnings to stdout when <code>--output json</code> is set.</p>
+<h2>Phase 3: Typed exit codes</h2>
+<p>Define every exit code in one place as an IntEnum. CI pipelines branch on these, so they are part of the tool&#x27;s public contract and must not change meaning between versions.</p>
+<pre><code class="language-python">import enum
+
+class Exit(enum.IntEnum):
+    OK = 0
+    ERROR = 1          # unexpected runtime failure
+    USAGE = 2          # bad arguments (argparse uses this too)
+    INPUT = 3          # input missing or unreadable
+    VALIDATION = 4     # input failed validation
+    OUTPUT = 5         # could not write output
+    INTERRUPTED = 130  # SIGINT, the shell convention
+
+def main(argv=None) -&gt; int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    try:
+        return args.func(args)
+    except FileNotFoundError as exc:
+        print(f&quot;logfilter: {exc}&quot;, file=sys.stderr)
+        return Exit.INPUT
+    except BrokenPipeError:
+        # downstream closed the pipe (e.g. | head); exit quietly
+        return Exit.OK
+    except KeyboardInterrupt:
+        return Exit.INTERRUPTED</code></pre>
+<p>| Code | Meaning | When to use | |---|---|---| | 0 | Success | normal completion, including &quot;no matches found&quot; for a filter | | 1 | General error | unexpected exception, keep for truly unexpected cases | | 2 | Usage error | bad flags or missing required args (argparse default, do not override) | | 3 | Input problem | file not found, unreadable stdin, bad encoding | | 4 | Validation failed | input parsed but is semantically invalid | | 5 | Output problem | cannot write the output file or stream | | 130 | Interrupted | user pressed Ctrl-C |</p>
+<p>Note: exit 0 on &quot;no results&quot; for a filter or search tool. Reserve non-zero for actual failure, or <code>grep</code>-style pipelines become unusable.</p>
+<h2>Phase 4: Logging and I/O discipline</h2>
+<p>Logs go to stderr. Data goes to stdout. This is what makes <code>--output json | jq</code> pipelines work.</p>
+<pre><code class="language-python">import logging
+
+def setup_logging(args) -&gt; None:
+    level = logging.WARNING
+    if args.verbose == 1:
+        level = logging.INFO
+    elif args.verbose &gt;= 2:
+        level = logging.DEBUG
+    if args.quiet:
+        level = logging.ERROR
+    logging.basicConfig(level=level, format=&quot;%(levelname)s: %(message)s&quot;,
+                        stream=sys.stderr)
+
+def log(args, message: str) -&gt; None:
+    if not args.quiet:
+        print(f&quot;logfilter: {message}&quot;, file=sys.stderr)</code></pre>
+<p>File handling rules: always open text files with <code>encoding=&quot;utf-8&quot;</code>. Stream line by line instead of <code>read()</code> when the input can be large. If stdin is a TTY and the tool expects piped input, print a hint to stderr and exit 2 rather than hanging forever:</p>
+<pre><code class="language-python">if args.input == &quot;-&quot; and sys.stdin.isatty():
+    print(&quot;logfilter: no input: pipe data in or pass a file&quot;, file=sys.stderr)
+    return Exit.USAGE</code></pre>
+<h2>Phase 5: Packaging with no dependencies</h2>
+<p>Check the file compiles, then ship it as a single executable zipapp archive or a plain script with a shebang.</p>
+<pre><code class="language-bash">python3 -m py_compile logfilter.py &amp;&amp; echo &quot;compiles clean&quot;
+chmod +x logfilter.py
+./logfilter.py --help</code></pre>
+<p>For a multi-module tool, keep the zipapp path working:</p>
+<pre><code class="language-bash">mkdir -p mytool
+cp logfilter.py mytool/__main__.py
+python3 -m zipapp mytool -p &quot;/usr/bin/env python3&quot; -o logfilter.pyz
+./logfilter.pyz sample | ./logfilter.pyz filter --level ERROR</code></pre>
+<p>Optional config files without dependencies: use <code>tomllib</code> (standard library since Python 3.11). Convention: CLI flags override config file values, which override built-in defaults.</p>
+<pre><code class="language-python">import tomllib, pathlib
+
+def load_config(path: str) -&gt; dict:
+    p = pathlib.Path(path).expanduser()
+    if not p.exists():
+        return {}
+    with p.open(&quot;rb&quot;) as fh:
+        return tomllib.load(fh)</code></pre>
+<h2>Phase 6: Contract tests</h2>
+<p>A five-minute test script that guards the CLI contract:</p>
+<pre><code class="language-bash">./logfilter.py --help &gt;/dev/null            || echo &quot;FAIL: --help&quot;
+./logfilter.py --version                    || echo &quot;FAIL: --version&quot;
+./logfilter.py bogus-command 2&gt;/dev/null   &amp;&amp; echo &quot;FAIL: bad command should exit non-zero&quot;
+./logfilter.py sample | python3 -m json.tool &gt;/dev/null || echo &quot;FAIL: sample is not valid JSON&quot;
+./logfilter.py sample | ./logfilter.py filter --level ERROR --output json | python3 -c &quot;import json,sys; [json.loads(l) for l in sys.stdin]&quot; || echo &quot;FAIL: json output invalid&quot;
+echo &#x27;{&quot;level&quot;:&quot;INFO&quot;}&#x27; | ./logfilter.py filter --level ERROR; test $? -eq 0 || echo &quot;FAIL: no-match filter should exit 0&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Broken pipe (<code>| head</code>): catch <code>BrokenPipeError</code> and exit 0. Also set <code>SIGPIPE</code> to default on platforms where Python ignores it, or the tool prints a traceback on every truncated pipe.</li>
+<li><code>--help</code> exits 0 and <code>--version</code> exits 0. Tests and users rely on this.</li>
+<li>Flags after the subcommand belong to the subcommand; flags before it belong to the top parser. Document the order in <code>--help</code> examples.</li>
+<li><code>argparse</code> with <code>nargs=&quot;*&quot;</code> and a file argument: an empty list is fine, do not crash on it.</li>
+<li>Unicode filenames and content: open with <code>encoding=&quot;utf-8&quot;</code> and decide on <code>errors=&quot;replace&quot;</code> for hostile input versus strict for validated input.</li>
+<li>Long-running tools: flush stdout periodically or use <code>print(..., flush=True)</code> so pipelines see progress.</li>
+<li>Do not call <code>sys.exit()</code> deep inside helper functions. Return exit codes up to <code>main()</code> so the tool stays importable and testable.</li>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The tool outgrows one file: convert to a package directory with <code>__main__.py</code>, keep the zipapp build step, and keep the CLI surface identical.</li>
+<li>You need config files: use <code>tomllib</code> with the flag-overrides-file-overrides-defaults layering. Do not invent a custom config format.</li>
+<li>You need speed: stream instead of loading whole files, avoid per-line regex recompilation, profile with <code>cProfile</code> before rewriting anything.</li>
+<li>You genuinely need a third-party dependency: stop and reconsider scope. This skill&#x27;s contract is stdlib-only; adding a dependency changes installation, packaging, and the security review surface.</li>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting CLI misuse and interface misconfiguration.</p>
+<ul>
+<li>Misuse: a tool that exits 0 on failure breaks every pipeline silently. Detect with the contract tests in Phase 6 run in CI.</li>
+<li>Misconfiguration: logs printed to stdout corrupt <code>--output json</code> for downstream parsers. Detect by piping JSON output through <code>python3 -m json.tool</code> in CI; any failure is a bug.</li>
+<li>Security-relevant misuse: building shell commands with <code>shell=True</code> from CLI arguments reintroduces command injection (see secure-coding). Grep the tool&#x27;s own source for <code>shell=True</code>, <code>eval(</code>, and <code>os.system</code> before release.</li>
+<li>Convention drift across a team&#x27;s tools (one uses <code>--json</code>, another <code>--output json</code>): pick one convention, document it, and lint for it.</li>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>Python 3.12 docs: argparse (docs.python.org/3/library/argparse.html), logging, sys, tomllib, zipapp, enum (docs.python.org/3/library/)</li>
+<li>Exit status conventions: sysexits.h and the POSIX shell convention for 130 on SIGINT</li>
+<li>zipapp: python -m zipapp --help and docs.python.org/3/library/zipapp.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

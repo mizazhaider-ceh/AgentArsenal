@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: nmap-methodology</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>nmap-methodology</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when planning or running nmap scans during authorized engagements: host discovery options, TCP SYN, connect, UDP, NULL, FIN, Xmas, and ACK scan types, service and OS detection, timing templates T0 to T5, evasion techniques (fragmentation, decoys, idle scans, source port tricks, data length padding), NSE script selection by category, and output formats for evidence. Covers choosing the right scan for the objective, tuning speed against stealth, and reading results accurately on firewalled networks with nmap 7.98.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>nmap</td><td>7.98</td></tr><tr><td>ncat</td><td>7.98</td></tr></tbody></table><p>nmap is the standard network scanner, and most bad scans come from bad scan choice, not from nmap itself. This skill is a methodology: which scan type for which goal, how timing and evasion interact, how to use the Nmap Scripting Engine without drowning in output, and how to read results honestly when firewalls lie to you. It assumes you already have a verified host list (see recon-active) and written authorization for every target. All examples use nmap 7.98 syntax.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the objective: host discovery, port inventory, service versions, OS, or vulnerability triage.</li>
+<li>Pick the least invasive scan type that answers the objective.</li>
+<li>Choose timing: fast for internal ranges, polite for fragile or third party networks.</li>
+<li>Decide whether evasion is authorized and needed; default to no evasion.</li>
+<li>Run service and OS detection only on confirmed open ports.</li>
+<li>Add NSE scripts by category, never the whole database at once.</li>
+<li>Save all three output formats for evidence, then interpret states correctly.</li>
+</ol>
+<h2>1. Choosing the scan type</h2>
+<p>Match the technique to the question. SYN scan is the default for a reason: fast, and it never completes the TCP handshake.</p>
+<pre><code class="language-bash">sudo nmap -sS -p- 203.0.113.10 -oN syn-full.txt</code></pre>
+<p>Connect scan needs no privileges but completes handshakes, so it is louder and gets logged by the target application:</p>
+<pre><code class="language-bash">nmap -sT --top-ports 1000 203.0.113.10 -oN connect-top1k.txt</code></pre>
+<p>UDP scanning is slow because closed ports may not answer at all, forcing retransmits. Scan UDP only for specific services, not the full range, unless you have hours:</p>
+<pre><code class="language-bash">sudo nmap -sU --top-ports 100 203.0.113.10 -oN udp-top100.txt</code></pre>
+<p>Stealth scan flavors (NULL, FIN, Xmas) exploit RFC behavior: closed ports answer with RST, open ports stay silent. They only work against RFC-compliant TCP stacks, so on modern Windows and filtered networks they are unreliable:</p>
+<pre><code class="language-bash">sudo nmap -sN 203.0.113.10 -oN null-scan.txt
+sudo nmap -sF 203.0.113.10 -oN fin-scan.txt
+sudo nmap -sX 203.0.113.10 -oN xmas-scan.txt</code></pre>
+<p>ACK scan does not find open ports; it maps firewall rulesets by distinguishing filtered from unfiltered:</p>
+<pre><code class="language-bash">sudo nmap -sA -p 22,80,443,3389 203.0.113.0/24 -oN ack-filtermap.txt</code></pre>
+<p>IP protocol scan lists which IP protocols (TCP, UDP, ICMP, GRE) a host supports, useful before tunneling work:</p>
+<pre><code class="language-bash">sudo nmap -sO 203.0.113.10 -oN ip-proto.txt</code></pre>
+<h2>2. Host discovery done right</h2>
+<p>Never port scan a range without host discovery unless you have a reason (<code>-Pn</code> treats every IP as alive and wastes time on dead space). Tune the discovery probes to the network:</p>
+<pre><code class="language-bash">sudo nmap -sn -PE -PP -PM 203.0.113.0/24 -oN icmp-discovery.txt
+sudo nmap -sn -PS80,443 -PA80,443 203.0.113.0/24 -oN tcp-discovery.txt
+nmap -sn --disable-arp-ping 203.0.113.0/24 -oN no-arp.txt</code></pre>
+<p>On a local segment, ARP ping is king: fast and unblockable without breaking the LAN. Across routers, combine ICMP echo, timestamp, and netmask with TCP SYN and ACK to common ports. <code>--disable-arp-ping</code> matters when ARP responses mislead you on networks with proxy ARP.</p>
+<h2>3. Service and OS detection</h2>
+<p>Version detection probes open ports with a battery of probes and matches responses. OS detection uses TCP/IP stack fingerprinting. Both are noisier than port scanning, so run them after you know which ports are open:</p>
+<pre><code class="language-bash">sudo nmap -sS -sV -O -p 22,80,443,3306,3389 203.0.113.10 -oN version-os.txt</code></pre>
+<p>Increase version intensity when the default probes miss (intrusion detection may notice the extra traffic):</p>
+<pre><code class="language-bash">sudo nmap -sV --version-intensity 9 -p 8080,8443 203.0.113.10 -oN version-deep.txt</code></pre>
+<p>If OS detection is inconclusive, say so in your notes. Guessing the OS from a TTL or a banner and writing it as fact is how wrong reports get written. <code>--osscan-guess</code> gives a best effort match when you explicitly need one:</p>
+<pre><code class="language-bash">sudo nmap -O --osscan-guess 203.0.113.10 -oN os-guess.txt</code></pre>
+<h2>4. Timing and performance</h2>
+<p>Timing templates T0 (paranoid) through T5 (insane) set probe parallelism and timeouts. T4 is the practical default for internal networks; T3 is the safe default nmap ships with. T5 risks missing ports and crashing fragile devices.</p>
+<pre><code class="language-bash">sudo nmap -sS -T4 --top-ports 1000 203.0.113.0/24 -oN t4-sweep.txt
+sudo nmap -sS -T2 -p 80,443 203.0.113.0/24 -oN t2-polite.txt</code></pre>
+<p>Fine tune for big ranges: raise parallelism, set explicit timeouts, and skip slow hosts instead of waiting on them:</p>
+<pre><code class="language-bash">sudo nmap -sS -T4 --min-rate 500 --max-retries 2 --host-timeout 10m \
+  -p- 203.0.113.0/24 -oN fast-full.txt</code></pre>
+<p><code>--min-rate</code> keeps packet flow steady, <code>--max-retries 2</code> stops nmap from hammering unresponsive hosts, and <code>--host-timeout</code> abandons black holes. For fragile targets (printers, PLCs, old switches), go the other way:</p>
+<pre><code class="language-bash">sudo nmap -sS -T1 --max-retries 1 --scan-delay 1s 203.0.113.50 -oN fragile.txt</code></pre>
+<p>Always estimate duration first with a small sample before launching a /16.</p>
+<h2>5. Evasion techniques</h2>
+<p>Use evasion only when the rules of engagement explicitly allow testing the defenses. Default scans are honest; evasion tests the IDS, not the network.</p>
+<p>Fragmentation splits probes into tiny IP fragments to dodge simple packet filters:</p>
+<pre><code class="language-bash">sudo nmap -sS -f -p 80,443 203.0.113.10 -oN frag.txt</code></pre>
+<p>Decoys hide your real source among fake ones. The real scan still happens; this only confuses log review, and some decoy IPs may get abuse complaints:</p>
+<pre><code class="language-bash">sudo nmap -sS -D RND:10 -p 80,443 203.0.113.10 -oN decoy.txt</code></pre>
+<p>Spoof the source port to look like replies from a trusted service (53 and 67 often pass lazy firewall rules):</p>
+<pre><code class="language-bash">sudo nmap -sS --source-port 53 -p 80,443 203.0.113.10 -oN srcport.txt</code></pre>
+<p>Pad packets with random data to defeat size-based signatures, and randomize host order so the scan does not walk the subnet sequentially:</p>
+<pre><code class="language-bash">sudo nmap -sS --data-length 24 --randomize-hosts -p- 203.0.113.0/24 -oN padded.txt</code></pre>
+<p>Idle (zombie) scan bounces the scan off a third party host with predictable IP IDs, hiding your address entirely. It needs a suitable zombie and is slow; document authorization carefully because a third party host is involved:</p>
+<pre><code class="language-bash">sudo nmap -sI 203.0.113.99:80 203.0.113.10 -p 22,80,443 -oN idle.txt</code></pre>
+<h2>6. NSE: scripting with discipline</h2>
+<p>The Nmap Scripting Engine has hundreds of scripts in categories: safe, discovery, version, auth, brute, exploit, vuln, and more. Run categories, not everything. Start safe and targeted:</p>
+<pre><code class="language-bash">sudo nmap -sS -sV --script &quot;safe or default&quot; -p 80,443 203.0.113.10 -oN nse-safe.txt</code></pre>
+<p>Vulnerability triage scripts check for known issues without exploiting:</p>
+<pre><code class="language-bash">sudo nmap -sV --script vuln -p 80,443,445 203.0.113.10 -oN nse-vuln.txt</code></pre>
+<p>Targeted enumeration per service keeps output readable:</p>
+<pre><code class="language-bash">sudo nmap -sV --script &quot;http-title,http-headers,ssl-cert,ssl-enum-ciphers&quot; \
+  -p 443 203.0.113.10 -oN nse-tls.txt
+sudo nmap --script &quot;smb-os-discovery,smb-security-mode,smb2-security-mode&quot; \
+  -p 445 203.0.113.10 -oN nse-smb.txt</code></pre>
+<p>Brute and exploit categories are intrusive: they attempt logins and may run proof-of-concept exploits. Use them only with explicit authorization, and prefer the dedicated skills (auth-attacks, password-attacks) for that work. Update the script database before an engagement:</p>
+<pre><code class="language-bash">sudo nmap --script-updatedb</code></pre>
+<h2>7. Output and evidence</h2>
+<p>Always save machine-readable output alongside human-readable. You will thank yourself at report time:</p>
+<pre><code class="language-bash">sudo nmap -sS -sV -O -p- 203.0.113.10 -oA evidence/webserver-01
+ls evidence/</code></pre>
+<p><code>-oA</code> writes <code>.nmap</code> (human), <code>.xml</code> (parseable), and <code>.gnmap</code> (greppable). Parse the XML for your report instead of retyping:</p>
+<pre><code class="language-bash">grep -o &#x27;portid=&quot;[0-9]*&quot;&#x27; evidence/webserver-01.xml | sort -u
+python3 -c &quot;
+import xml.etree.ElementTree as ET
+t = ET.parse(&#x27;evidence/webserver-01.xml&#x27;)
+for h in t.getroot().iter(&#x27;host&#x27;):
+    ip = h.find(&#x27;address&#x27;).get(&#x27;addr&#x27;)
+    for p in h.iter(&#x27;port&#x27;):
+        st = p.find(&#x27;state&#x27;).get(&#x27;state&#x27;)
+        if st == &#x27;open&#x27;:
+            svc = p.find(&#x27;service&#x27;)
+            print(ip, p.get(&#x27;portid&#x27;), svc.get(&#x27;name&#x27;), svc.get(&#x27;product&#x27;,&#x27;&#x27;))
+&quot;</code></pre>
+<h2>8. Reading results honestly</h2>
+<p>nmap reports six port states. Know what each one means before you write findings: open (service accepting), closed (reachable, nothing listening), filtered (no response, firewall or drop), unfiltered (ACK scan only, reachable but state unknown), open|filtered (cannot distinguish, common for UDP), closed|filtered (IP ID idle scan ambiguity). A filtered port is not a finding of safety; it is a finding of a firewall. Re-scan filtered ports of interest with different techniques before concluding. Version strings are banners, and banners lie: backported patches keep old version numbers, so treat a banner as a lead and confirm with behavior-based checks.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>UDP scans against rate limiting firewalls take forever. Cap UDP to the top</li>
+<p>100 ports and move on; full-range UDP is rarely worth it.</p>
+<li><code>--top-ports</code> uses nmap&#x27;s frequency table, which skews toward common</li>
+<p>enterprise ports. Unusual services hide above port 10000, so do at least one full-range TCP pass on key hosts.</p>
+<li>OS detection fails through NAT and load balancers because you fingerprint</li>
+<p>the middlebox. Note the network path before trusting OS guesses.</p>
+<li>Some hosts crash under fast scans (old printers, embedded devices). If a</li>
+<p>device goes silent mid-scan, stop, note it, and continue at T1 or T0.</p>
+<li>nmap&#x27;s default DNS resolution can leak your scanning through PTR queries.</li>
+<p>Use <code>-n</code> to skip reverse DNS when you want quiet, or keep it when you want the hostname intelligence.</p>
+<li>IPv6 scanning needs <code>-6</code> and link-local targets need a scope id</li>
+<p>(<code>fe80::1%eth0</code>). Global IPv6 ranges are too large to sweep; enumerate from DNS and neighbor discovery instead.</p>
+</ul>
+<h2>Escalation</h2>
+<p>When nmap results contradict each other: cross-check with a second tool (masscan for port confirmation, netcat for banner grabs). When every port shows filtered, try the ACK scan to map the firewall, then scan from a different network position if the rules allow (internal versus external view differ enormously). When version detection draws a blank, grab banners manually with ncat and compare against known service fingerprints. When the IDS blocks your source IP mid-scan, stop and coordinate with the blue team contact instead of rotating source addresses; evading the very team that authorized you breaks the engagement.</p>
+<h2>Detection and defender view</h2>
+<p>Defenders see nmap clearly: SYN packets to closed ports, OS detection probe patterns, NSE script traffic (HTTP requests with distinctive user agents), and timing patterns. IDS signatures exist for default nmap behavior, decoy scans, and idle scans. Evasion techniques do not make you invisible; they make you look like someone trying to hide, which is itself a high severity alert. The professional move is the agreed scanning window and source IP, documented in the rules of engagement. Your scan logs with timestamps are the evidence that every packet was authorized.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1046 Network Service Discovery</li>
+<li>MITRE ATT&amp;CK T1595.001 Scanning IP Blocks</li>
+<li>MITRE ATT&amp;CK T1595.002 Vulnerability Scanning</li>
+<li>CWE-200 Exposure of Sensitive Information to an Unauthorized Actor</li>
+<li>nmap man page and book: https://nmap.org/book/man.html</li>
+<li>NSE documentation: https://nmap.org/book/nse.html</li>
+<li>nmap 7.98 release notes: https://nmap.org/changelog.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>
