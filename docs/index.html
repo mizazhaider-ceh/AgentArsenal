@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal - Unified agent skills for security and engineering</title>
+<meta name="description" content="246 versioned, CI-tested agent skills across 28 security and engineering domains, with 25 agents, 16 brains, 8 playbooks, and install support for 19 agent platforms.">
+<style>
+/* Arsenal Keeper theme (original): near-black panels, cyan signal, green confirm */
+:root {
+  --bg: #0a0d13;
+  --bg2: #0d1420;
+  --panel: #101724;
+  --border: #2c3c55;
+  --ink: #e8fbff;
+  --muted: #9aa7bd;
+  --dim: #7d8ea8;
+  --cyan: #22d3ee;
+  --cyan-soft: #67e8f9;
+  --green: #34d399;
+  --amber: #d29922;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.65;
+}
+a { color: var(--cyan-soft); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
+
+/* top nav */
+.nav {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(10, 13, 19, 0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(6px);
+}
+.nav .wrap { display: flex; align-items: center; gap: 1.25rem; padding-top: .7rem; padding-bottom: .7rem; }
+.brand { font-weight: 800; letter-spacing: .02em; color: var(--ink); text-decoration: none; font-size: 1.1rem; }
+.brand b { color: var(--cyan); }
+.nav nav { margin-left: auto; display: flex; gap: 1rem; flex-wrap: wrap; }
+.nav nav a { color: var(--muted); text-decoration: none; font-size: .95rem; }
+.nav nav a:hover { color: var(--cyan-soft); }
+
+/* hero */
+.hero { padding: 4rem 0 3rem; text-align: center;
+  background: radial-gradient(60rem 22rem at 50% -6rem, rgba(34,211,238,.12), transparent 70%); }
+.hero .kicker {
+  display: inline-block; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--cyan); border: 1px solid var(--border); border-radius: 999px;
+  padding: .35rem 1rem; margin-bottom: 1.25rem; background: var(--panel);
+}
+.hero h1 { font-size: 2.9rem; line-height: 1.15; margin: 0 0 1rem; letter-spacing: -.01em; }
+.hero h1 .cy { color: var(--cyan); }
+.hero h1 .gr { color: var(--green); }
+.hero p.lead { color: var(--muted); font-size: 1.15rem; max-width: 44rem; margin: 0 auto 2rem; }
+.cta { display: flex; gap: .9rem; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-block; padding: .8rem 1.6rem; border-radius: .6rem;
+  font-weight: 700; text-decoration: none; border: 1px solid transparent;
+}
+.btn-primary { background: var(--cyan); color: #04222a; }
+.btn-primary:hover { background: var(--cyan-soft); }
+.btn-ghost { border-color: var(--border); color: var(--ink); background: var(--panel); }
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan-soft); }
+.hero img.banner { max-width: 100%; border-radius: .8rem; margin-top: 2.5rem; border: 1px solid var(--border); }
+
+/* stats */
+.stats { padding: 2.5rem 0; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1rem; }
+.stat {
+  background: var(--panel); border: 1px solid var(--border); border-radius: .8rem;
+  padding: 1.25rem .75rem; text-align: center;
+}
+.stat .n { font-size: 2rem; font-weight: 800; color: var(--cyan); }
+.stat .n.g { color: var(--green); }
+.stat .l { color: var(--muted); font-size: .9rem; margin-top: .25rem; }
+.stats img.strip { width: 100%; border-radius: .8rem; border: 1px solid var(--border); margin-top: 1.5rem; }
+
+/* sections */
+section.block { padding: 3rem 0; }
+section.block h2 { font-size: 1.9rem; margin: 0 0 .5rem; }
+section.block h2 .dot { color: var(--cyan); }
+section.block p.sub { color: var(--muted); margin-top: 0; max-width: 46rem; }
+
+/* feature grid */
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.feature {
+  background: var(--panel); border: 1px solid var(--border); border-radius: .8rem; padding: 1.25rem;
+  border-top: 3px solid var(--cyan);
+}
+.feature:nth-child(even) { border-top-color: var(--green); }
+.feature h3 { margin: 0 0 .4rem; font-size: 1.05rem; }
+.feature p { margin: 0; color: var(--muted); font-size: .95rem; }
+.feature code { color: var(--cyan-soft); }
+
+/* tables */
+table { width: 100%; border-collapse: collapse; margin-top: 1.25rem; font-size: .95rem; }
+th, td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); color: var(--ink); }
+td code, p code, li code { color: var(--cyan-soft); background: rgba(34,211,238,.08); padding: .1rem .35rem; border-radius: .3rem; font-size: .88em; }
+tbody tr:hover { background: rgba(34,211,238,.04); }
+
+/* quickstart */
+.quickstart { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+pre {
+  background: #05070c; border: 1px solid var(--border); border-radius: .8rem;
+  padding: 1.25rem; overflow-x: auto; font-size: .92rem; line-height: 1.7;
+}
+pre .c { color: var(--dim); }
+pre .p { color: var(--green); font-weight: 700; }
+
+/* cta band */
+.band {
+  margin: 3rem 0; padding: 3rem 2rem; text-align: center;
+  background: linear-gradient(135deg, rgba(34,211,238,.14), rgba(52,211,153,.10));
+  border: 1px solid var(--border); border-radius: 1rem;
+}
+.band h2 { margin: 0 0 .75rem; font-size: 2rem; }
+.band p { color: var(--muted); margin: 0 0 1.5rem; }
+
+footer { border-top: 1px solid var(--border); padding: 2rem 0; color: var(--dim); font-size: .9rem; }
+footer .wrap { display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
+footer nav { margin-left: auto; display: flex; gap: 1rem; }
+footer nav a { color: var(--dim); text-decoration: none; }
+footer nav a:hover { color: var(--cyan-soft); }
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 2rem; }
+  .nav nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#"><b>Agent</b>Arsenal</a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#platforms">Platforms</a>
+      <a href="#quickstart">Install</a>
+      <a href="#catalog">Catalog</a>
+      <a href="site/">Docs</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="kicker">246 skills &middot; 28 domains &middot; MIT licensed</span>
+    <h1>One <span class="cy">arsenal</span> of agent skills.<br>Deep on <span class="gr">engineering</span> and <span class="cy">offensive security</span>.</h1>
+    <p class="lead">Every skill versioned, freshness-dated, and graded 0 to 100 by machines, not vibes. A 14-check CI harness keeps the bar high. One manifest drives the installer, the docs, and the Claude Code marketplace.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="site/">View skills</a>
+      <a class="btn btn-ghost" href="https://github.com/mizazhaider-ceh/AgentArsenal">GitHub repo</a>
+    </div>
+    <img class="banner" src="../assets/banner.svg" alt="AgentArsenal banner">
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="stats" aria-label="Project statistics">
+    <div class="stat-grid">
+      <div class="stat"><div class="n">246</div><div class="l">skills</div></div>
+      <div class="stat"><div class="n g">28</div><div class="l">domains</div></div>
+      <div class="stat"><div class="n">110</div><div class="l">sub-skills</div></div>
+      <div class="stat"><div class="n g">25</div><div class="l">agents</div></div>
+      <div class="stat"><div class="n">16</div><div class="l">brains</div></div>
+      <div class="stat"><div class="n g">8</div><div class="l">playbooks</div></div>
+      <div class="stat"><div class="n">47</div><div class="l">CLI tools</div></div>
+      <div class="stat"><div class="n g">19</div><div class="l">platforms</div></div>
+    </div>
+    <img class="strip" src="../assets/stats-strip.svg" alt="AgentArsenal statistics strip">
+  </div>
+
+  <section class="block" id="features">
+    <h2><span class="dot">/</span> Why AgentArsenal</h2>
+    <p class="sub">Not a folder of prompts. An engineered system where every artifact is versioned, tested, scored, and connected.</p>
+    <div class="features">
+      <div class="feature"><h3>Per-skill versioning</h3><p>Semver plus a changelog entry on every skill. Pin <code>web-sqli@1.0.0</code> and know exactly what you installed.</p></div>
+      <div class="feature"><h3>14-check CI harness</h3><p><code>scripts/validate.py</code> enforces the frontmatter standard, naming rules, dependency acyclicity, and freshness dates.</p></div>
+      <div class="feature"><h3>Quality scores</h3><p><code>scripts/score.py</code> grades every skill 0 to 100 on triggers, commands, edge cases, and references. Merge needs 70+. Repo average: 95.6.</p></div>
+      <div class="feature"><h3>Dependency graph</h3><p><code>requires</code>, <code>extends</code>, and <code>relates</code> edges, validated and visualized. The installer resolves the full chain.</p></div>
+      <div class="feature"><h3>Agents, brains, playbooks</h3><p>25 named operators, 16 reusable reasoning patterns, and 8 end-to-end engagement runbooks with phases and stop conditions.</p></div>
+      <div class="feature"><h3>Memory system</h3><p>Schema, lifecycle, and hygiene docs plus <code>memory-store</code>, a stdlib-only SQLite CLI agents use to read and write memory.</p></div>
+      <div class="feature"><h3>Offline bundles and rollback</h3><p>Portable single-archive bundles for air-gapped use. Every release is a git tag plus a changelog entry.</p></div>
+      <div class="feature"><h3>Marketplace ready</h3><p><code>.claude-plugin/marketplace.json</code> exposes every skill to Claude Code directly.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="catalog">
+    <h2><span class="dot">/</span> Inside the arsenal</h2>
+    <p class="sub">Browse the full reference: all domains and skills, the dependency graph, and quality scores.</p>
+    <div class="cta" style="justify-content:flex-start">
+      <a class="btn btn-primary" href="site/">Open the full skill catalog</a>
+      <a class="btn btn-ghost" href="site/graph.html">Dependency graph</a>
+    </div>
+    <p style="margin-top:1.5rem">Learning tracks: <a href="learning-paths/BEGINNER.md">Beginner</a> &middot; <a href="learning-paths/PRACTITIONER.md">Practitioner</a> &middot; <a href="learning-paths/EXPERT.md">Expert</a></p>
+  </section>
+
+  <section class="block" id="platforms">
+    <h2><span class="dot">/</span> Works with your agent</h2>
+    <p class="sub">One <code>SKILL.md</code> standard, 19 platforms. The platform name is the value for <code>install.sh --platform</code>. Full notes per platform: <a href="../platforms/PLATFORM_SUPPORT.md">platforms/PLATFORM_SUPPORT.md</a>.</p>
+    <table>
+      <thead><tr><th>Platform</th><th>Install command</th><th>Skills folder</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Code</td><td><code>./install.sh --platform claude-code --all</code></td><td><code>~/.claude/skills/</code></td></tr>
+        <tr><td>OpenCode</td><td><code>./install.sh --platform opencode --all</code></td><td><code>~/.config/opencode/skills/</code></td></tr>
+        <tr><td>Codex CLI</td><td><code>./install.sh --platform codex-cli --all</code></td><td><code>~/.agents/skills/</code></td></tr>
+        <tr><td>Gemini CLI</td><td><code>./install.sh --platform gemini-cli --all</code></td><td><code>~/.gemini/skills/</code></td></tr>
+        <tr><td>Cursor</td><td><code>./install.sh --platform cursor --all</code></td><td><code>~/.cursor/skills/</code></td></tr>
+        <tr><td>GitHub Copilot</td><td><code>./install.sh --platform github-copilot --all</code></td><td><code>~/.copilot/skills/</code></td></tr>
+        <tr><td>Amp</td><td><code>./install.sh --platform amp --all</code></td><td><code>~/.agents/skills/</code></td></tr>
+        <tr><td>Goose</td><td><code>./install.sh --platform goose --all</code></td><td><code>~/.agents/skills/</code></td></tr>
+        <tr><td>Cline</td><td><code>./install.sh --platform cline --all</code></td><td><code>~/.agents/skills/</code></td></tr>
+        <tr><td>Roo Code</td><td><code>./install.sh --platform roo-code --all</code></td><td><code>~/.agents/skills/</code></td></tr>
+        <tr><td>Kilo Code</td><td><code>./install.sh --platform kilo-code --all</code></td><td><code>~/.agents/skills/</code></td></tr>
+        <tr><td>Zed</td><td><code>./install.sh --platform zed --all</code></td><td><code>~/.agents/skills/</code></td></tr>
+        <tr><td>Warp</td><td><code>./install.sh --platform warp --all</code></td><td><code>~/.agents/skills/</code></td></tr>
+        <tr><td>Windsurf</td><td><code>./install.sh --platform windsurf --all</code></td><td><code>~/.agents/skills/</code></td></tr>
+        <tr><td>Kiro</td><td><code>./install.sh --platform kiro --all</code></td><td><code>~/.kiro/skills/</code></td></tr>
+        <tr><td>Qwen Code</td><td><code>./install.sh --platform qwen-code --all</code></td><td><code>~/.qwen/skills/</code></td></tr>
+        <tr><td>Crush</td><td><code>./install.sh --platform crush --all</code></td><td><code>~/.agents/skills/</code></td></tr>
+        <tr><td>Continue</td><td><code>./install.sh --platform continue --all</code></td><td><code>~/.agents/skills/</code></td></tr>
+        <tr><td>Aider</td><td><code>./install.sh --platform aider</code> (prints a pointer snippet)</td><td>no skills support (uses <code>AGENTS.md</code>)</td></tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<div class="quickstart">
+  <div class="wrap">
+    <section class="block" id="quickstart">
+      <h2><span class="dot">/</span> Install in 60 seconds</h2>
+      <p class="sub">The sparse installer copies only what you pick, resolves dependencies from the manifest, and backs up your target first. Add <code>--dry-run</code> to any command to preview.</p>
+<pre><span class="c"># clone and preview</span>
+git clone https://github.com/mizazhaider-ceh/AgentArsenal.git
+cd AgentArsenal
+./install.sh --list            <span class="c"># domains with skill counts</span>
+./install.sh --dry-run         <span class="c"># preview, change nothing</span>
+
+<span class="c"># install what you need</span>
+<span class="p">$</span> ./install.sh --category web --dry-run
+<span class="p">$</span> ./install.sh --category web
+<span class="p">$</span> ./install.sh --platform opencode --all
+<span class="p">$</span> ./install.sh --version web-sqli@1.0.0
+<span class="p">$</span> ./install.sh --rollback    <span class="c"># restore the pre-install backup</span></pre>
+    </section>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="band">
+    <h2>Stop prompting from scratch.</h2>
+    <p>Install the arsenal, load a skill, run the engagement. Authorized security work only.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="site/">View skills</a>
+      <a class="btn btn-ghost" href="https://github.com/mizazhaider-ceh/AgentArsenal">GitHub repo</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>AgentArsenal &middot; MIT licensed &middot; original content</span>
+    <nav>
+      <a href="site/">Docs</a>
+      <a href="learning-paths/BEGINNER.md">Learning paths</a>
+      <a href="https://github.com/mizazhaider-ceh/AgentArsenal">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
