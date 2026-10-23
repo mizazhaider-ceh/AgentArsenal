@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="sans-serif" role="img" aria-label="AgentArsenal architecture diagram">
+  <defs>
+    <linearGradient id="abg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0e14"/>
+      <stop offset="0.55" stop-color="#10141f"/>
+      <stop offset="1" stop-color="#0a0c12"/>
+    </linearGradient>
+    <linearGradient id="aaccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+    <pattern id="agrid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#1f2937" stroke-width="1" opacity="0.4"/>
+    </pattern>
+    <marker id="ahead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#22d3ee"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="700" fill="url(#abg)"/>
+  <rect width="1200" height="700" fill="url(#agrid)"/>
+
+  <text x="600" y="40" text-anchor="middle" fill="#f3f4f6" font-size="28" font-weight="800" letter-spacing="1">How AgentArsenal fits together</text>
+  <rect x="460" y="54" width="280" height="3" rx="1.5" fill="url(#aaccent)"/>
+
+  <g stroke="#22d3ee" stroke-width="2" fill="#111827">
+    <!-- top: skills tree -->
+    <rect x="440" y="76" width="320" height="88" rx="10"/>
+    <!-- center: manifest -->
+    <rect x="440" y="220" width="320" height="88" rx="10" stroke-width="3"/>
+    <!-- left: validate -->
+    <rect x="30" y="220" width="340" height="88" rx="10" stroke="#34d399"/>
+    <!-- right: score -->
+    <rect x="830" y="220" width="340" height="88" rx="10" stroke="#34d399"/>
+    <!-- center: install -->
+    <rect x="440" y="366" width="320" height="88" rx="10" stroke="#fbbf24"/>
+    <!-- bottom left: docs -->
+    <rect x="30" y="516" width="340" height="88" rx="10" stroke="#a78bfa"/>
+    <!-- bottom right: marketplace -->
+    <rect x="830" y="516" width="340" height="88" rx="10" stroke="#a78bfa"/>
+  </g>
+
+  <!-- arrows -->
+  <g fill="none" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#ahead)">
+    <path d="M 600 164 L 600 214"/>
+    <path d="M 600 308 L 600 360"/>
+    <path d="M 436 264 L 376 264"/>
+    <path d="M 764 264 L 824 264"/>
+    <path d="M 440 118 L 405 118 L 405 560 L 376 560"/>
+    <path d="M 760 264 L 796 264 L 796 560 L 824 560"/>
+  </g>
+
+  <!-- edge labels -->
+  <g fill="#9ca3af" font-size="13">
+    <text x="612" y="192">built by</text>
+    <text x="612" y="342">feeds</text>
+    <text x="412" y="200">reads</text>
+    <text x="806" y="420">feeds</text>
+  </g>
+
+  <!-- box labels -->
+  <g text-anchor="middle">
+    <text x="600" y="112" fill="#f3f4f6" font-size="22" font-weight="700">skills/ tree</text>
+    <text x="600" y="140" fill="#9ca3af" font-size="13">21 domains, one folder per skill with SKILL.md</text>
+
+    <text x="600" y="256" fill="#f3f4f6" font-size="22" font-weight="700">arsenal-manifest.json</text>
+    <text x="600" y="284" fill="#9ca3af" font-size="13">one registry, built by scripts/derive_manifest.py</text>
+
+    <text x="200" y="256" fill="#f3f4f6" font-size="20" font-weight="700">scripts/validate.py</text>
+    <text x="200" y="284" fill="#9ca3af" font-size="13">14-check CI: frontmatter, naming, no cycles</text>
+
+    <text x="1000" y="256" fill="#f3f4f6" font-size="20" font-weight="700">scripts/score.py</text>
+    <text x="1000" y="284" fill="#9ca3af" font-size="13">quality scores 0-100, merging requires 70+</text>
+
+    <text x="600" y="402" fill="#f3f4f6" font-size="22" font-weight="700">install.sh</text>
+    <text x="600" y="430" fill="#9ca3af" font-size="13">one-command installer, copies stable skills</text>
+
+    <text x="200" y="552" fill="#f3f4f6" font-size="20" font-weight="700">docs/ site</text>
+    <text x="200" y="580" fill="#9ca3af" font-size="13">generate_docs.py: search plus dependency graph</text>
+
+    <text x="1000" y="552" fill="#f3f4f6" font-size="18" font-weight="700">.claude-plugin/marketplace.json</text>
+    <text x="1000" y="580" fill="#9ca3af" font-size="13">exposes every skill to Claude Code directly</text>
+  </g>
+
+  <rect width="1200" height="3" fill="url(#aaccent)"/>
+</svg>
