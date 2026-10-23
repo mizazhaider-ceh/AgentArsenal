@@ -39,7 +39,7 @@ agent). GitHub is the registry; `SKILL.md` is the package entry point.
 published repo skipped 38 skills with:
 
 ```
-Skipped .../SKILL.md — YAML parse error: Nested mappings are not
+Skipped .../SKILL.md - YAML parse error: Nested mappings are not
 allowed in compact mappings at line 2, column 14
 ```
 
