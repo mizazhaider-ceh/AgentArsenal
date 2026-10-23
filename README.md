@@ -1,4 +1,4 @@
-![AgentArsenal](assets/banner.svg)
+![AgentArsenal](assets/banner-keeper.png)
 
 # AgentArsenal
 
