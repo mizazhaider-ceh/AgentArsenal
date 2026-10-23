@@ -31,12 +31,12 @@ Rules:
 ## Body skeleton (every SKILL.md)
 
 1. One framing paragraph (what this skill covers, scope).
-2. `## Quick Workflow` — numbered operator steps, concrete and ordered.
+2. `## Quick Workflow`: numbered operator steps, concrete and ordered.
 3. Per-phase sections with exact commands in fenced code blocks (bash).
-4. `## Edge cases` — what goes wrong, how to detect it, workarounds.
-5. `## Escalation` — what to try when the standard path fails (where relevant; may merge into Edge cases for engineering skills).
-6. `## Detection and defender view` — how a defender sees this (offensive skills) or how to detect misuse/misconfig (engineering skills).
-7. `## Key references` — MITRE ATT&CK technique IDs (offensive), CWE IDs (where relevant), OWASP refs, official tool docs. Real IDs only.
+4. `## Edge cases`: what goes wrong, how to detect it, workarounds.
+5. `## Escalation`: what to try when the standard path fails (where relevant; may merge into Edge cases for engineering skills).
+6. `## Detection and defender view`: how a defender sees this (offensive skills) or how to detect misuse/misconfig (engineering skills).
+7. `## Key references`: MITRE ATT&CK technique IDs (offensive), CWE IDs (where relevant), OWASP refs, official tool docs. Real IDs only.
 
 ## Domains (wave 1)
 

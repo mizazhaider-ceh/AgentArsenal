@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal dependency graph</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="index.html">AgentArsenal</a></h1>
+<nav>
+<a href="index.html">Skills</a>
+<a href="graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<h2>Dependency graph</h2><p class="muted">No skills found yet, so there is nothing to draw.</p>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>
