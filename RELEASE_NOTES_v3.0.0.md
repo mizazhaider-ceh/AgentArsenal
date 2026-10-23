@@ -17,18 +17,33 @@ Docs: https://mizazhaider-ceh.github.io/AgentArsenal/
   generated skill reference (skills, agents, brains, playbooks, decisions,
   dependency graph) lives under `docs/site/`. All 412 generated pages were
   rebuilt for the new paths with zero broken internal links.
-- MCP server (in progress). `mcp_server/server.py` exposes the 246-skill
-  catalog over MCP with three read-only tools: `list_skills`,
+- MCP server (done, smoke-tested). `mcp_server/server.py` exposes the
+  246-skill catalog over MCP with three read-only tools: `list_skills`,
   `get_skill`, `search_skills`. It reads `arsenal-manifest.json` and the
-  `skills/` tree, and also runs from the `.mcpb` bundle.
-- `.mcpb` bundle (in progress). One-file install bundle for
-  MCP-compatible hosts, carrying a copy of the manifest and the skills
-  tree under `server/data/`.
-- Freshness checks, benchmarks, learning paths, translations, community
-  templates, and funding (in progress). These round out Wave 4 with
-  skill-date hygiene automation, measured quality evidence, guided
-  onboarding tracks, localized docs, contribution templates, and a
-  funding file.
+  `skills/` tree, and also runs from the `.mcpb` bundle. A stdio client
+  session confirmed listing, fetching, and searching return real data.
+- `.mcpb` bundle (done). One-file install bundle for MCP-compatible
+  hosts, carrying a copy of the manifest and the skills tree under
+  `server/data/`. `manifest.json` carries name `agent-arsenal`, version
+  `3.0.0`, and parses cleanly; setup documented in
+  `docs/distribution/mcpb.md`.
+- Freshness checks and benchmarks (done). `scripts/freshness_check.py`
+  reports skill-date hygiene; `scripts/benchmark.py` scenario-checks all
+  356 skills and sub-skills and writes `BENCHMARKS.md`.
+- Learning paths (done). `docs/learning-paths/`: BEGINNER, PRACTITIONER,
+  and EXPERT tracks with ordered tracks and milestones.
+- Translations (done). Full Spanish (`translations/README.es.md`) and
+  French (`translations/README.fr.md`) README translations with verified
+  anchors and paths.
+- Community templates and funding (done). Issue templates under
+  `.github/ISSUE_TEMPLATE/` and `.github/FUNDING.yml`.
+- skills.sh compatibility (done). `docs/distribution/skills-sh.md`
+  documents installation from skills.sh; the em dash it once carried is
+  confirmed gone.
+- Awesome-list drafts (done). Draft submission entries for six lists in
+  `docs/distribution/awesome-lists.md`.
+- Skill spotlight (done). `scripts/rotate_spotlight.py` rotates
+  `SKILL_OF_THE_WEEK.md`; currently pinned to `nmap-methodology`.
 
 ## Since v1.0.0: Wave 3
 
