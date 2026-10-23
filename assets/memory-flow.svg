@@ -1,19 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" font-family="sans-serif" role="img" aria-label="Memory flow: capture, consolidate, store, recall, forget, with hygiene">
+<defs>
+<linearGradient id="flameg" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#A3FF12"/>
+</linearGradient>
+<g id="flame">
+<path d="M0,-22 C7,-13 15,-8 15,5 C15,14 8,20 0,20 C-8,20 -15,14 -15,5 C-15,-3 -10,-8 -6,-13 C-4,-9 -2,-8 -2,-12 C-2,-16 -1,-19 0,-22 Z" fill="url(#flameg)"/>
+<path d="M0,-9 C4,-4 8,-1 8,6 C8,11 4,14 0,14 C-4,14 -8,11 -8,6 C-8,1 -4,-2 -2,-6 C-1,-3 0,-3 0,-9 Z" fill="#FFFFFF" opacity="0.9"/>
+</g>
+</defs>
+
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#070a11"/>
-      <stop offset="0.5" stop-color="#0b101a"/>
-      <stop offset="1" stop-color="#05070c"/>
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#F6F2FF"/>
+      <stop offset="1" stop-color="#ECE4FF"/>
     </linearGradient>
     <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#A78BFA"/>
       <stop offset="1" stop-color="#A3FF12"/>
     </linearGradient>
     <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
-      <path d="M 44 0 L 0 0 0 44" fill="none" stroke="#222431" stroke-width="1" opacity="0.6"/>
+      <path d="M 44 0 L 0 0 0 44" fill="none" stroke="#F5F2FF" stroke-width="1" opacity="0.6"/>
     </pattern>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#A78BFA"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6D28D9"/>
     </marker>
   </defs>
 
@@ -21,64 +31,65 @@
   <rect width="1200" height="640" fill="url(#grid)"/>
   <rect width="1200" height="3" fill="url(#accent)"/>
 
-  <text x="600" y="52" fill="#f3f4f6" font-size="34" font-weight="800" text-anchor="middle">Memory flow</text>
-  <text x="600" y="82" fill="#9aa7bd" font-size="16" text-anchor="middle">memory/: MEMORY_SCHEMA.md defines episodic, semantic, and procedural schemas</text>
+  <text x="600" y="52" fill="#171923" font-size="34" font-weight="800" text-anchor="middle">Memory flow</text>
+<use href="#flame" transform="translate(400,48) scale(0.85)"/><use href="#flame" transform="translate(800,48) scale(0.85)"/>
+  <text x="600" y="82" fill="#5B6076" font-size="16" text-anchor="middle">memory/: MEMORY_SCHEMA.md defines episodic, semantic, and procedural schemas</text>
 
   <!-- stage 1 -->
   <g>
-    <rect x="69" y="150" width="190" height="150" rx="10" fill="#171923" stroke="#A78BFA" stroke-width="2"/>
-    <text x="164" y="184" fill="#A78BFA" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">1. CAPTURE</text>
-    <text x="164" y="216" fill="#f3f4f6" font-size="19" font-weight="700" text-anchor="middle">what happened</text>
-    <text x="164" y="244" fill="#9aa7bd" font-size="13" text-anchor="middle">episodic events,</text>
-    <text x="164" y="264" fill="#9aa7bd" font-size="13" text-anchor="middle">facts, procedures</text>
+    <rect x="69" y="150" width="190" height="150" rx="10" fill="#FFFFFF" stroke="#6D28D9" stroke-width="2"/>
+    <text x="164" y="184" fill="#6D28D9" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">1. CAPTURE</text>
+    <text x="164" y="216" fill="#171923" font-size="19" font-weight="700" text-anchor="middle">what happened</text>
+    <text x="164" y="244" fill="#5B6076" font-size="13" text-anchor="middle">episodic events,</text>
+    <text x="164" y="264" fill="#5B6076" font-size="13" text-anchor="middle">facts, procedures</text>
   </g>
   <!-- stage 2 -->
   <g>
-    <rect x="287" y="150" width="190" height="150" rx="10" fill="#171923" stroke="#2E3247" stroke-width="1.5"/>
-    <text x="382" y="184" fill="#A78BFA" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">2. CONSOLIDATE</text>
-    <text x="382" y="216" fill="#f3f4f6" font-size="19" font-weight="700" text-anchor="middle">merge + dedup</text>
-    <text x="382" y="244" fill="#9aa7bd" font-size="13" text-anchor="middle">per LIFECYCLE.md:</text>
-    <text x="382" y="264" fill="#9aa7bd" font-size="13" text-anchor="middle">resolve conflicts</text>
+    <rect x="287" y="150" width="190" height="150" rx="10" fill="#FFFFFF" stroke="#DCD7F0" stroke-width="1.5"/>
+    <text x="382" y="184" fill="#6D28D9" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">2. CONSOLIDATE</text>
+    <text x="382" y="216" fill="#171923" font-size="19" font-weight="700" text-anchor="middle">merge + dedup</text>
+    <text x="382" y="244" fill="#5B6076" font-size="13" text-anchor="middle">per LIFECYCLE.md:</text>
+    <text x="382" y="264" fill="#5B6076" font-size="13" text-anchor="middle">resolve conflicts</text>
   </g>
   <!-- stage 3 -->
   <g>
-    <rect x="505" y="150" width="190" height="150" rx="10" fill="#171923" stroke="#2E3247" stroke-width="1.5"/>
-    <text x="600" y="184" fill="#A78BFA" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">3. STORE</text>
-    <text x="600" y="216" fill="#f3f4f6" font-size="19" font-weight="700" text-anchor="middle">memory-store</text>
-    <text x="600" y="244" fill="#9aa7bd" font-size="13" text-anchor="middle">CLI tool enforces</text>
-    <text x="600" y="264" fill="#9aa7bd" font-size="13" text-anchor="middle">the schemas</text>
+    <rect x="505" y="150" width="190" height="150" rx="10" fill="#FFFFFF" stroke="#DCD7F0" stroke-width="1.5"/>
+    <text x="600" y="184" fill="#6D28D9" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">3. STORE</text>
+    <text x="600" y="216" fill="#171923" font-size="19" font-weight="700" text-anchor="middle">memory-store</text>
+    <text x="600" y="244" fill="#5B6076" font-size="13" text-anchor="middle">CLI tool enforces</text>
+    <text x="600" y="264" fill="#5B6076" font-size="13" text-anchor="middle">the schemas</text>
   </g>
   <!-- stage 4 -->
   <g>
-    <rect x="723" y="150" width="190" height="150" rx="10" fill="#171923" stroke="#2E3247" stroke-width="1.5"/>
-    <text x="818" y="184" fill="#A78BFA" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">4. RECALL</text>
-    <text x="818" y="216" fill="#f3f4f6" font-size="19" font-weight="700" text-anchor="middle">on trigger</text>
-    <text x="818" y="244" fill="#9aa7bd" font-size="13" text-anchor="middle">agents query past</text>
-    <text x="818" y="264" fill="#9aa7bd" font-size="13" text-anchor="middle">context when relevant</text>
+    <rect x="723" y="150" width="190" height="150" rx="10" fill="#FFFFFF" stroke="#DCD7F0" stroke-width="1.5"/>
+    <text x="818" y="184" fill="#6D28D9" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">4. RECALL</text>
+    <text x="818" y="216" fill="#171923" font-size="19" font-weight="700" text-anchor="middle">on trigger</text>
+    <text x="818" y="244" fill="#5B6076" font-size="13" text-anchor="middle">agents query past</text>
+    <text x="818" y="264" fill="#5B6076" font-size="13" text-anchor="middle">context when relevant</text>
   </g>
   <!-- stage 5 -->
   <g>
-    <rect x="941" y="150" width="190" height="150" rx="10" fill="#171923" stroke="#A3FF12" stroke-width="2"/>
-    <text x="1036" y="184" fill="#A3FF12" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">5. FORGET</text>
-    <text x="1036" y="216" fill="#f3f4f6" font-size="19" font-weight="700" text-anchor="middle">expire safely</text>
-    <text x="1036" y="244" fill="#9aa7bd" font-size="13" text-anchor="middle">TTL expiry,</text>
-    <text x="1036" y="264" fill="#9aa7bd" font-size="13" text-anchor="middle">redaction, audit</text>
+    <rect x="941" y="150" width="190" height="150" rx="10" fill="#FFFFFF" stroke="#4D7C0F" stroke-width="2"/>
+    <text x="1036" y="184" fill="#4D7C0F" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">5. FORGET</text>
+    <text x="1036" y="216" fill="#171923" font-size="19" font-weight="700" text-anchor="middle">expire safely</text>
+    <text x="1036" y="244" fill="#5B6076" font-size="13" text-anchor="middle">TTL expiry,</text>
+    <text x="1036" y="264" fill="#5B6076" font-size="13" text-anchor="middle">redaction, audit</text>
   </g>
 
   <!-- arrows between stages -->
-  <line x1="259" y1="225" x2="282" y2="225" stroke="#A78BFA" stroke-width="2.5" marker-end="url(#arrow)"/>
-  <line x1="477" y1="225" x2="500" y2="225" stroke="#A78BFA" stroke-width="2.5" marker-end="url(#arrow)"/>
-  <line x1="695" y1="225" x2="718" y2="225" stroke="#A78BFA" stroke-width="2.5" marker-end="url(#arrow)"/>
-  <line x1="913" y1="225" x2="936" y2="225" stroke="#A78BFA" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="259" y1="225" x2="282" y2="225" stroke="#6D28D9" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="477" y1="225" x2="500" y2="225" stroke="#6D28D9" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="695" y1="225" x2="718" y2="225" stroke="#6D28D9" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="913" y1="225" x2="936" y2="225" stroke="#6D28D9" stroke-width="2.5" marker-end="url(#arrow)"/>
 
   <!-- hygiene box -->
-  <rect x="230" y="390" width="740" height="130" rx="10" fill="#171923" stroke="#2E3247" stroke-width="1.5"/>
-  <text x="600" y="424" fill="#A78BFA" font-size="15" font-weight="700" letter-spacing="2" text-anchor="middle">HYGIENE.md (RUNS UNDER EVERY STAGE)</text>
-  <text x="600" y="456" fill="#f3f4f6" font-size="18" font-weight="700" text-anchor="middle">dedup, redaction, TTLs, audit trail</text>
-  <text x="600" y="484" fill="#9aa7bd" font-size="14" text-anchor="middle">Secrets and PII are redacted at capture. Nothing sensitive is stored raw.</text>
+  <rect x="230" y="390" width="740" height="130" rx="10" fill="#FFFFFF" stroke="#DCD7F0" stroke-width="1.5"/>
+  <text x="600" y="424" fill="#6D28D9" font-size="15" font-weight="700" letter-spacing="2" text-anchor="middle">HYGIENE.md (RUNS UNDER EVERY STAGE)</text>
+  <text x="600" y="456" fill="#171923" font-size="18" font-weight="700" text-anchor="middle">dedup, redaction, TTLs, audit trail</text>
+  <text x="600" y="484" fill="#5B6076" font-size="14" text-anchor="middle">Secrets and PII are redacted at capture. Nothing sensitive is stored raw.</text>
 
-  <line x1="600" y1="300" x2="600" y2="384" stroke="#2E3247" stroke-width="2" stroke-dasharray="5 6"/>
-  <line x1="1036" y1="300" x2="900" y2="384" stroke="#2E3247" stroke-width="2" stroke-dasharray="5 6"/>
+  <line x1="600" y1="300" x2="600" y2="384" stroke="#DCD7F0" stroke-width="2" stroke-dasharray="5 6"/>
+  <line x1="1036" y1="300" x2="900" y2="384" stroke="#DCD7F0" stroke-width="2" stroke-dasharray="5 6"/>
 
-  <text x="600" y="586" fill="#7d8ea8" font-size="14" text-anchor="middle">Stateless agents skip memory entirely. Persistent agents (memory_mode: persistent) run the full loop.</text>
+  <text x="600" y="586" fill="#5B6076" font-size="14" text-anchor="middle">Stateless agents skip memory entirely. Persistent agents (memory_mode: persistent) run the full loop.</text>
 </svg>
