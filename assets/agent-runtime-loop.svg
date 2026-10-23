@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" font-family="sans-serif" role="img" aria-label="Agent runtime loop: read agent file, bind skills, bind brains, recall memory, execute, check gates">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070a11"/>
+      <stop offset="0.5" stop-color="#0b101a"/>
+      <stop offset="1" stop-color="#05070c"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M 44 0 L 0 0 0 44" fill="none" stroke="#1b2433" stroke-width="1" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#22d3ee"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <rect width="1200" height="760" fill="url(#grid)"/>
+  <rect width="1200" height="3" fill="url(#accent)"/>
+
+  <text x="600" y="52" fill="#f3f4f6" font-size="34" font-weight="800" text-anchor="middle">Agent runtime loop</text>
+  <text x="600" y="82" fill="#9aa7bd" font-size="16" text-anchor="middle">How an agent binds skills, brains, and memory before acting</text>
+
+  <!-- guide ellipse -->
+  <ellipse cx="600" cy="400" rx="430" ry="260" fill="none" stroke="#1c2839" stroke-width="1.5" stroke-dasharray="6 8"/>
+
+  <!-- center badge -->
+  <circle cx="600" cy="400" r="98" fill="#0d1420" stroke="#22d3ee" stroke-width="2"/>
+  <text x="600" y="388" fill="#f3f4f6" font-size="30" font-weight="800" text-anchor="middle">AGENT</text>
+  <text x="600" y="416" fill="#9aa7bd" font-size="15" text-anchor="middle">skills + brains</text>
+  <text x="600" y="438" fill="#9aa7bd" font-size="15" text-anchor="middle">+ memory</text>
+
+  <!-- node 1: top -->
+  <g>
+    <rect x="495" y="98" width="210" height="86" rx="10" fill="#0d1420" stroke="#22d3ee" stroke-width="2"/>
+    <text x="600" y="126" fill="#22d3ee" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">1. READ</text>
+    <text x="600" y="150" fill="#f3f4f6" font-size="20" font-weight="700" text-anchor="middle">AGENT.md</text>
+    <text x="600" y="172" fill="#9aa7bd" font-size="13" text-anchor="middle">mission, role, loop</text>
+  </g>
+
+  <!-- node 2: top right -->
+  <g>
+    <rect x="867" y="228" width="210" height="86" rx="10" fill="#0d1420" stroke="#1c2839" stroke-width="1.5"/>
+    <text x="972" y="256" fill="#22d3ee" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">2. BIND SKILLS</text>
+    <text x="972" y="280" fill="#f3f4f6" font-size="20" font-weight="700" text-anchor="middle">skills list</text>
+    <text x="972" y="302" fill="#9aa7bd" font-size="13" text-anchor="middle">top-level + sub-skills</text>
+  </g>
+
+  <!-- node 3: bottom right -->
+  <g>
+    <rect x="867" y="488" width="210" height="86" rx="10" fill="#0d1420" stroke="#1c2839" stroke-width="1.5"/>
+    <text x="972" y="516" fill="#22d3ee" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">3. BIND BRAINS</text>
+    <text x="972" y="540" fill="#f3f4f6" font-size="20" font-weight="700" text-anchor="middle">mental models</text>
+    <text x="972" y="562" fill="#9aa7bd" font-size="13" text-anchor="middle">heuristics, anti-patterns</text>
+  </g>
+
+  <!-- node 4: bottom -->
+  <g>
+    <rect x="495" y="618" width="210" height="86" rx="10" fill="#0d1420" stroke="#1c2839" stroke-width="1.5"/>
+    <text x="600" y="646" fill="#22d3ee" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">4. RECALL MEMORY</text>
+    <text x="600" y="670" fill="#f3f4f6" font-size="20" font-weight="700" text-anchor="middle">persistent mode</text>
+    <text x="600" y="692" fill="#9aa7bd" font-size="13" text-anchor="middle">episodic + semantic</text>
+  </g>
+
+  <!-- node 5: bottom left -->
+  <g>
+    <rect x="123" y="488" width="210" height="86" rx="10" fill="#0d1420" stroke="#1c2839" stroke-width="1.5"/>
+    <text x="228" y="516" fill="#22d3ee" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">5. EXECUTE</text>
+    <text x="228" y="540" fill="#f3f4f6" font-size="20" font-weight="700" text-anchor="middle">operating loop</text>
+    <text x="228" y="562" fill="#9aa7bd" font-size="13" text-anchor="middle">steps and tool calls</text>
+  </g>
+
+  <!-- node 6: top left -->
+  <g>
+    <rect x="123" y="228" width="210" height="86" rx="10" fill="#0d1420" stroke="#1c2839" stroke-width="1.5"/>
+    <text x="228" y="256" fill="#22d3ee" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">6. CHECK GATES</text>
+    <text x="228" y="280" fill="#f3f4f6" font-size="20" font-weight="700" text-anchor="middle">decisions/</text>
+    <text x="228" y="302" fill="#9aa7bd" font-size="13" text-anchor="middle">escalate when needed</text>
+  </g>
+
+  <!-- arrows -->
+  <line x1="705" y1="150" x2="855" y2="238" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="972" y1="314" x2="972" y2="480" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="865" y1="560" x2="715" y2="622" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="495" y1="660" x2="345" y2="578" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="228" y1="488" x2="228" y2="322" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="335" y1="242" x2="483" y2="162" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <text x="600" y="742" fill="#7d8ea8" font-size="14" text-anchor="middle">Stateless agents skip step 4. Constraints in AGENT.md are hard rules the agent never breaks.</text>
+</svg>

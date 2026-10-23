@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" font-family="sans-serif" role="img" aria-label="Skill lifecycle: author, validate, score, manifest, install, runtime">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070a11"/>
+      <stop offset="0.5" stop-color="#0b101a"/>
+      <stop offset="1" stop-color="#05070c"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M 44 0 L 0 0 0 44" fill="none" stroke="#1b2433" stroke-width="1" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#22d3ee"/>
+    </marker>
+    <marker id="arrowDn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="640" fill="url(#bg)"/>
+  <rect width="1200" height="640" fill="url(#grid)"/>
+  <rect width="1200" height="3" fill="url(#accent)"/>
+
+  <text x="600" y="58" fill="#f3f4f6" font-size="34" font-weight="800" text-anchor="middle">Skill lifecycle</text>
+  <text x="600" y="88" fill="#9aa7bd" font-size="16" text-anchor="middle">From a markdown file in the repo to a loaded procedure in your agent</text>
+
+  <!-- row 1 -->
+  <g>
+    <rect x="50" y="130" width="330" height="130" rx="10" fill="#0d1420" stroke="#22d3ee" stroke-width="2"/>
+    <text x="215" y="166" fill="#22d3ee" font-size="15" font-weight="700" letter-spacing="2" text-anchor="middle">1. AUTHOR</text>
+    <text x="215" y="198" fill="#f3f4f6" font-size="22" font-weight="700" text-anchor="middle">SKILL.md</text>
+    <text x="215" y="226" fill="#9aa7bd" font-size="14" text-anchor="middle">frontmatter + body skeleton</text>
+
+    <rect x="435" y="130" width="330" height="130" rx="10" fill="#0d1420" stroke="#1c2839" stroke-width="1.5"/>
+    <text x="600" y="166" fill="#22d3ee" font-size="15" font-weight="700" letter-spacing="2" text-anchor="middle">2. VALIDATE</text>
+    <text x="600" y="198" fill="#f3f4f6" font-size="22" font-weight="700" text-anchor="middle">validate.py</text>
+    <text x="600" y="226" fill="#9aa7bd" font-size="14" text-anchor="middle">14 checks: naming, deps, dates</text>
+
+    <rect x="820" y="130" width="330" height="130" rx="10" fill="#0d1420" stroke="#1c2839" stroke-width="1.5"/>
+    <text x="985" y="166" fill="#22d3ee" font-size="15" font-weight="700" letter-spacing="2" text-anchor="middle">3. SCORE</text>
+    <text x="985" y="198" fill="#f3f4f6" font-size="22" font-weight="700" text-anchor="middle">score.py</text>
+    <text x="985" y="226" fill="#9aa7bd" font-size="14" text-anchor="middle">quality gate 70 / 100</text>
+
+    <line x1="380" y1="195" x2="430" y2="195" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <line x1="765" y1="195" x2="815" y2="195" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- connector down on the right -->
+  <path d="M 985 260 L 985 320" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowDn)"/>
+
+  <!-- row 2 -->
+  <g>
+    <rect x="820" y="330" width="330" height="130" rx="10" fill="#0d1420" stroke="#1c2839" stroke-width="1.5"/>
+    <text x="985" y="366" fill="#22d3ee" font-size="15" font-weight="700" letter-spacing="2" text-anchor="middle">4. REGISTER</text>
+    <text x="985" y="398" fill="#f3f4f6" font-size="22" font-weight="700" text-anchor="middle">derive_manifest.py</text>
+    <text x="985" y="426" fill="#9aa7bd" font-size="14" text-anchor="middle">manifest entry + sha256</text>
+
+    <rect x="435" y="330" width="330" height="130" rx="10" fill="#0d1420" stroke="#1c2839" stroke-width="1.5"/>
+    <text x="600" y="366" fill="#22d3ee" font-size="15" font-weight="700" letter-spacing="2" text-anchor="middle">5. INSTALL</text>
+    <text x="600" y="398" fill="#f3f4f6" font-size="22" font-weight="700" text-anchor="middle">install.sh</text>
+    <text x="600" y="426" fill="#9aa7bd" font-size="14" text-anchor="middle">--platform copies skill folders</text>
+
+    <rect x="50" y="330" width="330" height="130" rx="10" fill="#0d1420" stroke="#34d399" stroke-width="2"/>
+    <text x="215" y="366" fill="#34d399" font-size="15" font-weight="700" letter-spacing="2" text-anchor="middle">6. RUN</text>
+    <text x="215" y="398" fill="#f3f4f6" font-size="22" font-weight="700" text-anchor="middle">Agent runtime</text>
+    <text x="215" y="426" fill="#9aa7bd" font-size="14" text-anchor="middle">description matches, body loads</text>
+
+    <line x1="820" y1="395" x2="770" y2="395" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <line x1="435" y1="395" x2="385" y2="395" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- footnotes -->
+  <text x="600" y="520" fill="#9aa7bd" font-size="15" text-anchor="middle">CI fails on ANY validation error: bad slug, missing fields, unknown dependency,</text>
+  <text x="600" y="544" fill="#9aa7bd" font-size="15" text-anchor="middle">dependency cycle, impossible last_verified date, or a single em dash.</text>
+  <rect x="180" y="572" width="840" height="40" rx="20" fill="#0d1420" stroke="#1c2839" stroke-width="1.5"/>
+  <text x="600" y="597" fill="#7d8ea8" font-size="14" text-anchor="middle">requires = must-have prerequisites (auto-installed) | extends = specialization | relates = see also</text>
+</svg>

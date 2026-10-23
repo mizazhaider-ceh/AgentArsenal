@@ -14,6 +14,10 @@
 #   --target <dir>         install target (default ~/.claude/skills/agent-arsenal)
 #   --dry-run              print what would be copied, change nothing
 #   --rollback             restore the most recent backup, then exit
+#   --platform <name>      set the install target for a platform's skills
+#                          folder (see platforms/PLATFORM_SUPPORT.md), e.g.
+#                          --platform opencode. Overrides --target.
+#   --list-platforms       print the supported platform table, then exit
 #
 # No args: interactive category picker.
 
@@ -27,15 +31,89 @@ DEFAULT_TARGET="$HOME/.claude/skills/agent-arsenal"
 MODE=""
 CATEGORY=""
 PINNED=""
+PLATFORM=""
 TARGET="$DEFAULT_TARGET"
 DRY_RUN=0
 
 usage() {
-    sed -n '2,20p' "$0" | sed 's/^# \?//'
+    sed -n '2,21p' "$0" | sed 's/^# \?//'
     exit "${1:-0}"
 }
 
 have() { command -v "$1" >/dev/null 2>&1; }
+
+# platform_base_dir <name>: print the user-wide skills folder for a
+# platform. The platform names here must match the "Platform" column of
+# platforms/PLATFORM_SUPPORT.md exactly (CI checks this).
+platform_base_dir() {
+    # PLATFORM_MAP_START
+    case "$1" in
+        claude-code)    echo "$HOME/.claude/skills" ;;
+        opencode)       echo "$HOME/.config/opencode/skills" ;;
+        codex-cli)      echo "$HOME/.agents/skills" ;;
+        gemini-cli)     echo "$HOME/.gemini/skills" ;;
+        cursor)         echo "$HOME/.cursor/skills" ;;
+        github-copilot) echo "$HOME/.copilot/skills" ;;
+        amp)            echo "$HOME/.agents/skills" ;;
+        goose)          echo "$HOME/.agents/skills" ;;
+        cline)          echo "$HOME/.agents/skills" ;;
+        roo-code)       echo "$HOME/.agents/skills" ;;
+        kilo-code)      echo "$HOME/.agents/skills" ;;
+        zed)            echo "$HOME/.agents/skills" ;;
+        warp)           echo "$HOME/.agents/skills" ;;
+        windsurf)       echo "$HOME/.agents/skills" ;;
+        kiro)           echo "$HOME/.kiro/skills" ;;
+        qwen-code)      echo "$HOME/.qwen/skills" ;;
+        crush)          echo "$HOME/.agents/skills" ;;
+        continue)       echo "$HOME/.agents/skills" ;;
+        aider)          echo "" ;;  # aider has no skills folder (AGENTS.md only)
+        *)              return 1 ;;
+    esac
+    # PLATFORM_MAP_END
+}
+
+# list_platforms: print the supported platform table, then exit.
+# Names match the "Platform" column of platforms/PLATFORM_SUPPORT.md.
+list_platforms() {
+    printf "%-14s %-32s %s\n" "PLATFORM" "SKILLS FOLDER" "NOTES"
+    printf "%-14s %-32s %s\n" "--------------" "--------------------------------" "-----"
+    printf "%-14s %-32s %s\n" "claude-code" "~/.claude/skills/" ""
+    printf "%-14s %-32s %s\n" "opencode" "~/.config/opencode/skills/" "per-skill permissions in opencode.json"
+    printf "%-14s %-32s %s\n" "codex-cli" "~/.agents/skills/" ""
+    printf "%-14s %-32s %s\n" "gemini-cli" "~/.gemini/skills/" "~/.agents/skills/ also scanned"
+    printf "%-14s %-32s %s\n" "cursor" "~/.cursor/skills/" "~/.agents/skills/ also scanned"
+    printf "%-14s %-32s %s\n" "github-copilot" "~/.copilot/skills/" "~/.agents/skills/ also scanned"
+    printf "%-14s %-32s %s\n" "amp" "~/.agents/skills/" ""
+    printf "%-14s %-32s %s\n" "goose" "~/.agents/skills/" ""
+    printf "%-14s %-32s %s\n" "cline" "~/.agents/skills/" "also maps to .clinerules/"
+    printf "%-14s %-32s %s\n" "roo-code" "~/.agents/skills/" "rules live in .roo/rules/"
+    printf "%-14s %-32s %s\n" "kilo-code" "~/.agents/skills/" ""
+    printf "%-14s %-32s %s\n" "zed" "~/.agents/skills/" ""
+    printf "%-14s %-32s %s\n" "warp" "~/.agents/skills/" ""
+    printf "%-14s %-32s %s\n" "windsurf" "~/.agents/skills/" ""
+    printf "%-14s %-32s %s\n" "kiro" "~/.kiro/skills/" ""
+    printf "%-14s %-32s %s\n" "qwen-code" "~/.qwen/skills/" "~/.agents/skills/ also scanned"
+    printf "%-14s %-32s %s\n" "crush" "~/.agents/skills/" ""
+    printf "%-14s %-32s %s\n" "aider" "-" "no skills support, use AGENTS.md"
+    printf "%-14s %-32s %s\n" "continue" "~/.agents/skills/" ""
+    echo ""
+    echo "Use: ./install.sh --platform <name> [--all|--category <d>|--version <s@v>]"
+    echo "Paths come from platforms/PLATFORM_SUPPORT.md (per vendor docs)."
+}
+
+# aider_guidance: aider has no skills folder; print an AGENTS.md pointer
+# snippet instead of copying skills, then exit.
+aider_guidance() {
+    echo "Aider does not support skills: it has no skills folder to install into."
+    echo "Instead, add a pointer in your project's AGENTS.md, for example:"
+    echo ""
+    echo "  ## AgentArsenal skills"
+    echo "  Follow these skill folders when the task matches their description:"
+    echo "  (see the repo's skills/<domain>/<name>/SKILL.md files)"
+    echo ""
+    echo "Then run install.sh with --platform <other-platform> to install the"
+    echo "skill folders somewhere your agent reads."
+}
 
 # copy_dir <src> <dst>: rsync -a when available, else cp -r.
 copy_dir() {
@@ -264,12 +342,31 @@ main() {
             --target)     TARGET="$2"; shift 2 ;;
             --dry-run)    DRY_RUN=1; shift ;;
             --rollback)   MODE="rollback"; shift ;;
+            --platform)   PLATFORM="${2:?missing platform name}"; shift 2 ;;
+            --list-platforms) MODE="list-platforms"; shift ;;
             -h|--help)    usage 0 ;;
             *)            echo "error: unknown flag $1" >&2; usage 1 ;;
         esac
     done
 
+    if [ -n "$PLATFORM" ]; then
+        if [ "$PLATFORM" = "aider" ]; then
+            aider_guidance
+            exit 0
+        fi
+        local base
+        base="$(platform_base_dir "$PLATFORM")" || {
+            echo "error: unknown platform '$PLATFORM'" >&2
+            echo "run: ./install.sh --list-platforms" >&2
+            exit 1
+        }
+        TARGET="$base/agent-arsenal"
+    fi
+
     case "$MODE" in
+        list-platforms)
+            list_platforms
+            ;;
         list)
             ensure_manifest
             local cats
