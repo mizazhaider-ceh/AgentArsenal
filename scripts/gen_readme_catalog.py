@@ -39,7 +39,7 @@ def badge_block(count):
     return (
         SKILLCOUNT_START
         + "\n"
-        + f"![skills](https://img.shields.io/badge/skills-{count}-blue)"
+        + f"![skills](https://img.shields.io/badge/skills-{count}-A78BFA)"
         + "\n"
         + SKILLCOUNT_END
     )

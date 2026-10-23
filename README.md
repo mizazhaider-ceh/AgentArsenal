@@ -3,16 +3,16 @@
 # AgentArsenal
 
 <!-- SKILLCOUNT:START -->
-![skills](https://img.shields.io/badge/skills-285-blue)
+![skills](https://img.shields.io/badge/skills-285-A78BFA)
 <!-- SKILLCOUNT:END -->
-[![sub-skills](https://img.shields.io/badge/sub--skills-227-9cf)](MINDMAP.md)
-[![agents](https://img.shields.io/badge/agents-25-blueviolet)](agents/README.md)
-[![brains](https://img.shields.io/badge/brains-16-red)](brains/README.md)
-[![platforms](https://img.shields.io/badge/platforms-19-orange)](platforms/PLATFORM_SUPPORT.md)
-[![tools](https://img.shields.io/badge/CLI%20tools-47-yellow)](tools/README.md)
-[![quality](https://img.shields.io/badge/avg%20quality-95.6-success)](scores.json)
-[![validation](https://img.shields.io/badge/validation-passing-brightgreen)](scripts/validate.py)
-[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![sub-skills](https://img.shields.io/badge/sub--skills-227-536DFE)](MINDMAP.md)
+[![agents](https://img.shields.io/badge/agents-25-A78BFA)](agents/README.md)
+[![brains](https://img.shields.io/badge/brains-16-536DFE)](brains/README.md)
+[![platforms](https://img.shields.io/badge/platforms-19-A78BFA)](platforms/PLATFORM_SUPPORT.md)
+[![tools](https://img.shields.io/badge/CLI%20tools-47-536DFE)](tools/README.md)
+[![quality](https://img.shields.io/badge/avg%20quality-96.1-171923)](scores.json)
+[![validation](https://img.shields.io/badge/validation-passing-7E6BF5)](scripts/validate.py)
+[![license](https://img.shields.io/badge/license-MIT-A78BFA)](LICENSE)
 
 **AgentArsenal is a unified agent-skills repo that goes deep on software engineering craft and offensive security practice, with quality enforced by machines, not vibes.**
 
