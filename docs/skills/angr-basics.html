@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: angr-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>angr-basics</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need symbolic execution to explore program paths</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="static-triage.html">static-triage</a> <a href="python-cli-tooling.html">python-cli-tooling</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>angr</td><td>10.0.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>angr is a symbolic execution engine: instead of running a program with concrete inputs, it runs it with symbolic inputs and explores many paths at once, asking a solver for the input that reaches a chosen address. That makes it the right tool for crackmes (&quot;find the input that prints success&quot;), for reaching deep code paths, and for vulnerability discovery on authorized targets. This skill covers the practical basics: project setup, CFG recovery, the classic find/avoid workflow, symbolic stdin and arguments, adding constraints, and keeping state explosion under control. Scope: analyze only binaries you are authorized to reverse (CTFs, crackmes, your own software, client code under assessment). Symbolic execution is a research technique, not a weapon; do not use it to develop exploits against systems you do not own or have no permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inspect the binary (architecture, protections) and decide the goal</li>
+<p>address: the &quot;success&quot; print, the vulnerable function, the target block.</p>
+<li>Create the angr project with the right options (do not auto-load</li>
+<p>libraries unless you need them).</p>
+<li>Recover the CFG to understand the program shape and locate addresses.</li>
+<li>Build the initial state with symbolic input (stdin or argv).</li>
+<li>Run the simulation manager with find and avoid addresses.</li>
+<li>Read the solver&#x27;s answer: the concrete input for the found state.</li>
+<li>Verify by running the real binary with that input.</li>
+<li>If it explodes or stalls, constrain the problem (see section 6) and</li>
+<p>retry.</p>
+</ol>
+<h2>1. Reconnaissance before symbolic execution</h2>
+<p>angr works best when you already know the binary&#x27;s shape. Five minutes of recon saves hours of solver time.</p>
+<pre><code class="language-bash"># Architecture, bitness, protections
+file crackme
+checksec --file=crackme 2&gt;/dev/null || python3 -c &quot;
+import subprocess
+out = subprocess.run([&#x27;readelf&#x27;,&#x27;-W&#x27;,&#x27;-l&#x27;,&#x27;crackme&#x27;],capture_output=True,text=True).stdout
+print(&#x27;NX/RELRO/PIE hints:&#x27;); print([l for l in out.splitlines() if &#x27;GNU_&#x27; in l][:5])&quot;
+
+# Find the interesting addresses with strings + disassembly first
+strings crackme | grep -iE &#x27;success|correct|flag|win&#x27; | head
+objdump -d crackme | grep -B2 -A2 &#x27;success&#x27; | head -30</code></pre>
+<p>Note the addresses of the success path and the failure path; those become your find and avoid targets. If the binary reads from stdin, plan symbolic stdin; if from argv, plan symbolic arguments.</p>
+<h2>2. Project setup and CFG</h2>
+<p>Load the binary, recover the control flow graph, and confirm angr sees the same functions you do.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;angr basics: load a binary and recover its CFG.&quot;&quot;&quot;
+import angr
+
+# auto_load_libs=False keeps it fast; set True only if the target needs
+# shared library code to reach the goal
+proj = angr.Project(&#x27;./crackme&#x27;, auto_load_libs=False)
+print(&#x27;arch:&#x27;, proj.arch.name, &#x27;entry:&#x27;, hex(proj.entry))
+
+# Fast CFG recovery
+cfg = proj.analyses.CFGFast()
+print(&#x27;functions found:&#x27;, len(cfg.kb.functions))
+for addr, func in list(cfg.kb.functions.items())[:10]:
+    print(hex(addr), func.name)</code></pre>
+<pre><code class="language-bash">python3 cfg_recon.py</code></pre>
+<p>If <code>CFGFast</code> misses functions (common with indirect jumps), try the slower <code>CFGEmulated</code> on the region of interest, or normalize the function addresses from your Ghidra/objdump recon and feed them directly as find targets.</p>
+<h2>3. The find/avoid workflow</h2>
+<p>This is the core pattern: start at entry with symbolic input, explore until a state reaches the success address, while discarding states that hit the failure address.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Solve a crackme: find input that reaches the success address.&quot;&quot;&quot;
+import angr
+import claripy
+
+proj = angr.Project(&#x27;./crackme&#x27;, auto_load_libs=False)
+
+# Addresses from recon (example values: replace with yours)
+SUCCESS = 0x401234
+FAILURE = 0x401280
+
+# Symbolic stdin: 32 bytes of unknown input
+stdin = claripy.BVS(&#x27;stdin&#x27;, 32 * 8)
+state = proj.factory.full_init_state(args=[&#x27;./crackme&#x27;], stdin=stdin)
+
+# Keep input printable and newline-terminated for sanity
+for b in stdin.chop(8):
+    state.solver.add(b &gt;= 0x20, b &lt;= 0x7e)
+state.solver.add(stdin.get_byte(31) == 0x0a)
+
+simgr = proj.factory.simulation_manager(state)
+simgr.explore(find=SUCCESS, avoid=FAILURE)
+
+if simgr.found:
+    found = simgr.found[0]
+    answer = found.solver.eval(stdin, cast_to=bytes).rstrip(b&#x27;\n&#x27;)
+    print(&#x27;INPUT:&#x27;, answer)
+    open(&#x27;solution.txt&#x27;, &#x27;wb&#x27;).write(answer)
+else:
+    print(&#x27;no path found; deadended:&#x27;, len(simgr.deadended),
+          &#x27;avoided:&#x27;, len(simgr.avoid))</code></pre>
+<pre><code class="language-bash">python3 solve.py
+# Verify against the real binary, always
+./crackme &lt; solution.txt</code></pre>
+<p>The verification step is not optional: solver quirks, concretization, and unmodeled syscalls can produce inputs that work symbolically but fail for real.</p>
+<h2>4. Symbolic argv and constrained input</h2>
+<p>Binaries that take arguments need symbolic argv; binaries with known input structure need constraints so the solver does not wander.</p>
+<pre><code class="language-python">import angr, claripy
+proj = angr.Project(&#x27;./crackme&#x27;, auto_load_libs=False)
+
+# Symbolic command-line argument instead of stdin
+arg = claripy.BVS(&#x27;arg&#x27;, 16 * 8)
+state = proj.factory.entry_state(args=[&#x27;./crackme&#x27;, arg])
+for b in arg.chop(8):
+    state.solver.add(b &gt;= 0x20, b &lt;= 0x7e)
+
+# Constrain a known prefix (e.g., flag format flag{...})
+state.solver.add(arg.get_byte(0) == ord(&#x27;f&#x27;))
+state.solver.add(arg.get_byte(1) == ord(&#x27;l&#x27;))
+state.solver.add(arg.get_byte(2) == ord(&#x27;a&#x27;))
+state.solver.add(arg.get_byte(3) == ord(&#x27;g&#x27;))
+state.solver.add(arg.get_byte(4) == ord(&#x27;{&#x27;))
+
+# Hook noisy functions you do not care about (e.g., skip a sleep or RNG)
+# proj.hook(addr_of_noisy_func, angr.SIM_PROCEDURES[&#x27;stubs&#x27;][&#x27;ReturnUnconstrained&#x27;]())</code></pre>
+<p>Constraints are how you inject knowledge: input length, character sets, magic prefixes, checksums you already reversed. Every good constraint cuts the search space dramatically.</p>
+<h2>5. Reading solver output and debugging stalls</h2>
+<p>When exploration finishes, interrogate the states; when it stalls, find out where it is stuck.</p>
+<pre><code class="language-python"># After explore(): inspect where the stashes ended up
+print(&#x27;found:&#x27;, len(simgr.found))
+print(&#x27;avoid:&#x27;, len(simgr.avoid))
+print(&#x27;deadended:&#x27;, len(simgr.deadended))
+print(&#x27;active:&#x27;, len(simgr.active))
+
+# What is the most common address among active states? (likely a loop)
+from collections import Counter
+addrs = Counter(s.addr for s in simgr.active)
+print(addrs.most_common(5))
+
+# Concrete input for a found state, plus the path length
+s = simgr.found[0]
+print(&#x27;steps:&#x27;, len(s.history.bbl_addrs))
+print(s.solver.eval(stdin, cast_to=bytes))</code></pre>
+<p>If most active states sit at one address, you have found a loop or a blocking syscall. That is normal; the fixes are in the next section.</p>
+<h2>6. Managing state explosion</h2>
+<p>Symbolic execution explodes when paths multiply: loops, large inputs, and unmodeled environment calls. Fight back in this order.</p>
+<pre><code class="language-python"># 1. Bound loops: hook the loop head to limit iterations
+# 2. Reduce symbolic bytes: make only the unknown part symbolic
+known_prefix = b&#x27;flag{&#x27;
+sym_part = claripy.BVS(&#x27;sym&#x27;, 8 * 8)
+concrete_stdin = claripy.Concat(claripy.BVV(known_prefix), sym_part)
+
+# 3. Veritesting: merge paths statically to reduce state count
+state = proj.factory.full_init_state(args=[&#x27;./crackme&#x27;], stdin=stdin)
+simgr = proj.factory.simulation_manager(state, veritesting=True)
+
+# 4. Step in rounds with a state cap instead of one unbounded explore
+for _ in range(20):
+    simgr.step()
+    simgr.move(from_stash=&#x27;active&#x27;, to_stash=&#x27;pruned&#x27;,
+               filter_func=lambda s: len(simgr.active) &gt; 200)
+    if simgr.found:
+        break</code></pre>
+<p>Additional levers: <code>auto_load_libs=False</code> (already default in the examples), hooking libc functions that do not matter, avoiding GUI or network code paths, and splitting the problem (solve stage 1, then use its output as concrete input for stage 2). If a binary is heavily obfuscated, do static cleanup in Ghidra first; angr is not a deobfuscator.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>PIE binary: addresses shift at load; use <code>proj.loader.main_object</code> offsets</li>
+<p>or resolve symbols by name instead of hardcoding addresses.</p>
+<li>Binary needs environment (env vars, files): add them to the state</li>
+<p>(<code>state = proj.factory.full_init_state(..., env={&#x27;HOME&#x27;: &#x27;/tmp&#x27;})</code>) or the path diverges from reality.</p>
+<li>angr version churn: APIs move between releases; pin the version</li>
+<p>(10.0.4 here) and check the docs for your exact version when a call fails.</p>
+<li>Solver is slow on bitvector division/modulo: these operations are</li>
+<p>expensive; if the crackme is crypto-heavy, consider whether symbolic execution is the right tool at all.</p>
+<li>Multi-threaded or fork-heavy binaries: angr models single-threaded</li>
+<p>execution; results may not transfer.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>angr cannot reach the target: go back to static analysis, reverse the</li>
+<p>checks manually, and use angr only for the sub-problem you cannot do by hand (e.g., one complex constraint).</p>
+<li>Need directed fuzzing instead: pair angr with a fuzzer (AFL++ with</li>
+<p>symbolic assistance) for vulnerability discovery on larger binaries.</p>
+<li>Target is a firmware blob or non-standard arch: confirm angr supports the</li>
+<p>architecture via its archinfo/CLE loaders; otherwise use Ghidra plus QEMU-based dynamic analysis.</p>
+<li>Real vulnerability research: once angr finds a crashing input, triage the</li>
+<p>crash for exploitability with standard tooling, within your authorized scope, and disclose responsibly.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>From the defender side, angr-style analysis is what happens to your software in an attacker&#x27;s lab, which is an argument for defense in depth rather than obscurity: assume any client-side check can be solved symbolically and never trust the client for security decisions. For detection engineering, the behaviors angr helps uncover (buffer overflows, format strings, use-after-free) map to the memory-corruption mitigations defenders deploy: ASLR, DEP/NX, stack canaries, and Control Flow Integrity. The misuse case is using symbolic execution to develop exploits against systems without authorization; this skill is for CTFs, crackmes, and authorized research, and crossing that line is out of scope.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1203 (Exploitation for Client Execution): the vulnerability</li>
+<p>class this research targets.</p>
+<li>CWE-787 (Out-of-bounds Write), CWE-416 (Use After Free), CWE-119</li>
+<p>(Improper Restriction of Operations within the Bounds of a Memory Buffer): typical findings.</p>
+<li>angr documentation: https://docs.angr.io</li>
+<li>angr on PyPI: https://pypi.org/project/angr/</li>
+<li>claripy solver docs (ships with angr): https://docs.angr.io/en/latest/api.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

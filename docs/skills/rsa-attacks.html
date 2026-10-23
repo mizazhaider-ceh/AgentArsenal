@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: rsa-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>rsa-attacks</h2><div class="meta"><span class="badge gray">crypto</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you face an RSA challenge or misconfigured RSA on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a> <a href="padding-oracle.html">padding-oracle</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>OpenSSL</td><td>3.3.x</td></tr><tr><td>SageMath</td><td>10.x</td></tr><tr><td>RsaCtfTool</td><td>1.7.x</td></tr></tbody></table><p>RSA fails in practice long before the math does: tiny exponents, shared primes across keys, missing padding, and small private exponents all reduce it to arithmetic puzzles. This skill is the operator&#x27;s checklist for those failures on authorized targets: inspect the parameters, match them to the known attack, recover the private key or plaintext, and verify by decrypting. It assumes you can already recognize RSA as the primitive (see crypto-fundamentals). All work targets systems you have written permission to test, such as CTF challenges or client systems in scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Collect every parameter: n, e, ciphertexts, and any extra values</li>
+<p>(dp, dq, additional keys, signatures).</p>
+<li>Sanity check: key size, public exponent value, and whether n looks</li>
+<p>like a product of two primes.</p>
+<li>Run RsaCtfTool in auto mode for the quick wins while you think.</li>
+<li>Match the parameters to a specific attack: small e broadcast, common</li>
+<p>modulus, shared factor, small d, or no padding.</p>
+<li>Recover the private key or the plaintext with the matched technique.</li>
+<li>Decrypt and verify: the plaintext should be readable or structured.</li>
+<li>Document the exact weakness and the fix for the report.</li>
+</ol>
+<h2>1. Parameter collection and sanity checks</h2>
+<p>Gather n, e, and c as integers. CTF challenges hand them over; on a pentest you extract them from certificates, JWT keys, or application configs.</p>
+<pre><code class="language-bash"># Extract RSA parameters from a PEM public key
+openssl rsa -pubin -in key.pub -text -noout | head -20
+
+# From an X.509 certificate
+openssl x509 -in cert.pem -text -noout | grep -A3 &#x27;Public-Key&#x27;
+
+# Quick Python triage of parameters
+python3 &lt;&lt;&#x27;EOF&#x27;
+n = 0x00  # paste the modulus
+e = 65537
+print(&quot;n bits:&quot;, n.bit_length())
+print(&quot;e:&quot;, e)
+print(&quot;n mod e:&quot;, n % e)
+EOF</code></pre>
+<p>Red flags at triage:</p>
+<ul>
+<li>e = 3: broadcast attack territory, and textbook RSA is likely.</li>
+<li>n under 512 bits: factor it directly, no cleverness needed.</li>
+<li>Several n values given together: try batch GCD for shared primes.</li>
+<li>dp, dq, or qinv leaked alongside n: private key reconstructs</li>
+<p>immediately.</p>
+<li>Same plaintext encrypted under two different keys: common modulus</li>
+<p>territory.</p>
+</ul>
+<pre><code class="language-bash"># Factor small n directly (under ~512 bits, fast)
+python3 -c &quot;
+from math import gcd
+# factorDB or yafu for larger; sage factor() for medium
+&quot;
+# SageMath for serious factoring attempts
+sage -c &quot;print(factor(0x00))&quot;  # paste n</code></pre>
+<h2>2. RsaCtfTool auto mode</h2>
+<p>Run the automated tool first. It tries dozens of known attacks in seconds and often solves the challenge while you read the parameters.</p>
+<pre><code class="language-bash"># Auto attack on a public key plus ciphertext
+python3 RsaCtfTool.py --publickey key.pub --uncipher c.bin --private
+
+# Private key recovery only
+python3 RsaCtfTool.py --publickey key.pub --private -o recovered.pem
+
+# Decrypt with explicit n and e
+python3 RsaCtfTool.py -n 0xABC... -e 3 --uncipherfile c.bin</code></pre>
+<p>If RsaCtfTool solves it, still understand which attack fired (it prints the attack name). The report needs the weakness class, not just the recovered key.</p>
+<h2>3. Hastad broadcast attack (small e)</h2>
+<p>When the same message is encrypted with e = 3 under three or more different moduli, the Chinese Remainder Theorem recovers m^3, and the integer cube root is the message. No factoring required.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Hastad broadcast attack: e=3, same plaintext, 3+ different moduli.&quot;&quot;&quot;
+from math import gcd
+
+def crt(remainders, moduli):
+    M = 1
+    for m in moduli: M *= m
+    x = 0
+    for r, m in zip(remainders, moduli):
+        Mi = M // m
+        inv = pow(Mi, -1, m)
+        x += r * Mi * inv
+    return x % M
+
+def iroot(k, n):
+    # integer k-th root via binary search
+    lo, hi = 0, 1 &lt;&lt; ((n.bit_length() // k) + 1)
+    while lo &lt; hi:
+        mid = (lo + hi) // 2
+        if mid ** k &lt; n: lo = mid + 1
+        else: hi = mid
+    return lo
+
+# c_list[i] = m^3 mod n_list[i], all with e = 3
+c_list = []  # paste ciphertexts
+n_list = []  # paste moduli
+assert len(c_list) &gt;= 3 and all(gcd(a, b) == 1 for a in n_list for b in n_list if a != b)
+m_cubed = crt(c_list, n_list)
+m = iroot(3, m_cubed)
+print(&quot;recovered m:&quot;, hex(m))
+print(bytes.fromhex(hex(m)[2:]))</code></pre>
+<p>Requirements: at least e ciphertexts under pairwise coprime moduli, same plaintext, no padding (or PKCS#1 v1.5 with e=3 can still work via the related Coppersmith variant, which is advanced follow-up).</p>
+<h2>4. Common modulus attack</h2>
+<p>Same n, two different exponents e1 and e2, same plaintext: the extended Euclidean algorithm recovers m without factoring n.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Common modulus: c1 = m^e1 mod n, c2 = m^e2 mod n, recover m.&quot;&quot;&quot;
+from math import gcd
+
+def egcd(a, b):
+    if b == 0: return (a, 1, 0)
+    g, x1, y1 = egcd(b, a % b)
+    return (g, y1, x1 - (a // b) * y1)
+
+n = 0x00   # shared modulus
+e1, e2 = 0, 0  # the two public exponents
+c1, c2 = 0x00, 0x00
+
+g, a, b = egcd(e1, e2)
+assert g == 1
+# handle negative exponents with modular inverses
+c1p = pow(c1, a, n) if a &gt; 0 else pow(pow(c1, -1, n), -a, n)
+c2p = pow(c2, b, n) if b &gt; 0 else pow(pow(c2, -1, n), -b, n)
+m = (c1p * c2p) % n
+print(&quot;recovered m:&quot;, hex(m))</code></pre>
+<p>This bites when a system reuses one modulus with per-user exponents, or when a challenge hands you two encryptions of the flag.</p>
+<h2>5. Shared prime factors (batch GCD)</h2>
+<p>When many RSA keys are generated with weak randomness, two moduli share a prime. The GCD of the pair reveals it instantly, and the technique scales to thousands of keys with a product tree.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Pairwise GCD across a list of moduli to find shared primes.&quot;&quot;&quot;
+from math import gcd
+
+moduli = []  # paste all n values
+for i in range(len(moduli)):
+    for j in range(i + 1, len(moduli)):
+        g = gcd(moduli[i], moduli[j])
+        if g != 1:
+            print(f&quot;shared factor between key {i} and {j}: {hex(g)}&quot;)
+            p = g
+            q = moduli[i] // p
+            print(f&quot;  key {i}: p={hex(p)} q={hex(q)}&quot;)</code></pre>
+<pre><code class="language-bash"># For large key sets, use the batch GCD approach:
+# build a product tree of all moduli, then take remainders.
+# Tools: sage batch_gcd scripts, or the &#x27;rsa_gcd&#x27; style implementations.
+# On a pentest, weak embedded devices (routers, IoT) are the classic source.</code></pre>
+<p>Once p is known, q = n // p, phi = (p-1)(q-1), d = e^-1 mod phi, and the key is fully recovered. Then decrypt normally.</p>
+<h2>6. Wiener attack (small private exponent)</h2>
+<p>If d &lt; n^0.25 / 3, the private exponent leaks through continued fraction expansion of e/n. RsaCtfTool tries this automatically; the manual version confirms understanding.</p>
+<pre><code class="language-bash"># RsaCtfTool includes Wiener; also try in Sage
+python3 RsaCtfTool.py --publickey key.pub --private --attack wiener</code></pre>
+<pre><code class="language-python"># Continued fraction convergents of e/n, test each denominator as d
+def convergents(num, den):
+    # yields (k, d) convergent pairs
+    cf = []
+    while den:
+        q = num // den
+        cf.append(q)
+        num, den = den, num - q * den
+    convs = []
+    for i in range(1, len(cf) + 1):
+        n_, d_ = 1, 0
+        n1, d1 = cf[0], 1
+        # (simplified: full implementation tracks two previous)
+        pass
+    return convs</code></pre>
+<p>In practice, use the tool for Wiener and reserve manual effort for verifying the recovered d by test-decryption. Small-d keys also fall to Boneh-Durfee (d &lt; n^0.292) via lattice methods in Sage, which is the escalation when Wiener fails.</p>
+<h2>7. Textbook RSA without padding</h2>
+<p>Without padding (PKCS#1 OAEP or v1.5), RSA is malleable: ciphertexts can be multiplied, and chosen-ciphertext tricks decrypt.</p>
+<pre><code class="language-python"># Malleability: c&#x27; = c * (2^e) mod n decrypts to 2*m mod n
+# If you have a decryption oracle, ask for c&#x27; and halve the result.
+n, e = 0x00, 65537
+c = 0x00
+c_blinded = (c * pow(2, e, n)) % n
+# send c_blinded to the oracle, get m_blinded = 2*m mod n
+# m = m_blinded * inv(2, n) % n</code></pre>
+<p>Also: small message with e=3 and no padding is just an integer cube root (single-modulus Hastad). And deterministic textbook RSA lets you test plaintext guesses by re-encrypting, which breaks semantic security outright.</p>
+<h2>8. Decrypt and verify</h2>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Decrypt once p and q are known.&quot;&quot;&quot;
+from Crypto.Util.number import long_to_bytes  # pycryptodome, or manual
+
+def decrypt(n, e, c, p, q):
+    phi = (p - 1) * (q - 1)
+    d = pow(e, -1, phi)
+    m = pow(c, d, n)
+    blen = (m.bit_length() + 7) // 8
+    return m.to_bytes(blen, &#x27;big&#x27;)
+
+# p, q from any attack above; c the ciphertext
+pt = decrypt(n, e, c, p, q)
+print(pt)</code></pre>
+<p>Faster for repeated decryptions: use CRT with dp = d mod (p-1) and dq = d mod (q-1). For CTF flags, the plaintext usually starts with a known prefix; check for it as your correctness signal.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>RsaCtfTool solves nothing and parameters look normal. The key may</li>
+<p>be fine and the challenge expects a protocol attack (padding oracle, Bleichenbacher) rather than a math attack. Pivot to the padding-oracle skill.</p>
+<li>n is prime, not a product. Then &quot;RSA&quot; is degenerate: phi = n-1</li>
+<p>and d computes directly. Challenges sometimes do this as a trick.</p>
+<li>e is even or shares a factor with phi. Key generation is broken;</li>
+<p>try small factors of e or treat it as a Rabin-like variant.</p>
+<li>Ciphertext is larger than n or negative. Normalize: c mod n before</li>
+<p>any attack math.</p>
+<li>Multiple test cases share e=3 but different plaintexts. Broadcast</li>
+<p>needs the SAME plaintext; different plaintexts need Coppersmith (Sage <code>small_roots</code>), which is the advanced escalation.</p>
+<li>The private key uses CRT parameters (dp, dq, qinv) that leaked.</li>
+<p>Reconstruct p and q from them directly instead of attacking n.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Wiener fails but d still looks small: Boneh-Durfee lattice attack</li>
+<p>in Sage (works up to d &lt; n^0.292). Needs Sage and patience.</p>
+<li>Partial key exposure: if you know some high or low bits of p</li>
+<p>(from a side channel or a leak), Coppersmith&#x27;s method in Sage recovers the rest from roughly half the bits.</p>
+<li>n has three or more prime factors (multi-prime RSA): trial divide</li>
+<p>small factors first, then apply the standard attacks per factor.</p>
+<li>The challenge is actually Rabin (e=2): decryption gives four</li>
+<p>candidates; pick by padding structure or known prefix.</p>
+<li>Nothing mathematical works: re-examine the protocol. RSA key</li>
+<p>transport without OAEP, PKCS#1 v1.5 decryption oracles (Bleichenbacher), and signature forgery on e=3 are protocol attacks, not factoring attacks.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders rarely detect RSA math attacks in progress; they prevent them by generating keys correctly. The durable defenses are: use 2048-bit or larger keys from a proper CSPRNG, use standard public exponent 65537, always use OAEP padding for encryption and PSS for signatures, never reuse a modulus across keys, and never expose CRT parameters or decryption oracles. For code review, grep for raw <code>pow(m, e, n)</code> style encryption, hardcoded small e values, and custom padding schemes; each is a finding. Key rotation after any suspected weak generation (embedded devices, VMs with poor entropy at first boot) closes the batch-GCD window.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm): weak RSA</li>
+<p>parameters.</p>
+<li>CWE-330 (Use of Insufficiently Random Values): shared primes from</li>
+<p>bad RNG.</p>
+<li>CWE-780 (Use of RSA Algorithm without OAEP): textbook RSA.</li>
+<li>MITRE ATT&amp;CK T1552.004 (Unsecured Credentials: Private Keys): when</li>
+<p>recovered keys grant access.</p>
+<li>RsaCtfTool: https://github.com/RsaCtfTool/RsaCtfTool</li>
+<li>OpenSSL documentation: https://docs.openssl.org/</li>
+<li>SageMath documentation: https://doc.sagemath.org/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: s3-misconfigurations</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>s3-misconfigurations</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing Amazon S3 buckets for misconfigurations</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="aws-enumeration.html">aws-enumeration</a> <a href="cloud-security-basics.html">cloud-security-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>aws-cli</td><td>2.22</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>S3 misconfigurations are one of the most common cloud findings: buckets that anyone on the internet can list, read, or write because of an open ACL, a permissive bucket policy, or a missing public access block. This skill covers the authorized operator workflow for finding and proving S3 exposure: discovery, permission analysis, common misconfiguration patterns, impact proof that stays read-only, and verification of the fix. Use it against your own buckets, in-scope bug bounty targets, and lab environments only. Never upload files to, delete objects from, or modify buckets you do not own.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Discover bucket names: from the authenticated <code>s3 ls</code> inventory,</li>
+<p>from scope notes, and from OSINT (subdomains, JS files, code) inside the authorized scope.</p>
+<li>Test each bucket unauthenticated with <code>--no-sign-request</code>:</li>
+<p>list, then read one object only if listing is public.</p>
+<li>Pull the bucket ACL and bucket policy with credentials and map</li>
+<p>every grant to an access level.</p>
+<li>Check the four guardrails: public access block, default</li>
+<p>encryption, versioning, and access logging.</p>
+<li>Check static website hosting and cross-account or</li>
+<p><code>AuthenticatedUsers</code> grants.</p>
+<li>Prove impact read-only: show a public object listing or one</li>
+<p>non-sensitive object header, never full sensitive data.</p>
+<li>Classify the finding (public read, public write, sensitive data</li>
+<p>exposed) and record the exact commands.</p>
+<li>Verify the fix after remediation: re-run the unauthenticated</li>
+<p>checks and confirm 403/AccessDenied.</p>
+</ol>
+<h2>1. Bucket discovery</h2>
+<pre><code class="language-bash"># Authenticated inventory (feeds the checks below)
+aws s3 ls
+
+# Unauthenticated probe of a known bucket name
+aws s3 ls s3://&lt;BUCKET&gt; --no-sign-request 2&gt;&amp;1 | head -5
+
+# Direct HTTPS checks (bucket names are globally unique, so any name works)
+curl -s -o /dev/null -w &#x27;list: %{http_code}\n&#x27; https://&lt;BUCKET&gt;.s3.amazonaws.com/
+curl -s -o /dev/null -w &#x27;region-redirect: %{http_code}\n&#x27; https://s3.amazonaws.com/&lt;BUCKET&gt;/</code></pre>
+<p>Bucket names often leak in JavaScript bundles, mobile apps, and subdomain certificates. Within your authorized scope, grep collected assets for <code>s3.amazonaws.com</code> and <code>.s3-website</code> patterns.</p>
+<h2>2. Unauthenticated access tests</h2>
+<p>Run these without credentials. Stop at the first read-only proof; do not download sensitive data or write test files to buckets you do not own.</p>
+<pre><code class="language-bash"># LIST: does the world see object names
+aws s3 ls s3://&lt;BUCKET&gt; --no-sign-request 2&gt;&amp;1 | head -10
+
+# READ: fetch one object header only (no body download)
+aws s3api head-object --bucket &lt;BUCKET&gt; --key &lt;KEY&gt; --no-sign-request 2&gt;&amp;1 | head -10
+
+# WRITE test: ONLY against buckets you own. Never upload to
+# buckets you do not own. (Intentionally no command here.)</code></pre>
+<p>HTTP equivalents when the CLI is not handy:</p>
+<pre><code class="language-bash"># List via XML API (200 with XML body means public listing)
+curl -s &quot;https://&lt;BUCKET&gt;.s3.amazonaws.com/?list-type=2&amp;max-keys=5&quot; | head -c 800
+
+# Object read check (200 means public read)
+curl -s -o /dev/null -w &#x27;%{http_code}\n&#x27; &quot;https://&lt;BUCKET&gt;.s3.amazonaws.com/&lt;KEY&gt;&quot;</code></pre>
+<p>Result codes: <code>200</code> means public, <code>403 AccessDenied</code> means closed, <code>404 NoSuchBucket</code> means the name does not exist.</p>
+<h2>3. ACL analysis</h2>
+<pre><code class="language-bash"># Full ACL: watch for AllUsers and AuthenticatedUsers grants
+aws s3api get-bucket-acl --bucket &lt;BUCKET&gt; \
+  --query &#x27;Grants[].[Grantee.URI,Grantee.DisplayName,Permission]&#x27; --output text
+
+# Object-level ACLs can differ from the bucket ACL
+aws s3api get-object-acl --bucket &lt;BUCKET&gt; --key &lt;KEY&gt; \
+  --query &#x27;Grants[].[Grantee.URI,Permission]&#x27; --output text 2&gt;/dev/null</code></pre>
+<p>Dangerous grants and what they mean:</p>
+<p>| Grantee | Permission | Impact | |---|---|---| | <code>http://acs.amazonaws.com/groups/global/AllUsers</code> | READ | Anyone lists and reads | | <code>http://acs.amazonaws.com/groups/global/AllUsers</code> | WRITE | Anyone uploads and deletes | | <code>http://acs.amazonaws.com/groups/global/AuthenticatedUsers</code> | READ or WRITE | Any AWS account in the world, not just yours |</p>
+<p>Note: <code>AuthenticatedUsers</code> does NOT mean your account&#x27;s users. It means any authenticated AWS principal anywhere.</p>
+<h2>4. Bucket policy analysis</h2>
+<pre><code class="language-bash"># Fetch and pretty-print the policy
+aws s3api get-bucket-policy --bucket &lt;BUCKET&gt; \
+  --query &#x27;Policy&#x27; --output text &gt; /tmp/policy.json
+python3 -m json.tool /tmp/policy.json | head -80</code></pre>
+<p>Read every statement and check three fields:</p>
+<pre><code class="language-bash"># Quick triage with Python (stdlib only): statements that allow the world
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import json
+pol = json.load(open(&#x27;/tmp/policy.json&#x27;))
+for s in pol.get(&#x27;Statement&#x27;, []):
+    princ = s.get(&#x27;Principal&#x27;)
+    world = princ == &#x27;*&#x27; or (isinstance(princ, dict) and princ.get(&#x27;AWS&#x27;) == &#x27;*&#x27;)
+    if world and s.get(&#x27;Effect&#x27;) == &#x27;Allow&#x27;:
+        print(&#x27;WORLD-ALLOW:&#x27;, s.get(&#x27;Sid&#x27;), s.get(&#x27;Action&#x27;), &#x27;-&gt;&#x27;, s.get(&#x27;Resource&#x27;))
+        print(&#x27;  Condition:&#x27;, json.dumps(s.get(&#x27;Condition&#x27;, {}))[:200])
+EOF</code></pre>
+<p>A <code>&quot;Principal&quot;: &quot;*&quot;</code> Allow WITHOUT a restrictive Condition (IP allowlist, VPC endpoint, or <code>aws:PrincipalOrgID</code>) is effectively public. Common safe-looking but broken conditions: checking only <code>aws:Referer</code>, or <code>StringLike</code> on user agent.</p>
+<h2>5. The four guardrails</h2>
+<pre><code class="language-bash"># 1. Public access block: all four should be true
+aws s3api get-public-access-block --bucket &lt;BUCKET&gt; 2&gt;&amp;1
+
+# 2. Default encryption at rest
+aws s3api get-bucket-encryption --bucket &lt;BUCKET&gt; 2&gt;&amp;1 | head -5
+
+# 3. Versioning (lets owners recover from malicious overwrite)
+aws s3api get-bucket-versioning --bucket &lt;BUCKET&gt;
+
+# 4. Server access logging (evidence trail for the defender)
+aws s3api get-bucket-logging --bucket &lt;BUCKET&gt; 2&gt;&amp;1
+
+# Bonus: static website hosting widens the attack surface
+aws s3api get-bucket-website --bucket &lt;BUCKET&gt; 2&gt;&amp;1 \
+  &amp;&amp; echo &#x27;NOTE: static website hosting is ON&#x27;
+
+# Bonus: policy status summary (AWS computed &quot;is public&quot; flag)
+aws s3api get-bucket-policy-status --bucket &lt;BUCKET&gt; 2&gt;&amp;1</code></pre>
+<h2>6. Cross-account and legacy grants</h2>
+<pre><code class="language-bash"># Bucket policy statements granting specific external account IDs
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import json, re
+pol = json.load(open(&#x27;/tmp/policy.json&#x27;))
+for s in pol.get(&#x27;Statement&#x27;, []):
+    txt = json.dumps(s)
+    for acct in set(re.findall(r&#x27;arn:aws:iam::(\d{12}):&#x27;, txt)):
+        print(&#x27;external account grant:&#x27;, acct, &#x27;| Sid:&#x27;, s.get(&#x27;Sid&#x27;), &#x27;|&#x27;, s.get(&#x27;Effect&#x27;), s.get(&#x27;Action&#x27;))
+EOF
+
+# CORS config can matter for browser-based exfiltration paths
+aws s3api get-bucket-cors --bucket &lt;BUCKET&gt; 2&gt;&amp;1 | head -20</code></pre>
+<h2>7. Proving impact without damage</h2>
+<p>Read-only proof is enough for the report:</p>
+<ol>
+<li>The unauthenticated <code>ls</code> output showing object names (redact</li>
+<p>sensitive names in the report if they leak PII).</p>
+<li><code>head-object</code> output showing a public object exists and its</li>
+<p>content type and size.</p>
+<li>The ACL or policy snippet granting the world access.</li>
+<li>One screenshot or terminal capture of the 200 response.</li>
+</ol>
+<p>Do NOT: download full sensitive files, upload test objects to someone else&#x27;s bucket, delete anything, or enable versioning or logging changes yourself. If you suspect live sensitive data is public, stop and escalate to the engagement lead immediately.</p>
+<h2>8. Bulk triage script</h2>
+<pre><code class="language-bash"># Unauthenticated sweep over a bucket list (scope-approved names only)
+while read -r b; do
+  code=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; &quot;https://$b.s3.amazonaws.com/&quot;)
+  acl=$(aws s3api get-bucket-acl --bucket &quot;$b&quot; \
+    --query &quot;Grants[?Grantee.URI==&#x27;http://acs.amazonaws.com/groups/global/AllUsers&#x27;].Permission&quot; \
+    --output text 2&gt;/dev/null)
+  echo &quot;$b http=$code allusers_acl=${acl:-none}&quot;
+done &lt; /tmp/buckets.txt</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Bucket exists but every call returns 403: it is closed to you.</li>
+<p>Record the 403 as evidence of a correct configuration, do not try to bypass it.</p>
+<li><code>get-bucket-policy</code> returns NoSuchBucketPolicy while the ACL</li>
+<p>grants AllUsers READ: the bucket is still public through the ACL. Check both, always.</p>
+<li>Public access block is ON but objects were shared via</li>
+<p>pre-signed URLs: those URLs are bearer tokens, not a bucket misconfiguration. Do not confuse the two.</p>
+<li><code>us-east-1</code> vs regional endpoints: a 301 redirect with the</li>
+<p>correct region in <code>x-amz-bucket-region</code> is normal, follow it.</p>
+<li>Requester-pays buckets return 403 to anonymous reads even when</li>
+<p>objects are shared; that is not a vulnerability.</p>
+<li>Object ACLs can be public while the bucket ACL is private</li>
+<p>(common with old <code>public-read</code> uploads). Sample object ACLs, do not assume the bucket ACL tells the whole story.</p>
+<li>Versioning SUSPENDED is not the same as never enabled: old</li>
+<p>versions may still exist and be publicly readable.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Unauthenticated list works but you need the data</li>
+<p>classification: list object names and sizes only, then stop and escalate to the lead before touching any object body.</p>
+<li>Authenticated as a low-privilege user and <code>get-bucket-policy</code></li>
+<p>is denied: the unauthenticated probes in section 2 still give you the ground truth about public exposure.</p>
+<li>Bucket name guesses return 404: move to scope-approved OSINT</li>
+<p>(certificate transparency for <code>*.s3.amazonaws.com</code> style names rarely helps; JS bundles and mobile apps help more).</p>
+<li>You find public WRITE on your own test bucket: prove it with</li>
+<p><code>aws s3 cp /tmp/probe.txt s3://&lt;BUCKET&gt;/probe-&lt;RANDOM&gt;.txt --no-sign-request</code>, then DELETE the probe file immediately and record both commands.</p>
+<li>Suspected sensitive data exposed (backups, keys, PII): stop</li>
+<p>testing that bucket, notify the engagement lead at once, and do not copy the data to your machine.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see S3 probing in S3 server access logs and CloudTrail data events: anonymous <code>ListBucket</code> and <code>GetObject</code> calls from unfamiliar IPs, and <code>GetBucketAcl</code>/<code>GetBucketPolicy</code> calls from your assumed role. AWS Config rules (<code>s3-bucket-public-read-prohibited</code>, <code>s3-bucket-public-write-prohibited</code>) and Security Hub flag public buckets continuously; Trusted Advisor does the same. The durable fixes are account-level public access blocks (all four settings ON), bucket policies that deny non-TLS and non-VPC-endpoint access, default encryption with KMS, versioning plus MFA delete for critical buckets, and access logging to a separate locked bucket. As the tester, keep unauthenticated probing gentle (a handful of requests per bucket), never write to buckets you do not own, and report exposure with the exact commands that proved it.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1530 (Data from Cloud Storage): reading exposed</li>
+<p>buckets and objects.</p>
+<li>MITRE ATT&amp;CK T1580 (Cloud Infrastructure Discovery): bucket</li>
+<p>discovery and enumeration.</p>
+<li>CWE-732 (Incorrect Permission Assignment for Critical</li>
+<p>Resource): the misconfiguration class.</p>
+<li>CWE-200 (Exposure of Sensitive Information to an Unauthorized</li>
+<p>Actor): the impact.</p>
+<li>AWS S3 Block Public Access:</li>
+<p>https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html</p>
+<li>AWS S3 bucket policy examples:</li>
+<p>https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-policies.html</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

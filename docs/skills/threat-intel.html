@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: threat-intel</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>threat-intel</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when working with cyber threat intelligence on a</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-methodology.html">osint-methodology</a> <a href="recon-passive.html">recon-passive</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>MISP</td><td>2.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Threat intelligence turns raw indicators and reports into decisions: what to block, what to hunt, what to patch first. This skill covers the defensive intel workflow: requirements, collection from feeds and open sources, evaluation and scoring, storage in MISP, sharing with STIX/TAXII under TLP, and operationalizing intel into detections. Collection stays on public and licensed sources; respect feed terms of service and privacy law.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Write priority intelligence requirements (PIRs): which actors,</li>
+<p>sectors, and techniques matter to this organization.</p>
+<li>Inventory your feeds (commercial, open source, ISAC, internal) and</li>
+<p>map each to the PIRs it serves.</p>
+<li>Ingest into MISP with source tags, TLP markings, and first-seen</li>
+<p>dates on everything.</p>
+<li>Score and age indicators: confidence, relevance, and expiry per</li>
+<p>type (IPs age fast, hashes age slow).</p>
+<li>Correlate new intel against your telemetry before blocking (does</li>
+<p>this IP talk to our hosts).</p>
+<li>Operationalize: push high-confidence IOCs to blocks and detections,</li>
+<p>write hunts for TTPs.</p>
+<li>Share finished intel with peers under the correct TLP marking.</li>
+<li>Review feed value quarterly: precision, overlap, and cost per true</li>
+<p>positive.</p>
+</ol>
+<h2>1. Priority intelligence requirements</h2>
+<p>Intel without requirements is noise. Write PIRs like:</p>
+<ul>
+<li>PIR-1: Which ransomware affiliates are targeting our sector in</li>
+<p>Europe this quarter, and what are their initial access TTPs.</p>
+<li>PIR-2: Are any of our domains, IPs, or executive names appearing in</li>
+<p>stealer logs or underground forums.</p>
+<li>PIR-3: Which vulnerabilities in our internet-facing stack have</li>
+<p>public exploits and active exploitation in the wild.</p>
+</ul>
+<p>Each PIR gets an owner, a review date, and a list of feeds and collection tasks that serve it. If a feed serves no PIR, drop it.</p>
+<h2>2. Feed inventory and evaluation</h2>
+<p>Common feed types: commercial intel platforms, open source blocklists, ISAC/ISAO sharing groups, government advisories (CISA AA reports), internal telemetry (your own incidents are your best intel).</p>
+<p>Evaluate a feed before trusting it:</p>
+<pre><code class="language-bash"># Measure overlap and freshness of two IP feeds with Python (stdlib)
+python3 &lt;&lt; &#x27;EOF&#x27;
+a = set(l.strip() for l in open(&#x27;feed_a.txt&#x27;) if l.strip())
+b = set(l.strip() for l in open(&#x27;feed_b.txt&#x27;) if l.strip())
+print(&quot;A:&quot;, len(a), &quot;B:&quot;, len(b), &quot;overlap:&quot;, len(a &amp; b))
+print(&quot;A unique:&quot;, len(a - b), &quot;B unique:&quot;, len(b - a))
+EOF</code></pre>
+<p>Track per feed: ingestion volume, true positive rate on your telemetry, mean indicator age at ingest, and cost. A free feed with 90 percent stale IPs is more expensive than it looks once analyst time is counted.</p>
+<h2>3. MISP operations</h2>
+<p>MISP is the standard open platform for storing and sharing intel. Core concepts: events (containers), attributes (IOCs with types), objects (structured entities like vulnerabilities), galaxies (actor and tool taxonomies), tags, and TLP markings.</p>
+<pre><code class="language-bash"># Search MISP for an indicator via the API (needs your API key)
+curl -sk -H &quot;Authorization: $MISP_KEY&quot; \
+  -H &quot;Accept: application/json&quot; -H &quot;Content-Type: application/json&quot; \
+  -d &#x27;{&quot;returnFormat&quot;:&quot;json&quot;,&quot;value&quot;:&quot;198.51.100.23&quot;}&#x27; \
+  https://misp.internal/attributes/restSearch
+
+# Add a simple IOC event via API
+curl -sk -H &quot;Authorization: $MISP_KEY&quot; \
+  -H &quot;Accept: application/json&quot; -H &quot;Content-Type: application/json&quot; \
+  -d &#x27;{&quot;Event&quot;:{&quot;info&quot;:&quot;Phishing infra 2026-10-23&quot;,&quot;distribution&quot;:1,
+    &quot;threat_level_id&quot;:2,&quot;analysis&quot;:1,
+    &quot;Attribute&quot;:[{&quot;type&quot;:&quot;domain&quot;,&quot;value&quot;:&quot;evil.example&quot;,
+    &quot;to_ids&quot;:true,&quot;comment&quot;:&quot;phishing kit host&quot;}]}}&#x27; \
+  https://misp.internal/events</code></pre>
+<p>Hygiene rules:</p>
+<ul>
+<li>Every attribute gets a first-seen date, a source tag, and a TLP.</li>
+<li><code>to_ids</code> true only for indicators you would actually block on.</li>
+<li>Expire aggressively: IPs 30 days, domains 90 days, hashes 1 year,</li>
+<p>unless re-observed.</p>
+<li>Link events to MITRE galaxies (actor, technique) so analysts can</li>
+<p>pivot from IOC to TTP.</p>
+</ul>
+<h2>4. Scoring and aging</h2>
+<p>Not all IOCs deserve a block. Score on:</p>
+<ul>
+<li>Confidence: how sure is the source (confirmed malicious vs</li>
+<p>suspicious).</p>
+<li>Relevance: does it match your PIRs and your technology stack.</li>
+<li>Freshness: when was it last observed active.</li>
+<li>Corroboration: how many independent sources report it.</li>
+</ul>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Simple IOC scorer: blocks only high-confidence, fresh, relevant IOCs.&quot;&quot;&quot;
+from datetime import datetime, timedelta
+
+def score(ioc):
+    s = 0
+    s += {&quot;confirmed&quot;: 40, &quot;probable&quot;: 20, &quot;possible&quot;: 5}[ioc[&quot;confidence&quot;]]
+    s += 20 if ioc[&quot;relevant_to_us&quot;] else 0
+    age_days = (datetime.utcnow() - ioc[&quot;last_seen&quot;]).days
+    s += max(0, 20 - age_days)          # freshness decays
+    s += min(20, 10 * ioc[&quot;source_count&quot;])  # corroboration
+    return s
+
+# Example: block at &gt;= 70, hunt at &gt;= 40, ignore below</code></pre>
+<p>Automate expiry: a daily job flips <code>to_ids</code> off for indicators past their TTL and tags them expired. Stale blocks cause outages and teach everyone to distrust the blocklist.</p>
+<h2>5. Correlate before you block</h2>
+<p>An IOC is only actionable if it touches your environment:</p>
+<pre><code class="language-bash"># Check a suspicious IP against 30 days of proxy logs before blocking
+index=proxy dest_ip=&quot;198.51.100.23&quot; earliest=-30d@d latest=@d
+| stats count by user, dest_ip | sort -count
+
+# Check a hash against EDR telemetry
+index=edr file_hash=&quot;d41d8cd98f00b204e9800998ecf8427e&quot; earliest=-90d@d latest=@d
+| stats values(host) as hosts count</code></pre>
+<p>Decision matrix:</p>
+<ul>
+<li>Seen in our telemetry plus high confidence: block and hunt for</li>
+<p>related activity.</p>
+<li>Not seen plus high confidence: block at the perimeter, low priority</li>
+<p>hunt.</p>
+<li>Seen plus low confidence: investigate as a hunt, do not block yet.</li>
+<li>Not seen plus low confidence: store for correlation, no action.</li>
+</ul>
+<h2>6. Operationalizing intel</h2>
+<p>Turn intel into controls:</p>
+<ul>
+<li>Push high-confidence network IOCs to firewall, proxy, and DNS</li>
+<p>blocklists with expiry dates.</p>
+<li>Convert TTPs into Sigma rules (see the sigma-rules skill) rather</li>
+<p>than blocking single hashes that change daily.</p>
+<li>Write threat-informed hunts: &quot;actor X uses rundll32 with this</li>
+<p>pattern; hunt our fleet for it.&quot;</p>
+<li>Brief the SOC with a one-page intel note: who, what TTPs, what to</li>
+<p>look for, what is already blocked.</p>
+</ul>
+<p>Track intel-driven outcomes: detections added, hunts run, incidents found because of intel. That is how the intel function justifies its budget.</p>
+<h2>7. Sharing under TLP</h2>
+<p>Traffic Light Protocol governs redistribution:</p>
+<ul>
+<li>TLP:CLEAR: share freely.</li>
+<li>TLP:GREEN: share within your community (peers, ISAC).</li>
+<li>TLP:AMBER: share within your organization and with clients on a</li>
+<p>need-to-know basis.</p>
+<li>TLP:RED: named recipients only, no forwarding.</li>
+</ul>
+<p>When you receive TLP:AMBER intel, your MISP sync and your SIEM blocklist must not leak it into a public feed. Tag at ingest, enforce at export. For STIX/TAXII sharing, mark objects with the TLP marking definition and filter collections by marking.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Feed poisoning: a feed lists a legitimate CDN IP and you block it.</li>
+<p>Always check an IOC against your own telemetry and an allowlist of critical services before blocking.</p>
+<li>Duplicate intel across feeds inflates confidence. Deduplicate on</li>
+<p>value plus first-seen before counting corroboration.</p>
+<li>Intel about your own infrastructure (your IP in a blocklist):</li>
+<p>investigate as a possible compromise or misattribution, and file a delist request with evidence.</p>
+<li>TLP violations by recipients: watermark shared reports per</li>
+<p>recipient so leaks are traceable, and remind the community of the rules before cutting access.</p>
+<li>MISP sync conflicts: decide which instance is authoritative per</li>
+<p>feed and document it; two writers to the same event cause merge pain.</p>
+<li>Intel overload: cap the number of active blocking IOCs and review</li>
+<p>the tail monthly. Ten thousand stale blocks help nobody.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Intel indicates an imminent threat to the organization (named in a</li>
+<p>ransomware leak post): treat as an incident, activate the relevant playbook, and hunt immediately.</p>
+<li>A blocking action causes a business outage: roll back the block,</li>
+<p>add the service to the allowlist with a ticket, and review the scoring threshold that let it through.</p>
+<li>Sharing dispute (a partner publishes your TLP:AMBER intel):</li>
+<p>contact them directly with the marking evidence, then escalate to the sharing community lead.</p>
+<li>Feed goes dark or degrades: fall back to the next feed serving the</li>
+<p>same PIR and note the coverage gap in the quarterly review.</p>
+<li>You need classified or law enforcement intel: that flows through</li>
+<p>official liaison channels, not OSINT. Engage your legal and leadership chain.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Threat intel is a defensive multiplier, and attackers adapt to it:</p>
+<ul>
+<li>Attackers rotate IPs and domains faster than feeds update, so</li>
+<p>prioritize TTP-based detections over IOC blocks for agile actors.</p>
+<li>Attackers test their infrastructure against public blocklists and</li>
+<p>rotate what gets listed. Assume listed IOCs are already burned and hunt for the next iteration.</p>
+<li>Attackers plant false flags (other actors&#x27; tools, misleading</li>
+<p>language). Treat attribution as probable at best unless you have multiple independent lines of evidence.</p>
+<li>Defenders should feed internal findings back into intel: your</li>
+<p>incidents, your phishing samples, and your hunt results are intel for the next shift.</p>
+<li>Measure intel by outcomes (incidents found, dwell time reduced),</li>
+<p>not by volume (IOCs ingested). Ten good indicators beat ten thousand stale ones.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK (actor and technique context): https://attack.mitre.org/</li>
+<li>MISP 2.5 documentation: https://www.misp-project.org/documentation/</li>
+<li>STIX 2.1 and TAXII 2.1 specifications (OASIS):</li>
+<p>https://oasis-open.github.io/cti-documentation/</p>
+<li>CISA advisories (AA reports): https://www.cisa.gov/news-events/cybersecurity-advisories</li>
+<li>FIRST TLP 2.0 definitions: https://www.first.org/tlp/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

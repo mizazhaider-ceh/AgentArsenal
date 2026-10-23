@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: go-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>go-basics</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing, building, or reviewing Go programs on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="code-reviewer.html">code-reviewer</a> <a href="git-workflows.html">git-workflows</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Go</td><td>1.23</td></tr></tbody></table><p>Go is a compiled language built for simple, fast, concurrent programs: one toolchain, fast builds, static binaries, and concurrency primitives in the language itself. This skill covers the working basics an operator needs to write, build, test, and ship Go tools, including the error handling and goroutine patterns that keep Go programs predictable. All examples target Go 1.23.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Verify the toolchain and set up a module with <code>go mod init</code>.</li>
+<li>Write code in small packages with exported names capitalized.</li>
+<li>Format every file with <code>gofmt</code> and check with <code>go vet</code> before</li>
+<p>committing.</p>
+<li>Handle every error explicitly; never ignore a returned <code>error</code>.</li>
+<li>Write table-driven tests and run them with <code>go test</code>.</li>
+<li>Use goroutines and channels for concurrent work; run tests with</li>
+<p><code>-race</code> to catch data races.</p>
+<li>Cross-compile static binaries for the target platform with</li>
+<p><code>GOOS</code>/<code>GOARCH</code> and stripped symbols.</p>
+<li>Document the module path and minimum Go version in <code>go.mod</code>.</li>
+</ol>
+<h2>1. Toolchain and first module</h2>
+<pre><code class="language-bash"># Confirm the toolchain
+go version
+
+# Start a new module (the path should match the repo location)
+mkdir -p ~/go-work/portcheck &amp;&amp; cd ~/go-work/portcheck
+go mod init example.com/portcheck
+
+# Project layout
+tree -L 2 -a 2&gt;/dev/null || find . -maxdepth 2 | sort</code></pre>
+<pre><code class="language-bash">cat &gt; main.go &lt;&lt;&#x27;EOF&#x27;
+package main
+
+import (
+	&quot;fmt&quot;
+	&quot;net&quot;
+	&quot;time&quot;
+)
+
+func checkPort(host string, port int, timeout time.Duration) bool {
+	addr := fmt.Sprintf(&quot;%s:%d&quot;, host, port)
+	conn, err := net.DialTimeout(&quot;tcp&quot;, addr, timeout)
+	if err != nil {
+		return false
+	}
+	conn.Close()
+	return true
+}
+
+func main() {
+	ports := []int{22, 80, 443, 8080}
+	for _, p := range ports {
+		fmt.Printf(&quot;port %d open=%v\n&quot;, p, checkPort(&quot;127.0.0.1&quot;, p, 2*time.Second))
+	}
+}
+EOF
+
+go run .</code></pre>
+<p><code>go run</code> compiles and runs in one step for development; <code>go build</code> produces a real binary.</p>
+<h2>2. Build, format, and vet</h2>
+<pre><code class="language-bash"># Build the binary into ./bin
+mkdir -p bin
+go build -o bin/portcheck .
+
+# Format all files in place (run before every commit)
+gofmt -l .        # lists files that need formatting
+gofmt -w .        # formats them
+
+# Static analysis: suspicious constructs, bad printf verbs, unreachable code
+go vet ./...
+
+# Tidy the module file after adding or removing imports
+go mod tidy</code></pre>
+<p><code>gofmt</code> is non-negotiable in Go culture: unformatted code stands out immediately in review. <code>go vet</code> catches real bugs such as <code>fmt.Printf</code> with the wrong verb count.</p>
+<h2>3. Error handling idioms</h2>
+<p>Go has no exceptions. Functions return <code>error</code> as the last value and the caller decides what to do. Check errors at the point of return, wrap them with context using <code>%w</code>, and fail fast.</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;os&quot;
+)
+
+func readConfig(path string) ([]byte, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf(&quot;read config %s: %w&quot;, path, err)
+	}
+	if len(data) == 0 {
+		return nil, fmt.Errorf(&quot;config %s is empty&quot;, path)
+	}
+	return data, nil
+}
+
+func main() {
+	data, err := readConfig(&quot;config.yaml&quot;)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, &quot;error:&quot;, err)
+		os.Exit(1)
+	}
+	fmt.Println(&quot;loaded&quot;, len(data), &quot;bytes&quot;)
+}</code></pre>
+<p>Use <code>errors.Is</code> and <code>errors.As</code> to inspect wrapped errors instead of string matching. Reserve <code>panic</code> for programmer errors that mean the program cannot continue (nil map writes in init paths, impossible states), never for expected failures like bad user input or network errors.</p>
+<h2>4. Testing with the standard library</h2>
+<p>Table-driven tests are the Go standard: one test function, a slice of cases, a loop.</p>
+<pre><code class="language-bash">cat &gt; main_test.go &lt;&lt;&#x27;EOF&#x27;
+package main
+
+import &quot;testing&quot;
+
+func TestCheckPort(t *testing.T) {
+	cases := []struct {
+		name string
+		host string
+		port int
+		want bool
+	}{
+		{&quot;closed high port&quot;, &quot;127.0.0.1&quot;, 59999, false},
+		{&quot;invalid port zero&quot;, &quot;127.0.0.1&quot;, 0, false},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			got := checkPort(tc.host, tc.port, 1000000000) // 1s
+			if got != tc.want {
+				t.Errorf(&quot;checkPort(%s,%d) = %v, want %v&quot;,
+					tc.host, tc.port, got, tc.want)
+			}
+		})
+	}
+}
+EOF
+
+go test -v ./...
+go test -race ./...   # race detector: required for concurrent code
+go test -cover ./...  # coverage summary</code></pre>
+<p>Subtests with <code>t.Run</code> give each case a name in the output. Benchmarks use <code>func BenchmarkX(b *testing.B)</code> and run with <code>go test -bench=.</code>.</p>
+<h2>5. Goroutines and channels</h2>
+<p>Goroutines are cheap concurrent functions; channels move data between them safely. The pattern below scans ports concurrently with a bounded worker pool.</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+	&quot;time&quot;
+)
+
+func worker(host string, jobs &lt;-chan int, results chan&lt;- int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for port := range jobs {
+		if checkPort(host, port, 2*time.Second) {
+			results &lt;- port
+		}
+	}
+}
+
+func scanHost(host string, ports []int, workers int) []int {
+	jobs := make(chan int, len(ports))
+	results := make(chan int, len(ports))
+	var wg sync.WaitGroup
+
+	for w := 0; w &lt; workers; w++ {
+		wg.Add(1)
+		go worker(host, jobs, results, &amp;wg)
+	}
+	for _, p := range ports {
+		jobs &lt;- p
+	}
+	close(jobs)
+	wg.Wait()
+	close(results)
+
+	var open []int
+	for p := range results {
+		open = append(open, p)
+	}
+	return open
+}
+
+func main() {
+	ports := []int{22, 80, 443, 3000, 8000, 8080, 9000}
+	fmt.Println(&quot;open:&quot;, scanHost(&quot;127.0.0.1&quot;, ports, 10))
+}</code></pre>
+<p>Rules that prevent the classic mistakes: the sender closes the channel, never the receiver; use <code>sync.WaitGroup</code> to know when workers are done; never share a map across goroutines without a mutex (the race detector will find this).</p>
+<pre><code class="language-bash"># Run with the race detector during development and CI
+go test -race ./...
+go run -race .</code></pre>
+<h2>6. Modules and dependencies</h2>
+<pre><code class="language-bash"># Add a dependency (picks the latest tagged version)
+go get github.com/spf13/cobra@latest
+
+# Pin to a specific version for reproducible builds
+go get github.com/spf13/cobra@v1.8.1
+
+# Upgrade all direct dependencies to latest minor/patch
+go get -u ./...
+
+# Show the dependency graph and verify checksums
+go mod graph | head -20
+go mod verify</code></pre>
+<p><code>go.mod</code> records the module path and Go version; <code>go.sum</code> records hashes of every dependency. Commit both files. Builds verify dependencies against <code>go.sum</code>, which blocks silent substitution of a dependency&#x27;s contents.</p>
+<h2>7. Cross-compiling static binaries</h2>
+<pre><code class="language-bash"># Linux amd64 static binary with symbols stripped (smaller, no debug info)
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+  go build -trimpath -ldflags=&quot;-s -w&quot; -o bin/portcheck-linux .
+
+# Windows and macOS targets from the same source
+CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o bin/portcheck.exe .
+CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -o bin/portcheck-mac .
+
+# Confirm the result
+file bin/portcheck-linux
+ls -lh bin/</code></pre>
+<p><code>CGO_ENABLED=0</code> gives a fully static binary with no libc dependency, which is what you want for containers and minimal hosts. <code>-trimpath</code> removes local filesystem paths from the binary for reproducible builds.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>go: command not found</code> after install. Add the Go bin directory to</li>
+<p>PATH: <code>export PATH=$PATH:/usr/local/go/bin</code> and the module bin dir <code>$(go env GOPATH)/bin</code>.</p>
+<li><code>go mod tidy</code> removes a dependency you still need indirectly. This</li>
+<p>happens when an import only exists behind a build tag; verify with <code>go build -tags &lt;tag&gt;</code> before tidying, or keep the import explicit.</p>
+<li>Tests pass locally but flake in CI. Usually timing assumptions or</li>
+<p>port conflicts; bind test servers to port 0 (random free port) and never assume a fixed port is free.</p>
+<li>Race detector reports a race in a map read. Maps are not safe for</li>
+<p>concurrent use; protect with <code>sync.Mutex</code> or switch to <code>sync.Map</code> when the access pattern fits.</p>
+<li>Cross-compiled binary fails with &quot;no such file or directory&quot; on</li>
+<p>the target. The binary was built with CGO against glibc; rebuild with <code>CGO_ENABLED=0</code> or ship the matching libc.</p>
+<li><code>go get</code> picks a pseudo-version you did not expect. Pin exact</li>
+<p>versions in <code>go.mod</code> for anything that ships; pseudo-versions (<code>v0.0.0-20240101-abcdef</code>) pin a commit but are hard to audit.</p>
+<li>Vendoring is required for offline builds. Run <code>go mod vendor</code></li>
+<p>and build with <code>-mod=vendor</code>; commit the <code>vendor/</code> directory so the build never touches the network.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration. A Go binary is suspicious when it is statically linked, stripped (<code>-s -w</code>), and upx-packed while claiming to be a common utility; check <code>file</code> output and string tables for mismatches. Go programs embed the module path and build metadata, readable with <code>go version -m binary</code>, which reveals the real project and dependency versions even in stripped builds. Misconfiguration shows up as Go services running as root, debug endpoints (<code>net/http/pprof</code>) exposed on public interfaces, and binaries built with CGO pulling unexpected shared libraries. Detect data races and goroutine leaks in long-running services by watching RSS growth and goroutine counts exposed through <code>runtime</code> metrics endpoints; a leak usually means a channel nobody drains.</p>
+<h2>Key references</h2>
+<ul>
+<li>Go 1.23 documentation: https://go.dev/doc/</li>
+<li>Effective Go: https://go.dev/doc/effective_go</li>
+<li>go command reference: https://pkg.go.dev/cmd/go</li>
+<li>testing package: https://pkg.go.dev/testing</li>
+<li>sync package (Mutex, WaitGroup): https://pkg.go.dev/sync</li>
+<li>CWE-362 (Concurrent Execution using Shared Resource with Improper</li>
+<p>Synchronization): data races the race detector finds.</p>
+<li>CWE-400 (Uncontrolled Resource Consumption): unbounded goroutine</li>
+<p>spawning.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

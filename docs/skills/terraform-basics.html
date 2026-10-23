@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: terraform-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>terraform-basics</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing or operating Terraform infrastructure as</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cloud-security-basics.html">cloud-security-basics</a> <a href="git-workflows.html">git-workflows</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Terraform</td><td>1.9</td></tr></tbody></table><p>Terraform declares infrastructure in HCL files and converges real cloud resources to match. This skill covers the safe operating loop (init, plan, apply), the HCL building blocks, state handling (the part that bites everyone eventually), modules for reuse, and the checks that keep <code>apply</code> from surprising you. All examples use Terraform 1.9 syntax.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Write HCL in a versioned directory: providers, variables,</li>
+<p>resources, outputs.</p>
+<li>Run <code>terraform fmt</code> and <code>terraform validate</code> before every plan.</li>
+<li>Run <code>terraform plan -out=tfplan</code> and read the whole plan: every</li>
+<p>create, update, and destroy must be expected.</p>
+<li>Apply the saved plan file, never re-plan at apply time.</li>
+<li>Store state in a remote backend with locking; never commit</li>
+<p><code>*.tfstate</code> to git.</p>
+<li>Reuse code with modules; pin module sources to versions or</li>
+<p>commits.</p>
+<li>Separate environments with workspaces or, better, separate state</li>
+<p>per environment.</p>
+<li>Destroy deliberately: plan the destroy, confirm the blast radius,</li>
+<p>then run it.</p>
+</ol>
+<h2>1. First configuration</h2>
+<pre><code class="language-bash">terraform version
+
+mkdir tf-demo &amp;&amp; cd tf-demo
+cat &gt; main.tf &lt;&lt;&#x27;EOF&#x27;
+terraform {
+  required_version = &quot;&gt;= 1.9.0&quot;
+  required_providers {
+    random = {
+      source  = &quot;hashicorp/random&quot;
+      version = &quot;~&gt; 3.6&quot;
+    }
+  }
+}
+
+resource &quot;random_pet&quot; &quot;name&quot; {
+  length = 2
+}
+
+resource &quot;random_password&quot; &quot;db&quot; {
+  length  = 24
+  special = true
+}
+EOF
+
+cat &gt; outputs.tf &lt;&lt;&#x27;EOF&#x27;
+output &quot;pet_name&quot; {
+  value = random_pet.name.id
+}
+
+output &quot;db_password&quot; {
+  value     = random_password.db.result
+  sensitive = true
+}
+EOF
+
+terraform init
+terraform fmt
+terraform validate
+terraform plan -out=tfplan
+terraform apply tfplan
+terraform output pet_name</code></pre>
+<p><code>init</code> downloads providers, <code>validate</code> checks syntax without cloud access, <code>plan -out</code> freezes the exact change set, and <code>apply tfplan</code> executes exactly that. Mark secret outputs <code>sensitive = true</code> so they do not print in logs.</p>
+<h2>2. Variables and configuration</h2>
+<pre><code class="language-bash">cat &gt; variables.tf &lt;&lt;&#x27;EOF&#x27;
+variable &quot;environment&quot; {
+  description = &quot;Deployment environment&quot;
+  type        = string
+  validation {
+    condition     = contains([&quot;dev&quot;, &quot;staging&quot;, &quot;prod&quot;], var.environment)
+    error_message = &quot;environment must be dev, staging, or prod.&quot;
+  }
+}
+
+variable &quot;instance_count&quot; {
+  description = &quot;Number of instances&quot;
+  type        = number
+  default     = 2
+}
+
+variable &quot;tags&quot; {
+  description = &quot;Tags applied to all resources&quot;
+  type        = map(string)
+  default     = {}
+}
+EOF
+
+# Supply values without editing files
+cat &gt; dev.tfvars &lt;&lt;&#x27;EOF&#x27;
+environment    = &quot;dev&quot;
+instance_count = 1
+tags = { team = &quot;platform&quot;, costcenter = &quot;eng&quot; }
+EOF
+
+terraform plan -var-file=dev.tfvars -out=tfplan</code></pre>
+<p>Variables with <code>validation</code> blocks reject bad input at plan time. Pass secrets via <code>TF_VAR_</code> environment variables or a secrets manager, never in committed <code>.tfvars</code> files:</p>
+<pre><code class="language-bash">export TF_VAR_db_password=&quot;$(openssl rand -hex 24)&quot;
+terraform plan -out=tfplan</code></pre>
+<h2>3. State and remote backends</h2>
+<p>State maps your HCL to real resource IDs. Lose it and Terraform forgets what it manages; corrupt it and Terraform fights reality.</p>
+<pre><code class="language-bash"># Local state exists after apply: inspect, do not hand-edit
+ls -la *.tfstate*
+terraform state list
+terraform show -json | head -c 500; echo
+
+# Move a resource to a new address after refactoring (no recreation)
+terraform state mv &#x27;random_pet.name&#x27; &#x27;random_pet.service_name&#x27;
+
+# Remove something from management WITHOUT deleting the real resource
+terraform state rm &#x27;random_password.db&#x27;</code></pre>
+<p>Configure a remote backend before a team touches the project:</p>
+<pre><code class="language-hcl">terraform {
+  backend &quot;s3&quot; {
+    bucket         = &quot;myorg-tfstate&quot;
+    key            = &quot;demo/terraform.tfstate&quot;
+    region         = &quot;eu-west-1&quot;
+    encrypt        = true
+    dynamodb_table = &quot;tfstate-locks&quot;
+  }
+}</code></pre>
+<pre><code class="language-bash"># Migrate local state into the backend (answers yes to copy)
+terraform init -migrate-state</code></pre>
+<p>Remote state with locking (S3 plus DynamoDB, or Terraform Cloud) stops two applies from corrupting state concurrently. State files contain secrets in plain text: encrypt the backend and restrict who can read it.</p>
+<h2>4. Modules for reuse</h2>
+<pre><code class="language-bash">mkdir -p modules/network
+cat &gt; modules/network/main.tf &lt;&lt;&#x27;EOF&#x27;
+variable &quot;name&quot; {
+  type = string
+}
+variable &quot;cidr&quot; {
+  type = string
+}
+
+resource &quot;random_pet&quot; &quot;net&quot; {
+  length = 2
+}
+
+output &quot;network_name&quot; {
+  value = &quot;${var.name}-${random_pet.net.id}&quot;
+}
+output &quot;cidr&quot; {
+  value = var.cidr
+}
+EOF
+
+cat &gt; main.tf &lt;&lt;&#x27;EOF&#x27;
+module &quot;network&quot; {
+  source = &quot;./modules/network&quot;
+  name   = &quot;demo&quot;
+  cidr   = &quot;10.0.0.0/16&quot;
+}
+EOF
+
+terraform init   # installs local modules too
+terraform plan -out=tfplan</code></pre>
+<p>Pin remote modules to a version or commit: <code>source = &quot;git::https://example.com/mod.git?ref=v2.1.0&quot;</code>. Unpinned modules change under you. Keep modules small and single-purpose; a module that provisions a network, a database, and monitoring is three modules wearing a trench coat.</p>
+<h2>5. Workspaces and environments</h2>
+<pre><code class="language-bash"># Workspaces give each environment its own state in one backend
+terraform workspace new dev
+terraform workspace new prod
+terraform workspace list
+terraform workspace select dev
+terraform plan -var-file=dev.tfvars -out=tfplan
+
+# The workspace name is available in configuration
+# terraform.workspace == &quot;dev&quot;</code></pre>
+<p>For serious setups, prefer completely separate directories or backend keys per environment over workspaces: a mistaken <code>workspace select</code> has destroyed production before. Either way, production applies happen from CI with approvals, not from laptops.</p>
+<h2>6. Importing existing resources</h2>
+<pre><code class="language-bash"># Bring a manually created resource under management
+cat &gt; import.tf &lt;&lt;&#x27;EOF&#x27;
+import {
+  to = random_pet.legacy
+  id = &quot;existing-id-here&quot;
+}
+EOF
+
+terraform plan -generate-config-out=generated.tf
+# Review generated.tf, move the resource block where it belongs,
+# delete import.tf, then apply
+terraform apply -auto-approve</code></pre>
+<p><code>plan -generate-config-out</code> drafts the HCL for you; always review it before applying, because generated config may include defaults you do not want.</p>
+<h2>7. Safe destroy</h2>
+<pre><code class="language-bash"># See exactly what destroy would remove, first
+terraform plan -destroy -out=destroy.plan
+
+# Then destroy only after reading it
+terraform apply destroy.plan
+
+# Remove one resource without touching the rest
+terraform plan -destroy -target=random_pet.name -out=one.plan
+terraform apply one.plan</code></pre>
+<p>Protect critical resources from accidental deletion in HCL:</p>
+<pre><code class="language-hcl">resource &quot;random_pet&quot; &quot;important&quot; {
+  length = 2
+  lifecycle {
+    prevent_destroy = true
+  }
+}</code></pre>
+<p><code>prevent_destroy</code> makes <code>terraform destroy</code> fail rather than delete the resource; removing the protection is a deliberate code change.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>terraform init</code> fails with provider checksum mismatch. A proxy</li>
+<p>or mirror served a different binary; verify network trust, pin provider versions, and consider a provider mirror you control.</p>
+<li>State lock stuck after a crashed apply. Confirm no apply is</li>
+<p>running, then <code>terraform force-unlock &lt;lock-id&gt;</code>; the lock ID is in the error message. Never force-unlock while an apply is alive.</p>
+<li>Plan wants to recreate a resource you did not touch. Usually a</li>
+<p>provider upgrade changed defaults, or someone edited the resource in the cloud console; use <code>terraform plan -refresh-only</code> to see drift, then decide whether to import the drift or revert it.</p>
+<li>Secrets appear in plan output or logs. Mark outputs sensitive,</li>
+<p>avoid <code>TF_LOG=DEBUG</code> on shared CI, and remember state files hold secrets: encrypt backends and limit read access.</p>
+<li><code>apply</code> partially fails halfway. Fix the root cause and re-run</li>
+<p><code>plan</code> plus <code>apply</code>; Terraform resumes from state. Do not hand-edit cloud resources to &quot;help&quot;, that widens the drift.</p>
+<li>Module update changes everything. Pin <code>?ref=</code> on git sources and</li>
+<p>version constraints on registry modules; review the plan diff of module upgrades like code review.</p>
+<li>Two engineers apply at once without a backend lock. One state</li>
+<p>wins and resources orphan; this is why remote backends with locking are mandatory for teams, not optional.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration. Terraform misconfiguration shows up as state files committed to git (grep for <code>*.tfstate</code> in repos), backends without encryption, <code>0.0.0.0/0</code> security group rules declared in HCL, and providers configured with long-lived admin keys instead of short lived credentials. Detect misuse by scanning plans in CI for destructive changes (<code>terraform plan -detailed-exitcode</code> plus a policy check), requiring plan review before apply, and alerting on applies run outside the approved pipeline. Drift between state and reality (<code>plan -refresh-only</code> showing unexpected changes) can indicate manual console changes or compromise; investigate before re-applying. Publicly readable state backends leak secrets and full infrastructure maps, so audit bucket policies on every state bucket.</p>
+<h2>Key references</h2>
+<ul>
+<li>Terraform 1.9 documentation: https://developer.hashicorp.com/terraform/docs</li>
+<li>HCL language syntax: https://developer.hashicorp.com/terraform/language/syntax</li>
+<li>State management: https://developer.hashicorp.com/terraform/language/state</li>
+<li>Backends: https://developer.hashicorp.com/terraform/language/backend</li>
+<li>CIS Terraform benchmarks (cloud-specific): https://www.cisecurity.org/benchmarks</li>
+<li>CWE-798 (Use of Hard-coded Credentials): secrets in HCL and state.</li>
+<li>CWE-732 (Incorrect Permission Assignment for Critical Resource):</li>
+<p>world-readable state backends.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

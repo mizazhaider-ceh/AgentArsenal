@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: azure-enumeration</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>azure-enumeration</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when enumerating a Microsoft Azure tenant or subscription</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cloud-security-basics.html">cloud-security-basics</a> <a href="recon-passive.html">recon-passive</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Azure CLI</td><td>2.65</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Azure enumeration maps what an identity can see and touch inside a tenant and its subscriptions: who you are, which Entra ID objects exist, which RBAC roles you hold, and which resources are deployed. This skill covers the authorized operator workflow with the Azure CLI: identity context, Entra ID, RBAC assignments, compute, storage, Key Vaults, networking, and policy, plus safe unauthenticated checks of public storage. Use it against your own tenants, in-scope bug bounty targets, and lab environments only. Never enumerate tenants you do not have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm identity and subscription: <code>az account show</code>, tenant ID,</li>
+<p>user type, and login method.</p>
+<li>List all subscriptions and tenants the principal can reach, then</li>
+<p>set the working subscription explicitly.</p>
+<li>Enumerate Microsoft Entra ID: users, groups, service principals,</li>
+<p>and app registrations.</p>
+<li>Enumerate Azure RBAC: role assignments scoped to the principal,</li>
+<p>then widen to subscription scope if readable.</p>
+<li>Survey compute: virtual machines, VM extensions, disks, and</li>
+<p>snapshots.</p>
+<li>Survey storage accounts: containers, public access settings, and</li>
+<p>keys only if the scope allows.</p>
+<li>Survey Key Vaults: vault list, then keys, secrets, and certificates</li>
+<p>metadata (values only with explicit permission).</p>
+<li>Survey networking: virtual networks, public IPs, network security</li>
+<p>groups, and load balancers.</p>
+<li>Check Azure Policy assignments and Defender for Cloud posture.</li>
+<li>Run safe unauthenticated checks: public blob containers and static</li>
+<p>websites inside the scope.</p>
+<li>Save every command and its raw JSON output for the report.</li>
+</ol>
+<h2>1. Identity and subscription context</h2>
+<pre><code class="language-bash"># Who am I, which subscription and tenant are active
+az account show --query &#x27;{user:name, tenant:tenantId, sub:name, subId:id}&#x27;
+
+# Every subscription and tenant reachable with these credentials
+az account list --query &#x27;[].{name:name, id:id, tenant:tenantId, state:state}&#x27; \
+  --output table
+
+# Work explicitly: never rely on the default subscription
+az account set --subscription &quot;&lt;SUBSCRIPTION-ID-OR-NAME&gt;&quot;
+
+# Login method and active cloud (AzureCloud vs national clouds)
+az account show --query &#x27;{cloud:environmentName}&#x27; --output text
+az ad signed-in-user show --query &#x27;{upn:userPrincipalName, id:id}&#x27; 2&gt;/dev/null</code></pre>
+<p>If <code>az ad</code> commands are deprecated in your CLI build, the same data is available through Microsoft Graph with <code>az rest</code>; the queries below show both where it matters.</p>
+<h2>2. Microsoft Entra ID enumeration</h2>
+<p>Entra ID (formerly Azure AD) holds the identities. Read users, groups, service principals, and the apps behind them.</p>
+<pre><code class="language-bash"># Users: UPN, display name, type (member vs guest)
+az ad user list --query &#x27;[].{upn:userPrincipalName, name:displayName, type:userType}&#x27; \
+  --output table
+
+# Groups and their membership
+az ad group list --query &#x27;[].{name:displayName, id:id}&#x27; --output table
+az ad group member list --group &quot;&lt;GROUP-ID-OR-NAME&gt;&quot; \
+  --query &#x27;[].{name:displayName, upn:userPrincipalName}&#x27; --output table
+
+# Service principals (managed identities and app identities)
+az ad sp list --all --query &#x27;[].{name:displayName, appId:appId, type:servicePrincipalType}&#x27; \
+  --output table
+
+# App registrations behind the service principals
+az ad app list --all --query &#x27;[].{name:displayName, appId:appId}&#x27; \
+  --output table</code></pre>
+<p>Graph fallback when <code>az ad</code> is unavailable:</p>
+<pre><code class="language-bash">az rest --method get \
+  --url &#x27;https://graph.microsoft.com/v1.0/users?$select=userPrincipalName,displayName,userType&#x27; \
+  --query &#x27;value[].[userPrincipalName,displayName,userType]&#x27; --output table</code></pre>
+<h2>3. Azure RBAC role assignments</h2>
+<p>RBAC decides what the principal can do at each scope (management group, subscription, resource group, resource).</p>
+<pre><code class="language-bash"># Role assignments for the signed-in principal at subscription scope
+MY_ID=$(az ad signed-in-user show --query id -o tsv 2&gt;/dev/null)
+az role assignment list --assignee &quot;$MY_ID&quot; --all \
+  --query &#x27;[].{role:roleDefinitionName, scope:scope}&#x27; --output table
+
+# All assignments in the subscription (needs read permission)
+az role assignment list --all \
+  --query &#x27;[].{principal:principalName, role:roleDefinitionName, scope:scope}&#x27; \
+  --output table | head -40
+
+# What a specific role definition actually grants
+az role definition list --name &quot;Contributor&quot; \
+  --query &#x27;[].{name:roleName, actions:permissions[0].actions, notActions:permissions[0].notActions}&#x27;
+
+# Custom role definitions (often over-permissive)
+az role definition list --custom-role-only true \
+  --query &#x27;[].{name:roleName, actions:permissions[0].actions}&#x27; --output table</code></pre>
+<p>High-value roles to flag: Owner, Contributor, User Access Administrator, Key Vault Secrets Officer, Storage Blob Data Contributor, and any custom role with wildcard actions.</p>
+<h2>4. Compute enumeration</h2>
+<pre><code class="language-bash"># Virtual machines: name, size, OS, power state, resource group
+az vm list --query &#x27;[].{name:name, rg:resourceGroup, size:hardwareProfile.vmSize, os:storageProfile.osDisk.osType}&#x27; \
+  --output table
+az vm list -d --query &#x27;[].{name:name, power:powerState, publicIp:publicIps, privateIp:privateIps}&#x27; \
+  --output table
+
+# VM extensions (custom scripts and agents are interesting)
+az vm extension list --vm-name &lt;VM&gt; --resource-group &lt;RG&gt; \
+  --query &#x27;[].{name:name, publisher:publisher, type:virtualMachineExtensionType}&#x27; \
+  --output table
+
+# Managed disks and snapshots (may contain copies of data)
+az disk list --query &#x27;[].{name:name, rg:resourceGroup, size:diskSizeGb}&#x27; \
+  --output table
+az snapshot list --query &#x27;[].{name:name, rg:resourceGroup}&#x27; --output table</code></pre>
+<h2>5. Storage account enumeration</h2>
+<p>Storage accounts hold blobs, files, queues, and tables. Public blob access at the account level is the first thing to check.</p>
+<pre><code class="language-bash"># Storage accounts and their public access posture
+az storage account list \
+  --query &#x27;[].{name:name, rg:resourceGroup, publicBlob:allowBlobPublicAccess, httpsOnly:enableHttpsTrafficOnly}&#x27; \
+  --output table
+
+# Containers inside one account (needs data-plane permission or key)
+az storage container list --account-name &lt;ACCOUNT&gt; \
+  --query &#x27;[].{name:name, public:properties.publicAccess}&#x27; --output table
+
+# Static website hosting flag
+az storage blob service-properties show --account-name &lt;ACCOUNT&gt; \
+  --query &#x27;staticWebsite&#x27;</code></pre>
+<p>Only list storage account KEYS when the scope allows it; keys are full-control credentials:</p>
+<pre><code class="language-bash">az storage account keys list --account-name &lt;ACCOUNT&gt; \
+  --query &#x27;[].{name:keyName}&#x27; --output table</code></pre>
+<h2>6. Key Vault enumeration</h2>
+<pre><code class="language-bash"># Vaults: name, SKU, network posture
+az keyvault list --query &#x27;[].{name:name, rg:resourceGroup}&#x27; --output table
+az keyvault show --name &lt;VAULT&gt; \
+  --query &#x27;{sku:properties.sku.name, publicNet:properties.publicNetworkAccess}&#x27;
+
+# Object names only (metadata pass; values need explicit permission)
+az keyvault secret list --vault-name &lt;VAULT&gt; \
+  --query &#x27;[].{name:name, enabled:attributes.enabled}&#x27; --output table
+az keyvault key list --vault-name &lt;VAULT&gt; \
+  --query &#x27;[].{name:name}&#x27; --output table
+az keyvault certificate list --vault-name &lt;VAULT&gt; \
+  --query &#x27;[].{name:name}&#x27; --output table</code></pre>
+<p>Read a secret VALUE only when the rules of engagement allow it, and record exactly which secrets you touched.</p>
+<h2>7. Network enumeration</h2>
+<pre><code class="language-bash"># Virtual networks, subnets, and peerings
+az network vnet list \
+  --query &#x27;[].{name:name, rg:resourceGroup, cidr:addressSpace.addressPrefixes}&#x27; \
+  --output table
+
+# Public IPs and what they attach to
+az network public-ip list \
+  --query &#x27;[].{ip:ipAddress, name:name, rg:resourceGroup}&#x27; --output table
+
+# NSG rules: open inbound rules are the interesting part
+az network nsg list --query &#x27;[].{name:name, rg:resourceGroup}&#x27; --output table
+az network nsg rule list --nsg-name &lt;NSG&gt; --resource-group &lt;RG&gt; \
+  --query &#x27;[?direction==`Inbound`].{name:name, prio:priority, port:destinationPortRange, src:sourceAddressPrefix, access:access}&#x27; \
+  --output table
+
+# Load balancers and application gateways
+az network lb list --query &#x27;[].{name:name, rg:resourceGroup}&#x27; --output table</code></pre>
+<h2>8. Policy and Defender posture</h2>
+<pre><code class="language-bash"># Policy assignments that constrain the subscription
+az policy assignment list \
+  --query &#x27;[].{name:name, display:displayName, scope:scope}&#x27; --output table
+
+# Microsoft Defender for Cloud pricing tiers (on = monitored)
+az security pricing list --query &#x27;[].{name:name, tier:pricingTier}&#x27; \
+  --output table 2&gt;/dev/null</code></pre>
+<h2>9. Unauthenticated checks</h2>
+<p>Some storage endpoints answer without credentials. Test only in-scope accounts and stay read-only.</p>
+<pre><code class="language-bash"># Anonymous container listing (works only if public access is on)
+curl -s &quot;https://&lt;ACCOUNT&gt;.blob.core.windows.net/&lt;CONTAINER&gt;?restype=container&amp;comp=list&quot; \
+  | head -c 600
+
+# Static website endpoint
+curl -s -o /dev/null -w &#x27;%{http_code}\n&#x27; \
+  &quot;https://&lt;ACCOUNT&gt;.z1.web.core.windows.net/&quot;</code></pre>
+<h2>10. Subscription sweep</h2>
+<pre><code class="language-bash">for sub in $(az account list --query &#x27;[].id&#x27; -o tsv); do
+  echo &quot;=== $sub ===&quot;
+  az account set --subscription &quot;$sub&quot;
+  az vm list --query &#x27;[].{name:name, rg:resourceGroup}&#x27; -o table
+  az storage account list --query &#x27;[].name&#x27; -o tsv
+  az keyvault list --query &#x27;[].name&#x27; -o tsv
+done</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li><code>az ad</code> commands print deprecation warnings or fail on new CLI</li>
+<p>builds: use the <code>az rest</code> Microsoft Graph calls from section 2.</p>
+<li>Guest users (<code>userType == Guest</code>) have limited directory read by</li>
+<p>default; many list calls return partial results or 403.</p>
+<li>Role assignment list at subscription scope needs</li>
+<p><code>Microsoft.Authorization/roleAssignments/read</code>; without it, fall back to assignments for your own principal only.</p>
+<li>Multiple tenants: <code>az account list</code> shows them all, but <code>az ad</code></li>
+<p>queries run against the home tenant of the active subscription. Set the subscription first, then query.</p>
+<li>National clouds (Azure Government, Azure China) use different</li>
+<p>endpoints: log in with <code>az cloud set --name &lt;CLOUD&gt;</code> first.</p>
+<li>Storage data-plane calls fail without the right RBAC data role</li>
+<p>even when you can list the account; keys or SAS tokens may be the intended path, subject to scope.</p>
+<li>Output pagination: large tenants truncate lists; add <code>--all</code> where</li>
+<p>supported and follow <code>nextLink</code> in <code>az rest</code> calls.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Directory reads are denied: query your own user and your own role</li>
+<p>assignments only, then pivot through group memberships you can see.</p>
+<li>No subscription read: try resource-group scope</li>
+<p>(<code>az group list</code>) and per-resource <code>az resource show --ids</code>.</p>
+<li>Look for privilege paths: User Access Administrator or Owner</li>
+<p>assignments let you grant yourself more; service principals with secrets you can read may hold higher roles.</p>
+<li>Check automation: <code>az automation account list</code> and runbooks,</li>
+<p>plus Logic Apps, often run as powerful managed identities.</p>
+<li>Managed identity on a VM you can reach: query the instance</li>
+<p>metadata token endpoint from inside the VM (<code>http://169.254.169.254/metadata/identity/oauth2/token</code>) to get tokens for the attached identity, only on in-scope VMs.</p>
+<li>Subscription has no permissions at all: enumerate the tenant-level</li>
+<p>surface (users, groups, apps) which often uses different permissions than subscription RBAC.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see Azure enumeration in the Azure Activity Log and in Microsoft Entra audit and sign-in logs: <code>List Role Assignments</code>, <code>List Storage Accounts</code>, and directory read bursts from one principal. Microsoft Defender for Cloud and Entra ID Protection raise alerts on anomalous token use, impossible travel, and unfamiliar locations. Key Vault and Storage diagnostic logs record each data-plane access with caller identity. Durable defenses are least-privilege RBAC (Reader instead of Contributor for humans who only need visibility), Conditional Access policies blocking legacy auth and risky sign-ins, and alerts on bulk directory reads or role assignment changes. As the tester, keep call volume reasonable, stay inside the agreed window, and never read secret values or customer data beyond what the scope allows.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1580 (Cloud Infrastructure Discovery): the tenant</li>
+<p>survey itself.</p>
+<li>MITRE ATT&amp;CK T1526 (Cloud Service Discovery): per-service</li>
+<p>enumeration.</p>
+<li>MITRE ATT&amp;CK T1087.004 (Account Discovery: Cloud Account):</li>
+<p>listing Entra ID users and groups.</p>
+<li>MITRE ATT&amp;CK T1530 (Data from Cloud Storage): storage account</li>
+<p>inventory and reads.</p>
+<li>Azure CLI reference: https://learn.microsoft.com/cli/azure/</li>
+<li>Microsoft Graph API reference:</li>
+<p>https://learn.microsoft.com/graph/api/overview</p>
+<li>Azure RBAC documentation:</li>
+<p>https://learn.microsoft.com/azure/role-based-access-control/</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

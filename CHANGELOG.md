@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- 103 new skills (127 total) across 21 domains, adding 6 new domains: mobile (android-static, android-dynamic, ios-basics), binary (pwn-fundamentals, shellcode-basics, rop-chains, heap-exploitation, format-strings, angr-basics, ghidra-basics, firmware-analysis), malware (static-triage, dynamic-sandbox, yara-rules, packer-analysis), soc (threat-hunting, siem-detections, sigma-rules, suricata-ids, wazuh-basics, velociraptor-basics), osint (osint-methodology, domain-osint, social-media-osint, threat-intel), defensive (edr-basics, incident-playbooks, phishing-defense, ransomware-response), plus deep coverage of ad, cloud, crypto, forensics, incident, linux, network, privesc, recon, web, engineering, bugbounty, c2, api, auth.
+- 46 operator tools under tools/ with `scripts/test_tools.py` harness (all 46 passing).
+- Premium README with generated skill-count badge and domain-grouped catalog table via `scripts/gen_readme_catalog.py`; assets/banner.svg and assets/architecture.svg stat chips updated.
+- docs/ site rebuilt from scratch for all 127 skills with verified internal links.
+- `.claude-plugin/marketplace.json` now lists all 127 skills, matching arsenal-manifest.json exactly.
+- MINDMAP.md regenerated with all 21 domains and 127 skills.
+
 ## [1.0.0] - 2026-10-23
 
 Wave-1 launch.

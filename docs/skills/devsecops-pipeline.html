@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: devsecops-pipeline</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>devsecops-pipeline</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when designing or improving a DevSecOps delivery</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="cicd-security.html">cicd-security</a> <a href="github-actions.html">github-actions</a> <a href="git-workflows.html">git-workflows</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Trivy</td><td>0.58</td></tr><tr><td>OWASP Dependency-Check</td><td>11.1.0</td></tr><tr><td>cosign</td><td>2.4</td></tr></tbody></table><p>DevSecOps moves security into the delivery pipeline as automated gates instead of a review at the end. This skill covers designing that pipeline: which stages run in which order, where each security check belongs, how artifacts move between environments without being rebuilt, and how to prove what shipped. It is the design companion to cicd-security (hardening the pipeline itself) and github-actions (authoring the workflows).</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Sketch the stages: commit, build, unit test, SAST, SCA, image</li>
+<p>build, image scan, sign, deploy to staging, DAST, promote to production.</p>
+<li>Make every stage produce versioned, immutable artifacts; never</li>
+<p>rebuild between staging and production.</p>
+<li>Put fast checks early (lint, unit tests, SAST) and slow checks</li>
+<p>later (DAST, full image scan) so developers get feedback in minutes.</p>
+<li>Gate promotion on scan results: fail on critical, triage high,</li>
+<p>record decisions.</p>
+<li>Generate an SBOM at build time and attach it to the release.</li>
+<li>Deploy with a strategy that allows rollback (blue-green or</li>
+<p>canary), behind required approvals.</p>
+<li>Sign artifacts and verify signatures at deploy time.</li>
+<li>Observe the pipeline itself: duration, failure rate, and time</li>
+<p>from commit to production per stage.</p>
+</ol>
+<h2>1. Reference pipeline design</h2>
+<p>A solid pipeline has the same shape regardless of tooling. Each box is a stage with a clear pass/fail gate:</p>
+<pre><code>commit -&gt; build -&gt; unit test -&gt; SAST -&gt; SCA -&gt; image build
+  -&gt; image scan -&gt; sign + SBOM -&gt; deploy staging -&gt; DAST
+  -&gt; approval -&gt; promote to production (no rebuild)</code></pre>
+<ul>
+<li>Build once: compile, run unit tests, produce the artifact.</li>
+<li>SAST (static analysis) on every pull request: finds injection,</li>
+<p>hardcoded secrets, and unsafe patterns in your own code.</p>
+<li>SCA (software composition analysis) on every pull request:</li>
+<p>finds known CVEs in dependencies.</p>
+<li>Image scan after the image is built: OS packages plus app</li>
+<p>dependencies.</p>
+<li>Sign plus SBOM: the artifact becomes tamper-evident and its</li>
+<p>contents are inventoried.</p>
+<li>DAST (dynamic scan) against staging: finds runtime issues SAST</li>
+<p>cannot see.</p>
+<li>Promote the exact tested artifact to production; rebuilding</li>
+<p>invalidates every test you just ran.</p>
+</ul>
+<h2>2. SAST gate placement and tuning</h2>
+<p>Run a static analysis scanner over the codebase on every pull request. The gate position matters more than the tool: SAST belongs early, on the PR, where the developer who wrote the code sees the finding within minutes.</p>
+<pre><code class="language-bash"># Example scan command shape (semgrep shown; swap in your org scanner)
+pip install semgrep
+semgrep --config auto --error --strict src/
+
+# Scan only changed files for speed on large repos
+git diff --name-only origin/main...HEAD | grep &#x27;\.py$&#x27; | xargs -r semgrep --config auto --error</code></pre>
+<p>Tune rules before enforcing: run in warn mode for two weeks, fix or suppress the noise with documented reasons, then flip to blocking. A SAST gate with a 40 percent false-positive rate trains developers to ignore security gates entirely.</p>
+<h2>3. SCA gate with OWASP Dependency-Check</h2>
+<pre><code class="language-bash"># OWASP Dependency-Check 11.1.0 scans project dependencies for known CVEs
+# Release page: https://github.com/dependency-check/DependencyCheck/releases
+
+dependency-check.sh \
+  --project myapp \
+  --scan . \
+  --format HTML \
+  --out reports/ \
+  --failOnCVSS 9
+
+# Keep the vulnerability database cache warm between runs
+dependency-check.sh --updateonly</code></pre>
+<p><code>--failOnCVSS 9</code> blocks only critical findings; tune the threshold to your policy and record exceptions with expiry dates. For container images and lockfiles, Trivy covers the same ground faster (see cicd-security); use Dependency-Check where Trivy lacks a language ecosystem.</p>
+<h2>4. SBOM generation and artifact promotion</h2>
+<pre><code class="language-bash"># Generate an SBOM for the built image (SPDX format)
+trivy image --format spdx-json --output sbom.spdx.json myapp:1.2.3
+
+# Sign the image so tampering is detectable
+cosign sign myapp:1.2.3
+
+# Promote the SAME image digest from staging to production: no rebuild
+STAGING_DIGEST=$(docker inspect myapp:1.2.3 --format &#x27;{{index .RepoDigests 0}}&#x27;)
+echo &quot;promoting $STAGING_DIGEST&quot;
+docker tag &quot;$STAGING_DIGEST&quot; registry.example/myapp:prod-1.2.3
+docker push registry.example/myapp:prod-1.2.3
+
+# Verify signature before the deploy job touches the cluster
+cosign verify --key cosign.pub &quot;$STAGING_DIGEST&quot;</code></pre>
+<p>Promotion by digest guarantees production runs the exact bytes that passed staging. The SBOM answers &quot;which library version is running where&quot; in minutes during the next big CVE.</p>
+<h2>5. Deployment strategies</h2>
+<pre><code class="language-bash"># Blue-green with kubectl: two deployments, switch the service selector
+kubectl apply -f k8s/app-green.yaml
+kubectl rollout status deployment/app-green
+# smoke tests against green go here
+kubectl patch service app -p &#x27;{&quot;spec&quot;:{&quot;selector&quot;:{&quot;version&quot;:&quot;green&quot;}}}&#x27;
+# keep blue for instant rollback: patch the selector back if needed
+
+# Canary with a second deployment at low replica count
+kubectl apply -f k8s/app-canary.yaml
+kubectl scale deployment/app-canary --replicas=3
+# on failure: kubectl delete deployment/app-canary
+
+# Record every production deploy as an annotation for forensics
+kubectl annotate deployment/app \
+  kubernetes.io/change-cause=&quot;release 1.2.3 promoted from staging&quot; --overwrite</code></pre>
+<p>Choose blue-green when you need instant full rollback, canary when you want to measure the new version on real traffic first. Both beat recreate deployments, which cause downtime on every release.</p>
+<h2>6. DAST against staging</h2>
+<pre><code class="language-bash"># Baseline OWASP ZAP scan against the staging deployment
+zap-baseline.py -t https://staging.example.com \
+  -r zap-report.html \
+  -I
+
+# Targeted scan of the API surface changed in this release
+zap-api-scan.py -t https://staging.example.com/openapi.json \
+  -f openapi -r zap-api-report.html</code></pre>
+<p>The <code>-I</code> flag fails only on HIGH findings so informational noise does not block releases. DAST runs against a staging environment that mirrors production topology (same ingress, same auth) with synthetic data, never real customer data.</p>
+<h2>7. Pipeline observability</h2>
+<p>Track four delivery metrics per pipeline: lead time (commit to production), deploy frequency, change failure rate (deploys causing incidents), and mean time to restore.</p>
+<pre><code class="language-bash"># Example: list recent runs with timing from the GitHub CLI
+gh run list --limit 20 --json databaseId,conclusion,createdAt,updatedAt</code></pre>
+<p>Alert when the pipeline itself degrades: p95 build time doubling week over week means cache or runner trouble; a spiking scan-gate failure rate means a vulnerable dependency merged widely; dropping deploy frequency means approvals or flaky tests are blocking flow. A pipeline nobody measures rots quietly until an incident exposes it.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>SAST blocks a release on a false positive the night before a</li>
+<p>deadline. Have a documented break-glass: a security approver can waive with a ticket and expiry, and the waiver is audited.</p>
+<li>DAST finds nothing because staging does not match production.</li>
+<p>Keep staging&#x27;s topology identical (same ingress, same auth); data can be synthetic but shapes must match.</p>
+<li>SBOM generation slows every build. Generate once per artifact</li>
+<p>and attach it; cache the vulnerability database on runners.</p>
+<li>Teams bypass the pipeline with manual kubectl applies. Make the</li>
+<p>pipeline the only path with credentials to production; detect drift with scheduled diff jobs that alert on out-of-band changes.</p>
+<li>Signing keys are lost or compromised. With keyless (OIDC) signing</li>
+<p>there is no key to lose; with key-based signing, keep the private key in a KMS or HSM and have a rotation runbook ready.</p>
+<li>Promotion copies tags instead of digests. Tags are mutable; a</li>
+<p>re-pushed tag can change what &quot;prod-1.2.3&quot; means. Always promote by digest and keep the tag as a human label.</p>
+<li>Security gates run but nobody reads the reports. Route findings</li>
+<p>to the team&#x27;s tracker automatically, assign owners, and review the aging backlog weekly; a gate without follow-through is theater.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration of the delivery pipeline design. A weak pipeline design shows rebuilt artifacts between staging and production, unsigned releases reaching production, DAST running against mocks instead of a real staging, and security gates that warn but never block. Detect drift by comparing deployed digests against the signed release manifest; any digest in production without a matching signature is an incident. Monitor for deploys that skip stages (direct pushes to production branches), SBOMs missing from releases, and approval steps rubber-stamped in seconds. During an active CVE, the SBOM inventory tells you exactly which services are exposed; a pipeline without SBOMs turns that into a week of manual hunting.</p>
+<h2>Key references</h2>
+<ul>
+<li>SLSA framework (supply-chain levels): https://slsa.dev/</li>
+<li>OWASP DevSecOps Guideline:</li>
+<p>https://owasp.org/www-project-devsecops-guideline/</p>
+<li>OWASP Top 10 CI/CD Security Risks:</li>
+<p>https://owasp.org/www-project-top-10-ci-cd-security-risks/</p>
+<li>NIST SSDF (Secure Software Development Framework):</li>
+<p>https://csrc.nist.gov/projects/ssdf</p>
+<li>OWASP ZAP documentation: https://www.zaproxy.org/docs/</li>
+<li>OWASP Dependency-Check releases:</li>
+<p>https://github.com/dependency-check/DependencyCheck/releases</p>
+<li>CWE-494 (Download of Code Without Integrity Check): unsigned</li>
+<p>artifacts in the pipeline.</p>
+<li>CWE-829 (Inclusion of Functionality from Untrusted Control</li>
+<p>Sphere): unvetted dependencies passing SCA silently.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

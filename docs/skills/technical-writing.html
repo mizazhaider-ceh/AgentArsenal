@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: technical-writing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>technical-writing</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing documentation people actually read: planning a</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="git-workflows.html">git-workflows</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>pandoc</td><td>3.4</td></tr><tr><td>Vale</td><td>3.9</td></tr></tbody></table><p>Technical writing is engineering with words: the doc is a product with users, requirements, and bugs. Good docs get read because they respect the reader&#x27;s goal; bad docs get skimmed because they serve the writer&#x27;s ego. This skill covers writing docs that work: audience analysis, the Diataxis structure (tutorial, how-to, reference, explanation), plain-language style, verifiable procedures, API and CLI documentation, review and linting with Vale and pandoc, and keeping docs alive in version control.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Name the reader and their goal in one sentence before writing a word.</li>
+<li>Pick the doc type: tutorial (learning), how-to (task), reference</li>
+<p>(lookup), explanation (understanding). One doc, one type.</p>
+<li>Outline with the reader&#x27;s questions, not the system&#x27;s components.</li>
+<li>Draft fast in plain language; short sentences, verbs up front.</li>
+<li>Make every procedure verifiable: each step ends with how to confirm</li>
+<p>it worked.</p>
+<li>Add examples that run: copy-pasteable commands with expected output.</li>
+<li>Review for accuracy by following the doc yourself on a clean machine.</li>
+<li>Lint the prose (Vale) and build the output (pandoc); fix what they</li>
+<p>flag.</p>
+<li>Keep the doc next to the code, reviewed in the same pull request.</li>
+</ol>
+<h2>1. Know the reader</h2>
+<pre><code class="language-text">Bad:  &quot;This document describes the backup system.&quot;
+Good: &quot;After this guide, you can restore the database from last night&#x27;s
+       backup in under 10 minutes.&quot;</code></pre>
+<p>Write the reader contract at the top of every doc:</p>
+<pre><code class="language-markdown"># Restoring the database
+
+**For:** on-call engineers. **You need:** SSH access to db-1, the backup
+bucket credentials. **Time:** 10 minutes. **Result:** a running database
+with last night&#x27;s data.</code></pre>
+<p>If you cannot fill in those four lines, you do not know the reader yet.</p>
+<h2>2. Diataxis: the four doc types</h2>
+<p>| Type | Goal | Reader question | Shape | |---|---|---|---| | Tutorial | Learning | &quot;Teach me&quot; | Lesson with guaranteed outcome | | How-to guide | Task | &quot;How do I...?&quot; | Steps to a goal | | Reference | Lookup | &quot;What does X do?&quot; | Dry, complete, structured | | Explanation | Understanding | &quot;Why is it like this?&quot; | Concept discussion |</p>
+<pre><code class="language-bash"># Docs layout that mirrors the four types
+mkdir -p docs/{tutorials,how-to,reference,explanation}
+ls docs/</code></pre>
+<p>Rules: never mix types in one page (a tutorial that detours into reference material loses the learner); link between them instead. Tutorials must work end to end or they teach distrust; how-tos assume competence and skip teaching; reference must be complete, not chatty; explanations give the why behind the what.</p>
+<h2>3. Procedures that verify themselves</h2>
+<p>Every step: imperative verb first, exact command or click path, then the check.</p>
+<pre><code class="language-markdown">## Rotate the API key
+
+1. Generate a new key (keep the old one active for now):
+   `vault write -f auth/approle/role/api/secret-id`
+   You should see: a JSON block with `secret_id` and `secret_id_ttl`.
+
+2. Deploy the new key to the app servers:
+   `ansible-playbook rotate-key.yml`
+   You should see: `PLAY RECAP ... failed=0` for all hosts.
+
+3. Confirm the app serves traffic with the new key:
+   `curl -H &quot;Authorization: Bearer $NEW_KEY&quot; https://api.example.com/v1/health`
+   You should see: `HTTP 200` and `{&quot;status&quot;:&quot;ok&quot;}`.
+
+4. Revoke the old key only after step 3 passes on every host.</code></pre>
+<p>Anti-patterns: steps without checks (&quot;configure the thing&quot;), screenshots of text that should be copyable, &quot;simply&quot; and &quot;just&quot; (if it were simple the reader would not be reading), and pronouns without antecedents.</p>
+<h2>4. Style: plain, direct, scannable</h2>
+<pre><code class="language-text">Prefer:  &quot;Restart the service. Confirm it is active.&quot;
+Avoid:   &quot;The service should then be restarted by the operator, at which
+          point its active status can be confirmed.&quot;
+
+Prefer:  &quot;The backup fails if the disk is full.&quot;
+Avoid:   &quot;In the event of insufficient disk capacity, backup failure may
+          occur.&quot;</code></pre>
+<p>House rules that fix 80 percent of bad prose:</p>
+<ul>
+<li>One idea per sentence; average under 20 words.</li>
+<li>Active voice, present tense, second person (&quot;you&quot;).</li>
+<li>Headings are the table of contents; make them task-shaped (&quot;Rotate</li>
+<p>the API key&quot;, not &quot;Key rotation considerations&quot;).</p>
+<li>Lists for anything with more than two items; tables for comparisons.</li>
+<li>Define jargon on first use, then use it consistently (pick one term</li>
+<p>per concept: &quot;key&quot;, not &quot;key/token/secret&quot; at random).</p>
+<li>Numbers, versions, and commands are exact; never &quot;the latest&quot; or</li>
+<p>&quot;recently&quot;.</p>
+</ul>
+<h2>5. Documenting APIs and CLIs</h2>
+<p>For each endpoint or command: purpose in one line, exact syntax, parameters with types and defaults, one real example with real-looking output, and the error cases.</p>
+<p>`</p>
+<pre><code class="language-markdown">## `GET /v1/users/{id}`
+
+Returns one user. Requires the `users:read` scope.
+
+**Example:**</code></pre>
+<p>bash curl -s https://api.example.com/v1/users/42 \ -H &quot;Authorization: Bearer $TOKEN&quot;</p>
+<pre><code></code></pre>
+<p>json { &quot;data&quot;: { &quot;id&quot;: 42, &quot;name&quot;: &quot;Izaz&quot;, &quot;role&quot;: &quot;student&quot; } }</p>
+<pre><code>**Errors:** `401` bad token, `403` missing scope, `404` unknown id.</code></pre>
+<p>`</p>
+<p>For CLIs, document <code>--help</code> output as the contract and test it:</p>
+<pre><code class="language-bash"># The help text IS documentation; keep it accurate
+mytool deploy --help
+# Every flag in --help appears in the docs, and vice versa
+diff &lt;(mytool deploy --help) &lt;(sed -n &#x27;/## deploy/,/^## /p&#x27; docs/reference/cli.md)</code></pre>
+<h2>6. Review: the accuracy pass</h2>
+<p>Docs rot. The review that matters is not copy-editing, it is execution:</p>
+<pre><code class="language-bash"># Follow your own doc on a clean machine or container and fix every
+# step that lies, assumes, or skips
+docker run --rm -it ubuntu:24.04 bash
+# ... perform the procedure exactly as written ...</code></pre>
+<p>Review checklist: every command runs as written; expected outputs match reality; prerequisites are listed and sufficient; links resolve; versions mentioned still exist; screenshots match the current UI; &quot;you should see&quot; checks actually appear. Assign every doc an owner and a review date; undated docs are assumed stale.</p>
+<h2>7. Linting prose with Vale and building with pandoc</h2>
+<pre><code class="language-bash"># Vale: prose linter with a style guide (install from GitHub releases)
+vale --version
+vale docs/how-to/restore-database.md
+
+# Example .vale.ini enforcing plain language
+cat &gt; .vale.ini &lt;&lt;&#x27;EOF&#x27;
+StylesPath = styles
+MinAlertLevel = suggestion
+[*.md]
+BasedOnStyles = write-good, Vale
+EOF</code></pre>
+<pre><code class="language-bash"># pandoc: build one source into HTML and PDF
+pandoc docs/how-to/restore-database.md \
+  -o /tmp/restore-database.html --standalone --toc
+pandoc docs/how-to/restore-database.md \
+  -o /tmp/restore-database.pdf --pdf-engine=xelatex
+
+# Check for common doc bugs mechanically
+grep -rn &quot;TODO\|FIXME\|XXX&quot; docs/ | head          # unfinished sections
+grep -rn &quot;http://&quot; docs/ | grep -v localhost     # insecure links</code></pre>
+<p>Vale catches passive voice, weasel words, and overlong sentences; it does not catch lies, so the execution review in section 6 stays mandatory.</p>
+<h2>8. READMEs that work</h2>
+<pre><code class="language-markdown"># Project name
+
+One paragraph: what it does and who it is for.
+
+## Quick start (under 5 minutes, copy-paste)
+
+## Installation
+
+## Usage (the 3 most common tasks)
+
+## Configuration
+
+## Troubleshooting (the 5 errors everyone hits)
+
+## Contributing / License</code></pre>
+<p>README rules: quick start first, never marketing fluff; every claim links to the doc that proves it; badges only for signals that matter (build status, not vanity). A README longer than two screens needs the docs/ directory treatment.</p>
+<h2>9. Keeping docs alive</h2>
+<pre><code class="language-bash"># Docs live next to the code and ship in the same PR
+git log --oneline -5 -- docs/how-to/restore-database.md
+
+# Find docs nobody updated in a year (staleness candidates)
+find docs -name &#x27;*.md&#x27; -mtime +365 | head -20
+
+# Link check in CI (example with lychee)
+lychee --no-progress docs/**/*.md</code></pre>
+<p>Process rules: doc changes ride with code changes in the same PR; &quot;docs later&quot; means docs never; every incident postmortem asks &quot;what doc would have prevented this&quot;; changelogs note behavior changes so docs authors know what to update.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The procedure works for you but not the reader: you have tribal</li>
+<p>knowledge (env vars, VPN, permissions); list every prerequisite explicitly, including the embarrassing ones.</p>
+<li>Screenshots rot fastest: prefer text commands and outputs; screenshot</li>
+<p>only UI that cannot be described in words, and date-stamp them.</p>
+<li>Translating docs: write translation-friendly source first (short</li>
+<p>sentences, no idioms, no jokes); machine translation of idiomatic prose is where meaning dies.</p>
+<li>API docs vs code drift: generate reference from the OpenAPI spec or</li>
+<p>docstrings in CI; hand-written reference rots within months.</p>
+<li>Too many audiences in one doc: split it; a doc for beginners and</li>
+<p>experts serves neither.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Nobody reads the docs: the doc answers the wrong question; interview</li>
+<p>two readers about what they actually needed and restructure around that.</p>
+<li>Docs are accurate but unused: discoverability problem; link from the</li>
+<p>README, the error messages, and the places people get stuck.</p>
+<li>Reviewers rubber-stamp doc PRs: require the execution check (section</li>
+<p>6) as a merge requirement for how-to guides.</p>
+<li>Conflicting docs: designate one source of truth per topic and delete</li>
+<p>or redirect the duplicates; two truths is zero truths.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Docs are a security surface: they leak architecture, credentials in examples, and internal hostnames. Detect misuse and misconfig with:</p>
+<pre><code class="language-bash"># Secrets pasted into docs and examples (the classic leak)
+grep -rnE &#x27;AKIA[0-9A-Z]{16}|ghp_[0-9A-Za-z]{36}|password\s*=\s*[&quot;&#x27;\&#x27;&#x27;][^&quot;&#x27;\&#x27;&#x27;]+&#x27; \
+  docs/ README.md | head
+
+# Internal hostnames or IPs in public docs
+grep -rnE &#x27;10\.[0-9]+\.[0-9]+\.[0-9]+|192\.168\.[0-9]+\.[0-9]+|\.internal\b&#x27; \
+  docs/ | head
+
+# Example tokens that look real enough to try
+grep -rn &#x27;Bearer ey&#x27; docs/ | head</code></pre>
+<p>Defensive rules: examples use obviously fake values (<code>example.com</code>, <code>AKIAIOSFODNN7EXAMPLE</code>), never real credentials even redacted-looking ones; keep internal runbooks in the private repo and public docs in the public one; scan docs in CI with a secret scanner; treat a leaked credential in docs as a rotation event, not an edit.</p>
+<h2>Key references</h2>
+<ul>
+<li>Diataxis framework: https://diataxis.fr/</li>
+<li>Google developer documentation style guide:</li>
+<p>https://developers.google.com/style</p>
+<li>Vale 3.9 docs: https://vale.sh/docs/</li>
+<li>pandoc 3.4 manual: https://pandoc.org/MANUAL.html</li>
+<li>&quot;Docs for Developers&quot; (Wilson): engineering-focused writing guide.</li>
+<li>CWE-200 (Exposure of Sensitive Information): secrets in docs.</li>
+<li>CWE-532 (Insertion of Sensitive Information into Log File): the same</li>
+<p>habit in examples and logs.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

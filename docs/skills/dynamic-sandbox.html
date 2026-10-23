@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: dynamic-sandbox</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>dynamic-sandbox</h2><div class="meta"><span class="badge gray">malware</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when a suspicious file needs to be executed to reveal its</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="static-triage.html">static-triage</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Wireshark</td><td>4.6.9</td></tr><tr><td>FakeNet-NG</td><td>3.1.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Dynamic analysis executes the sample and watches what it does: files created, registry keys written, processes spawned, and network connections attempted. It answers the questions static analysis cannot, but it carries real risk, so the entire skill is built around containment first, execution second. Every run happens in a disposable VM with a snapshot taken beforehand, host-only or simulated networking, strict time limits, and full instrumentation running before the sample starts. Scope: detonate only samples you are authorized to analyze, in an isolated lab you control. Never run a sample on hardware that touches production, never allow real internet egress unless the engagement explicitly requires it and you have approval, and never detonate someone else&#x27;s sample on shared infrastructure.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Prepare the sandbox VM: clean snapshot, instrumentation installed, clock</li>
+<p>set, analysis tools ready.</p>
+<li>Start monitoring first: packet capture, FakeNet-NG, process monitor, and</li>
+<p>filesystem watcher.</p>
+<li>Copy the sample in (shared folder, never email) and hash it in the VM.</li>
+<li>Execute with a time limit and watch live for the first 2 minutes.</li>
+<li>Let it run the full window (typically 5 to 10 minutes), then stop capture.</li>
+<li>Collect artifacts: new files, registry diffs, network flows, dropped</li>
+<p>binaries.</p>
+<li>Revert to the clean snapshot immediately after collection.</li>
+<li>Convert observations into IOCs and a behavior report.</li>
+</ol>
+<h2>1. Sandbox preparation</h2>
+<p>The snapshot is your safety net and your reproducibility guarantee. No snapshot, no detonation.</p>
+<pre><code class="language-bash"># On the host (example with a generic hypervisor CLI; adapt to yours):
+# 1. Boot the clean analysis VM, install nothing new, take snapshot &#x27;clean&#x27;
+# 2. Verify network is host-only or disconnected
+# 3. Inside the VM, confirm no route to production:
+ip route show
+# Expected: only host-only or sandbox subnets, no default via corp gateway
+
+# Inside the VM: baseline the filesystem before detonation
+find / -xdev -type f -newer /tmp/baseline_marker 2&gt;/dev/null | head
+touch /tmp/baseline_marker
+
+# Windows baseline alternative: export registry hives of interest
+reg export HKLM\SOFTWARE baseline_software.reg
+reg export &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Run&quot; baseline_run.reg</code></pre>
+<p>Set the VM clock to a plausible recent time; some malware sleeps if the clock looks wrong or refuses to run in an obvious lab year. Disable automatic updates and cloud AV uploads in the sandbox, or your sample gets quarantined mid-run and your hash gets shared with a vendor.</p>
+<h2>2. Instrumentation: capture everything before execution</h2>
+<p>Start every monitor before the sample runs. A monitor started late misses the dropper phase, which is usually the interesting part.</p>
+<pre><code class="language-bash"># Packet capture on the sandbox interface (run in background, save to file)
+dumpcap -i eth0 -w /tmp/capture.pcap &amp;
+echo $! &gt; /tmp/dumpcap.pid
+
+# FakeNet-NG: simulate DNS, HTTP, and common services so the sample
+# talks to you instead of timing out
+python3 -m fakenetng.fakenetng -c /opt/fakenet/default.ini &amp;
+# Watch its log for the sample&#x27;s DNS queries and HTTP requests
+tail -f /tmp/fakenet.log
+
+# Linux: trace file and process activity with auditd or sysdig-style tools
+# Simple version: log all new processes
+ps aux --sort=start_time &gt; /tmp/ps_before.txt
+
+# Windows: Process Monitor with a backing file, filtered later
+# (start Procmon, set backing file, begin capture; stop after the run)</code></pre>
+<p>Note the FakeNet-NG configuration: it answers DNS for any domain and serves fake HTTP pages, which tricks most malware into revealing its full C2 protocol instead of dying on connection refused.</p>
+<h2>3. Execution with limits</h2>
+<p>Copy the sample in, verify the hash matches your triage record, then run it under a timeout. Watch the first two minutes live; most droppers show their hand quickly.</p>
+<pre><code class="language-bash"># Verify the sample survived the transfer intact
+sha256sum sample.bin
+# compare against hashes.txt from static-triage
+
+# Linux sample: run under timeout, capture stdout/stderr
+timeout 600 ./sample.bin &gt; /tmp/stdout.txt 2&gt; /tmp/stderr.txt &amp;
+SAMPLE_PID=$!
+echo &quot;started pid $SAMPLE_PID&quot;
+
+# Watch new processes in real time
+watch -n 2 &#x27;ps -eo pid,ppid,etime,cmd --sort=start_time | tail -20&#x27;
+
+# After the window: kill anything the sample spawned
+kill $SAMPLE_PID 2&gt;/dev/null
+pkill -P $SAMPLE_PID 2&gt;/dev/null</code></pre>
+<p>For Windows samples, double-click execution in the VM is normal, but prefer launching from a console so you see errors, and always with the same timeout discipline. If the sample needs arguments (a C2 URL, a password), you learned them in static triage; pass exactly those.</p>
+<h2>4. Collecting network behavior</h2>
+<p>Stop the capture, then read it for intent: DNS queries, HTTP requests, odd ports, and data volumes.</p>
+<pre><code class="language-bash"># Stop capture
+kill $(cat /tmp/dumpcap.pid)
+
+# DNS queries the sample made (answered by FakeNet-NG)
+tshark -r /tmp/capture.pcap -Y dns -T fields -e dns.qry.name | sort -u | head -30
+
+# HTTP requests: method, host, URI
+tshark -r /tmp/capture.pcap -Y http.request -T fields -e http.host -e http.request.uri | sort -u | head -30
+
+# All conversations: who talked to whom, how much
+tshark -r /tmp/capture.pcap -q -z conv,ip | head -40
+
+# Anything NOT dns/http: potential custom C2 on odd ports
+tshark -r /tmp/capture.pcap -Y &#x27;not dns and not http and not arp&#x27; -T fields -e ip.dst -e tcp.dstport -e udp.dstport | sort -u | head -30</code></pre>
+<p>Record the full FakeNet-NG log lines for each C2 attempt: the URI paths and POST bodies often contain the bot ID format and exfiltration structure, which become high-value detection strings.</p>
+<h2>5. Collecting host behavior</h2>
+<p>Diff the after-state against the baseline from step 1.</p>
+<pre><code class="language-bash"># New or changed files since baseline
+find / -xdev -type f -newer /tmp/baseline_marker 2&gt;/dev/null | grep -v -E &#x27;^/(proc|sys|tmp)&#x27; | head -40
+
+# New processes that outlived the sample
+ps -eo pid,ppid,etime,cmd --sort=start_time &gt; /tmp/ps_after.txt
+diff /tmp/ps_before.txt /tmp/ps_after.txt | head -40
+
+# Persistence artifacts on Linux
+ls -la /etc/cron* /var/spool/cron/ 2&gt;/dev/null
+systemctl list-units --type=service --state=running | grep -v -E &#x27;systemd|dbus&#x27; | head -20
+grep -r . ~/.config/autostart/ 2&gt;/dev/null | head
+
+# Dropped binaries: hash everything new for the IOC list
+find /tmp /var/tmp /dev/shm -type f -newer /tmp/baseline_marker 2&gt;/dev/null -exec sha256sum {} \;</code></pre>
+<p>On Windows, export the same registry hives as the baseline and diff them, check <code>HKCU\...\Run</code> and <code>HKLM\...\Run</code>, scheduled tasks (<code>schtasks /query</code>), and new services. Any dropped PE gets hashed and sent back through static-triage.</p>
+<h2>6. Revert and report</h2>
+<p>Revert first, analyze second. A sandbox that is not reverted is a contaminated lab.</p>
+<pre><code class="language-bash"># Revert to the clean snapshot NOW, before writing the report
+# (hypervisor-specific; example pattern)
+# vm_control revert --vm analysis-win10 --snapshot clean
+
+# Behavior report skeleton
+cat &gt; behavior_report.txt &lt;&lt;&#x27;EOF&#x27;
+Sample SHA256: &lt;hash&gt;
+Run window: &lt;start&gt; to &lt;stop&gt; UTC
+Network: &lt;DNS names queried&gt; / &lt;HTTP URIs&gt; / &lt;odd ports&gt;
+Files: &lt;created/modified paths&gt;
+Persistence: &lt;registry keys | cron | services | none observed&gt;
+Processes: &lt;spawn tree summary&gt;
+Dropped binaries: &lt;hashes&gt;
+Verdict: &lt;MALICIOUS with behaviors | BENIGN | INCONCLUSIVE&gt;
+IOCs: &lt;domains, IPs, hashes, mutexes, file paths&gt;
+EOF</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Sample does nothing: it may be waiting for a trigger (specific date,</li>
+<p>user interaction, reboot, or a C2 that FakeNet-NG did not satisfy). Check static strings for sleep calls and date checks before declaring it benign.</p>
+<li>Sample detects the VM and exits: look for the checks in static analysis</li>
+<p>(registry keys, MAC addresses, CPUID), then decide whether defeating them is in scope. Do not modify the sample to evade its own checks without explicit authorization.</p>
+<li>Sample needs real internet (domain fronting, valid TLS): real egress is a</li>
+<p>scope decision, not a technical one. If approved, use a dedicated egress with full capture and a kill switch, never the corporate network.</p>
+<li>Ransomware behavior starts: kill the run immediately, revert, and note</li>
+<p>that encryption behavior was observed. Do not let it finish encrypting the sandbox &quot;for completeness&quot;.</p>
+<li>Multiple stages: the dropper downloads stage two. Capture stage two from</li>
+<p>FakeNet-NG&#x27;s served content or the pcap, hash it, and triage it as a new sample.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Behavior is inconclusive after the standard window: extend to 30 minutes</li>
+<p>with user-interaction simulation (mouse movement, opening documents), or run again after advancing the VM clock past any date checks found in static analysis.</p>
+<li>Sample requires a specific environment (a target application, a locale):</li>
+<p>rebuild the sandbox to match the victim profile from the incident, then re-run.</p>
+<li>Need API-level detail: escalate to API monitoring (API Monitor, Frida</li>
+<p>stalking in a lab) or a full debugger session, still inside the sandbox.</p>
+<li>Kernel-mode behavior suspected (driver drops): use a kernel debugger</li>
+<p>attached to the VM and memory forensics (memory-forensics) on a snapshot taken mid-run.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Dynamic analysis is how behavior-based detections are born: every file path, registry key, mutex, DNS name, and HTTP URI you record becomes a candidate detection or blocklist entry. Defenders should operationalize the outputs: feed dropped hashes to the EDR blocklist, the C2 domains to DNS filtering, and the behavior patterns (e.g., &quot;writes to Run key then beacons every 60s&quot;) to the SIEM as correlation rules. The lab itself needs defending too: an internet-connected sandbox that detonates real malware is a launchpad, so default-deny egress, snapshot discipline, and no shared credentials between the lab and production are mandatory. Misuse is detonating malware you have no right to possess, or using a sandbox to test whether your own malware evades detection; both are out of scope.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1204 (User Execution): the detonation moment.</li>
+<li>MITRE ATT&amp;CK T1497.001 (System Checks): sandbox and VM evasion to watch</li>
+<p>for.</p>
+<li>MITRE ATT&amp;CK T1059 (Command and Scripting Interpreter), T1053 (Scheduled</li>
+<p>Task/Job): common observed behaviors.</p>
+<li>MITRE ATT&amp;CK T1071 (Application Layer Protocol): C2 over HTTP/DNS.</li>
+<li>FakeNet-NG documentation: https://github.com/mandiant/flare-fakenet-ng</li>
+<li>Wireshark documentation: https://www.wireshark.org/docs/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

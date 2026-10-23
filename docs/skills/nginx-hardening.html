@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: nginx-hardening</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>nginx-hardening</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hardening an nginx 1.27 web server or reverse proxy:</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="secure-coding.html">secure-coding</a> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>nginx</td><td>1.27</td></tr><tr><td>OpenSSL</td><td>3.4</td></tr></tbody></table><p>nginx usually sits at the edge of the stack, terminating TLS and proxying to application servers, which makes its configuration a high-value hardening target. This skill covers locking down nginx 1.27: hiding version banners, modern TLS, security headers, rate limiting, request limits, privilege separation, safe proxying, and logging that supports incident response. Scope is the web server layer itself, not the application behind it.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory the config: <code>nginx -T</code> dumps the effective configuration;</li>
+<p>review every server block.</p>
+<li>Hide the version banner (<code>server_tokens off</code>) and remove the Server</li>
+<p>header where possible.</p>
+<li>Terminate TLS with modern protocols and ciphers only; redirect all HTTP</li>
+<p>to HTTPS.</p>
+<li>Add security headers: HSTS, X-Content-Type-Options, X-Frame-Options or</li>
+<p>frame-ancestors, Referrer-Policy, and a tight Content-Security-Policy.</p>
+<li>Set request limits: client_max_body_size, client_body_timeout, and</li>
+<p>method restrictions.</p>
+<li>Add rate limiting (limit_req) on login, API, and expensive endpoints.</li>
+<li>Run worker processes as a non-root user; lock down file and directory</li>
+<p>permissions.</p>
+<li>Harden the reverse proxy: sanitize forwarded headers, set timeouts, and</li>
+<p>never proxy hop-by-hop headers blindly.</p>
+<li>Configure structured access and error logging, and ship logs off the</li>
+<p>box.</p>
+<li>Test every change with <code>nginx -t</code>, reload gracefully, and verify from</li>
+<p>the outside with curl.</p>
+</ol>
+<h2>1. Baseline: inspect and test the config</h2>
+<pre><code class="language-bash"># Show nginx version and the full effective config
+nginx -v
+sudo nginx -T 2&gt;&amp;1 | less
+
+# Validate syntax before every reload (catches typos)
+sudo nginx -t
+
+# Graceful reload: zero-downtime config apply
+sudo systemctl reload nginx</code></pre>
+<p>Put site configs in <code>/etc/nginx/sites-available/</code> symlinked to <code>sites-enabled/</code>, and shared hardening snippets in <code>/etc/nginx/conf.d/</code> so every server block inherits them.</p>
+<h2>2. Hide version banners and server identity</h2>
+<pre><code class="language-bash"># /etc/nginx/conf.d/hardening.conf
+server_tokens off;</code></pre>
+<p>Verify from the outside; the Server header should say only <code>nginx</code>:</p>
+<pre><code class="language-bash">curl -sI https://example.com | grep -i &#x27;^server:&#x27;
+# Expected: server: nginx</code></pre>
+<p>To strip even that, use the third-party headers-more module (<code>more_clear_headers Server;</code>) if your build includes it; otherwise the bare <code>nginx</code> token is acceptable and honest.</p>
+<h2>3. Modern TLS termination</h2>
+<p>Redirect all HTTP to HTTPS, then serve TLS 1.2 and 1.3 only with a modern cipher list:</p>
+<pre><code class="language-nginx"># /etc/nginx/sites-available/example.com
+server {
+    listen 80;
+    server_name example.com www.example.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name example.com;
+
+    ssl_certificate     /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305;
+    ssl_prefer_server_ciphers off;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+
+    # HSTS: only after you are sure HTTPS works everywhere, start with a
+    # short max-age and raise it
+    add_header Strict-Transport-Security &quot;max-age=63072000; includeSubDomains; preload&quot; always;
+}</code></pre>
+<p>Verify the handshake from the outside:</p>
+<pre><code class="language-bash"># Confirm TLS 1.0/1.1 are rejected and 1.2/1.3 accepted
+openssl s_client -connect example.com:443 -tls1_1 &lt;/dev/null 2&gt;&amp;1 | grep -E &#x27;Protocol|Cipher&#x27;
+openssl s_client -connect example.com:443 -tls1_3 &lt;/dev/null 2&gt;&amp;1 | grep -E &#x27;Protocol|Cipher&#x27;
+
+# Check certificate chain and expiry
+echo | openssl s_client -connect example.com:443 -servername example.com 2&gt;/dev/null \
+  | openssl x509 -noout -dates -issuer</code></pre>
+<h2>4. Security headers</h2>
+<pre><code class="language-nginx"># /etc/nginx/conf.d/security-headers.conf
+add_header X-Content-Type-Options &quot;nosniff&quot; always;
+add_header X-Frame-Options &quot;SAMEORIGIN&quot; always;
+add_header Referrer-Policy &quot;strict-origin-when-cross-origin&quot; always;
+add_header Permissions-Policy &quot;camera=(), microphone=(), geolocation=()&quot; always;
+# Start CSP in report-only, tighten after watching violation reports
+add_header Content-Security-Policy &quot;default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;&quot; always;</code></pre>
+<p>Check the headers on a real response:</p>
+<pre><code class="language-bash">curl -sI https://example.com | grep -iE &#x27;strict-transport|x-content-type|x-frame|content-security|referrer|permissions&#x27;</code></pre>
+<p>CSP note: a wrong CSP breaks the site. Deploy <code>Content-Security-Policy-Report-Only</code> first, collect reports, then enforce.</p>
+<h2>5. Request limits and method restrictions</h2>
+<pre><code class="language-nginx"># /etc/nginx/conf.d/limits.conf
+client_max_body_size 10m;        # reject huge uploads early
+client_body_timeout 10s;
+client_header_timeout 10s;
+keepalive_timeout 15s;
+send_timeout 10s;
+
+# Block methods you do not use at the server level
+if ($request_method !~ ^(GET|HEAD|POST|PUT|DELETE|OPTIONS)$) {
+    return 405;
+}</code></pre>
+<p>Prefer <code>limit_except</code> inside location blocks for finer control:</p>
+<pre><code class="language-nginx">location /api/ {
+    limit_except GET POST PUT DELETE { deny all; }
+    proxy_pass http://app_backend;
+}</code></pre>
+<h2>6. Rate limiting</h2>
+<p>Define zones in the http context, then apply them where abuse hurts: logins, password resets, API endpoints.</p>
+<pre><code class="language-nginx"># /etc/nginx/conf.d/rate-limit.conf
+limit_req_zone $binary_remote_addr zone=login:10m rate=5r/m;
+limit_req_zone $binary_remote_addr zone=api:10m rate=60r/m;
+limit_req_status 429;</code></pre>
+<pre><code class="language-nginx">location /login {
+    limit_req zone=login burst=5 nodelay;
+    proxy_pass http://app_backend;
+}
+
+location /api/ {
+    limit_req zone=api burst=20 nodelay;
+    proxy_pass http://app_backend;
+}</code></pre>
+<p>Test that limiting triggers:</p>
+<pre><code class="language-bash">for i in $(seq 1 12); do
+  curl -s -o /dev/null -w &quot;%{http_code}\n&quot; https://example.com/login
+done
+# Expect 200s then 429s</code></pre>
+<p>Rejected requests land in the error log; watch them during rollout.</p>
+<h2>7. Privilege separation and file permissions</h2>
+<pre><code class="language-bash"># /etc/nginx/nginx.conf (top level)
+user www-data;
+worker_processes auto;</code></pre>
+<pre><code class="language-bash"># Config readable by root only; web root readable, never writable by www-data
+sudo chown -R root:root /etc/nginx
+sudo chmod -R 640 /etc/nginx/nginx.conf
+sudo find /etc/nginx -type d -exec chmod 750 {} \;
+
+sudo chown -R root:www-data /var/www/example.com
+sudo find /var/www/example.com -type d -exec chmod 755 {} \;
+sudo find /var/www/example.com -type f -exec chmod 644 {} \;
+
+# TLS private key: root only
+sudo chmod 600 /etc/letsencrypt/live/example.com/privkey.pem
+
+# Confirm workers run unprivileged
+ps -o user,comm -C nginx</code></pre>
+<p>Never run application upload directories with execute permission, and never let the web root be writable by the worker user.</p>
+<h2>8. Safe reverse proxying</h2>
+<pre><code class="language-nginx">upstream app_backend {
+    server 127.0.0.1:8000 max_fails=3 fail_timeout=30s;
+    keepalive 32;
+}
+
+server {
+    listen 443 ssl;
+    server_name example.com;
+
+    location / {
+        proxy_pass http://app_backend;
+        proxy_http_version 1.1;
+
+        # Forward client identity safely
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Drop hop-by-hop headers, do not blindly forward Connection
+        proxy_set_header Connection &quot;&quot;;
+
+        # Timeouts so a hung backend cannot pile up workers
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 15s;
+        proxy_read_timeout 30s;
+
+        # Do not let the backend override your security headers silently;
+        # use proxy_hide_header for backend headers you distrust
+        proxy_hide_header X-Powered-By;
+    }
+}</code></pre>
+<p>If nginx sits behind a CDN or load balancer, set <code>real_ip_header</code> and <code>set_real_ip_from</code> for the proxy ranges so logs and rate limits see the real client IP, and never trust <code>X-Forwarded-For</code> from the open internet.</p>
+<h2>9. Logging for forensics</h2>
+<pre><code class="language-nginx"># /etc/nginx/conf.d/logging.conf
+log_format forensic &#x27;$remote_addr - $remote_user [$time_local] &#x27;
+                    &#x27;&quot;$request&quot; $status $body_bytes_sent &#x27;
+                    &#x27;&quot;$http_referer&quot; &quot;$http_user_agent&quot; &#x27;
+                    &#x27;rt=$request_time uct=$upstream_connect_time &#x27;
+                    &#x27;urt=$upstream_response_time&#x27;;
+
+access_log /var/log/nginx/access.log forensic;
+error_log /var/log/nginx/error.log warn;</code></pre>
+<p>Ship logs off the box (rsyslog, filebeat, or similar) and rotate them:</p>
+<pre><code class="language-bash"># Confirm logrotate handles nginx
+cat /etc/logrotate.d/nginx
+# Force a rotation test
+sudo logrotate -d /etc/logrotate.d/nginx 2&gt;&amp;1 | tail -5</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li><code>nginx -t</code> passes but reload fails silently on a bad include path.</li>
+<p><code>nginx -T</code> shows exactly which files were loaded; diff against what you expect.</p>
+<li><code>add_header</code> directives are not inherited into a location block that</li>
+<p>defines its own <code>add_header</code>. Repeat the headers or use a shared include inside every location.</p>
+<li>HSTS with <code>preload</code> before you are ready can brick HTTP access for</li>
+<p>months. Start with a short max-age, no preload, then raise it.</p>
+<li>Rate limiting legitimate users behind NAT: one office shares one IP.</li>
+<p>Combine <code>limit_req</code> with allowlists for known office ranges, or key the zone on an authenticated user id instead of IP for logged-in endpoints.</p>
+<li><code>client_max_body_size</code> too small breaks file uploads with a confusing</li>
+</ul>
+<ol>
+<li>Set it per location for the upload endpoint instead of globally.</li>
+</ol>
+<ul>
+<li>HTTP/2 and <code>http2 on</code> syntax: nginx 1.25.1 and later use the <code>http2 on</code></li>
+<p>directive; the old <code>listen 443 ssl http2</code> parameter still works but is deprecated style.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Config test fails: <code>nginx -t</code> prints the file and line; fix, retest,</li>
+<p>and never reload on a failed test.</p>
+<li>502 Bad Gateway after proxy changes: check the backend is listening</li>
+<p>(<code>ss -tlnp | grep 8000</code>), then read <code>error.log</code> for the upstream error (<code>connect() failed</code>, <code>no live upstreams</code>).</p>
+<li>TLS handshake failures: run <code>openssl s_client</code> with <code>-tls1_2</code> and</li>
+<p><code>-tls1_3</code> to isolate protocol vs cipher issues; confirm the full chain is in <code>fullchain.pem</code> (missing intermediates are the usual cause).</p>
+<li>Permission denied on reload: the master process needs root to bind</li>
+<p>ports 80/443; reload via <code>systemctl reload nginx</code>, not as www-data.</p>
+<li>Still broken: bisect by moving site configs out of <code>sites-enabled</code></li>
+<p>one at a time and reloading until the failure disappears.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>nginx misconfigurations defenders hunt for: version banners leaking (<code>Server: nginx/1.27.0</code>), missing HSTS or CSP, TLS 1.0/1.1 still enabled, no rate limiting on auth endpoints, directory listing on, overly broad <code>location ~ \.php$</code> style blocks, and proxy configs that forward to internal hosts (SSRF via misconfigured <code>proxy_pass</code> with user-controlled variables). Detect misuse and misconfig with:</p>
+<pre><code class="language-bash"># Banner and header audit from outside
+curl -sI https://example.com | grep -iE &#x27;^server:|strict-transport|content-security&#x27;
+
+# TLS posture scan (needs testssl.sh or nmap ssl scripts)
+nmap --script ssl-enum-ciphers -p 443 example.com | head -30
+
+# 4xx/5xx spike or 429 flood in the access log (attack or mis-tuned limits)
+sudo awk &#x27;$9 ~ /^(429|403)$/ {print $1}&#x27; /var/log/nginx/access.log \
+  | sort | uniq -c | sort -rn | head
+
+# Requests probing for admin paths or traversal
+sudo grep -E &#x27;\.\./|/\.git/|/admin|/wp-login&#x27; /var/log/nginx/access.log | tail -20</code></pre>
+<p>Alert on: sudden 429 storms (credential stuffing), <code>client_max_body_size</code> 413 bursts (upload abuse probing), and any <code>proxy_pass</code> to non-allowlisted upstreams after a config change. Keep a known-good <code>nginx -T</code> dump in version control and diff it after every change.</p>
+<h2>Key references</h2>
+<ul>
+<li>nginx 1.27 documentation: https://nginx.org/en/docs/</li>
+<li>nginx ssl module: https://nginx.org/en/docs/http/ngx_http_ssl_module.html</li>
+<li>nginx limit_req module: https://nginx.org/en/docs/http/ngx_http_limit_req_module.html</li>
+<li>Mozilla SSL Configuration Generator (modern profile):</li>
+<p>https://ssl-config.mozilla.org/</p>
+<li>OWASP Secure Headers Project: https://owasp.org/www-project-secure-headers/</li>
+<li>CWE-200 (Exposure of Sensitive Information): version banners.</li>
+<li>CWE-319 (Cleartext Transmission): missing HTTPS redirect or HSTS.</li>
+<li>CWE-770 (Allocation of Resources Without Limits): missing rate limits</li>
+<p>and request size caps.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

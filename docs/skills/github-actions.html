@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: github-actions</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>github-actions</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing or debugging GitHub Actions workflows on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="git-workflows.html">git-workflows</a> <a href="devsecops-pipeline.html">devsecops-pipeline</a> <a href="cicd-security.html">cicd-security</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>git</td><td>2.48</td></tr><tr><td>GitHub CLI</td><td>2.68</td></tr><tr><td>act</td><td>0.2.71</td></tr></tbody></table><p>GitHub Actions runs your CI/CD inside the repository: workflows trigger on pushes, pull requests, and schedules, and execute jobs on runners. This skill covers authoring correct workflows, the caching and matrix patterns that keep them fast, and the pinning and permissions practices that keep them safe. Debug locally with <code>act</code> before burning runner minutes.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Put workflows in <code>.github/workflows/</code> with one file per pipeline</li>
+<p>(ci.yaml, release.yaml).</p>
+<li>Trigger narrowly: <code>pull_request</code> and <code>push</code> to protected branches,</li>
+<p>not every branch.</p>
+<li>Set top-level <code>permissions: {}</code> and grant each job only what it</li>
+<p>needs.</p>
+<li>Pin every third-party action to a full commit SHA, with a comment</li>
+<p>naming the version.</p>
+<li>Cache dependencies and split jobs so failures are fast and</li>
+<p>obvious.</p>
+<li>Test locally with <code>act</code> before pushing.</li>
+<li>Watch runs with <code>gh run watch</code> and read logs with <code>gh run view</code>.</li>
+<li>Store secrets in repository or environment secrets, never in the</li>
+<p>workflow file.</p>
+</ol>
+<h2>1. First workflow</h2>
+<pre><code class="language-bash">mkdir -p .github/workflows
+cat &gt; .github/workflows/ci.yaml &lt;&lt;&#x27;EOF&#x27;
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}  # deny everything by default, grant per job
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4  # pin to the release SHA, see section 1 note
+      - name: Set up Python
+        uses: actions/setup-python@v5  # pin to the release SHA, see section 1 note
+        with:
+          python-version: &quot;3.12&quot;
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: pytest -q
+EOF
+
+git add .github/workflows/ci.yaml
+git commit -m &quot;Add CI workflow&quot;
+git push
+gh run list --limit 5
+gh run watch</code></pre>
+<p><code>permissions: {}</code> at the top denies all token scopes; each job then declares exactly what it needs (<code>contents: read</code> to check out code). Pin every third-party action to the full commit SHA published on the action&#x27;s release page (Dependabot opens PRs that keep pins current). The examples below use version tags for readability; replace each tag with the pinned SHA before merging to a protected branch.</p>
+<h2>2. Matrix builds and caching</h2>
+<pre><code class="language-bash">cat &gt; .github/workflows/matrix.yaml &lt;&lt;&#x27;EOF&#x27;
+name: Matrix CI
+
+on:
+  pull_request:
+
+permissions: {}
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15]
+        python: [&quot;3.11&quot;, &quot;3.12&quot;]
+    steps:
+      - uses: actions/checkout@v4  # pin to the release SHA, see section 1 note
+      - uses: actions/setup-python@v5  # pin to the release SHA, see section 1 note
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: pytest -q
+EOF</code></pre>
+<p><code>fail-fast: false</code> shows all matrix failures instead of cancelling the rest after the first red cell. The built-in <code>cache:</code> option on setup actions handles dependency caching without manual cache keys; for custom caches use <code>actions/cache</code> with a key derived from lock files.</p>
+<pre><code class="language-bash"># Manual cache example for a Go build
+cat &gt; .github/workflows/go-cache.yaml &lt;&lt;&#x27;EOF&#x27;
+name: Go CI
+on: [pull_request]
+permissions: {}
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions: { contents: read }
+    steps:
+      - uses: actions/checkout@v4  # pin to the release SHA, see section 1 note
+      - uses: actions/setup-go@v5  # pin to the release SHA, see section 1 note
+        with:
+          go-version: &quot;1.23&quot;
+          cache: true
+      - run: go build ./...
+      - run: go test ./...
+EOF</code></pre>
+<h2>3. Artifacts and job dependencies</h2>
+<pre><code class="language-bash">cat &gt; .github/workflows/artifacts.yaml &lt;&lt;&#x27;EOF&#x27;
+name: Build and release
+
+on:
+  push:
+    tags: [&quot;v*&quot;]
+
+permissions: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions: { contents: read }
+    steps:
+      - uses: actions/checkout@v4  # pin to the release SHA, see section 1 note
+      - run: go build -o app .
+      - name: Upload binary
+        uses: actions/upload-artifact@v4  # pin to the release SHA, see section 1 note
+        with:
+          name: app-linux-amd64
+          path: app
+          retention-days: 7
+
+  release:
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write  # needed to create the release
+    steps:
+      - name: Download binary
+        uses: actions/download-artifact@v4  # pin to the release SHA, see section 1 note
+        with:
+          name: app-linux-amd64
+      - name: Create release with the GitHub CLI (no third-party action needed)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          chmod +x app
+          gh release create &quot;${{ github.ref_name }}&quot; app \
+            --title &quot;${{ github.ref_name }}&quot; --generate-notes
+EOF</code></pre>
+<p><code>needs:</code> orders jobs and passes artifacts between them. Short retention on artifacts keeps storage costs down; release assets live on the release, not in artifact storage.</p>
+<h2>4. OIDC: no long-lived cloud keys</h2>
+<pre><code class="language-bash">cat &gt; .github/workflows/deploy.yaml &lt;&lt;&#x27;EOF&#x27;
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  id-token: write  # required for OIDC token issuance
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    environment: production  # approvals and secrets scoped here
+    steps:
+      - uses: actions/checkout@v4  # pin to the release SHA, see section 1 note
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4  # pin to the release SHA, see section 1 note
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/github-deploy
+          aws-region: eu-west-1
+      - name: Deploy
+        run: ./scripts/deploy.sh
+EOF</code></pre>
+<p>OIDC exchanges a short-lived GitHub token for cloud credentials, so no static access keys live in secrets. The cloud side trusts the specific repo and environment; <code>environment: production</code> adds required reviewers before deploy jobs run.</p>
+<h2>5. Local testing with act</h2>
+<pre><code class="language-bash"># Install act (runs workflows locally with Docker)
+# https://github.com/nektos/act releases, or via package manager
+act --version
+
+# List jobs in a workflow file
+act -W .github/workflows/ci.yaml -l
+
+# Run the test job locally
+act -W .github/workflows/ci.yaml -j test
+
+# Dry run: print what would execute without running it
+act -W .github/workflows/ci.yaml -j test -n</code></pre>
+<p><code>act</code> catches YAML errors, bad action references, and broken shell steps before you push. It is not a perfect replica of GitHub-hosted runners (different images, no OIDC), so a green <code>act</code> run still gets one real CI run before merge.</p>
+<h2>6. Debugging failed runs</h2>
+<pre><code class="language-bash"># List recent runs and watch the latest
+gh run list --limit 10
+gh run view --log-failed | tail -60
+
+# Re-run only failed jobs
+gh run rerun --failed &lt;run-id&gt;
+
+# Download logs for offline reading
+gh run download &lt;run-id&gt; -n logs 2&gt;/dev/null || gh run view &lt;run-id&gt; --log &gt; run.log
+
+# Debug with tmux-style live session on failure (add to workflow)
+# uses: mxschmitt/action-tmate@...  # only on self-hosted or with approval</code></pre>
+<p>Enable debug logging per run by setting the <code>ACTIONS_STEP_DEBUG</code> secret to <code>true</code>; it prints far more about what each step did. For flaky tests, <code>gh run rerun --failed</code> retries without rerunning green jobs.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Workflow does not trigger on pull requests from forks. Fork PRs</li>
+<p>run with read-only tokens and no secrets by default; workflows needing secrets must use <code>pull_request_target</code> with extreme care (it runs your base-branch code, review what it checks out).</p>
+<li><code>GITHUB_TOKEN</code> permission denied on push or release. The job</li>
+<p>needs explicit <code>contents: write</code>; the default token is read-only when top-level permissions are locked down.</p>
+<li>Pinned SHA comment drifts from the real version. Re-pin with a</li>
+<p>tool like Dependabot, which opens PRs updating both the SHA and the comment together.</p>
+<li>Cache never hits. The key includes a lock-file hash; any</li>
+<p>dependency change invalidates it by design. For partial reuse, add <code>restore-keys</code> with a prefix fallback.</p>
+<li><code>act</code> fails where GitHub succeeds. Usually a missing secret</li>
+<p>(<code>act -s NAME=value</code>), a different runner image, or a service container networking difference; treat <code>act</code> as a smoke test.</p>
+<li>Matrix explodes runner minutes. Cap the matrix (2 OS x 2</li>
+<p>versions is usually enough), use <code>fail-fast: false</code> only when you need the full failure picture.</p>
+<li>Secrets printed in logs. GitHub masks known secrets, but</li>
+<p>transformed values (base64, substrings) leak; never echo credentials, and rotate any secret that appears in a log.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration. A misconfigured workflow shows unpinned actions (floating <code>@v4</code> tags that can move), <code>pull_request_target</code> checking out untrusted PR code, <code>permissions: write-all</code>, and secrets passed as plain inputs to third-party actions. Detect misuse by auditing workflow files for these patterns in CI, requiring CODEOWNERS review on <code>.github/workflows/</code>, and alerting on workflow runs that exfiltrate data (unexpected outbound network from build jobs, or artifacts containing <code>.git</code> or secret files). A compromised action pin is caught by verifying SHAs against the upstream release and by Dependabot update PRs; cryptominers in CI reveal themselves through sudden spikes in runner minutes and CPU-heavy steps with no legitimate build output.</p>
+<h2>Key references</h2>
+<ul>
+<li>GitHub Actions documentation: https://docs.github.com/actions</li>
+<li>Workflow syntax: https://docs.github.com/actions/reference/workflows/workflow-syntax-for-github-actions</li>
+<li>Security hardening guide:</li>
+<p>https://docs.github.com/actions/security-guides/security-hardening-for-github-actions</p>
+<li>act (local runner): https://github.com/nektos/act</li>
+<li>GitHub CLI manual: https://cli.github.com/manual/</li>
+<li>CWE-798 (Use of Hard-coded Credentials): secrets in workflow</li>
+<p>files.</p>
+<li>CWE-250 (Execution with Unnecessary Privileges): write-all</li>
+<p>tokens and unscoped permissions.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

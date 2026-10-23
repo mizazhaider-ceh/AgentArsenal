@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: social-media-osint</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>social-media-osint</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when researching publicly visible social media content</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-methodology.html">osint-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>curl</td><td>8.x</td></tr></tbody></table><p>Social media holds a large share of public human intelligence: who people claim to be, who they know, where they have been, and what they care about. This skill covers researching publicly visible social content for authorized purposes: profile analysis, network mapping, media forensics, and geolocation, with strict limits. Only public posts, no bypassing privacy controls, no interaction with subjects, respect platform terms of service and privacy law.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the question and confirm the authorization covers social</li>
+<p>media research on public content only.</p>
+<li>Prepare the research profile: clean browser, VPN, sock puppet with</li>
+<p>no real identity links, no interaction with targets.</p>
+<li>Identify candidate profiles from the seed data (name, handle,</li>
+<p>email, photo).</p>
+<li>Verify identity: corroborate across platforms with photos, dates,</li>
+<p>and connections before treating a profile as the subject.</p>
+<li>Map the network: followers, interactions, and tagged content.</li>
+<li>Extract media and metadata; geolocate where posts allow it.</li>
+<li>Timeline the findings and assign confidence levels.</li>
+<li>Archive everything with timestamps and write the report.</li>
+</ol>
+<h2>1. Research setup and OPSEC</h2>
+<pre><code class="language-bash"># Dedicated browser profile for research (example: Chromium)
+/usr/bin/chromium --user-data-dir=/cases/acme/soc-profile --incognito &amp;
+
+# Never reuse: one sock puppet per engagement, created with a case email
+# No personal photos, no phone numbers tied to you, no real friends
+
+# Keep a research log from the first search
+echo &quot;$(date -u +%FT%TZ) start: seed handle @example&quot; &gt;&gt; /cases/acme/log.md</code></pre>
+<p>Rules that keep you lawful and safe:</p>
+<ul>
+<li>View public content only. If a profile is private, it is out of</li>
+<p>scope unless the authorization explicitly covers it (it usually does not).</p>
+<li>Never send follows, friend requests, messages, likes, or comments</li>
+<p>to subjects. Observation only.</p>
+<li>Do not use scraping tools that violate the platform&#x27;s terms of</li>
+<p>service. Manual review and official APIs or export features are the safe path.</p>
+<li>Separate research activity from personal accounts completely.</li>
+</ul>
+<h2>2. Profile identification and verification</h2>
+<p>Start from seeds: a handle, an email, a phone number, or a photo. Find candidate profiles, then verify before analysis.</p>
+<p>Verification checklist:</p>
+<ul>
+<li>Photo match across two or more platforms (same face, same</li>
+<p>distinctive background).</p>
+<li>Date consistency: account creation, employment dates, life events</li>
+<p>that align.</p>
+<li>Network overlap: mutual connections who are plausibly real.</li>
+<li>Content consistency: writing style, locations, interests match.</li>
+</ul>
+<pre><code class="language-bash"># Reverse image search starting points (manual, in the research browser):
+# - Google Images / Lens upload of the profile photo
+# - TinEye for older copies of the same image
+# Note where else the photo appears and the earliest date found</code></pre>
+<p>A profile that fails verification is not the subject. Report it as unverified rather than building analysis on it.</p>
+<h2>3. Timeline and network mapping</h2>
+<p>Build a timeline of public posts: dates, locations mentioned, employment changes, travel. Clusters reveal routines and time zones.</p>
+<p>Network mapping, manually:</p>
+<ul>
+<li>List public followers and followees; note which look like real</li>
+<p>people vs bots (no photo, no posts, following thousands).</p>
+<li>Record interactions: who comments regularly, who is tagged in</li>
+<p>photos, who appears across platforms.</p>
+<li>Draw the graph on paper or in a link analysis tool; shared</li>
+<p>connections between two identities suggest they are the same person or close associates.</p>
+</ul>
+<pre><code class="language-bash"># Simple interaction log format (TSV, UTC dates)
+# date        platform  actor       action    target      url
+printf &#x27;2026-10-20\tinstagram\t@seed\tpost\t-\thttps://...\n&#x27; \
+  &gt;&gt; /cases/acme/interactions.tsv</code></pre>
+<h2>4. Image and video forensics</h2>
+<p>Downloaded media carries evidence. Work on copies, keep originals hashed.</p>
+<pre><code class="language-bash"># Inspect EXIF metadata (install exiftool in your environment)
+exiftool -a -G1 photo.jpg | grep -iE &quot;gps|create date|make|model|software&quot;
+
+# GPS coordinates to a map link (verify they are plausible, not spoofed)
+# Check CreateDate vs the post date: mismatches suggest recycled images
+
+# Hash everything for the evidence log
+sha256sum evidence/* &gt; evidence/hashes.txt</code></pre>
+<p>What to extract: embedded GPS, device model, timestamps, software traces (edited in Photoshop vs straight from a phone), and thumbnails that differ from the main image (a sign of editing). Many platforms strip EXIF on upload; absence of metadata is normal, presence is a bonus. Never rely on a single GPS tag for a location conclusion.</p>
+<h2>5. Geolocation from public posts</h2>
+<p>Geolocate using visible clues, corroborated:</p>
+<ul>
+<li>Landmarks, street signs, shop names, license plates (region).</li>
+<li>Vegetation, architecture, and language on signage.</li>
+<li>Shadows and sun angle for rough time of day (supporting, not</li>
+<p>primary, evidence).</p>
+<li>Check-ins, tagged locations, and event posts the subject made</li>
+<p>public.</p>
+</ul>
+<pre><code class="language-bash"># Keep a geolocation worksheet per assessed location
+# location | clue | source URL | archive URL | confidence
+printf &#x27;Brussels\tGrand Place in background\thttps://...\tarchive/...\tprobable\n&#x27; \
+  &gt;&gt; /cases/acme/geolocation.tsv</code></pre>
+<p>Confirm with at least two independent clues before reporting a location. One photo of a famous landmark proves a visit, not a home address.</p>
+<h2>6. Brand and threat monitoring uses</h2>
+<p>Defensive applications that stay clearly lawful:</p>
+<ul>
+<li>Monitor public mentions of your brand for phishing kits, fake</li>
+<p>support accounts, and scam ads impersonating the company.</p>
+<li>Track ransomware groups&#x27; public leak sites for your organization</li>
+<p>name (this is public threat intel collection).</p>
+<li>Verify breach claims: a claimed leak gets checked against what is</li>
+<p>actually posted before anyone reacts.</p>
+<li>Executive exposure review: what public posts reveal travel plans,</li>
+<p>family details, or security answers, reported back for reduction.</p>
+</ul>
+<h2>7. Cross-platform handle correlation</h2>
+<p>Subjects reuse handles, emails, and usernames across platforms. Use that to link identities, carefully.</p>
+<pre><code class="language-bash"># Check a handle across platforms with a lightweight Python prober
+# (HEAD requests only, respects rate limits, no scraping of content)
+python3 &lt;&lt; &#x27;EOF&#x27;
+import urllib.request
+handle = &quot;example_handle&quot;
+sites = {
+    &quot;github&quot;: f&quot;https://github.com/{handle}&quot;,
+    &quot;reddit&quot;: f&quot;https://www.reddit.com/user/{handle}/&quot;,
+    &quot;telegram&quot;: f&quot;https://t.me/{handle}&quot;,
+    &quot;medium&quot;: f&quot;https://medium.com/@{handle}&quot;,
+}
+for name, url in sites.items():
+    try:
+        req = urllib.request.Request(url, method=&quot;HEAD&quot;,
+            headers={&quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;})
+        code = urllib.request.urlopen(req, timeout=10).status
+        print(name, &quot;exists:&quot;, code == 200)
+    except Exception as e:
+        print(name, &quot;no match or blocked&quot;)
+EOF</code></pre>
+<p>Correlation rules: an exact handle match on two platforms is a lead, not proof. Confirm with photo, dates, or network overlap before merging identities in your analysis. Common handles collide; check the account creation dates and content themes. Record every match with its URL and your confidence, and keep unverified matches in a separate &quot;unconfirmed&quot; list so they never leak into the report as fact.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The subject deletes content mid-investigation. Your archive is the</li>
+<p>record; note the deletion date and keep the archived copy.</p>
+<li>Deepfakes and AI-generated profile photos. Check for artifacts,</li>
+<p>reverse image search, and treat single-photo identities as unverified.</p>
+<li>Platform changes break your workflow (API closed, layout changed).</li>
+<p>Fall back to manual review; do not deploy scrapers against the new terms.</p>
+<li>You are blocked or rate-limited. Stop, note the limitation, and</li>
+<p>use other platforms or sources. Do not evade with new accounts.</p>
+<li>Content in another language. Machine translate and flag quotes as</li>
+<p>translations; verify names and places with a second tool.</p>
+<li>Minors appear in the material. Minimize collection, do not store</li>
+<p>more than the task needs, and escalate handling to the case lead.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You find credible threats of violence or ongoing crime: follow the</li>
+<p>engagement&#x27;s reporting chain and local legal obligations; do not investigate alone.</p>
+<li>A subject contacts you or detects the research: disengage</li>
+<p>immediately, document the contact, and inform the case lead. Never engage in conversation.</p>
+<li>The task needs private content or interaction: stop and get</li>
+<p>explicit written authorization; this usually changes the legal basis of the work.</p>
+<li>You accidentally access non-public data: do not copy or use it,</li>
+<p>document the incident, and inform the case lead at once.</p>
+<li>Platform legal threat: cease that collection, preserve your</li>
+<p>authorization, and route through legal.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Social media OSINT defends as well as it exposes:</p>
+<ul>
+<li>Attackers build target profiles from public posts for spear</li>
+<p>phishing (T1598, T1593). Reduce the raw material: review what employees post about projects, travel, and org charts.</p>
+<li>Fake executive and support accounts run scams. Monitor for them</li>
+<p>and publish a verified-accounts page so customers can check.</p>
+<li>Attackers verify phishing lures with public details (&quot;your boss</li>
+<p>is traveling&quot;). Train staff that public details prove nothing.</p>
+<li>Defenders can spot pre-attack chatter and infrastructure bragging</li>
+<p>on public channels; treat it as a lead, verify before acting.</p>
+<li>Your own team&#x27;s OPSEC matters: researchers who slip and interact</li>
+<p>from real accounts burn the operation and create liability.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1593 (Search Open Websites/Domains), T1598 (Phishing</li>
+<p>for Information), T1591 (Gather Victim Org Information).</p>
+<li>Platform terms of service for each network researched (read before</li>
+<p>collecting).</p>
+<li>ExifTool documentation: https://exiftool.org/</li>
+<li>Bellingcat&#x27;s open source investigation guides (methodology</li>
+<p>reference for geolocation and verification).</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

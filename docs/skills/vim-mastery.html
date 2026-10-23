@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: vim-mastery</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>vim-mastery</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when editing text at speed with Vim 9.1: learning motions,</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <span class="muted">none</span></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Vim</td><td>9.1</td></tr><tr><td>Neovim</td><td>0.10</td></tr></tbody></table><p>Vim rewards a simple mental model: motions move, operators act, text objects select structure, and everything composes. <code>d</code> deletes, <code>w</code> moves a word, <code>i&quot;</code> selects inside quotes, so <code>di&quot;</code> deletes inside quotes and <code>ci&quot;</code> deletes and starts typing. This skill covers Vim 9.1 fluency: the composable core, buffers and windows, macros, registers, search and replace, visual block editing, and a maintainable vimrc. Most of it applies to Neovim 0.10 as well.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Learn the grammar first: operator + motion, or operator + text</li>
+<p>object; everything else is vocabulary.</p>
+<li>Move by meaning (paragraphs, brackets, search), not by character.</li>
+<li>Edit with text objects (<code>iw</code>, <code>i&quot;</code>, <code>ip</code>, <code>at</code>) instead of visual</li>
+<p>selection.</p>
+<li>Repeat with <code>.</code>, record with <code>q</code> when <code>.</code> is not enough.</li>
+<li>Navigate files with buffers, splits, and the quickfix list, not one</li>
+<p>file at a time.</p>
+<li>Search precisely, replace with confirmation on risky patterns.</li>
+<li>Keep a small, understood vimrc; add plugins only for real pain.</li>
+<li>Practice one new motion per day until it is muscle memory.</li>
+</ol>
+<h2>1. The composable core</h2>
+<pre><code class="language-text">Operators: d delete, c change, y yank (copy), &gt; indent, &lt; dedent,
+           gu lowercase, gU uppercase, = auto-indent
+
+Motions:   w next word, b back word, e end of word,
+           0 start of line, ^ first non-blank, $ end of line,
+           gg first line, G last line, } next paragraph, { prev,
+           f{char} find char forward, t{char} till char,
+           % matching bracket, * search word under cursor
+
+Text objects: iw inner word, aw a word (with space),
+              i&quot; inner quotes, a&quot; around quotes,
+              i( i[ i{ inner brackets, a( a[ a{ around,
+              ip inner paragraph, ap around paragraph,
+              it inner tag, at around tag (HTML/XML)</code></pre>
+<p>Composition examples (type these, do not memorize lists):</p>
+<pre><code class="language-text">di&quot;     delete inside quotes (keep the quotes)
+ci(     change inside parens (delete + insert mode)
+yap     yank a paragraph
+gUiw    uppercase inner word
+&gt;ip     indent paragraph
+dt,     delete till comma
+ciw     change inner word (the rename-variable workhorse)</code></pre>
+<p>Counts multiply: <code>d3w</code> deletes three words, <code>y5j</code> yanks five lines down.</p>
+<h2>2. Moving like you mean it</h2>
+<pre><code class="language-text">H M L        top / middle / bottom of screen
+Ctrl-d/u     half-page down / up
+Ctrl-f/b     full page down / up
+zz / zt / zb center / top / bottom the cursor line
+n / N        next / previous search match
+gd           go to definition (ctags/LSP)
+/pattern     search forward, ?pattern backward</code></pre>
+<pre><code class="language-bash"># Jump to a line from the shell
+vim +42 app.py
+vim +/TODO app.py</code></pre>
+<p>Inside insert mode, <code>Ctrl-o</code> runs one normal command then returns:</p>
+<pre><code class="language-text">Ctrl-o A    jump to end of line, stay in insert mode
+Ctrl-o zz   center the view without leaving insert mode</code></pre>
+<h2>3. Buffers, windows, tabs</h2>
+<pre><code class="language-text">:e file       edit (opens in current window)
+:ls           list buffers
+:b2  / :bnext / :bprev   switch buffers
+:bd           delete (close) buffer
+
+:sp / :vsp    horizontal / vertical split
+Ctrl-w hjkl   move between splits
+Ctrl-w =      equalize split sizes
+Ctrl-w o      keep only the current split
+
+:tabnew file  new tab, gt / gT cycle tabs</code></pre>
+<p>Netrw (built-in file browser) covers 90 percent of file navigation:</p>
+<pre><code class="language-text">:Ex           open netrw in current window
+-             go up a directory (inside netrw)
+%             create a file, d create a directory</code></pre>
+<p>For projects, combine with the shell instead of plugins:</p>
+<pre><code class="language-bash"># Open every file matching a pattern, each in an argument slot
+vim $(grep -rl &quot;MAX_RETRIES&quot; src/)
+# Then :argdo %s/old/new/g | update   (edit all, save all)</code></pre>
+<h2>4. Macros: record once, replay everywhere</h2>
+<pre><code class="language-text">qa        start recording into register a
+...edits...
+q         stop recording
+@a        replay register a
+@@        replay last macro again
+10@a      replay 10 times</code></pre>
+<p>Practical macro: turn a list into quoted CSV values.</p>
+<pre><code class="language-text"># Start:   apple
+#          banana
+#          cherry
+# Record: qa I&quot;&lt;Esc&gt; A&quot;,&lt;Esc&gt; j q
+# Then: 2@a
+# Result: &quot;apple&quot;,
+#         &quot;banana&quot;,
+#         &quot;cherry&quot;,</code></pre>
+<p>Recursive macro for &quot;until the end of file&quot;: record <code>q</code> at the end of the macro itself (<code>qa ... j q</code> then <code>@a</code> stops at the last line).</p>
+<h2>5. Registers, marks, and jumps</h2>
+<pre><code class="language-text">&quot;ayy       yank line into register a
+&quot;ap        paste from register a
+&quot;+y / &quot;+p  system clipboard (needs +clipboard build)
+&quot;0p        paste last yank (not the last delete)
+:reg       show all registers
+
+ma         set mark a at cursor
+&#x27;a         jump to mark a (line), `a jump exact position
+&#x27;&#x27;         jump back to previous position
+Ctrl-o/i   jump older / newer through the jump list</code></pre>
+<pre><code class="language-bash"># Check clipboard support before relying on &quot;+
+vim --version | grep -o &#x27;+clipboard&#x27;</code></pre>
+<p>The black hole register <code>&quot;_</code> deletes without clobbering the yank:</p>
+<pre><code class="language-text">&quot;_dd       delete line, keep previous yank intact</code></pre>
+<h2>6. Search and replace without fear</h2>
+<pre><code class="language-text">:%s/old/new/g        whole file
+:%s/old/new/gc       confirm each replacement
+:&#x27;&lt;,&#x27;&gt;s/old/new/g    visual selection only
+:s/old/new/g         current line</code></pre>
+<p>Magic modes: <code>\v</code> (very magic) makes patterns behave like ERE:</p>
+<pre><code class="language-text">:%s/\v(foo|bar)/X/g      no backslash soup
+:%s/\v(\d+)-(\d+)/\2-\1/g   swap number groups</code></pre>
+<pre><code class="language-bash"># Replace across many files from the shell (safer preview first)
+grep -rl &#x27;old_name&#x27; src/ | xargs sed -i &#x27;s/old_name/new_name/g&#x27;
+# Or inside vim with quickfix:
+:vimgrep /old_name/ src/**/*.py
+:copen        &quot; browse matches
+:cfdo %s/old_name/new_name/g | update</code></pre>
+<p>Case handling: <code>set ignorecase</code> + <code>set smartcase</code> (lowercase query is case-insensitive, any uppercase makes it sensitive).</p>
+<h2>7. Visual block mode: column editing</h2>
+<pre><code class="language-text">Ctrl-v      visual block select
+I / A       insert before / append after every selected line
+r{char}     replace the whole block with a char</code></pre>
+<p>Turn a list into an assignment block:</p>
+<pre><code class="language-text"># Start:        # Select the column before each name with Ctrl-v,
+#   apple       # press I, type &quot;name = &#x27;&quot;, Esc,
+#   banana      # then A, type &quot;&#x27;,&quot; Esc
+#   cherry
+# Result:
+#   name = &#x27;apple&#x27;,
+#   name = &#x27;banana&#x27;,
+#   name = &#x27;cherry&#x27;,</code></pre>
+<h2>8. A sane vimrc</h2>
+<pre><code class="language-bash">cat &gt; ~/.vimrc &lt;&lt;&#x27;EOF&#x27;
+&quot; Basics
+set nocompatible
+syntax on
+filetype plugin indent on
+set number relativenumber
+set cursorline
+set encoding=utf-8
+
+&quot; Search
+set ignorecase smartcase incsearch hlsearch
+
+&quot; Indentation: spaces, 4 wide, keep it consistent
+set expandtab tabstop=4 shiftwidth=4 softtabstop=4
+set autoindent smartindent
+
+&quot; Behavior
+set hidden            &quot; switch buffers without saving
+set mouse=a           &quot; mouse works in terminal vim
+set clipboard=unnamedplus
+set undofile          &quot; persistent undo across sessions
+set undodir=~/.vim/undodir
+set wildmenu wildmode=longest:full
+set backspace=indent,eol,start
+
+&quot; Leader key and the mappings you will actually use
+let mapleader=&quot; &quot;
+nnoremap &lt;leader&gt;w :w&lt;CR&gt;
+nnoremap &lt;leader&gt;q :q&lt;CR&gt;
+nnoremap &lt;leader&gt;f :find&lt;CR&gt;
+&quot; Clear search highlight
+nnoremap &lt;silent&gt; &lt;leader&gt;&lt;space&gt; :nohlsearch&lt;CR&gt;
+&quot; Move lines up/down
+vnoremap J :m &#x27;&gt;+1&lt;CR&gt;gv=gv
+vnoremap K :m &#x27;&lt;-2&lt;CR&gt;gv=gv
+
+&quot; Find files recursively from cwd
+set path+=**
+EOF
+mkdir -p ~/.vim/undodir</code></pre>
+<p>Plugins: start with none. Add vim-plug plus one fuzzy finder and one LSP client only when <code>:find</code> and ctags genuinely slow you down. Every plugin is a dependency you will debug at 2 AM.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>vim</code> opens as <code>vi</code> (compatible mode, no arrow keys): your vimrc is</li>
+<p>not loaded; check <code>:echo $MYVIMRC</code> and <code>:set compatible?</code>.</p>
+<li>Paste mangles indentation: <code>:set paste</code> before pasting, `:set</li>
+<p>nopaste` after (or use bracketed paste in a modern terminal).</p>
+<li>Macros break on a slightly different line: add <code>set nowrapscan</code></li>
+<p>awareness, or make the macro end with a search that fails cleanly.</p>
+<li><code>d</code> then <code>p</code> pastes the delete, not the yank: use <code>&quot;0p</code> for the last</li>
+<p>yank, or delete into the black hole <code>&quot;_d</code>.</p>
+<li>Swap files after a crash: <code>vim -r</code> lists recoverable sessions;</li>
+<p>delete stale <code>.swp</code> files once recovered.</p>
+<li><code>Ctrl-s</code> freezes the terminal: flow control, press <code>Ctrl-q</code> to</li>
+<p>resume; disable with <code>stty -ixon</code> in your shell rc.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Vim behaves bizarrely over SSH: check <code>$TERM</code> (use</li>
+<p><code>xterm-256color</code>), and test with <code>vim -u NONE</code> to rule out your config.</p>
+<li>A plugin broke startup: <code>vim --startuptime /tmp/t.log</code> shows what</li>
+<p>is slow; bisect plugins by commenting halves of the plug block.</p>
+<li>Key mapping does nothing: <code>:verbose map &lt;key&gt;</code> shows what claimed</li>
+<p>it; terminal emulators swallow some keys (Ctrl variants), remap around them.</p>
+<li>Still slow on huge files: <code>set noswapfile</code>, <code>syntax off</code>, and open</li>
+<p>with <code>vim -u NONE</code> for emergency edits of multi-GB logs (or use <code>less</code>/<code>sed</code> instead).</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Vim artifacts matter in forensics and in spotting tampering: swap files, undo history, and modelines. Detect misuse and misconfig with:</p>
+<pre><code class="language-bash"># Swap files: unsaved edits, or someone editing where they should not
+sudo find / -name &#x27;*.swp&#x27; -o -name &#x27;*.swo&#x27; 2&gt;/dev/null | head
+
+# Persistent undo history can leak file contents long after deletion
+ls -la ~/.vim/undodir/ 2&gt;/dev/null | head
+
+# Modelines: vim executes options from file headers; malicious modelines
+# are a known vector (CVE-2019-20807 and friends)
+grep -rn &#x27;vim:&#x27; /tmp /var/tmp --include=&#x27;*&#x27; 2&gt;/dev/null | head -5</code></pre>
+<p>Defensive rules: <code>set nomodeline</code> (or <code>modelines=0</code>) on any system where untrusted files are edited, keep Vim patched (modeline and :source vulnerabilities recur), and remember that editing a file as root with a user-owned vimrc/plugins runs that code as root; use <code>sudo -e</code> / <code>sudoedit</code> or a minimal root vimrc. In forensics, <code>.swp</code> and undo files can recover attacker-edited content.</p>
+<h2>Key references</h2>
+<ul>
+<li>Vim 9.1 documentation: https://www.vim.org/docs.php</li>
+<li>Vim user manual: https://vimhelp.org/usr_toc.txt.html</li>
+<li>Neovim 0.10 docs: https://neovim.io/doc/</li>
+<li>&quot;Practical Vim&quot; (Drew Neil): the composition model behind this skill.</li>
+<li>vimtutor: run <code>vimtutor</code> for the 30-minute interactive basics.</li>
+<li>CVE-2019-20807: modeline code execution (why nomodeline matters).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

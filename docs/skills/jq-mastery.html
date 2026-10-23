@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: jq-mastery</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>jq-mastery</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when processing JSON on the command line with jq 1.7.1:</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bash-advanced.html">bash-advanced</a> <a href="python-cli-tooling.html">python-cli-tooling</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>jq</td><td>1.7.1</td></tr></tbody></table><p>jq is sed for JSON: a small language of filters that select, transform, and reshape JSON in pipelines. The mental model is a pipeline of filters where <code>.</code> is the current input, <code>|</code> feeds one filter into the next, and every filter produces a stream of values. This skill covers jq 1.7.1 from field selection to reduce, real API and log recipes, output formats, and the quoting and null-handling traps.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Pretty-print first (<code>jq .</code>) to see the shape of the data.</li>
+<li>Select fields with <code>.field</code> and <code>.field.nested</code>; use <code>.[]</code> to</li>
+<p>iterate arrays.</p>
+<li>Filter with <code>select(...)</code>, transform with <code>map(...)</code>.</li>
+<li>Build new objects with <code>{key: .path}</code> syntax.</li>
+<li>Aggregate with <code>group_by</code>, <code>unique</code>, <code>length</code>, <code>add</code>, <code>reduce</code>.</li>
+<li>Choose the output: raw strings (<code>-r</code>), CSV (<code>@csv</code>), TSV (<code>@tsv</code>).</li>
+<li>Handle missing fields with <code>?</code>, <code>//</code>, and <code>try/catch</code>.</li>
+<li>Test the filter against a saved sample before wiring it into a</li>
+<p>script.</p>
+</ol>
+<h2>1. Selection basics</h2>
+<pre><code class="language-bash"># Pretty-print (your first move on any unknown JSON)
+curl -s https://api.example.com/v1/users/42 | jq .
+
+# Field access, nested access
+echo &#x27;{&quot;user&quot;:{&quot;name&quot;:&quot;Izaz&quot;,&quot;tags&quot;:[&quot;a&quot;,&quot;b&quot;]}}&#x27; | jq &#x27;.user.name&#x27;
+echo &#x27;{&quot;user&quot;:{&quot;name&quot;:&quot;Izaz&quot;,&quot;tags&quot;:[&quot;a&quot;,&quot;b&quot;]}}&#x27; | jq &#x27;.user.tags[0]&#x27;
+
+# Iterate an array: one output per element
+echo &#x27;{&quot;users&quot;:[{&quot;n&quot;:&quot;a&quot;},{&quot;n&quot;:&quot;b&quot;}]}&#x27; | jq &#x27;.users[].n&#x27;
+
+# Optional access: null instead of an error on missing keys
+echo &#x27;{&quot;a&quot;:1}&#x27; | jq &#x27;.b.c?&#x27;
+
+# Keys with dashes or spaces need brackets
+echo &#x27;{&quot;x-y&quot;: 5}&#x27; | jq &#x27;.&quot;x-y&quot;&#x27;
+echo &#x27;{&quot;a&quot;:1}&#x27; | jq &#x27;.[&quot;a&quot;]&#x27;
+
+# All keys / values of an object
+echo &#x27;{&quot;a&quot;:1,&quot;b&quot;:2}&#x27; | jq &#x27;keys&#x27;
+echo &#x27;{&quot;a&quot;:1,&quot;b&quot;:2}&#x27; | jq &#x27;to_entries[] | &quot;\(.key)=\(.value)&quot;&#x27;</code></pre>
+<h2>2. Filtering with select</h2>
+<pre><code class="language-bash"># Keep array elements matching a condition
+echo &#x27;[{&quot;n&quot;:&quot;a&quot;,&quot;ok&quot;:true},{&quot;n&quot;:&quot;b&quot;,&quot;ok&quot;:false}]&#x27; \
+  | jq &#x27;[.[] | select(.ok == true)]&#x27;
+
+# String matching: contains, startswith, test (regex)
+curl -s https://api.example.com/v1/users | jq \
+  &#x27;[.data[] | select(.name | test(&quot;izaz&quot;; &quot;i&quot;))]&#x27;
+
+# Numeric comparisons and compound conditions
+echo &#x27;[{&quot;p&quot;:5},{&quot;p&quot;:15},{&quot;p&quot;:25}]&#x27; | jq \
+  &#x27;[.[] | select(.p &gt; 10 and .p &lt; 30)]&#x27;
+
+# Filter objects by key existence
+echo &#x27;[{&quot;a&quot;:1},{&quot;b&quot;:2}]&#x27; | jq &#x27;[.[] | select(has(&quot;a&quot;))]&#x27;</code></pre>
+<h2>3. Transforming: map and object construction</h2>
+<pre><code class="language-bash"># map over an array, build a new shape
+curl -s https://api.example.com/v1/users | jq \
+  &#x27;[.data[] | {id, name, email: .contact.email}]&#x27;
+
+# Rename and compute fields
+echo &#x27;{&quot;price&quot;:100,&quot;qty&quot;:3}&#x27; | jq &#x27;{total: (.price * .qty), currency: &quot;EUR&quot;}&#x27;
+
+# String interpolation
+echo &#x27;{&quot;name&quot;:&quot;Izaz&quot;,&quot;role&quot;:&quot;student&quot;}&#x27; | jq -r &#x27;&quot;\(.name) is a \(.role)&quot;&#x27;
+
+# Flatten nested arrays, then reshape
+echo &#x27;{&quot;groups&quot;:[{&quot;members&quot;:[&quot;a&quot;,&quot;b&quot;]},{&quot;members&quot;:[&quot;c&quot;]}]}&#x27; | jq \
+  &#x27;[.groups[].members[]]&#x27;
+
+# Split and join strings
+echo &#x27;{&quot;csv&quot;:&quot;a,b,c&quot;}&#x27; | jq &#x27;.csv | split(&quot;,&quot;)&#x27;
+echo &#x27;[&quot;a&quot;,&quot;b&quot;]&#x27; | jq &#x27;join(&quot;; &quot;)&#x27;</code></pre>
+<h2>4. Aggregation</h2>
+<pre><code class="language-bash"># Count, sum, group
+echo &#x27;[1,2,3,4]&#x27; | jq &#x27;add&#x27;          # 10
+echo &#x27;[1,2,3,4]&#x27; | jq &#x27;length&#x27;      # 4
+
+# Group log entries by level and count
+cat app.jsonl | jq -s &#x27;group_by(.level) | map({level: .[0].level, count: length})&#x27;
+
+# Unique sorted values
+echo &#x27;[&quot;b&quot;,&quot;a&quot;,&quot;b&quot;]&#x27; | jq &#x27;unique&#x27;
+
+# reduce: the general aggregator (sum of totals here)
+echo &#x27;[{&quot;t&quot;:5},{&quot;t&quot;:7}]&#x27; | jq &#x27;reduce .[] as $x (0; . + $x.t)&#x27;
+
+# Max by a field
+echo &#x27;[{&quot;n&quot;:&quot;a&quot;,&quot;s&quot;:3},{&quot;n&quot;:&quot;b&quot;,&quot;s&quot;:9}]&#x27; | jq &#x27;max_by(.s).n&#x27;</code></pre>
+<h2>5. Output formats</h2>
+<pre><code class="language-bash"># Raw strings: no JSON quotes (essential for shell variables)
+echo &#x27;{&quot;token&quot;:&quot;abc123&quot;}&#x27; | jq -r &#x27;.token&#x27;
+TOKEN=$(curl -s https://api.example.com/auth | jq -r &#x27;.token&#x27;)
+
+# TSV for awk/cut pipelines
+curl -s https://api.example.com/v1/users | jq -r \
+  &#x27;.data[] | [.id, .name, .email] | @tsv&#x27; | cut -f1,2
+
+# CSV with headers
+curl -s https://api.example.com/v1/users | jq -r \
+  &#x27;[&quot;id&quot;,&quot;name&quot;,&quot;email&quot;], (.data[] | [.id, .name, .email]) | @csv&#x27;
+
+# Compact single-line output for logs
+cat app.jsonl | jq -c &#x27;{t: .time, lvl: .level, msg: .msg}&#x27;
+
+# Colored pretty output even when piped
+jq -C . file.json | less -R</code></pre>
+<h2>6. Input modes: slurp, raw, null</h2>
+<pre><code class="language-bash"># Slurp: read a JSONL stream into one array
+cat app.jsonl | jq -s &#x27;length&#x27;
+
+# Raw input: process plain text lines as strings
+printf &#x27;a\nb\n&#x27; | jq -R &#x27;{line: .}&#x27;
+
+# Split raw lines into fields
+printf &#x27;izaz:admin\nbob:user\n&#x27; | jq -R &#x27;split(&quot;:&quot;) | {user: .[0], role: .[1]}&#x27;
+
+# Null input: generate JSON from scratch (with --arg values)
+jq -n --arg name &quot;Izaz&quot; --argjson age 25 \
+  &#x27;{user: $name, age: $age, created: now | strftime(&quot;%Y-%m-%d&quot;)}&#x27;
+
+# Read a file into a variable
+jq --slurpfile users users.json -n &#x27;$users[0] | length&#x27;</code></pre>
+<h2>7. Real-world recipes</h2>
+<pre><code class="language-bash"># GitHub API: repo names and stars, sorted
+curl -s &#x27;https://api.github.com/users/mizazhaider-ceh/repos?per_page=100&#x27; | jq -r \
+  &#x27;sort_by(-.stargazers_count) | .[] | &quot;\(.stargazers_count)\t\(.name)&quot;&#x27; | head
+
+# journalctl JSON: error messages in the last hour
+journalctl -o json --since &quot;1 hour ago&quot; | jq -r \
+  &#x27;select(.PRIORITY | tonumber &lt;= 3) | &quot;\(.SYSLOG_IDENTIFIER): \(.MESSAGE)&quot;&#x27; | head -20
+
+# AWS-style: instance ids of running instances
+aws ec2 describe-instances | jq -r \
+  &#x27;.Reservations[].Instances[] | select(.State.Name==&quot;running&quot;) | .InstanceId&#x27;
+
+# Kubernetes: pods not running, with node
+kubectl get pods -A -o json | jq -r \
+  &#x27;.items[] | select(.status.phase != &quot;Running&quot;) | &quot;\(.metadata.namespace)/\(.metadata.name) \(.status.phase)&quot;&#x27;
+
+# Package.json: list dependencies
+jq -r &#x27;.dependencies // {} | to_entries[] | &quot;\(.key)@\(.value)&quot;&#x27; package.json
+
+# Merge two JSON files (second wins on conflicts)
+jq -s &#x27;.[0] * .[1]&#x27; base.json override.json
+
+# Delete keys recursively (strip secrets before sharing)
+jq &#x27;walk(if type == &quot;object&quot; then del(.password, .token, .secret) else . end)&#x27; config.json</code></pre>
+<h2>8. Nulls, errors, and debugging</h2>
+<pre><code class="language-bash"># Default operator: replace null/missing with a fallback
+echo &#x27;{&quot;a&quot;:1}&#x27; | jq &#x27;.b // &quot;missing&quot;&#x27;
+
+# Alternative operator //= assigns the fallback
+echo &#x27;{&quot;a&quot;:null}&#x27; | jq &#x27;.a //= &quot;default&quot;&#x27;
+
+# try/catch around risky filters
+echo &#x27;{&quot;n&quot;:&quot;x&quot;}&#x27; | jq &#x27;try (.n | tonumber) catch &quot;not a number&quot;&#x27;
+
+# Debug: print intermediate values to stderr without breaking the pipe
+echo &#x27;{&quot;users&quot;:[{&quot;n&quot;:&quot;a&quot;}]}&#x27; | jq &#x27;.users[] | debug | .n&#x27;
+
+# Why null? Check the path exists step by step
+echo &#x27;{&quot;a&quot;:{&quot;b&quot;:1}}&#x27; | jq &#x27;.a&#x27;        # {&quot;b&quot;:1}
+echo &#x27;{&quot;a&quot;:{&quot;b&quot;:1}}&#x27; | jq &#x27;.a.b&#x27;      # 1
+echo &#x27;{&quot;a&quot;:{&quot;b&quot;:1}}&#x27; | jq &#x27;.a.c&#x27;      # null (key missing, not an error)</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li><code>jq &#x27;.[]&#x27;</code> on an object iterates its values; on null it errors;</li>
+<p>guard with <code>?</code> (<code>.[]?</code>) in heterogeneous data.</p>
+<li>Shell quoting: always single-quote the filter; double quotes let</li>
+<p>the shell eat <code>$</code> and backticks. Pass shell values with <code>--arg</code>, never by interpolating into the filter (injection risk).</p>
+<li>Large files: jq loads the whole input; for multi-GB JSONL use</li>
+<p><code>--stream</code> or process line by line with <code>jq -c</code> per line.</p>
+<li>Numbers lose precision past 2^53 (IEEE double); use <code>--raw-output</code></li>
+<p>string handling or Python for 64-bit ids.</p>
+<li><code>empty</code> inside a pipe deletes the value silently; a filter that</li>
+<p>&quot;returns nothing&quot; usually has an <code>empty</code> or a failed <code>select</code>.</p>
+<li>Unicode: jq handles it correctly, but <code>length</code> counts codepoints;</li>
+<p>byte length needs <code>tostring | length</code> on the UTF-8 encoding via other tools.</p>
+<li><code>test()</code> uses Oniguruma-ish regex; escape backslashes twice in</li>
+<p>shell single quotes is unnecessary, once is enough.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Filter works on sample, fails in production: the real data has a</li>
+<p>different shape (null where you expected an object); dump one real record with <code>jq -c</code> and diff the structure.</p>
+<li>&quot;Cannot index string with string&quot;: you are deeper than you think;</li>
+<p>print each level (<code>.a</code>, <code>.a.b</code>) to find where the shape changes.</p>
+<li>Performance on huge inputs: add <code>-c</code> and filter early</li>
+<p>(<code>select</code> before building objects), or switch to <code>--stream</code>.</p>
+<li>Need logic jq cannot express (joins across files, date math):</li>
+<p><code>--slurpfile</code> covers small joins; beyond that use Python (see python-cli-tooling).</p>
+<li>Still stuck: <code>jq --help</code> lists every builtin; the manual&#x27;s builtin</li>
+<p>index answers &quot;does jq have X&quot; in seconds.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>jq is the analyst&#x27;s best friend and occasionally the attacker&#x27;s: it extracts secrets from JSON configs and API dumps just as easily as it parses logs. Detect misuse with:</p>
+<pre><code class="language-bash"># jq reading sensitive files (history / process list review)
+grep -h &quot;jq&quot; ~/.bash_history | grep -E &#x27;id_rsa|shadow|secret|token&#x27; | head
+
+# Pipelines exfiltrating parsed secrets
+ps aux | grep -E &#x27;jq.*token|curl.*jq.*secret&#x27; | grep -v grep</code></pre>
+<p>Defensive rules: never paste jq output containing secrets into chats, tickets, or docs; use <code>walk(del(...))</code> to strip secrets before sharing API dumps; prefer <code>--arg</code> over interpolation so values never land in process lists via the filter string; and remember shell history stores the whole pipeline including any embedded token, so use env vars and <code>HISTCONTROL=ignorespace</code> for sensitive one-liners.</p>
+<h2>Key references</h2>
+<ul>
+<li>jq 1.7.1 manual: https://jqlang.github.io/jq/manual/</li>
+<li>jq tutorial: https://jqlang.github.io/jq/tutorial/</li>
+<li>JSONPath vs jq discussion in the manual&#x27;s FAQ.</li>
+<li>CWE-20 (Improper Input Validation): parsing untrusted JSON without</li>
+<p>schema checks.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: postgresql-tuning</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>postgresql-tuning</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when diagnosing or improving PostgreSQL performance on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="secure-coding.html">secure-coding</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>PostgreSQL</td><td>16</td></tr></tbody></table><p>PostgreSQL 16 is fast when it is configured and indexed for the workload, and slow in confusing ways when it is not. This skill covers the operator loop: find the slow queries, read their plans, fix the indexing or the query, tune vacuum and connections, and verify backups. Every command targets PostgreSQL 16.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Enable <code>pg_stat_statements</code> and find the queries burning the</li>
+<p>most total time.</p>
+<li>Run <code>EXPLAIN (ANALYZE, BUFFERS)</code> on the worst offenders and read</li>
+<p>the plan before changing anything.</p>
+<li>Add the missing indexes the plan asks for; remove indexes that</li>
+<p>cost more on writes than they save on reads.</p>
+<li>Check autovacuum health and bloat on the busiest tables.</li>
+<li>Size connections with a pooler; never let apps open hundreds of</li>
+<p>direct connections.</p>
+<li>Tune the small set of <code>postgresql.conf</code> settings that matter</li>
+<p>(<code>shared_buffers</code>, <code>work_mem</code>, <code>maintenance_work_mem</code>, <code>effective_cache_size</code>).</p>
+<li>Verify backups restore, not just that they run.</li>
+<li>Re-measure: the same <code>pg_stat_statements</code> query should show the</li>
+<p>improvement.</p>
+</ol>
+<h2>1. Find the slow queries</h2>
+<pre><code class="language-bash"># Enable the extension once per database (needs shared_preload_libraries)
+sudo -u postgres psql -c &quot;CREATE EXTENSION IF NOT EXISTS pg_stat_statements;&quot;
+
+# Top 10 queries by total time
+sudo -u postgres psql -x -c &quot;
+SELECT query, calls, round(total_exec_time::numeric,1) AS total_ms,
+       round(mean_exec_time::numeric,1) AS mean_ms, rows
+FROM pg_stat_statements
+ORDER BY total_exec_time DESC
+LIMIT 10;&quot;</code></pre>
+<pre><code class="language-bash"># Reset stats before a benchmark window, compare after
+sudo -u postgres psql -c &quot;SELECT pg_stat_statements_reset();&quot;
+# ... run workload ...
+sudo -u postgres psql -c &quot;
+SELECT query, calls, round(mean_exec_time::numeric,1) AS mean_ms
+FROM pg_stat_statements ORDER BY mean_exec_time DESC LIMIT 5;&quot;</code></pre>
+<p><code>pg_stat_statements</code> needs <code>shared_preload_libraries = &#x27;pg_stat_statements&#x27;</code> in postgresql.conf and a restart to start collecting. Total time matters more than mean time: a query that is fast but runs a million times hurts more than a slow one-off.</p>
+<h2>2. Read the plan</h2>
+<pre><code class="language-bash">sudo -u postgres psql -c &quot;
+EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
+SELECT * FROM orders WHERE customer_id = 42 ORDER BY created_at DESC LIMIT 20;&quot;</code></pre>
+<p>What to look for in the output:</p>
+<ul>
+<li><code>Seq Scan</code> on a large table with a selective filter: the classic</li>
+<p>missing-index signal. A sequential scan reading 10 million rows to return 20 is the problem.</p>
+<li><code>Nested Loop</code> with a huge outer row count: the join order or the</li>
+<p>inner index is wrong.</p>
+<li><code>Buffers: shared hit</code> vs <code>read</code>: high <code>read</code> means the working</li>
+<p>set does not fit in cache; high <code>hit</code> with slow time means CPU or lock contention.</p>
+<li><code>Sort</code> with <code>Sort Method: external merge Disk</code>: <code>work_mem</code> is too</li>
+<p>small for the sort; data spilled to disk.</p>
+<li>Actual rows far from estimated rows: stale statistics; run</li>
+<p><code>ANALYZE</code> on the table and re-check.</p>
+</ul>
+<pre><code class="language-bash"># The fix for the classic case: index the filter plus the ordering
+sudo -u postgres psql -c &quot;
+CREATE INDEX CONCURRENTLY idx_orders_customer_created
+ON orders (customer_id, created_at DESC);&quot;
+
+# Verify the plan changed
+sudo -u postgres psql -c &quot;
+EXPLAIN SELECT * FROM orders WHERE customer_id = 42 ORDER BY created_at DESC LIMIT 20;&quot;</code></pre>
+<p><code>CREATE INDEX CONCURRENTLY</code> avoids locking writes on production tables; a plain <code>CREATE INDEX</code> blocks writes until it finishes.</p>
+<h2>3. Index hygiene</h2>
+<pre><code class="language-bash"># Unused indexes: candidates for removal (they tax every write)
+sudo -u postgres psql -x -c &quot;
+SELECT schemaname, relname AS table, indexrelname AS index
+FROM pg_stat_user_indexes
+WHERE idx_scan = 0 AND indexrelname NOT LIKE &#x27;%pkey%&#x27;
+ORDER BY relname;&quot;
+
+# Duplicate and overlapping indexes
+sudo -u postgres psql -c &quot;
+SELECT indexrelid::regclass, indrelid::regclass, indkey
+FROM pg_index WHERE indisvalid ORDER BY 2;&quot; | head -20
+
+# Index bloat estimate: indexes much larger than the data they index
+sudo -u postgres psql -c &quot;
+SELECT relname, pg_size_pretty(pg_relation_size(indexrelid)) AS size
+FROM pg_stat_user_indexes ORDER BY pg_relation_size(indexrelid) DESC LIMIT 10;&quot;
+
+# Drop safely: first make invisible to the planner, then drop after a week
+sudo -u postgres psql -c &quot;ALTER INDEX idx_old RENAME TO idx_old_retired;&quot;</code></pre>
+<p>Every index speeds reads and slows writes; a table with 15 indexes that are never scanned is paying write tax for nothing. Drop in two steps (rename, wait, drop) so a surprise regression is reversible.</p>
+<h2>4. Vacuum, bloat, and dead tuples</h2>
+<pre><code class="language-bash"># Tables with the most dead tuples waiting for vacuum
+sudo -u postgres psql -x -c &quot;
+SELECT relname, n_live_tup, n_dead_tup,
+       round(100.0*n_dead_tup/(n_live_tup+n_dead_tup+1),1) AS dead_pct,
+       last_autovacuum
+FROM pg_stat_user_tables
+ORDER BY n_dead_tup DESC LIMIT 10;&quot;
+
+# Aggressive manual vacuum on one bloated table (blocks briefly)
+sudo -u postgres psql -c &quot;VACUUM (VERBOSE, ANALYZE) orders;&quot;
+
+# Check for transaction ID wraparound risk (the scary one)
+sudo -u postgres psql -c &quot;
+SELECT datname, age(datfrozenxid) FROM pg_database ORDER BY 2 DESC;&quot;</code></pre>
+<p>Autovacuum settings that matter on write-heavy tables:</p>
+<pre><code class="language-bash"># Per-table tuning for a hot table (in psql)
+sudo -u postgres psql -c &quot;
+ALTER TABLE orders SET (autovacuum_vacuum_scale_factor = 0.02);
+ALTER TABLE orders SET (autovacuum_analyze_scale_factor = 0.01);&quot;</code></pre>
+<p>Defaults vacuum too rarely on huge tables; scale factors of 0.02 vacuum after 2 percent of the table changes instead of 20. A database approaching transaction ID wraparound stops accepting writes, so monitor <code>age(datfrozenxid)</code> and never disable autovacuum.</p>
+<h2>5. Connections and pooling</h2>
+<pre><code class="language-bash"># Current connections by state and application
+sudo -u postgres psql -x -c &quot;
+SELECT state, count(*) FROM pg_stat_activity GROUP BY state;&quot;
+
+# Who holds the most connections
+sudo -u postgres psql -c &quot;
+SELECT usename, application_name, count(*)
+FROM pg_stat_activity GROUP BY 1,2 ORDER BY 3 DESC LIMIT 10;&quot;
+
+# Kill a runaway query (use pg_terminate_backend only for the backend)
+sudo -u postgres psql -c &quot;
+SELECT pg_cancel_backend(pid) FROM pg_stat_activity
+WHERE state = &#x27;active&#x27; AND query_start &lt; now() - interval &#x27;10 minutes&#x27;
+AND usename != &#x27;postgres&#x27;;&quot;</code></pre>
+<p>PostgreSQL uses one process per connection; 500 direct connections waste memory and context-switch time. Put PgBouncer in transaction pooling mode in front, keep <code>max_connections</code> modest (100 to 200), and let the pooler multiplex thousands of app connections onto a small backend pool.</p>
+<h2>6. The settings that matter</h2>
+<pre><code class="language-bash"># Show current values and their sources
+sudo -u postgres psql -c &quot;
+SELECT name, setting, unit, context FROM pg_settings
+WHERE name IN (&#x27;shared_buffers&#x27;,&#x27;work_mem&#x27;,&#x27;maintenance_work_mem&#x27;,
+  &#x27;effective_cache_size&#x27;,&#x27;max_connections&#x27;,&#x27;checkpoint_timeout&#x27;)
+ORDER BY name;&quot;</code></pre>
+<p>Sane starting points for a dedicated database server with 16 GB RAM:</p>
+<pre><code class="language-bash"># In postgresql.conf (then restart or reload as noted)
+# shared_buffers = 4GB            # 25% of RAM, restart required
+# effective_cache_size = 12GB     # 75% of RAM, planner hint, reload
+# work_mem = 64MB                 # per sort/hash op, reload; careful: per operation
+# maintenance_work_mem = 1GB      # vacuum/index builds, reload
+# max_connections = 200           # with a pooler in front, restart required
+# checkpoint_timeout = 15min      # fewer, larger checkpoints
+# random_page_cost = 1.1          # SSDs: lower than the 4.0 default</code></pre>
+<p>Change one setting at a time and re-measure. <code>work_mem</code> is per operation per connection: 64 MB times 100 concurrent sorts is 6.4 GB, which is how people OOM their database with one config line.</p>
+<h2>7. Backup verification</h2>
+<pre><code class="language-bash"># Logical backup (small databases, portable)
+pg_dump -U appuser -Fc appdb &gt; /backups/appdb-$(date +%F).dump
+
+# Physical base backup for point-in-time recovery (needs archive_mode on)
+pg_basebackup -U replicator -D /backups/base-$(date +%F) -Ft -z -P
+
+# The only backup test that counts: restore somewhere and query it
+pg_restore -U postgres -d restoredb /backups/appdb-2026-10-23.dump
+sudo -u postgres psql -d restoredb -c &quot;SELECT count(*) FROM orders;&quot;
+
+# Verify WAL archiving is actually producing files
+ls -lh /backups/wal/ | tail -5</code></pre>
+<p>An untested backup is a rumor. Restore monthly to a scratch host, run the app&#x27;s smoke queries, and time the restore so the RTO in the runbook is real.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>EXPLAIN ANALYZE</code> on a write query actually executes it. Wrap in</li>
+<p>a transaction and roll back (<code>BEGIN; EXPLAIN ANALYZE UPDATE ...; ROLLBACK;</code>), or use plain <code>EXPLAIN</code> without ANALYZE.</p>
+<li><code>CREATE INDEX CONCURRENTLY</code> fails inside a transaction block.</li>
+<p>Run it as its own statement; it cannot be rolled back, so a failure can leave an INVALID index to drop and retry.</p>
+<li>Autovacuum cannot keep up and dead tuples grow. Lower the scale</li>
+<p>factors per table, raise <code>autovacuum_max_workers</code>, and schedule manual VACUUM in low-traffic windows for the worst tables.</p>
+<li><code>pg_stat_statements</code> shows normalized queries (<code>$1</code>, <code>$2</code>).</li>
+<p>That is by design (it groups by query shape); join with <code>pg_stat_activity</code> for live parameter values when debugging one session.</p>
+<li>Connection storm after a deploy: every app instance opens its</li>
+<p>pool at once. Stagger deploys, cap pool sizes per instance, and let PgBouncer absorb the spike.</p>
+<li>Query got slower after adding an index. The planner chose the</li>
+<p>new index wrongly due to stale stats; run <code>ANALYZE</code>, and check for skewed data the planner misestimates.</p>
+<li>Disk fills from WAL files. Check <code>archive_command</code> failures and</li>
+<p>replication slot lag (<code>pg_replication_slots</code>); a stuck slot retains WAL forever. Fix the archiver or drop the dead slot.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration. A misconfigured PostgreSQL listens on all interfaces with <code>trust</code> authentication, runs outdated minor versions with known CVEs, and logs no connections or DDL. Detect misuse by auditing <code>pg_hba.conf</code> for trust and overly broad host lines, alerting on new superusers and on <code>COPY ... FROM PROGRAM</code> (which executes shell commands), and watching for sudden full table dumps at odd hours. <code>pg_stat_statements</code> doubles as a detection source: unfamiliar query shapes from application users can indicate SQL injection probing. Long-running transactions holding locks open (<code>idle in transaction</code> for hours) are both a performance and a correctness risk; alert on them.</p>
+<h2>Key references</h2>
+<ul>
+<li>PostgreSQL 16 documentation: https://www.postgresql.org/docs/16/</li>
+<li>EXPLAIN and query planning:</li>
+<p>https://www.postgresql.org/docs/16/using-explain.html</p>
+<li>pg_stat_statements:</li>
+<p>https://www.postgresql.org/docs/16/pgstatstatements.html</p>
+<li>Server configuration:</li>
+<p>https://www.postgresql.org/docs/16/runtime-config.html</p>
+<li>CWE-89 (SQL Injection): the reason apps use parameterized</li>
+<p>queries against this database.</p>
+<li>CWE-400 (Uncontrolled Resource Consumption): unbounded queries</li>
+<p>and missing statement timeouts.</p>
+<li>CWE-798 (Use of Hard-coded Credentials): passwords in</li>
+<p>connection strings and config files.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

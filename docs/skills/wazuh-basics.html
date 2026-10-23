@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: wazuh-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>wazuh-basics</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when deploying or operating Wazuh for host-based</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Wazuh</td><td>4.x</td></tr><tr><td>Sysmon</td><td>15.x</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Wazuh is an open source security platform that combines host intrusion detection, file integrity monitoring, log analysis, vulnerability detection, and configuration assessment in one manager-plus-agents architecture. This skill covers deploying and operating Wazuh 4.x defensively: enrolling agents, writing rules and decoders, monitoring file integrity, and responding with active response. Use it on your own fleet or a client environment you are authorized to monitor.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Install the Wazuh manager (single node for labs, cluster for</li>
+<p>production) and confirm the API and dashboard are reachable.</p>
+<li>Enroll agents on a pilot group first, verify they check in and send</li>
+<p>logs.</p>
+<li>Enable file integrity monitoring on critical paths and security</li>
+<p>configuration assessment with the CIS benchmark for your OS.</p>
+<li>Review the default rules firing in the pilot, tune or disable the</li>
+<p>noisy ones with documented justification.</p>
+<li>Write one custom rule and decoder for an application log your team</li>
+<p>cares about.</p>
+<li>Enable vulnerability detection and review the first inventory for</li>
+<p>false positives before alerting on it.</p>
+<li>Configure active response for high-confidence cases only (for</li>
+<p>example block an IP after repeated SSH brute force).</p>
+<li>Roll out to the full fleet in waves, watching agent health and</li>
+<p>manager load at each step.</p>
+</ol>
+<h2>1. Architecture and installation</h2>
+<p>Wazuh has four parts: the manager (analysis engine), the indexer (OpenSearch storage), the dashboard (web UI), and agents on endpoints. For a lab, the all-in-one install is fastest:</p>
+<pre><code class="language-bash"># All-in-one install (lab only, single node)
+curl -sO https://packages.wazuh.com/4.14/wazuh-install.sh
+sudo bash wazuh-install.sh -a
+
+# After install, note the printed admin credentials and dashboard URL
+# Dashboard: https://&lt;manager-ip&gt;  API: https://&lt;manager-ip&gt;:55000
+
+# Check service health
+sudo systemctl status wazuh-manager wazuh-indexer wazuh-dashboard</code></pre>
+<p>For production, split the roles across nodes and follow the official cluster documentation. Keep the install script version pinned so rebuilds are reproducible.</p>
+<h2>2. Agent enrollment</h2>
+<p>Agents authenticate to the manager with a key. Enroll securely:</p>
+<pre><code class="language-bash"># On the manager: create an agent entry and get its key
+sudo /var/ossec/bin/manage_agents
+# Choose (A)dd, enter name, IP (or &#x27;any&#x27;), then (E)xtract key for the ID
+
+# On the agent (Linux): install and enroll
+sudo WAZUH_MANAGER=&#x27;manager.internal&#x27; WAZUH_AGENT_NAME=&#x27;web01&#x27; \
+  dpkg -i wazuh-agent_4.14.0-1_amd64.deb
+sudo /var/ossec/bin/agent-auth -m manager.internal -A web01
+
+# Verify enrollment from the manager
+sudo /var/ossec/bin/agent_control -l</code></pre>
+<p>For Windows agents, use the MSI with the same <code>agent-auth</code> step, or pre-shared keys via the API for automation. Rotate agent keys if one leaks, and never reuse one key across hosts.</p>
+<p>Verify agents are alive and sending data:</p>
+<pre><code class="language-bash"># List agents with last keep-alive
+sudo /var/ossec/bin/agent_control -l
+
+# Check an agent&#x27;s reported syscheck and rootcheck status
+sudo /var/ossec/bin/agent_control -i 001</code></pre>
+<h2>3. File integrity monitoring</h2>
+<p>FIM watches critical files and alerts on changes. Configure in the agent&#x27;s <code>ossec.conf</code> (or centralized agent configuration):</p>
+<pre><code class="language-xml">&lt;syscheck&gt;
+  &lt;frequency&gt;7200&lt;/frequency&gt;
+  &lt;directories check_all=&quot;yes&quot; realtime=&quot;yes&quot;&gt;/etc,/usr/bin,/usr/sbin&lt;/directories&gt;
+  &lt;directories check_all=&quot;yes&quot; realtime=&quot;yes&quot;&gt;/bin,/sbin,/boot&lt;/directories&gt;
+  &lt;ignore&gt;/etc/mtab&lt;/ignore&gt;
+  &lt;ignore&gt;/etc/hosts.deny&lt;/ignore&gt;
+  &lt;nodiff&gt;/etc/ssl/private.key&lt;/nodiff&gt;
+&lt;/syscheck&gt;</code></pre>
+<p>On Windows, monitor <code>C:\Windows\System32</code>, autorun registry keys, and service binaries. Use <code>realtime=&quot;yes&quot;</code> on small critical paths and scheduled scans on large trees to control load.</p>
+<p>Triage a FIM alert:</p>
+<pre><code class="language-bash"># Find what changed on web01 in the last day (dashboard or API)
+curl -k -u wazuh:wazuhpass \
+  &quot;https://manager.internal:55000/syscheck/001?pretty&quot; | head -40
+
+# On the host, check package ownership of a changed binary
+dpkg -S /usr/bin/suspicious 2&gt;/dev/null || rpm -qf /usr/bin/suspicious</code></pre>
+<p>A changed system binary with no package update behind it is an incident until proven otherwise.</p>
+<h2>4. Rules and decoders</h2>
+<p>Wazuh decodes logs with decoders, then matches rules. Write a custom decoder and rule for your application log:</p>
+<pre><code class="language-xml">&lt;!-- /var/ossec/etc/decoders/local_decoder.xml --&gt;
+&lt;decoder&gt;
+  &lt;prematch&gt;myapp: login failed&lt;/prematch&gt;
+  &lt;regex&gt;myapp: login failed user=(\w+) src=(\d+\.\d+\.\d+\.\d+)&lt;/regex&gt;
+  &lt;order&gt;user, srcip&lt;/order&gt;
+&lt;/decoder&gt;</code></pre>
+<pre><code class="language-xml">&lt;!-- /var/ossec/etc/rules/local_rules.xml, rule IDs 100000+ are local --&gt;
+&lt;group name=&quot;myapp,&quot;&gt;
+  &lt;rule id=&quot;100001&quot; level=&quot;5&quot;&gt;
+    &lt;decoded_as&gt;myapp&lt;/decoded_as&gt;
+    &lt;description&gt;MyApp login failure&lt;/description&gt;
+  &lt;/rule&gt;
+  &lt;rule id=&quot;100002&quot; level=&quot;10&quot; frequency=&quot;8&quot; timeframe=&quot;120&quot;&gt;
+    &lt;if_matched_sid&gt;100001&lt;/if_matched_sid&gt;
+    &lt;same_srcip /&gt;
+    &lt;description&gt;MyApp brute force: 8 failures from one IP in 2 minutes&lt;/description&gt;
+    &lt;mitre&gt;
+      &lt;id&gt;T1110.001&lt;/id&gt;
+      &lt;tactic&gt;Credential Access&lt;/tactic&gt;
+      &lt;technique&gt;Password Guessing&lt;/technique&gt;
+    &lt;/mitre&gt;
+  &lt;/rule&gt;
+&lt;/group&gt;</code></pre>
+<p>Test and reload:</p>
+<pre><code class="language-bash"># Validate the rule syntax before reloading
+sudo /var/ossec/bin/wazuh-logtest
+# Paste a sample log line, check the decoded fields and matched rule, Ctrl-C to exit
+
+sudo systemctl reload wazuh-manager</code></pre>
+<p>Map rules to MITRE in the <code>&lt;mitre&gt;</code> block so the dashboard shows technique coverage.</p>
+<h2>5. Security configuration assessment</h2>
+<p>SCA runs CIS benchmark checks against hosts and reports failures:</p>
+<pre><code class="language-bash"># SCA policies live on the manager; check which are enabled
+ls /var/ossec/etc/sca/
+
+# Review a host&#x27;s failing checks in the dashboard under
+# Security configuration assessment, or via API
+curl -k -u wazuh:wazuhpass \
+  &quot;https://manager.internal:55000/sca/001?pretty&quot; | head -60</code></pre>
+<p>Workflow: enable the CIS policy matching each OS, review failures in the pilot group, fix the real misconfigurations, and document accepted risks for the rest. Do not alert on every SCA failure; track the trend (failing checks going down) as the metric.</p>
+<h2>6. Vulnerability detection</h2>
+<p>Wazuh builds a software inventory per agent and matches it against vulnerability feeds:</p>
+<pre><code class="language-bash"># Trigger an immediate vulnerability scan on one agent (lab)
+sudo /var/ossec/bin/agent_control -r 001 -u 001</code></pre>
+<p>Tune before you alert: the first scan always has false positives (backported patches on RHEL/Debian report the base version). Verify a sample of critical findings against the vendor advisory, then build allow rules or adjust severity. Feed confirmed vulnerabilities into your patching process, not into the SOC paging queue.</p>
+<h2>7. Active response</h2>
+<p>Active response runs a script on the agent when a rule fires. Use it sparingly and only for reversible actions:</p>
+<pre><code class="language-xml">&lt;!-- Block an IP at the firewall after SSH brute force (rule 5760 level 10+) --&gt;
+&lt;command&gt;
+  &lt;name&gt;firewall-drop&lt;/name&gt;
+  &lt;executable&gt;firewall-drop.sh&lt;/executable&gt;
+  &lt;timeout_allowed&gt;yes&lt;/timeout_allowed&gt;
+&lt;/command&gt;
+&lt;active-response&gt;
+  &lt;command&gt;firewall-drop&lt;/command&gt;
+  &lt;location&gt;local&lt;/location&gt;
+  &lt;level&gt;10&lt;/level&gt;
+  &lt;timeout&gt;600&lt;/timeout&gt;
+&lt;/active-response&gt;</code></pre>
+<p>Rules for safe active response:</p>
+<ul>
+<li>Only trigger on high-confidence, high-level rules you have tuned.</li>
+<li>Always set a timeout so blocks expire automatically.</li>
+<li>Never auto-isolate production servers without a tested unblock path.</li>
+<li>Log every active response action and alert the SOC when one fires.</li>
+<li>Test in the lab by simulating the trigger and confirming both the</li>
+<p>block and the expiry.</p>
+</ul>
+<h2>8. Agent health and fleet operations</h2>
+<p>A blind agent is a blind spot. Monitor the fleet:</p>
+<pre><code class="language-bash"># Agents not reporting in the last hour
+sudo /var/ossec/bin/agent_control -l | grep -B2 &quot;Never connected\|disconnected&quot;
+
+# Manager load: queue sizes and event rates
+tail -50 /var/ossec/logs/ossec.log | grep -i &quot;warn\|error&quot;</code></pre>
+<p>Operational habits:</p>
+<ul>
+<li>Alert when any production agent is disconnected for more than 1 hour.</li>
+<li>Version agent configs in git and push via centralized configuration.</li>
+<li>Upgrade agents in waves: canary group first, then 25 percent, then</li>
+<p>the rest, watching for enrollment or performance regressions.</p>
+<li>Track coverage: percentage of in-scope hosts with a reporting agent,</li>
+<p>reported weekly.</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>Agents behind NAT: use <code>any</code> as the agent IP at enrollment and rely</li>
+<p>on the agent key, not the source IP, for identity.</p>
+<li>Clock skew breaks vulnerability matching and SCA scheduling. Sync</li>
+<p>all hosts with NTP and alert on drift.</p>
+<li>FIM on busy directories (log folders, database data dirs) floods the</li>
+<p>manager. Monitor config and data separately; FIM is for binaries and configuration.</p>
+<li>Windows agents need the audit policy enabled to produce useful logs.</li>
+<p>Deploy the audit baseline via GPO alongside the agent.</p>
+<li>The manager disk fills with archives: set log rotation and</li>
+<p>retention, and monitor disk space as a first-class alert.</p>
+<li>Custom rules with <code>frequency</code> need the events to arrive in order;</li>
+<p>delayed logs can break the count. Prefer SIEM-side correlation for precise thresholds.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Manager will not start: check <code>/var/ossec/logs/ossec.log</code>, validate</li>
+<p>XML configs with <code>wazuh-logtest</code> and <code>xmllint</code>, restore the last known-good config from git.</p>
+<li>Agents enroll but never send logs: check firewall port 1514/udp and</li>
+<p>1515/tcp, verify the manager address in <code>ossec.conf</code>, and look for TLS errors in the agent log.</p>
+<li>Rule changes have no effect: confirm you edited the manager&#x27;s live</li>
+<p>config (not a backup copy), reloaded the manager, and that the rule ID does not collide with a built-in one.</p>
+<li>Active response fired wrongly: check the timeout expiry, review the</li>
+<p>triggering rule&#x27;s precision, and demote or disable the response until retuned.</p>
+<li>You suspect manager compromise: agents keep local logs; collect them</li>
+<p>directly from hosts, rebuild the manager from known-good config, and re-enroll agents with fresh keys.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Wazuh is the defender&#x27;s sensor grid, so think about how attackers defeat host telemetry:</p>
+<ul>
+<li>Attackers kill or uninstall the agent. Alert on agent disconnection</li>
+<p>and on the agent service stopping (Windows Event 7036/7040, Linux service stop), and treat unexpected gaps as incidents.</p>
+<li>Attackers modify FIM-monitored files and then restore them. Use</li>
+<p><code>realtime</code> monitoring plus <code>check_all</code> hashes, and keep an offline copy of critical hashes for comparison.</p>
+<li>Attackers use fileless techniques that FIM never sees. Pair FIM</li>
+<p>with Sysmon process telemetry on the same hosts.</p>
+<li>Attackers exploit the delay between vulnerability scan and patch.</li>
+<p>Shrink the window: scan daily, patch criticals on SLA, and track mean time to patch.</p>
+<li>Tune so analysts trust the console: every false positive you leave</li>
+<p>in place teaches the team to ignore the next true positive.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1110.001 (Password Guessing), T1070 (Indicator</li>
+<p>Removal), T1562.001 (Disable or Modify Tools), T1486 (Data Encrypted for Impact).</p>
+<li>Wazuh 4.x documentation: https://documentation.wazuh.com/</li>
+<li>CIS benchmarks (SCA policies): https://www.cisecurity.org/cis-benchmarks</li>
+<li>Wazuh ruleset reference: https://documentation.wazuh.com/current/user-manual/ruleset/ruleset.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

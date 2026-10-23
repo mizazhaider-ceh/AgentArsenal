@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ssh-hardening</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ssh-hardening</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when hardening OpenSSH 9.8 servers and clients: writing a</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>OpenSSH</td><td>9.8</td></tr><tr><td>ssh-audit</td><td>3.4</td></tr></tbody></table><p>SSH is the front door of every server, and it is scanned constantly: any SSH port on the internet receives brute-force attempts within minutes. Hardening it is one of the highest-leverage security tasks there is. This skill covers OpenSSH 9.8 server hardening (sshd_config done right), client-side hygiene, key management, brute-force defenses, jump hosts, certificates, and auditing with sshd -T and ssh-audit.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Audit first: <code>sshd -T</code> shows the effective config; ssh-audit grades</li>
+<p>the algorithms.</p>
+<li>Enforce key-only auth: disable passwords, disable root login.</li>
+<li>Restrict who can connect: AllowUsers/AllowGroups, and listen only</li>
+<p>where needed.</p>
+<li>Select modern ciphers, MACs, and key exchange; disable legacy ones.</li>
+<li>Harden the handshake: MaxAuthTries, LoginGraceTime, MaxSessions.</li>
+<li>Add brute-force protection: fail2ban or firewall rate limiting.</li>
+<li>Fix permissions on host keys, ~/.ssh, and authorized_keys.</li>
+<li>Use jump hosts (ProxyJump) instead of exposing every box.</li>
+<li>Re-audit after changes and watch the auth logs for a week.</li>
+</ol>
+<h2>1. Audit the current state</h2>
+<pre><code class="language-bash"># Effective config with defaults applied (run as root)
+sudo sshd -T | sort
+
+# Focus on the security-relevant knobs
+sudo sshd -T | grep -iE &#x27;permitrootlogin|passwordauthentication|pubkeyauthentication|ciphers|macs|kexalgorithms|maxauthtries|permit.*forward|allowusers|allowgroups&#x27;
+
+# Grade the algorithms from outside (install ssh-audit via pip)
+ssh-audit example.com
+
+# What auth methods does the server actually offer?
+ssh -v -o PreferredAuthentications=none example.com 2&gt;&amp;1 | grep -i &#x27;authentications that can continue&#x27;</code></pre>
+<h2>2. The hardened sshd_config</h2>
+<pre><code class="language-bash"># /etc/ssh/sshd_config.d/10-hardening.conf  (drop-in, survives upgrades)
+# Authentication: keys only, no root
+PermitRootLogin no
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+UsePAM yes
+PubkeyAuthentication yes
+
+# Who may connect (principle of least privilege)
+AllowUsers deploy backup
+# AllowGroups ssh-users   (alternative)
+
+# Modern algorithms only
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512
+HostKeyAlgorithms ssh-ed25519,rsa-sha2-512,rsa-sha2-256
+
+# Handshake limits
+MaxAuthTries 3
+LoginGraceTime 30
+MaxSessions 4
+MaxStartups 10:30:60
+
+# Forwarding: disable what you do not use
+X11Forwarding no
+AllowTcpForwarding no
+PermitTunnel no
+# AllowAgentForwarding no   (set explicitly; see section 6)
+
+# Logging and banners
+LogLevel VERBOSE
+Banner /etc/ssh/banner.txt</code></pre>
+<p>Apply and verify:</p>
+<pre><code class="language-bash">sudo sshd -t &amp;&amp; sudo systemctl reload sshd
+sudo sshd -T | grep -iE &#x27;permitrootlogin|passwordauthentication&#x27;
+# Keep your current session open and test a NEW connection before closing it
+ssh -o PreferredAuthentications=publickey deploy@example.com</code></pre>
+<p>The golden rule: never close your working SSH session until a new login succeeds with the new config. One typo in sshd_config plus a closed session equals a drive to the datacenter.</p>
+<h2>3. Host keys and file permissions</h2>
+<pre><code class="language-bash"># Generate missing host key types (ed25519 + rsa); remove weak ones
+sudo ssh-keygen -A
+sudo rm -f /etc/ssh/ssh_host_dsa_key* /etc/ssh/ssh_host_ecdsa_key*
+
+# Show host key fingerprints (compare on first connect)
+sudo ssh-keygen -l -f /etc/ssh/ssh_host_ed25519_key.pub
+
+# Permissions: root-owned, tight
+sudo chown root:root /etc/ssh/ssh_host_*_key
+sudo chmod 600 /etc/ssh/ssh_host_*_key
+sudo chmod 644 /etc/ssh/ssh_host_*_key.pub</code></pre>
+<p>Client side, per user:</p>
+<pre><code class="language-bash">chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys ~/.ssh/id_ed25519
+chmod 644 ~/.ssh/id_ed25519.pub ~/.ssh/known_hosts
+
+# authorized_keys hygiene: one key per line, comment says who/where
+cat ~/.ssh/authorized_keys
+# ssh-ed25519 AAAA... deploy@laptop-2026</code></pre>
+<p>Restrict what a key can do with options in authorized_keys:</p>
+<pre><code class="language-bash"># Backup key: only rsync, only from the backup host, no forwarding
+from=&quot;10.0.0.5&quot;,command=&quot;/usr/bin/rsync --server --sender -vlogDtpr . /data/&quot;,no-agent-forwarding,no-X11-forwarding,no-pty ssh-ed25519 AAAA... backup@backup-1</code></pre>
+<h2>4. Brute-force protection</h2>
+<p>fail2ban is the standard: ban IPs after N failed logins.</p>
+<pre><code class="language-bash">sudo apt install -y fail2ban
+
+# /etc/fail2ban/jail.d/sshd.local
+# [sshd]
+# enabled = true
+# maxretry = 4
+# findtime = 10m
+# bantime = 1h
+
+sudo systemctl enable --now fail2ban
+sudo fail2ban-client status sshd
+sudo fail2ban-client get sshd banip --with-time | head</code></pre>
+<p>Firewall-level rate limiting as a second layer (nftables example):</p>
+<pre><code class="language-bash"># Allow 3 new SSH connections per minute per IP, then drop
+sudo nft add rule inet filter input tcp dport 22 ct state new \
+  limit rate over 3/minute burst 5 packets log prefix &#x27;&quot;ssh-flood: &quot;&#x27; drop</code></pre>
+<p>Reality check on &quot;change the port&quot;: moving SSH off port 22 cuts log noise by 99 percent but adds zero real security; do it for quiet logs, not as a control, and never as the only control.</p>
+<h2>5. Jump hosts instead of exposed fleets</h2>
+<pre><code class="language-bash"># ~/.ssh/config: one bastion, everything else behind it
+Host bastion
+    HostName bastion.example.com
+    User ops
+    IdentityFile ~/.ssh/id_ed25519
+
+Host db-1 app-1
+    ProxyJump bastion
+    User deploy
+    IdentityFile ~/.ssh/id_ed25519
+
+# Now this goes through the bastion transparently, end-to-end encrypted
+ssh db-1
+scp backup.sql db-1:/tmp/</code></pre>
+<p>The private servers need no public SSH at all: firewall port 22 to the bastion&#x27;s IP only. Audit who can reach what with one config file instead of scattered firewall rules.</p>
+<h2>6. Agent forwarding: convenient and dangerous</h2>
+<p><code>ssh -A</code> lets the remote host use your local keys. A compromised remote host can then use your agent to hop further as you, for as long as you stay connected.</p>
+<pre><code class="language-bash"># Prefer ProxyJump (no keys ever leave your laptop)
+ssh -J bastion db-1
+
+# If you must forward, confirm what&#x27;s loaded and lock it
+ssh-add -l
+ssh-add -c ~/.ssh/id_ed25519   # confirm each use
+
+# Server side: default deny, allow per need
+# AllowAgentForwarding no   (global default in the hardening drop-in)</code></pre>
+<p>Rule: ProxyJump by default; agent forwarding only for the rare case a remote host must authenticate outward, with <code>-c</code> confirmation, and never to hosts you do not fully trust.</p>
+<h2>7. SSH certificates (beyond keys)</h2>
+<p>Certificates remove authorized_keys management: a CA signs short-lived user certificates, servers trust the CA.</p>
+<pre><code class="language-bash"># CA setup (on the CA host, once)
+ssh-keygen -f /etc/ssh/ca -N &#x27;&#x27;
+# On each server: trust the CA for user certs
+# /etc/ssh/sshd_config.d/20-ca.conf:
+# TrustedUserCAKeys /etc/ssh/ca.pub
+
+# Issue a 8-hour certificate for an engineer
+ssh-keygen -s /etc/ssh/ca -I izaz-laptop -n deploy \
+  -V -5m:+8h -z 1 id_ed25519.pub
+# Produces id_ed25519-cert.pub; ssh offers it automatically
+ssh -i id_ed25519 db-1</code></pre>
+<p>Certificates give expiry, principals (usernames), and instant revocation via serial lists: the grown-up answer to &quot;who still has access&quot;.</p>
+<h2>8. Ongoing monitoring</h2>
+<pre><code class="language-bash"># Failed logins by IP (tune the window)
+sudo journalctl -u ssh --since &quot;24 hours ago&quot; \
+  | grep -oP &#x27;Failed password.*from \K[0-9.]+&#x27; | sort | uniq -c | sort -rn | head
+
+# Successful logins: every one should be expected
+sudo journalctl -u ssh --since &quot;24 hours ago&quot; | grep &#x27;Accepted&#x27; | tail -20
+
+# Keys offered vs accepted (VERBOSE LogLevel gives fingerprints)
+sudo journalctl -u ssh --since &quot;1 hour ago&quot; | grep -i &#x27;publickey&#x27; | tail -10</code></pre>
+<p>Alert on: logins at unusual hours, new source IPs for privileged users, <code>Accepted</code> for users outside AllowUsers (config drift), and fail2ban bans spiking (targeted campaign, not background noise).</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Locked out after hardening: use console access (cloud provider</li>
+<p>console, IPMI) to fix sshd_config; this is why you test a new session before closing the old one.</p>
+<li><code>AllowUsers</code> silently blocks everyone not listed, including</li>
+<p>automation accounts; audit the full user list before enabling.</p>
+<li><code>sshd -T</code> shows a value you did not set: another drop-in or the</li>
+<p>main file sets it; <code>sshd -T</code> merges all, check <code>/etc/ssh/sshd_config.d/</code> for conflicts (first-obtained value wins in sshd, opposite of most tools).</p>
+<li>Legacy clients cannot connect after cipher hardening: identify</li>
+<p>them from the logs (<code>no matching cipher found</code>) and upgrade the client; do not re-enable weak ciphers for one old script.</p>
+<li>fail2ban bans you during testing: whitelist your IP with</li>
+<p><code>ignoreip</code> in jail.local.</p>
+<li>ProxyJump chains break scp/rsync scripts: they honor</li>
+<p><code>~/.ssh/config</code>, so define the Host blocks once and scripts work unchanged.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li><code>sshd -t</code> fails: it prints the file and line; fix and retest,</li>
+<p>never restart on a failed test.</p>
+<li>Authentication fails with keys after hardening: check server</li>
+<p><code>LogLevel VERBOSE</code> output for the fingerprint offered, verify <code>~/.ssh</code> permissions (700/600), and confirm SELinux/AppArmor contexts on non-standard home directories (<code>restorecon -R</code>).</p>
+<li>Need to allow one legacy device: use a <code>Match</code> block scoped to</li>
+<p>its IP with weaker settings, never weaken the global config: <code>Match Address 10.0.0.99</code> then the overrides, and document why.</p>
+<li>Suspected compromised key: remove it from all authorized_keys,</li>
+<p>rotate the host keys if the server was breached, and move to certificates to make the next rotation instant.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>SSH is the most attacked service on the internet; the defender view is brute force, key sprawl, and persistence via authorized_keys. Detect with:</p>
+<pre><code class="language-bash"># Brute force in progress right now
+sudo journalctl -u ssh -f | grep -E &#x27;Failed|Invalid user&#x27;
+
+# authorized_keys files changed recently (persistence!)
+sudo find /home /root -name authorized_keys -mtime -30 -ls
+
+# Keys with dangerous options or unknown owners
+sudo grep -h -v &#x27;^#&#x27; /home/*/.ssh/authorized_keys /root/.ssh/authorized_keys \
+  2&gt;/dev/null | awk &#x27;{print $NF}&#x27; | sort | uniq -c | sort -rn | head -20
+
+# Logins from never-before-seen IPs (baseline first, then alert)
+sudo journalctl -u ssh --since &quot;7 days ago&quot; | grep Accepted \
+  | grep -oP &#x27;from \K[0-9.]+&#x27; | sort -u</code></pre>
+<p>Red flags: <code>command=</code> keys you did not create, world-readable private keys, password auth re-enabled after hardening (drift), and successful logins for users who should be key-only from unexpected countries. Treat any unknown entry in root&#x27;s authorized_keys as an incident.</p>
+<h2>Key references</h2>
+<ul>
+<li>OpenSSH 9.8 release notes: https://www.openssh.com/releasenotes.html</li>
+<li>sshd_config man page: https://man.openbsd.org/sshd_config</li>
+<li>ssh-audit 3.4: https://github.com/jtesta/ssh-audit</li>
+<li>Mozilla OpenSSH guidelines: https://infosec.mozilla.org/guidelines/openssh</li>
+<li>MITRE ATT&amp;CK T1021.004 (SSH): lateral movement over SSH.</li>
+<li>MITRE ATT&amp;CK T1136: account creation/persistence via keys.</li>
+<li>CWE-798 (Hard-coded Credentials): passwords in scripts instead of keys.</li>
+<li>CWE-287 (Improper Authentication): password auth left enabled.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

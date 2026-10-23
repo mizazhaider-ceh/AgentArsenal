@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: memory-forensics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>memory-forensics</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when analyzing a RAM dump or live memory image during</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="incident-response.html">incident-response</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Volatility 3</td><td>2.28.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>GNU Binutils</td><td>2.44</td></tr></tbody></table><p>Memory forensics examines a snapshot of RAM to answer one question: what was actually running when the image was captured. Disks can be wiped, logs can be cleared, and files can be deleted, but a live process leaves traces in memory that are much harder to erase. This skill covers the Volatility 3 workflow end to end: validating the image, identifying the operating system, enumerating processes, finding injected or hollowed code, recovering network and credential artifacts, and dumping suspicious processes for deeper static analysis. Scope: analyze memory images you are authorized to handle only (your own lab systems, client systems under an incident response retainer, or CTF challenge files). A memory image can contain passwords, keys, and private user data, so treat every sample as sensitive and keep it off shared storage.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Hash the image and work only on a copy, so the original stays pristine for</li>
+<p>chain of custody.</p>
+<li>Run <code>windows.info</code>, <code>linux.pslist</code>, or <code>mac.pslist</code> to identify the OS and</li>
+<p>confirm Volatility can parse the image.</p>
+<li>List processes three ways (<code>pslist</code>, <code>pstree</code>, <code>psxview</code>) and compare the</li>
+<p>outputs to spot hidden or unlinked processes.</p>
+<li>Hunt injected code with <code>malfind</code> and hollowed processes with</li>
+<p><code>hollowshunter</code>.</p>
+<li>Recover network history (<code>netscan</code>, <code>netstat</code>) and command history</li>
+<p>(<code>cmdline</code>, <code>consoles</code>, <code>bash</code>).</p>
+<li>Extract credential material (<code>hashdump</code>, <code>lsadump</code>, <code>cachedump</code>) only when</li>
+<p>the engagement scope allows it.</p>
+<li>Dump suspicious processes and DLLs to disk (<code>memmap</code>, <code>procdump</code>,</li>
+<p><code>dlldump</code>) for static triage.</p>
+<li>Build a timeline with <code>timeliner</code> and correlate memory findings with disk</li>
+<p>and log evidence.</p>
+</ol>
+<h2>1. Image intake and OS identification</h2>
+<p>Never analyze the only copy. Hash first, then copy, then hash the copy.</p>
+<pre><code class="language-bash"># Hash the original before anything else
+sha256sum /mnt/evidence/host01.mem | tee host01.sha256
+cp /mnt/evidence/host01.mem ./host01.mem
+sha256sum ./host01.mem
+
+# Quick sanity: size and first bytes
+ls -lh host01.mem
+xxd -l 64 host01.mem
+
+# Identify the operating system and kernel
+vol -f host01.mem windows.info
+vol -f host01.mem banners.Banners   # Linux kernel banner</code></pre>
+<p>If <code>windows.info</code> fails, the image may be Linux or macOS, a crash dump, or corrupt. Try the Linux or macOS plugin families before declaring it broken. Volatility 3 pulls Windows symbols automatically; for Linux and macOS you may need symbol tables generated from the target kernel (see Edge cases).</p>
+<pre><code class="language-bash"># Fallback: ask every OS family what it sees
+vol -f host01.mem linux.pslist | head -20
+vol -f host01.mem mac.pslist | head -20</code></pre>
+<h2>2. Process enumeration and cross-checks</h2>
+<p>List processes three ways and diff them. Malware that unlinks its EPROCESS entry disappears from <code>pslist</code> but often still shows in <code>psxview</code>.</p>
+<pre><code class="language-bash"># All three process views, saved for comparison
+vol -f host01.mem windows.pslist --output-dir ./out
+vol -f host01.mem windows.pstree --output-dir ./out
+vol -f host01.mem windows.psxview --output-dir ./out
+
+# psxview flags: &#x27;False&#x27; in pslist column but &#x27;True&#x27; elsewhere = hidden process
+grep -i false ./out/windows.psxview.txt 2&gt;/dev/null | head -20
+
+# Linux equivalents
+vol -f host01.mem linux.pslist --output-dir ./out
+vol -f host01.mem linux.pstree --output-dir ./out
+
+# Command lines reveal what each process was actually doing
+vol -f host01.mem windows.cmdline --output-dir ./out
+vol -f host01.mem linux.cmdline 2&gt;/dev/null | head -30</code></pre>
+<p>Read the output critically: a <code>svchost.exe</code> with no <code>-k</code> service group, a <code>rundll32.exe</code> with no DLL argument, or a process whose parent is PID 0 are all worth a second look. On Linux, watch for processes running from <code>/dev/shm</code>, <code>/tmp</code>, or deleted executables (paths ending in <code> (deleted)</code>).</p>
+<h2>3. Finding injected and hollowed code</h2>
+<p><code>malfind</code> flags memory regions that are both writable and executable with no backing file on disk, the classic signature of injected shellcode. The <code>hollowshunter</code> plugin (from the community plugin set) compares the on-disk image of a process with what is mapped in memory to catch process hollowing.</p>
+<pre><code class="language-bash"># Injected code: writable+executable private memory, no file backing
+vol -f host01.mem windows.malfind --output-dir ./out --dump
+
+# Dumped VAD regions land in the output dir; triage them by size
+ls -lh ./out | grep -i malfind | head
+
+# Hollowed processes: memory image differs from disk image
+vol -f host01.mem windows.hollowshunter 2&gt;/dev/null | head -30
+
+# LDR module list vs memory scan: DLLs hidden from the loader list
+vol -f host01.mem windows.ldrmodules | grep -v True | head -20
+
+# Linux: check for injected shared objects via maps
+vol -f host01.mem linux.proc.Maps 2&gt;/dev/null | grep -iE &#x27;rwx|heap&#x27; | head -20</code></pre>
+<p>Do not treat every <code>malfind</code> hit as malware. JIT compilers, .NET runtimes, and some security products allocate RWX memory legitimately. The deciding factor is context: an unknown RWX region inside <code>explorer.exe</code> or a short-lived child of a document reader is suspicious; one inside a browser renderer is usually not.</p>
+<h2>4. Network history and command activity</h2>
+<p>Memory holds sockets that closed hours ago and console buffers the user never saved. This is often where the C2 server or the exfiltration destination hides.</p>
+<pre><code class="language-bash"># Listening and established sockets (pools scan, works without symbols)
+vol -f host01.mem windows.netscan | grep -iE &#x27;ESTAB|LISTEN&#x27; | head -40
+vol -f host01.mem windows.netstat 2&gt;/dev/null | head -40
+
+# Linux network state
+vol -f host01.mem linux.netstat 2&gt;/dev/null | head -40
+
+# Console buffers: typed commands, attacker output, pasted strings
+vol -f host01.mem windows.consoles | head -60
+vol -f host01.mem windows.cmdscan | head -60
+
+# Linux bash history recovered from memory
+vol -f host01.mem linux.bash 2&gt;/dev/null | head -60
+
+# Environment variables can leak credentials and proxy config
+vol -f host01.mem windows.envars | grep -iE &#x27;pass|key|token|proxy&#x27; | head -20</code></pre>
+<p>Correlate every external IP against the case timeline. An established connection to an IP with no matching DNS query in the logs and no business reason to exist is a lead, not a conclusion.</p>
+<h2>5. Credential artifacts (scope-gated)</h2>
+<p>Dump credential material only when the engagement explicitly permits it. These plugins read LSASS and registry hives from the image.</p>
+<pre><code class="language-bash"># SAM hashes (needs SYSTEM + SAM hives present in the image)
+vol -f host01.mem windows.hashdump
+
+# LSA secrets: service account passwords, cached credentials
+vol -f host01.mem windows.lsadump
+
+# Domain cached credentials
+vol -f host01.mem windows.cachedump
+
+# Linux: shadow entries are on disk, but keys and tokens live in memory
+vol -f host01.mem linux.bash | grep -iE &#x27;ssh|aws_|token&#x27; | head</code></pre>
+<p>Handle output like live credentials: encrypted storage, limited access, and destroyed or returned at case close. If the scope says triage only, note the presence of credential artifacts without extracting values.</p>
+<h2>6. Dumping processes for static triage</h2>
+<p>A dumped process is a PE file you can feed to YARA, Ghidra, or your malware skills without ever running it.</p>
+<pre><code class="language-bash"># Dump a whole process by PID (from pslist)
+vol -f host01.mem windows.memmap.Memmap --pid 1234 --dump --output-dir ./dumps
+
+# Rebuild a runnable-ish executable from the process image
+vol -f host01.mem windows.procdump.Procdump --pid 1234 --output-dir ./dumps
+
+# Dump every loaded DLL of a suspicious process
+vol -f host01.mem windows.dlldump.Dlldump --pid 1234 --output-dir ./dumps
+
+# Carve all executables from the image without knowing PIDs
+vol -f host01.mem windows.peb 2&gt;/dev/null | head</code></pre>
+<p>Verify dumps before trusting them: check the PE header (<code>MZ</code>), the section table, and whether the entry point region was actually resident. A dump with paged-out code sections will crash a disassembler or produce garbage.</p>
+<pre><code class="language-bash">file ./dumps/*.dmp | head
+xxd -l 2 ./dumps/pid.1234.dmp</code></pre>
+<h2>7. Timelining</h2>
+<p><code>timeliner</code> merges process creation, registry, file, and network events into one CSV. Filter it hard, or it drowns you.</p>
+<pre><code class="language-bash"># Full timeline to CSV, then slice it
+vol -f host01.mem timeliner.Timeliner --output-file timeline.csv
+
+# Events around the suspected compromise window (example: 02:00 to 04:00)
+grep -E &#x27;2026-10-2[23] 0[234]:&#x27; timeline.csv | head -40
+
+# Process creation events only
+grep -i &#x27;ProcessCreation\|process_create&#x27; timeline.csv | head -40</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li><code>windows.info</code> reports the wrong profile or nothing: the image may be a</li>
+<p>hibernation file or crash dump, which needs conversion first (<code>hibinfo</code>, then extract). Pagefile-backed content is incomplete by design.</p>
+<li>Linux plugins fail with symbol errors: generate symbols from the exact</li>
+<p>kernel with dwarf2json, or grab the matching symbol pack from the Volatility Foundation downloads. A close-but-wrong kernel version produces plausible-looking garbage.</p>
+<li>32-bit process on a 64-bit image: use the <code>windows.pslist</code> output to check</li>
+<p>the Wow64 flag; pointer sizes differ and some plugins need the right layering to read them.</p>
+<li>Huge images (64 GB+): run plugins with <code>--output-dir</code> on fast local</li>
+<p>storage, skip <code>timeliner</code> until the end, and consider <code>windows.pslist</code> before anything expensive.</p>
+<li>Encrypted or compressed RAM (BitLocker hibernation, macOS): you need the</li>
+<p>recovery key or the live system; there is no supported brute force path.</p>
+<li><code>malfind</code> floods with false positives: scope it to suspicious PIDs with</li>
+<p><code>--pid</code> instead of scanning the whole image.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Standard plugins see nothing but behavior says malware: try the community</li>
+<p>plugin repository (hollowshunter, cmdline plugins, driver enumeration with <code>windows.modscan</code>), and run <code>windows.modules</code> plus <code>windows.driverscan</code> to catch kernel-mode implants.</p>
+<li>Rootkit unhooks everything: compare <code>pslist</code> against <code>psscan</code> (pool tag</li>
+<p>scanning finds processes the linked list hides), and <code>modules</code> against <code>modscan</code>.</p>
+<li>Need strings context fast: run <code>strings</code> on the image and grep for the</li>
+<p>suspicious IP or mutex name, then map the offset back to a process with <code>windows.vadinfo</code>.</p>
+<li>Image is a VM snapshot (<code>.vmem</code>, <code>.vmsn</code>): Volatility reads <code>.vmem</code></li>
+<p>directly; <code>.vmsn</code> needs the matching <code>.vmem</code> or conversion first.</p>
+<li>Symbol hell on Linux: fall back to <code>linux.banners</code> plus <code>strings</code> analysis,</li>
+<p>or acquire with a kernel module (AVML, LiME) that matches the target.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>From the defender side, memory forensics is the last line of visibility when disk and log evidence is gone. Fileless malware, in-memory credential theft, and living-off-the-land binaries leave almost no disk trace, which is exactly why EDR tools now do their own memory scanning. For detection engineering: alert on RWX private memory in processes that should not JIT-compile, on processes with no image path or a path in a temp directory, and on LSASS access from non-security processes (Sysmon Event ID 10 with <code>TargetImage</code> ending in <code>lsass.exe</code>). The misuse case to watch for is someone running these same plugins against a memory image they had no right to acquire: control acquisition tightly, because a RAM dump is a credential vault.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1003 (OS Credential Dumping): what <code>hashdump</code> and <code>lsadump</code></li>
+<p>recover.</p>
+<li>MITRE ATT&amp;CK T1057 (Process Discovery) and T1055 (Process Injection):</li>
+<p>what <code>psxview</code> and <code>malfind</code> detect.</p>
+<li>MITRE ATT&amp;CK T1033 (System Owner/User Discovery), T1049 (System Network</li>
+<p>Connections Discovery): memory artifacts of discovery activity.</p>
+<li>MITRE ATT&amp;CK T1070.004 (File Deletion) and T1027 (Obfuscated Files or</li>
+<p>Information): why memory beats disk when attackers clean up.</p>
+<li>Volatility 3 documentation: https://volatility3.readthedocs.io</li>
+<li>Volatility 3 GitHub (community plugins): https://github.com/volatilityfoundation/volatility3</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

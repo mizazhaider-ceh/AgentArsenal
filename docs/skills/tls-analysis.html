@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: tls-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>tls-analysis</h2><div class="meta"><span class="badge gray">crypto</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing the TLS configuration of a service you own</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>OpenSSL</td><td>3.5.0</td></tr><tr><td>testssl.sh</td><td>3.2.3</td></tr><tr><td>Wireshark</td><td>4.6.9</td></tr></tbody></table><p>TLS analysis verifies that encrypted connections are actually secure: valid certificates, modern protocol versions, strong cipher suites, and correct server configuration. It also covers the defensive side of decrypting traffic you are entitled to inspect, using key material from your own clients. This skill gives you the openssl-first workflow for quick checks, testssl.sh for comprehensive audits, and Wireshark keylog decryption for troubleshooting your own captures. Scope: test only endpoints you own or are authorized to assess, and decrypt only traffic you have the right to inspect (your own systems, with the client&#x27;s keylog or consent). Never intercept or decrypt third-party traffic.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Check the certificate chain, expiry, and hostname matching with</li>
+<p><code>openssl s_client</code>.</p>
+<li>Enumerate supported protocol versions and cipher suites.</li>
+<li>Run testssl.sh for the full audit: vulnerabilities, headers, and</li>
+<p>misconfigurations.</p>
+<li>Grade the findings by exploitability: protocol downgrade and weak</li>
+<p>ciphers first, informational items last.</p>
+<li>For traffic inspection, capture with a keylog from your own client and</li>
+<p>decrypt in Wireshark.</p>
+<li>Fingerprint TLS clients and servers (JA3/JA4) for detection baselines.</li>
+<li>Write remediation: exact config changes, not vague advice.</li>
+<li>Re-test after the fix to confirm the grade changed.</li>
+</ol>
+<h2>1. Certificate checks with openssl</h2>
+<p>The certificate is the first thing to verify and the most common thing to be wrong: expired, wrong hostname, or an incomplete chain.</p>
+<pre><code class="language-bash"># Full handshake view: chain, cipher, protocol
+openssl s_client -connect example.com:443 -servername example.com -showcerts &lt; /dev/null 2&gt;/dev/null | head -60
+
+# Certificate dates and subject/issuer, one-liners
+echo | openssl s_client -connect example.com:443 -servername example.com 2&gt;/dev/null \
+  | openssl x509 -noout -dates -subject -issuer
+
+# Subject Alternative Names (the hostnames this cert is valid for)
+echo | openssl s_client -connect example.com:443 -servername example.com 2&gt;/dev/null \
+  | openssl x509 -noout -ext subjectAltName
+
+# Days until expiry (alert under 30)
+echo | openssl s_client -connect example.com:443 -servername example.com 2&gt;/dev/null \
+  | openssl x509 -noout -checkend 2592000 &amp;&amp; echo &quot;OK: more than 30 days&quot; || echo &quot;RENEW SOON&quot;
+
+# Verify the full chain against system trust store
+openssl s_client -connect example.com:443 -servername example.com -verify_return_error &lt; /dev/null 2&gt;&amp;1 | grep -E &#x27;Verify return code&#x27;</code></pre>
+<p>Always pass <code>-servername</code> (SNI); without it you may get the default vhost&#x27;s certificate and misdiagnose a healthy server. A <code>Verify return code: 21</code> means an incomplete chain (missing intermediate), which is a server config bug, not a CA problem.</p>
+<h2>2. Protocol and cipher enumeration</h2>
+<p>Find out what the server actually negotiates, including the legacy protocols it should have disabled years ago.</p>
+<pre><code class="language-bash"># Which protocol versions are accepted? (try each explicitly)
+for proto in tls1 tls1_1 tls1_2 tls1_3; do
+  printf &quot;%-8s: &quot; &quot;$proto&quot;
+  echo | timeout 5 openssl s_client -connect example.com:443 -servername example.com -$proto &lt; /dev/null 2&gt;&amp;1 \
+    | grep -E &#x27;Protocol  :&#x27; | head -1
+done
+
+# Cipher suites offered (openssl lists what IT offers; testssl.sh enumerates the server)
+nmap --script ssl-enum-ciphers -p 443 example.com 2&gt;/dev/null | head -40
+
+# Check one specific weak cipher directly
+echo | timeout 5 openssl s_client -connect example.com:443 -cipher &#x27;DES-CBC3-SHA&#x27; &lt; /dev/null 2&gt;&amp;1 | grep -E &#x27;Cipher    :&#x27;</code></pre>
+<p>Anything below TLS 1.2 in 2026 is a finding. 3DES, RC4, export ciphers, and anonymous (ADH/AECDH) suites are findings. TLS 1.3-only is the ideal; TLS 1.2 with a tight cipher list is acceptable.</p>
+<h2>3. Comprehensive audit with testssl.sh</h2>
+<p>testssl.sh runs hundreds of checks in one go: protocols, ciphers, known vulnerabilities (Heartbleed, POODLE, ROBOT, and friends), certificate issues, and HTTP security headers.</p>
+<pre><code class="language-bash"># Full audit, HTML + JSON output for the report
+./testssl.sh --htmlfile audit.html --jsonfile audit.json example.com
+
+# Faster pass: vulnerabilities and protocols only
+./testssl.sh -U -p example.com
+
+# Cipher-focused pass
+./testssl.sh -E -e example.com
+
+# STARTTLS services (SMTP, IMAP, FTP): test the upgrade path too
+./testssl.sh -t smtp mail.example.com:25</code></pre>
+<p>Read the output by severity: red items are exploitable now (SWEET32 with 3DES, LOGJAM with export DH), yellow items are hardening opportunities (missing HSTS, TLS 1.0 still on). Quote the exact finding lines in your report; &quot;testssl.sh says BAD&quot; is not evidence, the cipher string is.</p>
+<h2>4. Decrypting your own traffic in Wireshark</h2>
+<p>When you need to see inside TLS for troubleshooting your own systems, have the client log session keys and point Wireshark at the log. This only works with key material you legitimately hold.</p>
+<pre><code class="language-bash"># Have YOUR client log keys (example: curl or a browser you control)
+export SSLKEYLOGFILE=/tmp/keys.log
+curl --tlsv1.3 https://example.com/ -o /dev/null
+
+# Capture the traffic at the same time
+dumpcap -i eth0 -w tls_capture.pcap host example.com &amp;
+
+# In Wireshark: Preferences -&gt; Protocols -&gt; TLS -&gt; (Pre)-Master-Secret log
+# filename -&gt; /tmp/keys.log, then reload the capture.
+# tshark equivalent:
+tshark -r tls_capture.pcap -o tls.keylog_file:/tmp/keys.log -Y http -T fields -e http.host -e http.request.uri | head -20</code></pre>
+<p>Limits to know: keylogging does not work for all clients, TLS 1.3 with certain configurations resists it, and you must delete the keylog file when done because it decrypts everything captured during the session. Never ask a user for their keylog; generate it from systems you administer.</p>
+<h2>5. JA3 and JA4 fingerprinting</h2>
+<p>TLS handshakes fingerprint clients and servers. Defenders use these fingerprints to spot malware C2 (which often uses unusual TLS libraries) hiding in HTTPS noise.</p>
+<pre><code class="language-bash"># JA3 from a capture (tshark with ja3 fields, or a dedicated tool)
+tshark -r tls_capture.pcap -Y tls.handshake.type==1 -T fields -e tls.handshake.ja3 2&gt;/dev/null | sort -u | head
+
+# JA4 is the modern successor (check your tshark/dissector version for support)
+tshark -r tls_capture.pcap -Y tls.handshake.type==1 -T fields -e tls.handshake.ja4 2&gt;/dev/null | sort -u | head
+
+# Baseline your environment: collect fingerprints of known-good clients first,
+# then alert on never-before-seen fingerprints talking to rare destinations</code></pre>
+<p>Build the baseline before the incident: record the JA3/JA4 of your standard browsers, updaters, and agents. During triage, a Python-based C2 client or a Go implant has a distinctive handshake that stands out against that baseline immediately.</p>
+<h2>6. Remediation write-up</h2>
+<p>Vague advice (&quot;use strong ciphers&quot;) gets ignored. Write the exact config.</p>
+<pre><code class="language-bash"># Example: nginx hardening snippet for the report
+cat &lt;&lt;&#x27;EOF&#x27;
+ssl_protocols TLSv1.2 TLSv1.3;
+ssl_ciphers &#x27;TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384&#x27;;
+ssl_prefer_server_ciphers on;
+add_header Strict-Transport-Security &quot;max-age=63072000&quot; always;
+EOF
+
+# Verify the fix with a retest, same commands as the audit
+./testssl.sh -p -e example.com | grep -E &#x27;offered|OK|NOT ok&#x27; | head -20</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>SNI required but you forgot <code>-servername</code>: you audited the wrong vhost.</li>
+<p>Re-run with SNI for every hostname on the server.</p>
+<li>Server behind a CDN or WAF: you tested the edge, not the origin. Note</li>
+<p>which one in the report; both matter, but they are different findings.</p>
+<li>Client certificate required (mTLS): openssl needs <code>-cert</code> and <code>-key</code>;</li>
+<p>without them the handshake fails and the audit is incomplete.</p>
+<li>testssl.sh is slow on some hosts: use targeted flags (<code>-p</code>, <code>-U</code>, <code>-E</code>)</li>
+<p>instead of the full run, and raise timeouts for high-latency targets.</p>
+<li>Keylog decryption shows nothing: the session used a cipher or extension</li>
+<p>your Wireshark build cannot handle, or the keylog did not cover that session. Verify keylog timestamps overlap the capture.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Findings disputed by the server team (&quot;the scanner is wrong&quot;): reproduce</li>
+<p>with raw openssl commands from section 2 and show the exact handshake; openssl output ends arguments.</p>
+<li>Need to prove exploitability, not just presence: demonstrate with a</li>
+<p>controlled downgrade or a decrypt of a captured session using a weak cipher, only within the authorized scope, and stop at proof of concept.</p>
+<li>Internal PKI issues (private CA, short-lived certs): audit the CA</li>
+<p>practices themselves (key storage, issuance policy, revocation), not just the leaf certificates.</p>
+<li>Encrypted traffic you cannot decrypt but must analyze: fall back to</li>
+<p>metadata analysis (JA3/JA4, SNI, flow sizes and timing) which needs no keys.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>TLS is both a shield and a hiding place: it protects your users and it protects attacker C2 equally. Defenders should inventory TLS everywhere (expire certs before they expire you, via monitoring), enforce TLS 1.2+ with a managed cipher policy, and deploy JA3/JA4 baselining on egress to catch non-browser TLS clients beaconing out. Watch for the defensive failure modes: expired certificates breaking monitoring, overly broad cipher lists kept for &quot;compatibility&quot;, and TLS inspection middleboxes with weak configurations of their own. The misuse case is intercepting traffic you have no right to see; certificate checks and audits are authorized assessment work, while decrypting third-party traffic is interception, and the line between them is consent and scope.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1040 (Network Sniffing): the traffic this analysis</li>
+<p>protects.</p>
+<li>MITRE ATT&amp;CK T1573 (Encrypted Channel) and T1071.001 (Web Protocols):</li>
+<p>attacker use of TLS this analysis helps detect.</p>
+<li>MITRE ATT&amp;CK T1557 (Adversary-in-the-Middle): the attack weak TLS</li>
+<p>enables.</p>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm): weak</li>
+<p>ciphers and protocols.</p>
+<li>CWE-295 (Improper Certificate Validation): chain and hostname failures.</li>
+<li>CWE-311 (Missing Encryption of Sensitive Data): the gap TLS fills.</li>
+<li>OpenSSL documentation: https://www.openssl.org/docs/</li>
+<li>testssl.sh: https://github.com/testssl/testssl.sh</li>
+<li>Wireshark TLS preferences: https://www.wireshark.org/docs/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

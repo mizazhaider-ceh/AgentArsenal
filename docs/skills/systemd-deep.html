@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: systemd-deep</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>systemd-deep</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when working deeply with systemd 256 on Linux: writing and</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>systemd</td><td>256</td></tr><tr><td>systemctl</td><td>256</td></tr><tr><td>journalctl</td><td>256</td></tr></tbody></table><p>systemd is the init system and service manager on nearly every modern Linux distribution: it starts the system, supervises services, schedules timers, manages sockets, and collects logs in the journal. This skill covers operating systemd 256 like a professional: unit anatomy, systemctl and journalctl fluency, timers, drop-in overrides, dependency ordering, service sandboxing, and boot and failure diagnosis.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the unit: <code>systemctl status &lt;name&gt;</code> shows state, recent logs,</li>
+<p>and the loaded unit file path.</p>
+<li>Read the unit file (<code>systemctl cat &lt;name&gt;</code>) before changing anything.</li>
+<li>Never edit vendor units in <code>/lib/systemd/system</code>; use drop-in</li>
+<p>overrides in <code>/etc/systemd/system/&lt;name&gt;.d/</code>.</p>
+<li>After any unit change, run <code>systemctl daemon-reload</code>, then restart and</li>
+<p>verify.</p>
+<li>Prefer timers over cron for scheduled work: they log to the journal,</li>
+<p>support dependencies, and survive reboots predictably.</p>
+<li>Apply sandboxing directives to services that face the network or parse</li>
+<p>untrusted input.</p>
+<li>Use <code>systemd-analyze</code> to find what slows the boot.</li>
+<li>Diagnose failures with <code>journalctl -u</code>, <code>systemctl --failed</code>, and the</li>
+<p>service exit code.</p>
+</ol>
+<h2>1. systemctl fluency</h2>
+<pre><code class="language-bash"># State of one service: loaded path, active state, recent log lines
+systemctl status nginx --no-pager
+
+# Full unit file as systemd sees it (includes drop-ins merged)
+systemctl cat nginx
+
+# Where a unit file lives and whether it is enabled
+systemctl is-enabled nginx
+systemctl show nginx -p FragmentPath,UnitFileState
+
+# List all units, filter by state
+systemctl list-units --type=service --state=running
+systemctl list-units --type=service --state=failed
+systemctl --failed
+
+# Enable now and at boot in one command
+sudo systemctl enable --now redis-server
+
+# Mask a unit so nothing can start it (stronger than disable)
+sudo systemctl mask telnet.socket</code></pre>
+<p>Reload vs restart: <code>reload</code> asks the daemon to re-read its own config (nginx, sshd support it); <code>restart</code> kills and starts the process. For systemd unit file changes you always need <code>daemon-reload</code> first:</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl restart myapp.service
+systemctl is-active myapp.service</code></pre>
+<h2>2. Unit file anatomy</h2>
+<pre><code class="language-ini"># /etc/systemd/system/myapp.service
+[Unit]
+Description=My application API
+Documentation=https://example.com/docs
+Wants=network-online.target
+After=network-online.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=appuser
+Group=appuser
+WorkingDirectory=/opt/myapp
+ExecStart=/opt/myapp/bin/server --config /etc/myapp/config.yaml
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=5s
+# Resource limits
+MemoryMax=1G
+CPUQuota=150%
+# Timeouts: fail fast instead of hanging the boot
+TimeoutStartSec=30s
+TimeoutStopSec=15s
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+<p>Key choices: <code>Type=simple</code> for foreground processes (the common case); <code>Type=forking</code> only for daemons that background themselves; <code>Type=oneshot</code> for jobs that run and exit (used with timers). <code>Restart=on-failure</code> restarts on crashes but not on clean exits; use <code>Restart=always</code> for services that must never stop.</p>
+<p>Enable and verify:</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl enable --now myapp.service
+systemctl show myapp.service -p ActiveState,SubState,MainPID</code></pre>
+<h2>3. Drop-in overrides (never edit vendor units)</h2>
+<p>Package updates overwrite <code>/lib/systemd/system/</code>. Put local changes in a drop-in:</p>
+<pre><code class="language-bash"># Override the restart policy and add an env var for nginx
+sudo systemctl edit nginx</code></pre>
+<p>That opens <code>/etc/systemd/system/nginx.service.d/override.conf</code>:</p>
+<pre><code class="language-ini">[Service]
+Restart=on-failure
+Environment=&quot;WORKER_PROCESSES=4&quot;
+# Clear a vendor list directive before replacing it:
+# ExecStart=
+# ExecStart=/usr/sbin/nginx -g &#x27;daemon off;&#x27;</code></pre>
+<p>Rules: to replace a directive that accepts multiple values (like <code>ExecStart</code>), first clear it with an empty assignment (<code>ExecStart=</code>), then set the new value. Verify the merged result:</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+systemctl cat nginx | tail -20
+sudo systemctl restart nginx</code></pre>
+<h2>4. journalctl: reading the journal</h2>
+<pre><code class="language-bash"># Logs for one unit, newest last, with pager
+journalctl -u myapp.service
+
+# Follow live, like tail -f
+journalctl -u myapp.service -f
+
+# Since the last boot, or a time window
+journalctl -u myapp.service -b
+journalctl --since &quot;2026-10-23 06:00&quot; --until &quot;2026-10-23 07:00&quot;
+
+# Errors and worse across all units
+journalctl -p err -b
+
+# JSON output for parsing with jq
+journalctl -u myapp.service -o json | jq -r &#x27;.MESSAGE&#x27; | tail -20
+
+# Who is spamming the journal (disk pressure diagnosis)
+journalctl --disk-usage
+sudo journalctl --vacuum-size=500M</code></pre>
+<p>Persistent journal storage lives in <code>/var/log/journal/</code>; without it, logs vanish on reboot. Set <code>Storage=persistent</code> in <code>/etc/systemd/journald.conf</code> on servers.</p>
+<h2>5. Timers instead of cron</h2>
+<p>A timer needs two files: the <code>.service</code> (what to run) and the <code>.timer</code> (when to run it).</p>
+<pre><code class="language-ini"># /etc/systemd/system/backup.service
+[Unit]
+Description=Nightly backup job
+
+[Service]
+Type=oneshot
+User=backup
+ExecStart=/usr/local/bin/backup.sh</code></pre>
+<pre><code class="language-ini"># /etc/systemd/system/backup.timer
+[Unit]
+Description=Run backup nightly
+
+[Timer]
+OnCalendar=02:30
+Persistent=true
+RandomizedDelaySec=15m
+
+[Install]
+WantedBy=timers.target</code></pre>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl enable --now backup.timer
+
+# List timers with next run time and last result
+systemctl list-timers --all
+
+# Run the job right now without waiting for the schedule
+sudo systemctl start backup.service
+journalctl -u backup.service -n 30</code></pre>
+<p><code>Persistent=true</code> runs missed jobs after downtime; <code>OnCalendar=</code> accepts expressions like <code>Mon *-*-* 03:00:00</code> or <code>hourly</code>. Check the next elapse with <code>systemd-analyze calendar &quot;Mon *-*-* 03:00:00&quot;</code>.</p>
+<h2>6. Dependencies and ordering</h2>
+<p><code>Wants=</code> / <code>Requires=</code> control what gets pulled in; <code>After=</code> / <code>Before=</code> control ordering only. A service can be ordered after something without requiring it. Common mistake: using <code>After=</code> alone and assuming the dependency starts too; add <code>Wants=</code> or <code>Requires=</code> for that.</p>
+<p>Targets group units: <code>multi-user.target</code> is the normal server state, <code>graphical.target</code> adds a desktop.</p>
+<pre><code class="language-bash"># Inspect the dependency tree of a service
+systemctl list-dependencies myapp.service
+
+# What target are we in, and what is the default
+systemctl get-default
+systemctl isolate multi-user.target   # drop out of graphical mode</code></pre>
+<h2>7. Service sandboxing directives</h2>
+<p>These directives cut what a compromised service can touch. Apply incrementally and test after each one, because over-strict settings break legitimate services.</p>
+<pre><code class="language-ini"># /etc/systemd/system/myapp.service.d/sandbox.conf
+[Service]
+# Process cannot gain new privileges (breaks setuid helpers inside)
+NoNewPrivileges=true
+# Private /tmp invisible to other processes
+PrivateTmp=true
+# Mount /usr and /boot read-only; /etc read-only too with ProtectSystem=strict
+ProtectSystem=strict
+# Hide home directories
+ProtectHome=true
+# No write access anywhere except the listed paths
+ReadWritePaths=/var/lib/myapp /var/log/myapp
+# Restrict which syscalls the service may use
+SystemCallFilter=@system-service
+SystemCallArchitectures=native
+# Private network namespace (for services needing no network at all)
+# PrivateNetwork=true</code></pre>
+<p>Test sandboxing without breaking production:</p>
+<pre><code class="language-bash"># Dry-run: shows which syscalls would be denied
+sudo systemd-run --pipe -p SystemCallFilter=&#x27;~@clock&#x27; /bin/true
+# Check the service still starts and functions
+sudo systemctl restart myapp.service
+journalctl -u myapp.service -n 20 | grep -iE &#x27;denied|failed|error&#x27;</code></pre>
+<p>Verify what a running service is confined with:</p>
+<pre><code class="language-bash">systemctl show myapp.service -p NoNewPrivileges,PrivateTmp,ProtectSystem,ProtectHome</code></pre>
+<h2>8. Boot analysis</h2>
+<pre><code class="language-bash"># Total boot time and where it went
+systemd-analyze
+systemd-analyze blame | head -20
+
+# Critical chain: what actually delayed the boot target
+systemd-analyze critical-chain
+
+# Visual SVG timeline (open in a browser)
+systemd-analyze plot &gt; /tmp/boot.svg
+
+# Check for ordering cycles and unit file problems
+systemd-analyze verify /etc/systemd/system/myapp.service</code></pre>
+<h2>9. Diagnosing failed units</h2>
+<pre><code class="language-bash"># Which units failed
+systemctl --failed
+
+# Full story: status, exit code, recent logs
+systemctl status myapp.service --no-pager -l
+journalctl -u myapp.service -b -n 50
+
+# Decode the exit code (143 = SIGTERM, 137 = SIGKILL/OOM)
+systemctl show myapp.service -p ExecMainStatus,ExecMainCode
+
+# Was it the OOM killer? Check the kernel log
+dmesg | grep -i &#x27;killed process&#x27; | tail -5
+journalctl -k | grep -i &#x27;out of memory&#x27; | tail -5
+
+# Start manually in the foreground to see the raw error
+sudo -u appuser /opt/myapp/bin/server --config /etc/myapp/config.yaml</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Unit file changed but behavior did not: you forgot</li>
+<p><code>daemon-reload</code>. systemd reads unit files once at load; always reload after edits.</p>
+<li>Service starts then immediately stops with success: usually</li>
+<p><code>Type=forking</code> on a program that does not fork, or <code>Type=simple</code> on a program that daemonizes itself. Match Type to reality; prefer simple.</p>
+<li>Timer exists but never fires: the <code>.timer</code> is not enabled</li>
+<p>(<code>systemctl is-enabled backup.timer</code>), or <code>Persistent=true</code> is missing and the machine was off at the scheduled time.</p>
+<li><code>systemctl edit</code> opens an empty file and changes seem lost: you edited</li>
+<p>the wrong unit name; check <code>systemctl cat &lt;name&gt;</code> for the drop-in path.</p>
+<li>Sandboxing breaks the app at 3 AM: <code>ProtectSystem=strict</code> without the</li>
+<p>right <code>ReadWritePaths</code>, or <code>PrivateTmp=true</code> hiding a socket the app shares. Test restarts after every sandboxing change.</p>
+<li>Journal logs missing after reboot: <code>/var/log/journal/</code> does not exist;</li>
+<p>create it or set <code>Storage=persistent</code>.</p>
+<li>Boot hangs on a network mount: use <code>nofail</code> and <code>x-systemd.device-timeout=10s</code></li>
+<p>in fstab for non-critical mounts so boot continues.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li><code>daemon-reload</code> hangs: a stuck unit can block it; find it with</li>
+<p><code>systemctl list-jobs</code>, cancel with <code>systemctl cancel &lt;job-id&gt;</code>.</p>
+<li>System will not reach multi-user.target: boot with</li>
+<p><code>systemd.unit=rescue.target</code> on the kernel command line, then inspect <code>journalctl -b -p err</code>.</p>
+<li>Suspected unit file syntax error: <code>systemd-analyze verify</code> on the file</li>
+<p>prints the offending line.</p>
+<li>Service killed instantly with no logs: run it via</li>
+<p><code>systemd-run --pty --wait --collect</code> to capture stdout/stderr directly.</p>
+<li>Journal corruption: <code>journalctl --verify</code> checks files;</li>
+<p><code>--vacuum-time=1s</code> plus restart clears a corrupt journal (logs are lost, so export first if they matter).</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering operators, the defender view is about catching malicious or careless unit changes: persistence via systemd is a top attacker technique, and a misconfigured service is an outage waiting to happen. Watch for:</p>
+<pre><code class="language-bash"># Recently changed or new unit files (possible persistence)
+sudo find /etc/systemd/system -name &#x27;*.service&#x27; -mtime -7 -ls
+sudo find /etc/systemd/system -name &#x27;*.timer&#x27; -mtime -7 -ls
+
+# Units that are enabled but should not be
+systemctl list-unit-files --state=enabled | grep -vE &#x27;^(sshd|nginx|cron)&#x27;
+
+# Masked or suspicious: services running as root that do not need it
+systemctl show -p User,ExecStart --value &#x27;*&#x27;
+
+# Unexpected timers (common persistence mechanism)
+systemctl list-timers --all</code></pre>
+<p>Red flags: a new service with <code>ExecStart</code> pointing at <code>/tmp</code> or a hidden directory, timers with random-looking names, <code>WantedBy=multi-user.target</code> units added outside package management, and journal gaps suggesting log wiping (<code>journalctl --verify</code> failures). Baseline: keep unit files in version control or a config management system and alert on drift.</p>
+<h2>Key references</h2>
+<ul>
+<li>systemd 256 documentation: https://www.freedesktop.org/software/systemd/man/latest/</li>
+<li>systemctl man page: https://www.freedesktop.org/software/systemd/man/latest/systemctl.html</li>
+<li>systemd.service man page: https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html</li>
+<li>systemd.timer man page: https://www.freedesktop.org/software/systemd/man/latest/systemd.timer.html</li>
+<li>systemd.exec sandboxing: https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html</li>
+<li>MITRE ATT&amp;CK T1543.002 (Systemd Service): persistence via services.</li>
+<li>MITRE ATT&amp;CK T1053.006 (Systemd Timers): persistence via timers.</li>
+<li>CWE-732 (Incorrect Permission Assignment): world-writable unit files.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

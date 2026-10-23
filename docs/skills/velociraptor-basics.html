@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: velociraptor-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>velociraptor-basics</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need fast, targeted forensic collection across</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Velociraptor</td><td>0.77</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Velociraptor is an endpoint visibility and collection framework: a server that talks to lightweight agents on every endpoint, letting you query, collect, and hunt across the whole fleet from one console instead of touching hosts one by one. Its power comes from VQL (Velociraptor Query Language) artifacts, prebuilt queries that collect specific evidence types. This skill covers deploying a lab server, enrolling clients, running your first collections, writing basic VQL, launching hunts, and the offline collector for hosts you cannot enroll. Scope: deploy agents only on systems you administer or are explicitly authorized to monitor, and tell users beforehand where policy requires it. Endpoint collection sees everything on a machine, so access control and a documented investigation basis are mandatory.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Deploy the Velociraptor server in your lab or SOC network and generate</li>
+<p>the server and client configs.</p>
+<li>Enroll at least one test client and confirm it checks in on the GUI.</li>
+<li>Run a built-in artifact collection on the test client (e.g., process</li>
+<p>listing, autoruns).</p>
+<li>Write and test a small custom VQL query in a notebook.</li>
+<li>Launch a hunt to run the collection across a client label or the fleet.</li>
+<li>Download and review the collected results; extract IOCs.</li>
+<li>For hosts you cannot enroll, build and run the offline collector.</li>
+<li>Clean up: remove hunt data per retention policy and document the</li>
+<p>collection.</p>
+</ol>
+<h2>1. Server deployment</h2>
+<p>One binary is the whole server. Generate configs with the interactive wizard, then run.</p>
+<pre><code class="language-bash"># Download the release binary for your platform and make it executable
+wget -O velociraptor https://github.com/Velocidex/velociraptor/releases/download/v0.77.2/velociraptor-v0.77.2-linux-amd64
+chmod +x velociraptor
+./velociraptor version
+
+# Interactive config generation (answers: datastore path, frontend hostname,
+# ports, GUI credentials, self-signed certs for a lab)
+./velociraptor config generate -i
+# Produces server.config.yaml and client.config.yaml
+
+# Run the server in the foreground first to watch for errors
+./velociraptor --config server.config.yaml frontend -v
+
+# GUI is on the configured port (default 8889); log in and confirm
+# the dashboard loads with zero clients</code></pre>
+<p>For anything beyond a lab, put the server behind TLS with a real hostname, back up <code>server.config.yaml</code> (it holds the CA), and restrict GUI access to the SOC network. The client config embeds the server address and cert, so regenerate clients if either changes.</p>
+<h2>2. Client enrollment</h2>
+<p>Install the agent with the client config on each endpoint. Enrollment is automatic on first check-in.</p>
+<pre><code class="language-bash"># Linux client: copy binary + client.config.yaml, install as a service
+sudo cp velociraptor /usr/local/bin/
+sudo cp client.config.yaml /etc/velociraptor/client.config.yaml
+# Create a systemd unit that runs:
+# /usr/local/bin/velociraptor --config /etc/velociraptor/client.config.yaml client -v
+
+# Windows client: install as a service (run as Administrator)
+velociraptor.exe --config client.config.yaml service install
+velociraptor.exe --config client.config.yaml service start
+
+# Confirm enrollment in the GUI: the client appears under the search tab
+# with its hostname, OS, and last-seen time</code></pre>
+<p>Label clients as they enroll (by OS, site, or role) because hunts target labels. A hunt without labels is a hunt against everything, which is rarely what you want.</p>
+<h2>3. First collections from the GUI</h2>
+<p>Collections run artifacts against one client. Start with the built-ins that answer the most common triage questions.</p>
+<pre><code class="language-bash"># GUI path for each: select client -&gt; Collect -&gt; search artifact -&gt; Launch
+# Useful first artifacts:
+#   Windows.System.Pslist          process listing
+#   Windows.Sysinternals.Autoruns   persistence points
+#   Windows.EventLogs.Evtx          event log collection
+#   Windows.Registry.Hunter         registry triage
+#   Linux.Sys.Pslist               Linux processes
+#   Generic.Client.Info            client metadata sanity check</code></pre>
+<p>Each collection gets a flow ID; results land in the flow&#x27;s Uploads and notebook tabs. Download the CSV/JSON for anything you will correlate elsewhere, and note the flow ID in your case notes so the collection is reproducible and auditable.</p>
+<h2>4. Basic VQL</h2>
+<p>VQL looks like SQL but queries the endpoint: plugins return rows, and you filter and shape them. Test in a notebook before putting a query in a hunt.</p>
+<pre><code class="language-sql">-- Processes with their command lines, newest first
+SELECT Pid, Ppid, Name, CommandLine
+FROM pslist()
+ORDER BY Pid DESC
+LIMIT 50</code></pre>
+<pre><code class="language-sql">-- Files modified in the last 24 hours under temp directories
+SELECT FullPath, Mtime, Size
+FROM glob(globs=[&#x27;C:/Windows/Temp/**&#x27;, &#x27;C:/Users/*/AppData/Local/Temp/**&#x27;])
+WHERE Mtime &gt; now() - 86400
+ORDER BY Mtime DESC</code></pre>
+<pre><code class="language-sql">-- Registry Run keys (persistence triage)
+SELECT *
+FROM registry_hunter(
+  hive=&#x27;HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run&#x27;)</code></pre>
+<pre><code class="language-bash"># Run VQL from the CLI too, for scripting and offline work
+./velociraptor --config server.config.yaml query &#x27;SELECT * FROM pslist() LIMIT 5&#x27;</code></pre>
+<p>VQL gotchas: paths need the right accessor for the OS, time is in epoch seconds unless converted, and expensive queries (full-disk globs) should be narrowed before hunting or they will take hours across a fleet.</p>
+<h2>5. Hunts across the fleet</h2>
+<p>A hunt runs an artifact against many clients at once, with conditions and label targeting.</p>
+<pre><code class="language-bash"># GUI: Hunts -&gt; New Hunt -&gt; select artifact -&gt; set label/condition -&gt; Start
+# Example hunt: collect autoruns from all Windows clients enrolled this week
+# Condition (VQL): SELECT * FROM info() WHERE OS = &#x27;windows&#x27;</code></pre>
+<p>Hunt hygiene: always set a label or condition, start with a small canary group before the full fleet, and watch the server load on the first run. Hunts write to the same flow/result structure as single collections, so your review workflow does not change, only the scale does.</p>
+<pre><code class="language-sql">-- Hunt condition example: only clients that have not been collected today
+SELECT * FROM info() WHERE OS = &#x27;windows&#x27;</code></pre>
+<h2>6. Offline collector for dead-box triage</h2>
+<p>When you cannot install an agent (a powered-off disk image, a host you must not touch), build a standalone collector binary that gathers a fixed artifact set to a local zip.</p>
+<pre><code class="language-bash"># Build the offline collector from the GUI (Server -&gt; Build Offline Collector)
+# or the CLI with a collector config, then run it on the target:
+./velociraptor-collector --config collector.config.yaml collect -v
+# Produces a zip with the collected artifacts; import it back into the
+# server GUI for analysis with the same notebooks and VQL</code></pre>
+<p>The offline collector is also the right tool for third-party handoffs: the recipient gets data, not access to your server.</p>
+<h2>7. Review, IOCs, and cleanup</h2>
+<pre><code class="language-bash"># Results download from the GUI per flow/hunt; for automation use the API
+# Extract IOCs from collected process and network data
+# Example: unique external IPs from a netstat-style collection CSV
+cut -d, -f5 connections.csv | sort -u | grep -E &#x27;^[0-9.]+$&#x27; | head -30
+
+# Retention: delete hunt and flow data when the case closes, per policy
+# GUI: select flow -&gt; Delete; document what was deleted and when</code></pre>
+<p>Every collection is an intrusion into someone&#x27;s machine from their perspective. Keep the justification, the scope (which clients, which artifacts), and the retention decision in the case file.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Client never checks in: verify the frontend port is reachable, the client</li>
+<p>config has the right server name/IP, and the client clock is roughly correct (TLS fails on wild skew).</p>
+<li>Collection returns empty: the artifact may not apply to that OS version,</li>
+<p>or the VQL had a wrong path/accessor. Test the artifact on a known-good lab client first.</p>
+<li>Hunt is too slow: narrow the artifact parameters, add stricter hunt</li>
+<p>conditions, or split by label into smaller hunts.</p>
+<li>GUI shows stale client data: check last-seen; an agent that stopped</li>
+<p>checking in mid-incident is itself a signal (host powered off, agent killed).</p>
+<li>Offline collector zip is huge: you collected too broadly; trim the</li>
+<p>artifact list to the triage set and re-run.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Need custom evidence types: write a custom artifact (YAML with VQL) in</li>
+<p>the GUI artifact editor, test on one client, then promote it to hunts. Keep custom artifacts in version control.</p>
+<li>Fleet-wide YARA scanning: use the built-in YARA artifacts to push rules</li>
+<p>from yara-rules across endpoints, then hunt on the hits.</p>
+<li>Need continuous monitoring, not point collections: configure client event</li>
+<p>monitoring artifacts (process creation, DNS queries) which stream to the server, but size the server storage first.</p>
+<li>Server compromise suspected: the server holds keys to every endpoint;</li>
+<p>treat it as tier-zero infrastructure with backups, access logging, and an incident plan of its own.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Velociraptor is a defender&#x27;s force multiplier, and this entire skill is the defender view: rapid evidence collection, fleet-wide hunting for IOCs, and baselining normal endpoint behavior. Operationalize it: maintain a library of hunt artifacts mapped to your top MITRE techniques, run them on a schedule as proactive hunts, and feed hits to the SIEM. The misuse case is deploying agents on machines without authorization, which is surveillance, not defense; enrollment requires admin rights or explicit consent for a reason, and bypassing that is out of scope. Also defend the server itself: it is the highest-value target in the SOC after the domain controllers.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1033 (System Owner/User Discovery), T1057 (Process</li>
+<p>Discovery), T1049 (System Network Connections Discovery): the discovery artifacts map here.</p>
+<li>MITRE ATT&amp;CK T1003 (OS Credential Dumping): what LSASS collection</li>
+<p>artifacts target for detection.</p>
+<li>Velociraptor documentation: https://docs.velociraptor.app</li>
+<li>Velociraptor quickstart: https://docs.velociraptor.app/docs/deployment/quickstart/</li>
+<li>Velociraptor GitHub releases: https://github.com/Velocidex/velociraptor/releases</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

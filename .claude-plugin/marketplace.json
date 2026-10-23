@@ -1,1 +1,1910 @@
-{"$schema":"https://anthropic.com/claude-code/marketplace.schema.json","description":"AgentArsenal: a unified agent-skills repo combining engineering depth and offensive-security depth, with machine-enforced quality (per-skill versioning, testing harness, quality scores, dependency graph, freshness tracking, lifecycle states, offline bundles, rollback). Scope: authorized security work only.","homepage":"https://github.com/mizazhaider-ceh/AgentArsenal","license":"MIT","name":"agent-arsenal","owner":{"name":"Muhammad Izaz Haider","url":"https://github.com/mizazhaider-ceh"},"plugins":[{"author":"Muhammad Izaz Haider","category":"recon","description":"Use when gathering intelligence on a target without touching it: OSINT, subdomains, certificates, WHOIS, archived data.","keywords":["recon","osint","passive","subdomains","footprinting"],"name":"recon-passive","source":"./skills/recon/recon-passive","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"recon","description":"Use when you have authorization to actively probe a target: DNS enumeration, service banners, live host discovery.","keywords":["recon","active","dns","enumeration","authorized"],"name":"recon-active","source":"./skills/recon/recon-active","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"network","description":"Use when scanning networks with Nmap: host discovery, port scanning, service detection, OS fingerprinting, evasion tradeoffs.","keywords":["nmap","scanning","ports","network","enumeration"],"name":"nmap-methodology","source":"./skills/network/nmap-methodology","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"network","description":"Use when moving deeper into an authorized network through a compromised foothold: proxychains, SOCKS, SSH tunnels, port forwarding.","keywords":["pivoting","tunneling","proxychains","socks","lateral movement"],"name":"network-pivoting","source":"./skills/network/network-pivoting","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"web","description":"Use when testing an authorized web app for SQL injection: detection, union-based, error-based, blind, sqlmap workflows.","keywords":["sql injection","sqli","sqlmap","web","owasp"],"name":"web-sqli","source":"./skills/web/web-sqli","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"web","description":"Use when testing an authorized web app for cross-site scripting: reflected, stored, DOM-based XSS, filters and bypasses.","keywords":["xss","cross-site scripting","web","owasp","injection"],"name":"web-xss","source":"./skills/web/web-xss","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"web","description":"Use when running a full authorized web application pentest: scoping, mapping, testing, evidence, reporting, OWASP methodology.","keywords":["pentest","web app","methodology","owasp","reporting"],"name":"webapp-pentest-methodology","source":"./skills/web/webapp-pentest-methodology","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"auth","description":"Use when testing authentication on authorized systems: brute force, credential stuffing, session handling, MFA weaknesses, OAuth flaws.","keywords":["authentication","brute force","sessions","mfa","oauth"],"name":"auth-attacks","source":"./skills/auth/auth-attacks","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"auth","description":"Use when attacking password hashes or password-based logins on authorized targets: wordlists, rules, hashcat, john, hydra.","keywords":["passwords","cracking","hashcat","john","hydra","wordlists"],"name":"password-attacks","source":"./skills/auth/password-attacks","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"privesc","description":"Use when escalating privileges on an authorized Linux host: SUID, sudo misconfigs, kernel bugs, cron jobs, LinPEAS workflow.","keywords":["privilege escalation","linux","suid","sudo","enumeration"],"name":"privesc-linux","source":"./skills/privesc/privesc-linux","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"privesc","description":"Use when escalating privileges on an authorized Windows host: service misconfigs, tokens, unquoted paths, WinPEAS workflow.","keywords":["privilege escalation","windows","tokens","services","enumeration"],"name":"privesc-windows","source":"./skills/privesc/privesc-windows","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"ad","description":"Use when enumerating an authorized Active Directory environment: users, groups, trusts, BloodHound, ACL attack paths.","keywords":["active directory","bloodhound","enumeration","acl","domain"],"name":"ad-enumeration","source":"./skills/ad/ad-enumeration","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"c2","description":"Use when building C2 for an authorized red team engagement: listeners, payloads, profiles, OPSEC, detection evasion basics.","keywords":["c2","command and control","red team","opsec","listeners"],"name":"c2-fundamentals","source":"./skills/c2/c2-fundamentals","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"engineering","description":"Use when reviewing code for quality, bugs, and security issues: structured review checklist, severity ratings, feedback format.","keywords":["code review","quality","bugs","security review","feedback"],"name":"code-reviewer","source":"./skills/engineering/code-reviewer","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"engineering","description":"Use when building Python command line tools: argparse, rich output, packaging, logging, testable structure, stdlib first.","keywords":["python","cli","argparse","tooling","packaging"],"name":"python-cli-tooling","source":"./skills/engineering/python-cli-tooling","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"engineering","description":"Use when working with Git: branching models, rebasing, commit hygiene, PR flow, recovering from mistakes.","keywords":["git","branching","rebase","commits","workflow"],"name":"git-workflows","source":"./skills/engineering/git-workflows","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"engineering","description":"Use when writing or auditing code for security: input validation, injection defenses, crypto use, OWASP secure coding practices.","keywords":["secure coding","defense","input validation","owasp","hardening"],"name":"secure-coding","source":"./skills/engineering/secure-coding","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"incident","description":"Use when responding to a security incident: preparation, detection, containment, eradication, recovery, lessons learned.","keywords":["incident response","containment","triage","playbooks","dfir"],"name":"incident-response","source":"./skills/incident/incident-response","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"forensics","description":"Use when doing digital forensics on authorized images: disk, memory, timelines, chain of custody, Sleuth Kit basics.","keywords":["forensics","disk","memory","timeline","chain of custody"],"name":"forensics-fundamentals","source":"./skills/forensics/forensics-fundamentals","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"linux","description":"Use when hardening a Linux server: SSH, firewall, users, services, updates, auditing, CIS benchmark aligned checks.","keywords":["linux","hardening","ssh","firewall","cis"],"name":"linux-hardening","source":"./skills/linux/linux-hardening","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"api","description":"Use when testing an authorized API for security flaws: auth, BOLA, rate limits, mass assignment, OWASP API Top 10.","keywords":["api","rest","bola","owasp api","testing"],"name":"api-security-testing","source":"./skills/api/api-security-testing","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"cloud","description":"Use when assessing cloud environments (AWS first): IAM, storage buckets, logging, common misconfigs, shared responsibility.","keywords":["cloud","aws","iam","misconfiguration","buckets"],"name":"cloud-security-basics","source":"./skills/cloud/cloud-security-basics","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"crypto","description":"Use when working with cryptography: symmetric vs asymmetric, hashes, TLS, common misuse patterns, what not to roll yourself.","keywords":["cryptography","tls","hashing","encryption","keys"],"name":"crypto-fundamentals","source":"./skills/crypto/crypto-fundamentals","version":"1.0.0"},{"author":"Muhammad Izaz Haider","category":"bugbounty","description":"Use when hunting bugs in authorized bounty programs: recon, triage, report writing, scope discipline, payout-friendly workflow.","keywords":["bug bounty","hunting","triage","reporting","scope"],"name":"bug-bounty-workflow","source":"./skills/bugbounty/bug-bounty-workflow","version":"1.0.0"}],"repository":"https://github.com/mizazhaider-ceh/AgentArsenal","version":"1.0.0"}
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "description": "AgentArsenal: a unified agent-skills repo combining engineering depth and offensive-security depth, with machine-enforced quality (per-skill versioning, testing harness, quality scores, dependency graph, freshness tracking, lifecycle states, offline bundles, rollback). Scope: authorized security work only.",
+  "homepage": "https://github.com/mizazhaider-ceh/AgentArsenal",
+  "license": "MIT",
+  "name": "agent-arsenal",
+  "owner": {
+    "name": "Muhammad Izaz Haider",
+    "url": "https://github.com/mizazhaider-ceh"
+  },
+  "plugins": [
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "ad",
+      "description": "Use when enumerating an authorized Active Directory environment: users, groups, trusts, BloodHound, ACL attack paths.",
+      "keywords": [
+        "active directory",
+        "bloodhound",
+        "enumeration",
+        "acl",
+        "domain"
+      ],
+      "name": "ad-enumeration",
+      "source": "./skills/ad/ad-enumeration",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "mobile",
+      "description": "Use when you need to test a running Android app on an authorized engagement, such as a client mobile app pentest or a CTF APK that only reveals behavior at runtime.",
+      "keywords": [
+        "mobile",
+        "android",
+        "dynamic",
+        "frida",
+        "objection",
+        "adb"
+      ],
+      "name": "android-dynamic",
+      "source": "./skills/mobile/android-dynamic",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "mobile",
+      "description": "Use when you need to reverse engineer an Android APK you are authorized to test, such as a client mobile application on a penetration test or a CTF challenge APK.",
+      "keywords": [
+        "mobile",
+        "android",
+        "static",
+        "jadx",
+        "apktool",
+        "python"
+      ],
+      "name": "android-static",
+      "source": "./skills/mobile/android-static",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "binary",
+      "description": "Use when you need symbolic execution to explore program paths automatically, typically for CTF binaries, crackmes, or vulnerability research on code you are authorized to analyze.",
+      "keywords": [
+        "binary",
+        "angr",
+        "python"
+      ],
+      "name": "angr-basics",
+      "source": "./skills/binary/angr-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when automating server configuration with Ansible on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "ansible",
+        "ansible-core"
+      ],
+      "name": "ansible-basics",
+      "source": "./skills/engineering/ansible-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "api",
+      "description": "Use when testing an authorized API for security flaws: auth, BOLA, rate limits, mass assignment, OWASP API Top 10.",
+      "keywords": [
+        "api",
+        "rest",
+        "bola",
+        "owasp api",
+        "testing"
+      ],
+      "name": "api-security-testing",
+      "source": "./skills/api/api-security-testing",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "network",
+      "description": "Use when performing authorized man-in-the-middle testing on a local network segment.",
+      "keywords": [
+        "network",
+        "arp",
+        "spoofing",
+        "dsniff",
+        "wireshark",
+        "python"
+      ],
+      "name": "arp-spoofing",
+      "source": "./skills/network/arp-spoofing",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "ad",
+      "description": "Use when testing Active Directory for AS-REP roasting on an authorized engagement.",
+      "keywords": [
+        "ad",
+        "asreproasting",
+        "impacket",
+        "rubeus",
+        "hashcat",
+        "netexec"
+      ],
+      "name": "asreproasting",
+      "source": "./skills/ad/asreproasting",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "auth",
+      "description": "Use when testing authentication on authorized systems: brute force, credential stuffing, session handling, MFA weaknesses, OAuth flaws.",
+      "keywords": [
+        "authentication",
+        "brute force",
+        "sessions",
+        "mfa",
+        "oauth"
+      ],
+      "name": "auth-attacks",
+      "source": "./skills/auth/auth-attacks",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "cloud",
+      "description": "Use when enumerating an AWS environment during an authorized cloud assessment, bug bounty engagement, or lab exercise.",
+      "keywords": [
+        "cloud",
+        "aws",
+        "enumeration",
+        "aws-cli",
+        "python"
+      ],
+      "name": "aws-enumeration",
+      "source": "./skills/cloud/aws-enumeration",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "cloud",
+      "description": "Use when enumerating a Microsoft Azure tenant or subscription during an authorized cloud assessment, bug bounty engagement, or lab exercise.",
+      "keywords": [
+        "cloud",
+        "azure",
+        "enumeration",
+        "azure-cli",
+        "python"
+      ],
+      "name": "azure-enumeration",
+      "source": "./skills/cloud/azure-enumeration",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when writing production-grade Bash 5.2 scripts: strict mode (set -euo pipefail), safe quoting and word splitting, arrays and associative arrays, parameter expansion, traps and cleanup handlers, getopts argument...",
+      "keywords": [
+        "engineering",
+        "bash",
+        "shellcheck"
+      ],
+      "name": "bash-advanced",
+      "source": "./skills/engineering/bash-advanced",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "ad",
+      "description": "Use when mapping Active Directory attack paths on an authorized engagement.",
+      "keywords": [
+        "ad",
+        "bloodhound",
+        "sharphound",
+        "netexec",
+        "impacket",
+        "python"
+      ],
+      "name": "bloodhound-methodology",
+      "source": "./skills/ad/bloodhound-methodology",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "network",
+      "description": "Use when assessing Bluetooth Low Energy devices on authorized engagements, such as beacons, locks, wearables, or IoT sensors in scope.",
+      "keywords": [
+        "network",
+        "bluetooth",
+        "le",
+        "bluez",
+        "wireshark",
+        "python"
+      ],
+      "name": "bluetooth-le",
+      "source": "./skills/network/bluetooth-le",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "bugbounty",
+      "description": "Use when hunting bugs in authorized bounty programs: recon, triage, report writing, scope discipline, payout-friendly workflow.",
+      "keywords": [
+        "bug bounty",
+        "hunting",
+        "triage",
+        "reporting",
+        "scope"
+      ],
+      "name": "bug-bounty-workflow",
+      "source": "./skills/bugbounty/bug-bounty-workflow",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "c2",
+      "description": "Use when building C2 for an authorized red team engagement: listeners, payloads, profiles, OPSEC, detection evasion basics.",
+      "keywords": [
+        "c2",
+        "command and control",
+        "red team",
+        "opsec",
+        "listeners"
+      ],
+      "name": "c2-fundamentals",
+      "source": "./skills/c2/c2-fundamentals",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing web cache poisoning and web cache deception on an authorized engagement.",
+      "keywords": [
+        "web",
+        "cache",
+        "poisoning",
+        "burp-suite",
+        "python"
+      ],
+      "name": "cache-poisoning",
+      "source": "./skills/web/cache-poisoning",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when securing a CI/CD pipeline on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "cicd",
+        "security",
+        "trivy",
+        "gitleaks",
+        "cosign"
+      ],
+      "name": "cicd-security",
+      "source": "./skills/engineering/cicd-security",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "cloud",
+      "description": "Use when assessing cloud environments (AWS first): IAM, storage buckets, logging, common misconfigs, shared responsibility.",
+      "keywords": [
+        "cloud",
+        "aws",
+        "iam",
+        "misconfiguration",
+        "buckets"
+      ],
+      "name": "cloud-security-basics",
+      "source": "./skills/cloud/cloud-security-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when reviewing code for quality, bugs, and security issues: structured review checklist, severity ratings, feedback format.",
+      "keywords": [
+        "code review",
+        "quality",
+        "bugs",
+        "security review",
+        "feedback"
+      ],
+      "name": "code-reviewer",
+      "source": "./skills/engineering/code-reviewer",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "cloud",
+      "description": "Use when testing container escape during an authorized security assessment, CTF, or lab exercise.",
+      "keywords": [
+        "cloud",
+        "container",
+        "escape",
+        "docker",
+        "python"
+      ],
+      "name": "container-escape",
+      "source": "./skills/cloud/container-escape",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing cross-origin resource sharing (CORS) configuration on an authorized engagement.",
+      "keywords": [
+        "web",
+        "cors",
+        "misconfig",
+        "burp-suite",
+        "python"
+      ],
+      "name": "cors-misconfig",
+      "source": "./skills/web/cors-misconfig",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "crypto",
+      "description": "Use when working with cryptography: symmetric vs asymmetric, hashes, TLS, common misuse patterns, what not to roll yourself.",
+      "keywords": [
+        "cryptography",
+        "tls",
+        "hashing",
+        "encryption",
+        "keys"
+      ],
+      "name": "crypto-fundamentals",
+      "source": "./skills/crypto/crypto-fundamentals",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing a web application for Cross-Site Request Forgery on an authorized engagement.",
+      "keywords": [
+        "web",
+        "csrf",
+        "burp-suite",
+        "python"
+      ],
+      "name": "csrf",
+      "source": "./skills/web/csrf",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "ad",
+      "description": "Use when pulling Active Directory credential material through directory replication on an authorized engagement.",
+      "keywords": [
+        "ad",
+        "dcsync",
+        "impacket",
+        "mimikatz",
+        "netexec",
+        "python"
+      ],
+      "name": "dcsync",
+      "source": "./skills/ad/dcsync",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when diagnosing a bug or failure systematically: building a reproduction case, bisecting with git bisect, reading logs and stack traces, tracing syscalls with strace, debugging with gdb 15 or pdb, analyzing core...",
+      "keywords": [
+        "engineering",
+        "debugging",
+        "gdb",
+        "strace",
+        "python"
+      ],
+      "name": "debugging-methodology",
+      "source": "./skills/engineering/debugging-methodology",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when designing or improving a DevSecOps delivery pipeline on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "devsecops",
+        "pipeline",
+        "trivy",
+        "owasp-dependency-check",
+        "cosign"
+      ],
+      "name": "devsecops-pipeline",
+      "source": "./skills/engineering/devsecops-pipeline",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "forensics",
+      "description": "Use when examining a disk image or forensic copy of a drive during an investigation.",
+      "keywords": [
+        "forensics",
+        "disk",
+        "the-sleuth-kit",
+        "autopsy",
+        "python"
+      ],
+      "name": "disk-forensics",
+      "source": "./skills/forensics/disk-forensics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "network",
+      "description": "Use when enumerating DNS on authorized engagements, internal or external.",
+      "keywords": [
+        "network",
+        "dns",
+        "enumeration",
+        "bind",
+        "nmap",
+        "python"
+      ],
+      "name": "dns-enumeration",
+      "source": "./skills/network/dns-enumeration",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when building, hardening, or debugging Docker containers on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "docker",
+        "deep"
+      ],
+      "name": "docker-deep",
+      "source": "./skills/engineering/docker-deep",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "osint",
+      "description": "Use when investigating domains, DNS history, certificates, and hosting infrastructure from public sources on an authorized engagement.",
+      "keywords": [
+        "osint",
+        "domain",
+        "python",
+        "bind",
+        "curl"
+      ],
+      "name": "domain-osint",
+      "source": "./skills/osint/domain-osint",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "malware",
+      "description": "Use when a suspicious file needs to be executed to reveal its behavior, and only inside an isolated sandbox or disposable VM with no route to production networks.",
+      "keywords": [
+        "malware",
+        "dynamic",
+        "sandbox",
+        "wireshark",
+        "fakenet-ng",
+        "python"
+      ],
+      "name": "dynamic-sandbox",
+      "source": "./skills/malware/dynamic-sandbox",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "defensive",
+      "description": "Use when deploying, operating, or triaging with Endpoint Detection and Response tooling on systems you are authorized to defend.",
+      "keywords": [
+        "defensive",
+        "edr",
+        "sysmon",
+        "velociraptor",
+        "python"
+      ],
+      "name": "edr-basics",
+      "source": "./skills/defensive/edr-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "forensics",
+      "description": "Use when investigating a suspicious email during phishing triage or incident response.",
+      "keywords": [
+        "forensics",
+        "email",
+        "python",
+        "bind"
+      ],
+      "name": "email-forensics",
+      "source": "./skills/forensics/email-forensics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing file upload functionality on an authorized engagement.",
+      "keywords": [
+        "web",
+        "file",
+        "upload",
+        "burp-suite",
+        "python",
+        "ffuf"
+      ],
+      "name": "file-upload-attacks",
+      "source": "./skills/web/file-upload-attacks",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "network",
+      "description": "Use when nmap scans are blocked, filtered, or rate limited by firewalls and IDS on authorized engagements.",
+      "keywords": [
+        "network",
+        "firewall",
+        "evasion",
+        "nmap",
+        "python",
+        "wireshark"
+      ],
+      "name": "firewall-evasion",
+      "source": "./skills/network/firewall-evasion",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "binary",
+      "description": "Use when analyzing a firmware image from a device you own or are authorized to test.",
+      "keywords": [
+        "binary",
+        "firmware",
+        "binwalk",
+        "ghidra",
+        "python"
+      ],
+      "name": "firmware-analysis",
+      "source": "./skills/binary/firmware-analysis",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "forensics",
+      "description": "Use when doing digital forensics on authorized images: disk, memory, timelines, chain of custody, Sleuth Kit basics.",
+      "keywords": [
+        "forensics",
+        "disk",
+        "memory",
+        "timeline",
+        "chain of custody"
+      ],
+      "name": "forensics-fundamentals",
+      "source": "./skills/forensics/forensics-fundamentals",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "binary",
+      "description": "Use when you need to exploit a format string vulnerability on an authorized target, such as a CTF pwn challenge or lab binary that passes user input directly to printf or a similar function.",
+      "keywords": [
+        "binary",
+        "format",
+        "strings",
+        "pwntools",
+        "gdb",
+        "python"
+      ],
+      "name": "format-strings",
+      "source": "./skills/binary/format-strings",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "cloud",
+      "description": "Use when enumerating a Google Cloud project, folder, or organization during an authorized cloud assessment, bug bounty engagement, or lab exercise.",
+      "keywords": [
+        "cloud",
+        "gcp",
+        "enumeration",
+        "gcloud",
+        "python"
+      ],
+      "name": "gcp-enumeration",
+      "source": "./skills/cloud/gcp-enumeration",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "binary",
+      "description": "Use when you need to reverse engineer a compiled binary on an authorized task, such as a CTF reversing challenge, malware triage in a lab, or auditing a binary you have permission to analyze.",
+      "keywords": [
+        "binary",
+        "ghidra",
+        "java",
+        "python"
+      ],
+      "name": "ghidra-basics",
+      "source": "./skills/binary/ghidra-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when working with Git: branching models, rebasing, commit hygiene, PR flow, recovering from mistakes.",
+      "keywords": [
+        "git",
+        "branching",
+        "rebase",
+        "commits",
+        "workflow"
+      ],
+      "name": "git-workflows",
+      "source": "./skills/engineering/git-workflows",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when writing or debugging GitHub Actions workflows on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "github",
+        "actions",
+        "git",
+        "github-cli",
+        "act"
+      ],
+      "name": "github-actions",
+      "source": "./skills/engineering/github-actions",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when writing, building, or reviewing Go programs on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "go"
+      ],
+      "name": "go-basics",
+      "source": "./skills/engineering/go-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "ad",
+      "description": "Use when forging Kerberos tickets on an authorized Active Directory engagement after recovering the krbtgt account hash.",
+      "keywords": [
+        "ad",
+        "golden",
+        "ticket",
+        "mimikatz",
+        "impacket",
+        "rubeus"
+      ],
+      "name": "golden-ticket",
+      "source": "./skills/ad/golden-ticket",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing a GraphQL API on an authorized engagement.",
+      "keywords": [
+        "web",
+        "graphql",
+        "security",
+        "python",
+        "burp-suite"
+      ],
+      "name": "graphql-security",
+      "source": "./skills/web/graphql-security",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "crypto",
+      "description": "Use when you need to recover plaintexts from password hashes on an authorized engagement, such as cracking NTLM hashes from a domain dump, testing password strength after extracting hashes in scope, or solving CTF...",
+      "keywords": [
+        "crypto",
+        "hash",
+        "cracking",
+        "hashcat",
+        "john-the-ripper",
+        "python"
+      ],
+      "name": "hash-cracking",
+      "source": "./skills/crypto/hash-cracking",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "binary",
+      "description": "Use when you need to exploit a heap memory bug on an authorized target, such as a CTF pwn challenge with use-after-free, heap overflow, or double free, or a lab binary using malloc and free unsafely.",
+      "keywords": [
+        "binary",
+        "heap",
+        "exploitation",
+        "pwntools",
+        "gdb",
+        "python"
+      ],
+      "name": "heap-exploitation",
+      "source": "./skills/binary/heap-exploitation",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing for HTTP request smuggling (desync) between a front-end proxy and a back-end server on an authorized engagement.",
+      "keywords": [
+        "web",
+        "http",
+        "request",
+        "smuggling",
+        "burp-suite",
+        "python"
+      ],
+      "name": "http-request-smuggling",
+      "source": "./skills/web/http-request-smuggling",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "cloud",
+      "description": "Use when assessing AWS IAM privilege escalation paths during an authorized cloud assessment, bug bounty engagement, or lab exercise.",
+      "keywords": [
+        "cloud",
+        "iam",
+        "privesc",
+        "aws-cli",
+        "python"
+      ],
+      "name": "iam-privesc",
+      "source": "./skills/cloud/iam-privesc",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "defensive",
+      "description": "Use when preparing for or running a security incident as a defender: writing and maintaining incident response playbooks, defining severity levels and SLAs, assigning roles, running communications, executing scenario...",
+      "keywords": [
+        "defensive",
+        "incident",
+        "playbooks",
+        "thehive",
+        "python"
+      ],
+      "name": "incident-playbooks",
+      "source": "./skills/defensive/incident-playbooks",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "incident",
+      "description": "Use when responding to a security incident: preparation, detection, containment, eradication, recovery, lessons learned.",
+      "keywords": [
+        "incident response",
+        "containment",
+        "triage",
+        "playbooks",
+        "dfir"
+      ],
+      "name": "incident-response",
+      "source": "./skills/incident/incident-response",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "mobile",
+      "description": "Use when you need to assess an iOS application you are authorized to test, such as a client iPhone app on a penetration test or a CTF challenge IPA.",
+      "keywords": [
+        "mobile",
+        "ios",
+        "frida",
+        "objection",
+        "python",
+        "xcode"
+      ],
+      "name": "ios-basics",
+      "source": "./skills/mobile/ios-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "network",
+      "description": "Use when testing IPv6 on authorized engagements, especially dual-stack networks where IPv6 is enabled but unmonitored.",
+      "keywords": [
+        "network",
+        "ipv6",
+        "thc-ipv6",
+        "nmap",
+        "wireshark"
+      ],
+      "name": "ipv6-attacks",
+      "source": "./skills/network/ipv6-attacks",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when processing JSON on the command line with jq 1.7.1: selecting and filtering fields, transforming API responses, building JSON objects, aggregating with map/select/reduce, converting JSON to CSV or TSV,...",
+      "keywords": [
+        "engineering",
+        "jq",
+        "mastery"
+      ],
+      "name": "jq-mastery",
+      "source": "./skills/engineering/jq-mastery",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing JSON Web Token handling on an authorized engagement.",
+      "keywords": [
+        "web",
+        "jwt",
+        "python",
+        "burp-suite"
+      ],
+      "name": "jwt-attacks",
+      "source": "./skills/web/jwt-attacks",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "ad",
+      "description": "Use when testing Active Directory for Kerberoasting on an authorized engagement.",
+      "keywords": [
+        "ad",
+        "kerberoasting",
+        "impacket",
+        "rubeus",
+        "hashcat",
+        "netexec"
+      ],
+      "name": "kerberoasting",
+      "source": "./skills/ad/kerberoasting",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when deploying or troubleshooting workloads on Kubernetes on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "kubernetes",
+        "kubectl"
+      ],
+      "name": "kubernetes-basics",
+      "source": "./skills/engineering/kubernetes-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "cloud",
+      "description": "Use when enumerating and testing Kubernetes RBAC during an authorized cloud or cluster assessment, bug bounty engagement, or lab exercise.",
+      "keywords": [
+        "cloud",
+        "kubernetes",
+        "rbac",
+        "kubectl",
+        "python"
+      ],
+      "name": "kubernetes-rbac",
+      "source": "./skills/cloud/kubernetes-rbac",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing a web application for Local and Remote File Inclusion on an authorized engagement.",
+      "keywords": [
+        "web",
+        "lfi",
+        "rfi",
+        "ffuf",
+        "burp-suite",
+        "python"
+      ],
+      "name": "lfi-rfi",
+      "source": "./skills/web/lfi-rfi",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "linux",
+      "description": "Use when hardening a Linux server: SSH, firewall, users, services, updates, auditing, CIS benchmark aligned checks.",
+      "keywords": [
+        "linux",
+        "hardening",
+        "ssh",
+        "firewall",
+        "cis"
+      ],
+      "name": "linux-hardening",
+      "source": "./skills/linux/linux-hardening",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "network",
+      "description": "Use when capturing authentication hashes on authorized Windows LAN segments.",
+      "keywords": [
+        "network",
+        "llmnr",
+        "poisoning",
+        "responder",
+        "hashcat",
+        "nmap"
+      ],
+      "name": "llmnr-poisoning",
+      "source": "./skills/network/llmnr-poisoning",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "forensics",
+      "description": "Use when reconstructing an incident from system and application logs you are authorized to analyze.",
+      "keywords": [
+        "forensics",
+        "log",
+        "systemd",
+        "jq",
+        "ripgrep"
+      ],
+      "name": "log-forensics",
+      "source": "./skills/forensics/log-forensics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when writing or fixing Makefiles with GNU Make 4.4: understanding targets, prerequisites, and recipes, using automatic variables ($@, $<, $^), writing pattern rules, declaring .PHONY targets, using variables and...",
+      "keywords": [
+        "engineering",
+        "make",
+        "gnu-make"
+      ],
+      "name": "make-basics",
+      "source": "./skills/engineering/make-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "forensics",
+      "description": "Use when analyzing a RAM dump or live memory image during incident response or a forensic investigation.",
+      "keywords": [
+        "forensics",
+        "memory",
+        "volatility-3",
+        "python",
+        "gnu-binutils"
+      ],
+      "name": "memory-forensics",
+      "source": "./skills/forensics/memory-forensics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "network",
+      "description": "Use when moving deeper into an authorized network through a compromised foothold: proxychains, SOCKS, SSH tunnels, port forwarding.",
+      "keywords": [
+        "pivoting",
+        "tunneling",
+        "proxychains",
+        "socks",
+        "lateral movement"
+      ],
+      "name": "network-pivoting",
+      "source": "./skills/network/network-pivoting",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when hardening an nginx 1.27 web server or reverse proxy: writing secure server blocks, disabling version banners, configuring modern TLS, adding security headers (HSTS, CSP, X-Frame-Options), rate limiting with...",
+      "keywords": [
+        "engineering",
+        "nginx",
+        "hardening",
+        "openssl"
+      ],
+      "name": "nginx-hardening",
+      "source": "./skills/engineering/nginx-hardening",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "network",
+      "description": "Use when scanning networks with Nmap: host discovery, port scanning, service detection, OS fingerprinting, evasion tradeoffs.",
+      "keywords": [
+        "nmap",
+        "scanning",
+        "ports",
+        "network",
+        "enumeration"
+      ],
+      "name": "nmap-methodology",
+      "source": "./skills/network/nmap-methodology",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing NoSQL-backed applications (MongoDB, CouchDB, Redis) for injection on an authorized engagement.",
+      "keywords": [
+        "web",
+        "nosql",
+        "injection",
+        "burp-suite",
+        "python"
+      ],
+      "name": "nosql-injection",
+      "source": "./skills/web/nosql-injection",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing OAuth 2.0 and OpenID Connect logins on an authorized engagement.",
+      "keywords": [
+        "web",
+        "oauth",
+        "burp-suite",
+        "python"
+      ],
+      "name": "oauth-attacks",
+      "source": "./skills/web/oauth-attacks",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing for unvalidated redirects and forwards on an authorized engagement.",
+      "keywords": [
+        "web",
+        "open",
+        "redirect",
+        "burp-suite",
+        "python"
+      ],
+      "name": "open-redirect",
+      "source": "./skills/web/open-redirect",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "osint",
+      "description": "Use when planning and running an open source intelligence collection effort against public sources only.",
+      "keywords": [
+        "osint",
+        "theharvester",
+        "python"
+      ],
+      "name": "osint-methodology",
+      "source": "./skills/osint/osint-methodology",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "malware",
+      "description": "Use when static triage finds a packed or encrypted executable and you need the real payload underneath.",
+      "keywords": [
+        "malware",
+        "packer",
+        "upx",
+        "ghidra",
+        "python"
+      ],
+      "name": "packer-analysis",
+      "source": "./skills/malware/packer-analysis",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "crypto",
+      "description": "Use when you encounter CBC-mode ciphertext with distinguishable padding errors on an authorized test, CTF, or code review, and need to decrypt or forge messages without the key.",
+      "keywords": [
+        "crypto",
+        "padding",
+        "oracle",
+        "python",
+        "openssl",
+        "cyberchef"
+      ],
+      "name": "padding-oracle",
+      "source": "./skills/crypto/padding-oracle",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "auth",
+      "description": "Use when attacking password hashes or password-based logins on authorized targets: wordlists, rules, hashcat, john, hydra.",
+      "keywords": [
+        "passwords",
+        "cracking",
+        "hashcat",
+        "john",
+        "hydra",
+        "wordlists"
+      ],
+      "name": "password-attacks",
+      "source": "./skills/auth/password-attacks",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when making a system faster on purpose: establishing a baseline benchmark with hyperfine 1.18, profiling Python with cProfile, finding CPU, memory, disk, or network bottlenecks on Linux, tuning database queries...",
+      "keywords": [
+        "engineering",
+        "performance",
+        "tuning",
+        "hyperfine",
+        "python",
+        "perf"
+      ],
+      "name": "performance-tuning",
+      "source": "./skills/engineering/performance-tuning",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "defensive",
+      "description": "Use when defending an organization against phishing: hardening email authentication with SPF, DKIM, and DMARC, writing gateway and mailbox detection rules, triaging user-reported phish, analyzing headers URLs and...",
+      "keywords": [
+        "defensive",
+        "phishing",
+        "defense",
+        "gophish",
+        "python"
+      ],
+      "name": "phishing-defense",
+      "source": "./skills/defensive/phishing-defense",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when diagnosing or improving PostgreSQL performance on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "postgresql",
+        "tuning"
+      ],
+      "name": "postgresql-tuning",
+      "source": "./skills/engineering/postgresql-tuning",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "privesc",
+      "description": "Use when escalating privileges on an authorized Linux host: SUID, sudo misconfigs, kernel bugs, cron jobs, LinPEAS workflow.",
+      "keywords": [
+        "privilege escalation",
+        "linux",
+        "suid",
+        "sudo",
+        "enumeration"
+      ],
+      "name": "privesc-linux",
+      "source": "./skills/privesc/privesc-linux",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "privesc",
+      "description": "Use when escalating privileges on an authorized Windows host: service misconfigs, tokens, unquoted paths, WinPEAS workflow.",
+      "keywords": [
+        "privilege escalation",
+        "windows",
+        "tokens",
+        "services",
+        "enumeration"
+      ],
+      "name": "privesc-windows",
+      "source": "./skills/privesc/privesc-windows",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when setting up or debugging Prometheus monitoring on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "prometheus",
+        "monitoring",
+        "grafana",
+        "node_exporter"
+      ],
+      "name": "prometheus-monitoring",
+      "source": "./skills/engineering/prometheus-monitoring",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "binary",
+      "description": "Use when you need to exploit a classic stack buffer overflow on an authorized target, such as a CTF pwn challenge or a lab binary you have permission to test.",
+      "keywords": [
+        "binary",
+        "pwn",
+        "pwntools",
+        "gdb",
+        "python",
+        "gcc"
+      ],
+      "name": "pwn-fundamentals",
+      "source": "./skills/binary/pwn-fundamentals",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when writing or reviewing advanced Python code on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "python",
+        "pytest",
+        "mypy"
+      ],
+      "name": "python-advanced",
+      "source": "./skills/engineering/python-advanced",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when building Python command line tools: argparse, rich output, packaging, logging, testable structure, stdlib first.",
+      "keywords": [
+        "python",
+        "cli",
+        "argparse",
+        "tooling",
+        "packaging"
+      ],
+      "name": "python-cli-tooling",
+      "source": "./skills/engineering/python-cli-tooling",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing for race conditions (time-of-check to time-of-use flaws) on an authorized engagement.",
+      "keywords": [
+        "web",
+        "race",
+        "conditions",
+        "burp-suite",
+        "python"
+      ],
+      "name": "race-conditions",
+      "source": "./skills/web/race-conditions",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "defensive",
+      "description": "Use when preparing for or responding to a ransomware incident as a defender.",
+      "keywords": [
+        "defensive",
+        "ransomware",
+        "response",
+        "velociraptor",
+        "sysmon",
+        "python"
+      ],
+      "name": "ransomware-response",
+      "source": "./skills/defensive/ransomware-response",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "recon",
+      "description": "Use when you have authorization to actively probe a target: DNS enumeration, service banners, live host discovery.",
+      "keywords": [
+        "recon",
+        "active",
+        "dns",
+        "enumeration",
+        "authorized"
+      ],
+      "name": "recon-active",
+      "source": "./skills/recon/recon-active",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "recon",
+      "description": "Use when gathering intelligence on a target without touching it: OSINT, subdomains, certificates, WHOIS, archived data.",
+      "keywords": [
+        "recon",
+        "osint",
+        "passive",
+        "subdomains",
+        "footprinting"
+      ],
+      "name": "recon-passive",
+      "source": "./skills/recon/recon-passive",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when operating Redis 7.4 in development or production: installing and configuring a server, choosing data types (strings, hashes, lists, sets, sorted sets, streams), writing and reading keys with redis-cli,...",
+      "keywords": [
+        "engineering",
+        "redis",
+        "redis-cli"
+      ],
+      "name": "redis-basics",
+      "source": "./skills/engineering/redis-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when writing or debugging regular expressions: choosing between BRE, ERE, and PCRE flavors, crafting grep, sed, and awk patterns, using character classes, anchors, quantifiers, groups, backreferences, and...",
+      "keywords": [
+        "engineering",
+        "regex",
+        "mastery",
+        "gnu-grep",
+        "pcre2",
+        "python"
+      ],
+      "name": "regex-mastery",
+      "source": "./skills/engineering/regex-mastery",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when designing a REST API from scratch or reviewing an existing one: naming resources and URIs, choosing HTTP methods and status codes correctly, versioning the API, designing pagination, filtering, and sorting,...",
+      "keywords": [
+        "engineering",
+        "rest",
+        "api",
+        "design",
+        "openapi",
+        "curl"
+      ],
+      "name": "rest-api-design",
+      "source": "./skills/engineering/rest-api-design",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "binary",
+      "description": "Use when you need to build a Return Oriented Programming chain on an authorized target, such as a CTF pwn challenge with NX enabled and no easy win function.",
+      "keywords": [
+        "binary",
+        "rop",
+        "chains",
+        "pwntools",
+        "ropgadget",
+        "ropper"
+      ],
+      "name": "rop-chains",
+      "source": "./skills/binary/rop-chains",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "crypto",
+      "description": "Use when you face an RSA challenge or misconfigured RSA on an authorized test, CTF, or code review and need an operator workflow for the classic attacks.",
+      "keywords": [
+        "crypto",
+        "rsa",
+        "python",
+        "openssl",
+        "sagemath",
+        "rsactftool"
+      ],
+      "name": "rsa-attacks",
+      "source": "./skills/crypto/rsa-attacks",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when writing, building, or reviewing Rust programs on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "rust",
+        "rustup"
+      ],
+      "name": "rust-basics",
+      "source": "./skills/engineering/rust-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "cloud",
+      "description": "Use when testing Amazon S3 buckets for misconfigurations during an authorized cloud assessment, bug bounty engagement, or lab exercise.",
+      "keywords": [
+        "cloud",
+        "s3",
+        "misconfigurations",
+        "aws-cli",
+        "python"
+      ],
+      "name": "s3-misconfigurations",
+      "source": "./skills/cloud/s3-misconfigurations",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when writing or auditing code for security: input validation, injection defenses, crypto use, OWASP secure coding practices.",
+      "keywords": [
+        "secure coding",
+        "defense",
+        "input validation",
+        "owasp",
+        "hardening"
+      ],
+      "name": "secure-coding",
+      "source": "./skills/engineering/secure-coding",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "binary",
+      "description": "Use when you need to write or use position-independent machine code payloads on an authorized target, such as a CTF pwn challenge where NX is disabled, a buffer you can execute, or a ROP chain that made memory...",
+      "keywords": [
+        "binary",
+        "shellcode",
+        "nasm",
+        "pwntools",
+        "python",
+        "gdb"
+      ],
+      "name": "shellcode-basics",
+      "source": "./skills/binary/shellcode-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "soc",
+      "description": "Use when building, tuning, or operating SIEM detections on an authorized blue team engagement or in a lab SOC.",
+      "keywords": [
+        "soc",
+        "siem",
+        "detections",
+        "splunk",
+        "sysmon",
+        "python"
+      ],
+      "name": "siem-detections",
+      "source": "./skills/soc/siem-detections",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "soc",
+      "description": "Use when writing, converting, or testing Sigma detection rules for a defensive detection program.",
+      "keywords": [
+        "soc",
+        "sigma",
+        "rules",
+        "python"
+      ],
+      "name": "sigma-rules",
+      "source": "./skills/soc/sigma-rules",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "network",
+      "description": "Use when enumerating SMB services on authorized Windows or Samba targets.",
+      "keywords": [
+        "network",
+        "smb",
+        "enumeration",
+        "smbclient",
+        "impacket",
+        "nmap"
+      ],
+      "name": "smb-enumeration",
+      "source": "./skills/network/smb-enumeration",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "network",
+      "description": "Use when enumerating SNMP services on authorized targets, typically UDP 161.",
+      "keywords": [
+        "network",
+        "snmp",
+        "net-snmp",
+        "nmap",
+        "python"
+      ],
+      "name": "snmp",
+      "source": "./skills/network/snmp",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "osint",
+      "description": "Use when researching publicly visible social media content on an authorized engagement.",
+      "keywords": [
+        "osint",
+        "social",
+        "media",
+        "python",
+        "curl"
+      ],
+      "name": "social-media-osint",
+      "source": "./skills/osint/social-media-osint",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when working with SQLite databases on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "sqlite",
+        "deep"
+      ],
+      "name": "sqlite-deep",
+      "source": "./skills/engineering/sqlite-deep",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when hardening OpenSSH 9.8 servers and clients: writing a secure sshd_config (key-only auth, no root login, modern ciphers and key exchange), auditing the effective config with sshd -T, managing host keys,...",
+      "keywords": [
+        "engineering",
+        "ssh",
+        "hardening",
+        "openssh",
+        "ssh-audit"
+      ],
+      "name": "ssh-hardening",
+      "source": "./skills/engineering/ssh-hardening",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing a web application for Server-Side Request Forgery on an authorized engagement.",
+      "keywords": [
+        "web",
+        "ssrf",
+        "burp-suite",
+        "python",
+        "ffuf"
+      ],
+      "name": "ssrf",
+      "source": "./skills/web/ssrf",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing a web application for Server-Side Template Injection on an authorized engagement.",
+      "keywords": [
+        "web",
+        "ssti",
+        "python",
+        "burp-suite"
+      ],
+      "name": "ssti",
+      "source": "./skills/web/ssti",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "malware",
+      "description": "Use when you receive a suspicious file and must decide what it is without executing it.",
+      "keywords": [
+        "malware",
+        "static",
+        "triage",
+        "ghidra",
+        "yara",
+        "python"
+      ],
+      "name": "static-triage",
+      "source": "./skills/malware/static-triage",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "soc",
+      "description": "Use when deploying, tuning, or troubleshooting Suricata as a network intrusion detection sensor on a network you are authorized to monitor.",
+      "keywords": [
+        "soc",
+        "suricata",
+        "ids",
+        "tcpdump",
+        "python"
+      ],
+      "name": "suricata-ids",
+      "source": "./skills/soc/suricata-ids",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when working deeply with systemd 256 on Linux: writing and debugging service, timer, socket, and target units, using systemctl and journalctl effectively, replacing cron jobs with systemd timers, analyzing boot...",
+      "keywords": [
+        "engineering",
+        "systemd",
+        "deep",
+        "systemctl",
+        "journalctl"
+      ],
+      "name": "systemd-deep",
+      "source": "./skills/engineering/systemd-deep",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when writing documentation people actually read: planning a doc for its audience, structuring tutorials, how-to guides, reference, and explanations (Diataxis), writing clear plain-English procedures with...",
+      "keywords": [
+        "engineering",
+        "technical",
+        "writing",
+        "pandoc",
+        "vale"
+      ],
+      "name": "technical-writing",
+      "source": "./skills/engineering/technical-writing",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when writing or operating Terraform infrastructure as code on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "terraform"
+      ],
+      "name": "terraform-basics",
+      "source": "./skills/engineering/terraform-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when building a test strategy for a Python project: choosing what to test at each level of the test pyramid, writing pytest unit tests with fixtures and parametrize, mocking external services, measuring coverage,...",
+      "keywords": [
+        "engineering",
+        "strategies",
+        "pytest",
+        "python",
+        "coverage.py"
+      ],
+      "name": "testing-strategies",
+      "source": "./skills/engineering/testing-strategies",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "soc",
+      "description": "Use when proactively hunting for undetected intruders in an environment you are authorized to defend.",
+      "keywords": [
+        "soc",
+        "threat",
+        "hunting",
+        "velociraptor",
+        "sysmon",
+        "python"
+      ],
+      "name": "threat-hunting",
+      "source": "./skills/soc/threat-hunting",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "osint",
+      "description": "Use when working with cyber threat intelligence on a defensive team: collecting IOCs, evaluating feeds, running a MISP instance, writing STIX/TAXII sharing packages, scoring and aging indicators, and turning intel...",
+      "keywords": [
+        "osint",
+        "threat",
+        "intel",
+        "misp",
+        "python"
+      ],
+      "name": "threat-intel",
+      "source": "./skills/osint/threat-intel",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "crypto",
+      "description": "Use when assessing the TLS configuration of a service you own or are authorized to test, or when decrypting your own captured traffic for troubleshooting.",
+      "keywords": [
+        "crypto",
+        "tls",
+        "openssl",
+        "testssl.sh",
+        "wireshark"
+      ],
+      "name": "tls-analysis",
+      "source": "./skills/crypto/tls-analysis",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when working with tmux 3.4 for persistent terminal sessions: creating and managing sessions, windows, and panes, customizing key bindings and the status bar in tmux.conf, using copy mode to search and copy...",
+      "keywords": [
+        "engineering",
+        "tmux",
+        "workflows"
+      ],
+      "name": "tmux-workflows",
+      "source": "./skills/engineering/tmux-workflows",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when writing, building, or reviewing TypeScript on an authorized engineering task.",
+      "keywords": [
+        "engineering",
+        "typescript",
+        "node.js"
+      ],
+      "name": "typescript-basics",
+      "source": "./skills/engineering/typescript-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "soc",
+      "description": "Use when you need fast, targeted forensic collection across many endpoints during incident response or proactive hunting.",
+      "keywords": [
+        "soc",
+        "velociraptor",
+        "python"
+      ],
+      "name": "velociraptor-basics",
+      "source": "./skills/soc/velociraptor-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "engineering",
+      "description": "Use when editing text at speed with Vim 9.1: learning motions, operators, and text objects, combining them into composable editing commands, managing buffers, windows, and tabs, recording and replaying macros, using...",
+      "keywords": [
+        "engineering",
+        "vim",
+        "mastery",
+        "neovim"
+      ],
+      "name": "vim-mastery",
+      "source": "./skills/engineering/vim-mastery",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "soc",
+      "description": "Use when deploying or operating Wazuh for host-based intrusion detection on infrastructure you are authorized to defend.",
+      "keywords": [
+        "soc",
+        "wazuh",
+        "sysmon",
+        "python"
+      ],
+      "name": "wazuh-basics",
+      "source": "./skills/soc/wazuh-basics",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing an authorized web app for SQL injection: detection, union-based, error-based, blind, sqlmap workflows.",
+      "keywords": [
+        "sql injection",
+        "sqli",
+        "sqlmap",
+        "web",
+        "owasp"
+      ],
+      "name": "web-sqli",
+      "source": "./skills/web/web-sqli",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing an authorized web app for cross-site scripting: reflected, stored, DOM-based XSS, filters and bypasses.",
+      "keywords": [
+        "xss",
+        "cross-site scripting",
+        "web",
+        "owasp",
+        "injection"
+      ],
+      "name": "web-xss",
+      "source": "./skills/web/web-xss",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when running a full authorized web application pentest: scoping, mapping, testing, evidence, reporting, OWASP methodology.",
+      "keywords": [
+        "pentest",
+        "web app",
+        "methodology",
+        "owasp",
+        "reporting"
+      ],
+      "name": "webapp-pentest-methodology",
+      "source": "./skills/web/webapp-pentest-methodology",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when an application uses WebSockets (ws:// or wss://) on an authorized engagement.",
+      "keywords": [
+        "web",
+        "websocket",
+        "security",
+        "burp-suite",
+        "python"
+      ],
+      "name": "websocket-security",
+      "source": "./skills/web/websocket-security",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "network",
+      "description": "Use when testing Wi-Fi security on authorized engagements with written permission covering the wireless network.",
+      "keywords": [
+        "network",
+        "wireless",
+        "wpa",
+        "aircrack-ng",
+        "hashcat",
+        "wireshark"
+      ],
+      "name": "wireless-wpa",
+      "source": "./skills/network/wireless-wpa",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "web",
+      "description": "Use when testing a web application for XML External Entity injection on an authorized engagement.",
+      "keywords": [
+        "web",
+        "xxe",
+        "burp-suite",
+        "python"
+      ],
+      "name": "xxe",
+      "source": "./skills/web/xxe",
+      "version": "1.0.0"
+    },
+    {
+      "author": "Muhammad Izaz Haider",
+      "category": "malware",
+      "description": "Use when you need to write, test, or tune YARA rules for malware detection and hunting.",
+      "keywords": [
+        "malware",
+        "yara",
+        "rules",
+        "yara-x",
+        "python"
+      ],
+      "name": "yara-rules",
+      "source": "./skills/malware/yara-rules",
+      "version": "1.0.0"
+    }
+  ],
+  "repository": "https://github.com/mizazhaider-ceh/AgentArsenal",
+  "version": "1.0.0"
+}

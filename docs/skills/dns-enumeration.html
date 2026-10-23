@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: dns-enumeration</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>dns-enumeration</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when enumerating DNS on authorized engagements, internal or</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-passive.html">recon-passive</a> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>BIND</td><td>9.20</td></tr><tr><td>nmap</td><td>7.98</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>DNS turns names into addresses, and misconfigured DNS turns one known domain into a full map of the target&#x27;s infrastructure. This skill covers authorized DNS enumeration: identifying authoritative nameservers, harvesting records, attempting zone transfers, walking DNSSEC-signed zones, brute forcing subdomains, and doing reverse lookups over IP ranges. It pairs naturally with recon-passive (which gathers names without touching the target) and feeds host lists into recon-active and nmap-methodology. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the authoritative nameservers for the target domain.</li>
+<li>Harvest all standard records (SOA, NS, MX, TXT, SRV) from a resolver.</li>
+<li>Attempt a zone transfer (AXFR) against every authoritative server.</li>
+<li>If the zone is DNSSEC signed, attempt NSEC zone walking.</li>
+<li>Brute force subdomains with a curated wordlist, with wildcard detection.</li>
+<li>Reverse lookup every in-scope IP range to find more names.</li>
+<li>Merge all names into one de-duplicated host list for scanning.</li>
+</ol>
+<h2>1. Find the authoritative nameservers</h2>
+<p>Start from the domain and work down to the servers that actually hold the zone. Query the authoritative servers directly later so cached or filtered resolver answers do not mislead you.</p>
+<pre><code class="language-bash"># NS records and SOA (start of authority) for the domain
+dig +short NS example.com
+dig +short SOA example.com
+
+# Full answer with the server that responded
+dig NS example.com +noall +answer +comments
+
+# Ask each authoritative server directly from here on
+NS=$(dig +short NS example.com | head -1)
+echo &quot;Using authoritative server: $NS&quot;
+dig @$NS example.com SOA +short</code></pre>
+<pre><code class="language-bash"># host and nslookup equivalents when dig is missing
+host -t NS example.com
+nslookup -type=SOA example.com</code></pre>
+<h2>2. Harvest standard records</h2>
+<p>Pull every record type that commonly leaks infrastructure details. TXT records often contain SPF data (which names mail servers), verification tokens, and sometimes secrets someone pasted by accident.</p>
+<pre><code class="language-bash"># Common record types in one pass
+for t in A AAAA MX TXT NS SOA SRV CAA; do
+  echo &quot;=== $t ===&quot;
+  dig +short $t example.com @$NS
+done | tee /tmp/dns-records.txt
+
+# SRV records reveal services: sip, xmpp, ldap, kerberos
+dig +short SRV _sip._tcp.example.com @$NS
+dig +short SRV _ldap._tcp.example.com @$NS
+dig +short SRV _kerberos._tcp.example.com @$NS
+
+# TXT records, one per line, check for pasted secrets
+dig +short TXT example.com @$NS | tr &#x27; &#x27; &#x27;\n&#x27; | sort -u</code></pre>
+<pre><code class="language-bash"># nmap DNS enumeration scripts as a cross-check
+nmap --script dns-brute,dns-srv-enum -p 53 $NS</code></pre>
+<h2>3. Attempt zone transfers (AXFR)</h2>
+<p>A zone transfer asks the nameserver for every record in the zone at once. It is almost always denied, but when it works it hands you the entire infrastructure map in one response, so always test it.</p>
+<pre><code class="language-bash"># Try AXFR against every authoritative nameserver
+for ns in $(dig +short NS example.com); do
+  echo &quot;=== AXFR via $ns ===&quot;
+  dig AXFR example.com @$ns +noall +answer | head -40
+done | tee /tmp/axfr.txt
+
+# host syntax for the same test
+host -l example.com $NS</code></pre>
+<p>A successful transfer prints dozens or hundreds of records. A refused one prints <code>Transfer failed</code> or returns nothing. Test every NS host, because administrators sometimes lock down the primary and forget a secondary. Also try the transfer over TCP explicitly (AXFR only works over TCP, but forcing it rules out UDP weirdness):</p>
+<pre><code class="language-bash">dig +tcp AXFR example.com @$NS +noall +answer | wc -l</code></pre>
+<p>If the transfer succeeds, parse it immediately into A records and hostnames for the scanning phase.</p>
+<pre><code class="language-bash"># Extract hostnames and addresses from a successful transfer
+grep -E &#x27;^[^ ;]&#x27; /tmp/axfr.txt | awk &#x27;{print $1, $NF}&#x27; | sort -u &gt; /tmp/zone-hosts.txt</code></pre>
+<h2>4. DNSSEC NSEC zone walking</h2>
+<p>DNSSEC-signed zones that use NSEC (not NSEC3) records can be walked: each NSEC record names the next existing name in the zone, so you can enumerate every name without brute force. NSEC3 uses hashes and resists this.</p>
+<pre><code class="language-bash"># Check whether the zone is signed and which NSEC flavor it uses
+dig +short DNSKEY example.com @$NS | head -2
+dig example.com @$NS +dnssec +noall +answer | grep -E &#x27;NSEC3?PARAM|RRSIG&#x27;
+
+# Walk the zone with nmap&#x27;s dns-nsec-enum script
+nmap --script dns-nsec-enum --script-args dns-nsec-enum.domains=example.com \
+  -p 53 $NS -oN /tmp/nsec-walk.txt</code></pre>
+<p>If <code>dns-nsec-enum</code> is unavailable, walk manually: query a nonexistent name, read the NSEC record in the authority section for the next name, query that name, repeat. A small Python loop using only the standard library and raw <code>dig</code> calls automates this:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Walk an NSEC-signed zone by following &#x27;next name&#x27; pointers with dig.&quot;&quot;&quot;
+import subprocess, re
+
+DOMAIN = &quot;example.com&quot;
+NS = &quot;ns1.example.com&quot;  # authoritative server from step 1
+
+def nsec_next(name):
+    out = subprocess.run(
+        [&quot;dig&quot;, f&quot;nonexistent-{name}.{DOMAIN}&quot;, f&quot;@{NS}&quot;, &quot;+noall&quot;, &quot;+authority&quot;],
+        capture_output=True, text=True, timeout=10).stdout
+    m = re.search(r&quot;(\S+)\s+\d+\s+IN\s+NSEC\s+(\S+)&quot;, out)
+    return m.group(2).rstrip(&quot;.&quot;) if m else None
+
+seen, cur = set(), f&quot;0.{DOMAIN}&quot;
+while True:
+    nxt = nsec_next(cur)
+    if not nxt or nxt in seen or not nxt.endswith(DOMAIN):
+        break
+    seen.add(nxt)
+    print(nxt)
+    cur = nxt.split(&quot;.&quot;)[0]
+print(f&quot;[*] walked {len(seen)} names&quot;)</code></pre>
+<h2>5. Brute force subdomains</h2>
+<p>When AXFR and NSEC fail, brute force with a wordlist. The critical step is wildcard detection: some domains answer every name with the same address, which makes naive brute force report thousands of false positives.</p>
+<pre><code class="language-bash"># Wildcard check: query a random name that cannot exist
+dig +short thisnamecannotexist12345.example.com @$NS
+
+# If that returns an address, the zone is wildcarded. Note the wildcard IP:
+WILD=$(dig +short thisnamecannotexist12345.example.com @$NS | head -1)
+echo &quot;Wildcard IP: $WILD&quot;</code></pre>
+<pre><code class="language-bash"># Brute force with dnsrecon, filtering the wildcard IP
+dnsrecon -d example.com -t brt -D /usr/share/wordlists/dnsmap.txt \
+  --wildcards -f | tee /tmp/dnsrecon-brt.txt
+
+# nmap dns-brute as an alternative (slower, noisier)
+nmap --script dns-brute --script-args dns-brute.domain=example.com \
+  -p 53 $NS -oN /tmp/dns-brute.txt</code></pre>
+<p>Filter results against the wildcard IP before trusting them: any answer matching the wildcard address is a false positive. Keep wordlists curated (a few thousand entries beats a million-entry list that takes all night and trips rate limits).</p>
+<pre><code class="language-bash"># Quick stdlib Python brute forcer with wildcard filtering
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import subprocess
+DOMAIN = &quot;example.com&quot;
+NS = &quot;ns1.example.com&quot;
+WILD = &quot;93.184.216.34&quot;  # from the wildcard check, or &quot;&quot; if none
+words = [w.strip() for w in open(&quot;/usr/share/wordlists/dnsmap.txt&quot;)]
+found = []
+for w in words:
+    try:
+        out = subprocess.run([&quot;dig&quot;, &quot;+short&quot;, f&quot;{w}.{DOMAIN}&quot;, f&quot;@{NS}&quot;],
+                             capture_output=True, text=True, timeout=5).stdout
+        ips = [l for l in out.splitlines() if l and not l.endswith(&quot;.&quot;)]
+        ips = [ip for ip in ips if ip != WILD]
+        if ips:
+            found.append((w, ips)); print(f&quot;{w}.{DOMAIN} -&gt; {&#x27;,&#x27;.join(ips)}&quot;)
+    except Exception:
+        pass
+print(f&quot;[*] {len(found)} real subdomains&quot;)
+EOF</code></pre>
+<h2>6. Reverse lookups over IP ranges</h2>
+<p>PTR records map addresses back to names and often reveal naming conventions (<code>vpn-01</code>, <code>mail-02</code>, <code>dc1</code>) that suggest more targets.</p>
+<pre><code class="language-bash"># Reverse lookup one address
+dig +short -x 192.168.1.10 @$NS
+
+# Sweep a /24 with nmap (fast, one query per host)
+nmap -sn -PR --dns-servers $NS 192.168.1.0/24 -oG /tmp/rev.gnmap
+grep -oP &#x27;Host: \S+ \(\K[^)]+&#x27; /tmp/rev.gnmap | sort -u | tee /tmp/ptr-names.txt</code></pre>
+<pre><code class="language-bash"># dnsrecon reverse sweep alternative
+dnsrecon -d example.com -t rvl -r 192.168.1.0/24</code></pre>
+<h2>7. Merge everything into a scan target list</h2>
+<p>Combine zone data, brute force hits, and PTR names into one clean list for the scanning phase.</p>
+<pre><code class="language-bash">cat /tmp/zone-hosts.txt /tmp/dnsrecon-brt.txt /tmp/ptr-names.txt 2&gt;/dev/null \
+  | grep -oE &#x27;[a-z0-9.-]+\.example\.com&#x27; | sort -u &gt; /tmp/targets.txt
+wc -l /tmp/targets.txt &amp;&amp; head -20 /tmp/targets.txt</code></pre>
+<p>Resolve every name to an address and drop anything outside the authorized scope before scanning.</p>
+<pre><code class="language-bash"># Resolve and keep only in-scope addresses (example: 203.0.113.0/24)
+while read -r h; do dig +short &quot;$h&quot; A @$NS; done &lt; /tmp/targets.txt \
+  | grep -E &#x27;^203\.0\.113\.&#x27; | sort -u &gt; /tmp/inscope-ips.txt</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The resolver rate limits you. Slow the brute force (add sleep between</li>
+<p>queries), split the wordlist, or ask the client for a dedicated resolver.</p>
+<li>Wildcard DNS poisons every result. Always run the wildcard check first</li>
+<p>and filter its IP; otherwise the whole brute force is garbage.</p>
+<li>Split horizon DNS: internal nameservers answer differently from external</li>
+<p>ones. Enumerate from the network position the scope describes, and note which view you tested.</p>
+<li>AXFR over UDP silently fails. AXFR requires TCP; use <code>+tcp</code> and test</li>
+<p>every authoritative server, including secondaries.</p>
+<li>NSEC3 zones resist walking. Fall back to brute force; do not waste time</li>
+<p>trying to reverse the hashes during the engagement.</p>
+<li><code>dig</code> returns SERVFAIL for everything. The nameserver may block your IP</li>
+<p>or the domain may use DNS filtering. Try a different source address or confirm with the client that testing is expected.</p>
+<li>CNAME chains hide the real address. Follow them with <code>dig +short</code> until</li>
+<p>you reach A records, and record the full chain.</p>
+<li>Huge zones time out the transfer. Page through with <code>dig AXFR</code> and save</li>
+<p>raw output to a file instead of the terminal.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Standard records are clean and AXFR is denied. Move to brute force with</li>
+<p>a larger wordlist and to certificate transparency logs via recon-passive for names the DNS servers will not give you.</p>
+<li>Brute force finds nothing new. Try common service prefixes manually</li>
+<p>(<code>vpn</code>, <code>owa</code>, <code>autodiscover</code>, <code>sip</code>, <code>test</code>, <code>dev</code>, <code>staging</code>) and check SRV records again for service-specific names.</p>
+<li>The target uses a DNS firewall that lies. Compare answers from the</li>
+<p>authoritative server, a public resolver, and the internal resolver; the differences themselves are findings.</p>
+<li>You suspect subdomain takeover on a dangling CNAME. That is a web finding;</li>
+<p>hand the CNAME target to the web team (see webapp-pentest-methodology).</p>
+<li>Reverse lookups reveal a naming convention. Generate candidates from the</li>
+<p>pattern (<code>db01</code>, <code>db02</code>, <code>db03</code>) and test them directly.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see DNS enumeration as high volumes of NXDOMAIN responses from one source (brute force), AXFR attempts in nameserver logs (almost always malicious or audit related), and NSEC walking as sequential queries for nonexistent names. DNS query logging at the resolver or passive DNS sensors catch all of it. The durable fixes: deny zone transfers to unauthorized clients (<code>allow-transfer { trusted; };</code> in BIND), prefer NSEC3 over NSEC for signed zones, avoid wildcard records where possible, keep TXT records free of secrets, and monitor for NXDOMAIN spikes. Rate limiting at the authoritative server blunts brute force without breaking legitimate use.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1590.002 (Gather Victim Network Information, DNS):</li>
+<p>record harvesting and zone data.</p>
+<li>MITRE ATT&amp;CK T1046 (Network Service Discovery): DNS-driven host</li>
+<p>discovery.</p>
+<li>CWE-200 (Exposure of Sensitive Information): zone data and TXT secrets.</li>
+<li>CWE-749 (Exposed Dangerous Method or Function): open AXFR.</li>
+<li>IETF RFC 1035 (DNS), RFC 5936 (AXFR), RFC 5155 (NSEC3).</li>
+<li>BIND 9 Administrator Reference: allow-transfer configuration.</li>
+<li>dnsrecon documentation: https://github.com/darkoperator/dnsrecon</li>
+<li>nmap dns NSE scripts: https://nmap.org/nsedoc/scripts/dns-brute.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

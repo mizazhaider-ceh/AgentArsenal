@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: hash-cracking</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>hash-cracking</h2><div class="meta"><span class="badge gray">crypto</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to recover plaintexts from password hashes on</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="crypto-fundamentals.html">crypto-fundamentals</a> <a href="password-attacks.html">password-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>hashcat</td><td>6.2.6</td></tr><tr><td>John the Ripper</td><td>1.9.0-jumbo</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Hash cracking is guessing: you hash candidate passwords and compare against the target hash until one matches. The skill is not in the guessing but in the ordering, spending cheap guesses first, using the right mode for the hash type, and stopping when the economics turn bad. This skill is the operator&#x27;s advanced workflow for hashcat and John the Ripper on authorized engagements: dumps from in-scope systems, CTF challenges, and password audits you were hired to run. It builds on the identification basics in crypto-fundamentals and pairs with password-attacks for getting the hashes in the first place. All cracking targets hashes you have written permission to crack.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the hash type precisely: algorithm, salt format, and</li>
+<p>iteration count, before choosing a tool mode.</p>
+<li>Normalize the input file: one hash per line, <code>user:hash</code> format where</li>
+<p>supported, no duplicates.</p>
+<li>Crack in cost order: wordlist, wordlist plus rules, masks, then</li>
+<p>brute force, stopping when returns diminish.</p>
+<li>Tune for the hardware: benchmark first, set workloads that fit the</li>
+<p>engagement window.</p>
+<li>Manage sessions and potfiles so cracked hashes persist and reruns</li>
+<p>skip solved work.</p>
+<li>Handle special formats (NTLM, Kerberos, NetNTLMv2, bcrypt) with</li>
+<p>their specific modes and considerations.</p>
+<li>Report cracked credentials with the method that cracked each one,</li>
+<p>and purge the plaintexts per the engagement rules.</p>
+</ol>
+<h2>1. Identify the hash type</h2>
+<p>Wrong mode means zero cracks and wasted hours. Identify from structure:</p>
+<pre><code class="language-bash"># Length and alphabet triage
+head -5 hashes.txt | awk &#x27;{print length, $0}&#x27;
+
+# Common fingerprints:
+# 32 hex chars      -&gt; MD5 (0) or NTLM (1000); context decides
+# 40 hex chars      -&gt; SHA-1 (100)
+# 64 hex chars      -&gt; SHA-256 (1400) or raw SHA-256 crypt is $5$
+# $2b$/$2y$ prefix  -&gt; bcrypt (3200)
+# $6$ prefix        -&gt; sha512crypt (1800)
+# $krb5tgs$...      -&gt; Kerberos TGS-REP (13100)
+# $krb5asrep$...    -&gt; Kerberos AS-REP (18200)
+# netntlmv2 format  -&gt; NetNTLMv2 (5600)
+
+# hashid for automated identification
+hashid -m &#x27;$2b$12$KIXxQG8b2aV8KxQ8b2aV8KO&#x27;</code></pre>
+<pre><code class="language-bash"># hashcat help lists every mode number
+hashcat --help | grep -i -E &#x27;ntlm|bcrypt|sha512crypt&#x27; | head</code></pre>
+<p>When in doubt between MD5 and NTLM (both 32 hex), test both modes on a small sample; the wrong one cracks nothing and the right one often cracks fast. Context is the tiebreaker: Windows SAM or NTDS output is NTLM, web application dumps are usually MD5 or bcrypt.</p>
+<h2>2. The cost-ordered attack ladder</h2>
+<p>Always climb in this order. Each step costs roughly ten times the previous one.</p>
+<pre><code class="language-bash"># Step 1: straight wordlist (fast hashes: minutes; slow: hours)
+hashcat -m 1000 -a 0 hashes.txt /usr/share/wordlists/rockyou.txt
+
+# Step 2: wordlist plus rules (mutations: leetspeak, appends, case)
+hashcat -m 1000 -a 0 hashes.txt /usr/share/wordlists/rockyou.txt \
+  -r /usr/share/hashcat/rules/best64.rule
+
+# Heavier rule sets when best64 stalls
+hashcat -m 1000 -a 0 hashes.txt /usr/share/wordlists/rockyou.txt \
+  -r /usr/share/hashcat/rules/d3ad0ne.rule
+
+# Step 3: mask attack (known structure, e.g. 8-char lowercase + 2 digits)
+hashcat -m 1000 -a 3 hashes.txt &#x27;?l?l?l?l?l?l?l?l?d?d&#x27;
+
+# Step 4: full brute force (last resort, only for fast hashes)
+hashcat -m 1000 -a 3 hashes.txt &#x27;?a?a?a?a?a?a?a?a&#x27;</code></pre>
+<p>John the Ripper equivalents:</p>
+<pre><code class="language-bash"># Wordlist mode
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=NT hashes.txt
+
+# Rules (John&#x27;s wordlist rules are strong)
+john --wordlist=/usr/share/wordlists/rockyou.txt --rules --format=NT hashes.txt
+
+# Incremental (brute force) mode
+john --incremental --format=NT hashes.txt
+
+# Show cracked passwords
+john --show --format=NT hashes.txt</code></pre>
+<p>Move up the ladder only when the current step exhausts. Do not start with brute force on bcrypt; the math says you will retire first.</p>
+<h2>3. Benchmark and tune</h2>
+<pre><code class="language-bash"># Benchmark the exact mode on your hardware before committing hours
+hashcat -m 1000 -b
+hashcat -m 3200 -b   # bcrypt: expect thousands, not billions
+
+# Typical speeds (single modern GPU, rough):
+# NTLM:    tens of GH/s  -&gt; full keyspace attacks are feasible
+# MD5:     tens of GH/s  -&gt; same
+# bcrypt:  tens of kH/s  -&gt; wordlist only, be selective
+# sha512crypt: hundreds of kH/s -&gt; wordlist plus light rules</code></pre>
+<p>Tune for the engagement window:</p>
+<pre><code class="language-bash"># Limit runtime: --runtime=3600 stops after one hour
+hashcat -m 1000 -a 0 hashes.txt rockyou.txt --runtime=3600
+
+# Restore interrupted sessions instead of restarting
+hashcat --session=clientA --restore
+# (hashcat auto-saves; --restore resumes the named session)
+
+# Distribute across GPUs
+hashcat -m 1000 -a 0 hashes.txt rockyou.txt -D 1,2 --force</code></pre>
+<p>Estimate before brute force: keyspace divided by speed equals seconds. If the answer exceeds the engagement, do not start; report the math.</p>
+<pre><code class="language-bash"># Keyspace estimate: 8 chars of ?a (95) = 95^8
+python3 -c &quot;print(95**8 / 50e9 / 3600, &#x27;hours at 50 GH/s&#x27;)&quot;</code></pre>
+<h2>4. Potfile and session hygiene</h2>
+<pre><code class="language-bash"># Cracked hashes live in the potfile; reuse across runs automatically
+# Disable potfile only for clean benchmarking
+hashcat -m 1000 -a 0 hashes.txt rockyou.txt --potfile-disable
+
+# Show only newly cracked in this run
+hashcat -m 1000 hashes.txt --show
+
+# Merge and deduplicate hash lists before starting
+sort -u hashes_raw.txt &gt; hashes.txt
+wc -l hashes.txt</code></pre>
+<p>Keep one potfile per engagement, never mix client data. At engagement end, follow the rules of engagement on data destruction: cracked plaintexts are sensitive, and the report should describe the method and count, not republish every password.</p>
+<h2>5. Special formats</h2>
+<p>NTLM (mode 1000) is the workhorse of Windows engagements:</p>
+<pre><code class="language-bash"># NTDS dump format: user:rid:lm:ntlm:::
+# Extract the NTLM field for hashcat
+cut -d: -f4 ntds.txt &gt; ntlm.txt
+hashcat -m 1000 -a 0 ntlm.txt rockyou.txt -r rules/best64.rule
+
+# Keep user:hash mapping for reporting
+hashcat -m 1000 --username -a 0 ntds_users.txt rockyou.txt</code></pre>
+<p>Kerberos tickets from in-scope captures:</p>
+<pre><code class="language-bash"># TGS-REP roast (mode 13100), AS-REP roast (mode 18200)
+hashcat -m 13100 -a 0 tgs.txt rockyou.txt
+hashcat -m 18200 -a 0 asrep.txt rockyou.txt</code></pre>
+<p>NetNTLMv2 from responder captures (only on authorized tests):</p>
+<pre><code class="language-bash"># Mode 5600, hash format: user::domain:challenge:response...
+hashcat -m 5600 -a 0 netntlmv2.txt rockyou.txt</code></pre>
+<p>Slow hashes (bcrypt 3200, sha512crypt 1800, PBKDF2): wordlist only, small curated lists, and consider targeted masks from password policy hints. A policy requiring 12 characters with symbols means masks, not rockyou.</p>
+<h2>6. Building better wordlists</h2>
+<p>The default rockyou cracks the easy half. Targeted lists crack the rest:</p>
+<pre><code class="language-bash"># Company-specific mutations: combine names, years, seasons
+cat company_words.txt | while read w; do
+  echo &quot;$w&quot;; echo &quot;${w}2024&quot;; echo &quot;${w}2025&quot;; echo &quot;${w}!&quot;
+done &gt; targeted.txt
+
+# CeWL-style spidering is for web passwords; for audits use HR data:
+# department names, office locations, product names (all authorized)
+
+# Merge and deduplicate
+cat rockyou.txt targeted.txt | sort -u &gt; combined.txt
+
+# John can generate candidates from cracked patterns
+john --wordlist=combined.txt --rules --stdout | head -5</code></pre>
+<p>Rules beat bigger wordlists: <code>best64</code> and <code>d3ad0ne</code> encode the mutations humans actually use (append year, capitalize first, leet substitutions). Custom rule files for the client&#x27;s language and keyboard layout outperform generic ones.</p>
+<h2>7. Knowing when to stop</h2>
+<p>Stop conditions, in order of importance:</p>
+<ol>
+<li>The engagement window ends. Cracking does not justify missing the</li>
+<p>report deadline.</p>
+<li>The remaining hashes are slow types (bcrypt cost 12+) and the</li>
+<p>wordlist plus rules are exhausted. Further effort has near-zero expected return.</p>
+<li>You have cracked enough to prove the point. For a password audit,</li>
+<p>30 percent cracked with method notes beats 35 percent with no report.</p>
+<li>The math says no: brute force estimate exceeds available time by</li>
+<p>orders of magnitude.</p>
+</ol>
+<p>Report format per hash type: total hashes, cracked count, method that cracked each batch, and the policy failures the cracks demonstrate (no complexity, reused passwords, seasonal patterns).</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Hashcat reports &quot;no devices found&quot;. Install the right OpenCL or</li>
+<p>CUDA runtime, or fall back to CPU with <code>--force</code> (slow but works).</p>
+<li>The hash file has salts in a nonstandard layout. Write a small</li>
+<p>Python normalizer to the exact <code>hash:salt</code> format the mode expects; one malformed line can abort the whole run.</p>
+<li>John guesses the wrong format. Force it with <code>--format=</code> and</li>
+<p>verify with <code>--show</code> on a known test hash first.</p>
+<li>Cracks show as hex blobs, not passwords. The password contained</li>
+<p>non-UTF8 bytes; decode with <code>--hex-charset</code> awareness or inspect the potfile raw.</p>
+<li>Duplicate effort across runs. Always <code>--restore</code> sessions and keep</li>
+<p>the potfile; hashcat skips already-cracked hashes automatically.</p>
+<li>The client used pepper (secret salt). Cracking is infeasible</li>
+<p>without it; document the control as effective and move on.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Wordlist plus rules stalls on fast hashes: build targeted masks</li>
+<p>from the password policy (length, character classes) and from cracked samples (common prefixes in this organization).</p>
+<li>One GPU is too slow: split the keyspace across machines with</li>
+<p><code>--keyspace</code> and <code>--skip</code>/<code>--limit</code> ranges, or rent cloud GPUs within the engagement budget and with client approval.</p>
+<li>The hash type is exotic with no hashcat mode: check John&#x27;s jumbo</li>
+<p>formats (it covers hundreds), then write a custom cracker only if the hash count justifies the development time.</p>
+<li>You need the plaintext but cracking is hopeless: pivot. Password</li>
+<p>reuse from other cracked sets, default credentials, and password reset flows often beat cryptography.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders detect cracking indirectly: they see the hash dump leaving (the real incident), not the cracking itself, which happens offline. The durable defenses are slow, salted hashes (bcrypt, scrypt, Argon2 with appropriate cost), unique salts per user, pepper for high-value systems, and breach monitoring for dumped hashes. Password policies should enforce length over complexity and check new passwords against known-breach lists. For the audit report, every cracked password maps to a policy gap; the fix list is policy and hashing upgrades, not longer blocklists.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm): fast</li>
+<p>hashes for passwords (MD5, SHA-1).</p>
+<li>CWE-916 (Use of Password Hash With Insufficient Computational</li>
+<p>Effort).</p>
+<li>CWE-759 (Use of a One-Way Hash without a Salt).</li>
+<li>CWE-798 (Use of Hard-coded Credentials): when the dump reveals</li>
+<p>defaults.</p>
+<li>hashcat wiki and example hashes: https://hashcat.net/wiki/</li>
+<li>John the Ripper documentation: https://www.openwall.com/john/doc/</li>
+<li>OWASP Password Storage Cheat Sheet:</li>
+<p>https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: kubernetes-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>kubernetes-basics</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when deploying or troubleshooting workloads on Kubernetes</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="docker-deep.html">docker-deep</a> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>kubectl</td><td>1.31</td></tr></tbody></table><p>Kubernetes schedules containers across machines, restarts them when they fail, and rolls out new versions without downtime. This skill covers the operator basics with kubectl 1.31: the core workload objects, how they fit together, and how to debug when a Pod refuses to run. It assumes you can already build a container image (see docker-deep) and focuses on getting it running correctly in a cluster.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Verify cluster access and set the right context and namespace</li>
+<p>before touching anything.</p>
+<li>Write manifests as versioned YAML files: Deployment, Service,</li>
+<p>ConfigMap, and Secret.</p>
+<li>Set resource requests and limits, plus liveness and readiness</li>
+<p>probes, on every container.</p>
+<li>Apply with <code>kubectl apply</code>, watch the rollout, and verify</li>
+<p>endpoints.</p>
+<li>Store config in ConfigMaps and secrets in Secrets (base64, backed</li>
+<p>by etcd encryption at rest).</p>
+<li>Debug failing Pods with <code>describe</code>, <code>logs</code>, and <code>exec</code>, in that</li>
+<p>order.</p>
+<li>Roll forward with new images; roll back with `kubectl rollout</li>
+<p>undo` when a release misbehaves.</p>
+<li>Grant the least RBAC each workload and human actually needs.</li>
+</ol>
+<h2>1. Context, namespaces, and cluster sanity</h2>
+<pre><code class="language-bash"># Which cluster am I talking to? Check BEFORE applying anything.
+kubectl config current-context
+kubectl config get-contexts
+
+# Work in a namespace, not default
+kubectl create namespace demo
+kubectl config set-context --current --namespace=demo
+kubectl get nodes
+kubectl get pods -n demo</code></pre>
+<p>A wrong context applies manifests to the wrong cluster. Make the current context part of your shell prompt when you manage more than one cluster.</p>
+<h2>2. Deployment and Service manifests</h2>
+<pre><code class="language-bash">mkdir -p k8s &amp;&amp; cat &gt; k8s/deployment.yaml &lt;&lt;&#x27;EOF&#x27;
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: web
+        image: demo-server:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: &quot;8080&quot;
+        resources:
+          requests:
+            cpu: &quot;100m&quot;
+            memory: &quot;128Mi&quot;
+          limits:
+            cpu: &quot;500m&quot;
+            memory: &quot;512Mi&quot;
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+EOF
+
+cat &gt; k8s/service.yaml &lt;&lt;&#x27;EOF&#x27;
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  selector:
+    app: web
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: ClusterIP
+EOF
+
+kubectl apply -f k8s/
+kubectl rollout status deployment/web
+kubectl get pods -l app=web</code></pre>
+<p>Requests guarantee scheduling capacity; limits cap runaway consumption. Readiness gates traffic until the app is truly ready; liveness restarts a stuck container. Without limits, one bad Pod can starve the node.</p>
+<h2>3. ConfigMaps and Secrets</h2>
+<pre><code class="language-bash">cat &gt; k8s/config.yaml &lt;&lt;&#x27;EOF&#x27;
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+data:
+  LOG_LEVEL: &quot;info&quot;
+  WORKERS: &quot;4&quot;
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: web-secret
+type: Opaque
+stringData:
+  DB_PASSWORD: &quot;change-me-in-production&quot;
+EOF
+
+kubectl apply -f k8s/config.yaml
+
+# Mount config as env vars in the Deployment
+kubectl set env deployment/web --from=configmap/web-config
+kubectl get secret web-secret -o jsonpath=&#x27;{.data.DB_PASSWORD}&#x27; | base64 -d; echo
+
+# Secrets are base64, NOT encrypted by default: enable etcd encryption
+# at rest on the cluster, and prefer an external secret manager
+kubectl get secrets</code></pre>
+<p>Never commit real secret values to git. Use sealed secrets, external secret operators, or CI-injected values; the manifest in git should reference the secret name, not contain the value.</p>
+<h2>4. Debugging failing Pods</h2>
+<pre><code class="language-bash"># 1. Describe: events at the bottom explain most failures
+kubectl describe pod -l app=web | tail -30
+
+# 2. Logs: current and previous (crashed) container
+kubectl logs -l app=web --tail=100
+kubectl logs -l app=web --previous --tail=100
+
+# 3. Exec into a running Pod to look around
+kubectl exec -it deploy/web -- sh
+# inside: check the app listens, env is set, files exist
+
+# Stream logs from all replicas at once
+kubectl logs -l app=web -f --max-log-requests=5
+
+# Check why a Pod is not scheduled
+kubectl describe pod &lt;pod-name&gt; | grep -A5 Events
+
+# Port-forward to test the Service locally without an Ingress
+kubectl port-forward svc/web 8080:80
+curl -s localhost:8080/healthz</code></pre>
+<p>The classic failure table: <code>ImagePullBackOff</code> means the image name, tag, or registry credentials are wrong; <code>CrashLoopBackOff</code> means the app exits, read the previous logs; <code>Pending</code> means no node has capacity or the Pod is unschedulable, check events; <code>OOMKilled</code> means the memory limit is too low, raise it and investigate the leak.</p>
+<h2>5. Rolling updates and rollbacks</h2>
+<pre><code class="language-bash"># Roll forward to a new image
+kubectl set image deployment/web web=demo-server:1.1.0
+kubectl rollout status deployment/web
+
+# Watch the rollout replace Pods one by one
+kubectl get pods -l app=web -w
+
+# Something broke: roll back to the previous revision
+kubectl rollout undo deployment/web
+kubectl rollout status deployment/web
+
+# History of what was deployed when
+kubectl rollout history deployment/web
+
+# Pause a rollout to inspect a canary before it completes
+kubectl rollout pause deployment/web
+kubectl rollout resume deployment/web</code></pre>
+<p>Deployments keep the previous ReplicaSet, which is what makes instant rollback possible. Verify new versions with readiness probes so bad Pods never receive traffic during the rollout.</p>
+<h2>6. Basic RBAC</h2>
+<pre><code class="language-bash">cat &gt; k8s/rbac.yaml &lt;&lt;&#x27;EOF&#x27;
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: web-reader
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-reader
+rules:
+- apiGroups: [&quot;&quot;]
+  verbs: [&quot;get&quot;, &quot;list&quot;]
+  resources: [&quot;pods&quot;, &quot;pods/log&quot;]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: web-can-read-pods
+subjects:
+- kind: ServiceAccount
+  name: web-reader
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+EOF
+
+kubectl apply -f k8s/rbac.yaml
+kubectl auth can-i --as=system:serviceaccount:demo:web-reader get pods
+kubectl auth can-i --as=system:serviceaccount:demo:web-reader delete pods</code></pre>
+<p>Bind Roles (namespace-scoped) instead of ClusterRoles unless the access truly is cluster-wide. Test effective permissions with <code>kubectl auth can-i</code> before handing credentials to a workload.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>kubectl apply</code> says &quot;unchanged&quot; but the Pod did not update. The</li>
+<p>Pod template did not change (same image tag counts as unchanged); use immutable tags per build (<code>1.1.0</code>, never <code>latest</code>) so every release changes the template.</p>
+<li>Pod stuck in <code>Pending</code> with &quot;Insufficient cpu&quot;. Requests exceed</li>
+<p>node capacity; lower requests, add nodes, or check for a misconfigured LimitRange forcing high defaults.</p>
+<li>Liveness probe kills a healthy app. The probe path or port is</li>
+<p>wrong, or <code>initialDelaySeconds</code> is shorter than startup time; the Pod restarts in a loop and logs show nothing wrong with the app.</p>
+<li>Secret change does not reach the app. Env-var secrets are only</li>
+<p>read at container start; restart the Pods (rollout restart) or mount secrets as volumes for automatic updates.</p>
+<li><code>kubectl exec</code> fails with &quot;unable to upgrade connection&quot;. The API</li>
+<p>server proxy or network policy blocks the exec websocket; check network policies and try from a node-adjacent network.</p>
+<li>Two Deployments select the same Pods. Overlapping <code>selector</code></li>
+<p>labels make controllers fight over Pods; keep label sets unique per Deployment (<code>app: web</code> plus <code>version</code> or team labels).</p>
+<li><code>imagePullPolicy: Always</code> with <code>:latest</code> causes surprise</li>
+<p>restarts. Pin digest or versioned tags and use <code>IfNotPresent</code> so node-cached images behave deterministically.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration. A misconfigured cluster exposes the API server without authentication, runs Pods as root without seccomp or read-only filesystems, mounts the service account token into Pods that never talk to the API, and stores Secrets unencrypted in etcd. Detect misuse by auditing RBAC for <code>cluster-admin</code> bindings and wildcard verbs, alerting on Pods with <code>hostNetwork</code>, <code>hostPID</code>, or privileged security contexts, and watching audit logs for secret reads outside expected service accounts. Cryptojacking in clusters shows as DaemonSets or Deployments with no resource limits pinning CPU; unexpected <code>kubectl exec</code> sessions into production Pods deserve investigation. Enable audit logging and ship it somewhere an attacker with cluster access cannot delete.</p>
+<h2>Key references</h2>
+<ul>
+<li>Kubernetes 1.31 documentation: https://kubernetes.io/docs/</li>
+<li>kubectl reference: https://kubernetes.io/docs/reference/kubectl/</li>
+<li>Pods, Deployments, Services concepts:</li>
+<p>https://kubernetes.io/docs/concepts/workloads/</p>
+<li>RBAC authorization: https://kubernetes.io/docs/reference/access-authn-authz/rbac/</li>
+<li>CIS Kubernetes Benchmark: https://www.cisecurity.org/benchmark/kubernetes</li>
+<li>CWE-250 (Execution with Unnecessary Privileges): Pods running as</li>
+<p>root or privileged.</p>
+<li>CWE-798 (Use of Hard-coded Credentials): secrets committed in</li>
+<p>manifests.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

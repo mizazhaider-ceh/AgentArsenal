@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: disk-forensics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>disk-forensics</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when examining a disk image or forensic copy of a drive</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="incident-response.html">incident-response</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>The Sleuth Kit</td><td>4.14.0</td></tr><tr><td>Autopsy</td><td>4.22.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Disk forensics reconstructs what was stored on a drive from a bit-for-bit image of it. Files are rarely truly gone when deleted: the directory entry is marked free but the content often survives until overwritten, which is why <code>fls</code>, <code>icat</code>, and <code>istat</code> are the core verbs of this skill. This skill covers the full command-line workflow with The Sleuth Kit: verifying the image, mapping partitions, listing files including deleted ones, recovering file content by inode, carving unallocated space, and building a filesystem timeline, plus when to switch to Autopsy for keyword search and reporting. Scope: analyze disk images you are authorized to handle only (your own lab images, client media under an investigation, or CTF files). Never write to the original media; work on copies, mount read-only, and record every hash.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Hash and copy the image, then verify the partition layout with <code>mmls</code>.</li>
+<li>List the filesystem root with <code>fls</code> and note deleted entries (marked <code>*</code>).</li>
+<li>Inspect suspicious files with <code>istat</code> (metadata) and <code>icat</code> (content),</li>
+<p>working by inode number so deleted files are reachable.</p>
+<li>Recover deleted files and carve unallocated space for file headers.</li>
+<li>Build a filesystem timeline with <code>fls -m</code> piped through <code>mactime</code>.</li>
+<li>Hash known files against NSRL or your case hash set to filter noise.</li>
+<li>Run keyword searches for IOCs (IPs, emails, malware strings).</li>
+<li>Switch to Autopsy when you need ingest modules, image review, or a</li>
+<p>report-ready case file.</p>
+</ol>
+<h2>1. Intake and partition mapping</h2>
+<p>Hash first, always. Then learn the layout before touching any filesystem.</p>
+<pre><code class="language-bash"># Hash the original, then work on the copy
+sha256sum /mnt/evidence/disk01.E01 &gt; disk01.sha256
+cp /mnt/evidence/disk01.E01 ./disk01.E01
+sha256sum ./disk01.E01
+
+# E01 (EnCase) images: Sleuth Kit reads them natively
+# For raw dd images the same commands apply
+
+# Partition table: slots, start sectors, lengths
+mmls disk01.E01
+
+# Details of one partition (note its start sector)
+mmls -o 2048 disk01.E01 2&gt;/dev/null | head</code></pre>
+<p><code>mmls</code> output gives you the sector offset of each partition. Every later command that reads inside a partition needs <code>-o &lt;offset&gt;</code>. If <code>mmls</code> shows <code>DOS Partition Table</code> with unallocated gaps between partitions, carve those gaps too, they sometimes hold deleted partition remnants.</p>
+<pre><code class="language-bash"># Filesystem type of the first partition
+fsstat -o 2048 disk01.E01 | head -30</code></pre>
+<h2>2. Listing files, including deleted ones</h2>
+<p><code>fls</code> lists directory entries by inode. Deleted entries are flagged and, critically, still listable because the inode survives.</p>
+<pre><code class="language-bash"># Root of partition starting at sector 2048
+fls -o 2048 disk01.E01
+
+# Long format with inode numbers and deleted markers (*)
+fls -o 2048 -l disk01.E01 | head -40
+
+# Recursive listing of everything, deleted included
+fls -o 2048 -r -p disk01.E01 &gt; full_listing.txt
+grep &#x27;^\*&#x27; full_listing.txt | head -20   # deleted files only
+
+# A specific directory by inode
+fls -o 2048 -l disk01.E01 5   # inode 5 is usually root on ext, check first</code></pre>
+<p>NTFS notes: <code>$MFT</code> entries behave the same way, and <code>fls</code> on NTFS shows ADS (alternate data streams) as <code>file:stream</code> entries. A lone ADS on an otherwise boring file is a classic hiding spot.</p>
+<h2>3. Inode metadata and file content recovery</h2>
+<p>This is the core recovery loop: <code>istat</code> tells you where the blocks are, <code>icat</code> pulls the bytes. It works for deleted files too, as long as the blocks were not overwritten.</p>
+<pre><code class="language-bash"># Metadata for inode 42: size, timestamps, block list
+istat -o 2048 disk01.E01 42
+
+# Dump the file content to stdout
+icat -o 2048 disk01.E01 42 &gt; recovered_file.bin
+
+# Recover by inode into a named file (same thing, clearer intent)
+icat -o 2048 disk01.E01 42 &gt; ./recovered/inode_42.bin
+
+# A deleted file: find its inode in the fls listing first, then icat it
+fls -o 2048 -l -d disk01.E01 | grep -i deleted | head</code></pre>
+<p>When you record an inode in your notes, also record how you found it: which command revealed it and which line of output named it. &quot;Inode 42, found via <code>fls -o 2048 -l</code> as the deleted entry <code>secret.docx</code>&quot; beats a bare number in court and in your report.</p>
+<pre><code class="language-bash"># Check block allocation: which blocks are unallocated (carving targets)
+blkstat -o 2048 disk01.E01 1000 | head
+
+# Dump raw unallocated blocks in a range
+blkls -o 2048 disk01.E01 1000-2000 &gt; unalloc.bin</code></pre>
+<h2>4. Carving unallocated space</h2>
+<p>Carving finds files by header signature in space the filesystem considers free. It recovers content without names or timestamps, so treat results as leads.</p>
+<pre><code class="language-bash"># Simple header scan for JPEGs in unallocated space
+blkls -o 2048 disk01.E01 &gt; unalloc.bin
+grep -a -b -o -P &#x27;\xff\xd8\xff&#x27; unalloc.bin | head -20
+
+# Better: use a dedicated carver for structured recovery
+# (scalpel/photorec style tools complement TSK here)
+mkdir -p carved &amp;&amp; cd carved
+# run your carver against unalloc.bin, then inspect each hit by hand
+file * | sort | uniq -c | sort -rn | head -20</code></pre>
+<p>Validate every carved file before reporting it: open images, check document headers, confirm the content is coherent. Carvers produce false positives from random byte sequences that happen to match a header.</p>
+<h2>5. Timelining the filesystem</h2>
+<p><code>fls -m</code> emits one line per file in <code>mactime</code> body format. <code>mactime</code> turns that into a sorted timeline, which is where deleted-file timestamps and mass-modification events jump out.</p>
+<pre><code class="language-bash"># Body file for the whole partition
+fls -o 2048 -r -m / disk01.E01 &gt; body.txt
+
+# Sorted timeline
+mactime -b body.txt &gt; timeline.txt
+
+# Activity on one suspicious day
+grep &#x27;2026-10-22&#x27; timeline.txt | head -40
+
+# Focus on one directory
+grep -i &#x27;/home/suspect/&#x27; timeline.txt | head -40</code></pre>
+<p>Look for: bursts of file creation at odd hours, executables with timestamps newer than the system install, and files whose MAC times cluster around the incident window. Timestamps can be forged (timestomping), so corroborate with logs before treating them as fact.</p>
+<h2>6. Hash filtering and keyword search</h2>
+<p>Hash sets remove the haystack. Keyword search finds the needle.</p>
+<pre><code class="language-bash"># Hash every allocated file and compare against your known-good set
+# (build the hash set from NSRL or your gold image first)
+hfind known_good.hash MD5_OF_FILE
+
+# Keyword search across raw image for an IOC (case-insensitive, binary-safe)
+grep -a -i -o -b &#x27;evil-c2.example&#x27; disk01.E01 | head -20
+
+# Search unallocated space only for a leaked email address
+grep -a -i -o -b &#x27;leak@[a-z.]*&#x27; unalloc.bin | head -20
+
+# Strings plus context around each hit
+strings -t d disk01.E01 | grep -i &#x27;mimikatz&#x27; | head -20</code></pre>
+<p>Keep a written list of every keyword you searched and why. A keyword you never searched is a question the defense can ask.</p>
+<h2>7. Autopsy for ingest and reporting</h2>
+<p>When the case needs keyword indexing, image triage, or a shareable report, load the image into Autopsy instead of doing everything by hand.</p>
+<pre><code class="language-bash"># Autopsy is GUI-driven; on a headless box use X forwarding or the
+# workstation build. Point a new case at the same hashed image copy.
+# Enable ingest modules: Hash Lookup, Keyword Search, EXIF Parser,
+# Recent Activity, and (Windows) Registry analysis.</code></pre>
+<p>Autopsy ingest is slow on large images; run it overnight and check module completion before trusting &quot;no results&quot;. Export reports from the case for handover, and keep the TSK command history alongside, because Autopsy does not log the equivalent of your shell history.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Image is split (<code>.E01</code>, <code>.E02</code>, ...): point TSK at the first segment; it</li>
+<p>follows the chain automatically. A missing segment aborts every read, so verify all segments hashed and present first.</p>
+<li>Unknown filesystem: <code>fsstat</code> fails, try <code>fsstat -t list</code> to see supported</li>
+<p>types, and check for encryption (BitLocker, LUKS) before assuming corruption. Encrypted volumes need the key, not a carver.</p>
+<li>Damaged partition table: <code>mmls</code> shows garbage, scan for filesystem</li>
+<p>superblocks directly with <code>sigfind</code> or a hex search for <code>53ef</code> (ext) or <code>FILE</code> (NTFS MFT) signatures.</p>
+<li><code>icat</code> returns zeros for a deleted file: the blocks were reallocated and</li>
+<p>overwritten. Note it as unrecoverable and move to carving or backups.</p>
+<li>ADS on NTFS: list with <code>fls -l</code> and read with <code>icat</code> using the</li>
+<p><code>inode:stream</code> form. A stream named <code>:Zone.Identifier</code> is normal browser metadata; anything else deserves a look.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>TSK cannot parse the filesystem at all: try <code>tsk_recover</code> for a brute</li>
+<p>directory walk, then fall back to full-image carving, then to a commercial or specialist tool for the exotic filesystem.</p>
+<li>Timeline is too big to read: pivot on the incident window first, then on</li>
+<p>file types (executables, archives, documents), then on paths outside normal user areas.</p>
+<li>Keyword search is too slow on a multi-TB image: index once with Autopsy or</li>
+<p>bulk_extractor, then query the index instead of re-scanning.</p>
+<li>Suspected timestomping: compare <code>$STANDARD_INFORMATION</code> vs <code>$FILE_NAME</code></li>
+<p>timestamps on NTFS with <code>istat</code>; mismatches are a red flag, and the <code>$FILE_NAME</code> times are harder to forge.</p>
+<li>Need file ownership and permissions: <code>istat</code> shows UID/GID and mode bits;</li>
+<p>on NTFS check the security descriptor for unexpected ACEs.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Disk forensics is how you prove what happened after the fact: deleted malware binaries, staged archives, and exfiltration remnants all live here until overwritten. For defenders, the operational lesson is retention and integrity: keep forensic images of key systems, hash them at acquisition, and store hashes separately so tampering is detectable. Watch for anti-forensic behavior in your own telemetry: mass file deletion, timestamp modification tools, secure-wipe utilities, and disabled Volume Shadow Copies (Sysmon/EDR alerts on <code>vssadmin delete shadows</code>). The misuse case is reading someone else&#x27;s drive without authorization; a disk image contains everything, so access control and a documented legal basis are non-negotiable.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1070.004 (File Deletion): recovering what deletion tried to</li>
+<p>hide.</p>
+<li>MITRE ATT&amp;CK T1564.001 (Hidden Files and Directories) and T1564.004 (NTFS</li>
+<p>File Attributes): ADS and hidden-file analysis.</p>
+<li>MITRE ATT&amp;CK T1070.006 (Timestomping): timestamp forgery detection.</li>
+<li>MITRE ATT&amp;CK T1005 (Data from Local System): what the recovered data</li>
+<p>represents.</p>
+<li>The Sleuth Kit documentation: https://www.sleuthkit.org/sleuthkit/docs.php</li>
+<li>Autopsy documentation: https://www.sleuthkit.org/autopsy/docs.php</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

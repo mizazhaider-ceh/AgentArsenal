@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: yara-rules</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>yara-rules</h2><div class="meta"><span class="badge gray">malware</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to write, test, or tune YARA rules for</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="static-triage.html">static-triage</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>YARA</td><td>4.5.5</td></tr><tr><td>YARA-X</td><td>1.7.1</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>YARA rules describe malware families as sets of strings plus a boolean condition, and they are the shared language of malware detection: analysts write them, sandboxes run them, and threat intel feeds distribute them. A good rule fires on every sample of the family and nothing else; a bad rule fires on your operating system. This skill covers writing rules from real triage findings, choosing string types and modifiers, using modules for structural conditions, testing against clean and dirty corpora, tuning performance, and the YARA-X migration path. Scope: write and test rules against samples and corpora you are authorized to handle. Test every rule against a clean corpus before deploying it anywhere that blocks or alerts.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Pick 5 to 10 unique strings from static triage of confirmed family</li>
+<p>samples (avoid common library strings).</p>
+<li>Write the rule with meta, strings, and condition sections.</li>
+<li>Compile-check it with <code>yara</code> against one known sample.</li>
+<li>Test against your malicious corpus: it should fire on all family samples.</li>
+<li>Test against your clean corpus (OS files, common apps): it must fire on</li>
+<p>none.</p>
+<li>Check performance: scan time and atom quality on a large directory.</li>
+<li>Tune strings and conditions until coverage is high and false positives</li>
+<p>are zero.</p>
+<li>Version, document, and commit the rule with its test results.</li>
+</ol>
+<h2>1. Rule anatomy</h2>
+<p>Every rule has three sections. Meta is documentation, strings are the patterns, condition is the logic.</p>
+<pre><code class="language-yara">rule Trojan_Example_Family_A
+{
+    meta:
+        description = &quot;Detects Example family dropper variant A&quot;
+        author = &quot;lab&quot;
+        date = &quot;2026-10-23&quot;
+        reference = &quot;case-2026-1042&quot;
+        hash = &quot;abc123...&quot;  // sample the rule was built from
+
+    strings:
+        $mz = &quot;MZ&quot;                                   // sanity anchor
+        $s1 = &quot;XxTeaEncryptedPayload&quot; ascii wide
+        $s2 = &quot;SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run&quot; ascii
+        $s3 = { 55 8B EC 83 EC 20 53 56 57 }          // hex: function prologue pattern
+        $re1 = /https?:\/\/[a-z0-9.-]+\/gate\.php/ ascii
+
+    condition:
+        $mz at 0 and filesize &lt; 5MB and 3 of ($s*)
+}</code></pre>
+<p>Rules live in <code>.yar</code> files, one family per file is a good default, with an index file that includes them all for scanning.</p>
+<pre><code class="language-bash"># Compile check: yara parses before scanning
+yara /opt/rules/malware/trojan_example.yar sample.bin &amp;&amp; echo COMPILED_OK
+
+# Scan with string match details for tuning
+yara -s /opt/rules/malware/trojan_example.yar sample.bin</code></pre>
+<h2>2. Choosing strings</h2>
+<p>String selection is the whole craft. Good strings are unique to the family, present in all its variants, and unlikely in benign software.</p>
+<pre><code class="language-yara">    strings:
+        // Prefer: custom protocol markers, ransom note phrases, unique mutexes
+        $a1 = &quot;B0T_C2_v3.2&quot; ascii wide
+        $a2 = &quot;SOFTWARE\\Classes\\ExamplePersistence&quot; ascii
+        // Avoid: standard library errors, common API names alone
+        // Avoid: short strings (&lt; 6 chars) unless combined with others
+
+        // Modifiers that widen or narrow matching
+        $b1 = &quot;config&quot; nocase ascii wide          // case-insensitive, both encodings
+        $b2 = &quot;payload&quot; xor(0x01-0xff)            // try all single-byte XOR keys
+        $b3 = { E8 ?? ?? ?? ?? 85 C0 74 ?? }      // hex with wildcards
+
+    condition:
+        // Thresholds beat &quot;all of them&quot;: families mutate
+        4 of ($a*) or (2 of ($a*) and 1 of ($b*))</code></pre>
+<p>Test each candidate string against your clean corpus individually before combining; one bad string poisons the rule. Prefer longer strings (12+ characters) and strings from the malware&#x27;s unique logic (C2 protocol, encryption constants, custom error messages) over generic Windows API names.</p>
+<h2>3. Modules for structural conditions</h2>
+<p>Modules let the condition inspect file structure, not just byte patterns. The <code>pe</code> module is the workhorse for Windows malware.</p>
+<pre><code class="language-yara">import &quot;pe&quot;
+import &quot;math&quot;
+
+rule Packed_Example_Loader
+{
+    meta:
+        description = &quot;Example loader: high-entropy text section plus C2 marker&quot;
+
+    strings:
+        $c2 = &quot;gate.php?id=&quot; ascii
+
+    condition:
+        pe.number_of_sections == 3 and
+        math.entropy(pe.sections[0].raw_data_offset, pe.sections[0].raw_data_size) &gt; 7.5 and
+        $c2 and
+        pe.imports(&quot;kernel32.dll&quot;, &quot;VirtualAlloc&quot;)
+}</code></pre>
+<p>Other modules worth knowing: <code>elf</code> (ELF headers and sections), <code>hash</code> (md5/sha256 of regions, for allow/deny lists), <code>dotnet</code> (.NET metadata), <code>magic</code> (libmagic file type, useful to scope rules to PEs only). Check module availability in your build with <code>yara --module-data pe -v</code> style probes or the docs, since distro builds vary.</p>
+<h2>4. Testing against corpora</h2>
+<p>A rule is not done until it has passed both corpora. Build and maintain them as lab infrastructure.</p>
+<pre><code class="language-bash"># Directory layout
+# /opt/corpus/malware/&lt;family&gt;/...   confirmed malicious samples
+# /opt/corpus/clean/...              OS files, common applications
+
+# Coverage: should fire on every sample of the target family
+yara -r /opt/rules/index.yar /opt/corpus/malware/example_family/ | tee coverage.txt
+wc -l coverage.txt   # compare against sample count
+
+# False positives: must be ZERO on the clean corpus
+yara -r /opt/rules/index.yar /opt/corpus/clean/ | tee fp.txt
+wc -l fp.txt         # anything here is a rule bug, fix before deploying
+
+# Per-rule stats across a big mixed directory
+yara -r -c /opt/rules/index.yar /opt/corpus/mixed/ | sort -t: -k2 -rn | head -20</code></pre>
+<p>When a rule misses a variant, add strings from the missed sample rather than loosening the condition; loosening is how false positives are born. When a rule fires on clean files, identify the offending string with <code>yara -s</code>, replace it with something more specific, and re-test both corpora.</p>
+<h2>5. Performance: atoms and scan speed</h2>
+<p>YARA extracts short byte sequences (&quot;atoms&quot;) from your strings to pre-filter files quickly. Rules with only regexes or short strings scan slowly.</p>
+<pre><code class="language-bash"># Time a full scan; investigate rules that dominate
+time yara -r /opt/rules/index.yar /opt/corpus/mixed/ &gt; /dev/null
+
+# Find slow rules by testing individually on a large file
+for r in /opt/rules/malware/*.yar; do
+  printf &#x27;%s &#x27; &quot;$(basename $r)&quot;
+  /usr/bin/time -f &#x27;%es&#x27; yara &quot;$r&quot; /opt/corpus/mixed/big_sample.bin 2&gt;&amp;1 | tail -1
+done | sort -k2 -rn | head -10</code></pre>
+<p>Performance rules of thumb: prefer literal strings over regexes, keep at least one long literal (8+ bytes) per rule so atoms are strong, avoid <code>xor</code>/<code>base64</code> modifiers on many strings at once, and put cheap structural checks (filesize, <code>pe.</code> conditions) early in the condition so YARA can skip fast. A hunt rule that takes 10x longer than the rest will get disabled by whoever runs it, which is the same as not existing.</p>
+<h2>6. YARA-X notes</h2>
+<p>YARA-X is the Rust rewrite and the future of the project; classic YARA is in maintenance mode. Most rules work unchanged, but know the differences.</p>
+<pre><code class="language-bash"># YARA-X CLI (yr) scans with the same rule files
+yr scan /opt/rules/index.yar sample.bin
+
+# Compile rules to a portable binary for distribution
+yr compile /opt/rules/index.yar -o rules.yarc
+yr scan rules.yarc sample.bin</code></pre>
+<p>Differences that bite: some obscure syntax and module fields changed, the <code>--no-follow-symlinks</code> behavior differs on Windows, and compiled <code>.yarc</code> files are the preferred distribution format. Keep rules in source <code>.yar</code> form in version control and compile at deploy time. Test every migrated rule against both corpora again after switching engines; do not assume parity.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Rule fires on packed samples of other families: your strings came from the</li>
+<p>packer stub, not the payload. Rebuild strings from the unpacked sample (packer-analysis first).</p>
+<li>Family uses string encryption: no plaintext strings exist. Pivot to hex</li>
+<p>patterns of the decryption routine, API import combinations, or structural <code>pe</code> conditions instead.</p>
+<li><code>xor</code> modifier explodes scan time: restrict the key range or apply it to</li>
+<p>one anchor string, not ten.</p>
+<li>Rule must match in memory dumps too: add <code>wide</code> variants and consider that</li>
+<p>memory images contain fragments; loosen filesize conditions for memory scanning.</p>
+<li>Conflicting rule names across files: namespace with family prefixes</li>
+<p>(<code>Trojan_Example_...</code>) and keep one index that includes each file once.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>One rule cannot cover a polymorphic family: split into a loader rule and</li>
+<p>a payload rule, or write per-variant rules sharing a common include file of helper strings.</p>
+<li>Need to hunt across an enterprise: export the rule to your EDR/SIEM hunt</li>
+<p>capability or run it with Velociraptor&#x27;s YARA artifact (velociraptor-basics) across endpoints.</p>
+<li>Strings are exhausted (fully encrypted payload): switch detection to</li>
+<p>behavior (dynamic-sandbox outputs) or to structural anomalies, and document why string-based detection is not viable for this family.</p>
+<li>False positive you cannot eliminate: convert the rule to hunt-only (never</li>
+<p>block) and document the known benign overlap.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>YARA rules are detection-as-code, and this skill is squarely on the defender side: every rule you write should end up in a scanner, a hunt, or a feed that protects someone. Operational hygiene matters as much as rule quality: version-control rules, test on every change, track true/false positive rates per rule, and retire rules for dead families so the set stays fast and trusted. The misuse case is writing rules to fingerprint security products or to test malware against detection before release; rules built from samples you are not authorized to analyze, or built to aid evasion, are out of scope.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1027 (Obfuscated Files or Information): what good rules see</li>
+<p>through.</p>
+<li>MITRE ATT&amp;CK T1036 (Masquerading): rules that key on structural lies.</li>
+<li>YARA documentation: https://yara.readthedocs.io</li>
+<li>YARA-X documentation: https://virustotal.github.io/yara-x/</li>
+<li>YARA-X stable announcement and migration notes: https://virustotal.github.io/yara-x/blog/yara-is-dead-long-live-yara-x/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

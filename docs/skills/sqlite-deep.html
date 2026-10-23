@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: sqlite-deep</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>sqlite-deep</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when working with SQLite databases on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="python-cli-tooling.html">python-cli-tooling</a> <a href="secure-coding.html">secure-coding</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>SQLite</td><td>3.47</td></tr></tbody></table><p>SQLite is a full SQL database in a single file with zero server to run, which makes it the default for CLIs, mobile apps, edge services, and test fixtures. This skill covers operating it well: the CLI for inspection, schema and index design, the pragmas that control speed and durability, safe concurrent access, backups, and fixing the classic &quot;database is locked&quot; error. All examples use SQLite 3.47.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inspect the file with the <code>sqlite3</code> CLI: tables, schema, row</li>
+<p>counts, and integrity.</p>
+<li>Design the schema with proper types, NOT NULL, and foreign keys</li>
+<p>enforced with <code>PRAGMA foreign_keys = ON</code>.</p>
+<li>Enable WAL mode for concurrent readers and one writer.</li>
+<li>Add indexes for the actual query patterns, verified with</li>
+<p><code>EXPLAIN QUERY PLAN</code>.</p>
+<li>Always use parameterized queries; never interpolate values into</li>
+<p>SQL strings.</p>
+<li>Tune <code>synchronous</code>, <code>cache_size</code>, and <code>temp_store</code> for the</li>
+<p>durability and speed the workload needs.</p>
+<li>Back up with the backup API or <code>.backup</code>, never with <code>cp</code> on a</li>
+<p>live database.</p>
+<li>Run <code>PRAGMA integrity_check</code> on any database you did not create.</li>
+</ol>
+<h2>1. The sqlite3 CLI</h2>
+<pre><code class="language-bash">sqlite3 --version
+
+# Open (or create) a database and explore
+sqlite3 app.db &lt;&lt;&#x27;EOF&#x27;
+.tables
+.schema users
+SELECT count(*) FROM users;
+EOF
+
+# Readable output modes for inspection
+sqlite3 -header -column app.db &quot;SELECT id, name FROM users LIMIT 5;&quot;
+sqlite3 -header -csv app.db &quot;SELECT * FROM users;&quot; &gt; users.csv
+
+# One-liner schema dump for review
+sqlite3 app.db .schema
+
+# Database file info: page size, page count, freelist
+sqlite3 app.db &quot;PRAGMA page_size; PRAGMA page_count; PRAGMA freelist_count;&quot;</code></pre>
+<p><code>.dump</code> produces SQL text you can diff, grep, and restore anywhere; use it for migrations review and for moving data between machines.</p>
+<pre><code class="language-bash">sqlite3 app.db .dump &gt; app.sql
+sqlite3 new.db &lt; app.sql</code></pre>
+<h2>2. Schema design</h2>
+<pre><code class="language-bash">sqlite3 app.db &lt;&lt;&#x27;EOF&#x27;
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE IF NOT EXISTS users (
+  id         INTEGER PRIMARY KEY,
+  email      TEXT NOT NULL UNIQUE,
+  name       TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime(&#x27;now&#x27;))
+);
+
+CREATE TABLE IF NOT EXISTS scans (
+  id         INTEGER PRIMARY KEY,
+  user_id    INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  target     TEXT NOT NULL,
+  status     TEXT NOT NULL DEFAULT &#x27;pending&#x27;
+             CHECK (status IN (&#x27;pending&#x27;,&#x27;running&#x27;,&#x27;done&#x27;,&#x27;failed&#x27;)),
+  started_at TEXT,
+  finished_at TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_scans_user ON scans(user_id);
+CREATE INDEX IF NOT EXISTS idx_scans_status ON scans(status);
+EOF</code></pre>
+<p>Notes that save pain later: <code>INTEGER PRIMARY KEY</code> is the rowid alias and autoincrements efficiently; foreign keys are parsed but NOT enforced unless <code>PRAGMA foreign_keys = ON</code> (set it on every connection); <code>CHECK</code> constraints document valid values where the app might forget.</p>
+<h2>3. WAL mode and durability pragmas</h2>
+<pre><code class="language-bash">sqlite3 app.db &lt;&lt;&#x27;EOF&#x27;
+-- Write-Ahead Logging: readers never block the writer
+PRAGMA journal_mode = WAL;
+
+-- Durability vs speed for the journal
+-- FULL: safest, slowest. NORMAL: safe with WAL, much faster.
+PRAGMA synchronous = NORMAL;
+
+-- Keep more pages in memory (negative value = kibibytes)
+PRAGMA cache_size = -64000;
+
+-- Temp tables and indexes in memory instead of temp files
+PRAGMA temp_store = MEMORY;
+
+-- Verify what is actually active (some pragmas are no-ops in odd states)
+PRAGMA journal_mode;
+PRAGMA synchronous;
+EOF</code></pre>
+<p>WAL mode creates <code>-wal</code> and <code>-shm</code> sidecar files; back up or copy all three together, or checkpoint first. <code>synchronous = NORMAL</code> with WAL is the recommended production setting: a power loss can lose the last transaction but cannot corrupt the database. Only use <code>synchronous = OFF</code> for throwaway data like test fixtures.</p>
+<pre><code class="language-bash"># Checkpoint the WAL back into the main file before copying
+sqlite3 app.db &quot;PRAGMA wal_checkpoint(TRUNCATE);&quot;
+ls -la app.db*</code></pre>
+<h2>4. Indexes and query plans</h2>
+<pre><code class="language-bash"># Ask the planner what it will actually do
+sqlite3 app.db &quot;EXPLAIN QUERY PLAN SELECT * FROM scans WHERE user_id = 7 AND status = &#x27;done&#x27;;&quot;
+
+# Covering index for the hot query: filter plus the selected columns
+sqlite3 app.db &quot;CREATE INDEX idx_scans_user_status ON scans(user_id, status);&quot;
+sqlite3 app.db &quot;EXPLAIN QUERY PLAN SELECT id, target FROM scans WHERE user_id = 7;&quot;
+
+# Find missing indexes via the query planner log (compile-time option)
+# or simply: any WHERE/JOIN column on a large table without an index
+
+# Measure before and after with a timer
+sqlite3 app.db &lt;&lt;&#x27;EOF&#x27;
+.timer on
+SELECT count(*) FROM scans WHERE user_id = 7 AND status = &#x27;done&#x27;;
+EOF</code></pre>
+<p><code>SEARCH ... USING INDEX</code> is good; <code>SCAN</code> on a big table without a good reason is the signal to add an index. Like all databases, each index taxes writes, so index the queries you actually run, not every column.</p>
+<h2>5. Parameterized queries (Python example)</h2>
+<pre><code class="language-python">import sqlite3
+
+con = sqlite3.connect(&quot;app.db&quot;)
+con.execute(&quot;PRAGMA foreign_keys = ON&quot;)
+con.execute(&quot;PRAGMA journal_mode = WAL&quot;)
+
+# Parameterized: values never become SQL
+user_id = 7
+rows = con.execute(
+    &quot;SELECT id, target FROM scans WHERE user_id = ? AND status = ?&quot;,
+    (user_id, &quot;done&quot;),
+).fetchall()
+
+# Bulk insert fast: one transaction, executemany
+targets = [(user_id, f&quot;10.0.0.{i}&quot;) for i in range(1, 500)]
+with con:  # commits on success, rolls back on exception
+    con.executemany(
+        &quot;INSERT INTO scans (user_id, target) VALUES (?, ?)&quot;, targets
+    )
+
+con.close()</code></pre>
+<p>Wrapping writes in one transaction (the <code>with con:</code> block) turns 500 separate disk syncs into one, often 100x faster. String-interpolated SQL (<code>f&quot;SELECT ... {user_id}&quot;</code>) is SQL injection even in a local database the moment any value comes from outside.</p>
+<h2>6. Backup and integrity</h2>
+<pre><code class="language-bash"># Online backup: safe on a live database (copies all three WAL files&#x27; state)
+sqlite3 app.db &quot;.backup /backups/app-$(date +%F).db&quot;
+
+# Restore is just opening the backup file
+sqlite3 /backups/app-2026-10-23.db &quot;SELECT count(*) FROM scans;&quot;
+
+# Integrity check: run on any database you received from elsewhere
+sqlite3 app.db &quot;PRAGMA integrity_check;&quot;
+# quick_check is faster and catches most corruption
+sqlite3 app.db &quot;PRAGMA quick_check;&quot;
+
+# Reclaim free pages and repack after large deletes
+sqlite3 app.db &quot;VACUUM;&quot;
+ls -lh app.db</code></pre>
+<p>Never <code>cp</code> a live database file in WAL mode: you can copy the main file mid-checkpoint and get a corrupt or stale backup. <code>VACUUM</code> rebuilds the file; run it after bulk deletes, not on a schedule.</p>
+<h2>7. Fixing &quot;database is locked&quot;</h2>
+<pre><code class="language-bash"># Find who holds the database open
+fuser app.db app.db-wal 2&gt;/dev/null
+lsof app.db 2&gt;/dev/null | head
+
+# Common causes and fixes:
+# 1. A connection with an open write transaction that never committed.
+#    Fix: commit/rollback in code; set a busy timeout so waits are bounded.
+sqlite3 app.db &quot;PRAGMA busy_timeout = 5000;&quot;
+
+# 2. Two processes writing without WAL mode: only one writer at a time.
+#    Fix: PRAGMA journal_mode = WAL (readers proceed during writes).
+
+# 3. A crashed process left a hot journal: SQLite recovers automatically
+#    on next open. If recovery seems stuck, open once with the CLI and
+#    run a trivial query to trigger it.
+sqlite3 app.db &quot;SELECT 1;&quot;</code></pre>
+<p>In application code, set <code>busy_timeout</code> on every connection and keep write transactions short: begin late, commit early. Long-lived write transactions are the root cause of most lock contention.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>PRAGMA foreign_keys = ON</code> set once does not persist. It is</li>
+<p>per-connection; every new connection must set it, or foreign keys silently stop being enforced.</p>
+<li>WAL files grow without bound. A reader holding an old snapshot</li>
+<p>blocks checkpointing; find the long-lived read transaction and close it, then run <code>PRAGMA wal_checkpoint(TRUNCATE)</code>.</p>
+<li>Database file copied without <code>-wal</code> is stale or corrupt.</li>
+<p>Checkpoint before copying, or use <code>.backup</code>, which handles this correctly.</p>
+<li><code>database is locked</code> under heavy multithreaded writes. SQLite</li>
+<p>allows one writer; serialize writes through a single thread or queue, or move to a server database if write concurrency is the actual requirement.</p>
+<li>Integer overflow on 32-bit assumptions. SQLite integers are 64</li>
+<p>bit; code that casts to 32 bit (some ORMs, some C bindings) truncates large rowids.</p>
+<li><code>.dump</code> of a huge database exhausts memory in the CLI. Dump</li>
+<p>table by table (<code>.dump users</code>) or use the backup API for full copies.</p>
+<li>Case-insensitive <code>UNIQUE</code> surprises. <code>UNIQUE</code> on TEXT is case</li>
+<p>sensitive by default; use <code>COLLATE NOCASE</code> in the column definition when emails or usernames must compare case insensitively.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration. SQLite misconfiguration shows up as world-writable database files, databases stored under the web root and served as downloads, and <code>synchronous = OFF</code> on data that matters. Detect misuse by checking file permissions on every <code>.db</code> file in production, auditing which processes hold databases open, and watching for unexpected growth (a sign of runaway logging or an attack staging data). During forensics, SQLite files are evidence: <code>PRAGMA integrity_check</code> first, then examine <code>sqlite_sequence</code>, freelist pages, and WAL contents for deleted rows; the <code>strings</code> command on the raw file often surfaces data the schema hides. Ship SQLite files with the application only when the data is truly static; mutable databases belong on a volume with backups.</p>
+<h2>Key references</h2>
+<ul>
+<li>SQLite 3.47 documentation: https://www.sqlite.org/docs.html</li>
+<li>Query planner and EXPLAIN: https://www.sqlite.org/eqp.html</li>
+<li>WAL mode: https://www.sqlite.org/wal.html</li>
+<li>Pragma statements: https://www.sqlite.org/pragma.html</li>
+<li>Backup API: https://www.sqlite.org/backup.html</li>
+<li>CWE-89 (SQL Injection): string-interpolated queries.</li>
+<li>CWE-732 (Incorrect Permission Assignment for Critical Resource):</li>
+<p>world-writable database files.</p>
+<li>CWE-665 (Improper Initialization): foreign keys not enforced</li>
+<p>without the per-connection pragma.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

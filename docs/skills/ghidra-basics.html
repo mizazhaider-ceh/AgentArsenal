@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ghidra-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ghidra-basics</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to reverse engineer a compiled binary on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="pwn-fundamentals.html">pwn-fundamentals</a> <a href="heap-exploitation.html">heap-exploitation</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Ghidra</td><td>11.4</td></tr><tr><td>Java</td><td>21.x</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Ghidra is a free software reverse engineering suite that disassembles a binary and lifts the assembly into readable C-like pseudocode. It is the standard first tool when you face a binary with no source: a CTF reversing challenge, a suspicious sample in a lab, or a proprietary component you are authorized to audit. This skill covers the operator workflow in Ghidra 11.4: importing and analyzing a binary, navigating functions and references, reading the decompiler, cleaning up the output with renames and types, and automating repetitive work with Python scripts. All work targets binaries you are authorized to analyze, such as CTF files, lab samples, or client software in scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Identify the binary: architecture, format, stripped or not, and</li>
+<p>protections, before opening Ghidra.</p>
+<li>Create a Ghidra project, import the binary, and run auto-analysis with</li>
+<p>the default analyzers.</p>
+<li>Find the entry point and <code>main</code>, then read the decompiler output for</li>
+<p>the input handling logic.</p>
+<li>Rename functions and variables and fix data types so the decompilation</li>
+<p>reads like source code.</p>
+<li>Follow cross-references to trace interesting calls: input reads,</li>
+<p>dangerous functions, and crypto or network APIs.</p>
+<li>Review strings and imports for hardcoded secrets, URLs, and suspicious</li>
+<p>library calls.</p>
+<li>Script repetitive tasks (renaming, string search, structure recovery)</li>
+<p>with Ghidra&#x27;s Python interpreter.</p>
+<li>Export notes or the decompiled listing for the report or the exploit</li>
+<p>developer.</p>
+</ol>
+<h2>1. Triage before importing</h2>
+<p>Know what you are opening. Thirty seconds of triage saves an hour of confusion in Ghidra.</p>
+<pre><code class="language-bash"># File type, architecture, and format
+file ./challenge
+checksec --file=./challenge 2&gt;/dev/null || \
+  hardening-check ./challenge 2&gt;/dev/null
+
+# Strings triage: look for usage text, prompts, and suspicious content
+strings ./challenge | head -40
+strings ./challenge | grep -i -E &#x27;flag|password|/bin/sh|http&#x27; | head -20
+
+# Imported library calls (dynamically linked binaries)
+objdump -T ./challenge 2&gt;/dev/null | grep -E &#x27;system|exec|strcpy|gets|scanf|malloc&#x27; | head
+# Or with readelf
+readelf -d ./challenge | head</code></pre>
+<p>Stripped binaries have no symbol names; expect <code>FUN_00401230</code> style names and plan to rename as you understand each function. Packed binaries show tiny import tables and high-entropy sections; unpack before importing.</p>
+<h2>2. Import and analyze</h2>
+<pre><code class="language-bash"># Launch Ghidra (needs Java 21 for Ghidra 11.x)
+ghidraRun &amp;</code></pre>
+<p>In the project window: File, New Project, Non-Shared Project, then File, Import File, select the binary. Accept the detected format and language (compiler spec). When prompted, run analysis now with the default analyzers enabled.</p>
+<p>Key analysis options to leave on for a first pass:</p>
+<ul>
+<li>Decompiler Parameter ID: recovers function signatures.</li>
+<li>ASCII Strings, Stack, Function Start Search: finds code the entry</li>
+<p>point analysis missed.</p>
+<li>For large binaries, disable the slower analyzers on the first pass</li>
+<p>and re-run them on demand.</p>
+</ul>
+<p>After analysis, open the binary in the CodeBrowser. The default layout gives you the listing, the decompiler window, the symbol tree, and the data type manager. If the decompiler window is closed, open it with Window, Decompiler.</p>
+<h2>3. Find main and read the logic</h2>
+<p>Start from the entry point and walk to <code>main</code>.</p>
+<pre><code class="language-bash"># In the Ghidra UI: use the Symbol Tree, filter for &#x27;main&#x27; or &#x27;entry&#x27;
+# Keyboard: press &#x27;g&#x27; and type the address or symbol to jump</code></pre>
+<p>Typical navigation path:</p>
+<ol>
+<li>In the Symbol Tree, expand Functions and look for <code>main</code>. On</li>
+<p>stripped binaries, find <code>entry</code> instead, open its decompilation, and follow the last call before <code>exit</code>, which is usually <code>__libc_start_main</code> receiving <code>main</code> as its first argument.</p>
+<li>Double-click <code>main</code> to open it in the decompiler.</li>
+<li>Read the decompiled C top to bottom. Mark the input functions</li>
+<p>(<code>scanf</code>, <code>fgets</code>, <code>read</code>, <code>gets</code>) and the decision logic.</p>
+<li>Right-click a variable, choose Rename, and give it a meaningful</li>
+<p>name. Press <code>L</code> to change a variable&#x27;s data type.</p>
+</ol>
+<p>Decompiler tips that save time:</p>
+<ul>
+<li>Double-click any function name to jump to its decompilation; use</li>
+<p>Alt+Left (or the back button) to return.</p>
+<li>Right-click a call and choose Find References to see every caller.</li>
+<li>If the decompiler shows a huge <code>switch</code> or weird casts, the types</li>
+<p>are probably wrong. Fix the parameter types first, then re-read.</p>
+<li>Commit your renames often: File, Save, or Ctrl+S. Ghidra stores</li>
+<p>analysis in the project database, not in the binary.</p>
+</ul>
+<h2>4. Cross-references and data flow</h2>
+<p>Cross-references (xrefs) answer &quot;who calls this&quot; and &quot;who reads this&quot;, which is how you trace input to a vulnerable sink.</p>
+<pre><code class="language-bash"># In the UI: select a function or variable, press Ctrl+Shift+F
+# to find all references, or right-click, References, Find References to</code></pre>
+<p>Operator patterns:</p>
+<ul>
+<li>Find every call to <code>strcpy</code>, <code>strcat</code>, <code>sprintf</code>, <code>gets</code>: select the</li>
+<p>import in the Symbol Tree, list references, and check whether the destination buffer size is enforced at each call site.</p>
+<li>Find every read of a global flag variable to locate win conditions</li>
+<p>in CTF binaries.</p>
+<li>Trace a user input buffer: start at the <code>read</code> or <code>fgets</code> call,</li>
+<p>follow the buffer variable forward through the decompilation, and note every function that touches it.</p>
+</ul>
+<p>Use the Function Graph view (Window, Function Graph) for complex control flow. It renders the basic blocks visually and makes loop and branch structure obvious when the linear listing is confusing.</p>
+<h2>5. Strings and imports review</h2>
+<p>The defined strings window (Window, Defined Strings) is searchable and faster than the command line for iterative work.</p>
+<pre><code class="language-bash"># In the UI: Window, Defined Strings, then use the Filter box
+# Search for: flag, password, key, http, /bin/sh, usage, error</code></pre>
+<p>For each interesting string, right-click and choose References to find the code that uses it. A hardcoded credential string referenced from an authentication function is an instant finding.</p>
+<p>Review the imports (Symbol Tree, Imports) for the binary&#x27;s capabilities:</p>
+<ul>
+<li><code>system</code>, <code>execve</code>, <code>popen</code>: command execution.</li>
+<li><code>socket</code>, <code>connect</code>, <code>bind</code>: networking.</li>
+<li><code>ptrace</code>, <code>getenv(&quot;LD_PRELOAD&quot;)</code>: anti-debugging.</li>
+<li><code>mmap</code>, <code>mprotect</code>: JIT or unpacking behavior.</li>
+</ul>
+<h2>6. Fixing types and structures</h2>
+<p>Real binaries pass structs by pointer. Teaching Ghidra the struct layout turns pointer arithmetic into readable field accesses.</p>
+<pre><code class="language-bash"># In the Data Type Manager: right-click, New, Structure
+# Add fields with their sizes, name the struct, then:
+# In the decompiler, right-click a parameter, Retype Variable, pick the struct</code></pre>
+<p>Workflow for an unknown struct:</p>
+<ol>
+<li>Note the offsets accessed in the disassembly (<code>param_1 + 0x18</code>).</li>
+<li>Create a structure with placeholder fields covering those offsets.</li>
+<li>Retype the pointer, re-read the decompiler, and rename fields as</li>
+<p>their purpose becomes clear (<code>fd</code>, <code>size</code>, <code>name</code>).</p>
+</ol>
+<p>This is the highest-value cleanup step on CTF binaries: five minutes of struct recovery can turn an unreadable function into obvious logic.</p>
+<h2>7. Scripting with Python</h2>
+<p>Automate the boring parts with Ghidra&#x27;s Python 3 interpreter (Window, Script Manager, or the Python console).</p>
+<pre><code class="language-python"># List all functions and their addresses (run in the Ghidra Python console)
+for func in currentProgram.getFunctionManager().getFunctions(True):
+    print(&quot;{} @ {}&quot;.format(func.getName(), func.getEntryPoint()))</code></pre>
+<pre><code class="language-python"># Rename functions matching a pattern, e.g. password check candidates
+from ghidra.program.model.symbol import SourceType
+fm = currentProgram.getFunctionManager()
+for func in fm.getFunctions(True):
+    addr = func.getEntryPoint()
+    for ref in getReferencesTo(addr):
+        pass  # extend: inspect callers and rename by behavior</code></pre>
+<pre><code class="language-python"># Find all calls to a dangerous import and print caller addresses
+target = None
+for sym in currentProgram.getSymbolTable().getSymbols(&quot;strcpy&quot;):
+    target = sym
+    break
+if target:
+    for ref in getReferencesTo(target.getAddress()):
+        print(&quot;strcpy called from {}&quot;.format(ref.getFromAddress()))</code></pre>
+<p>Save useful scripts in the Script Manager so the whole team reuses them. Keep scripts small and single-purpose.</p>
+<h2>8. Exporting results</h2>
+<pre><code class="language-bash"># Export the decompiled listing: File, Export Program
+# Choose C/C++ format for the decompiler output, or ASCII for the listing</code></pre>
+<p>For exploit development, export the addresses you need: <code>main</code>, the vulnerable function, <code>system</code> in the PLT, and string addresses. A short text file with symbol-to-address mappings is more useful to the exploit developer than a full export.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The binary is stripped. Everything is <code>FUN_</code> prefixed. Rename</li>
+<p>aggressively from <code>main</code> outward; the call graph from entry is your map.</p>
+<li>The binary is statically linked. The function list has thousands of</li>
+<p>library entries. Use FLIRT-style signature matching (Ghidra applies some automatically) and focus on the non-library code near <code>main</code>.</p>
+<li>Auto-analysis misses code, common in obfuscated or hand-written</li>
+<p>assembly. Use Search, For Instruction Patterns, or disassemble manually at a suspicious address with <code>D</code>.</p>
+<li>The decompiler output is nonsense for one function. The function</li>
+<p>boundaries are probably wrong. Clear the function (right-click, Delete) and recreate it with <code>F</code> at the true start.</p>
+<li>Ghidra runs out of memory on huge binaries. Raise the heap in</li>
+<p><code>support/launch.properties</code> (<code>-Xmx4G</code> or higher) and restart.</p>
+<li>The binary targets an exotic architecture. Check that Ghidra has a</li>
+<p>language module (<code>.ldefs</code>) for it; without one, use the closest available or a different tool.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You cannot find <code>main</code>: analyze the <code>entry</code> function, identify the</li>
+<p><code>__libc_start_main</code> call, and its first argument is <code>main</code>. On stripped static binaries, look for the function that calls the most I/O routines.</p>
+<li>Control flow is flattened (obfuscator): the decompiler shows a giant</li>
+<p>dispatcher switch. Note the obfuscation, then work at the disassembly level block by block, or use a devirtualization script if the obfuscator is a known one.</p>
+<li>The binary unpacks itself at runtime: set a breakpoint on the</li>
+<p>unpacked entry in a debugger, dump the process memory, and import the dump into Ghidra instead of the packed file.</p>
+<li>You need a specific struct from a header file: use File, Parse C</li>
+<p>Source to import real C headers into the Data Type Manager instead of hand-building structures.</p>
+<li>Analysis must be shared: export the project or use a Ghidra server</li>
+<p>so teammates see your renames and comments.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Ghidra is an offline analysis tool, so defenders do not detect its use; they defend against what it enables. Anti-reverse-engineering controls include stripping symbols, enabling compiler obfuscation or packing, anti-debugging checks, and moving sensitive logic server-side. None of these stop analysis, they only raise its cost. For defenders triaging unknown binaries, the same Ghidra workflow inverts: import the sample, check imports and strings for capability indicators, and trace network and execution behavior before letting it run anywhere important.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-798 (Use of Hard-coded Credentials): secrets found in strings.</li>
+<li>CWE-119 (Improper Restriction of Operations within the Bounds of a</li>
+<p>Memory Buffer): the memory bugs this analysis usually leads to.</p>
+<li>MITRE ATT&amp;CK T1027 (Obfuscated Files or Information): packed or</li>
+<p>obfuscated binaries.</p>
+<li>MITRE ATT&amp;CK T1106 (Native API): suspicious import usage.</li>
+<li>Ghidra documentation: https://ghidra-sre.org/documentation.html</li>
+<li>Ghidra API reference: https://ghidra.re/ghidra_docs/api/</li>
+<li>NSA Ghidra GitHub: https://github.com/NationalSecurityAgency/ghidra</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

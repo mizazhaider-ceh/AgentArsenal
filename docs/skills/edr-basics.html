@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: edr-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>edr-basics</h2><div class="meta"><span class="badge gray">defensive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when deploying, operating, or triaging with Endpoint</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Sysmon</td><td>15.x</td></tr><tr><td>Velociraptor</td><td>0.7</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>EDR watches what happens on endpoints: processes, file writes, registry changes, and network connections, and it can stop or isolate threats automatically. This skill covers operating EDR defensively: understanding the telemetry, triaging alerts well, using response actions safely, tuning detections, and keeping the fleet healthy. It applies to any EDR product and to Sysmon-based telemetry pipelines, on systems you own or are authorized to defend.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm coverage: every in-scope host has a reporting, untampered</li>
+<p>sensor on a supported version.</p>
+<li>Set policy modes deliberately: prevention on for known-bad,</li>
+<p>detection on for behavioral analytics during rollout.</p>
+<li>Triage new alerts with the process tree first, then the file,</li>
+<p>then the network, then the user.</p>
+<li>Isolate the host for confirmed evil, preserving memory and logs</li>
+<p>before remediation.</p>
+<li>Remediate: kill, quarantine, remove persistence, reset</li>
+<p>credentials, then reimage for serious cases.</p>
+<li>Hunt the IOCs and TTPs across the fleet for the last 90 days.</li>
+<li>Tune the detection that fired: add the exclusion with a ticket or</li>
+<p>promote it to a block.</p>
+<li>Report fleet health weekly: coverage, sensor tampering, policy</li>
+<p>drift, mean time to triage.</p>
+</ol>
+<h2>1. Telemetry model</h2>
+<p>Know what your sensor records, because you can only detect what is collected. The standard event set, mapped to Sysmon IDs where people know them:</p>
+<p>| Telemetry | Sysmon ID | Why it matters | |---|---|---| | Process creation with full command line and hashes | 1 | execution chains | | File creation with timestamps | 11 | droppers, staging | | Network connection with process attribution | 3 | C2, exfiltration | | DNS queries | 22 | C2 over DNS | | Registry create/set | 12, 13 | persistence | | Image load (DLLs) | 7 | injection, hijacking | | Process access (memory open) | 10 | credential dumping | | Named pipe creation | 17, 18 | lateral movement, C2 | | WMI event consumers | 19, 20, 21 | persistence | | Process tampering | 25 | EDR evasion |</p>
+<p>If your EDR does not log full command lines, your LOLBin detections are blind. Verify the telemetry with a controlled test, not with the datasheet.</p>
+<pre><code class="language-bash"># Lab verification: generate known events and check they appear
+# Run on a test host, then query the EDR console or Sysmon log:
+powershell -c &quot;Write-Host test-event-12345&quot;
+# Expect: process creation event with the full command line visible</code></pre>
+<h2>2. Prevention versus detection modes</h2>
+<ul>
+<li>Prevention (block) mode: the sensor kills known-malicious files</li>
+<p>and behaviors. Use for high-confidence signatures and for ransomware-like behavior on servers.</p>
+<li>Detection (alert) mode: the sensor logs and alerts but does not</li>
+<p>block. Use during rollout and for behavioral analytics that are still being tuned.</p>
+<li>Common rollout: detect-only for 2 weeks, review false positives,</li>
+<p>then enable blocking per policy group (servers first, then workstations, executives last or never auto-block).</p>
+</ul>
+<p>Never enable aggressive behavioral blocking fleet-wide on day one. One false positive that kills a business application will get the whole EDR blamed and possibly disabled.</p>
+<h2>3. Alert triage workflow</h2>
+<p>Work every alert the same way. Example triage of a suspicious PowerShell alert:</p>
+<pre><code class="language-text">1. Process tree: powershell.exe &lt;- wmiprvse.exe &lt;- ? 
+   Is the parent legitimate for this host and user?
+2. Command line: encoded? download cradle? Compare against the
+   baseline of normal admin usage.
+3. File: hash reputation, signer, first-seen in the fleet.
+4. Network: did the process connect out, to where, how much data.
+5. User and host: is this an admin, a server, business hours.
+6. Verdict: true positive (escalate), benign (document and tune),
+   or needs deeper forensics (memory, disk).</code></pre>
+<p>Use the EDR&#x27;s process timeline view; attackers hide in the gaps between single events. Pivot from the alert to the full process tree before deciding.</p>
+<pre><code class="language-bash"># Sysmon equivalent triage from the SIEM for one host and time window
+index=wineventlog ComputerName=&quot;WS-1042&quot; earliest=&quot;2026-10-23 09:00&quot; latest=&quot;2026-10-23 10:00&quot;
+| eval proc=lower(mvindex(split(Image,&quot;\\&quot;),-1))
+| table _time, EventCode, proc, CommandLine, user
+| sort _time</code></pre>
+<h2>4. Response actions</h2>
+<p>Standard actions and when to use them:</p>
+<ul>
+<li>Network isolation (quarantine): confirmed malicious activity,</li>
+<p>host stays powered on for forensics. Keep an allowlist for the EDR cloud and domain controllers so the sensor keeps reporting.</p>
+<li>Process kill: stop the bleeding on one process, but assume</li>
+<p>persistence remains.</p>
+<li>File quarantine: remove the payload, record the hash for hunting.</li>
+<li>Host shutdown: last resort; kills memory evidence, use only to</li>
+<p>stop fast-spreading ransomware when isolation is unavailable.</p>
+</ul>
+<pre><code class="language-bash"># After isolation, verify it worked before continuing
+# From the EDR console: host shows &quot;isolated&quot;. From the SIEM:
+index=edr ComputerName=&quot;WS-1042&quot; earliest=-15m
+| stats count by event_type
+# Expect only EDR heartbeat traffic, no user process network events</code></pre>
+<p>Always collect before you remediate on important hosts: memory capture and key logs first, then kill and quarantine. Remediation destroys evidence.</p>
+<h2>5. Hunting from EDR data</h2>
+<p>EDR telemetry is the best hunting dataset you have: 90 days of process-level truth.</p>
+<pre><code class="language-bash"># Hunt: processes with no signed image loading from user-writable paths
+index=edr event_type=process_create earliest=-30d@d latest=@d
+| where NOT signed=true AND match(image, &quot;(?i)\\\\users\\\\|\\\\temp\\\\|\\\\appdata\\\\&quot;)
+| stats dc(host) as hosts values(image) as examples by file_hash
+| where hosts &lt;= 3
+
+# Hunt: living-off-the-land binaries with network connections
+index=edr event_type=network earliest=-14d@d latest=@d
+| eval proc=lower(file_name)
+| where proc IN (&quot;powershell.exe&quot;,&quot;rundll32.exe&quot;,&quot;mshta.exe&quot;,&quot;certutil.exe&quot;)
+| stats values(dest_ip) as ips values(host) as hosts by proc</code></pre>
+<p>Save working hunts as scheduled queries or convert them to managed detections.</p>
+<h2>6. Tuning</h2>
+<p>Every detection gets the same treatment as SIEM rules: measure precision, fix logic first, exclude narrowly with tickets.</p>
+<pre><code class="language-bash"># Precision per EDR detection over 30 days (from your triage records)
+index=edr_triage
+| stats count(eval(verdict=&quot;true_positive&quot;)) as tp,
+        count(eval(verdict=&quot;false_positive&quot;)) as fp by detection_name
+| eval precision=round(tp/(tp+fp),2) | sort precision</code></pre>
+<p>Tuning patterns:</p>
+<ul>
+<li>Exclude by file hash plus signer for approved software, not by</li>
+<p>path alone (attackers plant files in excluded paths).</p>
+<li>Scope detections to host groups: a developer policy differs from</li>
+<p>a call-center policy.</p>
+<li>Time-bound exclusions for projects and migrations, with expiry.</li>
+<li>If a behavioral detection never produces true positives in 90</li>
+<p>days, demote it to hunt-only rather than paging the SOC.</p>
+</ul>
+<h2>7. Fleet health and tamper resistance</h2>
+<p>An EDR the attacker can kill is decoration. Monitor:</p>
+<pre><code class="language-bash"># Hosts without a recent heartbeat (SIEM-side check)
+index=edr earliest=-24h latest=@h
+| stats max(_time) as last_seen by host
+| where last_seen &lt; relative_time(now(), &quot;-2h&quot;)</code></pre>
+<ul>
+<li>Alert on sensor service stops, driver unloads, and tamper-protection</li>
+<p>disables. These are high severity by default.</p>
+<li>Track version drift: sensors more than two versions behind get</li>
+<p>upgraded on a schedule.</p>
+<li>Watch for exclusion sprawl: every exclusion has an owner, a</li>
+<p>ticket, and an expiry. Review quarterly.</p>
+<li>Test tamper resistance in the lab: try to kill the sensor as an</li>
+<p>administrator and confirm it resists or alerts.</p>
+</ul>
+<h2>8. Coverage metrics</h2>
+<p>Report monthly: percentage of in-scope hosts with a healthy sensor, mean time to triage, detection precision per policy, number of hosts isolated and why, and open tuning actions. Trend lines beat snapshots; a coverage dip after a laptop refresh cycle is normal and should be visible, not hidden.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>VDI and non-persistent hosts: sensors must register fast and</li>
+<p>telemetry must attribute to the right session; test the gold image, not just persistent hosts.</p>
+<li>macOS and Linux fleets need different policies and have thinner</li>
+<p>telemetry. Do not copy Windows detections over blindly.</p>
+<li>Offline hosts (travel, air-gapped): they report late or never.</li>
+<p>Define the offline tolerance and investigate hosts that exceed it.</p>
+<li>EDR conflicts with existing AV or security tools: pick one</li>
+<p>primary agent per function and test combinations in the lab.</p>
+<li>Cloud workloads are ephemeral: use the cloud workload agent or</li>
+<p>runtime sensor, and keep the asset inventory synced so dead hosts do not look like coverage gaps.</p>
+<li>Performance complaints: measure CPU and disk impact per policy</li>
+<p>before and after changes; most impact comes from file scanning scope, not behavioral analytics.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Sensor tampering alert on a production host: treat as a possible</li>
+<p>intrusion, isolate, and investigate before assuming user error.</p>
+<li>Widespread false positive blocking a business app: roll the</li>
+<p>policy back to detect-only for that group immediately, then tune.</p>
+<li>EDR console itself is unreachable: fall back to Sysmon and SIEM</li>
+<p>telemetry, and treat the outage as a security incident until the cause is known.</p>
+<li>Suspected EDR bypass in the wild: capture samples, test in the</li>
+<p>lab, engage the vendor, and add compensating detections (network, Sysmon) while waiting for the fix.</p>
+<li>Fleet-wide coverage drop (bad update): pause the rollout, roll</li>
+<p>back the affected group, and review the change process.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>EDR is the defender&#x27;s strongest sensor, so attackers invest in beating it:</p>
+<ul>
+<li>Attackers use bring-your-own-vulnerable-driver techniques to kill</li>
+<p>EDR at the kernel level. Keep tamper protection on, monitor driver loads, and block known-vulnerable drivers.</p>
+<li>Attackers patch or unhook user-mode sensors from memory. Prefer</li>
+<p>kernel telemetry and alert on sensor blindness (a host that goes quiet mid-incident).</p>
+<li>Attackers test payloads against EDR in their own labs. Assume</li>
+<p>signature evasion and lean on behavioral detections and hunts.</p>
+<li>Attackers abuse legitimate tools the EDR trusts. Tune allowlists</li>
+<p>by hash and signer, and watch trusted tools for unusual parents and command lines.</p>
+<li>Your tuning decisions are the attack surface: every exclusion is</li>
+<p>a hole. Review them like firewall rules, with owners and expiry.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1562.001 (Disable or Modify Tools), T1014 (Rootkit),</li>
+<p>T1055 (Process Injection), T1003.001 (LSASS Memory), T1218 (System Binary Proxy Execution).</p>
+<li>Sysmon documentation and SwiftOnSecurity config reference:</li>
+<p>https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon</p>
+<li>Velociraptor documentation: https://docs.velociraptor.app/</li>
+<li>MITRE Engenuity ATT&amp;CK Evaluations (EDR product test reports).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

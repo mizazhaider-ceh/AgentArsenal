@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: firewall-evasion</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>firewall-evasion</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when nmap scans are blocked, filtered, or rate limited by</p><div class="deps"><span class="kind">requires:</span> <a href="nmap-methodology.html">nmap-methodology</a></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>nmap</td><td>7.98</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>Wireshark</td><td>4.4</td></tr></tbody></table><p>A firewall between you and the target changes what a scan means: <code>filtered</code> is the firewall talking, not the host. Firewall evasion is the craft of getting accurate answers anyway, by shaping packets so the firewall passes them while the target still responds. This skill covers the nmap 7.98 evasion toolkit on authorized engagements: fragmentation, decoys, idle scans, source port tricks, timing control, and proxy tunneling, plus how to map the firewall&#x27;s own rule set from its responses. It assumes you know scan types and timing from nmap-methodology. Evasion is still scanning, so it stays inside the written scope and rate limits. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Run a baseline scan and record exactly what is open, closed, filtered,</li>
+<p>and dropped.</p>
+<li>Identify the firewall behavior: stateless filter, stateful, or IDS with</li>
+<p>rate limiting.</p>
+<li>Pick the least exotic evasion that answers the question, and try it on</li>
+<p>one host first.</p>
+<li>Tune timing so the scan stays under rate limits and the agreed window.</li>
+<li>Map the firewall rules from differential responses.</li>
+<li>Re-run service detection only on the ports you proved real.</li>
+<li>Document which technique defeated which control.</li>
+</ol>
+<h2>1. Read the baseline correctly</h2>
+<p>Before evading anything, characterize the obstacle. Different responses mean different firewalls.</p>
+<pre><code class="language-bash"># Baseline SYN scan with reason codes: why does nmap think so?
+sudo nmap -sS -p 1-1000 --reason -T4 192.0.2.10 -oN /tmp/base.txt
+
+# ACK scan: distinguishes stateless from stateful filtering
+sudo nmap -sA -p 22,80,443 --reason 192.0.2.10</code></pre>
+<p>Interpretation guide: <code>filtered</code> on an ACK scan means a stateful firewall is in the path. <code>unfiltered</code> on ACK but <code>filtered</code> on SYN means the firewall allows the ACK through but the host is not answering SYNs (or a stateless filter passes ACKs). No response at all to anything, including ping, suggests a drop-all posture or an IPS shunning your IP.</p>
+<pre><code class="language-bash"># Check whether your IP got shunned: scan from a second source if allowed
+# Or test with a single innocent probe after a pause
+sleep 60; sudo nmap -sS -p 80 --reason 192.0.2.10</code></pre>
+<p>If probes that worked ten minutes ago now get nothing, you tripped a rate limit or shun. Back off before trying anything clever.</p>
+<h2>2. Fragmentation and MTU tricks</h2>
+<p>Splitting the TCP header across fragments can slip past simple packet filters that only inspect the first fragment. Modern stateful firewalls reassemble, so this works best against old or misconfigured gear.</p>
+<pre><code class="language-bash"># Fragment probes into 8-byte IP fragments
+sudo nmap -sS -f -p 22,80,443 192.0.2.10
+
+# Smaller MTU forces more fragments (must be a multiple of 8)
+sudo nmap -sS --mtu 16 -p 22,80,443 192.0.2.10
+
+# Combine fragmentation with a slow timing template
+sudo nmap -sS -f -T2 -p 1-1024 192.0.2.10 -oN /tmp/frag.txt</code></pre>
+<p>Verify with Wireshark that fragments actually leave your box as fragments; some virtual interfaces reassemble before the wire. Compare the open port count against the baseline: new <code>open</code> results are ports the filter was hiding.</p>
+<h2>3. Decoys</h2>
+<p>Decoys hide your address among fake source addresses. The target sees probes from you plus N decoys and cannot tell which is real.</p>
+<pre><code class="language-bash"># Three decoys plus your real IP (ME), random positions
+sudo nmap -sS -D 198.51.100.7,203.0.113.44,192.0.2.99,ME -p 22,80,443 192.0.2.10
+
+# Random decoys: RND:10 generates ten random addresses
+sudo nmap -sS -D RND:10 -p 1-1024 192.0.2.10 -oN /tmp/decoy.txt</code></pre>
+<p>Rules: never use decoys that belong to real third parties without permission; spoofed sources can trigger abuse complaints and backscatter to innocent owners. <code>ME</code> keeps your real IP in the mix so you still get results. Decoys defeat simple per-IP rate limits, not stateful inspection.</p>
+<h2>4. Source port and firewall-trust tricks</h2>
+<p>Some firewalls trust traffic from well known source ports, assuming it is reply traffic. nmap can set its source port explicitly.</p>
+<pre><code class="language-bash"># Source port 53 (DNS): old filters often allow it
+sudo nmap -sS --source-port 53 -p 22,80,443 192.0.2.10
+
+# Source port 67 (DHCP) and 20 (FTP data) are other classic guesses
+sudo nmap -sS --source-port 67 -p 1-1024 192.0.2.10
+
+# Data length padding: append random bytes to dodge fixed-offset signatures
+sudo nmap -sS --data-length 32 -p 22,80,443 192.0.2.10</code></pre>
+<p>Test each trick against the baseline and keep only what changes results. These are low cost probes, so they belong early in the escalation order.</p>
+<h2>5. Idle (zombie) scan</h2>
+<p>The idle scan bounces the scan off a third host (the zombie) with a predictable IP ID sequence, so the target never sees your address. It is the stealthiest scan nmap offers and the fiddliest.</p>
+<pre><code class="language-bash"># Find a zombie: idle host with incremental IP IDs
+sudo nmap -sS -O -p 80 --reason 192.0.2.0/24 -oG /tmp/zcandidates.gnmap
+# Then check IP ID behavior:
+sudo nmap -O -p 80 192.0.2.25 | grep -i &quot;ip id sequence&quot;
+# Want: &quot;Incremental&quot;
+
+# Run the idle scan through the zombie
+sudo nmap -sI 192.0.2.25 -p 22,80,443 192.0.2.10</code></pre>
+<p>Requirements: the zombie must be truly idle (its IP ID must not move for other reasons) and must trust or reach the target. Verify the zombie is still idle right before the scan; a busy zombie produces garbage results. In practice, printers and old cameras make good zombies.</p>
+<h2>6. Timing, delays, and staying under the radar</h2>
+<p>Rate limiting is the most common control you will meet. Beat it with patience, not cleverness.</p>
+<pre><code class="language-bash"># Polite scan: T2 with explicit delays between probes
+sudo nmap -sS -T2 --scan-delay 5s --max-retries 1 -p 1-1024 192.0.2.10
+
+# Paranoid timing for tight IDS: one probe every 15 seconds
+sudo nmap -sS -T0 --scan-delay 15s -p 22,80,443,3306,5432 192.0.2.10
+
+# Cap parallelism so you never burst
+sudo nmap -sS --max-parallelism 1 --max-rate 10 -p 1-65535 192.0.2.10</code></pre>
+<p><code>--max-rate 10</code> (ten packets per second) stays under most default rate limits. A full 65k port scan at that rate takes about two hours, so narrow the port list first using the baseline and service guesses. Always check the agreed test window before starting a slow scan.</p>
+<h2>7. Tunnel through a proxy</h2>
+<p>When your source network is the problem (egress filtering, shunning), route the scan through an in-scope proxy or jump host.</p>
+<pre><code class="language-bash"># SOCKS proxy tunnel (proxychains must be configured first)
+# /etc/proxychains.conf: socks5 127.0.0.1 1080
+sudo proxychains nmap -sT -Pn -p 22,80,443 192.0.2.10
+
+# nmap&#x27;s own proxy support for HTTP/CONNECT
+sudo nmap -sT --proxies http://proxy.in-scope.example:8080 -p 80,443 192.0.2.10</code></pre>
+<p>Proxy scans must use <code>-sT</code> (connect scan); raw packet scans cannot go through a proxy. You lose OS detection and stealth, but you gain a fresh source address and sometimes a whole different network view.</p>
+<h2>8. Map the firewall rules themselves</h2>
+<p>Differential responses reveal the rule set. Probe systematically and read the firewall&#x27;s mind.</p>
+<pre><code class="language-bash"># Which ports does the firewall treat differently? Compare SYN vs ACK vs NULL
+for st in sS sA sN; do
+  echo &quot;=== -$st ===&quot;
+  sudo nmap -$st -p 21,22,23,25,53,80,110,143,443,993,3306,3389,5432,8080 \
+    --reason 192.0.2.10 | grep -E &#x27;^[0-9]+/tcp&#x27;
+done | tee /tmp/fw-map.txt
+
+# Test source port trust across candidate ports
+for sp in 53 67 20 123 161; do
+  echo &quot;=== source port $sp ===&quot;
+  sudo nmap -sS --source-port $sp -p 80,443 --reason 192.0.2.10 \
+    | grep -E &#x27;^[0-9]+/tcp&#x27;
+done</code></pre>
+<p>Build a small table: port, SYN result, ACK result, trusted source ports. That table is the firewall rule map, and it goes straight into the report as evidence of the filtering posture.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Everything is <code>filtered</code> no matter the technique. The firewall is</li>
+<p>stateful and correct; say so, and move testing to allowed paths (web, VPN) instead of burning the window.</p>
+<li>Your IP gets shunned mid-scan. Stop, wait out the shun (ask the client</li>
+<p>for the timeout), then resume slower or from the approved alternate source.</p>
+<li>Decoys trigger abuse complaints. Use only approved decoy addresses,</li>
+<p>and prefer <code>RND</code> with small counts over real addresses.</p>
+<li>The idle scan returns nonsense. The zombie was not idle; re-verify IP</li>
+<p>ID behavior immediately before scanning.</p>
+<li>Fragmentation changes nothing. The firewall reassembles; drop the</li>
+<p>technique and try timing or source port tricks.</p>
+<li>Proxy scans miss everything. The proxy egresses somewhere unexpected;</li>
+<p>confirm the proxy&#x27;s exit IP and its own filtering first.</p>
+<li>Scan results differ run to run. Load balancers and anycast make each</li>
+<p>probe hit a different back end; scan longer and note the variance.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>One evasion works on one host. Apply it subnet-wide, but re-baseline</li>
+<p>per host; firewall rules often differ by segment.</p>
+<li>Nothing works from outside. Request an internal scan position in</li>
+<p>writing; inside-outside comparison is itself a valuable finding.</p>
+<li>The firewall is application aware. Evasion at the packet layer will</li>
+<p>not beat a WAF or NGFW that understands the protocol; pivot to application layer testing (see webapp-pentest-methodology).</p>
+<li>You mapped the rules. Turn the map into recommendations: default deny,</li>
+<p>remove trusted source port exceptions, and alert on scan patterns.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see evasion as fragmented packets with tiny MTUs, bursts of decoy sources hitting the same ports, slow but relentless single-port probes over hours, and idle scan artifacts (a zombie&#x27;s IP ID climbing without its own traffic). Good NDR reassembles fragments before inspection, correlates decoys by timing, and rate limits regardless of source port. The durable fixes: default deny with explicit allows, stateful inspection with reassembly, no trust based on source port alone, IDS tuned for slow scans (not just fast ones), and shun lists with sensible timeouts. Log denied packets; the denied log is where scans show up.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1046 (Network Service Discovery): scanning itself.</li>
+<li>MITRE ATT&amp;CK T1090 (Proxy): tunneling scans through proxies.</li>
+<li>MITRE ATT&amp;CK T1205 (Traffic Signaling): port and protocol tricks map</li>
+<p>loosely here; treat as an analogy, not a claim.</p>
+<li>nmap 7.98 manual, firewall and IDS evasion section:</li>
+<p>https://nmap.org/book/man-bypass-firewalls-ids.html</p>
+<li>Wireshark display filters for fragments: <code>ip.flags.mf == 1</code></li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

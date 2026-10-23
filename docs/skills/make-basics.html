@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: make-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>make-basics</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing or fixing Makefiles with GNU Make 4.4:</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="git-workflows.html">git-workflows</a> <a href="python-cli-tooling.html">python-cli-tooling</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>GNU Make</td><td>4.4</td></tr></tbody></table><p>Make builds a dependency graph from a Makefile and rebuilds only what is stale: if <code>app</code> is newer than <code>main.c</code>, nothing happens; touch <code>main.c</code> and only the needed steps rerun. That makes it the right tool for compiled builds and for any repeatable task pipeline (lint, test, build, deploy). This skill covers GNU Make 4.4: targets, prerequisites, recipes, variables, pattern rules, functions, phony targets, parallel builds, and debugging.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Name the default target <code>all</code>; list the main entry points at the top.</li>
+<li>Write explicit target: prerequisites rules first, then generalize</li>
+<p>with pattern rules.</p>
+<li>Declare every non-file target <code>.PHONY</code>.</li>
+<li>Use automatic variables (<code>$@</code>, <code>$&lt;</code>, <code>$^</code>) instead of repeating</li>
+<p>names.</p>
+<li>Put configuration in variables at the top; override from the</li>
+<p>command line or environment.</p>
+<li>Test with <code>make -n</code> (dry run) before <code>make</code>; debug with</li>
+<p><code>--debug=b</code> when rebuilds surprise you.</p>
+<li>Run <code>make -j$(nproc)</code> for parallel builds once the graph is</li>
+<p>correct.</p>
+<li>Keep recipes portable: POSIX sh by default, one logical line per</li>
+<p>recipe line or joined with backslashes.</p>
+</ol>
+<h2>1. Anatomy: targets, prerequisites, recipes</h2>
+<pre><code class="language-make"># Makefile
+CC := gcc
+CFLAGS := -Wall -Wextra -O2 -g
+
+# target: prerequisites
+# &lt;TAB&gt;recipe line (TAB is mandatory, not spaces)
+app: main.o util.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+main.o: main.c util.h
+	$(CC) $(CFLAGS) -c $&lt; -o $@
+
+util.o: util.c util.h
+	$(CC) $(CFLAGS) -c $&lt; -o $@
+
+clean:
+	rm -f app *.o
+
+.PHONY: all clean
+all: app</code></pre>
+<pre><code class="language-bash">make            # builds app (first target is the default)
+make -n         # dry run: print recipes without running them
+make clean &amp;&amp; make -j&quot;$(nproc)&quot;</code></pre>
+<p>Core rules: recipes MUST start with a tab (&quot;missing separator&quot; means spaces); each recipe line runs in a fresh shell, so <code>cd</code> on one line does not persist (use <code>; \</code> continuations or <code>.ONESHELL</code>); make decides staleness by file timestamps.</p>
+<h2>2. Automatic variables</h2>
+<pre><code class="language-make">app: main.o util.o
+	$(CC) -o $@ $^
+# $@ = target name (app)
+# $^ = all prerequisites (main.o util.o)
+# $&lt; = first prerequisite (main.o)
+# $? = prerequisites newer than target
+# $* = stem matched by % in pattern rules
+# $(@D) / $(@F) = directory / file part of target</code></pre>
+<p>Use them always: a rule that repeats filenames will drift when the filenames change.</p>
+<h2>3. Variables and functions</h2>
+<pre><code class="language-make"># := immediate (evaluated once), = recursive (evaluated on each use)
+BUILD := build
+SOURCES := $(wildcard src/*.c)
+OBJECTS := $(patsubst src/%.c,$(BUILD)/%.o,$(SOURCES))
+
+# Override from the command line: make CFLAGS=&quot;-O0 -g&quot;
+CFLAGS ?= -O2
+
+# Functions you will use constantly
+FILES := $(wildcard *.md)                 # glob to list
+OBJS := $(patsubst %.c,%.o,$(SOURCES))    # pattern substitution
+DIRS := $(sort $(dir $(SOURCES)))         # directory parts, deduped
+STRIPPED := $(strip $(CFLAGS))            # trim whitespace
+
+$(BUILD)/%.o: src/%.c | $(BUILD)
+	$(CC) $(CFLAGS) -c $&lt; -o $@
+
+$(BUILD):
+	mkdir -p $@
+
+.PHONY: print-vars
+print-vars:
+	@echo &quot;SOURCES=$(SOURCES)&quot;
+	@echo &quot;OBJECTS=$(OBJECTS)&quot;</code></pre>
+<p><code>|</code> marks order-only prerequisites: <code>$(BUILD)</code> must exist before compiling, but its timestamp must not trigger rebuilds.</p>
+<pre><code class="language-bash">make print-vars
+make CFLAGS=&quot;-O0 -g&quot;     # command-line override</code></pre>
+<h2>4. Pattern rules and static patterns</h2>
+<pre><code class="language-make"># One rule for every .c -&gt; .o (the workhorse)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $&lt; -o $@
+
+# Static pattern: apply to a specific list only
+$(OBJECTS): $(BUILD)/%.o: src/%.c
+	$(CC) $(CFLAGS) -c $&lt; -o $@
+
+# Multiple targets, one recipe
+%.h %.c: %.y
+	bison -d $&lt;
+
+# Cancel a built-in implicit rule you do not want
+%.o: %.s</code></pre>
+<p>Prefer your own pattern rules over make&#x27;s built-in implicit rules for clarity; check what is built in with <code>make -p | grep -A2 &#x27;^%.o&#x27;</code>.</p>
+<h2>5. .PHONY and common task targets</h2>
+<pre><code class="language-make">.PHONY: all build test lint clean help
+
+all: build
+
+build: app
+
+test: build
+	pytest -q
+
+lint: build
+	shellcheck scripts/*.sh
+	ruff check src/
+
+clean:
+	rm -rf $(BUILD) app *.o
+
+help:
+	@echo &quot;Targets:&quot;
+	@echo &quot;  build  compile the app&quot;
+	@echo &quot;  test   run the test suite&quot;
+	@echo &quot;  lint   run linters&quot;
+	@echo &quot;  clean  remove build artifacts&quot;</code></pre>
+<p>Why <code>.PHONY</code> matters: without it, a file named <code>test</code> or <code>clean</code> in the directory makes make skip the target (&quot;up to date&quot;). Every target that is not a real file gets <code>.PHONY</code>.</p>
+<h2>6. Conditionals and includes</h2>
+<pre><code class="language-make">UNAME := $(shell uname -s)
+
+ifeq ($(UNAME),Darwin)
+	CFLAGS += -I/opt/homebrew/include
+else
+	CFLAGS += -pthread
+endif
+
+# Optional config file, silently skipped if missing
+-include config.mk
+
+ifdef DEBUG
+	CFLAGS += -O0 -g -DDEBUG
+endif</code></pre>
+<p>Keep conditionals small; a Makefile full of <code>ifeq</code> is a build system crying for help.</p>
+<h2>7. Parallel builds</h2>
+<pre><code class="language-bash">make -j&quot;$(nproc)&quot;        # one job per core
+make -j8                 # fixed count</code></pre>
+<p>For <code>-j</code> to be safe, the graph must be complete: every real dependency must be a prerequisite. Missing prerequisites cause race failures that vanish on retry (the classic &quot;works with -j1&quot; bug). Mark targets that must not parallelize:</p>
+<pre><code class="language-make"># These two both write to the same database; serialize them
+.NOTPARALLEL: migrate seed</code></pre>
+<h2>8. Debugging make</h2>
+<pre><code class="language-bash"># Print the database: every variable and rule make sees
+make -p | less
+
+# Why did it rebuild? (basic debug)
+make --debug=b
+
+# Which makefile, which line defined a variable?
+make --debug=v 2&gt;&amp;1 | grep -A2 &#x27;CFLAGS&#x27;
+
+# Trace recipe execution with the target that triggered it
+make --trace
+
+# Check for the tab problem visibly
+cat -A Makefile | head -10
+# Recipe lines must start with ^I (tab), not spaces</code></pre>
+<p>Common errors: &quot;missing separator&quot; (spaces instead of tab), &quot;recipe commences before first target&quot; (a recipe line outside any rule, often from a stray tab), &quot;No rule to make target&quot; (typo in a prerequisite or missing file), and circular dependency warnings (target depends on itself through a chain).</p>
+<h2>9. A complete example: Python project tasks</h2>
+<pre><code class="language-make">VENV := .venv
+PY := $(VENV)/bin/python
+
+.PHONY: all setup test lint format clean
+
+all: test
+
+setup:
+	python3 -m venv $(VENV)
+	$(PY) -m pip install -r requirements.txt -r requirements-test.txt
+
+test: setup
+	$(PY) -m pytest -q
+
+lint:
+	ruff check src/ tests/
+	mypy src/
+
+format:
+	ruff format src/ tests/
+
+clean:
+	rm -rf $(VENV) .pytest_cache htmlcov
+	find . -name &#x27;__pycache__&#x27; -type d -prune -exec rm -rf {} +</code></pre>
+<p>Idempotency note: <code>setup</code> reruns pip every time here; for real incremental behavior, use a stamp file:</p>
+<pre><code class="language-make">$(VENV)/.stamp: requirements.txt
+	python3 -m venv $(VENV)
+	$(PY) -m pip install -r requirements.txt
+	touch $@
+
+test: $(VENV)/.stamp
+	$(PY) -m pytest -q</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Tabs vs spaces: the eternal trap; configure your editor to keep</li>
+<p>tabs in Makefiles (<code>:set noexpandtab</code> in vim for Makefiles).</p>
+<li><code>$</code> in recipes is make syntax: write <code>$$</code> for a shell variable</li>
+<p>(<code>echo $$HOME</code>), single <code>$</code> gets eaten by make.</p>
+<li>Filenames with spaces: make handles them poorly; avoid spaces in</li>
+<p>build trees or use <code>$(wildcard)</code> carefully.</p>
+<li><code>make clean</code> deleting too much: scope <code>rm</code> to the build dir and</li>
+<p>known patterns, never <code>rm -rf *</code>.</p>
+<li>Environment variables vs make variables: <code>export VAR</code> in the</li>
+<p>Makefile passes to recipes; command-line assignments override everything except <code>override</code> directives.</p>
+<li>BSD make vs GNU make: syntax differs (<code>!=</code> vs <code>$(shell)</code>);</li>
+<p>this skill targets GNU Make 4.4 on Linux.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Rebuilds everything every time: a prerequisite is newer than the</li>
+<p>target on every run (a <code>.PHONY</code> prerequisite, or a generated file with a clock-skewed timestamp); inspect with <code>make --debug=b</code>.</p>
+<li>Parallel build fails intermittently: incomplete graph; run with</li>
+<p><code>-j1</code> to confirm, then add the missing prerequisites.</p>
+<li>&quot;No rule to make target X&quot;: check for typos, check the file</li>
+<p>exists, and check pattern rules actually match (<code>make -p</code> shows them).</p>
+<li>Variable has an unexpected value: <code>make print-vars</code> (section 3)</li>
+<p>plus <code>make --debug=v</code> to find where it was set.</p>
+<li>Outgrown make (generated sources, complex matrices): that is the</li>
+<p>signal for CMake, Meson, or a task runner; do not build a second build system inside the Makefile.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Makefiles execute arbitrary shell: a malicious Makefile is a code-execution vector hiding in plain sight, especially via <code>curl | bash</code> recipes or <code>setup</code> targets that download binaries. Detect misuse with:</p>
+<pre><code class="language-bash"># Suspicious recipes: network fetch + execute in build files
+grep -rnE &#x27;curl.*\|\s*(ba)?sh|wget.*\|\s*(ba)?sh&#x27; --include=&#x27;Makefile&#x27; \
+  --include=&#x27;*.mk&#x27; . 2&gt;/dev/null | head
+
+# Makefiles changed recently in unexpected places
+find / -name &#x27;Makefile&#x27; -mtime -7 2&gt;/dev/null | grep -vE &#x27;^/(usr|opt)&#x27; | head
+
+# What would this Makefile actually run? Dry-run before trusting it
+make -n</code></pre>
+<p>Defensive rules: read a Makefile before running it (especially from untrusted repos), never <code>sudo make install</code> without reviewing the install target, pin downloaded artifacts with checksums, and run builds as an unprivileged user. In CI, treat the Makefile as code: reviewed, versioned, and scanned like everything else.</p>
+<h2>Key references</h2>
+<ul>
+<li>GNU Make 4.4 manual: https://www.gnu.org/software/make/manual/</li>
+<li>&quot;Managing Projects with GNU Make&quot; (Mecklenburg): the classic book.</li>
+<li>POSIX make specification: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html</li>
+<li>CWE-78 (OS Command Injection): unsanitized variables in recipes.</li>
+<li>CWE-829 (Inclusion of Functionality from Untrusted Sphere): fetching</li>
+<p>build inputs over the network without verification.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

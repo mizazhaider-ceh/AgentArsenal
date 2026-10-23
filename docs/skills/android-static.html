@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: android-static</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>android-static</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to reverse engineer an Android APK you are</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="android-dynamic.html">android-dynamic</a> <a href="ios-basics.html">ios-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>jadx</td><td>1.5.1</td></tr><tr><td>apktool</td><td>2.11.0</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>adb</td><td>35.x</td></tr></tbody></table><p>Android static analysis is reading an APK without running it: decompiling the Dalvik bytecode back to Java, decoding the manifest and resources, and hunting for secrets, misconfigurations, and dangerous code patterns. It is the cheapest way to map an app&#x27;s attack surface and it works even when you have no device or emulator. This skill covers the full authorized methodology from APK acquisition through jadx decompilation, apktool resource decoding, manifest review, secret hunting, and insecure code pattern detection. All testing targets apps you have written permission to test, such as a client app in scope or a CTF challenge APK.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Acquire the APK legally (from the test device with adb, or the file</li>
+<p>provided in scope) and record its hash for the report.</p>
+<li>Triage the APK: package name, version, target SDK, and certificate</li>
+<p>details, without decompiling yet.</p>
+<li>Decompile to Java with jadx for readable source review.</li>
+<li>Decode resources and smali with apktool for the manifest, layouts, and</li>
+<p>exact bytecode.</p>
+<li>Review AndroidManifest.xml: permissions, exported components, deep</li>
+<p>links, backup flags, and debuggable flags.</p>
+<li>Hunt for hardcoded secrets: API keys, tokens, URLs, and crypto keys.</li>
+<li>Review code for dangerous patterns: WebViews, insecure crypto, cleartext</li>
+<p>storage, and custom trust managers.</p>
+<li>Map every finding to a file and line number so dynamic testing can</li>
+<p>confirm it later.</p>
+</ol>
+<h2>1. Acquire and triage the APK</h2>
+<p>Pull the APK from the authorized test device, or use the APK file supplied in the engagement scope. Never download APKs from third party sites for a client test; the hash must match what the client gave you.</p>
+<pre><code class="language-bash"># List installed packages and find the target
+adb shell pm list packages | grep -i target
+
+# Find the APK path on the device, then pull it
+adb shell pm path com.example.target
+adb pull /data/app/com.example.target-1/base.apk ./target.apk
+
+# Record integrity for the report
+sha256sum target.apk
+file target.apk
+
+# Quick triage: package name, version, SDK levels
+aapt dump badging target.apk 2&gt;/dev/null | head -5
+# If aapt is missing, unzip the listing instead
+unzip -l target.apk | head -30</code></pre>
+<p>Check the signing certificate. A debug certificate on a production app is a finding by itself.</p>
+<pre><code class="language-bash"># List the APK signature (apksigner ships with Android build-tools)
+apksigner verify --print-certs target.apk | grep -E &#x27;Signer|SHA-256&#x27;
+
+# Or inspect the raw signature block with keytool
+unzip -p target.apk META-INF/*.RSA &gt; /tmp/cert.rsa
+keytool -printcert -file /tmp/cert.rsa | head -20</code></pre>
+<p>Split APKs (base.apk plus config splits) are common. Pull every split or the decompiled view will miss code and resources.</p>
+<pre><code class="language-bash">adb shell pm path com.example.target
+# Pull each listed split: base.apk, split_config.arm64_v8a.apk, ...
+for p in $(adb shell pm path com.example.target | cut -d: -f2); do
+  adb pull &quot;$p&quot; &quot;./splits/$(basename $p)&quot;
+done</code></pre>
+<h2>2. Decompile with jadx</h2>
+<p>jadx converts classes.dex back into readable Java. It is the primary reading tool for static review.</p>
+<pre><code class="language-bash"># Decompile to a source tree
+jadx -d ./jadx-out target.apk
+
+# Decompile with debug info and deobfuscation helpers
+jadx -d ./jadx-out --show-bad-code --deobf target.apk
+
+# GUI for interactive review (slower on huge APKs, use CLI first)
+jadx-gui target.apk</code></pre>
+<p>Navigate the output like a source tree:</p>
+<pre><code class="language-bash">cd jadx-out
+# Find the main application classes (skip android/ and androidx/ noise)
+find sources -name &#x27;*.java&#x27; | grep -v -E &#x27;androidx?/|com/google/&#x27; | head -40
+
+# Locate the main activity and entry points
+grep -rl &#x27;extends Activity\|extends Application&#x27; sources/com/example/ | head</code></pre>
+<p>jadx output is an approximation. When a method looks wrong (bad casts, impossible control flow), cross-check the smali from apktool before reporting a vulnerability.</p>
+<h2>3. Decode resources with apktool</h2>
+<p>apktool decodes AndroidManifest.xml, layouts, and resources to readable XML, and disassembles dex to smali.</p>
+<pre><code class="language-bash"># Decode the APK
+apktool d target.apk -o ./apktool-out
+
+# The manifest is now readable XML
+head -80 apktool-out/AndroidManifest.xml</code></pre>
+<p>Use apktool output for anything the decompiler hides: resource values, manifest flags, native library names, and the exact smali when jadx produces suspicious code.</p>
+<pre><code class="language-bash"># List native libraries shipped with the app
+find apktool-out/lib -type f | head
+
+# Find smali files for a class jadx rendered badly
+find apktool-out/smali -name &#x27;LoginActivity.smali&#x27;</code></pre>
+<h2>4. Manifest and component analysis</h2>
+<p>The manifest is the app&#x27;s contract with Android. Read it top to bottom.</p>
+<pre><code class="language-bash"># Permissions requested
+grep -o &#x27;android:name=&quot;android.permission[^&quot;]*&quot;&#x27; apktool-out/AndroidManifest.xml | sort -u
+
+# Exported components (the external attack surface)
+grep -B2 -A2 &#x27;android:exported=&quot;true&quot;&#x27; apktool-out/AndroidManifest.xml | head -60
+
+# Deep links and URL schemes
+grep -B5 -A10 &#x27;android.intent.action.VIEW&#x27; apktool-out/AndroidManifest.xml | head -80
+
+# Dangerous global flags
+grep -E &#x27;debuggable|allowBackup|usesCleartextTraffic|networkSecurityConfig&#x27; \
+  apktool-out/AndroidManifest.xml</code></pre>
+<p>Flag these immediately:</p>
+<ul>
+<li><code>android:debuggable=&quot;true&quot;</code> in a release build.</li>
+<li><code>android:allowBackup=&quot;true&quot;</code> (default true on old target SDKs):</li>
+<p>backup abuse reads app-private data via adb.</p>
+<li>Exported activities, services, receivers, or providers with no</li>
+<p>permission guard.</p>
+<li>Exported <code>ContentProvider</code> with <code>grantUriPermissions</code> or path</li>
+<p>traversal in query handling.</p>
+<li><code>android:usesCleartextTraffic=&quot;true&quot;</code> or a network security config</li>
+<p>that trusts user CAs in release builds.</p>
+<li>Deep links (<code>VIEW</code> intents with <code>BROWSABLE</code>) that reach sensitive</li>
+<p>screens without authentication checks.</p>
+</ul>
+<p>Check the network security configuration file if one is referenced:</p>
+<pre><code class="language-bash">grep -r &#x27;networkSecurityConfig&#x27; apktool-out/AndroidManifest.xml
+# Then read the referenced XML, e.g. res/xml/network_security_config.xml
+find apktool-out/res -name &#x27;*network_security*&#x27;
+cat apktool-out/res/xml/network_security_config.xml</code></pre>
+<p>A config that sets <code>&lt;certificates src=&quot;user&quot; /&gt;</code> in the base config means your Burp CA will be trusted, which simplifies dynamic testing but is a finding on a production app.</p>
+<h2>5. Secret and API key hunting</h2>
+<p>Search the decompiled sources and resources for hardcoded credentials. This is the highest hit-rate static activity on real apps.</p>
+<pre><code class="language-bash">cd jadx-out
+# Broad secret-shaped patterns
+grep -rn -i -E &#x27;api[_-]?key|secret|password|passwd|pwd|token|aws_|sk_live|AIza&#x27; \
+  sources/ resources/ 2&gt;/dev/null | grep -v -E &#x27;androidx?/|R\.java&#x27; | head -40
+
+# High-entropy strings that look generated (possible keys)
+grep -rn -E &#x27;&quot;[A-Za-z0-9+/=]{32,}&quot;&#x27; sources/com/example/ | head -20
+
+# URLs and endpoints (map the backend attack surface)
+grep -rho -E &#x27;https?://[A-Za-z0-9._:/?=&amp;%-]+&#x27; sources/com/example/ \
+  | sort -u | head -40</code></pre>
+<p>Also check the places developers hide keys outside Java code:</p>
+<pre><code class="language-bash"># String resources
+grep -rn -i -E &#x27;key|secret|token|password&#x27; apktool-out/res/values/strings.xml | head -20
+
+# Build config fields (BuildConfig.java)
+find jadx-out/sources -name &#x27;BuildConfig.java&#x27; -exec cat {} \;
+
+# Assets and raw resources
+ls apktool-out/assets/ 2&gt;/dev/null
+grep -rn -i -E &#x27;api[_-]?key|secret&#x27; apktool-out/assets/ 2&gt;/dev/null | head</code></pre>
+<p>Validate before reporting: a string named <code>API_KEY</code> with the value <code>&quot;YOUR_API_KEY_HERE&quot;</code> is a placeholder, not a finding. Confirm a key is real by checking its format (for example <code>AIza</code> prefix for Google keys) or, only with client permission, by testing it against the provider.</p>
+<h2>6. Dangerous code patterns</h2>
+<p>Search for the code patterns that most often become findings.</p>
+<pre><code class="language-bash"># WebViews: JavaScript enabled, file access, and JS bridges
+grep -rn &#x27;setJavaScriptEnabled(true)&#x27; sources/com/example/ | head
+grep -rn &#x27;addJavascriptInterface&#x27; sources/com/example/ | head
+grep -rn &#x27;setAllowFileAccess(true)\|setAllowUniversalAccessFromFileURLs&#x27; sources/com/example/ | head
+
+# Insecure crypto: ECB mode, hardcoded IVs, weak hashes for passwords
+grep -rn -E &#x27;AES/ECB|DES/|MD5|SHA1\(&#x27; sources/com/example/ | head -20
+grep -rn &#x27;IvParameterSpec\|SecretKeySpec&#x27; sources/com/example/ | head
+
+# Custom trust managers that accept any certificate (pinning bypass target)
+grep -rn -E &#x27;X509TrustManager|checkServerTrusted|ALLOW_ALL_HOSTNAME_VERIFIER&#x27; \
+  sources/com/example/ | head
+
+# Insecure storage: world-readable files, cleartext SharedPreferences
+grep -rn -E &#x27;MODE_WORLD_READABLE|MODE_WORLD_WRITEABLE&#x27; sources/com/example/ | head
+grep -rn &#x27;getSharedPreferences&#x27; sources/com/example/ | head -20
+
+# SQL: raw queries with string concatenation
+grep -rn -E &#x27;rawQuery\(|execSQL\(&#x27; sources/com/example/ | head
+
+# Logging of sensitive data
+grep -rn -E &#x27;Log\.[divw]\(.*(password|token|key)&#x27; sources/com/example/ | head</code></pre>
+<p>Each pattern needs a read of the surrounding method before it becomes a finding. <code>setJavaScriptEnabled(true)</code> on a WebView that only loads a local asset is low risk; the same call on a WebView loading remote URLs with an <code>addJavascriptInterface</code> bridge is a real attack surface.</p>
+<h2>7. Native libraries</h2>
+<p>Apps with <code>.so</code> files hide logic from jadx. List them and decide whether deeper binary analysis is worth the time.</p>
+<pre><code class="language-bash"># Architectures and library names
+find apktool-out/lib -name &#x27;*.so&#x27; | head -20
+
+# Check which libraries are third party SDKs vs app code
+for f in $(find apktool-out/lib/arm64-v8a -name &#x27;*.so&#x27; | head); do
+  echo &quot;== $f&quot;; strings &quot;$f&quot; | grep -i -m3 -E &#x27;version|copyright&#x27;
+done</code></pre>
+<p>Hand interesting native libraries to the ghidra-basics skill for deeper review, especially ones referenced from JNI entry points in the Java code (<code>System.loadLibrary</code> calls and <code>native</code> method declarations).</p>
+<h2>8. Assemble findings</h2>
+<p>Record every finding with file, line, and the exact snippet. Static findings are hypotheses until dynamic testing confirms them.</p>
+<pre><code class="language-bash"># Example evidence line for the report
+grep -n &#x27;setJavaScriptEnabled(true)&#x27; \
+  jadx-out/sources/com/example/target/WebActivity.java</code></pre>
+<p>Typical static report items: hardcoded API keys, debuggable or backup flags, exported components without permission guards, cleartext traffic allowed, weak crypto modes, sensitive data in logs, and deep links into authenticated areas.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The APK is heavily obfuscated (ProGuard or R8 with full renaming).</li>
+<p>Class names become <code>a.b.c</code>. Follow the flow from the manifest entry points and string constants instead of class names.</p>
+<li>String encryption hides API keys from grep. Look for a decryption</li>
+<p>routine called at startup, or pivot to dynamic analysis with Frida to read the decrypted values at runtime.</p>
+<li>Native code holds the real logic. jadx shows only JNI stubs. Budget</li>
+<p>time for Ghidra on the <code>.so</code> files or the finding stays unconfirmed.</p>
+<li>Multi-dex apps (<code>classes2.dex</code>, <code>classes3.dex</code>). jadx handles these</li>
+<p>automatically, but a manual <code>dexdump</code> triage can miss them. Always confirm jadx processed every dex file.</p>
+<li>The app uses a commercial packer or protector. Decompilation output</li>
+<p>is garbage. Note the packer as a limitation and move to dynamic analysis; do not guess at findings from corrupted output.</p>
+<li>Resources are split across configuration APKs. If layouts look</li>
+<p>missing, you pulled only base.apk. Pull every split from the device.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>jadx fails or produces empty output: try <code>jadx --no-res</code> to skip</li>
+<p>resource decoding, update jadx to the latest release, or fall back to <code>dex2jar</code> plus a Java decompiler such as CFR.</p>
+<li>apktool fails to decode: the APK may use a newer resource format.</li>
+<p>Update apktool, or read the manifest with <code>aapt dump xmltree</code> instead of full decoding.</p>
+<li>Grep finds nothing because of string encryption or reflection-heavy</li>
+<p>code: switch to dynamic analysis (android-dynamic skill) and hook the crypto and network APIs at runtime.</p>
+<li>The app is a game or Flutter/React Native app: the Java layer is a</li>
+<p>thin wrapper. For Flutter, look at <code>libapp.so</code> and Dart snapshot analysis; for React Native, read the JS bundle in assets.</p>
+<li>You suspect a vulnerability in a third party SDK: isolate the SDK</li>
+<p>package, review its version against public advisories, and test the SDK&#x27;s behavior rather than auditing its entire codebase.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders and app owners see static analysis as APK extraction and decompilation, which leaves no trace on their servers, so detection is not the point. The defender view is about making static analysis unproductive: enable R8 full mode with obfuscation and string encryption for sensitive constants, never hardcode secrets (fetch them from the backend after authentication), set <code>allowBackup=&quot;false&quot;</code>, keep <code>debuggable</code> false in release builds, minimize exported components and guard each with a signature-level permission, enforce HTTPS with a strict network security config, and add root and tamper detection so static findings cannot be trivially confirmed at runtime. None of these stop a determined analyst; they raise the cost and shrink the findings list.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-312 (Cleartext Storage of Sensitive Information): hardcoded keys</li>
+<p>and tokens.</p>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm): ECB mode,</li>
+<p>MD5, DES.</p>
+<li>CWE-276 (Incorrect Default Permissions): exported components without</li>
+<p>guards.</p>
+<li>CWE-319 (Cleartext Transmission of Sensitive Information):</li>
+<p>usesCleartextTraffic.</p>
+<li>CWE-532 (Insertion of Sensitive Information into Log File).</li>
+<li>CWE-749 (Exposed Dangerous Method or Function): JavascriptInterface</li>
+<p>bridges.</p>
+<li>OWASP MASVS (Mobile Application Security Verification Standard):</li>
+<p>storage, crypto, and platform interaction requirements.</p>
+<li>OWASP MSTG (Mobile Security Testing Guide): Android static testing</li>
+<p>procedures.</p>
+<li>jadx documentation: https://github.com/skylot/jadx</li>
+<li>apktool documentation: https://apktool.org/documentation/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

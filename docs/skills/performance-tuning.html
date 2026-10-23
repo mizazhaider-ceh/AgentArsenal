@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: performance-tuning</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>performance-tuning</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when making a system faster on purpose: establishing a</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>hyperfine</td><td>1.18</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>perf</td><td>6.8</td></tr></tbody></table><p>Performance tuning without measurement is superstition. The discipline is: define the metric, measure the baseline, find the actual bottleneck, change one thing, re-measure, and keep the change only if the numbers improve. This skill covers that loop with hyperfine 1.18 for benchmarking, cProfile and Linux perf for profiling, bottleneck triage across CPU, memory, disk, and network, and the standard fixes: caching, pooling, query tuning, and concurrency. Scope is measurement-driven tuning; rewriting architecture is out of scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the metric and target: p99 latency under X, or Y requests per</li>
+<p>second at Z concurrent users.</p>
+<li>Benchmark the current state with hyperfine; save the numbers as the</li>
+<p>baseline.</p>
+<li>Profile under realistic load; find where time is actually spent.</li>
+<li>Classify the bottleneck: CPU, memory, disk I/O, network, or lock</li>
+<p>contention.</p>
+<li>Apply the cheapest fix for that bottleneck first (cache, index,</li>
+<p>pool, batch).</p>
+<li>Re-benchmark with the identical command and workload; keep only real</li>
+<p>wins.</p>
+<li>Load test at 2x expected peak to confirm headroom.</li>
+<li>Record the baseline, the change, and the delta so the next person</li>
+<p>does not re-tune blindly.</p>
+</ol>
+<h2>1. Benchmarking with hyperfine</h2>
+<pre><code class="language-bash"># Install (or cargo install hyperfine)
+sudo apt install -y hyperfine
+
+# Baseline: 10 warmup runs, 30 measured runs, exported for later
+hyperfine --warmup 10 --runs 30 \
+  --export-json /tmp/baseline.json \
+  &#x27;curl -s -o /dev/null http://127.0.0.1:8080/api/users&#x27;
+
+# Compare before/after on the same machine, same load
+hyperfine --warmup 5 --runs 20 \
+  --export-json /tmp/after.json \
+  &#x27;curl -s -o /dev/null http://127.0.0.1:8080/api/users&#x27;
+
+# Statistical comparison
+hyperfine --warmup 0 --runs 1 &#x27;true&#x27;  # placeholder; use the compare script:
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import json
+b = json.load(open(&#x27;/tmp/baseline.json&#x27;))[&#x27;results&#x27;][0]
+a = json.load(open(&#x27;/tmp/after.json&#x27;))[&#x27;results&#x27;][0]
+print(f&quot;before: {b[&#x27;mean&#x27;]*1000:.1f}ms  after: {a[&#x27;mean&#x27;]*1000:.1f}ms&quot;)
+print(f&quot;delta: {(a[&#x27;mean&#x27;]/b[&#x27;mean&#x27;]-1)*100:+.1f}%&quot;)
+EOF</code></pre>
+<p>Benchmark rules: same machine, same background load, multiple runs, warmup included, and never benchmark on a laptop on battery with the fan screaming.</p>
+<h2>2. Profiling Python with cProfile</h2>
+<pre><code class="language-bash"># Profile a script, sort by cumulative time
+python3 -m cProfile -s cumulative app.py 2&gt;&amp;1 | head -30
+
+# Save stats and explore the hot callers
+python3 -m cProfile -o /tmp/prof.out app.py
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import pstats
+p = pstats.Stats(&#x27;/tmp/prof.out&#x27;)
+p.sort_stats(&#x27;cumulative&#x27;).print_stats(15)
+p.sort_stats(&#x27;tottime&#x27;).print_stats(15)   # time IN the function itself
+EOF</code></pre>
+<p>Read it right: <code>tottime</code> shows where CPU burns (optimize these), <code>cumtime</code> shows the call path (understand these). A function with high cumtime but low tottime is a dispatcher; the cost is in its children.</p>
+<pre><code class="language-python"># Targeted timing without a full profiler
+import time
+from contextlib import contextmanager
+
+@contextmanager
+def timer(label):
+    t0 = time.perf_counter()
+    yield
+    print(f&quot;{label}: {(time.perf_counter()-t0)*1000:.1f}ms&quot;)
+
+with timer(&quot;db query&quot;):
+    rows = db.execute(&quot;SELECT ...&quot;)</code></pre>
+<h2>3. Linux: find the bottleneck layer</h2>
+<pre><code class="language-bash"># CPU saturated? (watch %us + %sy; &gt;80% sustained is hot)
+top -bn1 | head -15
+mpstat -P ALL 1 3
+
+# Which process burns CPU, and is it user or iowait?
+pidstat -u 1 3 | tail -10
+
+# Memory pressure: si/so (swap in/out) should be ~0
+vmstat 1 5
+free -h
+
+# Disk I/O: await (ms per op) and %util (100% = saturated device)
+iostat -x 1 3 | grep -E &#x27;Device|sd|nvme&#x27;
+
+# Network: retransmits, buffer errors
+ss -s
+cat /proc/net/snmp | grep -i retrans</code></pre>
+<p>Decision tree: CPU hot -&gt; profile the code. iowait high -&gt; disk or swapping; check iostat await and vmstat si/so. Network retransmits -&gt; congestion or loss, not code. Load average high but CPU idle -&gt; tasks blocked on I/O or locks.</p>
+<pre><code class="language-bash"># Flame graph via perf for native/CPU-bound code (needs debug symbols
+# for best output; sample 30s of the target PID)
+sudo perf record -F 99 -p 1234 -g -- sleep 30
+sudo perf script | head -5</code></pre>
+<h2>4. Database query tuning (the usual suspect)</h2>
+<pre><code class="language-bash"># Postgres: find the slowest queries
+sudo -u postgres psql -c &quot;
+SELECT query, calls, mean_exec_time, rows
+FROM pg_stat_statements
+ORDER BY mean_exec_time DESC LIMIT 10;&quot;
+
+# Explain the bad one: look for Seq Scan on big tables
+sudo -u postgres psql -c &quot;EXPLAIN (ANALYZE, BUFFERS)
+SELECT * FROM orders WHERE user_id = 42 ORDER BY created_at DESC LIMIT 20;&quot;</code></pre>
+<p>Fixes in order: add the missing index (<code>CREATE INDEX CONCURRENTLY</code>), fix N+1 queries (one JOIN or batched fetch instead of a query per row), select only needed columns, add pagination, cache the hot read. Measure with EXPLAIN ANALYZE before and after; &quot;it feels faster&quot; is not a result.</p>
+<h2>5. Caching: the highest-leverage fix</h2>
+<pre><code class="language-bash"># Cache the hot read in Redis with a TTL (see redis-basics)
+redis-cli SET user:42:profile &#x27;{&quot;name&quot;:&quot;Izaz&quot;}&#x27; EX 300
+
+# Measure hit rate over a minute
+redis-cli INFO stats | grep -E &#x27;keyspace_hits|keyspace_misses&#x27;</code></pre>
+<p>Cache rules: cache reads, not writes; every entry gets a TTL; cache aside (app checks cache, falls back to DB, populates cache) is the default pattern; invalidate on write or accept staleness explicitly. Watch for the thundering herd: use short jittered TTLs or request coalescing when a hot key expires.</p>
+<h2>6. Concurrency and pooling</h2>
+<pre><code class="language-bash"># How many workers? Start with 2x CPU cores for sync workers, tune by load test
+nproc
+# gunicorn example: sync workers
+gunicorn app:server --workers 5 --threads 2 --timeout 30
+
+# Database pool sizing: small is usually right (pool = cores * 2 + spindles)
+# Check for pool exhaustion in the app metrics or logs:
+grep -i &#x27;pool.*exhaust\|timeout.*acquir&#x27; /var/log/app.log | tail -5</code></pre>
+<p>Symptoms: latency climbs with concurrency but CPU is idle -&gt; pool or lock contention; add pool metrics (checked-out count, wait time) before raising limits. Async helps I/O-bound workloads; it does not make CPU work faster.</p>
+<h2>7. Load testing for headroom</h2>
+<pre><code class="language-bash"># vegeta: constant-rate load (install from GitHub releases)
+echo &quot;GET http://127.0.0.1:8080/api/users&quot; | \
+  vegeta attack -rate=200 -duration=60s | vegeta report
+
+# Watch the server during the run (second terminal)
+vmstat 1 | awk &#x27;{print $13, $14}&#x27;   # us, sy CPU columns
+ss -s | head -5                      # socket pressure</code></pre>
+<p>Read the report: p50/p95/p99 latencies, success rate, and where the curve bends (the knee is your real capacity). Test at 2x expected peak; if the knee is below peak, you do not have headroom.</p>
+<h2>8. Quick wins checklist</h2>
+<ul>
+<li>Enable compression (gzip/br) on text responses at the reverse proxy.</li>
+<li>Set far-future cache headers on static assets with fingerprinted</li>
+<p>names.</p>
+<li>Turn on HTTP keep-alive between proxy and backends (see</li>
+<p>nginx-hardening).</p>
+<li>Batch N+1 queries; add the obvious missing index.</li>
+<li>Move work out of the request path: queues for email, thumbnails,</li>
+<p>webhooks.</p>
+<li>Raise obviously tiny defaults: DB pool size, worker count, file</li>
+<p>descriptor limits (<code>ulimit -n</code>).</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>Optimization makes the benchmark faster but production slower: the</li>
+<p>benchmark did not match production (different data size, concurrency, or cache warmth). Benchmark with production-shaped data.</p>
+<li>p99 improved, p50 unchanged: you fixed a tail problem (GC pause, lock</li>
+<p>convoy); confirm the tail was the actual complaint.</p>
+<li>Caching made stale data visible: TTL too long or invalidation</li>
+<p>missing; shorten TTL or invalidate on write, and document the staleness contract.</p>
+<li>More workers made it slower: contention moved to the DB or a lock;</li>
+<p>workers are not free, profile again at the new shape.</p>
+<li>hyperfine shows huge variance: background process interference;</li>
+<p>pin CPUs (<code>taskset</code>), close browsers, rerun.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Profile says &quot;everything is slow, nothing is hot&quot;: the bottleneck is</li>
+<p>outside the profiled code (network, DNS, TLS handshake per request); measure with curl timing breakdown (<code>curl -w</code> with time_namelookup, time_connect, time_appconnect, time_starttransfer).</p>
+<li>Latency spikes correlate with deploys: check for cold caches and JIT</li>
+<p>warmup; warm the cache and let the process settle before measuring.</p>
+<li>Memory grows unbounded: take heap snapshots over time (Python:</li>
+<p>tracemalloc) and diff; fix the leak, do not raise the limit.</p>
+<li>Still slow after the obvious fixes: question the workload itself;</li>
+<p>can the feature do less (smaller pages, fewer joins, deferred work)?</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Performance tooling doubles as reconnaissance: profiling and load testing look like attacks from the outside. Detect misuse and misconfig with:</p>
+<pre><code class="language-bash"># Unexpected load generators on the host
+ps aux | grep -E &#x27;vegeta|wrk|ab |locust|hyperfine&#x27; | grep -v grep
+
+# A &quot;benchmark&quot; that is actually a DoS: connection floods in logs
+ss -s | head -3
+awk &#x27;$9 ~ /^5/ {print $1}&#x27; /var/log/nginx/access.log \
+  | sort | uniq -c | sort -rn | head
+
+# perf left recording (overhead + info leak via symbols)
+ps aux | grep &#x27;perf record&#x27; | grep -v grep</code></pre>
+<p>Defensive rules: run load tests only against staging or with explicit permission and a kill switch; never benchmark production at peak; restrict <code>perf</code> to privileged users (<code>kernel.perf_event_paranoid=2</code> or higher); treat sudden latency or 5xx spikes during &quot;testing&quot; as a possible attack until proven otherwise. Misconfig signal: caches with no TTL, pools sized by guesswork, and no baseline recorded anywhere.</p>
+<h2>Key references</h2>
+<ul>
+<li>hyperfine 1.18: https://github.com/sharkdp/hyperfine</li>
+<li>Python profilers docs: https://docs.python.org/3/library/profile.html</li>
+<li>Linux perf wiki: https://perf.wiki.kernel.org/</li>
+<li>Brendan Gregg&#x27;s USE method: https://www.brendangregg.com/usemethod.html</li>
+<li>vegeta: https://github.com/tsenart/vegeta</li>
+<li>CWE-400 (Uncontrolled Resource Consumption): missing limits that</li>
+<p>tuning should add.</p>
+<li>CWE-770 (Allocation Without Limits): unbounded pools and queues.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

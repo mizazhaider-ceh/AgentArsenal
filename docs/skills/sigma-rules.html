@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: sigma-rules</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>sigma-rules</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing, converting, or testing Sigma detection rules</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="siem-detections.html">siem-detections</a> <a href="incident-response.html">incident-response</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Sigma</td><td>2.0</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Sigma is an open, vendor-neutral format for writing detection rules. You write the logic once in YAML, then convert it to Splunk SPL, Elastic queries, Microsoft Sentinel KQL, and other backends. This skill covers writing correct Sigma rules, using the logsource taxonomy, testing rules locally, and converting them for deployment. It is defensive work for your own or a client-authorized detection program.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Pick one MITRE technique and one log source, and write the smallest</li>
+<p>rule that detects it.</p>
+<li>Fill in the logsource taxonomy (product, category, service) so the</li>
+<p>rule routes to the right backend query.</p>
+<li>Write the detection selection with explicit field names and modifiers,</li>
+<p>then a condition that combines selections.</p>
+<li>Add metadata: title, id (UUID), status, level, tags with attack IDs,</li>
+<p>author, date, and a false positives section.</p>
+<li>Validate the YAML and the rule schema with the Sigma CLI.</li>
+<li>Convert to each target backend and run the output against real data.</li>
+<li>Test with 30 days of history, tune, then commit the rule to the</li>
+<p>detection repo with a review.</p>
+</ol>
+<h2>1. Rule anatomy</h2>
+<p>Every Sigma rule has the same skeleton. Learn it once.</p>
+<pre><code class="language-yaml">title: Suspicious Rundll32 Execution Without CPL
+id: 7c9e8a2b-4f1d-4a3e-9b5c-2d6f7a8b9c0d
+status: test
+description: Detects rundll32.exe executed without a .cpl argument, which
+  deviates from common legitimate use and matches T1218.011 proxy execution.
+author: SOC Detection Team
+date: 2026/10/23
+modified: 2026/10/23
+references:
+  - https://attack.mitre.org/techniques/T1218/011/
+tags:
+  - attack.execution
+  - attack.t1218.011
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: &#x27;\rundll32.exe&#x27;
+  filter:
+    CommandLine|contains: &#x27;.cpl&#x27;
+  condition: selection and not filter
+falsepositives:
+  - Legitimate software installers that call rundll32 directly
+  - Administrative scripts using rundll32 for control panel items
+level: medium</code></pre>
+<p>Required habits: a stable UUID <code>id</code>, a <code>status</code> of experimental, test, or stable, and a <code>level</code> of informational, low, medium, high, or critical.</p>
+<h2>2. Logsource taxonomy</h2>
+<p>The logsource tells converters which backend index and sourcetype to query. Common values:</p>
+<pre><code class="language-yaml"># Windows process creation (Sysmon Event ID 1 or Security 4688)
+logsource:
+  product: windows
+  category: process_creation
+
+# Windows registry events (Sysmon 12, 13, 14)
+logsource:
+  product: windows
+  category: registry_event
+
+# Windows network connections (Sysmon 3, firewall logs)
+logsource:
+  product: windows
+  category: network_connection
+
+# Web proxy logs
+logsource:
+  category: proxy
+
+# Linux auditd
+logsource:
+  product: linux
+  category: process_creation
+  service: auditd
+
+# Specific Windows service log
+logsource:
+  product: windows
+  service: security</code></pre>
+<p>If the logsource is wrong, the converter emits a query against the wrong index and the rule silently matches nothing. Verify the mapping for each backend you deploy to.</p>
+<h2>3. Detection selections</h2>
+<p>The <code>detection</code> block holds named selections and one <code>condition</code>.</p>
+<pre><code class="language-yaml">detection:
+  selection_img:
+    Image|endswith:
+      - &#x27;\powershell.exe&#x27;
+      - &#x27;\pwsh.exe&#x27;
+  selection_cli:
+    CommandLine|contains:
+      - &#x27; -enc &#x27;
+      - &#x27; -EncodedCommand &#x27;
+      - &#x27;FromBase64String&#x27;
+      - &#x27;IEX&#x27;
+  filter_admin:
+    User|contains: &#x27;svc-backup&#x27;
+  condition: selection_img and selection_cli and not filter_admin</code></pre>
+<p>Modifiers you will use constantly:</p>
+<p>| Modifier | Meaning | Example | |---|---|---| | <code>\|contains</code> | substring match | <code>CommandLine\|contains: &#x27;mimikatz&#x27;</code> | | <code>\|startswith</code> | prefix match | <code>Image\|startswith: &#x27;C:\Windows\System32\&#x27;</code> | | <code>\|endswith</code> | suffix match | <code>Image\|endswith: &#x27;\rundll32.exe&#x27;</code> | | <code>\|re</code> | regex match | <code>CommandLine\|re: &#x27;sleep\s+\d+&#x27;</code> | | <code>\|windash</code> | match <code>-</code>, <code>/</code>, <code>--</code> variants | <code>CommandLine\|windash: &#x27;-enc&#x27;</code> | | <code>\|cidr</code> | IP in range | <code>DestinationIp\|cidr: &#x27;10.0.0.0/8&#x27;</code> | | <code>\|base64</code> | match base64 of value | <code>CommandLine\|base64: &#x27;powershell&#x27;</code> | | <code>\|base64offset</code> | base64 with offsets | for encoded payloads |</p>
+<p>Value lists are ORed automatically. Selections combined with <code>and</code> narrow; <code>1 of selection_*</code> means any one matches; <code>all of selection_*</code> means every selection must match.</p>
+<h2>4. Conditions and aggregations</h2>
+<p>Conditions support boolean logic plus aggregation functions for threshold rules.</p>
+<pre><code class="language-yaml">detection:
+  selection:
+    EventID: 4625
+  timeframe: 10m
+  condition: selection | count(TargetUserName) by SourceIp &gt; 20</code></pre>
+<p>More examples:</p>
+<pre><code class="language-yaml"># Near: two selections within a time window
+condition: selection_a and selection_b | near selection_a selection_b within 5m
+
+# Count distinct values
+detection:
+  selection:
+    EventID: 4625
+  timeframe: 1h
+  condition: selection | count(TargetUserName) by IpAddress &gt; 10
+
+# Sum a numeric field
+condition: selection | sum(bytes_out) by src_ip &gt; 1073741824</code></pre>
+<p>Keep thresholds in the rule metadata or a comment so tuners know why the number was chosen.</p>
+<h2>5. Correlations (Sigma 2.0)</h2>
+<p>Sigma 2.0 adds a <code>correlation</code> block for multi-event rules.</p>
+<pre><code class="language-yaml">title: Possible Lateral Movement Chain
+id: 1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d
+status: experimental
+correlation:
+  type: event_count
+  rules:
+    - d3c4e5f6-7a8b-4c5d-9e0f-1a2b3c4d5e6f  # SMB lateral movement rule id
+    - e4f5a6b7-8c9d-4e5f-0a1b-2c3d4e5f6a7b  # new service creation rule id
+  group-by:
+    - ComputerName
+  timespan: 30m
+  condition:
+    gte: 2
+level: high</code></pre>
+<p>Correlation types: <code>event_count</code>, <code>value_count</code>, <code>temporal</code> (ordered sequences), and <code>temporal_ordered</code>. Use them for chains like initial access followed by persistence on the same host.</p>
+<h2>6. Testing with the Sigma CLI</h2>
+<p>Install the Sigma toolchain (Python 3.12, stdlib plus the sigma packages) and validate before converting.</p>
+<pre><code class="language-bash"># Validate rule syntax and schema
+sigma check rules/windows/process_creation/proc_creation_win_rundll32_suspicious.yml
+
+# List supported backends and pipelines
+sigma list-backends
+sigma list-pipelines
+
+# Convert to Splunk SPL
+sigma convert -t splunk \
+  -p splunk_windows \
+  rules/windows/process_creation/proc_creation_win_rundll32_suspicious.yml
+
+# Convert to Elastic (Lucene / ES|QL)
+sigma convert -t elasticsearch \
+  -p ecs_windows \
+  rules/windows/process_creation/proc_creation_win_rundll32_suspicious.yml
+
+# Convert to Microsoft Sentinel (KQL)
+sigma convert -t microsoft365defender \
+  rules/windows/process_creation/proc_creation_win_rundll32_suspicious.yml</code></pre>
+<p>Always read the generated query. Converters are good but not perfect: check that wildcards landed in the right place and that field names match your normalized schema.</p>
+<h2>7. Writing high-signal rules</h2>
+<p>Patterns that separate good rules from noisy ones:</p>
+<ul>
+<li>Anchor on rare combinations, not single common events. Process</li>
+<p>creation alone is noise; process creation plus an encoded command line plus a first-seen hash is a signal.</p>
+<li>Prefer <code>category: process_creation</code> over raw Security 4688 when</li>
+<p>Sysmon is deployed, because Sysmon gives parent process and hashes.</p>
+<li>Use <code>OriginalFileName</code> from Sysmon to catch renamed LOLBins:</li>
+<p><code>OriginalFileName: &#x27;RUNDLL32.EXE&#x27;</code> catches the renamed copy.</p>
+<li>For logon rules, filter service and computer accounts (<code>$</code> suffix)</li>
+<p>unless you are specifically hunting them.</p>
+<li>Put every exclusion in a named <code>filter_*</code> selection with a comment</li>
+<p>explaining the business reason.</p>
+</ul>
+<p>Example: encoded PowerShell (T1059.001).</p>
+<pre><code class="language-yaml">title: Encoded PowerShell Command Line
+id: 9a8b7c6d-5e4f-3a2b-1c0d-9e8f7a6b5c4d
+status: stable
+description: Detects PowerShell started with an encoded command argument,
+  a common obfuscation technique.
+author: SOC Detection Team
+date: 2026/10/23
+tags:
+  - attack.execution
+  - attack.t1059.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_img:
+    Image|endswith:
+      - &#x27;\powershell.exe&#x27;
+      - &#x27;\pwsh.exe&#x27;
+  selection_cli:
+    CommandLine|contains|windash:
+      - &#x27;enc&#x27;
+      - &#x27;EncodedCommand&#x27;
+  filter_local_admin_scripts:
+    # Approved admin tooling, ticket SOC-4821, review 2027-01-15
+    ParentImage|endswith: &#x27;\admin-tool.exe&#x27;
+  condition: selection_img and selection_cli and not filter_local_admin_scripts
+falsepositives:
+  - Admin automation that encodes commands for quoting reasons
+level: high</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Field name mismatch: your SIEM calls it <code>CommandLine</code> but the</li>
+<p>pipeline maps to <code>process.command_line</code>. Test the converted query, not just the YAML.</p>
+<li>Case sensitivity in <code>|contains</code> depends on the backend. Splunk is</li>
+<p>case-insensitive by default; Elastic keyword fields are not. Add both cases or lowercase at ingest.</p>
+<li>Backslash escaping in YAML: single-quoted strings keep backslashes</li>
+<p>literal, double-quoted strings interpret them. Prefer single quotes for Windows paths.</p>
+<li>Very long value lists slow down some backends. Split lists over 50</li>
+<p>values into multiple selections or a lookup.</p>
+<li><code>timeframe</code> aggregation rules need the backend to support the</li>
+<p>aggregation. Verify the converted Splunk uses <code>bin</code> and <code>stats</code> correctly.</p>
+<li>Rule <code>id</code> collisions when copying rules: always generate a fresh UUID</li>
+<p>for a new rule, never reuse one from a copied file.</p>
+<li>Sigma 1.x rules use <code>aggregation</code> keys that changed in 2.0. Check the</li>
+<p>spec version at the top of any rule you import.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The converted query returns nothing: check the logsource mapping,</li>
+<p>then run the backend query by hand with the filters removed one at a time to find the failing clause.</p>
+<li>The converter does not support your backend: write the backend query</li>
+<p>manually from the Sigma logic and note the gap; consider contributing the backend mapping upstream.</p>
+<li>Too many false positives after deployment: demote <code>status</code> back to</li>
+<p>test, add filters with ticket references, and re-validate before promoting to stable again.</p>
+<li>You need a rule for a log source with no Sigma taxonomy entry: use</li>
+<p>the closest generic <code>category</code> and document the mapping in the rule comments so the next converter run does not silently drop it.</p>
+<li>Conflicting community rules: keep upstream SigmaHQ rules unmodified</li>
+<p>in a vendor directory and put your overrides in a local directory so updates do not clobber your tuning.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Sigma is a force multiplier for defenders, and attackers know the popular public rules, so assume evasion:</p>
+<ul>
+<li>Attackers obfuscate command lines to dodge <code>|contains</code> matches.</li>
+<p>Pair string rules with behavior rules (parent-child anomalies, first- seen hashes) that do not depend on exact strings.</p>
+<li>Attackers live off the land with signed binaries that public Sigma</li>
+<p>rules allowlist. Write environment-specific rules for the LOLBins your users actually run.</p>
+<li>Public Sigma rules are tuned for generality and can be noisy in your</li>
+<p>environment. Fork, add local filters, and track your fork&#x27;s precision separately from upstream.</p>
+<li>Tune by measuring: keep a per-rule true positive log, review monthly,</li>
+<p>and retire rules that never fire true positives. A dead rule is maintenance debt, not coverage.</p>
+<li>Version every rule in git. When an incident review asks &quot;did we have</li>
+<p>a rule for this&quot;, the git history is the answer.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>Sigma specification 2.0: https://github.com/SigmaHQ/sigma-specification</li>
+<li>SigmaHQ rule repository: https://github.com/SigmaHQ/sigma</li>
+<li>pySigma documentation: https://github.com/pySigma/pySigma</li>
+<li>MITRE ATT&amp;CK T1218.011 (Rundll32), T1059.001 (PowerShell),</li>
+<p>T1110 (Brute Force), T1070.001 (Clear Windows Event Logs).</p>
+<li>Sigma CLI (pysigma) usage: https://github.com/pySigma/pySigma-cli</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

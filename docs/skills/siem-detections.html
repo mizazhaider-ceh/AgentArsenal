@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: siem-detections</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>siem-detections</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when building, tuning, or operating SIEM detections on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Splunk</td><td>9.x</td></tr><tr><td>Sysmon</td><td>15.x</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A SIEM (Security Information and Event Management) platform collects logs from across the environment, normalizes them, and fires alerts when rule logic matches attacker behavior. This skill covers the defensive detection engineering workflow: choosing log sources, writing reliable detection logic in Splunk SPL and Elastic query language, correlating events, tuning out false positives, and mapping coverage to MITRE ATT&amp;CK. It is blue-team only work. Run it against your own infrastructure, a client environment you are authorized to monitor, or a lab.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory the log sources you actually receive (Windows events, Sysmon,</li>
+<p>firewall, proxy, EDR, authentication logs) and note what is missing.</p>
+<li>Normalize field names so one rule works across sources (for example</li>
+<p>always use <code>user</code>, <code>src_ip</code>, <code>dest_ip</code>, <code>process_name</code>).</p>
+<li>Pick one MITRE technique and write a single precise detection for it,</li>
+<p>starting with a known-good IOC or behavior pattern.</p>
+<li>Test the rule against 30 days of historical data before it goes live.</li>
+<li>Set severity, response SLA, and a runbook link on every alert.</li>
+<li>Route alerts to a queue, assign an owner, and track true positive rate.</li>
+<li>Tune weekly: suppress known-good patterns, add allowlists with</li>
+<p>expiration dates, never delete a rule silently.</p>
+<li>Map every rule to MITRE ATT&amp;CK and review coverage gaps quarterly.</li>
+</ol>
+<h2>1. Log source inventory</h2>
+<p>A detection is only as good as its data. Before writing rules, list every source, its volume, and its gaps.</p>
+<pre><code class="language-bash"># Splunk: list all indexes and their event counts over the last 24 hours
+index=* | stats count by index | sort -count
+
+# Check the newest and oldest event per index to spot ingestion gaps
+| tstats max(_time) as newest min(_time) as oldest where index=* by index
+| eval gap_hours=round((now()-newest)/3600,1) | sort - gap_hours
+
+# Elastic: check data streams and document counts
+GET /_cat/indices/*winlogbeat*,*sysmon*?v&amp;s=index</code></pre>
+<p>Minimum viable log set for a Windows-heavy shop:</p>
+<ul>
+<li>Windows Security event log (4624 logon, 4625 failed logon, 4672 special</li>
+<p>privileges, 4688 process creation, 4720 account creation, 4732 group membership change)</p>
+<li>Sysmon with a tuned config (process create, network connect, file create,</li>
+<p>registry, DNS query, process tamper)</p>
+<li>Firewall and proxy logs for egress visibility</li>
+<li>Authentication logs from the identity provider (Entra ID sign-in logs,</li>
+<p>VPN, RDP gateway)</p>
+<li>EDR telemetry if you have it</li>
+</ul>
+<p>If Sysmon Event ID 1 (process creation) is missing, you cannot reliably detect living-off-the-land binaries. Fix the log source before writing the rule.</p>
+<h2>2. Normalization</h2>
+<p>Rules break when field names differ per source. Normalize at ingest or in the rule with aliases. A common convention:</p>
+<p>| Canonical field | Splunk source field | Elastic ECS field | |---|---|---| | user | user / Account_Name | user.name | | src_ip | src_ip / IpAddress | source.ip | | dest_ip | dest_ip | destination.ip | | process_name | process / Image | process.name | | parent_process | ParentImage | process.parent.name | | command_line | CommandLine | process.command_line |</p>
+<pre><code class="language-bash"># Splunk: normalize inline with eval before the detection logic
+index=wineventlog EventCode=4688
+| eval process_name=lower(mvindex(split(New_Process_Name,&quot;\\&quot;),-1))
+| eval command_line=Process_Command_Line, user=lower(TargetUserName)</code></pre>
+<p>Keep a field mapping document next to the rule repo so every analyst knows which canonical name to use.</p>
+<h2>3. Writing a Splunk SPL detection</h2>
+<p>Anatomy of a good rule: narrow filter, explicit exclusions, aggregation, and a severity assignment. Example: detect suspicious use of rundll32 (MITRE T1218.011).</p>
+<pre><code class="language-bash">index=wineventlog EventCode=4688
+| eval process_name=lower(mvindex(split(New_Process_Name,&quot;\\&quot;),-1))
+| where process_name=&quot;rundll32.exe&quot;
+| eval cmd=lower(Process_Command_Line)
+| where NOT match(cmd,&quot;^\&quot;?c:\\\\windows\\\\(sysnative|system32)\\\\rundll32\.exe\&quot;?\\s+\\S+\\.cpl&quot;)
+| where NOT match(cmd,&quot;javascript:&quot;)=0
+| stats count values(cmd) as command_lines values(ComputerName) as hosts by user
+| where count &lt; 50
+| eval severity=&quot;medium&quot;, mitre=&quot;T1218.011&quot;, rule=&quot;rundll32_suspicious_use&quot;</code></pre>
+<p>Example: impossible travel on VPN logons.</p>
+<pre><code class="language-bash">index=vpn action=login success=true
+| iplocation src_ip
+| table user, src_ip, Country, _time
+| sort 0 user, _time
+| streamstats current=f last(Country) as prev_country last(_time) as prev_time by user
+| where Country!=prev_country AND (_time - prev_time) &lt; 3600
+| eval severity=&quot;high&quot;, mitre=&quot;T1078&quot;, rule=&quot;impossible_travel&quot;</code></pre>
+<p>Example: mass 4625 failed logons (password spraying, T1110).</p>
+<pre><code class="language-bash">index=wineventlog EventCode=4625
+| bin _time span=10m
+| stats dc(TargetUserName) as unique_users count as attempts by _time, src_ip
+| where unique_users &gt; 10 AND attempts &gt; 20
+| eval severity=&quot;high&quot;, mitre=&quot;T1110.001&quot;, rule=&quot;password_spray&quot;</code></pre>
+<h2>4. Writing an Elastic detection</h2>
+<p>Elastic Security rules use KQL or EQL. The same rundll32 idea in EQL:</p>
+<pre><code class="language-eql">process where event.type == &quot;start&quot; and
+  process.name == &quot;rundll32.exe&quot; and
+  not process.command_line regex~ &quot;&quot;&quot;(?i)^&quot;?(C:\\Windows\\(System32|Sysnative)\\)?rundll32\.exe&quot;?\s+\S+\.cpl&quot;&quot;&quot;</code></pre>
+<p>Threshold rule for brute force in KQL (run every 5 minutes, look back 15 minutes):</p>
+<pre><code class="language-kql">event.code: &quot;4625&quot; and winlog.event_data.IpAddress: *</code></pre>
+<p>Then configure the threshold: group by <code>winlog.event_data.IpAddress</code>, alert when count is greater than 20 and cardinality of <code>winlog.event_data.TargetUserName</code> is greater than 10.</p>
+<p>Sequence rule for a classic intrusion chain (EQL):</p>
+<pre><code class="language-eql">sequence by host.id with maxspan=30m
+  [process where event.type == &quot;start&quot; and process.name == &quot;powershell.exe&quot;
+    and process.command_line like~ &quot;* -enc *&quot;]
+  [file where event.type == &quot;creation&quot; and file.extension == &quot;ps1&quot;]
+  [network where event.type == &quot;connection&quot; and destination.port == 443
+    and not destination.ip like~ &quot;10.*&quot;]</code></pre>
+<h2>5. Correlation and thresholds</h2>
+<p>Single events are noisy. Correlate:</p>
+<ul>
+<li>Join authentication logs with asset inventory so alerts on servers</li>
+<p>score higher than on workstations.</p>
+<li>Require two weak signals before paging: for example a new external IP</li>
+<p>in proxy logs AND a first-seen process hash on the same host within one hour.</p>
+<li>Use risk-based alerting: add points per finding, alert when the score</li>
+<p>crosses a threshold instead of firing on each rule.</p>
+</ul>
+<pre><code class="language-bash"># Splunk: risk-based example, sum risk scores per user over 24h
+index=risk_events
+| bin _time span=1d
+| stats sum(risk_score) as total_risk values(rule) as rules by user, _time
+| where total_risk &gt; 100
+| eval severity=&quot;high&quot;, rule=&quot;risk_threshold_breach&quot;</code></pre>
+<h2>6. Alert tuning</h2>
+<p>Every alert gets a disposition: true positive, benign true positive, false positive. Track the false positive rate per rule weekly.</p>
+<pre><code class="language-bash"># Measure precision per rule over the last 7 days
+index=alert_triage
+| stats count(eval(disposition=&quot;true_positive&quot;)) as tp
+        count(eval(disposition=&quot;false_positive&quot;)) as fp by rule
+| eval precision=round(tp/(tp+fp),2) | sort precision</code></pre>
+<p>Tuning order of operations:</p>
+<ol>
+<li>Fix the logic (wrong field, wrong event code) before suppressing.</li>
+<li>Add narrow exclusions with a comment and a ticket number, for example</li>
+<p>exclude the backup service account by name, not by wildcard.</p>
+<li>Put time-bound suppressions on noisy-but-legit admin activity, and let</li>
+<p>them expire.</p>
+<li>If precision stays below 0.2 after two tuning rounds, disable the rule</li>
+<p>and rewrite it rather than muting it forever.</p>
+</ol>
+<p>Never suppress by source IP alone. Attackers pivot to new IPs; suppress by the combination of user, process, and behavior.</p>
+<h2>7. Detection coverage mapping</h2>
+<p>Map every rule to MITRE ATT&amp;CK and plot the matrix. The goal is to see which techniques have zero coverage.</p>
+<pre><code class="language-bash"># Export rule to technique mapping and count coverage per tactic
+index=detection_inventory
+| stats dc(rule) as rule_count by tactic, technique
+| sort tactic, technique</code></pre>
+<p>Prioritize new rules by:</p>
+<ul>
+<li>Techniques your threat model says are likely (phishing, valid accounts,</li>
+<p>ransomware behaviors).</p>
+<li>Techniques with zero coverage in Initial Access, Execution, and Impact.</li>
+<li>Techniques where you already have the log source but no rule.</li>
+</ul>
+<p>Review the map quarterly. Archive rules for techniques that no longer apply and note why.</p>
+<h2>8. Validating a rule safely</h2>
+<p>Never ship an untested rule to the paging queue.</p>
+<pre><code class="language-bash"># Splunk: backtest over 30 days, compare alert volume to capacity
+index=wineventlog EventCode=4688 earliest=-30d@d latest=@d
+| eval process_name=lower(mvindex(split(New_Process_Name,&quot;\\&quot;),-1))
+| where process_name=&quot;rundll32.exe&quot;
+| bin _time span=1d | stats count by _time</code></pre>
+<p>Steps:</p>
+<ol>
+<li>Run the logic over 30 days of history and record daily alert volume.</li>
+<li>Manually review a sample of hits and label them.</li>
+<li>Deploy in shadow mode (log only, no ticket) for one week.</li>
+<li>Enable ticketing only when precision is acceptable.</li>
+</ol>
+<h2>Edge cases</h2>
+<ul>
+<li>Clock skew between forwarders makes correlation windows wrong. Monitor</li>
+<p>forwarder time drift and alert when any host is more than 5 minutes off.</p>
+<li>Sysmon config differences across hosts cause blind spots. Version your</li>
+<p>Sysmon config in git and audit deployed configs monthly.</p>
+<li>Log volume spikes during incidents can drop events. Set an alert on</li>
+<p>ingestion drop per source, not just on total volume.</p>
+<li>Case sensitivity: Windows process names vary in case. Always lowercase</li>
+<p>before comparing.</p>
+<li>NAT hides the true source IP in firewall logs. Correlate with VPN or</li>
+<p>proxy logs that record the real client address.</p>
+<li>Detections that join on hostname break when machines are renamed or</li>
+<p>reimaged. Join on a stable host ID where the platform provides one.</p>
+<li>Time zones: store and compare in UTC only. A rule that mixes local and</li>
+<p>UTC timestamps will miss or double count.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A rule fires hundreds of times an hour: check for a logic error first</li>
+<p>(missing exclusion, wrong event code), then look for a real incident, then throttle with a per-host suppression while you investigate.</p>
+<li>No telemetry for a technique you must cover: add the log source (deploy</li>
+<p>Sysmon, enable PowerShell Script Block Logging 4104, turn on DNS logging) instead of writing a weak proxy rule.</p>
+<li>Splunk search is too slow for the schedule: narrow the index and</li>
+<p>sourcetype, add an indexed field, or convert to a data model acceleration. As a last resort, lengthen the schedule and widen the lookback.</p>
+<li>Stakeholders ignore alerts: attach the MITRE technique, the affected</li>
+<p>asset value, and the last true positive date to every alert. Data beats nagging.</p>
+<li>You suspect the SIEM itself is tampered with: compare forwarder</li>
+<p>configs against git, check admin audit logs for rule changes, and verify log hashes if you ship to immutable storage.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>This is the defender&#x27;s own craft, so the &quot;attacker view&quot; here is how attackers evade these detections, and how to tune against evasion:</p>
+<ul>
+<li>Attackers rename LOLBins (copy rundll32.exe to svch0st.exe). Detect by</li>
+<p>image path plus original filename from Sysmon, or by parent-child process anomalies, not by name alone.</p>
+<li>Attackers clear logs (T1070.001, Event ID 1102). Alert on 1102 itself</li>
+<p>and on gaps in the event sequence per host.</p>
+<li>Attackers slow down password sprays to stay under thresholds. Add a</li>
+<p>second rule with a 24 hour window and a lower per-IP threshold, keyed on unique usernames.</p>
+<li>Attackers use valid accounts (T1078), which look like normal logons.</li>
+<p>Hunt for first-seen source IPs, unusual logon hours, and logon type changes per user.</p>
+<li>EQL and SPL logic that matches on full command lines can be evaded</li>
+<p>with argument obfuscation. Add a parallel rule on parent-child process pairs and on network behavior.</p>
+<li>Tune with attacker cost in mind: force them to be slower, quieter, or</li>
+<p>to use noisier techniques, then detect the new behavior.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1218.011 (Rundll32), T1110.001 (Password Guessing),</li>
+<p>T1078 (Valid Accounts), T1070.001 (Clear Windows Event Logs), T1059.001 (PowerShell), T1021 (Remote Services).</p>
+<li>Splunk Security Content (ESCU): detection research and SPL examples,</li>
+<p>https://research.splunk.com/</p>
+<li>Elastic detection rules repository:</li>
+<p>https://github.com/elastic/detection-rules</p>
+<li>Sigma rule format (convertible to SPL and Elastic):</li>
+<p>https://github.com/SigmaHQ/sigma</p>
+<li>MITRE ATT&amp;CK matrix: https://attack.mitre.org/</li>
+<li>SANS SEC555: SIEM with Tactical Analytics (course reference).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

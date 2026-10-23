@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bluetooth-le</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bluetooth-le</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when assessing Bluetooth Low Energy devices on authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>BlueZ</td><td>5.77</td></tr><tr><td>Wireshark</td><td>4.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Bluetooth Low Energy (BLE) is the radio in door locks, asset tags, medical sensors, and countless IoT gadgets. Many BLE devices trust any central that connects: they expose readable characteristics, accept writes without authentication, and leak identifiers in advertisements. This skill covers authorized BLE assessment with BlueZ on Linux: verifying the adapter, sniffing advertisements, scanning, connecting to GATT servers, enumerating services and characteristics, and reading or writing values with care. It stops at the GATT layer; firmware extraction and protocol reverse engineering build on what you map here. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Verify the Bluetooth adapter is present, powered, and supports BLE.</li>
+<li>Sniff advertisements passively to list nearby devices without</li>
+<p>connecting.</p>
+<li>Run an active scan to get names, addresses, and signal strength.</li>
+<li>Pick the in-scope target and connect to its GATT server.</li>
+<li>Enumerate primary services, characteristics, and descriptors.</li>
+<li>Read readable characteristics and note identifiers, versions, and</li>
+<p>state.</p>
+<li>Test writes only on characteristics where the scope allows it, and</li>
+<p>restore any changed value.</p>
+<li>Save captures and notes for the report.</li>
+</ol>
+<h2>1. Verify the adapter</h2>
+<p>Use a Bluetooth 4.0 or newer adapter. Many built-in laptop radios work for BLE, but a dedicated USB dongle gives better range and cleaner captures.</p>
+<pre><code class="language-bash"># Adapter presence and version
+hciconfig -a
+bluetoothctl show
+
+# Power on and enable LE
+bluetoothctl power on
+sudo hciconfig hci0 up
+sudo hciconfig hci0 leadv 2&gt;/dev/null; echo &quot;LE check done&quot;
+
+# Confirm the kernel sees BLE support
+hciconfig hci0 | grep -i &quot;BD Address&quot;
+btmon --version 2&gt;/dev/null || echo &quot;install bluez for btmon captures&quot;</code></pre>
+<p>If <code>hciconfig</code> shows the interface DOWN, bring it up and retry. If the adapter is Bluetooth 2.1 only (no LE), replace it; classic Bluetooth tools do not speak BLE.</p>
+<h2>2. Sniff advertisements passively</h2>
+<p>BLE devices broadcast advertisements with their address, flags, local name, and service UUIDs. Passive sniffing lists them without connecting, which is the quietest possible recon.</p>
+<pre><code class="language-bash"># Live advertisement dump with btmon (best detail)
+sudo btmon | tee /tmp/btmon-adv.log
+
+# In another terminal, start a passive scan so advertisements flow
+sudo hcitool lescan --passive &gt; /tmp/lescan-passive.txt 2&gt;&amp;1 &amp;
+sleep 60; sudo pkill hcitool; cat /tmp/lescan-passive.txt | sort -u</code></pre>
+<p>Watch for: static addresses (a privacy problem), the complete local name (often the product model), manufacturer specific data (sometimes contains serial numbers or state), and service UUIDs that hint at the device role (heart rate, battery, custom services).</p>
+<pre><code class="language-bash"># bettercap BLE passive recon as an alternative
+sudo bettercap -iface hci0 -eval &quot;ble.recon on; sleep 30; ble.show; ble.recon off&quot;</code></pre>
+<p>MAC randomization note: modern phones and some peripherals rotate their advertising address. If the target address keeps changing, identify the device by its name and service UUIDs instead of the MAC, and note the randomization as a (weak but real) privacy control.</p>
+<h2>3. Active scan and target selection</h2>
+<p>Active scanning asks each advertiser for its scan response, which often adds the full device name.</p>
+<pre><code class="language-bash"># Active LE scan for 60 seconds, de-duplicated
+sudo timeout 60 hcitool lescan | sort -u | tee /tmp/lescan.txt
+
+# bluetoothctl interactive alternative
+bluetoothctl scan on
+# ... wait, then: bluetoothctl scan off; bluetoothctl devices</code></pre>
+<p>Match what you see against the scope: device name, address, or service UUID. Record the target MAC, the RSSI (signal strength, closer to zero is stronger), and the address type (public vs random) shown by btmon.</p>
+<h2>4. Connect and enumerate GATT</h2>
+<p>Connect with <code>bluetoothctl</code> or <code>gatttool</code>. Then list primary services and walk each one for characteristics.</p>
+<pre><code class="language-bash"># Connect (replace with the target MAC)
+bluetoothctl connect AA:BB:CC:DD:EE:FF
+
+# gatttool interactive session alternative
+gatttool -b AA:BB:CC:DD:EE:FF -I
+# Inside gatttool: connect</code></pre>
+<pre><code class="language-bash"># List primary services by UUID (handles 0x0001-0xffff)
+gatttool -b AA:BB:CC:DD:EE:FF --primary
+
+# Example output lines:
+# attr handle: 0x0001, end grp handle: 0x0007 uuid: 00001800-0000-1000-8000-00805f9b34fb
+# attr handle: 0x0008, end grp handle: 0x000b uuid: 0000180a-0000-1000-8000-00805f9b34fb
+
+# List characteristics within one service handle range
+gatttool -b AA:BB:CC:DD:EE:FF --characteristics --start-handle=0x0008 --end-handle=0x000b</code></pre>
+<p>Standard service UUIDs decode immediately: <code>0x1800</code> is Generic Access (device name lives here), <code>0x1801</code> Generic Attribute, <code>0x180A</code> Device Information (model, serial, firmware version), <code>0x180F</code> Battery. Custom 128-bit UUIDs are vendor specific and are where the interesting logic hides.</p>
+<pre><code class="language-bash"># Read the device name and appearance from Generic Access
+gatttool -b AA:BB:CC:DD:EE:FF --char-read -a 0x0003
+
+# Dump Device Information characteristics (firmware version is gold)
+for h in 0x0009 0x000a 0x000b; do
+  echo &quot;=== handle $h ===&quot;
+  gatttool -b AA:BB:CC:DD:EE:FF --char-read -a $h 2&gt;/dev/null | head -2
+done</code></pre>
+<h2>5. Read and write characteristics safely</h2>
+<p>Read every characteristic that allows it and decode the bytes. Writes go only where the scope allows, one at a time, with the original value saved first.</p>
+<pre><code class="language-bash"># Read a characteristic by handle, hex and ASCII
+gatttool -b AA:BB:CC:DD:EE:FF --char-read -a 0x0012
+
+# Read by UUID when you know it (example: battery level 0x2A19)
+gatttool -b AA:BB:CC:DD:EE:FF --char-read --uuid 0x2A19
+
+# Decode hex output locally
+echo &quot;4c 6f 63 6b 65 64&quot; | xxd -r -p; echo</code></pre>
+<pre><code class="language-bash"># Write test: read first, write a test value, read back, restore
+gatttool -b AA:BB:CC:DD:EE:FF --char-read -a 0x0014 &gt; /tmp/orig.txt
+gatttool -b AA:BB:CC:DD:EE:FF --char-write-req -a 0x0014 -n &quot;test&quot;
+gatttool -b AA:BB:CC:DD:EE:FF --char-read -a 0x0014
+ORIG=$(cut -d: -f2 /tmp/orig.txt | tr -d &#x27; &#x27;)
+gatttool -b AA:BB:CC:DD:EE:FF --char-write-req -a 0x0014 -n &quot;$ORIG&quot;</code></pre>
+<p>Never write to characteristics that control physical state (locks, motors, medical dosing) unless the scope explicitly authorizes it and the client understands the risk. A write that unlocks a door in a live building is not a finding, it is an incident.</p>
+<p>Subscribe to notifications to watch live data:</p>
+<pre><code class="language-bash"># Enable notifications on a characteristic (write 0x0001 to its CCCD)
+gatttool -b AA:BB:CC:DD:EE:FF --char-write-req -a 0x0013 -n 0100 --listen</code></pre>
+<h2>6. Capture traffic for analysis</h2>
+<p>Capture the full session with btmon and open it in Wireshark for the report and for deeper protocol work.</p>
+<pre><code class="language-bash"># Capture everything during your GATT session
+sudo btmon -w /tmp/ble-session.log &amp;
+BTMON=$!
+# ... run your gatttool session ...
+sudo kill $BTMON
+
+# Convert for Wireshark if needed, or open the log directly
+wireshark /tmp/ble-session.log &amp;</code></pre>
+<p>In Wireshark, filter <code>btatt</code> for GATT traffic and <code>btsmp</code> for pairing. Look for: pairing requests with <code>NoInputNoOutput</code> (Just Works pairing, vulnerable to MITM), long term keys exchanged in clear, and sensitive data in notification payloads.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The adapter sees nothing. Confirm BLE support (`hciconfig hci0</li>
+<p>features`), move within a few meters, and check the device is actually advertising (many only advertise when a button is pressed or on boot).</p>
+<li>Connection drops immediately. The peripheral may enforce a bonded</li>
+<p>relationship or a short supervision timeout; retry, and check btmon for the disconnect reason code.</p>
+<li><code>gatttool</code> is deprecated or missing. Modern BlueZ favors</li>
+<p><code>bluetoothctl</code> with <code>menu gatt</code>; the concepts are identical, only the commands differ.</p>
+<li>Handles shift between connections. Some devices randomize attribute</li>
+<p>handles; re-run <code>--primary</code> each session instead of hardcoding handles.</p>
+<li>The device requires pairing. Try Just Works first (no PIN); if it</li>
+<p>demands a PIN or out-of-band pairing, note the requirement as a positive control and stop unless the scope covers pairing attacks.</p>
+<li>Encrypted characteristics return errors on read. That indicates real</li>
+<p>access control; document it as a good finding, not a failure.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Reads reveal a debug or test service. Enumerate it fully; test services</li>
+<p>often lack the access checks the main services have.</p>
+<li>A characteristic accepts writes that change device behavior. Prove it</li>
+<p>with the smallest reversible change, restore the value, and report the impact precisely.</p>
+<li>Notifications leak sensitive data. Capture a session, decode the</li>
+<p>payloads, and show what a passive sniffer in range would learn.</p>
+<li>The device uses Just Works pairing. Demonstrate a MITM with two</li>
+<p>adapters only if the scope allows active attacks; otherwise report the weak pairing method with a capture as evidence.</p>
+<li>You need long range. A directional antenna or a higher gain dongle</li>
+<p>extends practical BLE range well beyond the nominal 10 meters; note the tested distance in the report.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>BLE attacks are hard to detect: passive sniffing is invisible, and connection attempts look like normal central behavior. Defenders can watch for repeated connection and pairing attempts from unknown centrals in gateway logs, and for deauth-style interference on the 2.4 GHz band. The durable fixes live in the device design: require authenticated pairing (passkey or numeric comparison, never Just Works for sensitive actions), encrypt characteristics that carry personal or control data, use resolvable private addresses to stop tracking, minimize advertisement data, and strip debug services from production firmware. For deployed fleets, monitor for unknown centrals holding long connections to critical peripherals.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1046 (Network Service Discovery): BLE scanning maps to</li>
+<p>service discovery on a radio medium.</p>
+<li>CWE-200 (Exposure of Sensitive Information): data in advertisements and</li>
+<p>readable characteristics.</p>
+<li>CWE-306 (Missing Authentication for Critical Function): unauthenticated</li>
+<p>GATT writes.</p>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm): Just Works</li>
+<p>pairing and unencrypted links.</p>
+<li>Bluetooth Core Specification 5.x, Vol 3 Part G (GATT) and Part H (SMP).</li>
+<li>BlueZ documentation: http://www.bluez.org/</li>
+<li>Wireshark Bluetooth wiki: https://wiki.wireshark.org/Bluetooth</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

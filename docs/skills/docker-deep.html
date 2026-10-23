@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: docker-deep</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>docker-deep</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when building, hardening, or debugging Docker containers</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a> <a href="git-workflows.html">git-workflows</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Docker</td><td>27</td></tr></tbody></table><p>Docker packages an application and its dependencies into a portable image that runs the same everywhere. This skill goes beyond <code>docker run</code>: writing efficient Dockerfiles, keeping images small and non-root, orchestrating stacks with Compose, and debugging containers like a professional. All commands target Docker 27 with BuildKit.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Write a multi-stage Dockerfile: build in one stage, ship only the</li>
+<p>runtime artifacts in the final stage.</p>
+<li>Order instructions from least-changing to most-changing to maximize</li>
+<p>layer cache hits.</p>
+<li>Use a minimal base image and run the app as a non-root user.</li>
+<li>Build with <code>docker build</code>, tag explicitly, and scan the image.</li>
+<li>Define multi-service stacks in <code>compose.yaml</code>, with named volumes</li>
+<p>and isolated networks.</p>
+<li>Set memory and CPU limits so one container cannot starve the host.</li>
+<li>Debug with <code>docker logs</code>, <code>docker exec</code>, and <code>docker inspect</code>,</li>
+<p>in that order.</p>
+<li>Prune aggressively on dev machines, never with <code>-a</code> on shared</li>
+<p>build hosts without checking.</p>
+</ol>
+<h2>1. Multi-stage Dockerfile</h2>
+<pre><code class="language-bash">mkdir docker-demo &amp;&amp; cd docker-demo
+cat &gt; Dockerfile &lt;&lt;&#x27;EOF&#x27;
+# Stage 1: build the Go binary
+FROM golang:1.23-alpine AS build
+WORKDIR /src
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 go build -trimpath -ldflags=&quot;-s -w&quot; -o /app/server .
+
+# Stage 2: minimal runtime image
+FROM alpine:3.20
+RUN adduser -D -u 10001 appuser
+COPY --from=build /app/server /usr/local/bin/server
+USER appuser
+EXPOSE 8080
+ENTRYPOINT [&quot;server&quot;]
+EOF
+
+# BuildKit build with a named tag (never rely on :latest in production)
+DOCKER_BUILDKIT=1 docker build -t demo-server:1.0.0 .
+docker images demo-server</code></pre>
+<p>Multi-stage builds keep compilers, source, and caches out of the final image. The result here is a ~15 MB static binary on Alpine instead of a ~1 GB Go toolchain image.</p>
+<h2>2. Layer caching done right</h2>
+<pre><code class="language-bash">cat &gt; Dockerfile.node &lt;&lt;&#x27;EOF&#x27;
+FROM node:22-alpine
+WORKDIR /app
+# Copy dependency manifests FIRST so npm install is cached
+# until dependencies actually change
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+COPY . .
+RUN npm run build
+USER node
+CMD [&quot;node&quot;, &quot;dist/index.js&quot;]
+EOF
+
+# Watch the cache work: second build reuses every layer until COPY . .
+docker build -f Dockerfile.node -t demo-node:1.0.0 . 2&gt;&amp;1 | tail -8</code></pre>
+<p>Put <code>COPY package.json</code> before <code>COPY .</code> so editing application code does not reinstall dependencies. Add a <code>.dockerignore</code> so build context stays small:</p>
+<pre><code class="language-bash">cat &gt; .dockerignore &lt;&lt;&#x27;EOF&#x27;
+node_modules
+.git
+.gitignore
+*.md
+dist
+coverage
+.env
+EOF</code></pre>
+<h2>3. Compose for multi-service stacks</h2>
+<pre><code class="language-bash">cat &gt; compose.yaml &lt;&lt;&#x27;EOF&#x27;
+services:
+  web:
+    build: .
+    ports:
+      - &quot;8080:8080&quot;
+    environment:
+      DATABASE_URL: postgres://app:${DB_PASSWORD}@db:5432/appdb
+    depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: &quot;1.0&quot;
+          memory: 512M
+    networks: [frontend, backend]
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: appdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [&quot;CMD-SHELL&quot;, &quot;pg_isready -U app&quot;]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks: [backend]
+
+volumes:
+  pgdata:
+
+networks:
+  frontend:
+  backend:
+EOF
+
+# Secrets come from the environment, never from the file
+export DB_PASSWORD=&quot;$(openssl rand -hex 16)&quot;
+docker compose up -d
+docker compose ps
+docker compose logs -f web</code></pre>
+<p>Compose gives each project isolated networks by default. The <code>web</code> service can reach <code>db</code> at hostname <code>db</code>; nothing else on the host can. Healthchecks plus <code>depends_on</code> stop the app from starting before the database accepts connections.</p>
+<h2>4. Volumes, networks, and inspection</h2>
+<pre><code class="language-bash"># Named volume vs bind mount: volumes for data, binds for config/code
+docker volume create appdata
+docker run -d --name demo -v appdata:/data alpine:3.20 sleep 3600
+docker volume inspect appdata
+
+# Networks: put the database on an internal network only
+docker network create --internal backend-only
+docker network connect backend-only demo
+
+# Inspect anything when behavior is unclear
+docker inspect demo --format &#x27;{{json .NetworkSettings.Networks}}&#x27; | head -c 400; echo
+docker inspect demo --format &#x27;{{.Config.User}} {{.HostConfig.Memory}}&#x27;</code></pre>
+<p>Use volumes for data that must survive container replacement, bind mounts for injecting config or live code during development, and <code>tmpfs</code> mounts for scratch space that must never hit disk.</p>
+<h2>5. Scanning and hardening</h2>
+<pre><code class="language-bash"># Scan the image for known CVEs in OS packages and app dependencies
+docker scout cves demo-server:1.0.0 2&gt;/dev/null || \
+  echo &quot;docker scout needs a Docker Hub login; use trivy instead&quot;
+
+# Trivy alternative (install once, scan offline-capable)
+trivy image --severity HIGH,CRITICAL demo-server:1.0.0 | head -30
+
+# Hardening checklist for the Dockerfile
+grep -E &#x27;^(USER|HEALTHCHECK)&#x27; Dockerfile || echo &quot;MISSING: USER and HEALTHCHECK&quot;
+
+# Drop capabilities and make the filesystem read-only at runtime
+docker run -d --name hardened \
+  --read-only --tmpfs /tmp \
+  --cap-drop ALL --cap-add NET_BIND_SERVICE \
+  --user 10001 \
+  --memory 256m --cpus 0.5 \
+  demo-server:1.0.0</code></pre>
+<p>Harden every production container: non-root user, read-only root filesystem, dropped capabilities, resource limits, and no <code>--privileged</code> ever. Scan images in CI and fail the build on new CRITICAL findings.</p>
+<h2>6. Debugging like a professional</h2>
+<pre><code class="language-bash"># 1. Logs first: what did the app say before it died
+docker logs --tail 100 demo
+docker logs -f --since 10m demo
+
+# 2. Exec into the running container to look around
+docker exec -it demo sh
+# inside: check listening ports, env, files
+# netstat -tlnp 2&gt;/dev/null || ss -tlnp
+# env | sort
+
+# 3. Inspect the container&#x27;s full configuration
+docker inspect demo | grep -A5 -i &#x27;&quot;env&quot;&#x27;
+
+# Container keeps exiting: run it interactively to see the error
+docker run --rm -it demo-server:1.0.0 sh
+
+# Show resource usage live
+docker stats --no-stream</code></pre>
+<p>When a container exits immediately, the cause is almost always in the last 20 lines of <code>docker logs</code>: a missing env var, a bad config path, or a permission error on a mounted volume.</p>
+<h2>7. Cleanup and disk hygiene</h2>
+<pre><code class="language-bash"># Safe cleanup: stopped containers, unused networks, dangling images
+docker system prune
+
+# Show what is eating disk
+docker system df
+
+# Remove everything unused (CAREFUL on shared hosts)
+# docker system prune -a --volumes</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Build is slow because the context is huge. Check <code>.dockerignore</code>;</li>
+<p>a stray <code>node_modules</code> or <code>.git</code> directory multiplies build time and can leak secrets into image layers.</p>
+<li><code>COPY --from=build</code> fails with &quot;not found&quot;. The source path must</li>
+<p>exist in the named stage; stage names are case-sensitive and a typo silently refers to a different stage.</p>
+<li>App binds to <code>localhost</code> inside the container and is unreachable.</li>
+<p>Bind to <code>0.0.0.0</code> inside containers; <code>localhost</code> in a container is the container itself, not the host.</p>
+<li>Permission denied on a mounted volume. The container user (UID</li>
+<p>10001) differs from the host file owner; fix with <code>chown</code> on the host or run the container with <code>--user $(id -u):$(id -g)</code> in dev.</p>
+<li><code>docker compose up</code> recreates the database and data is gone. Data</li>
+<p>lives only in named volumes; anonymous volumes and container filesystems are ephemeral. Always declare named volumes for databases.</p>
+<li>Image works locally but fails on the registry host with &quot;exec</li>
+<p>format error&quot;. You built for the wrong architecture (arm64 laptop vs amd64 server); build with <code>--platform linux/amd64</code>.</p>
+<li>Secrets visible in <code>docker inspect</code> or image history. Never use</li>
+<p><code>ENV</code> or build args for secrets; use runtime env files, Docker secrets, or a vault integration instead.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration. A misconfigured Docker host shows containers running <code>--privileged</code>, the Docker socket mounted inside a container (<code>/var/run/docker.sock</code>, which is root-equivalent on the host), images running as root, and secrets baked into layers (find them with <code>docker history</code> and layer inspection). Detect misuse by auditing <code>docker ps</code> for privileged flags, scanning images for CRITICAL CVEs before deployment, and alerting on containers with host network mode or sensitive host path mounts. Cryptominers and compromised containers reveal themselves through <code>docker stats</code> (CPU pinned at the limit with no legitimate workload) and unexpected outbound connections from container networks.</p>
+<h2>Key references</h2>
+<ul>
+<li>Docker 27 engine docs: https://docs.docker.com/engine/</li>
+<li>Dockerfile reference: https://docs.docker.com/reference/dockerfile/</li>
+<li>Compose specification: https://docs.docker.com/compose/</li>
+<li>CIS Docker Benchmark: https://www.cisecurity.org/benchmark/docker</li>
+<li>CWE-250 (Execution with Unnecessary Privileges): containers</li>
+<p>running as root or privileged.</p>
+<li>CWE-798 (Use of Hard-coded Credentials): secrets in Dockerfiles</li>
+<p>and image layers.</p>
+<li>OWASP Docker Top 10: https://owasp.org/www-project-docker-top-10/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

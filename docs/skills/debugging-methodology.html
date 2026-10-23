@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: debugging-methodology</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>debugging-methodology</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when diagnosing a bug or failure systematically: building a</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="python-cli-tooling.html">python-cli-tooling</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>GDB</td><td>15</td></tr><tr><td>strace</td><td>6.12</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Debugging is the disciplined reduction of uncertainty: reproduce, observe, hypothesize, test, repeat. Random changes and restarts sometimes work, but they do not produce understanding, and the bug returns. This skill covers a repeatable methodology plus the concrete tools for each layer: logs, git bisect, strace, gdb, core dumps, and pdb for Python.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Reproduce reliably: find the minimal steps that trigger the bug every</li>
+<p>time; no repro, no fix.</p>
+<li>Read the error completely: full stack trace, exit code, and the exact</li>
+<p>log lines around it.</p>
+<li>Check what changed: recent deploys, config edits, dependency updates</li>
+<p>(<code>git log</code>, deploy history).</p>
+<li>Form ONE hypothesis, predict what you will observe if it is true, then</li>
+<p>run the smallest experiment that tests it.</p>
+<li>Change one variable at a time; record each result.</li>
+<li>Bisect when the cause is a code change: <code>git bisect</code> finds it in</li>
+<p>log2(n) steps.</p>
+<li>Go one layer down when stuck: strace for syscalls, gdb for crashes,</li>
+<p>packet capture for network.</p>
+<li>Fix the root cause, add a regression test, and write down what you</li>
+<p>learned.</p>
+</ol>
+<h2>1. Reproduce first</h2>
+<pre><code class="language-bash"># Capture the exact failing command and its full output
+./failing-thing --input data.json &gt; /tmp/repro.out 2&gt; /tmp/repro.err; echo &quot;exit=$?&quot;
+
+# Minimal input: shrink the trigger until removing anything more makes
+# the bug disappear (delta debugging by hand)
+wc -c data.json
+head -c 1000 data.json &gt; small.json &amp;&amp; ./failing-thing --input small.json; echo &quot;exit=$?&quot;
+
+# Freeze the environment: same user, same cwd, same env vars
+env -i PATH=/usr/bin:/bin HOME=/root ./failing-thing --input small.json; echo &quot;exit=$?&quot;</code></pre>
+<p>A repro script is an asset: check it into the repo as the regression test seed. If you cannot reproduce it, you cannot verify the fix; say so explicitly instead of shipping a guess.</p>
+<h2>2. Read the failure properly</h2>
+<pre><code class="language-bash"># Python: full traceback, not just the last line
+python3 app.py 2&gt;&amp;1 | tail -40
+
+# Exit code meaning (128+n = killed by signal n; 137 = SIGKILL, 139 = SIGSEGV)
+./crasher; echo &quot;exit=$?&quot;
+
+# Was it the OOM killer?
+dmesg -T | grep -i &#x27;killed process&#x27; | tail -3
+journalctl -k --since &quot;10 minutes ago&quot; | grep -i &#x27;out of memory&#x27;
+
+# Service context: what systemd saw
+systemctl status myapp --no-pager -l
+journalctl -u myapp -n 50 --no-pager</code></pre>
+<h2>3. What changed: bisect and history</h2>
+<pre><code class="language-bash"># When did it break? Bisect between a good and bad commit
+git bisect start
+git bisect bad HEAD
+git bisect good v1.4.0
+# At each stop: run the repro, then mark it
+./repro.sh &amp;&amp; git bisect good || git bisect bad
+# ... repeat until git names the culprit commit
+git bisect reset
+
+# Automated bisect when the repro is scriptable (exit 0 = good)
+git bisect start HEAD v1.4.0
+git bisect run ./repro.sh
+git bisect reset
+
+# Recent changes to the suspect area
+git log --oneline -15 -- src/billing/
+git log -S &quot;MAX_RETRIES&quot; --oneline -- src/</code></pre>
+<p>Also check non-code changes: config diffs, environment variables, dependency versions (<code>pip freeze | grep -E &#x27;requests|django&#x27;</code>), OS upgrades, and deploy timestamps.</p>
+<h2>4. strace: what the program actually asked the kernel</h2>
+<pre><code class="language-bash"># Trace syscalls of a short-lived command, follow forks
+strace -f -o /tmp/trace.log ./failing-thing --input small.json
+
+# Summarize: which syscalls burn time (great for hangs)
+strace -f -c -o /tmp/summary.log timeout 10 ./hanging-thing
+
+# Attach to a running stuck process
+strace -p 1234 -o /tmp/stuck.log
+# then read the tail: is it looping on read()? blocked in futex()? 
+tail -20 /tmp/stuck.log</code></pre>
+<p>Common reads: <code>ENOENT</code> on a config path (wrong path or permissions), <code>EACCES</code> on files, <code>ECONNREFUSED</code> on sockets, endless <code>poll</code>/<code>futex</code> ( deadlock or spin), <code>open</code> of the same file thousands of times (leak).</p>
+<p>Filter the noise:</p>
+<pre><code class="language-bash"># Only file and network syscalls
+strace -f -e trace=open,openat,connect,read,write -o /tmp/io.log ./app</code></pre>
+<h2>5. gdb for crashes and hangs</h2>
+<pre><code class="language-bash"># Compile with debug symbols for useful traces (-g, no -s stripping)
+gcc -g -O0 -o crasher crasher.c
+
+# Run under gdb and get a backtrace at the crash
+gdb -batch -ex run -ex bt --args ./crasher --input small.json
+
+# Attach to a hung process and see where every thread is stuck
+gdb -p 1234 -batch -ex &quot;thread apply all bt&quot; | head -60</code></pre>
+<p>Core dumps for post-crash analysis:</p>
+<pre><code class="language-bash"># Enable core dumps (size unlimited) for the session
+ulimit -c unlimited
+echo &#x27;/tmp/core.%e.%p&#x27; | sudo tee /proc/sys/kernel/core_pattern
+./crasher   # produces /tmp/core.crasher.&lt;pid&gt;
+
+# Analyze the core offline
+gdb -batch -ex bt ./crasher /tmp/core.crasher.1234
+
+# Inspect variables at the crash frame
+gdb -batch -ex bt -ex &quot;frame 3&quot; -ex &quot;info locals&quot; ./crasher /tmp/core.crasher.1234</code></pre>
+<h2>6. Python: pdb and faulthandler</h2>
+<pre><code class="language-bash"># Drop into the debugger at the exception
+python3 -m pdb app.py
+# (pdb) c          continue
+# (pdb) bt         backtrace
+# (pdb) p varname  print variable
+# (pdb) up/down    move frames
+
+# Post-mortem on an uncaught exception
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import pdb, traceback, app
+try:
+    app.main()
+except Exception:
+    traceback.print_exc()
+    pdb.post_mortem()
+EOF
+
+# Hangs: dump all thread stacks after a timeout (stdlib)
+PYTHONFAULTHANDLER=1 timeout 30 python3 hanging_app.py
+# faulthandler prints every thread&#x27;s stack on timeout kill</code></pre>
+<p>For production hangs without restart rights, <code>py-spy</code> (third party) dumps stacks of a running process; with stdlib only, faulthandler plus a USR1-triggered dump is the portable pattern.</p>
+<h2>7. Hypothesis discipline</h2>
+<p>Write hypotheses down; memory lies about what you already tried.</p>
+<pre><code class="language-text">H1: the bug is in the retry logic (config changed Tuesday).
+    Predict: setting MAX_RETRIES=0 makes the failure disappear.
+    Test: MAX_RETRIES=0 ./repro.sh
+    Result: still fails -&gt; H1 dead.
+
+H2: the input file has a BOM breaking the parser.
+    Predict: hexdump shows EF BB BF at the start.
+    Test: head -c 3 data.json | xxd
+    Result: confirmed -&gt; fix the parser to strip BOM.</code></pre>
+<p>Rules: one variable per experiment, predict the outcome before running, kill disproven hypotheses fast, and prefer the hypothesis that explains ALL the symptoms. When two hypotheses remain, design the experiment that distinguishes them.</p>
+<h2>8. Network-layer debugging</h2>
+<pre><code class="language-bash"># Is the port even listening, and on which interface
+ss -tlnp | grep 8080
+
+# TCP handshake or refusal, with timing
+time (echo &gt; /dev/tcp/127.0.0.1/8080) &amp;&amp; echo open || echo closed
+
+# Full request/response with headers and timing
+curl -sv --max-time 10 http://127.0.0.1:8080/health 2&gt;&amp;1 | head -30
+
+# DNS or TLS? Isolate: IP first, then hostname
+curl -sk https://127.0.0.1:8443/health
+curl -s https://api.example.com/health</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>Heisenbugs that vanish under strace/gdb: timing-sensitive races;</li>
+<p>add logging instead of interactive debugging, and stress the repro in a loop.</p>
+<li>Bug only in production: differences are config, data volume, or</li>
+<p>environment; diff all three systematically before touching code.</p>
+<li>No logs at the failure point: the process died before flushing;</li>
+<p>log to stderr unbuffered (<code>python3 -u</code>, <code>stdbuf -o0</code>) or use the journal.</p>
+<li><code>git bisect</code> with a flaky repro: automate with retries in the test</li>
+<p>script and require 3 consecutive passes to call a commit good.</p>
+<li>Core dump not written: check <code>ulimit -c</code>, core_pattern, disk space,</li>
+<p>and systemd&#x27;s <code>DefaultLimitCORE</code> / per-service <code>LimitCORE</code>.</p>
+<li>Optimized-out variables in gdb (<code>&lt;optimized out&gt;</code>): rebuild that</li>
+<p>translation unit with <code>-O0 -g</code> for the debugging session.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>One layer down did not help: go another layer (syscall -&gt; kernel</li>
+<p>messages -&gt; hardware counters), or one layer up (is the caller passing garbage?).</p>
+<li>Suspect the compiler, kernel, or library: build a 20-line reproducer</li>
+<p>and test it on a second machine or container; environment-specific bugs are real but rare, so demand strong evidence.</p>
+<li>Distributed bug across services: add a request id through the whole</li>
+<p>chain first; debugging without correlation ids is guessing.</p>
+<li>Out of ideas: rubber-duck the timeline to a colleague, or sleep on</li>
+<p>it; a fresh read of the code you &quot;know&quot; is often where the bug is.</p>
+<li>Still stuck after a day: escalate with the repro script, the</li>
+<p>hypothesis log, and what you ruled out; that package gets help fast.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Debugging tools are dual-use: strace, gdb, and core dumps also read secrets from process memory. Detect misuse with:</p>
+<pre><code class="language-bash"># Unexpected debuggers attached to production processes
+ps aux | grep -E &#x27;strace|gdb |ltrace&#x27; | grep -v grep
+
+# Core dumps lying around with possible secrets in them
+sudo find /tmp /var/tmp /var/crash -name &#x27;core*&#x27; -ls 2&gt;/dev/null
+
+# ptrace scope: who may attach to whom (Yama LSM)
+cat /proc/sys/kernel/yama/ptrace_scope</code></pre>
+<p>Defensive rules: set <code>kernel.yama.ptrace_scope=1</code> (only parents may trace) or <code>2</code> (only with CAP_SYS_PTRACE) on production hosts, restrict core dump paths and scrub them, never leave <code>PYTHONFAULTHANDLER</code> dumps or gdb sessions on shared machines, and treat any unexpected core file as an incident artifact: it may contain keys and PII. A debugger attached to a payment or auth process outside a maintenance window is worth an alert.</p>
+<h2>Key references</h2>
+<ul>
+<li>GDB 15 manual: https://sourceware.org/gdb/current/onlinedocs/gdb.html</li>
+<li>strace man page: https://man7.org/linux/man-pages/man1/strace.1.html</li>
+<li>Python pdb: https://docs.python.org/3/library/pdb.html</li>
+<li>Python faulthandler: https://docs.python.org/3/library/faulthandler.html</li>
+<li>git-bisect docs: https://git-scm.com/docs/git-bisect</li>
+<li>&quot;Debugging: The 9 Indispensable Rules&quot; (Agans): the hypothesis</li>
+<p>discipline behind this skill.</p>
+<li>CWE-754 (Improper Check for Unusual Conditions): bugs born from</li>
+<p>unhandled edge cases.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

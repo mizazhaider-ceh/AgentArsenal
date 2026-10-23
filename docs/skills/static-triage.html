@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: static-triage</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>static-triage</h2><div class="meta"><span class="badge gray">malware</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you receive a suspicious file and must decide what it</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Ghidra</td><td>12.1.4</td></tr><tr><td>YARA</td><td>4.5.5</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Static triage is the discipline of learning everything possible about a file without running it. It is fast, safe, and usually enough to classify a sample as benign, known-malicious, or needs-dynamic-analysis. The pipeline in this skill moves from cheap to expensive: identify, hash, strings, entropy, structure, YARA, then disassembly, stopping as soon as you have a confident verdict. Scope: analyze only samples you are authorized to handle (alert artifacts, your own lab builds, CTF files, client-provided samples). Do all of it in an isolated analysis VM or sandbox host, never on a production workstation, and never execute the sample during static triage, that is what dynamic-sandbox is for.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Hash the sample (MD5, SHA1, SHA256) and check it against known-good and</li>
+<p>known-bad sets before spending any more time.</p>
+<li>Identify the real file type with magic bytes, not the extension.</li>
+<li>Pull strings at multiple minimum lengths and read them like a story.</li>
+<li>Measure entropy per section: packed or encrypted regions stand out.</li>
+<li>Inspect imports, exports, and sections for capability hints.</li>
+<li>Scan with your YARA rule set and note which rules fire.</li>
+<li>Detect packers and decide whether static analysis is even viable.</li>
+<li>Run headless Ghidra for a function list and cross-references on the</li>
+<p>interesting strings.</p>
+</ol>
+<h2>1. Hash and identify</h2>
+<p>Hashing first serves two purposes: deduplication against your corpus, and a lookup key for threat intel you are allowed to use.</p>
+<pre><code class="language-bash"># All three hashes in one pass
+md5sum sample.bin | tee hashes.txt
+sha1sum sample.bin | tee -a hashes.txt
+sha256sum sample.bin | tee -a hashes.txt
+
+# Compare against your local known-bad set
+grep -i -f hashes.txt known_bad.sha256 &amp;&amp; echo &#x27;KNOWN MALICIOUS&#x27;
+
+# Real file type from magic bytes, ignoring the extension
+file sample.bin
+xxd -l 16 sample.bin</code></pre>
+<p>Common headers to recognize by sight: <code>MZ</code> (PE executable), <code>\x7fELF</code> (Linux executable), <code>PK\x03\x04</code> (ZIP, which includes Office OOXML and JAR), <code>%PDF</code>, <code>\x1f\x8b</code> (gzip), <code>7z\xbc\xaf\x27\x1c</code> (7z). A <code>.pdf</code> that starts with <code>MZ</code> is not a PDF.</p>
+<h2>2. Strings analysis</h2>
+<p>Strings are the cheapest window into intent: URLs, IPs, registry keys, pdb paths, error messages, and ransom notes all surface here.</p>
+<pre><code class="language-bash"># Default and long strings; compare what appears only at length 8+
+strings sample.bin &gt; strings_default.txt
+strings -n 8 sample.bin &gt; strings_8.txt
+wc -l strings_default.txt strings_8.txt
+
+# Hunt for indicators directly
+grep -a -o -E &#x27;https?://[^ &quot;]+&#x27; strings_default.txt | sort -u | head -30
+grep -a -o -E &#x27;\b([0-9]{1,3}\.){3}[0-9]{1,3}\b&#x27; strings_default.txt | sort -u | head -30
+grep -a -i -E &#x27;\\\\(SOFTWARE|SYSTEM)\\\\|HKEY_|CurrentVersion\\Run&#x27; strings_default.txt | head -20
+
+# Unicode strings (wide-char) are invisible to plain strings
+strings -e l sample.bin &gt; strings_unicode.txt
+grep -a -i -E &#x27;powershell|cmd\.exe|wscript&#x27; strings_unicode.txt | head -20
+
+# PDB paths leak the author&#x27;s build machine layout
+grep -a -o -E &#x27;[A-Za-z]:\\[^ ]*\.pdb&#x27; strings_default.txt | head -10</code></pre>
+<p>Read the strings file end to end once, not just the grep hits. The narrative matters: a binary containing both <code>CreateRemoteThread</code> and a ransom note template tells a different story than one containing only standard library error strings.</p>
+<h2>3. Entropy and section analysis</h2>
+<p>Packed or encrypted payloads have high entropy (near 8.0) and few readable strings. Measure per section to localize the hidden code.</p>
+<pre><code class="language-bash"># Section table with sizes and entropy hints (PE)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import struct
+data = open(&#x27;sample.bin&#x27;,&#x27;rb&#x27;).read()
+# e_lfanew -&gt; PE header -&gt; section table walk (simplified triage)
+e_lfanew = struct.unpack(&#x27;&lt;I&#x27;, data[0x3c:0x40])[0]
+assert data[e_lfanew:e_lfanew+4] == b&#x27;PE\x00\x00&#x27;, &#x27;not a PE&#x27;
+coff = e_lfanew + 4
+nsec = struct.unpack(&#x27;&lt;H&#x27;, data[coff+2:coff+4])[0]
+opt_size = struct.unpack(&#x27;&lt;H&#x27;, data[coff+16:coff+18])[0]
+sec_off = coff + 20 + opt_size
+import math
+def entropy(b):
+    from collections import Counter
+    c = Counter(b)
+    n = len(b)
+    return -sum((v/n) * math.log2(v/n) for v in c.values()) if n else 0
+for i in range(nsec):
+    s = data[sec_off+i*40:sec_off+(i+1)*40]
+    name = s[:8].rstrip(b&#x27;\x00&#x27;).decode(errors=&#x27;ignore&#x27;)
+    vsize, vaddr, rawsize, rawptr = struct.unpack(&#x27;&lt;IIII&#x27;, s[8:24])
+    chunk = data[rawptr:rawptr+rawsize]
+    print(f&#x27;{name:8} rawsize={rawsize:8} entropy={entropy(chunk):.2f}&#x27;)
+EOF</code></pre>
+<p>Interpretation: a <code>.text</code> section at entropy 7.9 with almost no strings is packed. A <code>.rsrc</code> section at 7.9 may just hold a compressed icon or a legitimate embedded archive, check its size and content before concluding. Normal compiled code sits around 6.0 to 6.8.</p>
+<pre><code class="language-bash"># Imports: which APIs the binary needs (capability hints)
+# (use rabin2, objdump, or Ghidra; quick PE import names via strings fallback)
+grep -a -o -E &#x27;[A-Za-z0-9_]+\.dll&#x27; strings_default.txt | sort -u | head -30
+grep -a -i -E &#x27;VirtualAlloc|WriteProcessMemory|CreateRemoteThread|WinExec|URLDownloadToFile|CryptEncrypt|socket|connect&#x27; strings_default.txt | sort -u | head -30</code></pre>
+<h2>4. YARA scanning</h2>
+<p>Run your rule set over the sample. A hit names the family or behavior; no hits means unknown, not clean.</p>
+<pre><code class="language-bash"># Scan with the lab rule set
+yara -r /opt/rules/index.yar sample.bin
+
+# Which rule fired and which strings matched
+yara -s -r /opt/rules/index.yar sample.bin | head -40
+
+# Scan with metadata shown for triage notes
+yara -m -r /opt/rules/index.yar sample.bin | head -40</code></pre>
+<p>Keep rules in one indexed file for speed, and version-control the rule set so a hit is reproducible months later. Writing your own rules is covered in yara-rules; here you only consume them.</p>
+<h2>5. Packer detection</h2>
+<p>A packer wraps the real code in a compressed or encrypted layer. Detect it before you waste hours disassembling the wrapper.</p>
+<pre><code class="language-bash"># Detect It Easy: signature-based packer/compiler identification
+diec sample.bin | head -20
+
+# UPX is the common case and trivially reversible (see packer-analysis)
+diec sample.bin | grep -i upx
+
+# Entropy + section names corroborate: UPX leaves UPX0/UPX1 sections
+python3 - &lt;&lt;&#x27;EOF&#x27;
+data = open(&#x27;sample.bin&#x27;,&#x27;rb&#x27;).read()
+print(b&#x27;UPX!&#x27; in data, b&#x27;UPX0&#x27; in data, b&#x27;UPX1&#x27; in data)
+EOF</code></pre>
+<p>If a packer is confirmed, your static verdict options are: unpack it first (packer-analysis), or escalate to dynamic analysis. Do not write a report based on disassembly of the packed stub.</p>
+<h2>6. Headless Ghidra pass</h2>
+<p>When strings and YARA leave questions, get a function list and cross-references without opening the GUI.</p>
+<pre><code class="language-bash"># Analyze headless and dump the function list
+/opt/ghidra/support/analyzeHeadless /tmp/ghidra_proj Triage \
+  -import sample.bin -postScript FunctionList.java 2&gt;/dev/null | head -50
+
+# Lighter alternative: list imported functions via script output
+# Save Ghidra&#x27;s decompiler output for the interesting functions only,
+# then read it like source code, not like proof</code></pre>
+<p>Focus on: functions that reference the suspicious strings from step 2, imports of process injection and networking APIs, and any function with an unusually large basic-block count (often the real payload). Ghidra&#x27;s decompiler output is an approximation; confirm critical findings with the disassembly view.</p>
+<h2>7. Writing the triage verdict</h2>
+<p>A triage note is short and decisive.</p>
+<pre><code class="language-bash">cat &gt; triage_note.txt &lt;&lt;&#x27;EOF&#x27;
+Sample: sample.bin
+SHA256: &lt;from hashes.txt&gt;
+File type: &lt;from file&gt;
+YARA hits: &lt;rule names or none&gt;
+Packer: &lt;name or none&gt;
+Key strings: &lt;3-5 most telling&gt;
+Verdict: BENIGN / MALICIOUS / UNKNOWN-needs-dynamic
+Confidence: high/medium/low
+Next step: &lt;none | dynamic-sandbox | packer-analysis | yara-rules new rule&gt;
+EOF</code></pre>
+<p>UNKNOWN is a valid verdict. A wrong confident verdict is worse than an honest unknown, because it stops the investigation.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>File is a polyglot (valid as two formats): <code>file</code> reports one; check</li>
+<p>multiple offsets for headers and treat each embedded format separately.</p>
+<li>Strings are all garbage but entropy is low: the binary may be stripped of</li>
+<p>meaningful strings deliberately (string obfuscation); move to import analysis and dynamic.</p>
+<li>.NET assembly: strings and sections look odd; use a .NET-aware tool</li>
+<p>(dnfile, ilspycmd) instead of raw PE logic. YARA has a dotnet module.</p>
+<li>Sample is a script (PowerShell, JS, VBS): static triage is deobfuscation;</li>
+<p>look for <code>Invoke-Expression</code>, <code>eval</code>, base64 blobs, and download cradles.</p>
+<li>Huge installer or bundle: the malicious part may be one embedded file;</li>
+<p>carve embedded PEs/ZIPs first (binwalk or manual carving), then triage each.</p>
+<li>Hash matches known-good (signed Microsoft binary): still check the</li>
+<p>signature and the path; a valid signed binary in the wrong place can be living-off-the-land abuse.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Static verdict is UNKNOWN and the sample is unpacked: escalate to</li>
+<p>dynamic-sandbox for behavior.</p>
+<li>Static verdict is UNKNOWN and the sample is packed: escalate to</li>
+<p>packer-analysis to unpack, then re-triage the unpacked payload.</p>
+<li>YARA fires on a generic rule only: write a family-specific rule</li>
+<p>(yara-rules) from the unique strings you found.</p>
+<li>Need to understand one function deeply: move from headless listing to an</li>
+<p>interactive Ghidra session, or use angr-basics for path exploration.</p>
+<li>Sample targets firmware or a non-x86 architecture: hand the carved</li>
+<p>binaries to firmware-analysis for the right toolchain.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Static triage is the first filter in every malware pipeline: mail gateways, EDR cloud lookups, and SOC analysts all do some version of hash, file, and strings before anything heavier. Defenders should feed triage outputs back into detection: every confirmed-malicious sample should yield YARA rules, hashes for blocklists, and strings-derived IOCs (IPs, mutexes, registry keys). Watch for the failure modes: allow-listing by hash alone (attackers repack), trusting the file extension, and skipping triage because &quot;the AV said clean&quot;. The misuse case is using triage to improve malware rather than detect it; this skill is for defenders classifying samples they are authorized to handle, and repurposing it to harden malware against analysis is out of scope.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1027 (Obfuscated Files or Information): what packers and</li>
+<p>string obfuscation look like statically.</p>
+<li>MITRE ATT&amp;CK T1036 (Masquerading): extension and header mismatches.</li>
+<li>MITRE ATT&amp;CK T1204 (User Execution): the delivery context triage supports.</li>
+<li>CWE-506 (Embedded Malicious Code): the finding triage aims to confirm.</li>
+<li>YARA documentation: https://yara.readthedocs.io</li>
+<li>Ghidra documentation: https://ghidra-sre.org</li>
+<li>MITRE ATT&amp;CK: https://attack.mitre.org</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

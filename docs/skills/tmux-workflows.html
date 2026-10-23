@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: tmux-workflows</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>tmux-workflows</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when working with tmux 3.4 for persistent terminal</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="bash-advanced.html">bash-advanced</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>tmux</td><td>3.4</td></tr></tbody></table><p>tmux is a terminal multiplexer: it keeps shell sessions alive on the server, independent of your SSH connection, and tiles them into windows and panes you can script. The core workflow is attach in the morning, detach at night, and never lose work to a dropped connection again. This skill covers tmux 3.4: sessions, windows, panes, copy mode, a practical tmux.conf, scripted layouts, logging, and shared pairing sessions.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Start named sessions per project: <code>tmux new -s project</code>.</li>
+<li>Detach with prefix + d; reattach with <code>tmux attach -t project</code>.</li>
+<li>Split panes for editor/logs/shell; zoom a pane when you need focus.</li>
+<li>Use copy mode to search scrollback and copy text without a mouse.</li>
+<li>Put your bindings in <code>~/.tmux.conf</code>; reload with prefix + r.</li>
+<li>Script standard layouts so a project workspace is one command.</li>
+<li>Log panes for long-running jobs you need to audit later.</li>
+<li>Share a session for pairing with <code>tmux attach</code> on a shared socket.</li>
+</ol>
+<h2>1. Sessions: the unit of persistence</h2>
+<pre><code class="language-bash"># New named session
+tmux new -s deploy
+
+# List sessions
+tmux ls
+
+# Attach (or create if missing)
+tmux new -A -s deploy
+
+# Detach from inside: prefix + d  (default prefix is Ctrl-b)
+# Kill when done
+tmux kill-session -t deploy
+
+# Rename the current session
+# prefix + $   (prompt for a new name)</code></pre>
+<p>Surviving disconnects is the point: start long jobs inside tmux on the server, detach, close the laptop; the job keeps running and you reattach later. For jobs that must survive even tmux dying, use systemd or nohup; tmux survives network drops, not server reboots.</p>
+<h2>2. Windows and panes</h2>
+<pre><code class="language-text">prefix + c        new window
+prefix + ,        rename window
+prefix + n/p      next / previous window
+prefix + 0-9      jump to window by number
+prefix + &amp;        kill window (confirm)
+
+prefix + %        vertical split (side by side)
+prefix + &quot;        horizontal split (stacked)
+prefix + arrows   move between panes
+prefix + z        zoom pane (toggle fullscreen)
+prefix + x        kill pane
+prefix + q        show pane numbers, then press one to jump
+prefix + { / }    swap panes left / right
+prefix + space    cycle pane layouts</code></pre>
+<p>Resize without the mouse:</p>
+<pre><code class="language-text">prefix + :resize-pane -R 10     grow right by 10 cells
+prefix + :resize-pane -D 5      grow down by 5 cells</code></pre>
+<p>A typical dev layout: window 1 editor, window 2 shell split with logs, window 3 tests. Name windows (<code>prefix + ,</code>) so <code>tmux ls</code> reads like a project map.</p>
+<h2>3. Copy mode: scrollback without a mouse</h2>
+<pre><code class="language-text">prefix + [        enter copy mode
+  / pattern      search forward, ? backward, n/N next/prev
+  space          start selection, Enter copies and exits
+  q              exit copy mode
+prefix + ]        paste the buffer</code></pre>
+<p>With vi mode (set in tmux.conf below), copy mode uses vim keys: <code>v</code> starts selection, <code>y</code> yanks, just like visual mode.</p>
+<pre><code class="language-bash"># List and manage paste buffers
+tmux list-buffers
+tmux show-buffer -b 0 | head -20
+tmux save-buffer -b 0 /tmp/pane-output.txt</code></pre>
+<h2>4. A practical tmux.conf</h2>
+<pre><code class="language-bash">cat &gt; ~/.tmux.conf &lt;&lt;&#x27;EOF&#x27;
+# Vi keys in copy mode, mouse on for resizing/scrolling
+setw -g mode-keys vi
+set -g mouse on
+
+# Bigger scrollback for log-heavy panes
+set -g history-limit 50000
+
+# Start numbering at 1 (easier reach) and renumber on close
+set -g base-index 1
+setw -g pane-base-index 1
+set -g renumber-windows on
+
+# Faster key response
+set -sg escape-time 10
+
+# Reload config: prefix + r
+bind r source-file ~/.tmux.conf \; display &quot;reloaded&quot;
+
+# Sane splits that open in the current directory
+bind | split-window -h -c &quot;#{pane_current_path}&quot;
+bind - split-window -v -c &quot;#{pane_current_path}&quot;
+bind c new-window -c &quot;#{pane_current_path}&quot;
+
+# Vim-style pane movement
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# Status bar: session, window list, date/time
+set -g status-bg colour235
+set -g status-fg colour231
+set -g status-left &quot;#[bold]#S &quot;
+set -g status-right &quot;%Y-%m-%d %H:%M&quot;
+EOF
+
+# Apply to a running server
+tmux source-file ~/.tmux.conf</code></pre>
+<h2>5. Scripted layouts</h2>
+<p>One command builds the whole project workspace:</p>
+<pre><code class="language-bash">cat &gt; ~/bin/workon &lt;&lt;&#x27;EOF&#x27;
+#!/usr/bin/env bash
+set -euo pipefail
+name=&quot;${1:?usage: workon &lt;project-dir&gt;}&quot;
+session=&quot;$(basename &quot;$name&quot;)&quot;
+cd &quot;$name&quot;
+if ! tmux has-session -t &quot;$session&quot; 2&gt;/dev/null; then
+  tmux new-session -d -s &quot;$session&quot; -n editor -c &quot;$PWD&quot;
+  tmux new-window -t &quot;$session&quot; -n shell -c &quot;$PWD&quot;
+  tmux split-window -h -t &quot;$session:shell&quot; -c &quot;$PWD&quot;
+  tmux send-keys -t &quot;$session:shell.1&quot; &#x27;tail -f logs/app.log&#x27; Enter
+  tmux select-window -t &quot;$session:editor&quot;
+fi
+tmux attach -t &quot;$session&quot;
+EOF
+chmod +x ~/bin/workon
+workon ~/projects/myapp</code></pre>
+<p>Patterns used: <code>new-session -d</code> (detached build), <code>-c</code> for the working directory, <code>send-keys ... Enter</code> to start commands, <code>-t session:window.pane</code> targeting.</p>
+<h2>6. Logging panes</h2>
+<pre><code class="language-bash"># Log the current pane to a file (toggle)
+# prefix + :pipe-pane -o &quot;cat &gt;&gt; /tmp/deploy.log&quot;
+tmux pipe-pane -o &quot;cat &gt;&gt; /tmp/deploy-$(date +%F).log&quot;
+
+# Stop logging
+tmux pipe-pane
+
+# Capture the whole scrollback right now
+tmux capture-pane -p -S -5000 &gt; /tmp/pane-full.txt</code></pre>
+<p>Logging is the poor man&#x27;s audit trail for deploys and incident work: start it before the risky command, stop after, keep the file.</p>
+<h2>7. Pairing and sharing</h2>
+<pre><code class="language-bash"># Two users attach to the same session (read-write both)
+tmux -S /tmp/pair attach -t deploy
+# Second user: tmux -S /tmp/pair attach -t deploy
+# Fix socket permissions so both users can join
+chmod 770 /tmp/pair  # plus shared group, or use 777 on trusted boxes
+
+# Read-only observer
+tmux attach -t deploy -r</code></pre>
+<p>Etiquette: announce before typing in a shared session; use the read-only flag for observers.</p>
+<h2>8. Session hygiene</h2>
+<pre><code class="language-bash"># What is running where (find the forgotten job)
+tmux ls
+for s in $(tmux ls -F &#x27;#S&#x27;); do echo &quot;== $s&quot;; tmux list-panes -s -t &quot;$s&quot; \
+  -F &#x27;#W:#P #{pane_current_command}&#x27;; done
+
+# Kill dead sessions, keep the list short
+tmux kill-session -t old-project
+
+# Server-wide: kill everything (careful)
+tmux kill-server</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li><code>tmux attach</code> says &quot;no sessions&quot;: the server died (reboot) or you</li>
+<p>are on a different host; sessions live on the machine where tmux runs, not on your laptop.</p>
+<li>Garbage characters after resize: <code>prefix + r</code> redraw, or detach and</li>
+<p>reattach; also check <code>$TERM</code> matches outside and inside tmux (<code>tmux-256color</code> or <code>screen-256color</code>).</p>
+<li>Copy-paste to the system clipboard over SSH: needs OSC 52 support;</li>
+<p><code>set -g set-clipboard on</code> plus a modern terminal, otherwise paste via the buffer file.</p>
+<li>Nested tmux (local tmux + remote tmux): double the prefix for the</li>
+<p>inner session, or set a different prefix remotely to stay sane.</p>
+<li>Scrollback lost on pane close: raise <code>history-limit</code>, or log</li>
+<p>important panes from the start.</p>
+<li><code>mouse on</code> steals text selection: hold Shift while selecting to get</li>
+<p>the terminal&#x27;s native selection back.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Key binding does nothing: <code>tmux list-keys | grep &lt;key&gt;</code> shows the</li>
+<p>binding; <code>prefix + ?</code> lists all; check for conflicts with the terminal or SSH client.</p>
+<li>Layout script targets the wrong pane: list panes with</li>
+<p><code>tmux list-panes -t session -F &#x27;#D #W #{pane_current_command}&#x27;</code> and fix the <code>-t</code> selectors.</p>
+<li>tmux server will not start: stale socket in <code>/tmp/tmux-&lt;uid&gt;/</code>;</li>
+<p>remove it if no tmux process is alive (<code>pgrep tmux</code>).</p>
+<li>Colors broken inside tmux: set <code>TERM=tmux-256color</code> before starting</li>
+<p>the server, and <code>set -g default-terminal &quot;tmux-256color&quot;</code> in conf.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>tmux sessions are where long-running attacker activity hides: a detached session survives logout and keeps running implants, exfiltration loops, or miners. Detect misuse with:</p>
+<pre><code class="language-bash"># Sessions on shared servers: who owns them and what runs inside
+tmux ls 2&gt;/dev/null
+for s in $(tmux ls -F &#x27;#S&#x27; 2&gt;/dev/null); do
+  echo &quot;== $s&quot;; tmux list-panes -s -t &quot;$s&quot; \
+    -F &#x27;#{pane_current_command} #{pane_current_path}&#x27;; done
+
+# Sockets in /tmp: unexpected tmux servers
+ls -la /tmp/tmux-*/ 2&gt;/dev/null
+sudo find /tmp -name &#x27;tmux-*&#x27; -type d 2&gt;/dev/null
+
+# Processes whose parent is a detached tmux, doing network I/O
+ps -ef | grep -iE &#x27;miner|xmrig|ncat|nc &#x27; | grep -v grep</code></pre>
+<p>Defensive rules: audit tmux sessions on shared jump hosts regularly, kill orphaned sessions from departed users, restrict socket directory permissions, and treat an unfamiliar persistent session running network tools as an incident until proven otherwise. For forensics, pane scrollback and pipe-pane logs are gold: capture them before killing anything.</p>
+<h2>Key references</h2>
+<ul>
+<li>tmux 3.4 manual: https://man.openbsd.org/tmux.1</li>
+<li>tmux GitHub: https://github.com/tmux/tmux</li>
+<li>&quot;tmux 2: Productive Mouse-Free Development&quot; (Hogan): workflow ideas.</li>
+<li>MITRE ATT&amp;CK T1059 context: shells persist via multiplexers too.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

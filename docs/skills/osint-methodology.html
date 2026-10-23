@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: osint-methodology</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>osint-methodology</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when planning and running an open source intelligence</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-passive.html">recon-passive</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>theHarvester</td><td>4.x</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>OSINT is the collection and analysis of publicly available information to answer a specific intelligence question. This skill covers the disciplined methodology: the intelligence cycle applied to open sources, collection planning, source evaluation, researcher OPSEC, and evidence handling. Scope is strictly public sources, used lawfully: respect terms of service, privacy law, and the engagement&#x27;s written authorization. Never access non-public data, never bypass access controls, never pretext as someone else to obtain private information.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Write the intelligence requirement as a question, with a deadline</li>
+<p>and a named requester.</p>
+<li>Break the question into sub-questions and map each to source types</li>
+<p>(domains, people, social, documents, code, infrastructure).</p>
+<li>Set up a clean research environment and sock puppet accounts before</li>
+<p>touching any target.</p>
+<li>Collect in passes: broad sweep first, then deep dives on the leads</li>
+<p>that matter.</p>
+<li>Evaluate every source for reliability and every item for credibility</li>
+<p>before it enters the report.</p>
+<li>Corroborate key facts with two independent sources.</li>
+<li>Document everything with timestamps, URLs, and archived copies.</li>
+<li>Report findings with confidence levels and explicit gaps.</li>
+</ol>
+<h2>1. The OSINT cycle</h2>
+<p>Direction, Collection, Processing, Analysis, Dissemination. In practice:</p>
+<ul>
+<li>Direction: the requester states the question. &quot;Which domains does</li>
+<p>this company expose?&quot; is answerable; &quot;tell me everything&quot; is not. Push back until the question is specific.</p>
+<li>Collection: gather raw data from public sources per the plan.</li>
+<li>Processing: deduplicate, normalize, and structure the data (spread-</li>
+<p>sheets, timelines, link charts).</p>
+<li>Analysis: answer the question, assign confidence, note what you</li>
+<p>could not find.</p>
+<li>Dissemination: deliver the report to the authorized requester only.</li>
+</ul>
+<p>Revisit direction when collection shows the question was wrong. The cycle is a loop, not a straight line.</p>
+<h2>2. Collection plan</h2>
+<p>Write the plan before you collect. Template:</p>
+<pre><code class="language-text">Requirement: Map the external attack surface of example.com for the
+  authorized assessment starting 2026-11-01.
+Sub-questions:
+  1. Which domains and subdomains resolve publicly? (DNS, CT logs)
+  2. Which IPs and ASNs host them? (BGP, reverse DNS)
+  3. What technologies are exposed? (headers, certificates)
+  4. Are there leaked credentials tied to the domain? (breach data)
+Sources: crt.sh, DNS, RDAP, Shodan (authorized use), GitHub code search
+Timebox: 3 days. Stop conditions: diminishing returns, or any source
+  requiring authentication we do not have.</code></pre>
+<p>A timebox per sub-question stops OSINT from expanding forever. If a lead would take a day to chase, check with the requester first.</p>
+<h2>3. Research environment and OPSEC</h2>
+<p>Keep research separate from your real identity:</p>
+<pre><code class="language-bash"># Dedicated research VM or browser profile, VPN exit in a neutral country
+# Never log into personal accounts from the research profile
+
+# Separate theHarvester runs per engagement with output directories
+theHarvester -d example.com -b crtsh,certspotter -f /cases/acme/theharvester.html
+
+# Archive every important page at collection time (pages change or vanish)
+# Use the Wayback Machine save endpoint or a local archive tool, and note
+# the archive URL next to the live URL in your notes</code></pre>
+<p>OPSEC rules:</p>
+<ul>
+<li>Use sock puppet accounts created for the engagement, with no links</li>
+<p>to your real identity (separate email, no phone reuse, no personal photos).</p>
+<li>Do not interact with the target: no friend requests, no follows, no</li>
+<p>messages, no comments. Passive observation only unless the authorization explicitly allows contact.</p>
+<li>Do not log into the target&#x27;s services with the research identity in</li>
+<p>ways that create audit trails tied to the engagement unless approved.</p>
+<li>Keep case material encrypted at rest and delete it at the end of the</li>
+<p>retention period in the contract.</p>
+</ul>
+<h2>4. Source evaluation</h2>
+<p>Not all public data is good data. Score sources on:</p>
+<ul>
+<li>Authority: who publishes it (registry data beats a random blog).</li>
+<li>Freshness: when was it updated (DNS data goes stale fast).</li>
+<li>Corroboration: does a second independent source agree.</li>
+<li>Bias and motive: is the source selling something or pushing a view.</li>
+</ul>
+<p>Credibility scale for the report: confirmed (two independent sources), probable (one strong source), possible (one weak source), unknown. Never present a single-source social media claim as confirmed.</p>
+<h2>5. Collection passes</h2>
+<p>Pass 1, broad sweep (hours): enumerate the obvious. Domains from certificate transparency, company website, job ads (they leak tech stacks), public code repos, app store listings.</p>
+<pre><code class="language-bash"># Certificate transparency sweep for subdomains
+curl -s &quot;https://crt.sh/?q=%25.example.com&amp;output=json&quot; \
+  | python3 -c &quot;
+import json,sys
+data=json.load(sys.stdin)
+names=set()
+for e in data:
+    for n in e[&#x27;name_value&#x27;].splitlines():
+        names.add(n.strip().lower())
+print(&#x27;\n&#x27;.join(sorted(names)))&quot; | head -50</code></pre>
+<p>Pass 2, deep dives (days): chase the leads. Historic DNS, document metadata, employee tech mentions, infrastructure reuse across domains.</p>
+<p>Pass 3, verification: re-check the key facts, archive the evidence, and close gaps or mark them as gaps.</p>
+<h2>6. Evidence handling</h2>
+<p>Every finding needs a trail back to the source:</p>
+<pre><code class="language-bash"># Case directory layout
+/cases/acme/
+  plan.md            # collection plan and requirements
+  log.md             # dated collection log: what, when, source URL
+  evidence/          # archived pages, screenshots, raw JSON
+  analysis.md        # working analysis and confidence notes
+  report.md          # final deliverable</code></pre>
+<p>Log format per entry: timestamp (UTC), collector, source URL, archive URL, what was collected, and why it matters. Screenshots get filenames with date and subject. Hash raw downloads so you can prove they have not changed.</p>
+<h2>7. Analysis techniques</h2>
+<ul>
+<li>Timelining: put events in chronological order; gaps and clusters</li>
+<p>reveal campaigns and working hours.</p>
+<li>Link analysis: map people, domains, emails, and IPs as a graph;</li>
+<p>shared infrastructure links seemingly separate entities.</p>
+<li>Contradiction hunting: when two sources disagree, dig into which is</li>
+<p>newer or more authoritative instead of averaging them.</p>
+<li>Hypothesis testing: write the conclusion you expect, then actively</li>
+<p>look for disconfirming evidence before reporting.</p>
+</ul>
+<h2>8. Reporting</h2>
+<p>Structure: executive summary, requirement restatement, key findings with confidence levels, detailed findings with evidence links, gaps and limitations, recommendations, appendix of sources. Mark every finding confirmed, probable, or possible. State what you did not find as clearly as what you did. Deliver only to the authorized requester over an approved channel.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The target has almost no public footprint. Report the thin result</li>
+<p>honestly instead of padding with speculation; suggest adjacent collection (suppliers, job ads) if authorized.</p>
+<li>Sources contradict each other. Present both with dates and let the</li>
+<p>requester decide, noting which you judge more reliable and why.</p>
+<li>A source requires login or payment. Check the authorization and</li>
+<p>terms of service first; some paid data sources are fine, scraping behind a login usually is not.</p>
+<li>You stumble on clearly private data (exposed credentials, personal</li>
+<p>documents). Stop, document minimally for the report, notify the requester through proper channels, and do not exploit or spread it.</p>
+<li>Language barriers: machine translate, but flag translated quotes as</li>
+<p>translations and verify key terms with a second tool.</p>
+<li>Sock puppet gets blocked or flagged. Do not create replacements to</li>
+<p>evade the block; note the limitation and move to other sources.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The requirement cannot be answered from public sources: say so</li>
+<p>early, propose a narrowed question, and do not drift into gray-area collection to fill the gap.</p>
+<li>You find evidence of ongoing crime beyond the engagement scope:</li>
+<p>report to the requester and follow their legal guidance; do not investigate further on your own.</p>
+<li>A source threatens legal action over your collection: stop that</li>
+<p>collection immediately, preserve your authorization paperwork, and escalate to the requester&#x27;s legal contact.</p>
+<li>The engagement needs active contact (interviews, pretexting):</li>
+<p>that is a different authorization and usually a different skill set. Get explicit written approval before any interaction.</p>
+<li>Timebox expires with gaps remaining: report the gaps with a cost</li>
+<p>estimate to close them and let the requester decide.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>OSINT methodology is neutral tradecraft; defenders use it and defend against it:</p>
+<ul>
+<li>Attackers run the same cycle against your organization. Reduce</li>
+<p>their raw material: minimize DNS exposure, scrub document metadata, review what job ads and public code reveal.</p>
+<li>Defenders use OSINT for threat intel and incident scoping: find</li>
+<p>attacker infrastructure, track ransomware leak sites for your data, and verify breach claims before reacting.</p>
+<li>Watch for collection against you: certificate transparency</li>
+<p>monitoring alerts you when someone (or you) issues certs for your domains; canary tokens in public documents reveal who opens them.</p>
+<li>Attackers evade OSINT-based detection by rotating infrastructure</li>
+<p>fast and reusing bulletproof hosting. Track behavior (TTPs) not just IOCs.</p>
+<li>Tune your external footprint quarterly with the same passes in</li>
+<p>this skill, and fix what you would not want an attacker to find.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1590 (Gather Victim Network Information), T1591</li>
+<p>(Gather Victim Org Information), T1593 (Search Open Websites and Domains), T1596 (Search Open Technical Databases).</p>
+<li>NATO OSINT Handbook concepts (intelligence cycle applied to open</li>
+<p>sources).</p>
+<li>theHarvester documentation: https://github.com/laramies/theHarvester</li>
+<li>crt.sh (certificate transparency): https://crt.sh/</li>
+<li>SANS SEC487 / SEC497 OSINT course concepts (course references).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

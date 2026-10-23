@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: domain-osint</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>domain-osint</h2><div class="meta"><span class="badge gray">osint</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when investigating domains, DNS history, certificates,</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="osint-methodology.html">osint-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>BIND</td><td>9.x</td></tr><tr><td>curl</td><td>8.x</td></tr></tbody></table><p>Domains are the skeleton of internet infrastructure, and almost every fact about them is public: who registered them, where they resolve, what certificates they hold, and what they resolved to last year. This skill covers domain and DNS OSINT on public sources for authorized work: triaging suspicious domains, mapping an organization&#x27;s footprint, and linking infrastructure. Respect rate limits, terms of service, and privacy law; use only public data.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Start with the domain as given: normalize it (lowercase, strip</li>
+<p>URL wrappers, handle punycode).</p>
+<li>Pull RDAP/WHOIS for registrar, creation date, and status flags.</li>
+<li>Resolve current DNS (A, AAAA, MX, NS, TXT, SOA) and note TTLs.</li>
+<li>Mine certificate transparency for subdomains and issuance history.</li>
+<li>Check passive DNS history for past IPs and nameservers.</li>
+<li>Pivot: which other domains share the IP, ASN, nameserver, or</li>
+<p>certificate.</p>
+<li>Score the domain (age, registrar, patterns) and record a verdict.</li>
+<li>Archive the evidence with timestamps and move on.</li>
+</ol>
+<h2>1. RDAP and WHOIS</h2>
+<p>RDAP is the modern, structured replacement for WHOIS. Use it first.</p>
+<pre><code class="language-bash"># RDAP lookup (JSON, structured, rate-limited politely)
+curl -s &quot;https://rdap.verisign.com/com/v1/domain/example.com&quot; | python3 -m json.tool | head -60
+
+# Key fields to read: creation date, registrar, status flags
+# (clientHold, serverHold), nameservers, last update
+
+# Classic whois as fallback
+whois example.com | grep -iE &quot;creation|registrar|status|name server&quot; | head -20</code></pre>
+<p>Red flags in registration data: created days ago, privacy-protected on a domain impersonating a brand, registrar known for abuse, status flags showing recent changes. Note that GDPR redaction hides most registrant data on gTLDs now; work with what is public (dates, registrar, nameservers, statuses).</p>
+<h2>2. Current DNS enumeration</h2>
+<pre><code class="language-bash"># Full record sweep with dig (BIND 9.x)
+for t in A AAAA MX NS TXT SOA CAA; do
+  echo &quot;== $t ==&quot;
+  dig +short example.com $t
+done
+
+# Zone transfer attempt (usually refused; note the refusal, do not force it)
+dig axfr example.com @ns1.example.com
+
+# Check DNSSEC
+dig +dnssec example.com SOA | grep -E &quot;RRSIG|ad flag&quot;
+
+# Reverse DNS on the hosting IP
+dig +short -x 93.184.216.34</code></pre>
+<p>Record what matters: hosting IP and ASN, mail provider (MX), TXT records (SPF, DKIM selectors, verification tokens that leak SaaS usage), and nameserver provider. A domain with MX pointing at a free mailbox provider while impersonating a bank is a strong phishing signal.</p>
+<h2>3. Certificate transparency</h2>
+<p>Every public TLS certificate is logged. crt.sh is the standard interface.</p>
+<pre><code class="language-bash"># All subdomains ever certified for a domain
+curl -s &quot;https://crt.sh/?q=%25.example.com&amp;output=json&quot; \
+  | python3 -c &quot;
+import json,sys
+seen=set()
+for e in json.load(sys.stdin):
+    for n in e[&#x27;name_value&#x27;].splitlines():
+        n=n.strip().lower()
+        if n and not n.startswith(&#x27;*&#x27;):
+            seen.add(n)
+print(&#x27;\n&#x27;.join(sorted(seen)))&quot;
+
+# Issuance timeline: when were certs issued (bursts suggest campaigns)
+curl -s &quot;https://crt.sh/?q=%25.example.com&amp;output=json&quot; \
+  | python3 -c &quot;
+import json,sys
+from collections import Counter
+c=Counter(e[&#x27;entry_timestamp&#x27;][:10] for e in json.load(sys.stdin))
+for d in sorted(c): print(d, c[d])&quot;</code></pre>
+<p>For a suspicious domain, check: certificate age vs domain age (a cert issued yesterday on a week-old domain is typical for phishing), issuer (free ACME issuers are normal now, so this is weak signal alone), and subject alternative names shared with other domains.</p>
+<h2>4. Passive DNS and history</h2>
+<p>Passive DNS shows where a domain pointed in the past, which links current infrastructure to old campaigns.</p>
+<pre><code class="language-bash"># ViewDNS or similar public passive DNS (respect terms, low volume)
+curl -s &quot;https://api.viewdns.info/propagation/?domain=example.com&quot; | head -20
+
+# Historical approach with local data: query common public resolvers
+# and compare against your notes from previous investigations
+for r in 1.1.1.1 8.8.8.8 9.9.9.9; do
+  echo &quot;== $r ==&quot;; dig +short example.com A @$r
+done</code></pre>
+<p>What to look for: IP changes right before a campaign, moves between ASNs (bulletproof hosting hops), and long-dormant domains suddenly activated. Keep your own notes; your history file becomes passive DNS for your team.</p>
+<h2>5. Infrastructure pivoting</h2>
+<p>One domain is a thread; pull it to find the sweater.</p>
+<pre><code class="language-bash"># Reverse IP: which domains share the host (use a passive DNS source)
+# Then check each for registration patterns
+
+# ASN lookup for the hosting IP
+whois -h whois.cymru.com &quot; -v 93.184.216.34&quot;
+
+# BGP origin check
+curl -s &quot;https://api.bgpview.io/ip/93.184.216.34&quot; \
+  | python3 -c &quot;import json,sys; d=json.load(sys.stdin)[&#x27;data&#x27;];
+print(d[&#x27;prefixes&#x27;][0][&#x27;asn&#x27;][&#x27;asn&#x27;], d[&#x27;prefixes&#x27;][0][&#x27;asn&#x27;][&#x27;name&#x27;])&quot;</code></pre>
+<p>Pivot points in order of reliability: exact IP match, same /24 with matching registration patterns, shared nameserver, shared certificate, shared ASN. Attackers share infrastructure to save money; defenders link it to burn the whole cluster at once. Verify each link before asserting it: shared Cloudflare IPs mean nothing, shared bulletproof-host IPs mean a lot.</p>
+<h2>6. Scoring a suspicious domain</h2>
+<p>Triage checklist for a domain from a phishing email or alert:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Domain triage heuristics. Each hit adds suspicion; verify manually.&quot;&quot;&quot;
+import datetime
+
+def triage(domain, created, registrar):
+    score, reasons = 0, []
+    age = (datetime.date.today() - created).days
+    if age &lt; 30:
+        score += 30; reasons.append(f&quot;very new: {age} days old&quot;)
+    elif age &lt; 180:
+        score += 10; reasons.append(f&quot;young: {age} days old&quot;)
+    if any(k in domain for k in [&quot;login&quot;, &quot;verify&quot;, &quot;secure&quot;, &quot;update&quot;, &quot;account&quot;]):
+        score += 15; reasons.append(&quot;contains lure keyword&quot;)
+    if domain.count(&quot;-&quot;) &gt;= 2 or sum(c.isdigit() for c in domain) &gt;= 3:
+        score += 10; reasons.append(&quot;suspicious characters&quot;)
+    print(domain, &quot;score:&quot;, score)
+    for r in reasons: print(&quot; -&quot;, r)
+
+triage(&quot;secure-login-update-2026.example.com&quot;, datetime.date(2026, 10, 20), &quot;cheap-registrar&quot;)</code></pre>
+<p>Combine with: does it resolve, does it serve a login page, does the certificate match the brand, is it on any blocklist. A score is a triage aid, not a verdict; always confirm with content inspection in a safe sandbox.</p>
+<h2>7. Mapping an organization&#x27;s footprint</h2>
+<p>For authorized external recon, systematize:</p>
+<pre><code class="language-bash"># 1. Subdomains from CT logs (see section 3), save to a file
+# 2. Resolve them all
+cat subdomains.txt | xargs -P 20 -I{} sh -c &#x27;echo &quot;{} $(dig +short {} A | head -1)&quot;&#x27; \
+  &gt; resolved.txt
+
+# 3. Group by IP/ASN to find hosting clusters
+awk &#x27;{print $2}&#x27; resolved.txt | sort | uniq -c | sort -rn | head -20
+
+# 4. Check each live host for a TLS cert and banner (light touch only)</code></pre>
+<p>Stay passive where possible; active port scanning needs explicit authorization even from the outside. Document the boundary in the collection plan.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Wildcard DNS returns an IP for every subdomain. Detect it by</li>
+<p>resolving a random non-existent name first; if it resolves, your subdomain list is polluted.</p>
+<li>DNS-based blocklists and sinkholes: a domain resolving to a known</li>
+<p>sinkhole IP is already neutralized; note it and move on.</p>
+<li>Privacy-protected WHOIS is the norm now. Do not try to bypass it;</li>
+<p>pivot on technical data (IPs, certs, nameservers) instead.</p>
+<li>IDN homographs: check punycode (<code>xn--</code>) forms; a domain that looks</li>
+<p>like a brand in the email client may be Cyrillic or Greek letters.</p>
+<li>Fast flux: IPs change every few minutes. Note the flux pattern</li>
+<p>itself as the finding; single snapshots mislead.</p>
+<li>Rate limits on crt.sh and RDAP: cache results, space queries, and</li>
+<p>never hammer public infrastructure from an investigation script.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The domain is actively phishing your users: escalate to incident</li>
+<p>response, request takedown via the registrar and hosting provider, and submit to blocklist feeds.</p>
+<li>You find your own organization&#x27;s data on attacker infrastructure:</li>
+<p>treat as an incident, preserve evidence, and engage the IR process.</p>
+<li>Registration data suggests an insider or partner: hand the finding</li>
+<p>to the investigation lead; do not contact the subject.</p>
+<li>You need non-public data (registrar logs, hosting customer info):</li>
+<p>that requires legal process. Route through legal, not through clever queries.</p>
+<li>Infrastructure links point to a large shared host: do not assert</li>
+<p>attribution on shared IPs alone; find a stronger pivot or mark it inconclusive.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Domain OSINT cuts both ways:</p>
+<ul>
+<li>Attackers monitor certificate transparency for your new</li>
+<p>subdomains to find fresh targets. Watch CT logs for your own domains and investigate unexpected issuances.</p>
+<li>Attackers age domains and use reputable registrars to look</li>
+<p>legitimate. Do not rely on age alone; inspect content and behavior.</p>
+<li>Defenders can poison attacker recon with canary subdomains and</li>
+<p>monitor who resolves or probes them.</p>
+<li>Track typosquat registrations of your brand proactively and</li>
+<p>takedown the malicious ones before campaigns start.</p>
+<li>Your own DNS history is attacker intel: minimize stale records,</li>
+<p>remove forgotten subdomains, and keep SPF/DKIM tight so your domain is harder to spoof.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1590.002 (DNS), T1593 (Search Open Websites and</li>
+<p>Domains), T1583.001 (Acquire Domains), T1566 (Phishing).</p>
+<li>RDAP specification (RFC 9082, 9083).</li>
+<li>crt.sh documentation: https://crt.sh/</li>
+<li>BIND 9 dig manual: https://bind9.readthedocs.io/</li>
+<li>Cymru IP to ASN mapping: https://www.team-cymru.com/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

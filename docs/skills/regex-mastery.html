@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: regex-mastery</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>regex-mastery</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing or debugging regular expressions: choosing</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="python-cli-tooling.html">python-cli-tooling</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>GNU grep</td><td>3.11</td></tr><tr><td>PCRE2</td><td>10.44</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Regular expressions are the shared language of text processing, but three flavors with different metacharacters cause most of the pain: BRE (basic, used by default grep and sed), ERE (extended, <code>grep -E</code> / <code>sed -E</code>), and PCRE (Perl-compatible, <code>grep -P</code>, Python, most modern languages). This skill covers writing correct patterns in each flavor, the building blocks from character classes to lookarounds, practical extraction recipes, and the performance traps that turn a pattern into a denial of service.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Pick the flavor first: ERE for grep/sed/awk work, PCRE when you need</li>
+<p>lookarounds or non-greedy matching.</p>
+<li>Anchor the pattern (<code>^</code>, <code>$</code>, <code>\b</code>) so it matches what you mean and</li>
+<p>runs fast.</p>
+<li>Build from small pieces: character class, then quantifier, then group.</li>
+<li>Test against both matching and non-matching samples before using it.</li>
+<li>Prefer specific classes (<code>[0-9]</code>, <code>[A-Za-z]</code>) over <code>.</code> to avoid</li>
+<p>over-matching.</p>
+<li>Capture with groups and reference them in replacements.</li>
+<li>Check for nested quantifiers (<code>(a+)+</code>) that cause catastrophic</li>
+<p>backtracking; rewrite with atomic groups or possessive quantifiers in PCRE.</p>
+<li>Document tricky patterns with a comment and example matches.</li>
+</ol>
+<h2>1. Know your flavor</h2>
+<pre><code class="language-bash"># BRE (default grep/sed): ( ) { } need backslashes to be special
+grep &#x27;foo\(bar\)\+&#x27; file.txt        # BRE: matches foobar, foobarbar...
+
+# ERE (grep -E, sed -E, awk): metacharacters work unescaped
+grep -E &#x27;foo(bar)+&#x27; file.txt
+sed -E &#x27;s/foo(bar)+/X/&#x27; file.txt
+
+# PCRE (grep -P): lookarounds, \d \w \s, non-greedy, atomic groups
+grep -P &#x27;foo(?=bar)&#x27; file.txt       # foo only when followed by bar
+grep -P &#x27;\d{1,3}(\.\d{1,3}){3}&#x27; file.txt
+
+# Which flavor is your tool? Test quickly:
+echo &quot;aab&quot; | grep -E &#x27;a+b&#x27;    # ERE ok
+echo &quot;aab&quot; | grep -P &#x27;a+?b&#x27;   # PCRE non-greedy ok</code></pre>
+<p>Rule of thumb: use <code>grep -E</code> for portable scripts (PCRE in grep is experimental and absent on some systems); use PCRE in Python/Perl where it is first-class.</p>
+<h2>2. Building blocks</h2>
+<pre><code class="language-bash"># Character classes
+grep -E &#x27;[0-9]+&#x27; file            # digits
+grep -E &#x27;[A-Za-z_][A-Za-z0-9_]*&#x27; # identifier-like words
+grep -E &#x27;[^0-9]&#x27; file            # NOT a digit (^ first = negation)
+
+# Shorthand (PCRE / ERE with grep -P)
+grep -P &#x27;\d+&#x27; file               # digits
+grep -P &#x27;\w+&#x27; file               # word chars [A-Za-z0-9_]
+grep -P &#x27;\s+&#x27; file               # whitespace
+
+# Anchors: ^ start, $ end, \b word boundary
+grep -E &#x27;^ERROR&#x27; app.log         # lines starting with ERROR
+grep -E &#x27;\.log$&#x27; files.txt       # ending in .log
+grep -w &#x27;fail&#x27; app.log           # whole word only
+
+# Quantifiers: * (0+), + (1+), ? (0/1), {n}, {n,}, {n,m}
+grep -E &#x27;colou?r&#x27; file           # color or colour
+grep -E &#x27;[0-9]{4}-[0-9]{2}-[0-9]{2}&#x27; file   # YYYY-MM-DD
+
+# Alternation and grouping
+grep -E &#x27;^(INFO|WARN|ERROR):&#x27; app.log
+grep -E &#x27;(ab){2,3}&#x27; file         # abab or ababab</code></pre>
+<p>Greedy vs non-greedy (PCRE): <code>.*</code> grabs as much as possible, <code>.*?</code> as little as possible.</p>
+<pre><code class="language-bash">echo &#x27;&lt;a&gt;1&lt;/a&gt;&lt;b&gt;2&lt;/b&gt;&#x27; | grep -oP &#x27;&lt;.*&gt;&#x27;    # &lt;a&gt;1&lt;/a&gt;&lt;b&gt;2&lt;/b&gt; (greedy)
+echo &#x27;&lt;a&gt;1&lt;/a&gt;&lt;b&gt;2&lt;/b&gt;&#x27; | grep -oP &#x27;&lt;.*?&gt;&#x27;   # &lt;a&gt; then &lt;/a&gt;... per tag</code></pre>
+<h2>3. Capture groups and replacements</h2>
+<pre><code class="language-bash"># sed -E: reorder date from DD/MM/YYYY to YYYY-MM-DD
+echo &quot;23/10/2026&quot; | sed -E &#x27;s#([0-9]{2})/([0-9]{2})/([0-9]{4})#\3-\2-\1#&#x27;
+
+# Extract key=value pairs, print value only
+grep -oP &#x27;^token=\K.*&#x27; config.env        # \K drops the matched prefix
+
+# awk with match() and capture groups (gawk)
+echo &quot;user=izaz id=42&quot; | awk &#x27;match($0, /id=([0-9]+)/, m) {print m[1]}&#x27;
+
+# Python: named groups make extraction readable</code></pre>
+<pre><code class="language-python">import re
+log = &#x27;2026-10-23 07:12:01 ERROR db connection failed (retry 3)&#x27;
+m = re.match(
+    r&#x27;(?P&lt;date&gt;\d{4}-\d{2}-\d{2}) (?P&lt;time&gt;\d{2}:\d{2}:\d{2}) &#x27;
+    r&#x27;(?P&lt;level&gt;[A-Z]+) (?P&lt;msg&gt;.*)&#x27;, log)
+print(m.groupdict())
+# {&#x27;date&#x27;: &#x27;2026-10-23&#x27;, &#x27;time&#x27;: &#x27;07:12:01&#x27;, &#x27;level&#x27;: &#x27;ERROR&#x27;,
+#  &#x27;msg&#x27;: &#x27;db connection failed (retry 3)&#x27;}</code></pre>
+<h2>4. Lookarounds (PCRE only)</h2>
+<p>Lookarounds assert context without consuming characters:</p>
+<pre><code class="language-bash"># Password with a digit somewhere ahead (validation)
+echo &quot;s3cret!&quot; | grep -P &#x27;^(?=.*\d).{6,}$&#x27; &amp;&amp; echo valid
+
+# Find &#x27;error&#x27; NOT preceded by &#x27;no &#x27;
+grep -oP &#x27;(?&lt;!no )error&#x27; app.log
+
+# Split camelCase: insert space before capitals not at start
+echo &quot;camelCaseWord&quot; | grep -oP &#x27;(?&lt;!^)(?=[A-Z])|.&#x27; | tr -d &#x27;\n&#x27;
+# Simpler with sed:
+echo &quot;camelCaseWord&quot; | sed -E &#x27;s/([a-z])([A-Z])/\1 \2/g&#x27;
+
+# Match a quoted string, allowing escaped quotes inside
+grep -oP &#x27;&quot;(\\.|[^&quot;\\])*&quot;&#x27; code.js</code></pre>
+<h2>5. Practical recipes</h2>
+<pre><code class="language-bash"># IPv4 addresses (each octet 0-255, strict version)
+grep -oP &#x27;\b(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}\b&#x27; net.log
+
+# Quick-and-dirty IPv4 (fine for log grepping, not validation)
+grep -oE &#x27;\b[0-9]{1,3}(\.[0-9]{1,3}){3}\b&#x27; net.log
+
+# Email-ish (practical, not RFC-perfect)
+grep -oiE &#x27;[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}&#x27; mail.log
+
+# HTTP status codes from an access log, count them
+grep -oP &#x27;&quot; \K[0-9]{3}(?= )&#x27; /var/log/nginx/access.log | sort | uniq -c | sort -rn
+
+# Top 10 client IPs
+grep -oP &#x27;^\S+&#x27; /var/log/nginx/access.log | sort | uniq -c | sort -rn | head
+
+# Strip ANSI color codes from command output
+sed -E &#x27;s/\x1b\[[0-9;]*m//g&#x27; colored.txt
+
+# Validate a semantic version
+echo &quot;1.27.0&quot; | grep -qP &#x27;^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$&#x27; &amp;&amp; echo &quot;semver ok&quot;</code></pre>
+<p>Multiline matching in Python (log entries spanning lines):</p>
+<pre><code class="language-python">import re
+text = open(&#x27;/var/log/app.log&#x27;).read()
+# DOTALL lets . cross newlines; find tracebacks as one match
+for tb in re.findall(r&#x27;Traceback \(most recent call last\):.*?(?=\n\S|\Z)&#x27;,
+                     text, re.DOTALL):
+    print(tb[:200], &#x27;\n---&#x27;)</code></pre>
+<h2>6. Performance: catastrophic backtracking</h2>
+<p>Nested quantifiers make the engine try exponentially many paths:</p>
+<pre><code class="language-bash"># DANGEROUS: (a+)+ on a long string of a&#x27;s with no match hangs
+python3 -c &quot;
+import re, time
+s = &#x27;a&#x27; * 30 + &#x27;!&#x27;
+t = time.time()
+try:
+    re.match(r&#x27;^(a+)+$&#x27;, s)
+except Exception as e:
+    print(e)
+print(&#x27;took&#x27;, round(time.time() - t, 2), &#x27;s&#x27;)
+&quot;</code></pre>
+<p>Fixes: make the inner part specific, use atomic groups <code>(?&gt;...)</code> or possessive quantifiers <code>++</code> in PCRE, or anchor and simplify:</p>
+<pre><code class="language-bash"># PCRE atomic group: once a+ matches, never backtrack into it
+grep -P &#x27;^(?&gt;a+)$&#x27; file
+# Or just write what you mean
+grep -P &#x27;^a+$&#x27; file</code></pre>
+<p>Also: prefer <code>[^&quot;]*</code> over <code>.*?</code> inside quotes (negated class cannot backtrack across the delimiter), and put the most selective literal first so the engine skips non-matching positions fast.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>.</code> does not match newline by default; use <code>[\s\S]</code> or DOTALL/<code>-z</code></li>
+<p>for multiline.</p>
+<li>In BRE, <code>+</code> <code>?</code> <code>|</code> are literal unless escaped; in ERE they are</li>
+<p>special unless escaped. Mixing flavors is the number one bug source.</p>
+<li><code>grep -P</code> may warn &quot;PCRE support is experimental&quot; or be missing on</li>
+<p>macOS/BSD grep; use <code>pcre2grep</code> or Python there.</p>
+<li>Character ranges like <code>[A-z]</code> include <code>[\]^_</code> between Z and a; always</li>
+<p>write <code>[A-Za-z]</code>.</p>
+<li>Locale affects <code>[a-z]</code> in some tools (it can match accented chars);</li>
+<p>set <code>LC_ALL=C</code> for byte-predictable matching in scripts.</p>
+<li><code>$</code> in the shell: single-quote every pattern or the shell eats <code>$</code>,</li>
+<p>backticks, and <code>!</code> (history expansion).</p>
+<li><code>sed</code> <code>&amp;</code> in the replacement means &quot;the whole match&quot;; escape it as</li>
+<p><code>\&amp;</code> when you want a literal ampersand.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Pattern matches too much: add anchors and replace <code>.</code> with negated</li>
+<p>classes; test against a corpus of must-not-match lines.</p>
+<li>Pattern matches nothing: build it up token by token, testing each</li>
+<p>addition; check flavor (BRE vs ERE) first.</p>
+<li>Works in a tester, fails in the script: quoting issue; echo the exact</li>
+<p>pattern the tool receives, or the shell mangled it.</p>
+<li>Too slow on big files: anchor to line start, use <code>grep -F</code> for literal</li>
+<p>pre-filtering before the regex stage, or switch to awk for field-based parsing (far faster than regex on structured logs).</p>
+<li>Still stuck: paste the pattern plus three sample lines (one match,</li>
+<p>two non-matches) into a PCRE debugger or Python with <code>re.DEBUG</code> to see how the engine parses it.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Regex shows up defensively in input validation, WAF rules, and log detection patterns, and offensively in ReDoS (a malicious input crafted to hang a vulnerable pattern). Detect misuse and misconfig with:</p>
+<pre><code class="language-bash"># Find nested-quantifier patterns in code (ReDoS candidates)
+grep -rnE &#x27;\(\.\+\)\+|\(\.\*\)\*|\(\[^\]]+\]\+\)\+&#x27; --include=&#x27;*.py&#x27; src/ | head
+
+# Test a suspect pattern against a hostile input with a timeout
+timeout 3 python3 -c &quot;import re; re.match(r&#x27;^(a+)+\$&#x27;, &#x27;a&#x27;*40+&#x27;!&#x27;)&quot; \
+  &amp;&amp; echo ok || echo &quot;HANGS or too slow&quot;</code></pre>
+<p>Defender rules: validate with allowlists (<code>^[a-z0-9-]+$</code>) instead of blocklists, set regex timeouts where the engine supports them (Python 3.11+ has no built-in timeout; use <code>timeout</code> wrappers or the <code>regex</code> module), prefer parsers over regex for nested formats (HTML, JSON), and never let user input become part of a pattern without <code>re.escape</code>.</p>
+<h2>Key references</h2>
+<ul>
+<li>PCRE2 syntax: https://www.pcre.org/current/doc/html/pcre2pattern.html</li>
+<li>Python re module: https://docs.python.org/3/library/re.html</li>
+<li>GNU grep manual: https://www.gnu.org/software/grep/manual/</li>
+<li>GNU sed manual: https://www.gnu.org/software/sed/manual/sed.html</li>
+<li>OWASP Input Validation Cheat Sheet:</li>
+<p>https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html</p>
+<li>CWE-1333 (Inefficient Regular Expression Complexity): ReDoS.</li>
+<li>CWE-20 (Improper Input Validation): validation done with sloppy</li>
+<p>patterns.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

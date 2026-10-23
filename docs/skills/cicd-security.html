@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: cicd-security</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>cicd-security</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when securing a CI/CD pipeline on an authorized</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="devsecops-pipeline.html">devsecops-pipeline</a> <a href="github-actions.html">github-actions</a> <a href="git-workflows.html">git-workflows</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Trivy</td><td>0.58</td></tr><tr><td>gitleaks</td><td>8.24</td></tr><tr><td>cosign</td><td>2.4</td></tr></tbody></table><p>The CI/CD pipeline builds, tests, and deploys your software, which makes it one of the most valuable targets in the supply chain: a compromised pipeline ships backdoors to every customer at once. This skill covers the pipeline attack surface, the controls that shrink it, and the scanning and signing tooling that proves what you shipped. It pairs with devsecops-pipeline (designing the pipeline) and github-actions (authoring workflows).</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory every workflow, runner, secret, and third-party action</li>
+<p>in the pipeline.</p>
+<li>Map the attack surface: script injection via PR titles, secret</li>
+<p>exfiltration paths, and actions that run with write tokens.</p>
+<li>Set minimal <code>permissions</code> on every workflow and job, and require</li>
+<p>OIDC instead of long-lived cloud keys.</p>
+<li>Pin all third-party actions to commit SHAs and enable Dependabot</li>
+<p>for updates.</p>
+<li>Add secret scanning (gitleaks) so credentials never land in git.</li>
+<li>Add dependency and container scanning (Trivy) as blocking gates.</li>
+<li>Sign release artifacts with cosign and verify signatures on</li>
+<p>deploy.</p>
+<li>Enforce branch protection, required reviews, and CODEOWNERS on</li>
+<p>workflow files.</p>
+</ol>
+<h2>1. Mapping the attack surface</h2>
+<p>The pipeline attack surface is everything an attacker can reach: the workflow YAML, the runner environment, secrets, artifacts, and every third-party action in the chain.</p>
+<pre><code class="language-bash"># Inventory workflows and third-party action usage
+find .github/workflows -name &#x27;*.yaml&#x27; | sort
+grep -rh &#x27;uses:&#x27; .github/workflows | sort | uniq -c | sort -rn
+
+# Find dangerous patterns: unpinned actions, write-all permissions
+grep -rn &#x27;uses:.*@v[0-9]&#x27; .github/workflows        # floating tags, pin these
+grep -rn &#x27;pull_request_target&#x27; .github/workflows   # high-risk trigger
+grep -rn &#x27;permissions.*write-all\|write-all&#x27; .github/workflows
+
+# Classic script injection: PR-controlled data interpolated into run:
+grep -rn &#x27;github.event&#x27; .github/workflows | grep -i &#x27;run:&#x27;</code></pre>
+<p>The highest-risk pattern is interpolating attacker-controlled data (<code>github.event.pull_request.title</code>, issue bodies) into a <code>run:</code> script block. That is remote code execution on your runner, triggered by opening a pull request.</p>
+<h2>2. Least-privilege tokens and OIDC</h2>
+<pre><code class="language-bash">cat &gt; .github/workflows/hardened.yaml &lt;&lt;&#x27;EOF&#x27;
+name: Hardened example
+
+on:
+  pull_request:
+
+permissions: {}  # deny all at the top
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read   # only what this job needs
+    steps:
+      - uses: actions/checkout@v4  # pin to SHA in production
+      - run: make build
+
+  deploy:
+    needs: build
+    if: github.ref == &#x27;refs/heads/main&#x27;
+    runs-on: ubuntu-24.04
+    environment: production
+    permissions:
+      contents: read
+      id-token: write  # OIDC only, no stored cloud keys
+    steps:
+      - uses: actions/checkout@v4  # pin to SHA in production
+      - name: Assume deploy role via OIDC
+        uses: aws-actions/configure-aws-credentials@v4  # pin to SHA
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/github-deploy
+          aws-region: eu-west-1
+EOF</code></pre>
+<p>Rules: top-level <code>permissions: {}</code> everywhere; per-job grants only; <code>environment: production</code> with required reviewers for deploys; OIDC instead of static <code>AWS_SECRET_ACCESS_KEY</code> in secrets; fork PRs never get secrets.</p>
+<h2>3. Secret scanning with gitleaks</h2>
+<pre><code class="language-bash"># Install gitleaks 8.24 (single static binary)
+# https://github.com/gitleaks/gitleaks/releases
+
+# Scan the working tree for leaked secrets
+gitleaks detect --source . --verbose
+
+# Scan full git history (finds secrets committed long ago)
+gitleaks detect --source . --log-opts=&quot;--all&quot; --verbose
+
+# Baseline: record existing findings so only NEW leaks fail CI
+gitleaks detect --source . --baseline-path .gitleaks-baseline.json --redact</code></pre>
+<pre><code class="language-bash"># CI gate: fail the build on any new secret
+cat &gt; .github/workflows/secrets.yaml &lt;&lt;&#x27;EOF&#x27;
+name: Secret scan
+on: [pull_request]
+permissions: {}
+jobs:
+  gitleaks:
+    runs-on: ubuntu-24.04
+    permissions: { contents: read }
+    steps:
+      - uses: actions/checkout@v4  # pin to SHA in production
+        with:
+          fetch-depth: 0
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2  # pin to SHA in production
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+EOF</code></pre>
+<p>When gitleaks finds a secret, rotate it immediately: removing it from git does not unexpose it, because history keeps it forever. Use <code>git filter-repo</code> to purge it from history after rotation.</p>
+<h2>4. Dependency and image scanning with Trivy</h2>
+<pre><code class="language-bash"># Scan container images for OS and language CVEs
+trivy image --severity HIGH,CRITICAL myapp:1.2.3
+
+# Scan a repository: dependencies, IaC misconfigurations, secrets
+trivy fs --severity HIGH,CRITICAL --scanners vuln,misconfig,secret .
+
+# Scan a Kubernetes manifest before applying
+trivy config --severity HIGH,CRITICAL k8s/
+
+# Output SARIF for the GitHub code scanning UI
+trivy image --format sarif --output trivy.sarif myapp:1.2.3</code></pre>
+<pre><code class="language-bash"># CI gate: block on CRITICAL, warn on HIGH
+cat &gt; .github/workflows/scan.yaml &lt;&lt;&#x27;EOF&#x27;
+name: Vulnerability scan
+on: [pull_request]
+permissions:
+  contents: read
+  security-events: write
+jobs:
+  trivy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4  # pin to SHA in production
+      - name: Build image
+        run: docker build -t myapp:${{ github.sha }} .
+      - name: Scan image
+        uses: aquasecurity/trivy-action@master  # pin to SHA in production
+        with:
+          image-ref: myapp:${{ github.sha }}
+          format: sarif
+          output: trivy-results.sarif
+          severity: CRITICAL
+          exit-code: &quot;1&quot;
+EOF</code></pre>
+<p>Fail the build on CRITICAL findings and triage HIGH within a fixed window. Suppress a finding only with a documented reason and an expiry date, never silently.</p>
+<h2>5. Signing artifacts with cosign</h2>
+<pre><code class="language-bash"># Install cosign 2.4
+# https://github.com/sigstore/cosign/releases
+
+# Generate a key pair (or use keyless OIDC signing in CI)
+cosign generate-key-pair
+
+# Sign a container image
+cosign sign --key cosign.key myapp:1.2.3
+
+# Keyless signing in CI via OIDC (no keys to manage)
+cosign sign myapp:1.2.3
+
+# Verify before deploying: refuse unsigned images
+cosign verify --key cosign.pub myapp:1.2.3
+
+# Sign and verify a release tarball with a blob signature
+cosign sign-blob --key cosign.key --output-signature app.sig app.tar.gz
+cosign verify-blob --key cosign.pub --signature app.sig app.tar.gz</code></pre>
+<p>Enforce verification at deploy time (admission controllers in Kubernetes, policy checks in the deploy job). An unsigned artifact must not reach production, no matter how urgent the release.</p>
+<h2>6. Branch protection and workflow governance</h2>
+<pre><code class="language-bash"># Require PR reviews, status checks, and signed commits on main
+gh api repos/{owner}/{repo}/branches/main/protection -X PUT \
+  -f required_status_checks[strict]=true \
+  -f required_status_checks[contexts][]=&#x27;CI&#x27; \
+  -f enforce_admins=true \
+  -f required_pull_request_reviews[required_approving_review_count]=1 \
+  -f required_pull_request_reviews[dismiss_stale_reviews]=true \
+  -f required_linear_history=true \
+  --silent
+
+# Require review for workflow file changes specifically
+cat &gt; .github/CODEOWNERS &lt;&lt;&#x27;EOF&#x27;
+.github/workflows/ @security-team
+Dockerfile @security-team
+EOF</code></pre>
+<p>CODEOWNERS on <code>.github/workflows/</code> means pipeline changes need a security review, which blocks the quiet insertion of an exfiltration step into a build job.</p>
+<h2>7. Responding to a suspected pipeline compromise</h2>
+<pre><code class="language-bash"># 1. Freeze: disable the workflow and rotate exposed secrets
+gh workflow disable suspicious.yaml
+
+# 2. Find what ran: list recent runs and their logs
+gh run list --workflow=suspicious.yaml --limit 20
+
+# 3. Check what changed: diff workflow files against the last known good
+git log --oneline -10 -- .github/workflows/
+git diff &lt;good-commit&gt; HEAD -- .github/workflows/
+
+# 4. Check artifacts produced by suspicious runs for tampering
+gh run download &lt;run-id&gt;
+
+# 5. Rebuild and re-sign artifacts from a clean commit after remediation</code></pre>
+<p>Treat a compromised pipeline like any incident: contain, preserve logs, find the entry point (often a malicious action update or a stolen token), rotate every secret the pipeline could read, and rebuild artifacts from a verified commit.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Legitimate workflow needs <code>pull_request_target</code> (for labeling</li>
+<p>fork PRs). Never check out the PR&#x27;s code in that workflow; use it only for metadata operations with read-only tokens.</p>
+<li>Trivy flags a CVE in a base image with no fixed version. Options:</li>
+<p>switch to a slimmer base, wait for the upstream fix with a documented exception, or confirm the vulnerable code path is unreachable in your image.</p>
+<li>gitleaks false-positives on test fixtures. Add precise</li>
+<p><code>allowlist</code> rules in <code>.gitleaks.toml</code> for the fixture paths, never a blanket exclusion of whole directories.</p>
+<li>cosign keyless verification fails in air-gapped deploys. Use</li>
+<p>key-based signing with the public key distributed to the deploy environment, and pin the Rekor/Fulcio bundle when available.</p>
+<li>Dependabot PRs pile up and get ignored. Auto-merge patch and</li>
+<p>minor updates after green CI; require human review only for major bumps and for actions.</p>
+<li>OIDC trust misconfigured: the cloud role trusts the wrong repo.</li>
+<p>Scope the trust policy to the exact repository and environment; a wildcard subject lets any repo in the org assume the role.</p>
+<li>Secret scanning passes but a key leaks via build logs. Masked</li>
+<p>secrets can still leak transformed (base64, URL-encoded); audit logs for suspicious echoes and rotate on suspicion.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration of the pipeline itself. Defenders monitor for workflow files changed without a linked review, new <code>uses:</code> entries pointing at unfamiliar actions, jobs requesting <code>id-token: write</code> outside deploy workflows, and runs that access secrets they never used before. Pipeline compromise indicators: a familiar action suddenly exfiltrating (watch for new DNS or HTTPS connections from build jobs to unknown hosts), artifacts whose cosign signatures no longer verify, and deploys triggered outside the normal schedule. Ship workflow audit logs and runner logs to a SIEM; alert on <code>pull_request_target</code> workflows modified by non-security-team authors, and on OIDC role assumptions from unexpected repositories.</p>
+<h2>Key references</h2>
+<ul>
+<li>GitHub Actions security hardening:</li>
+<p>https://docs.github.com/actions/security-guides/security-hardening-for-github-actions</p>
+<li>OWASP Top 10 CI/CD Security Risks:</li>
+<p>https://owasp.org/www-project-top-10-ci-cd-security-risks/</p>
+<li>SLSA framework (supply-chain levels): https://slsa.dev/</li>
+<li>Sigstore/cosign 2.4 docs: https://docs.sigstore.dev/cosign/</li>
+<li>Trivy 0.58 docs: https://aquasecurity.github.io/trivy/</li>
+<li>gitleaks 8.24: https://github.com/gitleaks/gitleaks</li>
+<li>CWE-829 (Inclusion of Functionality from Untrusted Control</li>
+<p>Sphere): unpinned third-party actions.</p>
+<li>CWE-798 (Use of Hard-coded Credentials): secrets in pipelines.</li>
+<li>MITRE ATT&amp;CK T1195.002 (Supply Chain Compromise: Compromise</li>
+<p>Software Supply Chain): pipeline compromise pattern.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

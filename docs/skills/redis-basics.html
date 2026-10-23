@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: redis-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>redis-basics</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when operating Redis 7.4 in development or production:</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Redis</td><td>7.4</td></tr><tr><td>redis-cli</td><td>7.4</td></tr></tbody></table><p>Redis is an in-memory data structure server used as a cache, session store, message queue, and primary data store. It speaks a simple text protocol (RESP), persists optionally to disk, and exposes rich atomic commands for each data type. This skill covers operating Redis 7.4: installation, everyday data-type commands, persistence, access control, memory tuning, backups, and troubleshooting. Scope is single-instance and basic replication operation; cluster resharding internals are out of scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Install Redis 7.4 and verify the server starts with the expected config</li>
+<p>file.</p>
+<li>Connect with redis-cli, run PING, and confirm the protected-mode and</li>
+<p>bind settings.</p>
+<li>Create an ACL user for the application and disable the default user or</li>
+<p>give it a strong password.</p>
+<li>Choose the right data type per use case (string for cache, hash for</li>
+<p>objects, list or stream for queues, sorted set for leaderboards).</p>
+<li>Set TTLs on every cache key so stale data expires on its own.</li>
+<li>Enable AOF plus periodic RDB snapshots for durability, and verify the</li>
+<p>files are written.</p>
+<li>Set maxmemory and an eviction policy that matches the workload.</li>
+<li>Back up dump.rdb and appendonlydir regularly and test a restore.</li>
+<li>Monitor INFO stats, SLOWLOG, and memory usage on a schedule.</li>
+<li>Lock down networking: bind to localhost or a private interface, firewall</li>
+<p>the port, never expose 6379 to the internet.</p>
+</ol>
+<h2>1. Install and first connection</h2>
+<p>Install from your distribution or the official Redis packages, then confirm the version.</p>
+<pre><code class="language-bash"># Debian/Ubuntu (official Redis APT repo recommended for 7.4)
+sudo apt update &amp;&amp; sudo apt install -y redis-server
+redis-server --version
+
+# Start and check status
+sudo systemctl enable --now redis-server
+sudo systemctl status redis-server --no-pager
+
+# Connect locally and run the smoke test
+redis-cli ping
+# Expected: PONG</code></pre>
+<p>Confirm which config file the running server uses, and that protected mode is on:</p>
+<pre><code class="language-bash">redis-cli CONFIG GET protected-mode
+redis-cli CONFIG GET bind
+redis-cli INFO server | grep -E &#x27;redis_version|config_file|process_id&#x27;</code></pre>
+<p>Key files on Debian: config at <code>/etc/redis/redis.conf</code>, data dir at <code>/var/lib/redis</code>, logs via journald (<code>journalctl -u redis-server</code>).</p>
+<h2>2. Core data types and everyday commands</h2>
+<p>Strings are the default: use them for cache entries, counters, and flags.</p>
+<pre><code class="language-bash"># Cache entry with a 10 minute TTL (single atomic command)
+redis-cli SET session:abc123 &#x27;{&quot;user&quot;:&quot;izaz&quot;}&#x27; EX 600
+redis-cli GET session:abc123
+redis-cli TTL session:abc123
+
+# Atomic counters for rate limits or stats
+redis-cli INCR api:hits:2026-10-23
+redis-cli INCRBY inventory:sku42 -3
+
+# Set only if missing (simple distributed lock primitive)
+redis-cli SET lock:deploy worker-1 NX EX 30</code></pre>
+<p>Hashes store objects field by field without serializing the whole thing:</p>
+<pre><code class="language-bash">redis-cli HSET user:1001 name &quot;Izaz&quot; role &quot;student&quot; logins 7
+redis-cli HGET user:1001 name
+redis-cli HGETALL user:1001
+redis-cli HINCRBY user:1001 logins 1</code></pre>
+<p>Lists are queues and stacks. LPUSH plus BRPOP gives a blocking worker queue:</p>
+<pre><code class="language-bash">redis-cli LPUSH jobs &#x27;{&quot;task&quot;:&quot;render&quot;,&quot;id&quot;:9}&#x27;
+redis-cli LPUSH jobs &#x27;{&quot;task&quot;:&quot;email&quot;,&quot;id&quot;:10}&#x27;
+redis-cli LRANGE jobs 0 -1
+# Worker side: block up to 5s for the next job
+redis-cli BRPOP jobs 5</code></pre>
+<p>Sets give uniqueness; sorted sets give ranked data:</p>
+<pre><code class="language-bash">redis-cli SADD tags:post77 linux redis tutorial
+redis-cli SISMEMBER tags:post77 redis
+redis-cli SMEMBERS tags:post77
+
+# Leaderboard: member -&gt; score, ZRANGE with REV for top N
+redis-cli ZADD leaderboard 1500 alice 2300 bob 900 cara
+redis-cli ZREVRANGE leaderboard 0 2 WITHSCORES
+redis-cli ZRANK leaderboard bob</code></pre>
+<p>Streams are the durable log/queue type with consumer groups:</p>
+<pre><code class="language-bash"># Append an event (server assigns the ID)
+redis-cli XADD events * type signup user izaz
+
+# Consumer group reads each message exactly once per group
+redis-cli XGROUP CREATE events workers 0 MKSTREAM
+redis-cli XREADGROUP GROUP workers w1 COUNT 1 BLOCK 5000 STREAMS events &#x27;&gt;&#x27;
+redis-cli XACK events workers 1750000000000-0</code></pre>
+<p>Scan keys safely. Never use KEYS * on a production instance with many keys; it blocks the server:</p>
+<pre><code class="language-bash"># Iterate in small batches instead
+redis-cli --scan --pattern &#x27;session:*&#x27; | head -20
+redis-cli --scan --pattern &#x27;user:*&#x27; | wc -l</code></pre>
+<h2>3. Persistence: RDB snapshots and AOF log</h2>
+<p>RDB is a point-in-time snapshot (compact, fast restarts). AOF logs every write (more durable, larger). Run both in production.</p>
+<pre><code class="language-bash"># Check current persistence settings
+redis-cli CONFIG GET &#x27;save|appendonly|dir|dbfilename&#x27; 
+
+# Snapshot now and confirm the file timestamp moves
+redis-cli BGSAVE
+ls -l /var/lib/redis/dump.rdb
+redis-cli LASTSAVE
+
+# AOF settings in /etc/redis/redis.conf
+# appendonly yes
+# appendfsync everysec</code></pre>
+<p>Recommended <code>redis.conf</code> persistence block:</p>
+<pre><code class="language-bash"># /etc/redis/redis.conf (edit, then restart)
+save 3600 1 300 100 60 10000
+appendonly yes
+appendfsync everysec</code></pre>
+<p>After editing, restart and verify:</p>
+<pre><code class="language-bash">sudo systemctl restart redis-server
+redis-cli CONFIG GET appendonly
+redis-cli INFO persistence | grep -E &#x27;rdb_last_bgsave_status|aof_enabled|aof_last_rewrite_time_sec&#x27;</code></pre>
+<h2>4. Access control: passwords and ACL users</h2>
+<p>Redis 7.4 keeps the legacy <code>requirepass</code> but ACL users are the right tool: per-user passwords plus command and key restrictions.</p>
+<pre><code class="language-bash"># Create an app user limited to its own key prefix, no dangerous commands
+redis-cli ACL SETUSER appuser on &#x27;&gt;S3cure-App-Pass&#x27; \
+  &#x27;+@all -@dangerous -DEBUG -MONITOR -CONFIG&#x27; \
+  &#x27;resetkeys&#x27; &#x27;+@all&#x27; &#x27;~app:*&#x27; &#x27;~session:*&#x27;
+
+# Verify and list users
+redis-cli ACL LIST
+redis-cli ACL WHOAMI
+
+# Disable the default user if everything authenticates as appuser
+redis-cli ACL SETUSER default off
+
+# Persist ACLs to /etc/redis/users.acl so they survive restarts
+redis-cli ACL SAVE</code></pre>
+<p>In <code>redis.conf</code>, point at the ACL file instead of inline passwords:</p>
+<pre><code class="language-bash"># /etc/redis/redis.conf
+# requirepass oldstylepassword   (avoid; use ACLs)
+aclfile /etc/redis/users.acl</code></pre>
+<p>Application connection strings then use the ACL user:</p>
+<pre><code class="language-bash">redis-cli --user appuser --pass &#x27;S3cure-App-Pass&#x27; --askpass PING</code></pre>
+<h2>5. Memory limits and eviction</h2>
+<p>Redis keeps everything in RAM, so cap it and pick an eviction policy. Without a cap, Redis grows until the OOM killer steps in.</p>
+<pre><code class="language-bash"># Set a 2 GB cap and LRU eviction of keys with TTLs
+redis-cli CONFIG SET maxmemory 2gb
+redis-cli CONFIG SET maxmemory-policy volatile-lru
+redis-cli CONFIG REWRITE   # persist to redis.conf
+
+# Check memory pressure
+redis-cli INFO memory | grep -E &#x27;used_memory_human|maxmemory_human|mem_fragmentation_ratio&#x27;
+redis-cli INFO stats | grep evicted_keys</code></pre>
+<p>Policy guide: <code>volatile-lru</code> for cache with TTLs (most common), <code>allkeys-lru</code> when keys have no TTL, <code>volatile-ttl</code> when expiry order matters, <code>noeviction</code> for a primary store (writes fail instead of evicting, so monitor closely).</p>
+<h2>6. Backup and restore</h2>
+<pre><code class="language-bash"># Backup: copy the RDB snapshot and AOF directory (stop writes briefly
+# or accept a slightly inconsistent copy; prefer BGSAVE first)
+redis-cli BGSAVE
+sleep 2
+sudo cp /var/lib/redis/dump.rdb /backup/redis/dump-$(date +%F).rdb
+sudo tar -czf /backup/redis/aof-$(date +%F).tar.gz -C /var/lib/redis appendonlydir
+
+# Restore: stop server, replace files, fix ownership, start
+sudo systemctl stop redis-server
+sudo cp /backup/redis/dump-2026-10-23.rdb /var/lib/redis/dump.rdb
+sudo chown redis:redis /var/lib/redis/dump.rdb
+sudo systemctl start redis-server
+redis-cli DBSIZE</code></pre>
+<p>Test restores on a scratch instance before you trust them.</p>
+<h2>7. Monitoring and slow query diagnosis</h2>
+<pre><code class="language-bash"># One-page health summary
+redis-cli INFO replication
+redis-cli INFO stats | grep -E &#x27;instantaneous_ops_per_sec|total_commands_processed|rejected_connections&#x27;
+
+# Find slow commands (threshold in microseconds, default 10000)
+redis-cli CONFIG SET slowlog-log-slower-than 5000
+redis-cli SLOWLOG GET 10
+redis-cli SLOWLOG LEN
+redis-cli SLOWLOG RESET
+
+# Live command stream for debugging (NEVER in production, it leaks data
+# and hurts performance)
+redis-cli MONITOR
+# Ctrl-C to stop</code></pre>
+<p>Latency spikes often come from: <code>KEYS *</code>, large <code>SMEMBERS</code>/<code>HGETALL</code> on huge collections, <code>BGSAVE</code> on a machine without enough RAM (fork latency), or AOF fsync stalls on slow disks.</p>
+<h2>8. Basic replication</h2>
+<p>One replica gives read scaling and a warm standby:</p>
+<pre><code class="language-bash"># On the replica&#x27;s redis.conf
+# replicaof 10.0.0.5 6379
+# replica-serve-stale-data yes
+# replica-read-only yes
+
+sudo systemctl restart redis-server
+redis-cli INFO replication | grep -E &#x27;role|master_link_status|connected_slaves&#x27;</code></pre>
+<p>Promote a replica manually when the primary dies:</p>
+<pre><code class="language-bash">redis-cli REPLICAOF NO ONE</code></pre>
+<p>For automatic failover use Redis Sentinel or a managed setup; manual promotion is fine for small deployments with runbooks.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>CONFIG SET</code> changes vanish after restart. Always follow with</li>
+<p><code>CONFIG REWRITE</code> or edit <code>redis.conf</code> directly.</p>
+<li><code>BGSAVE</code> fails with &quot;fork: Cannot allocate memory&quot;. The fork needs</li>
+<p>virtual memory headroom; set <code>vm.overcommit_memory = 1</code> via sysctl and make sure free RAM plus swap covers the dataset.</p>
+<li>AOF file corrupt after a crash. Run `redis-check-aof --fix</li>
+<p>/var/lib/redis/appendonlydir/*.aof` (Redis 7 uses a multi-part AOF manifest; check the manifest file too).</p>
+<li><code>OOM command not allowed when used memory &gt; maxmemory</code>. Either raise</li>
+<p>maxmemory, switch to an eviction policy, or delete cold keys. For a primary store with <code>noeviction</code>, this is the expected backpressure.</p>
+<li>Replication full resync on every replica restart. Caused by a too-small</li>
+<p><code>repl-backlog-size</code>; raise it so brief disconnects resync partially.</p>
+<li>Latency spikes every N minutes. Usually RDB <code>save</code> points or AOF</li>
+<p>rewrite; check <code>INFO persistence</code> for <code>rdb_bgsave_in_progress</code> and <code>aof_rewrite_in_progress</code> during the spike.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Server will not start: run <code>redis-server /etc/redis/redis.conf</code> in the</li>
+<p>foreground to see the fatal error (bad directive, permission on the data dir, port already in use). Check <code>journalctl -u redis-server -n 50</code>.</p>
+<li>Suspected data loss: compare <code>INFO keyspace</code> DBSIZE against the last</li>
+<p>backup manifest, inspect <code>dump.rdb</code> timestamps, and check whether AOF was actually enabled (<code>aof_enabled:1</code>).</p>
+<li>Replica lag growing: check <code>master_repl_offset</code> vs the replica&#x27;s</li>
+<p><code>slave_repl_offset</code> in <code>INFO replication</code>, look for network drops, and consider raising <code>repl-timeout</code>.</p>
+<li>Authentication chaos after ACL changes: keep one SSH session with a</li>
+<p>working redis-cli while you edit ACLs, and keep a backup of <code>users.acl</code> before <code>ACL SAVE</code>.</p>
+<li>Still stuck: <code>redis-check-rdb /var/lib/redis/dump.rdb</code> validates the</li>
+<p>snapshot file itself.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>An exposed or weakly authenticated Redis is a classic intrusion path: attackers scan for port 6379, try no-auth access, then write SSH keys via <code>CONFIG SET dir /root/.ssh</code> tricks or drop cron jobs. Detect misconfiguration and misuse by watching for:</p>
+<pre><code class="language-bash"># Connections from unexpected hosts (run on the Redis host)
+sudo ss -tnp | grep &#x27;:6379&#x27;
+
+# Auth failures and dangerous commands in the log
+sudo journalctl -u redis-server | grep -iE &#x27;auth|denied|config set|flushall&#x27; | tail -20
+
+# Unexpected keys that look like attacker artifacts
+redis-cli --scan --pattern &#x27;*ssh*&#x27; | head
+redis-cli --scan --pattern &#x27;*cron*&#x27; | head</code></pre>
+<p>Hardening checklist for defenders: bind to 127.0.0.1 or a private IP, <code>protected-mode yes</code>, firewall 6379, ACL users with least privilege, disable or rename dangerous commands (<code>FLUSHALL</code>, <code>CONFIG</code>, <code>DEBUG</code>, <code>EVAL</code> if unused) via <code>rename-command</code>, keep Redis patched, and alert on <code>CONFIG SET dir</code>/<code>dbfilename</code> changes which signal persistence abuse. Misuse signal: <code>MONITOR</code> running unexpectedly, or a new unknown ACL user in <code>ACL LIST</code>.</p>
+<h2>Key references</h2>
+<ul>
+<li>Redis 7.4 documentation: https://redis.io/docs/latest/</li>
+<li>redis.conf annotated example (7.4): https://redis.io/docs/latest/operate/oss_and_stack/management/config/</li>
+<li>Redis ACL guide: https://redis.io/docs/latest/operate/oss_and_stack/management/security/acl/</li>
+<li>Redis persistence: https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/</li>
+<li>Redis security checklist: https://redis.io/docs/latest/operate/oss_and_stack/management/security/</li>
+<li>CWE-306 (Missing Authentication for Critical Function): unauthenticated</li>
+<p>Redis instances.</p>
+<li>CWE-798 (Use of Hard-coded Credentials): passwords baked into configs</li>
+<p>instead of ACL files with tight permissions.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

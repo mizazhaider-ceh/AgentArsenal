@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ios-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ios-basics</h2><div class="meta"><span class="badge gray">mobile</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to assess an iOS application you are</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="android-static.html">android-static</a> <a href="android-dynamic.html">android-dynamic</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Frida</td><td>16.x</td></tr><tr><td>objection</td><td>1.11.0</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>Xcode</td><td>16.x</td></tr></tbody></table><p>iOS app assessment combines static review of the IPA bundle with runtime instrumentation on a jailbroken test device. The platform gives you strong defaults (sandboxing, Keychain, App Transport Security), so iOS findings usually come from app-level mistakes: insecure storage, broken transport security exceptions, exposed URL schemes, and missing jailbreak or tamper detection. This skill covers the authorized workflow from IPA triage through Info.plist review, binary inspection, storage checks, and Frida runtime analysis. All testing targets apps you have written permission to test, on devices you own or are assigned for the engagement.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Obtain the IPA through an authorized channel (client build, TestFlight</li>
+<p>build in scope, or CTF file) and record its hash.</p>
+<li>Unzip the IPA and triage the bundle: Info.plist, embedded frameworks,</li>
+<p>and the main binary.</p>
+<li>Review Info.plist for URL schemes, ATS exceptions, and privacy</li>
+<p>permission usage.</p>
+<li>Inspect the Mach-O binary: encryption check, PIE, stack canaries, and</li>
+<p>ARC.</p>
+<li>Review entitlements and the provisioning profile for excessive</li>
+<p>capabilities.</p>
+<li>Check local storage: Keychain usage, files in the sandbox, and pasteboard</li>
+<p>or screenshot leaks.</p>
+<li>On a jailbroken test device, run objection and Frida for runtime</li>
+<p>inspection: Keychain dump, method hooks, and pinning bypass.</p>
+<li>Record every finding with bundle path and reproduction steps.</li>
+</ol>
+<h2>1. IPA acquisition and triage</h2>
+<p>An IPA is a zip file. Unzip it and inventory the contents before any deep review.</p>
+<pre><code class="language-bash"># Record integrity first
+sha256sum target.ipa
+file target.ipa
+
+# Unzip the bundle
+unzip -q target.ipa -d ipa-out
+ls ipa-out/Payload/
+
+# Identify the main app bundle and binary
+ls ipa-out/Payload/*.app/
+plutil -p ipa-out/Payload/Target.app/Info.plist | head -40</code></pre>
+<p>The <code>plutil</code> command (macOS, ships with Xcode) converts the binary plist to readable form. On Linux, use a Python plist parser instead:</p>
+<pre><code class="language-bash">python3 -c &quot;
+import plistlib
+with open(&#x27;ipa-out/Payload/Target.app/Info.plist&#x27;,&#x27;rb&#x27;) as f:
+    info = plistlib.load(f)
+for k in [&#x27;CFBundleIdentifier&#x27;,&#x27;CFBundleVersion&#x27;,&#x27;CFBundleShortVersionString&#x27;,
+          &#x27;MinimumOSVersion&#x27;,&#x27;CFBundleURLTypes&#x27;,&#x27;NSAppTransportSecurity&#x27;]:
+    if k in info: print(k, &#x27;=&#x27;, info[k])
+&quot;</code></pre>
+<h2>2. Info.plist review</h2>
+<p>Info.plist declares the app&#x27;s URL schemes, transport security policy, and permission requests. Read it fully.</p>
+<pre><code class="language-bash"># URL schemes (deep link attack surface)
+python3 -c &quot;
+import plistlib
+info = plistlib.load(open(&#x27;ipa-out/Payload/Target.app/Info.plist&#x27;,&#x27;rb&#x27;))
+for t in info.get(&#x27;CFBundleURLTypes&#x27;, []):
+    print(t.get(&#x27;CFBundleURLName&#x27;), t.get(&#x27;CFBundleURLSchemes&#x27;))
+&quot;
+
+# App Transport Security exceptions (cleartext or weak TLS allowed)
+plutil -p ipa-out/Payload/Target.app/Info.plist | grep -A15 NSAppTransportSecurity
+
+# Privacy permissions (camera, location, contacts)
+plutil -p ipa-out/Payload/Target.app/Info.plist | grep -E &#x27;NS(Camera|Location|Contacts|Microphone|FaceID)UsageDescription&#x27;</code></pre>
+<p>Flag these:</p>
+<ul>
+<li><code>NSAllowsArbitraryLoads</code> set to true: the app can use cleartext HTTP</li>
+<p>anywhere.</p>
+<li><code>NSExceptionDomains</code> entries that allow insecure loads or weak TLS for</li>
+<p>specific hosts.</p>
+<li>URL schemes that reach sensitive functionality. Note each scheme for</li>
+<p>runtime fuzzing.</p>
+<li>Missing usage descriptions are a rejection risk, not a security</li>
+<p>finding, but overly broad permission requests deserve a question in the report.</p>
+</ul>
+<h2>3. Binary inspection</h2>
+<p>Check whether the binary is encrypted (App Store FairPlay) and which hardening features the compiler enabled.</p>
+<pre><code class="language-bash">APP=ipa-out/Payload/Target.app/Target
+
+# FairPlay encryption check: cryptid 1 means encrypted, skip static review
+otool -l &quot;$APP&quot; | grep -A4 LC_ENCRYPTION_INFO | grep cryptid
+
+# Hardening: PIE, stack canaries, ARC
+otool -hv &quot;$APP&quot; | head -5
+# Look for the PIE flag in the Mach-O header output
+otool -Iv &quot;$APP&quot; | grep -i stack_chk | head -3</code></pre>
+<p>If <code>cryptid</code> is 1, the binary came from the App Store and is encrypted. You need a decrypted copy from a jailbroken device (dump with frida-ios-dump or a similar authorized tool) before static analysis. Never redistribute decrypted binaries; keep them inside the engagement workspace.</p>
+<p>List linked frameworks to spot interesting third party SDKs:</p>
+<pre><code class="language-bash">otool -L &quot;$APP&quot; | head -30
+ls ipa-out/Payload/Target.app/Frameworks/</code></pre>
+<p>Strings in the binary reveal endpoints, keys, and debug messages:</p>
+<pre><code class="language-bash">strings &quot;$APP&quot; | grep -E -o &#x27;https?://[^ &quot;]+&#x27; | sort -u | head -30
+strings &quot;$APP&quot; | grep -i -E &#x27;api[_-]?key|secret|token&#x27; | head -20</code></pre>
+<h2>4. Entitlements and provisioning</h2>
+<p>Entitlements define what the app is allowed to do beyond the sandbox.</p>
+<pre><code class="language-bash"># Dump entitlements from the binary
+codesign -d --entitlements - ipa-out/Payload/Target.app/ 2&gt;/dev/null
+
+# Read the embedded provisioning profile
+security cms -D -i ipa-out/Payload/Target.app/embedded.mobileprovision \
+  | plutil -p - | grep -E &#x27;application-identifier|get-task-allow|aps-environment&#x27; </code></pre>
+<p><code>get-task-allow</code> true means a development build that permits debugging; fine for a test build, a finding if it ships to production. Push notification and iCloud entitlements are normal; look for anything the app&#x27;s functionality does not justify.</p>
+<h2>5. Local storage review</h2>
+<p>On a jailbroken test device, inspect the app sandbox directly.</p>
+<pre><code class="language-bash"># App sandbox location (find the bundle identifier directory)
+ls /var/mobile/Containers/Data/Application/ | head
+
+# Inside the sandbox: Documents, Library, tmp
+SANDBOX=/var/mobile/Containers/Data/Application/&lt;UUID&gt;
+ls -la &quot;$SANDBOX/Documents&quot; &quot;$SANDBOX/Library&quot; &quot;$SANDBOX/tmp&quot;
+
+# Plists and databases that may hold sensitive data
+find &quot;$SANDBOX&quot; -name &#x27;*.plist&#x27; -o -name &#x27;*.db&#x27; -o -name &#x27;*.sqlite*&#x27; | head -20</code></pre>
+<p>Use objection to dump the iOS Keychain, where tokens and credentials should live:</p>
+<pre><code class="language-bash"># Attach with objection on the jailbroken device
+objection --gadget com.example.target explore
+
+# Inside the REPL
+ios keychain dump
+ios plist cat /var/mobile/Containers/Data/Application/&lt;UUID&gt;/Library/Preferences/com.example.target.plist
+ios cookies get</code></pre>
+<p>Findings here are concrete: passwords or session tokens in NSUserDefaults plists, unencrypted databases in Documents, or Keychain items with <code>kSecAttrAccessibleAlways</code> that survive device lock.</p>
+<h2>6. Runtime instrumentation with Frida</h2>
+<p>Frida on iOS needs a jailbroken device with frida-server installed, or a device you can attach to over USB.</p>
+<pre><code class="language-bash"># List processes on the device
+frida-ps -U | grep -i target
+
+# Spawn the app with a hook script
+frida -U -f com.example.target -l ./ios-hooks.js --no-pause</code></pre>
+<p>A basic iOS hook script uses Objective-C method interception:</p>
+<pre><code class="language-javascript">// Hook an Objective-C method and log its arguments
+if (ObjC.available) {
+    var LoginVC = ObjC.classes.LoginViewController;
+    Interceptor.attach(LoginVC[&#x27;- authenticateUser:&#x27;].implementation, {
+        onEnter: function (args) {
+            // args[0] = self, args[1] = selector, args[2] = first parameter
+            var user = new ObjC.Object(args[2]);
+            console.log(&#x27;[*] authenticateUser called with: &#x27; + user.toString());
+        },
+        onLeave: function (retval) {
+            console.log(&#x27;[*] authenticate returned: &#x27; + retval);
+        }
+    });
+
+    // Dump all methods of an interesting class
+    var Crypto = ObjC.classes.CryptoManager;
+    Crypto.$ownMethods.forEach(function (m) { console.log(m); });
+}</code></pre>
+<p>Bypass jailbreak detection by hooking the common checks:</p>
+<pre><code class="language-javascript">// Neutralize common jailbreak detection calls
+if (ObjC.available) {
+    var checks = [
+        [&#x27;UIDevice&#x27;, &#x27;- isJailbroken&#x27;],
+        [&#x27;JailbreakDetection&#x27;, &#x27;+ isJailbroken&#x27;]
+    ];
+    // Pattern: find methods whose names contain jailbreak indicators
+    // and force them to return NO (0)
+    for (var clsName in ObjC.classes) {
+        if (!ObjC.classes.hasOwnProperty(clsName)) continue;
+        var cls = ObjC.classes[clsName];
+        try {
+            cls.$ownMethods.forEach(function (m) {
+                if (/jailbreak|jailBroken|cydia|rooted/i.test(m)) {
+                    console.log(&#x27;[*] found check: &#x27; + clsName + &#x27; &#x27; + m);
+                }
+            });
+        } catch (e) {}
+    }
+}</code></pre>
+<p>Enumerate first, then write targeted hooks. Blindly disabling every method with &quot;jailbreak&quot; in its name can crash the app; hook one check at a time and retest.</p>
+<h2>7. SSL pinning bypass on iOS</h2>
+<p>iOS apps pin with NSURLSession delegates or libraries. Bypass at runtime:</p>
+<pre><code class="language-bash"># objection one-command bypass (covers the common cases)
+# Inside the objection REPL:
+ios sslpinning disable</code></pre>
+<p>For custom pinning, hook the validation callback:</p>
+<pre><code class="language-javascript">// Bypass NSURLSession server trust evaluation
+if (ObjC.available) {
+    var NSURLSession = ObjC.classes.NSURLSession;
+    // Many apps implement URLSession:didReceiveChallenge:completionHandler:
+    // Hook the delegate method found during enumeration and call the
+    // completion handler with NSURLSessionAuthChallengeUseCredential
+    console.log(&#x27;[*] enumerate the delegate class first, then hook its challenge handler&#x27;);
+}</code></pre>
+<p>Confirm the bypass by routing the device through Burp (install the Burp CA profile on the test device) and watching for decrypted API traffic.</p>
+<h2>8. URL scheme fuzzing</h2>
+<p>URL schemes are reachable from Safari, other apps, and web pages. Fuzz each scheme from Info.plist.</p>
+<pre><code class="language-bash"># Open a URL scheme from the device shell (simulates an external caller)
+uiopen &quot;targetapp://account/transfer?amount=9999&quot;
+uiopen &quot;targetapp://debug?enable=1&quot;
+
+# From macOS with a connected device, use Safari or:
+xcrun simctl openurl booted &quot;targetapp://test&quot;  # simulator only</code></pre>
+<p>Watch the device logs while fuzzing for crashes or unauthenticated navigation to sensitive screens:</p>
+<pre><code class="language-bash"># Stream logs from the device
+idevicesyslog 2&gt;/dev/null | grep -i target | head -30
+# Or with Frida attached, log method calls on the deep link handler</code></pre>
+<p>A URL scheme that performs an action (transfer, logout, settings change) without user confirmation or authentication is a real finding.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The IPA is FairPlay encrypted (<code>cryptid</code> 1). Static review is</li>
+<p>impossible until you dump a decrypted copy from a jailbroken device. Budget time for this on every App Store build.</p>
+<li>No jailbroken device is available. Options shrink to static review,</li>
+<p>simulator testing (no Keychain realism, no push), and API testing against the backend. Say so explicitly in the report.</p>
+<li>The app is written in Swift. Frida&#x27;s ObjC API still works for</li>
+<p>Objective-C bridged methods, but pure Swift methods need the Swift demangled names. Use <code>frida-trace</code> with Swift symbol patterns or hook at the lower C level.</p>
+<li>Bitcode or heavy Swift optimization makes the binary hard to read.</li>
+<p>Focus on strings, Info.plist, and runtime behavior instead of fighting the disassembly.</p>
+<li>The app uses React Native or Flutter. The interesting logic is in</li>
+<p>the JS bundle or the Dart snapshot, not the native shell. Extract the bundle from the app resources for React Native; for Flutter, runtime hooking is more productive than static reading.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Jailbreak detection blocks every bypass attempt: enumerate the exact</li>
+<p>checks with Frida (file existence checks for /Applications/Cydia.app, suspicious URL schemes, fork() behavior), then hook each check individually rather than using a blanket bypass.</p>
+<li>Pinning lives in a closed-source SDK: identify the SDK from the</li>
+<p>linked frameworks, check public research for a known bypass, or hook below it at the SecureTransport layer.</p>
+<li>Keychain dump shows nothing sensitive: verify the app actually</li>
+<p>stores credentials (log in and re-dump), and check NSUserDefaults and files as the fallback locations developers misuse.</p>
+<li>The app refuses to run on a jailbroken device at all: test the API</li>
+<p>surface directly with crafted HTTP requests based on the traffic captured from a non-jailbroken device, and report the anti-tamper control as effective.</p>
+<li>Time is short: prioritize the Info.plist review, the Keychain dump,</li>
+<p>and the Burp traffic pass. Those three cover the majority of iOS findings on business apps.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders protect iOS apps with jailbreak detection, Frida detection (unexpected listening ports, injected dynamic libraries, altered memory maps), certificate pinning, Play Integrity style device attestation where available, and server-side authorization that makes client tampering worthless. The durable fixes mirror Android: never trust the client, keep secrets server-side, store credentials only in the Keychain with appropriate accessibility flags, enforce App Transport Security without arbitrary-load exceptions, validate deep link input and require user confirmation for actions, and disable verbose logging in release builds. Report which controls the app has and which bypasses succeeded, because the gap between claimed and actual protection is often the most valuable part of the report.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-312 (Cleartext Storage of Sensitive Information): credentials in</li>
+<p>NSUserDefaults or files.</p>
+<li>CWE-319 (Cleartext Transmission of Sensitive Information): ATS</li>
+<p>exceptions allowing HTTP.</p>
+<li>CWE-295 (Improper Certificate Validation): broken pinning.</li>
+<li>CWE-200 (Exposure of Sensitive Information): verbose logs and</li>
+<p>pasteboard leaks.</p>
+<li>OWASP MASVS: iOS platform and storage requirements.</li>
+<li>OWASP MSTG: iOS static and dynamic testing procedures.</li>
+<li>Apple App Transport Security documentation:</li>
+<p>https://developer.apple.com/documentation/security/preventing-insecure-network-connections</p>
+<li>Frida iOS examples: https://frida.re/docs/ios/</li>
+<li>objection iOS help: https://github.com/sensepost/objection/wiki</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

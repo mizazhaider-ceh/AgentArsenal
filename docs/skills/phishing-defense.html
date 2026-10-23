@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: phishing-defense</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>phishing-defense</h2><div class="meta"><span class="badge gray">defensive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when defending an organization against phishing: hardening</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>GoPhish</td><td>0.12</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Phishing remains the most common initial access vector, and defending against it is a layered problem: stop what you can at the gateway, authenticate your own mail so it cannot be spoofed, make reporting easy, and analyze what gets through. This skill covers the defensive program end to end for your own organization or an authorized client.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Publish and enforce SPF, DKIM, and DMARC on every domain you own,</li>
+<p>starting in monitoring mode.</p>
+<li>Harden the email gateway: block executable attachments, rewrite</li>
+<p>or detonate URLs, quarantine lookalike-domain mail.</p>
+<li>Deploy a one-click report-phish button and route reports to the</li>
+<p>SOC queue with automated triage.</p>
+<li>Analyze reported messages: headers, URLs, attachments, in a</li>
+<p>sandbox, never on a workstation.</p>
+<li>Extract IOCs, block them, hunt for other recipients, and check</li>
+<p>for credential submissions.</p>
+<li>Takedown active phishing sites via the host, registrar, and</li>
+<p>blocklist feeds.</p>
+<li>Run authorized simulations to measure reporting rate and click</li>
+<p>rate, and train on the gaps.</p>
+<li>Review DMARC aggregate reports weekly and push the policy toward</li>
+<p>reject.</p>
+</ol>
+<h2>1. Email authentication: SPF, DKIM, DMARC</h2>
+<p>These three DNS-based controls stop exact-domain spoofing of your domains.</p>
+<pre><code class="language-bash"># Check current posture of a domain
+dig +short example.com TXT | grep -i spf
+dig +short default._domainkey.example.com TXT
+dig +short _dmarc.example.com TXT
+
+# Example SPF: only listed senders may send (start with ~all, move to -all)
+# &quot;v=spf1 ip4:198.51.100.0/24 include:_spf.google.com ~all&quot;
+
+# DMARC progression: none -&gt; quarantine -&gt; reject, pct ramps up
+# &quot;_dmarc.example.com TXT \&quot;v=DMARC1; p=none; rua=mailto:dmarc@example.com;\&quot;&quot;</code></pre>
+<p>Rollout order: publish SPF, sign with DKIM, publish DMARC at <code>p=none</code> with aggregate reports, read the reports for two weeks to find legitimate senders you missed, then move to <code>quarantine</code> at increasing percentages, then <code>reject</code>. Skipping the monitoring phase breaks legitimate mail.</p>
+<pre><code class="language-bash"># Parse a DMARC aggregate report quickly (Python stdlib)
+python3 &lt;&lt; &#x27;EOF&#x27;
+import xml.etree.ElementTree as ET, glob
+for f in glob.glob(&#x27;dmarc/*.xml&#x27;):
+    r = ET.parse(f).getroot()
+    for rec in r.iter(&#x27;record&#x27;):
+        ip = rec.find(&#x27;row/source_ip&#x27;).text
+        dkim = rec.find(&#x27;auth_results/dkim/result&#x27;).text
+        spf = rec.find(&#x27;auth_results/spf/result&#x27;).text
+        disp = rec.find(&#x27;row/policy_evaluated/disposition&#x27;).text
+        print(ip, &quot;dkim=&quot; + dkim, &quot;spf=&quot; + spf, &quot;disposition=&quot; + disp)
+EOF</code></pre>
+<h2>2. Gateway and mailbox rules</h2>
+<p>Layer controls at the gateway before mail reaches users:</p>
+<ul>
+<li>Block or strip dangerous attachments: executables, scripts,</li>
+<p>macro-enabled Office files from external senders, HTML attachments with credential forms.</p>
+<li>URL rewriting and detonation: rewrite links to go through the</li>
+<p>sandbox, detonate attachments in a sandbox before delivery.</p>
+<li>Lookalike domain detection: quarantine mail from domains with</li>
+<p>Levenshtein distance 1 to your brand or executive names.</p>
+<li>Display-name spoofing: flag external mail where the display name</li>
+<p>matches an executive but the address does not.</p>
+<li>New-domain rule: quarantine or tag links to domains younger than</li>
+<p>30 days.</p>
+</ul>
+<p>Example mailbox transport rule logic (pseudocode for your platform):</p>
+<pre><code class="language-text">IF sender is external
+AND (attachment extension IN [exe, scr, js, vbs, hta, lnk, iso]
+     OR attachment is office file WITH macros)
+THEN quarantine AND notify SOC</code></pre>
+<p>Test every rule against legitimate business mail first. A rule that quarantines the finance team&#x27;s invoices will be disabled by Friday.</p>
+<h2>3. User reporting pipeline</h2>
+<p>The fastest detector is a user who reports in one click. Deploy a report-phish button in the mail client that forwards the message with full headers to the SOC and deletes it from the inbox.</p>
+<p>Automated triage on each report:</p>
+<pre><code class="language-bash"># Extract URLs and attachments from a reported .eml for sandboxing
+python3 &lt;&lt; &#x27;EOF&#x27;
+import email, re, sys
+msg = email.message_from_binary_file(open(&#x27;/tmp/report.eml&#x27;,&#x27;rb&#x27;))
+body = &quot;&quot;
+for part in msg.walk():
+    if part.get_content_type() == &quot;text/plain&quot;:
+        body += part.get_payload(decode=True).decode(errors=&quot;ignore&quot;)
+urls = set(re.findall(r&#x27;https?://[^\s&lt;&gt;&quot;\&#x27;]+&#x27;, body))
+print(&quot;\n&quot;.join(sorted(urls)))
+for part in msg.walk():
+    fn = part.get_filename()
+    if fn:
+        print(&quot;attachment:&quot;, fn)
+        open(&quot;/tmp/sandbox/&quot; + fn, &quot;wb&quot;).write(part.get_payload(decode=True))
+EOF</code></pre>
+<p>SLA: acknowledge the reporter within the hour, verdict within four. Users who never hear back stop reporting.</p>
+<h2>4. Header and URL analysis</h2>
+<p>Read the headers before anything else:</p>
+<pre><code class="language-bash"># Pull the key headers from a reported message
+grep -iE &quot;^(Received|Return-Path|Authentication-Results|DKIM-Signature|From|Reply-To):&quot; \
+  /tmp/report.eml | head -30</code></pre>
+<p>Checklist:</p>
+<ul>
+<li><code>Authentication-Results</code>: did SPF, DKIM, DMARC pass for the</li>
+<p>visible From domain.</p>
+<li><code>Received</code> chain: does the first external hop match the claimed</li>
+<p>sender infrastructure. Read bottom-up (earliest first).</p>
+<li><code>Reply-To</code> vs <code>From</code> mismatch: classic credential phishing sign.</li>
+<li><code>Return-Path</code> domain vs <code>From</code> domain mismatch.</li>
+<li>Lookalike domains: compare character by character, decode punycode.</li>
+</ul>
+<p>URL analysis, safe handling:</p>
+<pre><code class="language-bash"># Expand and inspect a suspicious URL without visiting it in a browser
+curl -sI -L --max-time 15 &quot;http://suspicious.example/login&quot; | head -20
+
+# Never fetch the page from your workstation or the corporate IP.
+# Submit to the sandbox / URL scanner and read the report there.</code></pre>
+<p>Never click through on a workstation, never enter credentials &quot;to check&quot;, never forward the live phish to colleagues. Work from the sandbox report.</p>
+<h2>5. Attachment analysis</h2>
+<pre><code class="language-bash"># Static first: file type, hashes, strings
+file /tmp/sandbox/invoice.doc
+sha256sum /tmp/sandbox/invoice.doc
+strings /tmp/sandbox/invoice.doc | grep -iE &quot;powershell|cmd|http|autoopen&quot; | head -20
+
+# Office macro check without opening in Word
+oledump.py /tmp/sandbox/invoice.doc 2&gt;/dev/null | head -20
+# or: python3 -m oletools.olevba /tmp/sandbox/invoice.doc</code></pre>
+<p>Detonate in an isolated sandbox and record: processes spawned, network connections, files written, persistence. If it is malicious, extract the IOCs (URLs, IPs, hashes) and move to blocking and hunting. If a user opened it, treat the host as compromised and engage incident response.</p>
+<h2>6. Containment: blocks, hunts, takedowns</h2>
+<pre><code class="language-bash"># Hunt: who else got the same phish (same sender domain or subject)
+index=email_logs sender_domain=&quot;evil.example&quot; earliest=-7d@d latest=@d
+| stats values(recipient) as recipients count by sender, subject
+
+# Hunt: who clicked (proxy logs to the phishing URL after delivery)
+index=proxy url=&quot;*evil.example/login*&quot; earliest=-7d@d latest=@d
+| stats values(user) as clickers count</code></pre>
+<p>For everyone who clicked or submitted credentials: force password reset, revoke sessions and tokens, review mailbox rules the attacker may have created (see the BEC note below), and check for forwarding rules.</p>
+<p>Takedown steps for the phishing site:</p>
+<ol>
+<li>Report to the hosting provider abuse contact with the URL and</li>
+<p>evidence.</p>
+<li>Report to the registrar if the domain is clearly abusive.</li>
+<li>Submit the URL to blocklist feeds and the browser safe-browsing</li>
+<p>programs.</p>
+<li>If it impersonates your brand, file with your brand protection</li>
+<p>service as well.</p>
+<li>Re-check daily; attackers re-host fast.</li>
+</ol>
+<h2>7. BEC-specific defense</h2>
+<p>Business email compromise often uses no malware, just stolen sessions or lookalike domains, so attachment sandboxes miss it.</p>
+<p>Mailbox rule hunting after a suspected BEC:</p>
+<pre><code class="language-bash"># Exchange/Graph: list inbox rules on a mailbox (needs authorized admin)
+# Look for rules that move mail to RSS Subscriptions, mark as read,
+# or forward externally. Any rule the user did not create is hostile.</code></pre>
+<p>Controls: require phishing-resistant MFA (FIDO2) for mail access, alert on mailbox rule creation and external forwarding, alert on impossible-travel logons to mail, and set a verification policy for payment changes (call back on a known number, never trust email alone).</p>
+<h2>8. Simulations and metrics</h2>
+<p>Run authorized phishing simulations with GoPhish or your platform:</p>
+<pre><code class="language-bash"># GoPhish admin UI runs locally; campaigns are built in the UI.
+# Track per campaign: sent, opened, clicked, submitted, reported.</code></pre>
+<p>Metrics that matter: report rate (goal: rising), click rate (goal: falling), median time to report, and repeat clickers for targeted training. Never punish individuals publicly; report trends to leadership and train the departments that struggle. Get written authorization before any simulation, and exclude the SOC on-call rotation from surprise tests that could mask a real incident.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The phish comes from a compromised legitimate sender. Domain</li>
+<p>reputation checks pass; rely on content analysis, URL sandboxing, and user reports.</p>
+<li>QR code phishing (quishing): the URL hides in an image. Gateway</li>
+<p>OCR or user reporting is the catch; train users that QR codes in email are suspicious.</p>
+<li>The attacker uses a legitimate service (Google Forms, SharePoint)</li>
+<p>for credential harvesting. Blocklisting the domain breaks business; block the specific URL and hunt for visitors.</p>
+<li>DMARC reports show legitimate senders failing. Fix their SPF/DKIM</li>
+<p>before enforcing reject, or you will break payroll emails.</p>
+<li>Users forward phish to the helpdesk as attachments, spreading it.</li>
+<p>The report button must strip and contain the sample automatically.</p>
+<li>Simulation emails get reported as real phish. That is success;</li>
+<p>tune the triage to recognize your own simulation markers fast.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Credentials were submitted: treat as account compromise. Reset,</li>
+<p>revoke sessions, hunt the mailbox, engage incident response.</p>
+<li>Malware was executed: isolate the host and follow the incident</li>
+<p>playbook; the phish is now an intrusion.</p>
+<li>A VIP or finance user is targeted with a tailored lure: brief</li>
+<p>them directly, tighten monitoring on their accounts, and consider a temporary approval workflow for payments.</p>
+<li>Takedown stalls while users keep clicking: escalate to the</li>
+<p>registrar, add the URL to every blocklist you control, and warn users with the exact lure text.</p>
+<li>Suspected insider involvement in the phish targeting: hand to the</li>
+<p>investigation lead and HR/legal; do not confront.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Phishing defense is the defender&#x27;s home turf; attackers adapt constantly:</p>
+<ul>
+<li>Attackers bypass SPF/DKIM/DMARC with lookalike domains and</li>
+<p>compromised accounts, so content and behavior rules matter as much as authentication.</p>
+<li>Attackers use adversary-in-the-middle kits to steal session</li>
+<p>cookies, defeating MFA codes. Move to phishing-resistant MFA (FIDO2) for high-value users.</p>
+<li>Attackers rotate phishing domains hourly. Block on content</li>
+<p>patterns and kit fingerprints, not just domains.</p>
+<li>Attackers A/B test lures against your gateway. Keep gateway rules</li>
+<p>and sandbox detonations updated, and watch for lures tuned to your organization&#x27;s language.</p>
+<li>Measure the program by reporting speed and credential-reset time,</li>
+<p>not just click rate. A user who reports in two minutes beats a gateway that blocks 99 percent.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1566 (Phishing), T1566.001 (Spearphishing</li>
+<p>Attachment), T1566.002 (Spearphishing Link), T1137 (Office Application Startup).</p>
+<li>RFC 7208 (SPF), RFC 6376 (DKIM), RFC 7489 (DMARC).</li>
+<li>CISA phishing guidance: https://www.cisa.gov/topics/cyber-threats-and-advisories/phishing</li>
+<li>GoPhish documentation: https://docs.getgophish.com/</li>
+<li>APWG and brand protection reporting channels.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

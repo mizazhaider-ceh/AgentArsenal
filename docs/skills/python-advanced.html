@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: python-advanced</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>python-advanced</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing or reviewing advanced Python code on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="python-cli-tooling.html">python-cli-tooling</a> <a href="code-reviewer.html">code-reviewer</a> <a href="secure-coding.html">secure-coding</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Python</td><td>3.12</td></tr><tr><td>pytest</td><td>8.3</td></tr><tr><td>mypy</td><td>1.13</td></tr></tbody></table><p>This skill covers Python at the professional level: typing that catches bugs before runtime, data modeling, resource-safe patterns, concurrency that does not corrupt state, packaging that installs cleanly, and profiling that tells you where the time and memory really go. It builds on the basics of small scripts and CLIs and focuses on code that must be correct, fast, and maintainable in production. All examples use Python 3.12 and stdlib unless a tool is named.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Create an isolated environment with <code>venv</code> and pin dependencies in</li>
+<p><code>requirements.txt</code> or <code>pyproject.toml</code>.</p>
+<li>Write typed code from the start and check it with <code>mypy --strict</code>.</li>
+<li>Model data with <code>dataclasses</code> or typed containers, never with loose</li>
+<p>dicts that grow undocumented keys.</p>
+<li>Wrap every external resource (files, sockets, locks) in a context</li>
+<p>manager so cleanup happens even on exceptions.</p>
+<li>Choose the right concurrency model: asyncio for I/O bound work,</li>
+<p>multiprocessing for CPU bound work, threads only with locks you can explain.</p>
+<li>Profile before optimizing: <code>cProfile</code> for time, <code>tracemalloc</code> for</li>
+<p>memory, <code>py-spy</code> style sampling for production.</p>
+<li>Write tests with <code>pytest</code> for the paths that handle money, auth, or</li>
+<p>data loss.</p>
+<li>Package with <code>pyproject.toml</code> so the project installs with one</li>
+<p>command and ships metadata.</p>
+</ol>
+<h2>1. Environments and packaging</h2>
+<p>Never install project dependencies into the system Python. Use a virtual environment per project and record exact pins.</p>
+<pre><code class="language-bash"># Create and activate a virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+
+# Pin what you have today, review what you add later
+pip install requests pytest mypy
+pip freeze &gt; requirements.txt
+
+# Check which interpreter and packages are active
+which python
+pip list | head -20</code></pre>
+<p>A minimal <code>pyproject.toml</code> makes the project installable and declares metadata in one place:</p>
+<pre><code class="language-bash">cat &gt; pyproject.toml &lt;&lt;&#x27;EOF&#x27;
+[project]
+name = &quot;mytool&quot;
+version = &quot;0.1.0&quot;
+description = &quot;Internal helper tool&quot;
+requires-python = &quot;&gt;=3.12&quot;
+dependencies = [&quot;requests&gt;=2.31&quot;]
+
+[project.scripts]
+mytool = &quot;mytool.cli:main&quot;
+
+[build-system]
+requires = [&quot;setuptools&gt;=61&quot;]
+build-backend = &quot;setuptools.build_meta&quot;
+EOF
+
+pip install -e .
+mytool --help</code></pre>
+<h2>2. Type hints and mypy</h2>
+<p>Type hints document intent and let mypy catch an entire class of bugs before the code ever runs. Start strict on new code; add types to old code file by file.</p>
+<pre><code class="language-bash"># Install and run mypy in strict mode
+pip install mypy==1.13
+mypy --strict src/</code></pre>
+<pre><code class="language-python">from __future__ import annotations
+
+def fetch_user(user_id: int) -&gt; dict[str, str] | None:
+    &quot;&quot;&quot;Return the user record, or None when the id is unknown.&quot;&quot;&quot;
+    row = db_lookup(user_id)  # assume this returns dict or None
+    if row is None:
+        return None
+    return {&quot;name&quot;: row[&quot;name&quot;], &quot;email&quot;: row[&quot;email&quot;]}
+
+def notify(users: list[int], message: str) -&gt; int:
+    sent = 0
+    for uid in users:
+        if send_message(uid, message):
+            sent += 1
+    return sent</code></pre>
+<p>Common mypy findings to fix, not silence: returning <code>None</code> where a value is promised, mutating a <code>tuple</code> like a list, and passing <code>str</code> where <code>int</code> is expected. Use <code>cast()</code> only when you can prove the type and the checker cannot; every cast is a bet you should be able to explain.</p>
+<h2>3. Dataclasses for structured data</h2>
+<p>Dataclasses replace dicts that grow mystery keys and tuples whose field order nobody remembers.</p>
+<pre><code class="language-python">from dataclasses import dataclass, field
+from datetime import datetime
+
+@dataclass(frozen=True)
+class ScanResult:
+    &quot;&quot;&quot;Immutable result: safe to share across threads and tasks.&quot;&quot;&quot;
+    host: str
+    port: int
+    open: bool
+    banner: str = &quot;&quot;
+    scanned_at: datetime = field(default_factory=datetime.now)
+
+@dataclass
+class ScanJob:
+    targets: list[str]
+    ports: list[int] = field(default_factory=lambda: [80, 443])
+    timeout: float = 5.0
+    results: list[ScanResult] = field(default_factory=list)
+
+    def add(self, result: ScanResult) -&gt; None:
+        self.results.append(result)</code></pre>
+<p>Use <code>frozen=True</code> for value objects that must not change after creation. Use <code>field(default_factory=...)</code> for mutable defaults; a bare <code>[]</code> default is a shared mutable object and a classic bug.</p>
+<h2>4. Context managers for safe resources</h2>
+<p>Files, locks, database connections, and temporary directories must be released even when code raises. The <code>with</code> statement plus a custom context manager guarantees it.</p>
+<pre><code class="language-python">from contextlib import contextmanager
+import time
+
+@contextmanager
+def timed_section(label: str):
+    &quot;&quot;&quot;Context manager that logs how long a block took.&quot;&quot;&quot;
+    start = time.perf_counter()
+    try:
+        yield
+    finally:
+        elapsed = time.perf_counter() - start
+        print(f&quot;{label} took {elapsed:.2f}s&quot;)
+
+with timed_section(&quot;database scan&quot;):
+    run_scan()</code></pre>
+<pre><code class="language-bash"># Verify a file handle closes even on exception
+python3 - &lt;&lt;&#x27;EOF&#x27;
+f = open(&quot;/tmp/demo.txt&quot;, &quot;w&quot;)
+try:
+    f.write(&quot;data&quot;)
+    raise RuntimeError(&quot;boom&quot;)
+except RuntimeError:
+    pass
+finally:
+    f.close()
+print(&quot;closed:&quot;, f.closed)
+EOF</code></pre>
+<h2>5. Generators and iterators</h2>
+<p>Generators process one item at a time, so a 10 GB log file never sits in memory.</p>
+<pre><code class="language-python">def read_lines(path: str):
+    &quot;&quot;&quot;Yield lines lazily; the file closes when the loop ends.&quot;&quot;&quot;
+    with open(path, &quot;r&quot;, encoding=&quot;utf-8&quot;, errors=&quot;replace&quot;) as fh:
+        for line in fh:
+            yield line.rstrip(&quot;\n&quot;)
+
+def failed_logins(path: str):
+    for line in read_lines(path):
+        if &quot;Failed password&quot; in line:
+            yield line
+
+# Count without loading the file
+count = sum(1 for _ in failed_logins(&quot;/var/log/auth.log&quot;))
+print(&quot;failed logins:&quot;, count)</code></pre>
+<p>Generator expressions (<code>sum(1 for ...)</code>) beat list comprehensions when you only need one pass. Chain generators into pipelines instead of building intermediate lists.</p>
+<h2>6. asyncio for I/O bound concurrency</h2>
+<p>When the program waits on the network, asyncio runs hundreds of operations in one thread instead of blocking on each.</p>
+<pre><code class="language-python">import asyncio
+
+async def check_port(host: str, port: int, timeout: float = 3.0) -&gt; bool:
+    try:
+        _, writer = await asyncio.wait_for(
+            asyncio.open_connection(host, port), timeout
+        )
+        writer.close()
+        return True
+    except (OSError, asyncio.TimeoutError):
+        return False
+
+async def scan(host: str, ports: list[int]) -&gt; list[int]:
+    results = await asyncio.gather(
+        *(check_port(host, p) for p in ports)
+    )
+    return [p for p, is_open in zip(ports, results) if is_open]
+
+open_ports = asyncio.run(scan(&quot;127.0.0.1&quot;, [22, 80, 443, 8080]))
+print(&quot;open:&quot;, open_ports)</code></pre>
+<p>Limit concurrency with a semaphore so you do not open 10,000 connections at once:</p>
+<pre><code class="language-python">sem = asyncio.Semaphore(100)
+
+async def checked(host: str, port: int) -&gt; bool:
+    async with sem:
+        return await check_port(host, port)</code></pre>
+<p>Never mix blocking calls (like <code>time.sleep</code> or <code>requests.get</code>) inside async functions; they freeze the whole event loop. Use <code>await asyncio.sleep()</code> and async HTTP clients instead.</p>
+<h2>7. multiprocessing for CPU bound work</h2>
+<p>The GIL stops threads from using multiple cores for pure computation. Use processes when the bottleneck is CPU, not waiting.</p>
+<pre><code class="language-bash">python3 - &lt;&lt;&#x27;EOF&#x27;
+import multiprocessing as mp
+import hashlib, os
+
+def hash_chunk(n: int) -&gt; str:
+    h = hashlib.sha256()
+    for i in range(n):
+        h.update(f&quot;block-{i}&quot;.encode())
+    return h.hexdigest()[:16]
+
+if __name__ == &quot;__main__&quot;:
+    print(&quot;cpus:&quot;, os.cpu_count())
+    with mp.Pool(processes=os.cpu_count()) as pool:
+        results = pool.map(hash_chunk, [200_000] * os.cpu_count())
+    print(&quot;done:&quot;, len(results))
+EOF</code></pre>
+<p>Guard process-spawning code with <code>if __name__ == &quot;__main__&quot;:</code> or child processes will re-run your top-level code. Prefer <code>pool.map</code> over manual process management; pass plain data (numbers, strings) between processes, not open sockets or locks.</p>
+<h2>8. Profiling and debugging</h2>
+<p>Optimize with measurements, never with guesses.</p>
+<pre><code class="language-bash"># CPU profile: which functions burn time
+python3 -m cProfile -s cumulative myscript.py | head -25
+
+# Memory: where allocations come from
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import tracemalloc
+tracemalloc.start()
+data = [bytearray(10_000) for _ in range(1_000)]
+current, peak = tracemalloc.get_traced_memory()
+print(f&quot;current={current/1e6:.1f}MB peak={peak/1e6:.1f}MB&quot;)
+tracemalloc.stop()
+EOF
+
+# Post-mortem debugging: drop into pdb on unhandled exception
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import pdb, traceback, sys
+
+def buggy():
+    items = [1, 2, 3]
+    return items[10]
+
+try:
+    buggy()
+except Exception:
+    traceback.print_exc()
+    # pdb.post_mortem()  # uncomment for interactive inspection
+EOF</code></pre>
+<p><code>faulthandler</code> dumps a traceback when a hung process gets SIGABRT, which is invaluable for deadlocks in production:</p>
+<pre><code class="language-bash"># In code: faulthandler.enable() at startup
+# Then send SIGABRT to a stuck process to get a thread dump
+kill -ABRT &lt;pid&gt;</code></pre>
+<h2>9. pytest patterns that survive</h2>
+<pre><code class="language-bash">pip install pytest==8.3
+mkdir -p tests &amp;&amp; cat &gt; tests/test_scan.py &lt;&lt;&#x27;EOF&#x27;
+import pytest
+from mytool.scan import ScanResult
+
+def test_scan_result_defaults():
+    r = ScanResult(host=&quot;h&quot;, port=80, open=True)
+    assert r.banner == &quot;&quot;
+    assert r.scanned_at is not None
+
+@pytest.mark.parametrize(&quot;port,expected&quot;, [(80, True), (0, False), (70000, False)])
+def test_port_valid(port, expected):
+    assert (1 &lt;= port &lt;= 65535) == expected
+EOF
+
+pytest -q
+pytest -q --tb=short -x   # stop at first failure, short tracebacks</code></pre>
+<p>Fixtures isolate setup; parametrize covers the boundary table in one test instead of ten copies.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>mypy strict on legacy code produces hundreds of errors. Adopt it</li>
+<p>module by module: add one clean module to the checked list at a time instead of fighting the whole codebase at once.</p>
+<li>asyncio code calls a blocking library and the loop stalls. Symptom:</li>
+<p>all coroutines pause together. Fix: run the blocking call in a thread with <code>asyncio.to_thread()</code>, or switch to an async library.</p>
+<li>Multiprocessing passes huge objects and startup crawls. Data is</li>
+<p>pickled to each child; pass small arguments and load shared data once per worker with an initializer.</p>
+<li>Generators are single-use. Iterating a generator twice silently</li>
+<p>yields nothing the second time; convert to a list if you need two passes, or rebuild the generator.</p>
+<li><code>pip install</code> fails inside containers without network. Build a</li>
+<p>wheelhouse on a connected machine (<code>pip download -r requirements.txt -d wheels</code>) and install offline with <code>--no-index --find-links wheels</code>.</p>
+<li>Memory grows without bound on long runs. Check for unbounded caches</li>
+<p>(<code>functools.lru_cache</code> without <code>maxsize</code>), appended lists that are never drained, and reference cycles holding file handles.</p>
+<li><code>python</code> points to Python 2 or the wrong 3.x on old systems. Always</li>
+<p>invoke <code>python3 -m venv</code> and activate explicitly; never trust a bare <code>python</code> on a machine you did not set up.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration. A Python service is misconfigured when it runs as root, when <code>pip install</code> pulls unsigned packages from a public index on a production host, or when <code>eval()</code> and <code>pickle.loads()</code> touch untrusted input (both execute arbitrary code). Detect misuse by auditing imports of <code>subprocess</code>, <code>os.system</code>, <code>pickle</code>, and <code>eval</code> in code that handles external data, and by checking that services run under dedicated users with read-only code directories. Dependency confusion and typosquatting are caught by pinning hashes (<code>pip install --require-hashes</code>) and by using a private index for internal packages. Slowloris-style resource exhaustion from unbounded asyncio tasks shows up as one process holding thousands of sockets; cap concurrency with semaphores and set timeouts on every network call.</p>
+<h2>Key references</h2>
+<ul>
+<li>Python 3.12 documentation: https://docs.python.org/3.12/</li>
+<li>mypy 1.13 documentation: https://mypy.readthedocs.io/</li>
+<li>pytest 8.3 documentation: https://docs.pytest.org/</li>
+<li>asyncio documentation: https://docs.python.org/3/library/asyncio.html</li>
+<li>packaging with pyproject.toml: https://packaging.python.org/</li>
+<li>CWE-20 (Improper Input Validation): applies to untrusted data</li>
+<p>handled by Python services.</p>
+<li>CWE-502 (Deserialization of Untrusted Data): <code>pickle.loads</code> on</li>
+<p>untrusted input.</p>
+<li>CWE-78 (OS Command Injection): <code>os.system</code> and unsanitized</li>
+<p><code>subprocess</code> calls.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

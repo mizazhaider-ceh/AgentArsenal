@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: testing-strategies</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>testing-strategies</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when building a test strategy for a Python project: choosing</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="code-reviewer.html">code-reviewer</a> <a href="python-cli-tooling.html">python-cli-tooling</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>pytest</td><td>8.3</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>coverage.py</td><td>7.6</td></tr></tbody></table><p>Testing is how a codebase stays changeable: tests catch regressions before users do and document what the code is supposed to do. This skill covers a practical testing strategy for Python projects with pytest 8.3: the test pyramid, unit test technique (fixtures, parametrize, mocking), integration and end-to-end tests, coverage, flaky test triage, and CI wiring. Scope is strategy and technique; load and performance testing belong to performance-tuning.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the pyramid: many fast unit tests, fewer integration tests, a</li>
+<p>handful of end-to-end tests.</p>
+<li>Write the first failing test before the fix (TDD for bug fixes at</li>
+<p>minimum).</p>
+<li>Use fixtures for setup, parametrize for input matrices, mocks for</li>
+<p>boundaries.</p>
+<li>Keep unit tests hermetic: no network, no filesystem outside tmp_path,</li>
+<p>no wall-clock sleeps.</p>
+<li>Measure coverage and raise it on changed lines, not as a vanity</li>
+<p>number.</p>
+<li>Quarantine and fix flaky tests immediately; a flaky suite trains</li>
+<p>everyone to ignore red builds.</p>
+<li>Run the full suite in CI on every pull request, with the same command</li>
+<p>developers run locally.</p>
+<li>Review test quality in code review: one behavior per test, clear</li>
+<p>names, no logic in tests.</p>
+</ol>
+<h2>1. The test pyramid</h2>
+<pre><code class="language-text">        /\
+       /  \   E2E: a few journeys (slow, brittle, high value)
+      /----\
+     /      \  Integration: components wired together
+    /--------\
+   /          \ Unit: many, fast, isolated (the base)</code></pre>
+<p>Budget rule of thumb: unit tests run in milliseconds and number in the hundreds; integration tests in seconds and number in the dozens; E2E tests in minutes and number under twenty. When the pyramid inverts (everything is E2E), the suite is slow, flaky, and nobody runs it.</p>
+<pre><code class="language-bash"># Project layout that mirrors the pyramid
+mkdir -p tests/unit tests/integration tests/e2e
+touch tests/__init__.py tests/unit/__init__.py
+
+# Mark slow tiers so developers can run the fast base by default
+# pytest.ini:
+# [pytest]
+# markers =
+#     integration: integration tests
+#     e2e: end-to-end tests</code></pre>
+<pre><code class="language-bash">pytest tests/unit -q            # fast feedback loop
+pytest -m &quot;not e2e&quot; -q         # everything but the slow tier</code></pre>
+<h2>2. Unit tests with pytest: fixtures and parametrize</h2>
+<pre><code class="language-python"># tests/unit/test_pricing.py
+import pytest
+from shop.pricing import total_for
+
+@pytest.fixture
+def cart():
+    return [{&quot;sku&quot;: &quot;book&quot;, &quot;price&quot;: 12.0, &quot;qty&quot;: 2}]
+
+def test_empty_cart_totals_zero(cart):
+    assert total_for([], tax_rate=0.2) == 0.0
+
+@pytest.mark.parametrize(&quot;qty,price,expected&quot;, [
+    (1, 10.0, 12.0),     # with 20% tax
+    (3, 5.0, 18.0),
+    (0, 99.0, 0.0),      # zero quantity edge
+])
+def test_total_for_cases(qty, price, expected):
+    items = [{&quot;sku&quot;: &quot;x&quot;, &quot;price&quot;: price, &quot;qty&quot;: qty}]
+    assert total_for(items, tax_rate=0.2) == pytest.approx(expected)
+
+def test_negative_price_rejected():
+    with pytest.raises(ValueError, match=&quot;price&quot;):
+        total_for([{&quot;sku&quot;: &quot;x&quot;, &quot;price&quot;: -1.0, &quot;qty&quot;: 1}], tax_rate=0.2)</code></pre>
+<p>Fixture rules: fixtures build state, tests assert behavior; one assert focus per test (multiple asserts on the same behavior are fine); name tests <code>test_&lt;unit&gt;_&lt;scenario&gt;_&lt;expected&gt;</code>.</p>
+<pre><code class="language-bash">pytest tests/unit/test_pricing.py -v
+pytest tests/unit/test_pricing.py -k &quot;negative or zero&quot; -v</code></pre>
+<h2>3. Mocking at the boundaries</h2>
+<p>Mock I/O (HTTP, databases, filesystems, clocks), never business logic. Mocking the thing you are testing proves nothing.</p>
+<pre><code class="language-python"># tests/unit/test_notifier.py
+from unittest.mock import Mock, patch
+from shop.notifier import send_receipt
+
+def test_send_receipt_posts_to_webhook():
+    fake_http = Mock()
+    fake_http.post.return_value.status_code = 200
+    with patch(&quot;shop.notifier.http_client&quot;, fake_http):
+        send_receipt(&quot;izaz@example.com&quot;, 42)
+    fake_http.post.assert_called_once()
+    url, payload = fake_http.post.call_args.args
+    assert url.endswith(&quot;/receipts&quot;)
+    assert payload[&quot;order_id&quot;] == 42
+
+def test_retry_on_transient_failure():
+    from requests import ConnectionError
+    fake_http = Mock()
+    fake_http.post.side_effect = [ConnectionError(), Mock(status_code=200)]
+    with patch(&quot;shop.notifier.http_client&quot;, fake_http):
+        send_receipt(&quot;izaz@example.com&quot;, 42)   # must retry, not crash
+    assert fake_http.post.call_count == 2</code></pre>
+<p>Use <code>tmp_path</code> for files and <code>freezegun</code>-style time control (or inject a clock) instead of real sleeps:</p>
+<pre><code class="language-python">def test_report_writes_csv(tmp_path):
+    from shop.report import write_csv
+    out = tmp_path / &quot;report.csv&quot;
+    write_csv([{&quot;a&quot;: 1}], out)
+    assert out.read_text().splitlines()[0] == &quot;a&quot;</code></pre>
+<h2>4. Integration tests</h2>
+<p>Test components wired together with real dependencies, but still local: SQLite instead of Postgres where the dialect allows, testcontainers or a local Redis for the real thing.</p>
+<pre><code class="language-python"># tests/integration/test_checkout.py
+import pytest
+from shop.app import create_app
+
+@pytest.fixture
+def client():
+    app = create_app({&quot;DATABASE_URL&quot;: &quot;sqlite:///:memory:&quot;})
+    return app.test_client()
+
+def test_checkout_creates_order_and_charges(client):
+    r = client.post(&quot;/v1/orders&quot;, json={&quot;item&quot;: &quot;book&quot;, &quot;qty&quot;: 1},
+                    headers={&quot;Idempotency-Key&quot;: &quot;test-1&quot;})
+    assert r.status_code == 201
+    order_id = r.get_json()[&quot;data&quot;][&quot;id&quot;]
+    r2 = client.get(f&quot;/v1/orders/{order_id}&quot;)
+    assert r2.status_code == 200</code></pre>
+<pre><code class="language-bash">pytest -m integration -q</code></pre>
+<p>Keep integration tests independent: each test builds its own data and cleans up (transactions rolled back, tmp dirs, unique key prefixes).</p>
+<h2>5. Coverage that means something</h2>
+<pre><code class="language-bash"># Run with branch coverage, fail under the gate
+pytest --cov=shop --cov-branch --cov-report=term-missing \
+  --cov-fail-under=85 tests/unit
+
+# HTML report to find the untested lines
+pytest --cov=shop --cov-report=html tests/
+python3 -m http.server 8000 --directory htmlcov &amp;</code></pre>
+<p>Coverage rules: enforce the gate on new/changed lines in CI rather than chasing 100 percent globally; uncovered lines should be a conscious choice (defensive branches, platform code), marked with <code># pragma: no cover</code> and a reason. Coverage measures what ran, not what was asserted; pair it with review.</p>
+<h2>6. Flaky test triage</h2>
+<pre><code class="language-bash"># Find the flake: run the suspect test 50 times
+pytest tests/unit/test_cache.py -q --count=50 2&gt;/dev/null \
+  || pip list 2&gt;/dev/null | grep -i repeat
+# (pytest-repeat plugin: pytest --count=50)
+
+# Run tests in random order to catch inter-test coupling
+pytest -p no:randomly tests/ -q   # or install pytest-randomly and watch</code></pre>
+<p>Common flake causes and fixes: wall-clock sleeps (replace with polling loops with timeouts), shared global state (fresh fixtures per test), unordered collections in assertions (sort first), timezones (pin TZ=UTC in CI), parallel test workers sharing ports or files (unique resources per worker). Policy: a flaky test is quarantined (marked <code>xfail(strict=False)</code> with a ticket) the same day it is found, fixed within the sprint, never left red.</p>
+<h2>7. CI wiring</h2>
+<pre><code class="language-yaml"># .github/workflows/tests.yml (excerpt)
+name: tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: &quot;3.12&quot; }
+      - run: pip install -r requirements.txt -r requirements-test.txt
+      - run: pytest -m &quot;not e2e&quot; --cov=shop --cov-fail-under=85 -q
+      - run: pytest -m e2e -q   # nightly or on main, not every PR</code></pre>
+<p>CI rules: the exact same <code>pytest</code> command developers run locally; fail the build on warnings that matter (<code>-W error</code> for deprecation warnings in your own code); cache dependencies; split E2E to a scheduled run if it exceeds a few minutes.</p>
+<h2>8. What good tests look like (review checklist)</h2>
+<ul>
+<li>Name says what is tested and what is expected.</li>
+<li>Arrange/Act/Assert structure, visually separated.</li>
+<li>No <code>time.sleep</code>, no network, no hardcoded <code>/tmp</code> paths.</li>
+<li>Assertions on behavior, not implementation (do not assert private</li>
+<p>method call counts unless the contract is the call).</p>
+<li>Test data is minimal and meaningful, not a 200-line fixture for a</li>
+<p>one-line assertion.</p>
+<li>Each bug fix ships with a regression test that fails without the fix;</li>
+<p>verify by stashing the fix and watching it fail.</p>
+</ul>
+<h2>Edge cases</h2>
+<ul>
+<li>Testing code that calls <code>sys.exit</code> or <code>os._exit</code>: use</li>
+<p><code>pytest.raises(SystemExit)</code>; for <code>os._exit</code> you must subprocess.</p>
+<li>Datetime-dependent logic: inject a clock function; never assert on</li>
+<p><code>datetime.now()</code> directly.</p>
+<li>Randomness: seed it (<code>random.seed(0)</code>) or assert on properties, not</li>
+<p>exact values.</p>
+<li>Tests that pass alone but fail together: shared module-level state;</li>
+<p>run with <code>-p randomly</code> to find the coupling, then isolate fixtures.</p>
+<li>Database migrations in tests: test against the migrated schema from</li>
+<p>scratch at least once; migration drift is a classic integration-only failure.</p>
+<li>External APIs in E2E: record and replay (VCR-style cassettes) for PR</li>
+<p>runs; hit the real API only in scheduled runs with a sandbox key.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Suite takes 30 minutes: profile it (<code>pytest --durations=20</code>), split</li>
+<p>tiers, parallelize with pytest-xdist (<code>-n auto</code>), and move slow tests down the pyramid or to nightly.</p>
+<li>Coverage gate blocks a legitimate PR: check whether the uncovered</li>
+<p>lines are defensive; add targeted tests or document the exclusion, do not lower the gate silently.</p>
+<li>Cannot reproduce a CI-only failure: run the exact CI container image</li>
+<p>locally, print the environment (<code>pip freeze</code>, env vars), and bisect the test file with <code>--lf</code> (last failed) plus <code>-x</code>.</p>
+<li>Flaky E2E nobody owns: assign an owner per E2E journey; unowned tests</li>
+<p>rot.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering teams, the defender view is quality misuse: tests that lie. Watch for:</p>
+<pre><code class="language-bash"># Tests with no assertions (they pass by existing)
+grep -rL &quot;assert&quot; tests/unit --include=&#x27;test_*.py&#x27;
+
+# Tests disabled via skip markers (tech debt hiding)
+grep -rn &quot;pytest.mark.skip&quot; tests/ | wc -l
+
+# Coverage exclusions growing unchecked
+grep -rn &quot;pragma: no cover&quot; src/ | wc -l</code></pre>
+<p>Misuse signals: a suite that is green but the product is broken (mocks asserting on mocks), coverage at 95 percent with zero integration tests, and E2E tests that hit production. Defensive practice: mutation testing on critical modules (mutmut or cosmic-ray) to check tests actually kill bugs, and a dashboard tracking flake rate per test so rot is visible.</p>
+<h2>Key references</h2>
+<ul>
+<li>pytest 8.3 documentation: https://docs.pytest.org/en/stable/</li>
+<li>coverage.py 7.6 docs: https://coverage.readthedocs.io/</li>
+<li>unittest.mock: https://docs.python.org/3/library/unittest.mock.html</li>
+<li>Google Testing Blog (test sizes): https://testing.googleblog.com/</li>
+<li>Martin Fowler on the test pyramid:</li>
+<p>https://martinfowler.com/articles/practical-test-pyramid.html</p>
+<li>CWE-754 (Improper Check for Unusual Conditions): untested edge cases.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

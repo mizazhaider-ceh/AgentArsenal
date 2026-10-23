@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: suricata-ids</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>suricata-ids</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when deploying, tuning, or troubleshooting Suricata as a</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Suricata</td><td>7.0</td></tr><tr><td>tcpdump</td><td>4.99</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Suricata is an open source network IDS/IPS that inspects traffic against signature rules and logs rich metadata (EVE JSON) for hunting. This skill covers deploying a Suricata 7 sensor defensively: where to place it, how to write and tune rules, how to read EVE logs, and how to keep it fast enough to see everything. Only run sensors on networks you own or are authorized to monitor.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Place the sensor where it sees the traffic you care about (SPAN port,</li>
+<p>TAP, or inline) and verify it captures with tcpdump first.</p>
+<li>Install Suricata 7, enable the Emerging Threats Open ruleset, and</li>
+<p>confirm rules load without errors.</p>
+<li>Configure EVE JSON output with alert, dns, tls, http, and flow</li>
+<p>logging enabled.</p>
+<li>Baseline for one week: record alert volume per rule and signature.</li>
+<li>Tune: disable or threshold noisy rules, add suppressions for known-</li>
+<p>good traffic with ticket references.</p>
+<li>Ship EVE logs to the SIEM and build dashboards for top alerts,</li>
+<p>top source IPs, and rule hit rates.</p>
+<li>Review rule updates weekly and re-baseline after each update.</li>
+<li>Test detection with a safe, local simulation (a lab attack host) and</li>
+<p>confirm the expected alerts fire.</p>
+</ol>
+<h2>1. Placement and capture</h2>
+<p>A sensor that does not see the traffic cannot detect anything. Options:</p>
+<ul>
+<li>SPAN/mirror port: easiest, no inline risk, but drops packets under</li>
+<p>load and misses traffic if the switch is oversubscribed.</p>
+<li>Network TAP: sees everything, no packet loss from mirroring, costs</li>
+<p>hardware.</p>
+<li>Inline (IPS mode): can block, but a sensor failure can break traffic</li>
+<p>unless you use a bypass TAP.</p>
+</ul>
+<p>Verify capture before touching Suricata:</p>
+<pre><code class="language-bash"># Confirm the interface sees traffic (replace eth1 with your monitor iface)
+sudo tcpdump -i eth1 -c 20 -nn
+
+# Check for packet loss on the capture interface
+cat /proc/net/dev | grep eth1
+
+# Large receive offload can hide packets from the IDS; disable on monitor ifaces
+sudo ethtool -K eth1 gro off lro off</code></pre>
+<p>For a lab, mirror a port on your switch or use a virtual SPAN in your hypervisor. Document which network segments the sensor covers and, critically, which it does not.</p>
+<h2>2. Installation and ruleset</h2>
+<pre><code class="language-bash"># Ubuntu: install Suricata 7 from the official PPA
+sudo add-apt-repository ppa:oisf/suricata-7.0
+sudo apt update &amp;&amp; sudo apt install -y suricata
+
+# Update the Emerging Threats Open ruleset
+sudo suricata-update
+
+# Verify the rules load cleanly (do this after every rule change)
+sudo suricata -T -c /etc/suricata/suricata.yaml
+
+# Check the version and build features
+suricata --build-info | head -30</code></pre>
+<p>Key paths: <code>/etc/suricata/suricata.yaml</code> (config), <code>/var/lib/suricata/rules/suricata.rules</code> (downloaded rules), <code>/var/log/suricata/eve.json</code> (alerts and metadata).</p>
+<p>Enable the rulesets you need in <code>/etc/suricata/suricata.yaml</code> and use <code>suricata-update</code> with a configuration that disables categories you do not want (for example <code>emerging-games</code> on a corporate network).</p>
+<h2>3. Rule syntax</h2>
+<p>A Suricata rule has a header (action, protocol, addresses, ports) and options in parentheses.</p>
+<pre><code class="language-text">alert http $HOME_NET any -&gt; $EXTERNAL_NET any \
+  (msg:&quot;SUSP PowerShell download cradle pattern&quot;;
+   flow:established,to_server;
+   http.uri; content:&quot;/powershell&quot;; nocase;
+   http.user_agent; content:&quot;Mozilla&quot;; nocase;
+   classtype:trojan-activity; sid:9000001; rev:1;)</code></pre>
+<p>Important keywords:</p>
+<pre><code class="language-text"># Match a DNS query for a suspicious domain
+alert dns $HOME_NET any -&gt; any any \
+  (msg:&quot;SUSP DNS query to known bad TLD&quot;;
+   dns.query; content:&quot;.xyz&quot;; endswith;
+   classtype:trojan-activity; sid:9000002; rev:1;)
+
+# Match TLS SNI to a suspicious domain
+alert tls $HOME_NET any -&gt; $EXTERNAL_NET any \
+  (msg:&quot;SUSP TLS SNI to dynamic DNS host&quot;;
+   tls.sni; content:&quot;.duckdns.org&quot;; endswith;
+   classtype:trojan-activity; sid:9000003; rev:1;)
+
+# Threshold: only alert after 10 hits from one source in 60 seconds
+alert http $HOME_NET any -&gt; $EXTERNAL_NET any \
+  (msg:&quot;POSSIBLE brute force login attempts&quot;;
+   flow:established,to_server; http.uri; content:&quot;/login&quot;;
+   threshold:type threshold, track by_src, count 10, seconds 60;
+   classtype:attempted-recon; sid:9000004; rev:1;)</code></pre>
+<p>Rule hygiene: every local rule gets a <code>sid</code> above 9000000 (your private range), a <code>rev</code> you bump on change, a <code>msg</code> that says what fired, and a reference (URL or ticket) in a comment above it.</p>
+<h2>4. EVE JSON logging</h2>
+<p>EVE JSON is the main output you will hunt in. Enable the log types you need in <code>suricata.yaml</code>:</p>
+<pre><code class="language-yaml">outputs:
+  - eve-log:
+      enabled: yes
+      filetype: regular
+      filename: eve.json
+      types:
+        - alert
+        - dns:
+            query: yes
+            answers: yes
+        - tls:
+            extended: yes
+        - http:
+            extended: yes
+        - flow
+        - fileinfo</code></pre>
+<p>Read alerts with jq during tuning:</p>
+<pre><code class="language-bash"># Top alert signatures in the last hour
+jq -r &#x27;select(.event_type==&quot;alert&quot;) | .alert.signature&#x27; /var/log/suricata/eve.json \
+  | sort | uniq -c | sort -rn | head -20
+
+# All alerts for one suspicious IP
+jq -r &#x27;select(.event_type==&quot;alert&quot; and .src_ip==&quot;192.0.2.44&quot;)
+  | &quot;\(.timestamp) \(.alert.signature) \(.dest_ip):\(.dest_port)&quot;&#x27; \
+  /var/log/suricata/eve.json
+
+# TLS handshakes with JA3 fingerprints (great for hunting malware C2)
+jq -r &#x27;select(.event_type==&quot;tls&quot;) | &quot;\(.src_ip) \(.tls.ja3.hash) \(.tls.sni)&quot;&#x27; \
+  /var/log/suricata/eve.json | sort | uniq -c | sort -rn | head -20</code></pre>
+<h2>5. JA3 and protocol fingerprinting</h2>
+<p>JA3 fingerprints the TLS client handshake, which identifies malware families even when the domain changes. Suricata logs it in EVE TLS events.</p>
+<pre><code class="language-bash"># Find rare JA3 hashes (first step of a C2 hunt)
+jq -r &#x27;select(.event_type==&quot;tls&quot; and .tls.ja3.hash != null)
+  | .tls.ja3.hash&#x27; /var/log/suricata/eve.json \
+  | sort | uniq -c | sort -n | head -20
+
+# Correlate a rare JA3 with its destinations
+jq -r &#x27;select(.event_type==&quot;tls&quot; and .tls.ja3.hash==&quot;e7d705a3286e0e892b58c3f0a1d3cb7e&quot;)
+  | &quot;\(.src_ip) -&gt; \(.dest_ip):\(.dest_port) sni=\(.tls.sni)&quot;&#x27; \
+  /var/log/suricata/eve.json | sort -u</code></pre>
+<p>Also useful: JA3S (server fingerprint), HASSH for SSH, and DHCP fingerprints. Compare observed hashes against public JA3 feeds and your own baseline of normal clients.</p>
+<h2>6. Performance tuning</h2>
+<p>A sensor that drops packets misses attacks. Watch the stats:</p>
+<pre><code class="language-bash"># Check capture drops (should stay near zero)
+jq -r &#x27;select(.event_type==&quot;stats&quot;)
+  | &quot;\(.timestamp) capture.kernel_drops=\(.stats.capture.kernel_drops)&quot;&#x27; \
+  /var/log/suricata/stats.log | tail -5
+
+# Or from the stats log directly
+grep -a &quot;capture.kernel_drops&quot; /var/log/suricata/stats.log | tail -3</code></pre>
+<p>Tuning levers in <code>suricata.yaml</code>:</p>
+<ul>
+<li>Increase <code>runmode</code> workers: use <code>workers</code> mode on multi-queue NICs.</li>
+<li>Raise <code>stream.memcap</code> and <code>flow.memcap</code> if you see stream depth</li>
+<p>warnings, but watch total RAM.</p>
+<li>Disable protocol parsers you do not need (for example SMB parsing on</li>
+<p>a sensor that only watches DMZ web traffic).</p>
+<li>Use <code>bpf-filter</code> to skip trusted bulk traffic (backups, monitoring)</li>
+<p>at capture time.</p>
+<li>Pin Suricata to dedicated CPU cores and keep the management traffic</li>
+<p>off the monitor interface.</p>
+</ul>
+<p>Rule of thumb: if <code>kernel_drops</code> grows during business hours, you need more cores, fewer rules, or a BPF filter. Never ignore drops; they are blind spots.</p>
+<h2>7. Tuning and suppression</h2>
+<p>Weekly tuning keeps the SOC from drowning:</p>
+<pre><code class="language-bash"># Find the noisiest rules over the last 7 days
+jq -r &#x27;select(.event_type==&quot;alert&quot;) | &quot;\(.alert.signature_id) \(.alert.signature)&quot;&#x27; \
+  /var/log/suricata/eve.json | sort | uniq -c | sort -rn | head -15</code></pre>
+<p>In <code>threshold.config</code>:</p>
+<pre><code class="language-text"># Suppress a noisy rule for the vulnerability scanner (ticket SOC-5200)
+suppress gen_id 1, sig_id 2010935, track by_src, ip 198.51.100.10
+
+# Rate-limit a chatty informational rule
+threshold gen_id 1, sig_id 2013028, type limit, track by_src, count 1, seconds 3600</code></pre>
+<p>Process: for each top noisy rule, decide disable, threshold, or suppress, record the ticket, and re-check after the next rule update. Never suppress by destination IP of an external host; suppress the known-good internal source instead.</p>
+<h2>8. Shipping to the SIEM</h2>
+<pre><code class="language-bash"># Example: Filebeat shipping EVE JSON to Elastic
+# /etc/filebeat/filebeat.yml snippet
+filebeat.inputs:
+  - type: log
+    paths: [/var/log/suricata/eve.json]
+    json.keys_under_root: true
+    json.add_error_key: true
+output.elasticsearch:
+  hosts: [&quot;https://elastic.internal:9200&quot;]</code></pre>
+<p>Build SIEM content on top: a dashboard of alert volume by signature, a watchlist of JA3 hashes seen in threat intel, and a correlation that joins Suricata alerts with EDR process data on internal IP and time.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Encrypted traffic: Suricata sees metadata (SNI, JA3, cert fields),</li>
+<p>not payloads. Do not expect HTTP content rules to fire on HTTPS.</p>
+<li>Asymmetric routing: if the sensor sees only one direction, stream</li>
+<p>reassembly fails and many rules never fire. Fix the mirror, not the rules.</p>
+<li>VLAN tags: if the mirror port sends tagged frames and Suricata is</li>
+<p>not configured for VLANs, it may ignore the traffic. Test with tcpdump first.</p>
+<li>ET rules update weekly and can change alert volume overnight. Diff</li>
+<p>the ruleset on update and re-baseline noisy new rules.</p>
+<li>Large file transfers trigger file extraction rules. Exclude backup</li>
+<p>windows and known-good file servers with BPF or suppression.</p>
+<li>IPv6: rules written with <code>$HOME_NET</code> as IPv4-only miss IPv6</li>
+<p>traffic. Define both, or attackers will walk through the gap.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Suricata fails to start after a rule change: run <code>suricata -T</code> to</li>
+<p>find the broken rule, fix or disable it, and restart. Keep the last known-good ruleset as a backup.</p>
+<li>Drops persist after tuning: reduce the active ruleset to</li>
+<p><code>emerging-malware</code>, <code>emerging-exploit</code>, and <code>emerging-trojan</code> only, then add categories back one at a time while watching drops.</p>
+<li>Alerts point to an internal host: pivot to EDR and DHCP logs to</li>
+<p>identify the host, then follow the incident-response skill.</p>
+<li>You need full packet capture for forensics: add <code>pcap-log</code> or a</li>
+<p>dedicated full-packet recorder (Suricata is an alerting engine, not a packet archive).</p>
+<li>Sensor is blind to a segment: document the gap, propose TAP or SPAN</li>
+<p>placement, and note compensating controls (EDR, proxy logs) in the risk register.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Suricata is a defender tool, so the attacker view is evasion:</p>
+<ul>
+<li>Attackers fragment packets and use overlapping segments to confuse</li>
+<p>reassembly. Keep <code>stream</code> reassembly at OS-policy defaults and updated; test with a lab IDS evasion tool to confirm.</p>
+<li>Attackers tunnel C2 over DNS, ICMP, or HTTPS to blend in. Write</li>
+<p>rules on anomaly metadata (long DNS labels, rare JA3, beaconing intervals) rather than only on known-bad domains.</p>
+<li>Attackers use valid certificates and CDNs, so SNI and cert rules</li>
+<p>miss them. Correlate network alerts with endpoint process data.</p>
+<li>Attackers slow scans to stay under thresholds. Keep a second,</li>
+<p>longer-window threshold rule for scan detection.</p>
+<li>Tune so the SOC trusts the sensor: a Suricata that pages on every</li>
+<p>scan gets ignored, and then the real alert gets missed too.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1071.001 (Web Protocols), T1048 (Exfiltration Over</li>
+<p>Alternative Protocol), T1595 (Active Scanning), T1105 (Ingress Tool Transfer).</p>
+<li>Suricata 7 user guide: https://docs.suricata.io/en/suricata-7.0.0/</li>
+<li>Emerging Threats rules documentation:</li>
+<p>https://doc.emergingthreats.net/</p>
+<li>JA3 fingerprinting: https://github.com/salesforce/ja3</li>
+<li>EVE JSON schema: Suricata docs, &quot;Eve JSON Output&quot; chapter.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

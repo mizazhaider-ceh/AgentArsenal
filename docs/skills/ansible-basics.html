@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ansible-basics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ansible-basics</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when automating server configuration with Ansible on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a> <a href="git-workflows.html">git-workflows</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Ansible Core</td><td>2.18</td></tr></tbody></table><p>Ansible configures machines over SSH with no agent to install: you describe the desired state in YAML, and Ansible makes it so. This skill covers inventory, ad-hoc commands for one-off tasks, playbooks with idempotent modules, secrets with Vault, and roles for reuse. All examples use Ansible Core 2.18 against Linux hosts you are authorized to manage.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define the inventory: groups of hosts with connection variables.</li>
+<li>Test connectivity with the <code>ping</code> module before running anything</li>
+<p>real.</p>
+<li>Use ad-hoc commands for one-off checks; write playbooks for</li>
+<p>anything you will run twice.</p>
+<li>Run every playbook first with <code>--check --diff</code> to preview changes.</li>
+<li>Use idempotent modules (<code>apt</code>, <code>copy</code>, <code>template</code>, <code>service</code>)</li>
+<p>instead of <code>shell</code> wherever possible.</p>
+<li>Encrypt secrets with <code>ansible-vault</code>; never store plaintext</li>
+<p>passwords in playbooks.</p>
+<li>Organize repeated logic into roles with defaults, tasks, and</li>
+<p>handlers.</p>
+<li>Keep playbooks in git and run production changes from a</li>
+<p>controlled runner, not a laptop.</p>
+</ol>
+<h2>1. Inventory and connectivity</h2>
+<pre><code class="language-bash">ansible --version
+
+mkdir ansible-demo &amp;&amp; cd ansible-demo
+cat &gt; inventory.ini &lt;&lt;&#x27;EOF&#x27;
+[web]
+web1.example.com
+web2.example.com
+
+[db]
+db1.example.com
+
+[all:vars]
+ansible_user=deployer
+ansible_ssh_private_key_file=~/.ssh/deployer_ed25519
+EOF
+
+# The ping module tests the Ansible connection, not ICMP
+ansible -i inventory.ini all -m ping
+
+# Gather facts about every host (OS, IPs, memory, disks)
+ansible -i inventory.ini web -m setup -a &#x27;filter=ansible_distribution*&#x27;</code></pre>
+<p>Inventory groups (<code>web</code>, <code>db</code>) let you target subsets. Facts gathered by the <code>setup</code> module are available as variables like <code>ansible_distribution</code> in playbooks.</p>
+<h2>2. Ad-hoc commands for one-off work</h2>
+<pre><code class="language-bash"># Check uptime everywhere
+ansible -i inventory.ini all -a &#x27;uptime&#x27;
+
+# Install a package idempotently (nothing happens if already installed)
+ansible -i inventory.ini web -m apt -a &#x27;name=nginx state=present update_cache=yes&#x27; -b
+
+# Copy a file with correct ownership and permissions
+ansible -i inventory.ini web -m copy \
+  -a &#x27;src=./motd dest=/etc/motd owner=root group=root mode=0644&#x27; -b
+
+# Restart a service only if needed
+ansible -i inventory.ini web -m service -a &#x27;name=nginx state=restarted&#x27; -b
+
+# Run as a specific user without full become
+ansible -i inventory.ini db -m command -a &#x27;whoami&#x27; -b --become-user postgres</code></pre>
+<p>The <code>-b</code> flag enables privilege escalation (sudo). Ad-hoc commands are for exploration and emergencies; repeatable work belongs in playbooks.</p>
+<h2>3. First playbook</h2>
+<pre><code class="language-bash">cat &gt; site.yaml &lt;&lt;&#x27;EOF&#x27;
+---
+- name: Baseline web servers
+  hosts: web
+  become: true
+  vars:
+    admin_email: ops@example.com
+
+  tasks:
+    - name: Install nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Deploy index page
+      ansible.builtin.copy:
+        content: &quot;Hello from {{ inventory_hostname }}\n&quot;
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: &quot;0644&quot;
+      notify: Reload nginx
+
+    - name: Ensure nginx is running and enabled
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+  handlers:
+    - name: Reload nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+EOF
+
+# Preview first: check mode shows what WOULD change, diff shows how
+ansible-playbook -i inventory.ini site.yaml --check --diff
+
+# Then run for real
+ansible-playbook -i inventory.ini site.yaml</code></pre>
+<p>Handlers run once at the end of the play, only when notified by a task that actually changed something. This is how you avoid restarting services on every run.</p>
+<h2>4. Templates and variables</h2>
+<pre><code class="language-bash">mkdir -p templates
+cat &gt; templates/nginx.conf.j2 &lt;&lt;&#x27;EOF&#x27;
+# Managed by Ansible: local edits will be overwritten
+server {
+    listen 80;
+    server_name {{ inventory_hostname }};
+    access_log /var/log/nginx/{{ inventory_hostname }}.access.log;
+
+    location / {
+        proxy_pass http://127.0.0.1:{{ app_port | default(8080) }};
+    }
+}
+EOF
+
+cat &gt; webapp.yaml &lt;&lt;&#x27;EOF&#x27;
+---
+- name: Configure nginx vhost
+  hosts: web
+  become: true
+  vars:
+    app_port: 8080
+  tasks:
+    - name: Deploy vhost config from template
+      ansible.builtin.template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/sites-enabled/app.conf
+        owner: root
+        group: root
+        mode: &quot;0644&quot;
+        validate: &quot;nginx -t -c %s&quot;
+      notify: Reload nginx
+  handlers:
+    - name: Reload nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+EOF
+
+ansible-playbook -i inventory.ini webapp.yaml --check --diff</code></pre>
+<p>The <code>validate</code> option checks the rendered config before installing it; a bad template never reaches the live config directory. Jinja2 filters (<code>default</code>, <code>join</code>, <code>to_json</code>) handle missing variables gracefully.</p>
+<h2>5. Vault for secrets</h2>
+<pre><code class="language-bash"># Create a vault password file with strict permissions (or use a script)
+openssl rand -hex 32 &gt; ~/.vault_pass
+chmod 600 ~/.vault_pass
+export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass
+
+# Create an encrypted variables file
+ansible-vault create group_vars/db/vault.yaml
+# inside the editor, write:
+# db_password: &quot;a-very-long-random-password&quot;
+
+# Encrypt an existing file, edit later without decrypting to disk
+ansible-vault encrypt group_vars/db/secret_vars.yaml
+ansible-vault edit group_vars/db/vault.yaml
+
+# Use the secret in a playbook: {{ db_password }}
+ansible-playbook -i inventory.ini db.yaml --ask-vault-pass</code></pre>
+<p>Vault encrypts with AES256. Store the vault password in a password manager or CI secret, never next to the encrypted files. Rotate secrets with <code>ansible-vault rekey</code> when someone with access leaves.</p>
+<h2>6. Roles for reuse</h2>
+<pre><code class="language-bash"># Scaffold a role layout
+ansible-galaxy role init roles/hardening
+find roles/hardening -type f | sort
+
+# Minimal role: defaults, tasks, handlers
+cat &gt; roles/hardening/defaults/main.yaml &lt;&lt;&#x27;EOF&#x27;
+---
+ssh_permit_root_login: &quot;no&quot;
+ssh_password_auth: &quot;no&quot;
+EOF
+
+cat &gt; roles/hardening/tasks/main.yaml &lt;&lt;&#x27;EOF&#x27;
+---
+- name: Harden sshd config
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: &quot;{{ item.regexp }}&quot;
+    line: &quot;{{ item.line }}&quot;
+    validate: &quot;sshd -t -f %s&quot;
+  loop:
+    - { regexp: &#x27;^#?PermitRootLogin&#x27;, line: &quot;PermitRootLogin {{ ssh_permit_root_login }}&quot; }
+    - { regexp: &#x27;^#?PasswordAuthentication&#x27;, line: &quot;PasswordAuthentication {{ ssh_password_auth }}&quot; }
+  notify: Restart sshd
+EOF
+
+cat &gt; roles/hardening/handlers/main.yaml &lt;&lt;&#x27;EOF&#x27;
+---
+- name: Restart sshd
+  ansible.builtin.service:
+    name: ssh
+    state: restarted
+EOF
+
+cat &gt; harden.yaml &lt;&lt;&#x27;EOF&#x27;
+---
+- name: Harden all hosts
+  hosts: all
+  become: true
+  roles:
+    - hardening
+EOF
+
+ansible-playbook -i inventory.ini harden.yaml --check --diff</code></pre>
+<p>Roles separate defaults (overridable), tasks, handlers, templates, and files. Pin third-party roles from Galaxy to a version; review their tasks before running them with become on your fleet.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>SSH fails with &quot;Permission denied (publickey)&quot;. The key path in</li>
+<p>inventory is wrong or the key is not authorized on the host; test with plain <code>ssh -i key user@host</code> first to separate SSH problems from Ansible problems.</p>
+<li>Playbook hangs on gathering facts. A host has broken DNS or a</li>
+<p>stuck mount; run with <code>-e ansible_timeout=20</code> or disable fact gathering (<code>gather_facts: false</code>) for fact-free plays.</p>
+<li><code>--check</code> mode reports changes for <code>shell</code> tasks every run. Shell</li>
+<p>and command tasks are not idempotent by default; add <code>creates:</code>/<code>removes:</code> guards or rewrite with a proper module.</p>
+<li>Handler never fires. The notifying task name must match the</li>
+<p>handler name exactly, and handlers only run on <code>changed</code>, not on <code>ok</code>; a task that reports changed every run masks this.</p>
+<li>Vault password prompt in CI. Set <code>ANSIBLE_VAULT_PASSWORD_FILE</code></li>
+<p>to a script or file provided by the CI secret store; never commit the password file.</p>
+<li><code>lineinfile</code> duplicates lines. The <code>regexp</code> did not match the</li>
+<p>existing line (commented variants, whitespace); test the regex against the real file and anchor it properly.</p>
+<li>Become asks for a sudo password on every host. Use</li>
+<p><code>--ask-become-pass</code> interactively, or configure passwordless sudo for the automation user limited to the needed commands.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration. Ansible misuse shows up as playbooks with <code>become: true</code> on every task, vault-encrypted files committed next to their password file, and <code>shell:</code> tasks piping <code>curl</code> into <code>bash</code> from the internet. Detect misconfiguration by reviewing playbooks for hardcoded passwords (grep for <code>password:</code> outside vault files), checking that the automation user has limited sudo rights instead of <code>ALL=(ALL) NOPASSWD:ALL</code>, and auditing <code>~/.ansible</code> logs for which hosts were touched and when. An attacker with the vault password owns every secret in the repo, so treat vault passwords like production credentials: rotate on personnel changes and never share them in chat. Unexpected <code>ansible-playbook</code> runs against production inventory outside change windows deserve investigation.</p>
+<h2>Key references</h2>
+<ul>
+<li>Ansible Core 2.18 documentation: https://docs.ansible.com/</li>
+<li>Playbook guide: https://docs.ansible.com/ansible/latest/playbook_guide/index.html</li>
+<li>ansible-vault: https://docs.ansible.com/ansible/latest/vault_guide/index.html</li>
+<li>Built-in modules index: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/</li>
+<li>CWE-798 (Use of Hard-coded Credentials): plaintext secrets in</li>
+<p>playbooks and inventory.</p>
+<li>CWE-732 (Incorrect Permission Assignment for Critical Resource):</li>
+<p>overly broad sudo for automation users.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

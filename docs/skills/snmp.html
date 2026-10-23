@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: snmp</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>snmp</h2><div class="meta"><span class="badge gray">network</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when enumerating SNMP services on authorized targets,</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="nmap-methodology.html">nmap-methodology</a> <a href="recon-active.html">recon-active</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Net-SNMP</td><td>5.9.4</td></tr><tr><td>nmap</td><td>7.98</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>SNMP (Simple Network Management Protocol) lets administrators monitor network gear, and it is still deployed with the default community strings <code>public</code> and <code>private</code> far too often. A readable SNMP service can hand you hostnames, interface tables, routing tables, ARP tables, running processes, installed software, and sometimes usernames. A writable one can change device configuration. This skill covers authorized SNMP enumeration on UDP 161: finding services, guessing community strings, walking the MIB tree for useful data, and testing write access without breaking the device. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Find hosts with UDP 161 open on the target range.</li>
+<li>Identify the SNMP version and test the default community strings.</li>
+<li>Brute force a short list of common community strings if defaults fail.</li>
+<li>Walk the standard MIB branches: system, interfaces, IP, and processes.</li>
+<li>Extract hostnames, routes, ARP entries, users, and software lists.</li>
+<li>Test SNMP write access with a harmless read-back write, only in scope.</li>
+<li>Note SNMPv3 targets for credentialed testing later.</li>
+</ol>
+<h2>1. Find SNMP services</h2>
+<p>SNMP runs over UDP, so scans are slower and less reliable than TCP scans. Use a targeted UDP sweep on port 161 and confirm with an actual SNMP query rather than trusting the port state alone.</p>
+<pre><code class="language-bash"># UDP sweep for SNMP across the subnet (slow, be patient)
+nmap -sU -p 161 --open -T4 192.168.1.0/24 -oG /tmp/snmp-sweep.gnmap
+
+# Faster alternative: nmap SNMP discovery scripts
+nmap -sU -p 161 --script snmp-info,snmp-sysdescr 192.168.1.0/24 \
+  -oN /tmp/snmp-info.txt</code></pre>
+<p>The <code>snmp-info</code> script tries the <code>public</code> community string by itself, so a hit there already tells you the string works. Confirm manually:</p>
+<pre><code class="language-bash"># Basic query with the public community string (SNMPv2c)
+snmpwalk -v2c -c public 192.168.1.10 1.3.6.1.2.1.1.1.0
+
+# The .1.0 at the end is sysDescr: a free text device description
+# Example answer: STRING: &quot;Cisco IOS Software, C2900 Software ...&quot;</code></pre>
+<p>If <code>snmpwalk</code> prints <code>Timeout: No Response</code>, either the community string is wrong, the version is wrong, or SNMP is filtered. Work through each in order.</p>
+<h2>2. Test community strings</h2>
+<p>Community strings are cleartext passwords. Vendors ship <code>public</code> for read-only and <code>private</code> for read-write, and many devices keep them.</p>
+<pre><code class="language-bash"># Try the classic defaults against one target
+for c in public private community manager admin default; do
+  echo &quot;=== community: $c ===&quot;
+  snmpget -v2c -c &quot;$c&quot; -t 2 -r 1 192.168.1.10 1.3.6.1.2.1.1.1.0 2&gt;&amp;1 \
+    | grep -v &quot;Timeout&quot; | head -2
+done</code></pre>
+<pre><code class="language-bash"># nmap brute force script with a custom community list
+nmap -sU -p 161 --script snmp-brute \
+  --script-args snmp-brute.communitiesdb=/tmp/communities.txt \
+  192.168.1.10</code></pre>
+<p>Keep the list short and sane: <code>public</code>, <code>private</code>, plus vendor defaults for the gear you fingerprinted (<code>cisco</code>, <code>tivoli</code>, <code>Dell</code>, <code>HP</code>, empty string). A good starter file:</p>
+<pre><code class="language-bash">cat &gt; /tmp/communities.txt &lt;&lt;&#x27;EOF&#x27;
+public
+private
+community
+manager
+admin
+default
+cisco
+tivoli
+password
+snmp
+EOF</code></pre>
+<p>For many targets, wrap the loop in Python with the standard library calling <code>snmpget</code>, and stop at the first hit per host. Never spray thousands of strings; SNMP agents on embedded devices crash under brute force, and a crashed switch is an outage you caused.</p>
+<h2>3. Walk the MIB tree</h2>
+<p>Once a read community string works, walk the standard MIB-2 branches. These OIDs exist on almost every SNMP agent and give the most value per query.</p>
+<pre><code class="language-bash">C=&quot;public&quot;; T=&quot;192.168.1.10&quot;
+
+# System group: description, uptime, contact, hostname, location
+snmpwalk -v2c -c $C $T 1.3.6.1.2.1.1
+
+# Interfaces: names, addresses, speeds, status
+snmpwalk -v2c -c $C $T 1.3.6.1.2.1.2 | head -60
+
+# IP address table: every configured address on the device
+snmpwalk -v2c -c $C $T 1.3.6.1.2.1.4.20
+
+# Routing table: destinations, next hops, interfaces
+snmpwalk -v2c -c $C $T 1.3.6.1.2.1.4.21</code></pre>
+<pre><code class="language-bash"># ARP / neighbor table: IP to MAC mappings (great for pivoting)
+snmpwalk -v2c -c $C $T 1.3.6.1.2.1.4.22
+
+# TCP connections table: who is connected to what
+snmpwalk -v2c -c $C $T 1.3.6.1.2.1.6.13
+
+# Full walk saved for offline review (can be large)
+snmpbulkwalk -v2c -c $C $T 1.3.6.1.2.1 &gt; /tmp/mib2-walk.txt 2&gt;&amp;1
+wc -l /tmp/mib2-walk.txt</code></pre>
+<p>Use <code>snmpbulkwalk</code> instead of <code>snmpwalk</code> for full walks: it fetches many values per packet and finishes far faster. On Windows targets with SNMP installed, the Host Resources MIB adds gold:</p>
+<pre><code class="language-bash"># Running processes (names and paths)
+snmpwalk -v2c -c $C $T 1.3.6.1.2.1.25.4.2.1.2 | head -40
+
+# Installed software
+snmpwalk -v2c -c $C $T 1.3.6.1.2.1.25.6.3.1.2 | head -40
+
+# Local users (when the agent exposes them)
+snmpwalk -v2c -c $C $T 1.3.6.1.4.1.77.1.2.25</code></pre>
+<p>The last OID is the LAN Manager MIB user table, present on Windows SNMP agents. It leaks usernames, which feed password spraying.</p>
+<h2>4. Pull the high value data</h2>
+<p>Turn the raw walk into findings. These one-liners extract what matters.</p>
+<pre><code class="language-bash">C=&quot;public&quot;; T=&quot;192.168.1.10&quot;
+
+# Hostname, contact, location (often contains real names and sites)
+snmpwalk -v2c -c $C $T 1.3.6.1.2.1.1.4.0 1.3.6.1.2.1.1.5.0 1.3.6.1.2.1.1.6.0
+
+# Interface names mapped to IPs
+snmpwalk -v2c -c $C $T 1.3.6.1.2.1.2.2.1.2
+snmpwalk -v2c -c $C $T 1.3.6.1.2.1.4.20.1.1
+
+# Config file names on network gear (Cisco: running config location hints)
+snmpwalk -v2c -c $C $T 1.3.6.1.4.1.9.9.96.1.1.1.1.2 2&gt;/dev/null | head -10</code></pre>
+<p>On printers, SNMP often exposes the admin password or the device web password in vendor MIB branches. Check the vendor branch (<code>1.3.6.1.4.1.&lt;enterprise&gt;</code>) when the device is a printer, UPS, or camera. Document every credential-looking string, but verify before reporting.</p>
+<h2>5. Test write access carefully</h2>
+<p>A <code>private</code> or custom read-write community string allows SET operations, which change device configuration. Test write access only when the scope explicitly allows configuration changes, and use a harmless, reversible write.</p>
+<pre><code class="language-bash"># Safe write test: set sysContact to a test value, read it back, restore it
+ORIG=$(snmpget -v2c -c private 192.168.1.10 1.3.6.1.2.1.1.4.0 | cut -d&#x27;&quot;&#x27; -f2)
+snmpset -v2c -c private 192.168.1.10 1.3.6.1.2.1.1.4.0 s &quot;pentest-probe&quot;
+snmpget -v2c -c private 192.168.1.10 1.3.6.1.2.1.1.4.0
+snmpset -v2c -c private 192.168.1.10 1.3.6.1.2.1.1.4.0 s &quot;$ORIG&quot;
+snmpget -v2c -c private 192.168.1.10 1.3.6.1.2.1.1.4.0</code></pre>
+<p>If the SET succeeds, you have proven write access and restored the original value. Report it as a critical finding: writable SNMP can change routes, reboot devices, or push configurations. Never write to routing, reboot, or config-copy OIDs during enumeration.</p>
+<h2>6. Handle SNMPv3</h2>
+<p>SNMPv3 uses real authentication (username, auth password, privacy password) instead of community strings. You cannot walk it without credentials, but you can detect it and note it for credentialed testing.</p>
+<pre><code class="language-bash"># Detect SNMPv3: an auth failure reply still proves the service is there
+snmpwalk -v3 -l noAuthNoPriv -u nosuchuser 192.168.1.10 1.3.6.1.2.1.1 2&gt;&amp;1 | head -3
+
+# nmap SNMPv3 discovery
+nmap -sU -p 161 --script snmp-info 192.168.1.10</code></pre>
+<p>With valid SNMPv3 credentials from another phase, walk exactly like v2c:</p>
+<pre><code class="language-bash">snmpwalk -v3 -l authPriv -u monitor -a SHA -A &#x27;authpass&#x27; \
+  -x AES -X &#x27;privpass&#x27; 192.168.1.10 1.3.6.1.2.1.1</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>UDP scan says <code>open|filtered</code> for everything. That is normal for UDP;</li>
+<p>confirm with a real <code>snmpget</code> before calling a host an SNMP service.</p>
+<li><code>Timeout: No Response</code> with the right string. The agent may bind SNMP</li>
+<p>to a management interface or VLAN only, or a firewall drops UDP 161 from your network. Test from the approved network position.</p>
+<li>The device answers SNMPv1 only. Retry with <code>-v1</code>; some old printers and</li>
+<p>UPS units never got v2c.</p>
+<li>The walk returns <code>No Such Object</code> for Host Resources OIDs. The agent</li>
+<p>does not implement that MIB; stick to MIB-2.</p>
+<li>Community brute force crashes an old device. Stop immediately, note the</li>
+<p>outage, inform the client contact, and continue with gentler methods. This is why you keep the string list short.</p>
+<li>snmpwalk output is enormous. Walk specific branches instead of the full</li>
+<p>tree, and use <code>snmpbulkwalk</code> with output redirected to a file.</p>
+<li>Vendor MIBs need translation. Pipe numeric OIDs through <code>snmptranslate</code></li>
+<p>or install the vendor MIB files for readable names.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Defaults fail and the short list fails. Check the device fingerprint</li>
+<p>for vendor-specific defaults (printer and camera vendors are the worst offenders) and try one more targeted round.</p>
+<li>SNMP is filtered from your position. Ask whether a jump host or VPN</li>
+<p>segment with management access is in scope; SNMP often lives on a management VLAN you cannot reach directly.</p>
+<li>You find credentials in SNMP output. Feed them into SNMPv3 testing,</li>
+<p>device web interfaces, and SSH/Telnet on the same box.</p>
+<li>Read-write access confirmed. Document it, restore any test value, and</li>
+<p>hand the finding to the reporting phase; do not pivot device configuration further without explicit approval.</p>
+<li>The target is a Windows host with SNMP. Prioritize the Host Resources</li>
+<p>and LAN Manager branches for users, processes, and software.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see SNMP enumeration as bursts of UDP 161 traffic from one source, failed community string attempts in device logs, and full MIB walks as sustained query streams. SNMP traps can alert on authentication failures. The durable fixes: change all default community strings to long random values, restrict SNMP to read-only where writes are not needed, migrate to SNMPv3 with authPriv, bind SNMP to the management VLAN only, and filter UDP 161 at the network edge. Audit devices for community strings with a scanner on a schedule, because defaults creep back in after firmware resets and replacements.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1046 (Network Service Discovery): SNMP sweeps.</li>
+<li>MITRE ATT&amp;CK T1590.006 (Gather Victim Network Information, Network</li>
+<p>Security Appliances): device config via SNMP.</p>
+<li>CWE-200 (Exposure of Sensitive Information): MIB data leaks.</li>
+<li>CWE-798 (Use of Hard-coded Credentials): default community strings.</li>
+<li>IETF RFC 3411-3418 (SNMPv3 architecture and security).</li>
+<li>Net-SNMP documentation: http://www.net-snmp.org/docs/man/</li>
+<li>nmap snmp NSE scripts: https://nmap.org/nsedoc/scripts/snmp-brute.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

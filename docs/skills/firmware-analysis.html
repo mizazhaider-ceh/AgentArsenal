@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: firmware-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>firmware-analysis</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when analyzing a firmware image from a device you own or</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="static-triage.html">static-triage</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Binwalk</td><td>3.1.0</td></tr><tr><td>Ghidra</td><td>12.1.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Firmware analysis treats a device&#x27;s flash image like a crime scene made of nested archives: bootloaders, kernels, compressed filesystems, and applications layered inside one binary blob. The work splits into three phases: map the structure, extract the filesystems, then analyze what came out. This skill covers the Binwalk-centered workflow for all three, plus the high-value findings firmware audits produce (hardcoded credentials, private keys, debug interfaces, outdated software) and how to analyze extracted binaries. Scope: analyze firmware from devices you own, devices you are authorized to test, or vendor updates you are reviewing. Never flash modified firmware to a device you do not own, and never extract and redistribute proprietary firmware contents beyond your authorized scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Hash the firmware image and record where it came from (device model,</li>
+<p>version, extraction method).</p>
+<li>Scan with Binwalk to map embedded files, filesystems, and kernels.</li>
+<li>Run an entropy plot to find encrypted or compressed regions.</li>
+<li>Extract recursively, installing the helper tools Binwalk shells out to.</li>
+<li>Identify the bootloader, kernel version, and root filesystem type.</li>
+<li>Hunt the extracted tree for hardcoded credentials, keys, and debug</li>
+<p>artifacts.</p>
+<li>Inventory software versions and match against known CVEs.</li>
+<li>Reverse engineer the interesting binaries (network daemons, updaters)</li>
+<p>with Ghidra.</p>
+</ol>
+<h2>1. Intake and structural scan</h2>
+<p>Hash first, then let Binwalk draw the map. Do not extract yet; read the map first.</p>
+<pre><code class="language-bash">sha256sum firmware.bin | tee firmware.sha256
+ls -lh firmware.bin
+file firmware.bin
+
+# Signature scan: what lives at which offset
+binwalk firmware.bin | tee scan.txt
+
+# Verbose scan with confidence levels when the map looks thin
+binwalk -v firmware.bin | head -60</code></pre>
+<p>A typical consumer router map shows: a bootloader header (U-Boot), an LZMA compressed kernel, and a SquashFS root filesystem, sometimes with a second firmware partition for updates. Read every line of the scan before extracting; the offsets tell you the layout story.</p>
+<h2>2. Entropy analysis</h2>
+<p>Entropy finds what signatures miss: encrypted blobs, compressed regions without headers, and appended data.</p>
+<pre><code class="language-bash"># Entropy plot (high = compressed/encrypted, low = code/padding)
+binwalk -E firmware.bin | head -40
+
+# Interpretation guide:
+# ~0.0-0.3 : padding (0x00 or 0xFF fills)
+# ~0.5-0.7 : executable code, headers
+# ~0.95+   : compressed or encrypted data
+# A sharp DROP after a high region often marks a filesystem boundary</code></pre>
+<p>An encrypted region shows as sustained near-1.0 entropy with no signatures inside it. That usually means a decryption key lives in the bootloader or a separate partition; note it and move on rather than attacking the crypto.</p>
+<h2>3. Extraction</h2>
+<p>Binwalk extracts by shelling out to external tools, so install the helpers first or extraction silently produces nothing.</p>
+<pre><code class="language-bash"># Helpers Binwalk needs (Debian/Ubuntu example)
+sudo apt install -y squashfs-tools mtd-utils lzma gzip bzip2 unrar cabextract
+
+# Recursive extraction into _firmware.bin.extracted/
+binwalk -e -M -r firmware.bin
+# -e extract, -M recursive (matryoshka), -r delete carved files after recursion
+
+# Inspect what came out
+find _firmware.bin.extracted -maxdepth 3 -type d | head -30
+ls -la _firmware.bin.extracted/</code></pre>
+<p>If a SquashFS is detected but extraction yields nothing, the filesystem is probably a vendor-modified variant; try <code>sasquatch</code> (the patched extractor) or check Binwalk&#x27;s log for the exact helper failure. If extraction partially fails, carve manually at the reported offset with <code>dd</code>.</p>
+<pre><code class="language-bash"># Manual carve fallback at a known offset (example: 0x123400)
+dd if=firmware.bin of=carved.squashfs bs=1 skip=$((0x123400))
+unsquashfs -d manual_root carved.squashfs</code></pre>
+<h2>4. Identifying the platform</h2>
+<p>Once extracted, identify the moving parts: bootloader config, kernel, and userland.</p>
+<pre><code class="language-bash">ROOT=_firmware.bin.extracted/squashfs-root
+
+# Bootloader config and environment
+find _firmware.bin.extracted -iname &#x27;*u-boot*&#x27; -o -iname &#x27;*.dtb&#x27; | head
+strings firmware.bin | grep -i -E &#x27;u-boot|bootcmd|bootargs&#x27; | head -10
+
+# Kernel version from the extracted kernel or its strings
+strings _firmware.bin.extracted/*.7z 2&gt;/dev/null | grep -m1 &#x27;Linux version&#x27;
+find &quot;$ROOT&quot; -name &#x27;version&#x27; -path &#x27;*proc*&#x27; 2&gt;/dev/null | head -3
+
+# Userland inventory: busybox version, web server, ssh daemon
+&quot;$ROOT/bin/busybox&quot; 2&gt;/dev/null | head -3
+ls &quot;$ROOT/usr/sbin&quot; &quot;$ROOT/bin&quot; 2&gt;/dev/null | head -40</code></pre>
+<p>Record the kernel version, BusyBox version, and any network-facing daemons (httpd, telnetd, sshd, upnp). These become your CVE matching list in step 6.</p>
+<h2>5. Hunting hardcoded secrets</h2>
+<p>This is where firmware audits pay for themselves. Search the extracted tree and the raw image for credentials and keys.</p>
+<pre><code class="language-bash"># Password-like assignments in configs and scripts
+grep -r -i -E &#x27;password\s*=\s*[&quot;&#x27;&quot;&#x27;&quot;&#x27;]?[^&quot;&#x27;&quot;&#x27;&quot;&#x27; ]+|passwd\s*=\s*\S+|admin\s*:\s*\S+&#x27; &quot;$ROOT/etc&quot; 2&gt;/dev/null | head -30
+
+# Private keys and certificates left in the image
+find &quot;$ROOT&quot; -iname &#x27;*.pem&#x27; -o -iname &#x27;*.key&#x27; -o -iname &#x27;id_rsa*&#x27; 2&gt;/dev/null | head -20
+grep -r -l &#x27;BEGIN PRIVATE KEY&#x27; &quot;$ROOT&quot; 2&gt;/dev/null | head -20
+grep -r -l &#x27;BEGIN RSA PRIVATE KEY&#x27; firmware.bin 2&gt;/dev/null | head
+
+# Hardcoded credentials in binaries (strings on the extracted daemons)
+strings &quot;$ROOT/usr/sbin/httpd&quot; 2&gt;/dev/null | grep -i -E &#x27;admin|password|root&#x27; | head -20
+
+# Debug and backdoor artifacts
+grep -r -i -E &#x27;telnetd|debug|backdoor|test_account&#x27; &quot;$ROOT/etc&quot; 2&gt;/dev/null | head -20
+ls -la &quot;$ROOT/etc/&quot; | grep -iE &#x27;shadow|passwd&#x27;</code></pre>
+<p>Every finding needs impact analysis, not just existence: a private key in firmware means anyone with the image can impersonate the device; a hardcoded telnet password means remote access. Check whether the credential is actually used by reading the code that references it.</p>
+<h2>6. Software inventory and CVE matching</h2>
+<p>List versions, then match against public vulnerability data.</p>
+<pre><code class="language-bash"># Version strings from the main binaries
+for b in busybox httpd dropbear sshd dnsmasq; do
+  f=$(find &quot;$ROOT&quot; -name &quot;$b&quot; -type f 2&gt;/dev/null | head -1)
+  [ -n &quot;$f&quot; ] &amp;&amp; echo &quot;== $b: $f&quot; &amp;&amp; strings &quot;$f&quot; | grep -i -m2 -E &#x27;version [0-9]|v[0-9]+\.[0-9]+&#x27;
+done
+
+# Kernel modules can reveal driver versions
+ls &quot;$ROOT/lib/modules/&quot; 2&gt;/dev/null</code></pre>
+<p>Take each version to your CVE source of choice and record matches with severity. Prioritize network-reachable services: a 2019 dnsmasq on the WAN interface outranks a 2015 busybox used only at boot.</p>
+<h2>7. Binary analysis of extracted components</h2>
+<p>The interesting binaries (web server, update client, authentication daemon) go through the standard reverse engineering pipeline.</p>
+<pre><code class="language-bash"># Architecture check first: firmware is often MIPS/ARM, not x86
+file &quot;$ROOT/usr/sbin/httpd&quot;
+readelf -h &quot;$ROOT/usr/sbin/httpd&quot; 2&gt;/dev/null | grep -E &#x27;Class|Machine&#x27;
+
+# Then Ghidra with the right processor (import and set language explicitly)
+# Analyze the update mechanism: how does the device verify new firmware?
+strings &quot;$ROOT/usr/sbin/updater&quot; 2&gt;/dev/null | grep -i -E &#x27;http|sign|rsa|md5|sha&#x27; | head -20</code></pre>
+<p>Focus questions: does the updater verify signatures (or just checksums, or nothing), does the web interface sanitize input (command injection is the classic firmware bug), and are there hidden URLs or debug endpoints. Findings here feed responsible disclosure to the vendor, never public exploit release.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Extraction produces nested archives five deep: that is normal for</li>
+<p>firmware; keep recursing and track the path of each interesting file.</p>
+<li>SquashFS extraction fails silently: vendor-modified SquashFS is the usual</li>
+<p>cause; try sasquatch, or binwalk&#x27;s <code>--run</code> with explicit unsquashfs flags.</p>
+<li>Firmware is encrypted: look for the key in the bootloader partition, in a</li>
+<p>separate unencrypted update package, or in the vendor&#x27;s GPL release. Do not brute force; document it as encrypted and move to what is accessible.</p>
+<li>Multi-partition image (A/B updates): analyze both partitions; the inactive</li>
+<p>one may hold an older, more vulnerable version, or the attacker&#x27;s persistence.</p>
+<li>No filesystem found, just a bare-metal binary: it is likely an RTOS</li>
+<p>image; switch to direct Ghidra analysis with the right base address and processor.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Binwalk finds nothing but the image is definitely firmware: try</li>
+<p><code>binwalk -A</code> (opcode scan) to find code regions, or scan with firmware-specific tools for the vendor&#x27;s header magic.</p>
+<li>Need runtime behavior: emulate the extracted userland with QEMU</li>
+<p>user-mode or full-system emulation, or flash to an identical spare device you own. Never emulate with network access to production.</p>
+<li>Encrypted firmware blocks everything: pivot to analyzing the update</li>
+<p>mechanism and the companion mobile app, which often leak the crypto design.</p>
+<li>Responsible disclosure: vendor contact first, coordinated timeline, no</li>
+<p>public details until patched or the timeline expires.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For defenders managing fleets of embedded devices, firmware analysis is how you verify what your vendors shipped: extract, inventory, and diff each update against the last, watching for new network services, changed credentials, and added binaries. Detection content from this skill includes YARA rules for backdoored firmware markers, hashes of known-vulnerable firmware versions to flag in asset inventory, and network signatures for the device&#x27;s update protocol to spot rogue updates. The misuse case is extracting proprietary firmware to steal IP or to build exploits for devices you do not own; this skill covers authorized audit and research, with disclosure through proper channels.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1542.003 (Bootkit) and T1542 (Pre-OS Boot): firmware-level</li>
+<p>persistence concepts.</p>
+<li>MITRE ATT&amp;CK T1005 (Data from Local System): secrets recovered from</li>
+<p>images.</p>
+<li>CWE-798 (Use of Hard-coded Credentials): the headline firmware finding.</li>
+<li>CWE-321 (Use of Hard-coded Cryptographic Key): keys in firmware.</li>
+<li>Binwalk documentation: https://binwalk.app</li>
+<li>Ghidra documentation: https://ghidra-sre.org</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

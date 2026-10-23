@@ -21,6 +21,7 @@ DOMAINS = [
     "recon", "network", "web", "auth", "privesc", "ad", "c2",
     "engineering", "incident", "forensics", "linux", "api",
     "cloud", "crypto", "bugbounty",
+    "mobile", "binary", "malware", "soc", "osint", "defensive",
 ]
 LIFECYCLES = ["experimental", "stable", "deprecated"]
 REQUIRED_FIELDS = [
@@ -302,7 +303,7 @@ def validate_skill(domain, name, path, skill_names, errors):
     dom = data.get("domain")
     if isinstance(dom, str):
         if dom not in DOMAINS:
-            errors.append("%s:1: domain '%s' is not one of the 15 spec domains"
+            errors.append("%s:1: domain '%s' is not one of the 21 spec domains"
                           % (rel, dom))
     elif "domain" in data:
         errors.append("%s:1: domain must be a string" % rel)

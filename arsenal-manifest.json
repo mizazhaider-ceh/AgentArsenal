@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-23T03:07:24Z",
+  "generated_at": "2026-10-23T05:18:11Z",
   "skills": [
     {
       "name": "ad-enumeration",
@@ -13,6 +13,62 @@
       ],
       "extends": [],
       "relates": []
+    },
+    {
+      "name": "android-dynamic",
+      "version": "1.0.0",
+      "domain": "mobile",
+      "path": "skills/mobile/android-dynamic",
+      "sha256": "5b67a3a159464531d65c3e0b32df35b7ae27fd2d5d51b33684a5cb8451a8c7f3",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "android-static",
+        "ios-basics"
+      ]
+    },
+    {
+      "name": "android-static",
+      "version": "1.0.0",
+      "domain": "mobile",
+      "path": "skills/mobile/android-static",
+      "sha256": "2f76858d3eaca6e2f3ce8cbbe2f987ece8762f6717640b2f00305618893c2ddb",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "android-dynamic",
+        "ios-basics"
+      ]
+    },
+    {
+      "name": "angr-basics",
+      "version": "1.0.0",
+      "domain": "binary",
+      "path": "skills/binary/angr-basics",
+      "sha256": "54fcdd835b8ce112284b2d4cbab6caa4231ddbf0c441bba94ba20e67c91c772d",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "static-triage",
+        "python-cli-tooling"
+      ]
+    },
+    {
+      "name": "ansible-basics",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/ansible-basics",
+      "sha256": "a575a27d307eaf821c2b041cfda258fbc49adcce94644c9dce79682c838307e3",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "linux-hardening",
+        "git-workflows"
+      ]
     },
     {
       "name": "api-security-testing",
@@ -30,6 +86,34 @@
       ]
     },
     {
+      "name": "arp-spoofing",
+      "version": "1.0.0",
+      "domain": "network",
+      "path": "skills/network/arp-spoofing",
+      "sha256": "aa9eb04bec7f8e209580b3b9070ec56edcefb5676854ee9cf962cf5ad68e3d16",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "recon-active",
+        "network-pivoting"
+      ]
+    },
+    {
+      "name": "asreproasting",
+      "version": "1.0.0",
+      "domain": "ad",
+      "path": "skills/ad/asreproasting",
+      "sha256": "850d958e8baa0716ab6732e261e51804c0d1f87b5c24aff445a82a069a8c4fc7",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "ad-enumeration",
+        "password-attacks"
+      ]
+    },
+    {
       "name": "auth-attacks",
       "version": "1.0.0",
       "domain": "auth",
@@ -40,6 +124,75 @@
       "extends": [],
       "relates": [
         "password-attacks"
+      ]
+    },
+    {
+      "name": "aws-enumeration",
+      "version": "1.0.0",
+      "domain": "cloud",
+      "path": "skills/cloud/aws-enumeration",
+      "sha256": "fc7b6da20376c324c19d12444ffce8055eb44880c5a747ed737543649c41be42",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "cloud-security-basics",
+        "recon-passive"
+      ]
+    },
+    {
+      "name": "azure-enumeration",
+      "version": "1.0.0",
+      "domain": "cloud",
+      "path": "skills/cloud/azure-enumeration",
+      "sha256": "495e64c2db0c96a6591b08e86b9e57e215c336be007b5601eebd245c2fb98d02",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "cloud-security-basics",
+        "recon-passive"
+      ]
+    },
+    {
+      "name": "bash-advanced",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/bash-advanced",
+      "sha256": "e9c2e128becf4bb779f32ab6c47561d24a86871cc8bc59f5557197e37a1157d6",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "python-cli-tooling",
+        "git-workflows"
+      ]
+    },
+    {
+      "name": "bloodhound-methodology",
+      "version": "1.0.0",
+      "domain": "ad",
+      "path": "skills/ad/bloodhound-methodology",
+      "sha256": "fcd79945083cd4df1bfd5c1f410ac47b331300996d9429a5c316b9dd8a993c98",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "ad-enumeration",
+        "password-attacks"
+      ]
+    },
+    {
+      "name": "bluetooth-le",
+      "version": "1.0.0",
+      "domain": "network",
+      "path": "skills/network/bluetooth-le",
+      "sha256": "d38267c30ccb85ea158e6e23aac4c42d5bfe5b001b080766834ce4dd35690b47",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "recon-active"
       ]
     },
     {
@@ -70,6 +223,35 @@
       "relates": []
     },
     {
+      "name": "cache-poisoning",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/cache-poisoning",
+      "sha256": "d6a3368fe10d770b2301bcb14a6423d07f86653a4aa3a3e5e09a7de8624ec4ec",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "web-xss",
+        "webapp-pentest-methodology"
+      ]
+    },
+    {
+      "name": "cicd-security",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/cicd-security",
+      "sha256": "93f59da7a781f41e03823b0aa3aa33ce0489de7c3b263096d886fe54299d76ed",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "devsecops-pipeline",
+        "github-actions",
+        "git-workflows"
+      ]
+    },
+    {
       "name": "cloud-security-basics",
       "version": "1.0.0",
       "domain": "cloud",
@@ -96,6 +278,34 @@
       ]
     },
     {
+      "name": "container-escape",
+      "version": "1.0.0",
+      "domain": "cloud",
+      "path": "skills/cloud/container-escape",
+      "sha256": "298195a8d6deb4bfb3ea6a9ceb7bc63d11e7cedc3eb23f16c449eea5b267ff6f",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "cloud-security-basics"
+      ]
+    },
+    {
+      "name": "cors-misconfig",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/cors-misconfig",
+      "sha256": "de5365197463cdb6c1b266304548acbb3d800c77d463038fd09aa8f2091c720f",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "web-xss",
+        "auth-attacks",
+        "webapp-pentest-methodology"
+      ]
+    },
+    {
       "name": "crypto-fundamentals",
       "version": "1.0.0",
       "domain": "crypto",
@@ -106,6 +316,201 @@
       "extends": [],
       "relates": [
         "web-sqli"
+      ]
+    },
+    {
+      "name": "csrf",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/csrf",
+      "sha256": "e6e1d0a35044a8c6a3d3f636bff6bcba7df01c0cb2cf4f690d72564c33c13669",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "webapp-pentest-methodology",
+        "auth-attacks",
+        "web-xss"
+      ]
+    },
+    {
+      "name": "dcsync",
+      "version": "1.0.0",
+      "domain": "ad",
+      "path": "skills/ad/dcsync",
+      "sha256": "aca40454a2e73e44070ef669e11e41af13e27b0ea44d765f2e95fcf6136e17f4",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "ad-enumeration",
+        "password-attacks"
+      ]
+    },
+    {
+      "name": "debugging-methodology",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/debugging-methodology",
+      "sha256": "62a61185d7123e1073f02c13cf6796606098b8faccec5ae9e45bf4ef20c84fbc",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "python-cli-tooling"
+      ]
+    },
+    {
+      "name": "devsecops-pipeline",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/devsecops-pipeline",
+      "sha256": "94b9091bb5986e2cdd9a4ec93a1d32db13900f044a27276da114c82b204c1ca6",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "cicd-security",
+        "github-actions",
+        "git-workflows"
+      ]
+    },
+    {
+      "name": "disk-forensics",
+      "version": "1.0.0",
+      "domain": "forensics",
+      "path": "skills/forensics/disk-forensics",
+      "sha256": "be05d8edbee2237f7025a223b0bfc4dfaacd177589f7720ebe63c1a31fa3c1bd",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "forensics-fundamentals",
+        "incident-response"
+      ]
+    },
+    {
+      "name": "dns-enumeration",
+      "version": "1.0.0",
+      "domain": "network",
+      "path": "skills/network/dns-enumeration",
+      "sha256": "824694f4a63bdf5ee2f1732d122d667e24c365d0c0da2630d7e1077e44f22602",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "recon-passive",
+        "recon-active"
+      ]
+    },
+    {
+      "name": "docker-deep",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/docker-deep",
+      "sha256": "8a84d080395dca40bd9a13faf231eb62c9a86907e90e46ab30318cc427fa9256",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "linux-hardening",
+        "git-workflows"
+      ]
+    },
+    {
+      "name": "domain-osint",
+      "version": "1.0.0",
+      "domain": "osint",
+      "path": "skills/osint/domain-osint",
+      "sha256": "1d16231dfa6ae280c55592b30e43eb1711d4ca3417dcff78299edc8a930fc3c9",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "osint-methodology"
+      ]
+    },
+    {
+      "name": "dynamic-sandbox",
+      "version": "1.0.0",
+      "domain": "malware",
+      "path": "skills/malware/dynamic-sandbox",
+      "sha256": "d6e80870f93248f746506fe1e8674cc4d7e068239fe2a0870a1d3b78d270b6e0",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "static-triage"
+      ]
+    },
+    {
+      "name": "edr-basics",
+      "version": "1.0.0",
+      "domain": "defensive",
+      "path": "skills/defensive/edr-basics",
+      "sha256": "b2bafc17d77b70b18b6809d8c17a91ca9ce2588be0d0f7dd162f238e6822bcb6",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response",
+        "forensics-fundamentals"
+      ]
+    },
+    {
+      "name": "email-forensics",
+      "version": "1.0.0",
+      "domain": "forensics",
+      "path": "skills/forensics/email-forensics",
+      "sha256": "265a2f238b9f5e157354d9ecb79cc0d8bea359b471f5e6ec1c33c7af478ff531",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "forensics-fundamentals",
+        "incident-response"
+      ]
+    },
+    {
+      "name": "file-upload-attacks",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/file-upload-attacks",
+      "sha256": "05e78fc6de756bcb13777c04121f62e606caeb913ff40bc5b4b249d4ef9ff328",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "webapp-pentest-methodology",
+        "secure-coding"
+      ]
+    },
+    {
+      "name": "firewall-evasion",
+      "version": "1.0.0",
+      "domain": "network",
+      "path": "skills/network/firewall-evasion",
+      "sha256": "313268c3536657e4121e2ceba9bf96197c7be729177915498e0181f9cba8d054",
+      "lifecycle": "stable",
+      "requires": [
+        "nmap-methodology"
+      ],
+      "extends": [],
+      "relates": [
+        "recon-active"
+      ]
+    },
+    {
+      "name": "firmware-analysis",
+      "version": "1.0.0",
+      "domain": "binary",
+      "path": "skills/binary/firmware-analysis",
+      "sha256": "b0a13486c28497a691f243df2004ed177555449895a5bd8139c6d89d070ae426",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "static-triage"
       ]
     },
     {
@@ -122,6 +527,47 @@
       ]
     },
     {
+      "name": "format-strings",
+      "version": "1.0.0",
+      "domain": "binary",
+      "path": "skills/binary/format-strings",
+      "sha256": "c9f835a214ee7171e710b252ab17c2ff69ec08ec211cfc00894684f2d978e6e1",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "pwn-fundamentals"
+      ]
+    },
+    {
+      "name": "gcp-enumeration",
+      "version": "1.0.0",
+      "domain": "cloud",
+      "path": "skills/cloud/gcp-enumeration",
+      "sha256": "002147f03e6c6e0a517944ccdc38e87b0b2214e05c97e037bf03fe3d01ad4887",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "cloud-security-basics",
+        "recon-passive"
+      ]
+    },
+    {
+      "name": "ghidra-basics",
+      "version": "1.0.0",
+      "domain": "binary",
+      "path": "skills/binary/ghidra-basics",
+      "sha256": "f8cc85f10eeba2b7cdd8c1f3962d04894a01b33d6810b9deb71c8d38e57b825c",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "pwn-fundamentals",
+        "heap-exploitation"
+      ]
+    },
+    {
       "name": "git-workflows",
       "version": "1.0.0",
       "domain": "engineering",
@@ -131,6 +577,134 @@
       "requires": [],
       "extends": [],
       "relates": []
+    },
+    {
+      "name": "github-actions",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/github-actions",
+      "sha256": "430879c3dc4e9bbf68a98e7e33e64aea37a9f3273b44e707cbcfa1b5a29f8a4a",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "git-workflows",
+        "devsecops-pipeline",
+        "cicd-security"
+      ]
+    },
+    {
+      "name": "go-basics",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/go-basics",
+      "sha256": "a75c2c07532d183234c475c359c70208858cf5e8522a937ef4b5c419bf0b8347",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "code-reviewer",
+        "git-workflows"
+      ]
+    },
+    {
+      "name": "golden-ticket",
+      "version": "1.0.0",
+      "domain": "ad",
+      "path": "skills/ad/golden-ticket",
+      "sha256": "c56ebc77a62433d513f47a45547606fff66239916b344ab045ec99e47b135a70",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "ad-enumeration",
+        "password-attacks"
+      ]
+    },
+    {
+      "name": "graphql-security",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/graphql-security",
+      "sha256": "5a76b1d905b1394437add0ed748a147851eae605a3dddf4a2550a0140ba66b28",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "api-security-testing",
+        "webapp-pentest-methodology",
+        "auth-attacks"
+      ]
+    },
+    {
+      "name": "hash-cracking",
+      "version": "1.0.0",
+      "domain": "crypto",
+      "path": "skills/crypto/hash-cracking",
+      "sha256": "4d2ecc2449c3d028d7dca863c1318f40cdaa7aad6e5051d0d5311c2db25df96a",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "crypto-fundamentals",
+        "password-attacks"
+      ]
+    },
+    {
+      "name": "heap-exploitation",
+      "version": "1.0.0",
+      "domain": "binary",
+      "path": "skills/binary/heap-exploitation",
+      "sha256": "1afc6a9f892dd0ffa933b1305e4c29ec18803899853f49a1190a6bd512e65d52",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "pwn-fundamentals",
+        "ghidra-basics"
+      ]
+    },
+    {
+      "name": "http-request-smuggling",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/http-request-smuggling",
+      "sha256": "1aabb447593a03b92b75eb6e1ae96fe21d0c6c5558de8a491b3fc58253c804ac",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "webapp-pentest-methodology",
+        "web-sqli"
+      ]
+    },
+    {
+      "name": "iam-privesc",
+      "version": "1.0.0",
+      "domain": "cloud",
+      "path": "skills/cloud/iam-privesc",
+      "sha256": "eef04e725fd439da59d2776fa2f20f2db70ed9b5e16c3edda59b29a8da7e5410",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "aws-enumeration",
+        "cloud-security-basics"
+      ]
+    },
+    {
+      "name": "incident-playbooks",
+      "version": "1.0.0",
+      "domain": "defensive",
+      "path": "skills/defensive/incident-playbooks",
+      "sha256": "387cbbc40aad5957f22dc92ca9a45abf8f7ec042535166731292789c7195f218",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response",
+        "forensics-fundamentals"
+      ]
     },
     {
       "name": "incident-response",
@@ -143,6 +717,119 @@
       "extends": [],
       "relates": [
         "forensics-fundamentals"
+      ]
+    },
+    {
+      "name": "ios-basics",
+      "version": "1.0.0",
+      "domain": "mobile",
+      "path": "skills/mobile/ios-basics",
+      "sha256": "568e404238b7d8c5901b643a48d6076cd3e789653e5c33d528aad6c77e9c56ce",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "android-static",
+        "android-dynamic"
+      ]
+    },
+    {
+      "name": "ipv6-attacks",
+      "version": "1.0.0",
+      "domain": "network",
+      "path": "skills/network/ipv6-attacks",
+      "sha256": "9d13d4680d311e862d186a43bb40505199516a75938a9dfb6892efc43b5ef709",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "nmap-methodology",
+        "recon-active"
+      ]
+    },
+    {
+      "name": "jq-mastery",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/jq-mastery",
+      "sha256": "7a71c50cd6f8660f682de9ae0237f19f91bb9e9db2cea17a261d17ad7e4ce6d6",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "bash-advanced",
+        "python-cli-tooling"
+      ]
+    },
+    {
+      "name": "jwt-attacks",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/jwt-attacks",
+      "sha256": "9ca438bf41cfc79ec62be566de3f4239cdde302c26cbdb2dcb70b5136090f2b4",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "auth-attacks",
+        "api-security-testing",
+        "webapp-pentest-methodology"
+      ]
+    },
+    {
+      "name": "kerberoasting",
+      "version": "1.0.0",
+      "domain": "ad",
+      "path": "skills/ad/kerberoasting",
+      "sha256": "2d6e5c92931211bdbbae8111b511624d5c4c96e52ac73760ecdec2661008ba5b",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "ad-enumeration"
+      ]
+    },
+    {
+      "name": "kubernetes-basics",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/kubernetes-basics",
+      "sha256": "94be40a30d7f1737452f69afda0eab7a1dcd7a6338cb657cdd645d5ffd37c252",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "docker-deep",
+        "linux-hardening"
+      ]
+    },
+    {
+      "name": "kubernetes-rbac",
+      "version": "1.0.0",
+      "domain": "cloud",
+      "path": "skills/cloud/kubernetes-rbac",
+      "sha256": "33a9fece819c2a9cd11b1e0ce6dd393b85de87437a04ef541289748ae67d5604",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "container-escape",
+        "cloud-security-basics"
+      ]
+    },
+    {
+      "name": "lfi-rfi",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/lfi-rfi",
+      "sha256": "cf3eb92a0f2cd6d4b3663cc0d87f7bfff1b7477f48831b49c07cc95cb6de9030",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "webapp-pentest-methodology",
+        "web-sqli",
+        "ssrf"
       ]
     },
     {
@@ -159,6 +846,63 @@
       ]
     },
     {
+      "name": "llmnr-poisoning",
+      "version": "1.0.0",
+      "domain": "network",
+      "path": "skills/network/llmnr-poisoning",
+      "sha256": "aa6cff52af7340356dd05d77b0a66e27eff22b759959f3f4f3eff7a7d7a9fc04",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "ad-enumeration",
+        "recon-active",
+        "password-attacks"
+      ]
+    },
+    {
+      "name": "log-forensics",
+      "version": "1.0.0",
+      "domain": "forensics",
+      "path": "skills/forensics/log-forensics",
+      "sha256": "ead6ab7cb2ddfbdc58706a8da9c20d0307551b22b9316706d587364f4bef4a5d",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "forensics-fundamentals",
+        "incident-response"
+      ]
+    },
+    {
+      "name": "make-basics",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/make-basics",
+      "sha256": "9b5dec193571fd3cef3350bc5fa3905218c17d601e9c346f8a1c07d4f6c5c4cd",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "git-workflows",
+        "python-cli-tooling"
+      ]
+    },
+    {
+      "name": "memory-forensics",
+      "version": "1.0.0",
+      "domain": "forensics",
+      "path": "skills/forensics/memory-forensics",
+      "sha256": "2ababd966e1dd9dc0c85b49767f3fc29e3c6d45c664f99e1e4cdb21f8242d583",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "forensics-fundamentals",
+        "incident-response"
+      ]
+    },
+    {
       "name": "network-pivoting",
       "version": "1.0.0",
       "domain": "network",
@@ -170,6 +914,20 @@
       ],
       "extends": [],
       "relates": []
+    },
+    {
+      "name": "nginx-hardening",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/nginx-hardening",
+      "sha256": "566855f700abf7559b4d6da54834340f3e759cbdbababa98f8bc5cc21e14ee52",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "secure-coding",
+        "linux-hardening"
+      ]
     },
     {
       "name": "nmap-methodology",
@@ -185,6 +943,89 @@
       ]
     },
     {
+      "name": "nosql-injection",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/nosql-injection",
+      "sha256": "25ef57c0b4327c4e1e4de16d75222d0d2c0bb117e7828c88080f33ddcdff2274",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "web-sqli",
+        "api-security-testing"
+      ]
+    },
+    {
+      "name": "oauth-attacks",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/oauth-attacks",
+      "sha256": "bc2fd3d12fca68932597696a8b3be529e77dc90560797bda818be155b9572826",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "auth-attacks",
+        "webapp-pentest-methodology",
+        "jwt-attacks"
+      ]
+    },
+    {
+      "name": "open-redirect",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/open-redirect",
+      "sha256": "7a047192b8a35d4c1342e5c9d89eb50899bcbcd18c1f2ac44804543d2a55d8e6",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "web-xss",
+        "webapp-pentest-methodology"
+      ]
+    },
+    {
+      "name": "osint-methodology",
+      "version": "1.0.0",
+      "domain": "osint",
+      "path": "skills/osint/osint-methodology",
+      "sha256": "280521fe68244c54b63e33bea36b69210815b4d36234c3e442f7871567d40740",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "recon-passive"
+      ]
+    },
+    {
+      "name": "packer-analysis",
+      "version": "1.0.0",
+      "domain": "malware",
+      "path": "skills/malware/packer-analysis",
+      "sha256": "fd4a8d7b96bf3b2e9f10730bfd406d91aca189d89c1c0b83aedffc0530da9544",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "static-triage"
+      ]
+    },
+    {
+      "name": "padding-oracle",
+      "version": "1.0.0",
+      "domain": "crypto",
+      "path": "skills/crypto/padding-oracle",
+      "sha256": "5c1dd95dc1b51a337c8aba93db8a6c9ae6e45493809dbbbf8db1f1f788fae094",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "crypto-fundamentals",
+        "rsa-attacks"
+      ]
+    },
+    {
       "name": "password-attacks",
       "version": "1.0.0",
       "domain": "auth",
@@ -195,6 +1036,45 @@
       "extends": [],
       "relates": [
         "auth-attacks"
+      ]
+    },
+    {
+      "name": "performance-tuning",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/performance-tuning",
+      "sha256": "d0d97b4b4c2d5b437fd22ba5d250879e9c4178764819ada1b6089a5b02179e57",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "linux-hardening"
+      ]
+    },
+    {
+      "name": "phishing-defense",
+      "version": "1.0.0",
+      "domain": "defensive",
+      "path": "skills/defensive/phishing-defense",
+      "sha256": "0ac5645709a38aba523a9cd3bb16cb5a490f3a5a5a23daadfcb2c0b263b05e9f",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response"
+      ]
+    },
+    {
+      "name": "postgresql-tuning",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/postgresql-tuning",
+      "sha256": "567c92ca716d4f017486ff129c7e9c3ad9cfa95b03ad94dae166869f8daea430",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "secure-coding"
       ]
     },
     {
@@ -225,6 +1105,51 @@
       ]
     },
     {
+      "name": "prometheus-monitoring",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/prometheus-monitoring",
+      "sha256": "b5611f87046c1da90616a4f7ecc6857ff5c2bfeb26f1c640afcee12a3de5e540",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "linux-hardening",
+        "docker-deep"
+      ]
+    },
+    {
+      "name": "pwn-fundamentals",
+      "version": "1.0.0",
+      "domain": "binary",
+      "path": "skills/binary/pwn-fundamentals",
+      "sha256": "331f846a063f52c45de99f6fc658bfe2c5783cbe56c10c37a6ecd9d8b007e43a",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "ghidra-basics",
+        "shellcode-basics",
+        "format-strings",
+        "rop-chains"
+      ]
+    },
+    {
+      "name": "python-advanced",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/python-advanced",
+      "sha256": "ddda815eb538811121d6013ceb6be30d90bb404473966f7505b91dab88a0192b",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "python-cli-tooling",
+        "code-reviewer",
+        "secure-coding"
+      ]
+    },
+    {
       "name": "python-cli-tooling",
       "version": "1.0.0",
       "domain": "engineering",
@@ -234,6 +1159,34 @@
       "requires": [],
       "extends": [],
       "relates": []
+    },
+    {
+      "name": "race-conditions",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/race-conditions",
+      "sha256": "a94db316081aa86088f254cb0b15292e0913e6fef830fbd3d561de3e62f36f58",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "webapp-pentest-methodology",
+        "auth-attacks"
+      ]
+    },
+    {
+      "name": "ransomware-response",
+      "version": "1.0.0",
+      "domain": "defensive",
+      "path": "skills/defensive/ransomware-response",
+      "sha256": "48e00920f454e79795f62b8bd22b7344f973f51daf851303641afe57c4dc0ca4",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response",
+        "incident-playbooks"
+      ]
     },
     {
       "name": "recon-active",
@@ -260,6 +1213,102 @@
       "relates": []
     },
     {
+      "name": "redis-basics",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/redis-basics",
+      "sha256": "fa5141bd674d551da75cac67527a40a9ef69a8d7a0a9a9b50fdb4ce6fff7a922",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "linux-hardening"
+      ]
+    },
+    {
+      "name": "regex-mastery",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/regex-mastery",
+      "sha256": "db428961bb0ff6a15e3a836c9139b1a909583b38078fe41d9ce995be8a338f30",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "python-cli-tooling"
+      ]
+    },
+    {
+      "name": "rest-api-design",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/rest-api-design",
+      "sha256": "5c40759374e84478ae8edb65f934eeb378781482887aef9e11b0f72d95e153f9",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "api-security-testing",
+        "secure-coding"
+      ]
+    },
+    {
+      "name": "rop-chains",
+      "version": "1.0.0",
+      "domain": "binary",
+      "path": "skills/binary/rop-chains",
+      "sha256": "af5b5c6d055a0b6826d77e82f72de89e1f6b29f6dcf529a083a857b1cf404195",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "pwn-fundamentals",
+        "shellcode-basics"
+      ]
+    },
+    {
+      "name": "rsa-attacks",
+      "version": "1.0.0",
+      "domain": "crypto",
+      "path": "skills/crypto/rsa-attacks",
+      "sha256": "17698d8ed38cadf65f92b60a238495482c5090a5ed89a06e10d173240e223d36",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "crypto-fundamentals",
+        "padding-oracle"
+      ]
+    },
+    {
+      "name": "rust-basics",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/rust-basics",
+      "sha256": "ec68d70798dcdf4bc52c7aa0f9db6d323ec8a1ded8d0e9d1e501d563671b8823",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "secure-coding",
+        "code-reviewer"
+      ]
+    },
+    {
+      "name": "s3-misconfigurations",
+      "version": "1.0.0",
+      "domain": "cloud",
+      "path": "skills/cloud/s3-misconfigurations",
+      "sha256": "ec2df0cdf34a753106ba2f801c9dd7ea800d3b5dc87e6c0ff1ef4cfd345216e0",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "aws-enumeration",
+        "cloud-security-basics"
+      ]
+    },
+    {
       "name": "secure-coding",
       "version": "1.0.0",
       "domain": "engineering",
@@ -272,6 +1321,334 @@
         "code-reviewer",
         "web-sqli",
         "web-xss"
+      ]
+    },
+    {
+      "name": "shellcode-basics",
+      "version": "1.0.0",
+      "domain": "binary",
+      "path": "skills/binary/shellcode-basics",
+      "sha256": "1cde2e65456c99983189c5d90118999a72337f8dbf67f13bb21250f1307fdbf3",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "pwn-fundamentals",
+        "rop-chains"
+      ]
+    },
+    {
+      "name": "siem-detections",
+      "version": "1.0.0",
+      "domain": "soc",
+      "path": "skills/soc/siem-detections",
+      "sha256": "ff08f563c8c0db026a00c19b498a03e083de4a98aca6d035c33db68b7056295d",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response",
+        "forensics-fundamentals"
+      ]
+    },
+    {
+      "name": "sigma-rules",
+      "version": "1.0.0",
+      "domain": "soc",
+      "path": "skills/soc/sigma-rules",
+      "sha256": "aa3642c44f7e2e38226f02555ff4e1ae88139312a891736fedefb108d1071240",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "siem-detections",
+        "incident-response"
+      ]
+    },
+    {
+      "name": "smb-enumeration",
+      "version": "1.0.0",
+      "domain": "network",
+      "path": "skills/network/smb-enumeration",
+      "sha256": "83dad6f956fd5f9d43936072a273fcc9d0ca02927aec623715cb6ad748639a17",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "nmap-methodology",
+        "recon-active",
+        "ad-enumeration"
+      ]
+    },
+    {
+      "name": "snmp",
+      "version": "1.0.0",
+      "domain": "network",
+      "path": "skills/network/snmp",
+      "sha256": "497855ce9be6bf8d366aa231d5fdbe68eef755521841b0108daf65410afac025",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "nmap-methodology",
+        "recon-active"
+      ]
+    },
+    {
+      "name": "social-media-osint",
+      "version": "1.0.0",
+      "domain": "osint",
+      "path": "skills/osint/social-media-osint",
+      "sha256": "bef4d32fe1c6d3ebc90e538a6bbaf249174e02e7124945ac8fccfd296d5ddec8",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "osint-methodology"
+      ]
+    },
+    {
+      "name": "sqlite-deep",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/sqlite-deep",
+      "sha256": "3b3a16846469202ad1b056ef2bb42d8adb64bfcb9593e752ba13d491f5e18477",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "python-cli-tooling",
+        "secure-coding"
+      ]
+    },
+    {
+      "name": "ssh-hardening",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/ssh-hardening",
+      "sha256": "ac9c817127b7ad81f123459594311881a6f7103d43f89c283868cec6b8bb29a2",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "linux-hardening"
+      ]
+    },
+    {
+      "name": "ssrf",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/ssrf",
+      "sha256": "fddd5e7dd6dbdc5b790725a3a6af6776594ebadc010fd68849cfa5f78371c771",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "webapp-pentest-methodology",
+        "recon-active",
+        "xxe"
+      ]
+    },
+    {
+      "name": "ssti",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/ssti",
+      "sha256": "24f35ad2092802a911e31aec6753bd2541377ac9805b4703c3834c7e2c12a976",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "web-sqli",
+        "web-xss",
+        "webapp-pentest-methodology"
+      ]
+    },
+    {
+      "name": "static-triage",
+      "version": "1.0.0",
+      "domain": "malware",
+      "path": "skills/malware/static-triage",
+      "sha256": "8714f86a2d554ec1dbc9cdf73a0642dd62ceab342dcbe6a6fa84efe34c8fb2e7",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "forensics-fundamentals"
+      ]
+    },
+    {
+      "name": "suricata-ids",
+      "version": "1.0.0",
+      "domain": "soc",
+      "path": "skills/soc/suricata-ids",
+      "sha256": "07e982581af5f78ec1f22be5b8c1a715a3d34c3ae22078604825f3c24949b427",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response"
+      ]
+    },
+    {
+      "name": "systemd-deep",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/systemd-deep",
+      "sha256": "d673ad0d6a44b1d68638c831e59bafc4b187bfdcc36c1e65d9513ae75c9bbf5b",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "linux-hardening"
+      ]
+    },
+    {
+      "name": "technical-writing",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/technical-writing",
+      "sha256": "5546629e096ce03b7a938944d8992f849e071f0c65c2cbc1fae7bc869b27825b",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "git-workflows"
+      ]
+    },
+    {
+      "name": "terraform-basics",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/terraform-basics",
+      "sha256": "6279cc8289d9c4fac869de4cc63af0628f6189540ca146e7a9c7371c0690c11d",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "cloud-security-basics",
+        "git-workflows"
+      ]
+    },
+    {
+      "name": "testing-strategies",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/testing-strategies",
+      "sha256": "9f09450ce8adda279b3477db6e9a10603cd27b43cc3fbe788d4bf3e8fb4987a4",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "code-reviewer",
+        "python-cli-tooling"
+      ]
+    },
+    {
+      "name": "threat-hunting",
+      "version": "1.0.0",
+      "domain": "soc",
+      "path": "skills/soc/threat-hunting",
+      "sha256": "de8d51de507e07fad26714493f496fd212d389e7ddb533cb139b3b2475e7be81",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response",
+        "forensics-fundamentals"
+      ]
+    },
+    {
+      "name": "threat-intel",
+      "version": "1.0.0",
+      "domain": "osint",
+      "path": "skills/osint/threat-intel",
+      "sha256": "3595500b9d2dc73463b48377d84d8316396d29a79b97a0217297e50d9b347e3c",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "osint-methodology",
+        "recon-passive"
+      ]
+    },
+    {
+      "name": "tls-analysis",
+      "version": "1.0.0",
+      "domain": "crypto",
+      "path": "skills/crypto/tls-analysis",
+      "sha256": "a80882a18e17119654b3f8816930199755303279f1320f20e17b2f148f891508",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "crypto-fundamentals"
+      ]
+    },
+    {
+      "name": "tmux-workflows",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/tmux-workflows",
+      "sha256": "55146a6306deffcdd2d4375c2bb5125516948a2dffbe19fb41983ba248b517e9",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "bash-advanced"
+      ]
+    },
+    {
+      "name": "typescript-basics",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/typescript-basics",
+      "sha256": "cf36687a0f8d6d5b3f0eafd5a0eef7e369674fca9cefe9610e5b43729fe3f34d",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "secure-coding",
+        "code-reviewer"
+      ]
+    },
+    {
+      "name": "velociraptor-basics",
+      "version": "1.0.0",
+      "domain": "soc",
+      "path": "skills/soc/velociraptor-basics",
+      "sha256": "fb8b56b4df4afc07bc62267b37c204234589e40665a46653ef570dc3ff0aa1f2",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response",
+        "forensics-fundamentals"
+      ]
+    },
+    {
+      "name": "vim-mastery",
+      "version": "1.0.0",
+      "domain": "engineering",
+      "path": "skills/engineering/vim-mastery",
+      "sha256": "166aa33574eae6ddee8de344caba5532fa051089f5c818668c59e0e0f4c931b0",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": []
+    },
+    {
+      "name": "wazuh-basics",
+      "version": "1.0.0",
+      "domain": "soc",
+      "path": "skills/soc/wazuh-basics",
+      "sha256": "2c5cde9149e01b394bc6f8ac358c069530bfc400d498bf59730376c6eae8445b",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "incident-response",
+        "forensics-fundamentals"
       ]
     },
     {
@@ -316,6 +1693,62 @@
       ],
       "extends": [],
       "relates": []
+    },
+    {
+      "name": "websocket-security",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/websocket-security",
+      "sha256": "4d768e04c09b11dcfd82b5dd4334cd2fc44cc3bb0b58714c21abf6571d39e362",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "web-xss",
+        "auth-attacks",
+        "webapp-pentest-methodology"
+      ]
+    },
+    {
+      "name": "wireless-wpa",
+      "version": "1.0.0",
+      "domain": "network",
+      "path": "skills/network/wireless-wpa",
+      "sha256": "172a16f28310343edf0378c2aafab13a5c7f170b2823c1de574b4b312dde6a65",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "recon-active"
+      ]
+    },
+    {
+      "name": "xxe",
+      "version": "1.0.0",
+      "domain": "web",
+      "path": "skills/web/xxe",
+      "sha256": "8e217ad38cf82ff0f681d63e837bba4c1b15e847313e8646b3eb49ef7831edcb",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "webapp-pentest-methodology",
+        "ssrf",
+        "web-sqli"
+      ]
+    },
+    {
+      "name": "yara-rules",
+      "version": "1.0.0",
+      "domain": "malware",
+      "path": "skills/malware/yara-rules",
+      "sha256": "e3ff3b6cdda5e14bb2f31e1c10dfcf99154758c46c907a9b933ef9c79a43e2f6",
+      "lifecycle": "stable",
+      "requires": [],
+      "extends": [],
+      "relates": [
+        "static-triage"
+      ]
     }
   ]
 }

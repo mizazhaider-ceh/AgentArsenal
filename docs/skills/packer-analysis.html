@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: packer-analysis</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>packer-analysis</h2><div class="meta"><span class="badge gray">malware</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when static triage finds a packed or encrypted executable</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="static-triage.html">static-triage</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>UPX</td><td>5.2.1</td></tr><tr><td>Ghidra</td><td>12.1.4</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A packer compresses or encrypts an executable and prepends a small stub that restores the original code at runtime. Static analysis of a packed binary sees only the stub, which is why packer-analysis exists: identify the packer, reverse its transformation, and recover the unpacked payload for real analysis. This skill covers identification, the easy UPX case, reading section and entropy evidence, the standard memory-dump unpacking technique, overlay handling, and validating the result. Scope: unpack only samples you are authorized to analyze, in an isolated lab VM. Unpacking executes the stub&#x27;s logic in some form, so treat every step with the same containment discipline as dynamic analysis.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the binary is packed: entropy, section names, and Detect It Easy</li>
+<p>signatures.</p>
+<li>Identify the exact packer and version.</li>
+<li>If UPX, unpack with <code>upx -d</code> and verify; done in one command.</li>
+<li>For other packers, map the packed regions: which sections are high</li>
+<p>entropy, where the stub ends and payload begins.</p>
+<li>Recover the payload via memory dump after the stub unpacks it (isolated</li>
+<p>VM, debugger or process dump at the original entry point).</p>
+<li>Fix up the dumped image (imports, sections) enough for static analysis.</li>
+<li>Re-run the full static triage on the unpacked payload.</li>
+<li>Write YARA rules against the payload, not the packer.</li>
+</ol>
+<h2>1. Confirming and identifying the packer</h2>
+<p>Three independent signals should agree before you commit to an unpacking strategy.</p>
+<pre><code class="language-bash"># Signal 1: Detect It Easy signatures
+diec packed.bin
+
+# Signal 2: section names and entropy (UPX0/UPX1, .themida, .aspack, UPX!)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import struct, math
+from collections import Counter
+data = open(&#x27;packed.bin&#x27;,&#x27;rb&#x27;).read()
+e_lfanew = struct.unpack(&#x27;&lt;I&#x27;, data[0x3c:0x40])[0]
+coff = e_lfanew + 4
+nsec = struct.unpack(&#x27;&lt;H&#x27;, data[coff+2:coff+4])[0]
+opt_size = struct.unpack(&#x27;&lt;H&#x27;, data[coff+16:coff+18])[0]
+sec_off = coff + 20 + opt_size
+for i in range(nsec):
+    s = data[sec_off+i*40:sec_off+(i+1)*40]
+    name = s[:8].rstrip(b&#x27;\x00&#x27;).decode(errors=&#x27;ignore&#x27;)
+    rawsize, rawptr = struct.unpack(&#x27;&lt;II&#x27;, s[16:24])
+    chunk = data[rawptr:rawptr+rawsize]
+    ent = -sum((v/len(chunk))*math.log2(v/len(chunk)) for v in Counter(chunk).values()) if chunk else 0
+    print(f&#x27;{name:8} size={rawsize:8} entropy={ent:.2f}&#x27;)
+EOF
+
+# Signal 3: entry point location (packer stubs often start in the last section)
+# and import table size (stubs import almost nothing)</code></pre>
+<p>Typical tells: two or three sections with odd names, <code>.text</code> entropy above 7.5, an import table with only <code>LoadLibrary</code>/<code>GetProcAddress</code>, and a DIE hit naming the packer. If DIE says &quot;UPX&quot; and you see UPX0/UPX1 sections, skip to section 2.</p>
+<h2>2. The UPX case</h2>
+<p>UPX is the most common packer in the wild and the easiest to reverse, because <code>upx -d</code> exists. Always try it first.</p>
+<pre><code class="language-bash"># Test what UPX thinks of the file
+upx -t packed.bin
+
+# Unpack to a new file (keep the original)
+upx -d packed.bin -o unpacked.bin
+ls -l packed.bin unpacked.bin
+
+# Verify: the unpacked file should have normal sections and strings
+file unpacked.bin</code></pre>
+<p>Modified UPX (attackers tweak the stub to break <code>upx -d</code>) fails here with a &quot;not packed by UPX&quot; or checksum error. That is a signal, not a dead end: the underlying compression is usually still NRV/LZMA, and the memory-dump method in section 4 works regardless of stub modifications.</p>
+<h2>3. Mapping the packed regions</h2>
+<p>For non-UPX packers, understand the layout before attempting recovery.</p>
+<pre><code class="language-bash"># Where does the entry point point? (section containing EP = stub usually)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import struct
+data = open(&#x27;packed.bin&#x27;,&#x27;rb&#x27;).read()
+e_lfanew = struct.unpack(&#x27;&lt;I&#x27;, data[0x3c:0x40])[0]
+opt = e_lfanew + 4 + 20
+ep = struct.unpack(&#x27;&lt;I&#x27;, data[opt+16:opt+20])[0]
+print(f&#x27;entry point RVA: 0x{ep:x}&#x27;)
+EOF
+
+# Overlay: data appended after the last section (often the packed payload)
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import struct
+data = open(&#x27;packed.bin&#x27;,&#x27;rb&#x27;).read()
+e_lfanew = struct.unpack(&#x27;&lt;I&#x27;, data[0x3c:0x40])[0]
+coff = e_lfanew + 4
+nsec = struct.unpack(&#x27;&lt;H&#x27;, data[coff+2:coff+4])[0]
+opt_size = struct.unpack(&#x27;&lt;H&#x27;, data[coff+16:coff+18])[0]
+sec_off = coff + 20 + opt_size
+end = 0
+for i in range(nsec):
+    s = data[sec_off+i*40:sec_off+(i+1)*40]
+    rawsize, rawptr = struct.unpack(&#x27;&lt;II&#x27;, s[16:24])
+    end = max(end, rawptr + rawsize)
+print(f&#x27;file size: {len(data)}, last section ends at: {end}, overlay: {len(data)-end} bytes&#x27;)
+EOF</code></pre>
+<p>A large overlay plus a tiny stub means the payload is sitting in the overlay waiting to be mapped; some unpackers just need the overlay carved and decompressed. Check the overlay&#x27;s entropy and first bytes before assuming.</p>
+<h2>4. Memory-dump unpacking</h2>
+<p>The universal technique: let the stub do its job in a controlled environment, then dump the process at the moment the original code is unpacked but before it runs. This works against most packers because the stub must produce executable unpacked code in memory.</p>
+<pre><code class="language-bash"># In the isolated VM:
+# 1. Load the packed binary in a debugger (x64dbg, WinDbg)
+# 2. The stub unpacks and jumps to the Original Entry Point (OEP).
+#    Find the OEP by watching for a jump to a newly-written executable region,
+#    or use the classic &quot;hardware breakpoint on write then execute&quot; method.
+# 3. At the OEP, dump the process memory.
+
+# Alternative without a debugger: run under a process dumper that snapshots
+# at a timed delay (crude but works for simple stubs)
+timeout 30 ./packed.bin &amp; sleep 5 &amp;&amp; gcore -o dump $! 2&gt;/dev/null</code></pre>
+<p>After dumping, the image needs repair before tools accept it: the import table is often destroyed or redirected through the stub. Rebuild imports with an import reconstructer, fix section headers to match the dumped regions, and set the entry point to the OEP. This is fiddly work; budget time for it, and validate each fix by re-running <code>file</code> and your triage pipeline.</p>
+<pre><code class="language-bash"># Sanity checks on the dumped image
+file dumped.bin
+# Should report a PE/ELF with plausible sections, not &#x27;data&#x27;
+python3 - &lt;&lt;&#x27;EOF&#x27;
+data = open(&#x27;dumped.bin&#x27;,&#x27;rb&#x27;).read()
+print(&#x27;MZ header:&#x27;, data[:2] == b&#x27;MZ&#x27;)
+print(&#x27;size:&#x27;, len(data))
+EOF</code></pre>
+<h2>5. Special cases</h2>
+<p>Virtualizer packers (Themida, VMProtect) do not just compress, they translate code into a custom bytecode run by an embedded interpreter. There is no &quot;unpacked PE&quot; to recover in the simple sense; analysis shifts to the VM handlers or to dynamic behavior. Recognize this early from DIE output so you do not burn days on a memory dump that yields bytecode.</p>
+<pre><code class="language-bash">diec packed.bin | grep -iE &#x27;themida|vmprotect|enigma|obsidium&#x27;
+# Any hit above: stop manual unpacking, escalate to dynamic analysis</code></pre>
+<p>.NET packers (ConfuserEx and friends) need .NET-aware unpackers; the payload is IL code, and tools like de4dot-style deobfuscators handle the standard cases. SFX archives (self-extracting zips/rars) are not packers at all: just extract them as archives and triage the contents.</p>
+<h2>6. Re-triage and rule writing</h2>
+<p>The unpacked payload goes back through the full static pipeline, because the packed triage told you almost nothing about the real code.</p>
+<pre><code class="language-bash"># Fresh triage on the unpacked binary
+sha256sum unpacked.bin
+file unpacked.bin
+strings unpacked.bin | grep -a -i -E &#x27;http|cmd|powershell|SOFTWARE&#x27; | head -30
+yara -r /opt/rules/index.yar unpacked.bin
+
+# Now write the family rule from PAYLOAD strings (yara-rules)
+# A rule built on packer-stub strings fires on every packed benign binary too</code></pre>
+<p>Compare the packed and unpacked string sets; the delta is the payload&#x27;s vocabulary and usually the best rule material you will get.</p>
+<h2>Edge cases</h2>
+<ul>
+<li><code>upx -d</code> fails on a UPX-packed file: modified UPX. Fall back to memory</li>
+<p>dump, or try <code>upx -d</code> after restoring the UPX magic bytes if you can identify the modification.</p>
+<li>Dumped image will not disassemble: imports not rebuilt, or the OEP guess</li>
+<p>was wrong and you dumped mid-unpack. Re-dump at a later breakpoint.</p>
+<li>Multiple packing layers (packed twice): unpack iteratively; each layer&#x27;s</li>
+<p>output is the next layer&#x27;s input. DIE on each intermediate to track progress.</p>
+<li>Packer stub is also the anti-debug: the memory-dump method needs debugger</li>
+<p>evasion (hide the debugger, patch IsDebuggerPresent) which is scope-gated; simpler to use timed process dumps instead.</p>
+<li>ELF packers (UPX on Linux): same <code>upx -d</code> workflow; memory dump via</li>
+<p><code>gcore</code> at the right moment works identically.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Manual unpacking stalls: escalate to dynamic-sandbox and detect on</li>
+<p>behavior instead of bytes. Not every sample needs to be unpacked.</p>
+<li>Virtualizer packer confirmed: shift to dynamic analysis plus VM-handler</li>
+<p>analysis in Ghidra; consider whether the engagement actually needs the unpacked code or just the behavior and IOCs.</p>
+<li>Custom packer with no public unpacker: the stub itself is now the</li>
+<p>analysis target; reverse the decompression routine in Ghidra and reimplement it in Python (stdlib only) to decrypt the payload offline.</p>
+<li>Time-box it: set a hard limit (e.g., 4 hours) for manual unpacking. Past</li>
+<p>that, dynamic analysis plus memory carving usually yields more value per hour.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Packer detection is a triage signal, not a verdict: packers are dual-use (legitimate software uses them too), so defenders should combine packer identification with reputation, signing status, and behavior. Detection opportunities: alert on high-entropy executables arriving via email or download, on processes whose in-memory image differs from their on-disk image (hollowshunter-style checks in EDR), and on the classic RWX private memory regions that unpacking stubs create. For the lab, the defensive value of this skill is recovering payloads that become YARA rules and IOCs; every unpacked payload should produce detection content. Misuse is using unpacking to strip protections from software you have no right to analyze, or to improve a packer against detection; both are out of scope.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1027.002 (Software Packing): the technique under analysis.</li>
+<li>MITRE ATT&amp;CK T1027 (Obfuscated Files or Information): the parent</li>
+<p>technique.</p>
+<li>MITRE ATT&amp;CK T1055 (Process Injection): what stubs often do next.</li>
+<li>UPX documentation: https://upx.github.io</li>
+<li>Detect It Easy: https://github.com/horsicq/Detect-It-Easy</li>
+<li>Ghidra documentation: https://ghidra-sre.org</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

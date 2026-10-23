@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: threat-hunting</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>threat-hunting</h2><div class="meta"><span class="badge gray">soc</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when proactively hunting for undetected intruders in an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Velociraptor</td><td>0.7</td></tr><tr><td>Sysmon</td><td>15.x</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Threat hunting is the proactive search for attackers who slipped past automated detections. Unlike alert triage, which reacts to fired rules, hunting starts from a hypothesis (&quot;an intruder would do X, and it would look like Y in our logs&quot;) and tests it against historical data. This skill covers hypothesis-driven hunts on infrastructure you are authorized to defend, using Sysmon, EDR, and SIEM telemetry.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Write the hypothesis in one sentence, tied to a MITRE technique and</li>
+<p>an expected log artifact.</p>
+<li>Define the data source, the time window (usually 30 to 90 days), and</li>
+<p>the scope (which hosts or users).</p>
+<li>Collect a baseline of normal behavior for the artifact first.</li>
+<li>Run the hunt query and stack the results (group by rare values).</li>
+<li>Investigate every outlier: process tree, parent, user, network, hash.</li>
+<li>Document the hunt: hypothesis, query, time window, findings, verdict.</li>
+<li>If you find evil, escalate to incident response immediately and</li>
+<p>preserve the evidence.</p>
+<li>If the hunt works, convert it into a permanent detection rule.</li>
+</ol>
+<h2>1. Writing a hypothesis</h2>
+<p>A good hypothesis is falsifiable and specific. Bad: &quot;look for malware.&quot; Good examples:</p>
+<ul>
+<li>&quot;Attackers using WMI for lateral movement (T1047) will spawn</li>
+<p>powershell.exe from wmiprvse.exe, which our admins rarely do.&quot;</p>
+<li>&quot;A Kerberoasting attack (T1558.003) produces Event ID 4769 with</li>
+<p>ticket encryption type 0x17 and no pre-authentication, clustered in a short window from one account.&quot;</p>
+<li>&quot;Ransomware staging (T1486) creates many file rename events with</li>
+<p>unusual extensions in user document folders within minutes.&quot;</p>
+</ul>
+<p>Record for each hunt: hypothesis, MITRE technique, data source, time window, analyst, date, and verdict (confirmed benign, confirmed evil, inconclusive).</p>
+<h2>2. Baseline first</h2>
+<p>Never hunt without knowing normal. Pull 30 days of the artifact and find the common values so rare ones stand out.</p>
+<pre><code class="language-bash"># Splunk: baseline of parent -&gt; child process pairs over 30 days
+index=wineventlog EventCode=1 earliest=-30d@d latest=@d
+| eval parent=lower(mvindex(split(ParentImage,&quot;\\&quot;),-1)),
+       child=lower(mvindex(split(Image,&quot;\\&quot;),-1))
+| stats count by parent, child
+| sort -count | head -50</code></pre>
+<pre><code class="language-bash"># Baseline: which users run PowerShell with encoded args normally
+index=wineventlog EventCode=1 Image=&quot;*powershell.exe&quot;
+  CommandLine=&quot;*-enc*&quot; earliest=-30d@d latest=@d
+| stats count by user | sort -count</code></pre>
+<p>If the baseline shows your admin tooling does the &quot;suspicious&quot; thing daily, note it as a known-good pattern before you start flagging hosts.</p>
+<h2>3. Stacking and frequency analysis</h2>
+<p>Stacking groups events by a field and sorts by rarity. The rarest items are investigated first.</p>
+<pre><code class="language-bash"># Stack: rare parent-child process pairs (hunt for odd execution chains)
+index=wineventlog EventCode=1 earliest=-30d@d latest=@d
+| eval parent=lower(mvindex(split(ParentImage,&quot;\\&quot;),-1)),
+       child=lower(mvindex(split(Image,&quot;\\&quot;),-1))
+| stats dc(ComputerName) as host_count count as total by parent, child
+| where host_count &lt;= 3
+| sort host_count, total
+
+# Stack: rare command lines for common binaries
+index=wineventlog EventCode=1 Image=&quot;*\\rundll32.exe&quot; earliest=-30d@d latest=@d
+| stats dc(ComputerName) as hosts values(CommandLine) as examples by CommandLine
+| where hosts &lt;= 2
+
+# Frequency analysis: users with first-seen external IPs in proxy logs
+index=proxy earliest=-30d@d latest=@d
+| stats earliest(_time) as first_seen by user, dest_ip
+| where first_seen &gt; relative_time(now(), &quot;-7d@d&quot;)</code></pre>
+<p>In Elastic, the equivalent is a terms aggregation sorted by count ascending, filtered to low document counts.</p>
+<h2>4. First-seen and rare-event hunts</h2>
+<p>New things in an environment deserve suspicion. Hunt for first-seen hashes, first-seen services, and first-seen scheduled tasks.</p>
+<pre><code class="language-bash"># First-seen SHA256 per host over 90 days, show only the newest
+index=wineventlog EventCode=1 earliest=-90d@d latest=@d
+| eval sha=lower(Hashes)
+| stats earliest(_time) as first_seen values(Image) as path
+        values(ComputerName) as host by sha
+| where first_seen &gt; relative_time(now(), &quot;-7d@d&quot;)
+| sort first_seen</code></pre>
+<pre><code class="language-bash"># Rare services created (Event ID 7045), first seen this week
+index=wineventlog EventCode=7045 earliest=-90d@d latest=@d
+| stats earliest(_time) as first_seen values(ServiceName) as svc
+        values(ImagePath) as path by ComputerName
+| where first_seen &gt; relative_time(now(), &quot;-7d@d&quot;)</code></pre>
+<pre><code class="language-bash"># Scheduled tasks created outside business hours (T1053.005)
+index=wineventlog EventCode=4698 earliest=-30d@d latest=@d
+| eval hour=strftime(_time,&quot;%H&quot;), dow=strftime(_time,&quot;%A&quot;)
+| where hour &lt; 7 OR hour &gt; 19 OR dow=&quot;Saturday&quot; OR dow=&quot;Sunday&quot;</code></pre>
+<h2>5. Hunt patterns by MITRE technique</h2>
+<p>Keep a library of hunt queries mapped to techniques:</p>
+<p>Credential access:</p>
+<pre><code class="language-bash"># LSASS access by non-system processes (T1003.001)
+index=wineventlog EventCode=10 TargetImage=&quot;*\\lsass.exe&quot; earliest=-30d@d latest=@d
+| eval src=lower(mvindex(split(SourceImage,&quot;\\&quot;),-1))
+| where NOT src IN (&quot;csrss.exe&quot;,&quot;wininit.exe&quot;,&quot;services.exe&quot;,&quot;lsass.exe&quot;)
+| stats values(src) as processes values(ComputerName) as hosts by GrantedAccess</code></pre>
+<p>Defense evasion:</p>
+<pre><code class="language-bash"># Event log cleared (T1070.001)
+index=wineventlog EventCode=1102 earliest=-90d@d latest=@d
+
+# Sysmon config tampered or service stopped
+index=wineventlog (EventCode=7040 OR EventCode=7036) ServiceName=&quot;*Sysmon*&quot;
+  earliest=-30d@d latest=@d</code></pre>
+<p>Discovery:</p>
+<pre><code class="language-bash"># Account discovery bursts: many 4798/4799 or net user calls (T1087)
+index=wineventlog EventCode=1 Image=&quot;*\\net*.exe&quot; CommandLine=&quot;* user*&quot;
+  earliest=-14d@d latest=@d
+| bin _time span=1h | stats dc(ComputerName) as hosts count as n by _time
+| where n &gt; 20</code></pre>
+<p>Lateral movement:</p>
+<pre><code class="language-bash"># WMI spawning processes remotely (T1047): wmiprvse as parent of cmd/powershell
+index=wineventlog EventCode=1 ParentImage=&quot;*\\wmiprvse.exe&quot;
+  earliest=-30d@d latest=@d
+| eval child=lower(mvindex(split(Image,&quot;\\&quot;),-1))
+| where child IN (&quot;powershell.exe&quot;,&quot;cmd.exe&quot;,&quot;pwsh.exe&quot;)
+| table _time, ComputerName, user, Image, CommandLine</code></pre>
+<h2>6. Hunting with Velociraptor</h2>
+<p>For host-level hunts across the fleet, Velociraptor artifacts beat SIEM when you need live filesystem or memory state.</p>
+<pre><code class="language-bash"># List available hunt artifacts
+velociraptor --config server.config.yaml query &quot;SELECT name FROM artifact_definitions() LIMIT 20&quot;
+
+# Hunt: collect recent prefetch files across all Windows hosts
+velociraptor --config server.config.yaml query &quot;
+SELECT * FROM hunt_add(
+  hunt_description=&#x27;Prefetch collection for execution timeline&#x27;,
+  artifact=&#x27;Windows.Forensics.Prefetch&#x27;)&quot;
+
+# Query process trees on one client for the last 7 days
+velociraptor --config server.config.yaml query &quot;
+SELECT * FROM Artifact.Windows.Forensics.ProcessInfo(client_id=&#x27;C.1234&#x27;)&quot;</code></pre>
+<p>Use Velociraptor when the SIEM lacks the data (prefetch, amcache, USN journal, memory) and the SIEM when you need long retention and correlation across sources.</p>
+<h2>7. Documenting the hunt</h2>
+<p>Every hunt produces a record, even when it finds nothing. Template:</p>
+<pre><code class="language-text">Hunt ID: HUNT-2026-104
+Hypothesis: Attackers dump LSASS with renamed tools; Sysmon Event ID 10
+  to lsass.exe from unusual source images indicates T1003.001.
+Technique: T1003.001
+Data source: Sysmon Event ID 10, 90 days, all Windows hosts
+Query: &lt;paste exact query&gt;
+Baseline: csrss, wininit, services are the only normal sources
+Findings: 3 hosts with rundll32.exe accessing LSASS, all traced to
+  the approved EDR sensor (ticket SOC-5100)
+Verdict: benign, known-good pattern added to baseline
+Follow-up: none; detection rule sigma-lsass-access already covers this</code></pre>
+<p>Store hunt records next to detection rules in git. A future analyst should be able to rerun the hunt from the record alone.</p>
+<h2>8. From hunt to detection</h2>
+<p>A hunt that finds evil, or that reliably surfaces suspicious outliers, becomes a rule:</p>
+<ol>
+<li>Take the hunt query and add the exclusions you learned during the</li>
+<p>hunt.</p>
+<li>Write it as a Sigma rule (see the sigma-rules skill) so it converts</li>
+<p>to every backend.</p>
+<li>Backtest 30 days, check precision, deploy in shadow mode for a week.</li>
+<li>Link the detection back to the hunt record for provenance.</li>
+</ol>
+<h2>Edge cases</h2>
+<ul>
+<li>Log retention is shorter than your hunt window. Check the oldest</li>
+<p>event per source first; a 90 day hunt on 30 days of data gives false confidence.</p>
+<li>Daylight saving shifts break hourly binning. Hunt in UTC and convert</li>
+<p>to local time only for display.</p>
+<li>Hosts that were reimaged reset first-seen baselines. Exclude rebuild</li>
+<p>dates from first-seen hunts or you will chase ghosts.</p>
+<li>Admin tooling mimics attacker behavior (PsExec looks like lateral</li>
+<p>movement). Maintain an approved-tooling list with hashes and owning teams.</p>
+<li>Encrypted traffic hides payloads. Hunt on metadata: JA3 fingerprints,</li>
+<p>certificate fields, beaconing intervals, byte ratios.</p>
+<li>Hunts over huge data sets time out. Narrow by host group, split the</li>
+<p>window into weekly chunks, and use summary indexes for repeated hunts.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>A hunt finds active evil: stop hunting, start incident response.</li>
+<p>Preserve volatile data (memory, logs) before containment changes it.</p>
+<li>The data you need was never collected: file a logging gap ticket,</li>
+<p>deploy the collection (Sysmon config change, new forwarder), and note the blind window in the hunt record.</p>
+<li>Queries time out on the full fleet: sample hosts by risk tier</li>
+<p>(servers and admin workstations first), then expand.</p>
+<li>The hypothesis is inconclusive after full effort: record it as</li>
+<p>inconclusive with the exact limits hit, and schedule a re-hunt when new intel or new data arrives.</p>
+<li>Stakeholders ask &quot;are we compromised&quot;: answer with the hunts run,</li>
+<p>their coverage, and their verdicts. Never claim &quot;clean&quot;, only &quot;no evidence found in the data and windows tested&quot;.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Hunting is the defender&#x27;s answer to detection gaps, so think like the attacker you are trying to catch:</p>
+<ul>
+<li>Attackers study public Sigma rules and avoid their exact strings.</li>
+<p>Hunt on behavior (parent-child pairs, timing, rarity), which is harder to evade than string matches.</p>
+<li>Attackers use valid credentials, so authentication logs look normal.</li>
+<p>Hunt for second-order anomalies: new device, new ASN, impossible travel, dormant account reactivation.</p>
+<li>Attackers slow down to dodge thresholds. Hunt with long windows (90</li>
+<p>days) and low counts, not just the SIEM&#x27;s 15 minute alert window.</p>
+<li>Attackers clear logs on the host. Hunt from centralized, tamper-</li>
+<p>resistant copies and alert on ingestion gaps per host.</p>
+<li>When a hunt technique becomes public, attackers adapt. Rotate hunt</li>
+<p>focus quarterly and keep some hunts unshared outside the team.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1003.001 (LSASS Memory), T1047 (WMI), T1558.003</li>
+<p>(Kerberoasting), T1486 (Data Encrypted for Impact), T1070.001 (Clear Windows Event Logs), T1053.005 (Scheduled Task), T1087 (Account Discovery).</p>
+<li>&quot;The Threat Hunting Pyramid of Pain&quot; and TaHiTI methodology</li>
+<p>(ENISA / Dutch NCSC hunting references).</p>
+<li>Velociraptor documentation: https://docs.velociraptor.app/</li>
+<li>MITRE ATT&amp;CK matrix: https://attack.mitre.org/</li>
+<li>SANS FOR508 / SEC511 hunting concepts (course references).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: log-forensics</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>log-forensics</h2><div class="meta"><span class="badge gray">forensics</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when reconstructing an incident from system and application</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="forensics-fundamentals.html">forensics-fundamentals</a> <a href="incident-response.html">incident-response</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>systemd</td><td>257</td></tr><tr><td>jq</td><td>1.8.1</td></tr><tr><td>ripgrep</td><td>14.1.1</td></tr></tbody></table><p>Logs are the narrative layer of an investigation: they say who authenticated, what ran, and what the system thought was happening. They are also the first thing a competent attacker tries to silence, so log forensics is equal parts reading and distrusting. This skill covers Linux journald/syslog triage, JSON log filtering with jq, Windows EVTX basics, hunting authentication anomalies, spotting tampering and coverage gaps, and merging sources into one timeline. Scope: analyze logs from systems you are authorized to investigate, and treat log contents as sensitive (they hold usernames, IPs, and sometimes secrets). Never assume a log is complete; always check what is missing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Inventory the log sources available (journald, syslog files, auth logs,</li>
+<p>application logs, EVTX) and their time ranges.</p>
+<li>Normalize to one timezone (UTC) before comparing anything.</li>
+<li>Hunt authentication events: failures, successes at odd hours, new users,</li>
+<p>privilege changes.</p>
+<li>Hunt execution events: new services, cron jobs, scheduled tasks, suspicious</li>
+<p>child processes.</p>
+<li>Check log integrity: gaps, truncation, cleared logs, and time jumps.</li>
+<li>Filter structured (JSON) logs with jq for IOCs and error patterns.</li>
+<li>Corroborate across sources: the same event should appear in two places.</li>
+<li>Build a merged timeline of the incident window.</li>
+</ol>
+<h2>1. Linux: journald and syslog triage</h2>
+<p>journald is the first stop on modern Linux. Query it with time bounds and output formats that survive piping.</p>
+<pre><code class="language-bash"># Everything since yesterday, short format, no pager
+journalctl --since &quot;yesterday&quot; --no-pager | head -100
+
+# One service only, with UTC timestamps
+journalctl -u sshd --since &quot;2026-10-22&quot; --until &quot;2026-10-23&quot; -o short-utc --no-pager | head -100
+
+# JSON output for jq filtering
+journalctl -u sshd -o json --no-pager &gt; sshd.json
+
+# Failed SSH logins grouped by source IP
+journalctl -u sshd -o json --no-pager | jq -r &#x27;select(.MESSAGE | test(&quot;Failed password&quot;)) | ._SOURCE_REALTIME_TIMESTAMP&#x27; | wc -l
+journalctl -u sshd --no-pager | grep -oE &#x27;Failed password.*from [0-9.]+&#x27; | grep -oE &#x27;[0-9.]+$&#x27; | sort | uniq -c | sort -rn | head -20
+
+# Successful logins: who, from where, when
+journalctl -u sshd --no-pager | grep -E &#x27;Accepted (password|publickey)&#x27; | head -20
+
+# Classic syslog files when journald is not the source of truth
+ls -lt /var/log/auth.log* /var/log/secure* 2&gt;/dev/null
+grep -E &#x27;Failed|failure&#x27; /var/log/auth.log | tail -40</code></pre>
+<p>Also check <code>cron</code> logs (<code>/var/log/cron</code>, or <code>journalctl -u cron</code>), because persistence via cron is quiet and common. A cron entry that appeared the night of the incident is worth more than a week of SSH noise.</p>
+<pre><code class="language-bash">journalctl -u cron --since &quot;2026-10-22&quot; --no-pager | grep -v -E &#x27;pam_unix|session&#x27; | head -30
+grep -r . /etc/cron* /var/spool/cron/ 2&gt;/dev/null | grep -v &#x27;^Binary&#x27;</code></pre>
+<h2>2. JSON logs with jq</h2>
+<p>Modern apps and forwarders emit JSON. jq turns a million-line blob into answers in seconds. Learn five patterns and you cover most cases.</p>
+<pre><code class="language-bash"># Pretty-print one record to learn the schema
+head -c 2000 app.json | jq .
+
+# Filter by field value, print selected fields
+jq -r &#x27;select(.level == &quot;error&quot;) | &quot;\(.timestamp) \(.msg)&quot;&#x27; app.json | head -20
+
+# Count events per source IP, top talkers first
+jq -r &#x27;.client_ip // .src_ip // empty&#x27; app.json | sort | uniq -c | sort -rn | head -20
+
+# Time window filter (ISO 8601 timestamps)
+jq -r &#x27;select(.timestamp &gt;= &quot;2026-10-22T02:00:00Z&quot; and .timestamp &lt;= &quot;2026-10-22T04:00:00Z&quot;)&#x27; app.json | head -20
+
+# Rare values: things that appear once are often the interesting things
+jq -r &#x27;.user_agent&#x27; app.json | sort | uniq -c | sort -n | head -20
+
+# Nested fields and arrays
+jq -r &#x27;select(.request.path | test(&quot;admin&quot;)) | &quot;\(.timestamp) \(.request.method) \(.request.path) \(.response.status)&quot;&#x27; app.json | head -30</code></pre>
+<p>When a field is missing on some records, use <code>// empty</code> or <code>?</code> so jq does not abort mid-file. For multi-GB files, prefer <code>jq -c</code> streaming patterns or split the file first; jq loads the whole input for non-streaming filters.</p>
+<h2>3. Windows EVTX triage</h2>
+<p>Windows logs live in EVTX files under <code>C:\Windows\System32\winevt\Logs</code>. Copy them off the image (see disk-forensics), then parse.</p>
+<pre><code class="language-bash"># List the logs available on the image
+ls -lh /mnt/image/Windows/System32/winevt/Logs/ | head -30
+
+# Parse Security.evtx to XML/JSON with an EVTX parser
+# (python-evtx or evtx_dump style tools; output to text for grepping)
+evtx_dump.py /mnt/image/Windows/System32/winevt/Logs/Security.evtx &gt; security.xml
+
+# Key Security event IDs to hunt
+grep -E &#x27;EventID&gt;4625&lt;&#x27; security.xml | wc -l   # failed logons
+grep -E &#x27;EventID&gt;4624&lt;&#x27; security.xml | wc -l   # successful logons
+grep -E &#x27;EventID&gt;4672&lt;&#x27; security.xml | wc -l   # special privileges (admin logon)
+grep -E &#x27;EventID&gt;4720&lt;&#x27; security.xml | wc -l   # user account created
+grep -E &#x27;EventID&gt;4732&lt;&#x27; security.xml | wc -l   # member added to group
+grep -E &#x27;EventID&gt;7045&lt;&#x27; security.xml | wc -l   # service installed (in System.evtx)
+
+# Extract logon type and source IP from 4624 events
+grep -A5 &#x27;EventID&gt;4624&lt;&#x27; security.xml | grep -E &#x27;LogonType|IpAddress|TargetUserName&#x27; | head -30
+
+# PowerShell operational log: script blocks (4104) are the gold
+evtx_dump.py /mnt/image/Windows/System32/winevt/Logs/Microsoft-Windows-PowerShell%4Operational.evtx &gt; ps.xml
+grep -E &#x27;EventID&gt;4104&lt;&#x27; ps.xml | wc -l</code></pre>
+<p>Cross-check Security.evtx against the System log: a service installed (System 7045) with no matching 4624/4672 logon nearby suggests the installer ran as SYSTEM, which points at an existing privileged foothold.</p>
+<h2>4. Detecting log tampering and gaps</h2>
+<p>An attacker who clears logs leaves a different-shaped hole than rotation does. Learn to tell them apart.</p>
+<pre><code class="language-bash"># journald: check for gaps and the earliest available entry
+journalctl --list-boots
+journalctl -o short-utc --no-pager | head -3
+journalctl -o short-utc --no-pager | tail -3
+
+# Sudden truncation: file shrank or starts mid-rotation unexpectedly
+ls -l /var/log/auth.log* /var/log/syslog*
+# Compare against logrotate config: is this rotation schedule or deletion?
+grep -A5 &#x27;auth.log&#x27; /etc/logrotate.d/rsyslog 2&gt;/dev/null
+
+# Windows: event ID 1102 (audit log cleared) and 104 (log cleared)
+grep -E &#x27;EventID&gt;(1102|104)&lt;&#x27; security.xml system.xml | head
+
+# Time jumps: clock changes that break timeline order
+journalctl -o short-utc --no-pager | awk &#x27;{print $1, $2}&#x27; | uniq -c | awk &#x27;$1 &gt; 1000&#x27; | head
+
+# Forwarded copies: if logs ship to a SIEM, compare counts
+# local count vs SIEM count for the incident window; a local-only deficit
+# means local tampering after forwarding</code></pre>
+<p>Document gaps explicitly: &quot;auth.log covers 2026-10-20 to 2026-10-22 03:14, then nothing until 2026-10-22 09:02; logrotate shows weekly rotation, so this gap is unexplained.&quot; An unexplained gap is itself evidence.</p>
+<h2>5. Merging sources into one timeline</h2>
+<p>One timezone, one format, one sorted file. Everything else is decoration.</p>
+<pre><code class="language-bash"># Normalize journald to epoch, then to ISO UTC
+journalctl -o json --no-pager | jq -r &#x27;&quot;\(._SOURCE_REALTIME_TIMESTAMP | tonumber / 1000000 | strftime(&quot;%Y-%m-%dT%H:%M:%SZ&quot;)) journald \(.MESSAGE)&quot;&#x27; &gt; t_journal.txt
+
+# Syslog lines already carry timestamps; convert and tag
+awk &#x27;{print $1&quot;T&quot;$2&quot;Z syslog &quot;$0}&#x27; /var/log/auth.log &gt; t_syslog.txt 2&gt;/dev/null
+
+# Merge and sort
+sort -m t_journal.txt t_syslog.txt &gt; merged_timeline.txt
+
+# Slice the incident window
+awk &#x27;$1 &gt;= &quot;2026-10-22T02:00:00Z&quot; &amp;&amp; $1 &lt;= &quot;2026-10-22T04:00:00Z&quot;&#x27; merged_timeline.txt | head -100</code></pre>
+<p>For serious cases use a proper timeline tool, but this 10-line version is enough to test a hypothesis before you commit to heavy tooling. Always note which sources fed the timeline and their clock confidence.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Logs are in a non-UTC timezone with no offset recorded: establish the</li>
+<p>offset from a known event (a reboot, a scheduled job) before comparing against UTC sources, and document the assumption.</p>
+<li>journald is volatile (Storage=volatile): logs exist only in RAM and are</li>
+<p>gone after reboot. Check <code>/etc/systemd/journald.conf</code> and the presence of <code>/var/log/journal/</code> to know what you should have had.</p>
+<li>Compressed rotated logs (<code>.gz</code>): use <code>zgrep</code>/<code>zcat</code>, and remember rotation</li>
+<p>order when reconstructing a sequence across files.</p>
+<li>EVTX files are corrupt or partially overwritten: parse what you can and</li>
+<p>note the record count vs expected; a parser that stops early is not proof the rest is empty.</p>
+<li>Application logs with no timestamps: correlate by sequence against a</li>
+<p>timestamped source, or treat ordering as unreliable.</p>
+<li>Clock skew between hosts: a 5-minute skew turns &quot;A caused B&quot; into &quot;B</li>
+<p>caused A&quot;. NTP status (<code>timedatectl</code>, <code>w32tm /query /status</code>) is part of every log case.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Local logs are destroyed: pivot to forwarded copies (SIEM, syslog server,</li>
+<p>cloud audit trails like CloudTrail or Entra sign-in logs) which the attacker could not reach.</p>
+<li>No central logging exists: rebuild activity from non-log sources, such as</li>
+<p>filesystem timelines (disk-forensics), memory artifacts (memory-forensics), firewall and proxy logs, and DHCP lease history.</p>
+<li>JSON logs are too large for jq: pre-filter with ripgrep on the raw text</li>
+<p>(<code>rg -a &#x27;pattern&#x27; huge.json</code>), then jq only the matching lines.</p>
+<li>Need to prove a negative (user X never logged in): document the complete</li>
+<p>log coverage for the window first; absence of evidence is only meaningful when the coverage is complete and untampered.</p>
+<li>Encrypted or access-controlled log stores: get the keys through the proper</li>
+<p>case authority, never by attacking the store.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>From the defender side, logs are both the detection surface and the target. Build detections on the events this skill hunts: impossible-travel logons, first-time admin privilege use (Windows 4672), service installations outside change windows (7045), and cron or scheduled-task creation on servers that should be static. Just as important, detect log tampering itself: alert on Windows event IDs 1102 and 104, on journald or syslog daemons stopping unexpectedly, and on forwarding pipeline failures, because a blind SIEM is worse than no SIEM. The misuse case is reading logs beyond your authorization: logs contain credentials in cleartext more often than anyone admits, so scope access, mask secrets in reports, and never copy full logs to personal machines.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1070.001 (Clear Windows Event Logs) and T1070.002 (Clear</li>
+<p>Linux or Mac System Logs): the tampering this skill detects.</p>
+<li>MITRE ATT&amp;CK T1110 (Brute Force): the auth-log hunting pattern.</li>
+<li>MITRE ATT&amp;CK T1053 (Scheduled Task/Job): cron, at, and Task Scheduler</li>
+<p>persistence in logs.</p>
+<li>MITRE ATT&amp;CK T1036 (Masquerading): log entries that lie about their</li>
+<p>source.</p>
+<li>CWE-778 (Insufficient Logging): the defensive gap to close.</li>
+<li>CWE-117 (Improper Output Neutralization for Logs): log injection and</li>
+<p>forgery.</p>
+<li>journalctl manual: https://www.freedesktop.org/software/systemd/man/latest/journalctl.html</li>
+<li>jq manual: https://jqlang.github.io/jq/manual/</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

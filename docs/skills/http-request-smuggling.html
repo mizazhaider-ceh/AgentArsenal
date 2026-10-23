@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: http-request-smuggling</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>http-request-smuggling</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing for HTTP request smuggling (desync) between a</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a> <a href="web-sqli.html">web-sqli</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>HTTP request smuggling exploits disagreement between a front-end server (CDN, load balancer, reverse proxy) and a back-end server about where one HTTP request ends and the next begins. The attacker smuggles a second, hidden request inside the first, and the back end executes it as if it came from another user. Impact ranges from cache poisoning to full request hijacking. This skill covers the authorized methodology: timing-based detection, variant classification, safe confirmation, and controlled exploitation. All testing targets systems you have written permission to test. Smuggling tests can poison other users&#x27; requests, so keep every probe non-destructive, timeboxed, and inside the agreed window.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm the architecture: identify the front end (response headers,</li>
+<p>CDN markers) and note that two servers parse the same bytes.</p>
+<li>Send the baseline timing probe with both <code>Content-Length</code> and</li>
+<p><code>Transfer-Encoding: chunked</code> to detect a desync.</p>
+<li>Classify the variant: CL.TE, TE.CL, or TE.TE, using the timing</li>
+<p>signatures in sections 2 to 4.</p>
+<li>Confirm with a differential response that does not harm other users</li>
+<p>(a unique header or a harmless prefix, never a destructive payload).</p>
+<li>Attempt controlled exploitation: prefix-based cache poisoning or a</li>
+<p>redirect to your test domain, only if the rules of engagement allow it.</p>
+<li>Stop immediately if other users&#x27; traffic is affected; report and</li>
+<p>coordinate a retest window.</p>
+<li>Record the exact raw requests, timing deltas, and the variant for the</li>
+<p>report.</p>
+</ol>
+<h2>1. Baseline timing probe</h2>
+<p>Send a POST that carries both headers. If the front end prefers <code>Content-Length</code> while the back end prefers <code>Transfer-Encoding</code> (or the reverse), the leftover bytes desynchronize the connection, which shows up as a delay.</p>
+<pre><code class="language-bash"># Raw request via printf and openssl (keeps exact bytes under your control)
+printf &#x27;POST / HTTP/1.1\r\nHost: target.example\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: 4\r\nTransfer-Encoding: chunked\r\n\r\n5c\r\nGPOST / HTTP/1.1\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: 15\r\n\r\nx=1\r\n0\r\n\r\n&#x27; \
+| openssl s_client -quiet -connect target.example:443 2&gt;/dev/null | head -20</code></pre>
+<p>The timing method: send the probe, then immediately send a normal request on the same connection. If the normal request is delayed (the back end is waiting for the smuggled bytes to complete), you have a desync. Burp Suite 2026.2 automates this in Repeater: paste the raw request, send it twice in quick succession, and compare response times. A consistent delay of several seconds on the second request is the signal. No delay means either no desync or the variant needs the mirrored header order.</p>
+<h2>2. CL.TE variant</h2>
+<p>The front end uses <code>Content-Length</code>, the back end uses <code>Transfer-Encoding</code>. The front end forwards only <code>Content-Length</code> bytes, so the chunked remainder (starting with the smuggled request) stays in the back-end buffer and prefixes the next request.</p>
+<pre><code class="language-bash"># CL.TE probe: front end sees CL:6 (&quot;0\r\n\r\n&quot;), back end reads chunked
+# body and treats the rest as the start of the next request
+printf &#x27;POST / HTTP/1.1\r\nHost: target.example\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: 6\r\nTransfer-Encoding: chunked\r\n\r\n0\r\n\r\nG&#x27; \
+| openssl s_client -quiet -connect target.example:443 2&gt;/dev/null | head -5</code></pre>
+<p>Confirmation technique: follow the probe with a normal GET and look for the response to the smuggled prefix. The classic safe differential is to smuggle <code>GET /hopefully404 HTTP/1.1</code> with junk headers and watch for a 404 status on the follow-up response instead of the expected 200. A 404 where a 200 belongs proves the back end processed your smuggled bytes. Keep the smuggled request harmless: a GET to a nonexistent path.</p>
+<h2>3. TE.CL variant</h2>
+<p>The front end uses <code>Transfer-Encoding</code>, the back end uses <code>Content-Length</code>. Here the front end forwards the chunked body and strips nothing, while the back end stops reading at <code>Content-Length</code> bytes, leaving the tail to be treated as a new request.</p>
+<pre><code class="language-bash"># TE.CL probe: chunked body ends at &quot;0\r\n\r\n&quot;, but CL:4 makes the
+# back end stop early, leaving &quot;G...&quot; buffered as a new request
+printf &#x27;POST / HTTP/1.1\r\nHost: target.example\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: 4\r\nTransfer-Encoding: chunked\r\n\r\n5c\r\nGPOST / HTTP/1.1\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: 15\r\n\r\nx=1\r\n0\r\n\r\n&#x27; \
+| openssl s_client -quiet -connect target.example:443 2&gt;/dev/null | head -5</code></pre>
+<p>The timing signature is inverted from CL.TE: the delay appears when the headers are ordered so the front end commits to chunked parsing. If the baseline probe shows nothing, swap the order of the <code>Content-Length</code> and <code>Transfer-Encoding</code> header lines and retest; some stacks decide by header order.</p>
+<h2>4. TE.TE variant with obfuscation</h2>
+<p>Both servers support chunked encoding, but one can be tricked into ignoring the <code>Transfer-Encoding</code> header through obfuscation, turning the pair into a de facto CL.TE or TE.CL.</p>
+<pre><code class="language-bash"># Obfuscation variants: one of these makes a server ignore the TE header
+# while the other honors it. Test each in place of the plain header.
+for te in \
+  &#x27;Transfer-Encoding: xchunked&#x27; \
+  &#x27;Transfer-Encoding : chunked&#x27; \
+  &#x27;Transfer-Encoding: chunked &#x27; \
+  &#x27;X: X\nTransfer-Encoding: chunked&#x27; \
+  &#x27;Transfer-Encoding: chunked, x&#x27; \
+  ; do echo &quot;== $te&quot;; done</code></pre>
+<pre><code class="language-bash"># Example: space before the colon (some servers reject, some normalize)
+printf &#x27;POST / HTTP/1.1\r\nHost: target.example\r\nContent-Length: 6\r\nTransfer-Encoding : chunked\r\n\r\n0\r\n\r\nG&#x27; \
+| openssl s_client -quiet -connect target.example:443 2&gt;/dev/null | head -3</code></pre>
+<pre><code class="language-bash"># Example: vertical tab or other whitespace inside the header value
+printf &#x27;POST / HTTP/1.1\r\nHost: target.example\r\nContent-Length: 6\r\nTransfer-Encoding:\x0bchunked\r\n\r\n0\r\n\r\nG&#x27; \
+| openssl s_client -quiet -connect target.example:443 2&gt;/dev/null | head -3</code></pre>
+<p>Work through obfuscations one at a time with the timing test from section 1. The variant that suddenly produces a delay is your TE.TE differential. Document the exact bytes: the finding is only reproducible with the precise obfuscation.</p>
+<h2>5. Safe confirmation with differential responses</h2>
+<p>Never smuggle destructive requests (no DELETE, no state changes, no login attempts as other users). The safe confirmation ladder:</p>
+<ol>
+<li>Timing differential (sections 1 to 4): no payload beyond the probe.</li>
+<li>Status code differential: smuggle <code>GET /&lt;random-404&gt; HTTP/1.1</code> and</li>
+<p>confirm the follow-up response is 404 instead of 200.</p>
+<li>Header differential: smuggle a request that triggers a distinctive</li>
+<p>response header your test server can recognize, such as a request to a debug endpoint that echoes a canary header value.</p>
+</ol>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;Timing-based smuggling detector (authorized targets only).&quot;&quot;&quot;
+import socket, ssl, time
+
+HOST = &quot;target.example&quot;
+BODY = (
+    &quot;POST / HTTP/1.1\r\nHost: target.example\r\n&quot;
+    &quot;Content-Type: application/x-www-form-urlencoded\r\n&quot;
+    &quot;Content-Length: 6\r\nTransfer-Encoding: chunked\r\n\r\n&quot;
+    &quot;0\r\n\r\nG&quot;
+)
+def one_shot(payload):
+    s = ssl.create_default_context().wrap_socket(
+        socket.create_connection((HOST, 443), timeout=10),
+        server_hostname=HOST)
+    s.sendall(payload.encode())
+    start = time.time()
+    try:
+        s.recv(4096)
+    except socket.timeout:
+        pass
+    s.close()
+    return time.time() - start
+
+base = one_shot(&quot;GET / HTTP/1.1\r\nHost: target.example\r\n\r\n&quot;)
+probe = one_shot(BODY)
+print(f&quot;baseline={base:.2f}s probe={probe:.2f}s desync={probe - base &gt; 3}&quot;)</code></pre>
+<p>Run each test at least three times. Network jitter causes false positives; a real desync is consistent.</p>
+<h2>6. Controlled exploitation (only with explicit permission)</h2>
+<p>If the rules of engagement allow impact demonstration, prefer these two non-destructive primitives:</p>
+<ul>
+<li>Prefix-based cache poisoning: smuggle a prefix that makes the back</li>
+<p>end cache a response with attacker-controlled content under a normal URL, then show the poisoned page served to your own second session. Keep the TTL short and coordinate cache purging with the client.</p>
+<li>Redirect hijack: smuggle bytes that turn the next user&#x27;s request into</li>
+<p>a 302 to your test domain, then demonstrate with your own victim session only.</p>
+</ul>
+<p>Never attempt to hijack real users&#x27; sessions, never exfiltrate data belonging to others, and never leave poisoned cache entries behind. Each exploitation attempt gets its own timeboxed window, and you stop at the first sign of collateral impact.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>HTTP/2 to the front end: the front end may translate H2 to HTTP/1.1</li>
+<p>for the back end, which reintroduces desync (H2.CL, H2.TE). Test with an H2-capable client when the front end speaks H2.</p>
+<li>The front end normalizes or strips the <code>Transfer-Encoding</code> header:</li>
+<p>detection then requires TE.TE obfuscation or is impossible; report the architecture, not a finding.</p>
+<li>Connection reuse is disabled (each request gets a new back-end</li>
+<p>connection): smuggling cannot work, because the smuggled bytes have no next request to attach to.</p>
+<li>The application sits behind multiple proxies: each hop is a new</li>
+<p>front-end/back-end pair, so test each layer separately.</p>
+<li>WAFs may block the word <code>chunked</code> or the probe shape: the absence of</li>
+<p>a signal behind a WAF is inconclusive, say so explicitly.</p>
+<li>Timeouts differ per layer: a slow back end can mimic the timing</li>
+<p>signature, so always confirm with a status differential, not timing alone.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Plain CL.TE and TE.CL fail: move to the TE.TE obfuscation list in</li>
+<p>section 4, testing one mutation per run.</p>
+<li>Timing is inconclusive: switch to the 404 status differential, which</li>
+<p>does not depend on measuring delays.</p>
+<li>The back end closes the connection after the probe: try the</li>
+<p><code>X: X</code> line-split variant, which survives some normalizers.</p>
+<li>Front end is HTTP/2 only: research H2 desync vectors (request body</li>
+<p>confusion via <code>:protocol</code> downgrades) against the specific CDN.</p>
+<li>You confirm desync but cannot exploit safely: report the confirmed</li>
+<p>desync with the differential evidence. A confirmed desync is already a high severity finding without weaponization.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see request smuggling as bursts of 400 Bad Request responses, connections where one TCP stream carries mismatched <code>Content-Length</code> and <code>Transfer-Encoding</code> headers, unparsed bytes appearing at the start of legitimate users&#x27; requests in back-end logs, and cache entries whose content does not match the cached URL. The durable fixes are rejecting requests that carry both <code>Content-Length</code> and <code>Transfer-Encoding</code> (RFC 7230 says a server MUST reject them), normalizing or stripping ambiguous headers at the front end, using HTTP/2 end to end where the framing is unambiguous, and disabling back-end connection reuse across different security contexts. WAF rules help only against known probe shapes, not the underlying parsing disagreement.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the entry</li>
+<p>point class.</p>
+<li>CWE-444 (Inconsistent Interpretation of HTTP Requests, HTTP Request</li>
+<p>Smuggling).</p>
+<li>RFC 7230 section 3.3.3: servers MUST reject ambiguous</li>
+<p>Content-Length with Transfer-Encoding.</p>
+<li>PortSwigger research by James Kettle: HTTP Desync Attacks (CL.TE,</li>
+<p>TE.CL, TE.TE taxonomy and obfuscation catalog).</p>
+<li>PortSwigger Web Security Academy: HTTP request smuggling labs.</li>
+<li>Burp Suite 2026.2 documentation: Repeater raw request editing for</li>
+<p>desync testing.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

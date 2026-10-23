@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: prometheus-monitoring</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>prometheus-monitoring</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when setting up or debugging Prometheus monitoring on an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="linux-hardening.html">linux-hardening</a> <a href="docker-deep.html">docker-deep</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Prometheus</td><td>3.1</td></tr><tr><td>Grafana</td><td>11.5</td></tr><tr><td>node_exporter</td><td>1.8</td></tr></tbody></table><p>Prometheus scrapes numeric metrics from targets, stores them as time series, and evaluates alert rules over them. This skill covers the operator loop: instrument and scrape, query with PromQL, alert with Alertmanager, visualize with Grafana, and keep alerts actionable. All examples target Prometheus 3.1, Alertmanager 0.28, node_exporter 1.8, and Grafana 11.5.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Deploy node_exporter on hosts and expose <code>/metrics</code> on</li>
+<p>applications.</p>
+<li>Configure Prometheus scrape jobs with sensible intervals and</li>
+<p>labels.</p>
+<li>Verify targets are UP before writing any query.</li>
+<li>Write PromQL for the RED metrics (rate, errors, duration) per</li>
+<p>service and USE metrics (utilization, saturation, errors) per resource.</p>
+<li>Add recording rules for expensive queries used by dashboards.</li>
+<li>Write alert rules with clear severity, summary, and runbook</li>
+<p>links; route them in Alertmanager.</p>
+<li>Build Grafana dashboards from the same queries; one dashboard</li>
+<p>per service.</p>
+<li>Tune: silence noise, fix flapping alerts, and review alert</li>
+<p>quality monthly.</p>
+</ol>
+<h2>1. Scrape configuration and targets</h2>
+<pre><code class="language-bash">mkdir -p prometheus &amp;&amp; cat &gt; prometheus/prometheus.yaml &lt;&lt;&#x27;EOF&#x27;
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: [&quot;localhost:9090&quot;]
+
+  - job_name: nodes
+    static_configs:
+      - targets: [&quot;web1:9100&quot;, &quot;web2:9100&quot;, &quot;db1:9100&quot;]
+        labels:
+          team: platform
+
+  - job_name: myapp
+    metrics_path: /metrics
+    static_configs:
+      - targets: [&quot;app1:8080&quot;, &quot;app2:8080&quot;]
+EOF
+
+# Validate the config before reloading
+promtool check config prometheus/prometheus.yaml
+
+# Start Prometheus with the config
+prometheus --config.file=prometheus/prometheus.yaml \
+  --storage.tsdb.path=/var/lib/prometheus
+
+# Reload config without restart after edits
+curl -X POST localhost:9090/-/reload</code></pre>
+<p>Check target health first when metrics go missing: the Targets page (or API) shows UP, DOWN, and the last scrape error.</p>
+<pre><code class="language-bash">curl -s localhost:9090/api/v1/targets | head -c 600; echo</code></pre>
+<h2>2. node_exporter host metrics</h2>
+<pre><code class="language-bash"># Run node_exporter on each host (port 9100)
+node_exporter --collector.systemd --collector.processes &amp;
+
+# Verify metrics flow
+curl -s localhost:9100/metrics | grep -E &#x27;^node_cpu_seconds_total&#x27; | head -3
+curl -s localhost:9100/metrics | grep -E &#x27;^node_memory_MemAvailable_bytes&#x27;</code></pre>
+<p>Key host queries (run in the Prometheus expression browser or via API):</p>
+<pre><code class="language-bash"># CPU usage percent across all CPUs, per instance
+# 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode=&quot;idle&quot;}[5m])) * 100)
+
+# Memory usage percent
+# 100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes))
+
+# Disk usage percent per mountpoint
+# 100 * (1 - (node_filesystem_avail_bytes{fstype!~&quot;tmpfs|overlay&quot;} / node_filesystem_size_bytes))
+
+# Load average vs CPU count (saturation signal)
+# node_load1 / count by(instance) (node_cpu_seconds_total{mode=&quot;idle&quot;})</code></pre>
+<pre><code class="language-bash"># Query via API for scripting and verification
+curl -s -G localhost:9090/api/v1/query \
+  --data-urlencode &#x27;query=up{job=&quot;nodes&quot;}&#x27; | head -c 400; echo</code></pre>
+<h2>3. PromQL patterns for services</h2>
+<p>Application metrics follow the RED pattern: Rate, Errors, Duration. Assume the app exposes <code>http_requests_total</code> (counter) and <code>http_request_duration_seconds</code> (histogram).</p>
+<pre><code class="language-bash"># Request rate per second, by status code
+# sum by(status) (rate(http_requests_total[5m]))
+
+# Error rate percent (5xx)
+# 100 * sum(rate(http_requests_total{status=~&quot;5..&quot;}[5m]))
+#   / sum(rate(http_requests_total[5m]))
+
+# p95 latency in seconds
+# histogram_quantile(0.95,
+#   sum by(le) (rate(http_request_duration_seconds_bucket[5m])))
+
+# p99 latency, grouped by endpoint
+# histogram_quantile(0.99,
+#   sum by(endpoint, le) (rate(http_request_duration_seconds_bucket[5m])))
+
+# Requests in flight (gauge)
+# http_requests_in_flight</code></pre>
+<p>Counter rates need <code>[5m]</code> style ranges; instant queries on raw counters are meaningless. Always aggregate with <code>sum by(...)</code> before dividing, or a single noisy series skews the ratio.</p>
+<h2>4. Recording rules</h2>
+<pre><code class="language-bash">cat &gt; prometheus/rules/record.yaml &lt;&lt;&#x27;EOF&#x27;
+groups:
+  - name: service-slo
+    interval: 30s
+    rules:
+      - record: job:http_request_rate_5m
+        expr: sum by(job) (rate(http_requests_total[5m]))
+
+      - record: job:http_error_ratio_5m
+        expr: |
+          sum by(job) (rate(http_requests_total{status=~&quot;5..&quot;}[5m]))
+          /
+          sum by(job) (rate(http_requests_total[5m]))
+
+      - record: job:http_latency_p95_5m
+        expr: |
+          histogram_quantile(0.95,
+            sum by(job, le) (rate(http_request_duration_seconds_bucket[5m])))
+EOF
+
+promtool check rules prometheus/rules/record.yaml</code></pre>
+<p>Recording rules precompute expensive queries so dashboards stay fast. Name them <code>level:metric:operation</code> (instance, job, or group level first). Reference the recorded series in alerts and dashboards, not the raw expression.</p>
+<h2>5. Alert rules and Alertmanager routing</h2>
+<pre><code class="language-bash">cat &gt; prometheus/rules/alerts.yaml &lt;&lt;&#x27;EOF&#x27;
+groups:
+  - name: service-alerts
+    rules:
+      - alert: HighErrorRate
+        expr: job:http_error_ratio_5m &gt; 0.05
+        for: 5m
+        labels:
+          severity: page
+          team: platform
+        annotations:
+          summary: &quot;High 5xx rate on {{ $labels.job }}&quot;
+          description: &quot;Error ratio is {{ $value | printf \&quot;%.2f\&quot; }} for 5m&quot;
+          runbook: &quot;https://wiki.example/runbooks/high-error-rate&quot;
+
+      - alert: InstanceDown
+        expr: up{job=&quot;nodes&quot;} == 0
+        for: 2m
+        labels:
+          severity: page
+        annotations:
+          summary: &quot;Instance {{ $labels.instance }} down&quot;
+
+      - alert: DiskFilling
+        expr: |
+          100 * (1 - (node_filesystem_avail_bytes{fstype!~&quot;tmpfs|overlay&quot;}
+            / node_filesystem_size_bytes)) &gt; 85
+        for: 10m
+        labels:
+          severity: ticket
+        annotations:
+          summary: &quot;Disk over 85% on {{ $labels.instance }}:{{ $labels.mountpoint }}&quot;
+EOF
+
+promtool check rules prometheus/rules/alerts.yaml
+promtool test rules test.yaml  # unit-test alert expressions</code></pre>
+<pre><code class="language-bash">cat &gt; alertmanager/alertmanager.yaml &lt;&lt;&#x27;EOF&#x27;
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: team-platform
+  group_by: [alertname, job]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+  routes:
+    - matchers: [severity = &quot;page&quot;]
+      receiver: pagerduty-critical
+      continue: true
+    - matchers: [severity = &quot;ticket&quot;]
+      receiver: team-platform
+
+receivers:
+  - name: team-platform
+    webhook_configs:
+      - url: https://chat.example/hooks/alerts
+  - name: pagerduty-critical
+    pagerduty_configs:
+      - service_key: &lt;pagerduty-integration-key&gt;
+EOF
+
+amtool check-config alertmanager/alertmanager.yaml</code></pre>
+<p>Every alert needs a runbook link and a severity that matches its urgency. <code>for: 5m</code> prevents paging on blips; <code>repeat_interval</code> stops the 3 AM repeat page for an acknowledged issue.</p>
+<h2>6. Grafana dashboards</h2>
+<pre><code class="language-bash"># Point Grafana at Prometheus as a data source, then build panels
+# from the same PromQL used in alerts. Provision dashboards as code:
+
+mkdir -p grafana/provisioning/dashboards
+cat &gt; grafana/provisioning/dashboards/service.yaml &lt;&lt;&#x27;EOF&#x27;
+apiVersion: 1
+providers:
+  - name: services
+    folder: Services
+    type: file
+    options:
+      path: /etc/grafana/dashboards
+EOF</code></pre>
+<p>Dashboard discipline: one dashboard per service with the same four panels (rate, error ratio, p50/p95/p99 latency, saturation), plus a host dashboard per fleet. Dashboards in git, provisioned on deploy; hand-built dashboards in the UI get lost and drift.</p>
+<h2>7. Silences, inhibition, and alert hygiene</h2>
+<pre><code class="language-bash"># Silence a noisy alert during maintenance (expires automatically)
+amtool silence add alertname=&quot;DiskFilling&quot; instance=&quot;web1&quot; \
+  --comment &quot;disk expansion scheduled&quot; --duration 4h
+
+# List active silences
+amtool silence query
+
+# Expire a silence early
+amtool silence expire &lt;silence-id&gt;</code></pre>
+<p>Inhibit cascading alerts: when <code>InstanceDown</code> fires, suppress the <code>HighErrorRate</code> alerts from that instance so one outage pages once, not twenty times. Review monthly: any alert that fired 50 times with zero action taken is either miscalibrated or missing its runbook; fix the threshold or delete the alert.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>Targets show DOWN with &quot;connection refused&quot;. The exporter is not</li>
+<p>running, the port is wrong, or a firewall blocks scraping; check from the Prometheus host with curl, not from your laptop.</p>
+<li><code>rate()</code> returns no data for new counters. Rate needs at least</li>
+<p>two samples in the range; wait two scrape intervals after deploying a new metric.</p>
+<li>Alert flaps between firing and resolved. Widen <code>for:</code> or add</li>
+<p>hysteresis via a higher resolve threshold; flapping alerts train people to ignore pages.</p>
+<li>Recording rule slows Prometheus. The expression is too</li>
+<p>expensive (high-cardinality <code>by</code> labels); reduce label cardinality or lengthen the rule interval.</p>
+<li>Disk fills on the Prometheus server. Set</li>
+<p><code>--storage.tsdb.retention.time=30d</code> and size, monitor <code>prometheus_tsdb_storage_blocks_bytes</code>, and consider remote write to long-term storage.</p>
+<li>Histograms show wrong quantiles. The bucket boundaries do not</li>
+<p>match the latency range; define buckets for your actual latencies (e.g. 0.005 to 10 seconds), not library defaults.</p>
+<li>Alertmanager config reload fails silently. Always run</li>
+<p><code>amtool check-config</code> before sending SIGHUP; a bad config leaves the old one running and your new routes never apply.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For engineering skills this section covers detecting misuse and misconfiguration. Monitoring misconfiguration shows up as Prometheus and Alertmanager exposed without authentication on the internet (they leak infrastructure topology and sometimes credentials in labels), alerts with no runbooks, and paging rules that nobody follows. Detect gaps by auditing which services have no RED metrics, which alerts fired without any human action, and whether <code>up == 0</code> alerts exist for every scrape job. An attacker who reaches the Prometheus API learns your hostnames, versions (from <code>*_build_info</code> metrics), and traffic patterns; restrict API access and strip sensitive labels. Alert fatigue is a security issue: when everything pages, the real intrusion alert gets acknowledged unread.</p>
+<h2>Key references</h2>
+<ul>
+<li>Prometheus 3.1 documentation: https://prometheus.io/docs/</li>
+<li>PromQL basics: https://prometheus.io/docs/prometheus/latest/querying/basics/</li>
+<li>Alertmanager 0.28 configuration:</li>
+<p>https://prometheus.io/docs/alerting/latest/configuration/</p>
+<li>node_exporter 1.8: https://github.com/prometheus/node_exporter</li>
+<li>Grafana 11.5 documentation: https://grafana.com/docs/grafana/</li>
+<li>Google SRE Workbook (alerting): https://sre.google/workbook/alerting-on-slos/</li>
+<li>CWE-778 (Insufficient Logging): monitoring gaps that hide</li>
+<p>incidents.</p>
+<li>CWE-400 (Uncontrolled Resource Consumption): unbounded metric</li>
+<p>cardinality.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

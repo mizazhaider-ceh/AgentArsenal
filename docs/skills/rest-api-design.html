@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: rest-api-design</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>rest-api-design</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when designing a REST API from scratch or reviewing an</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="api-security-testing.html">api-security-testing</a> <a href="secure-coding.html">secure-coding</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>OpenAPI</td><td>3.1</td></tr><tr><td>curl</td><td>8.9</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A REST API is a contract: clients program against your URIs, methods, and status codes for years, so design mistakes calcify fast. This skill covers designing clean, predictable, secure REST APIs: resource modeling, method and status code semantics, versioning, pagination and filtering, error formats, idempotency, authentication, rate limiting, and documenting the result in OpenAPI 3.1. Scope is HTTP API design; transport security and auth internals live in api-security-testing.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Model the domain as resources (nouns), not actions; nest only one</li>
+<p>level deep.</p>
+<li>Assign each operation the correct HTTP method (GET/POST/PUT/PATCH/</li>
+<p>DELETE) and make safe methods truly safe.</p>
+<li>Return the right status code for every outcome; never 200-with-error.</li>
+<li>Version from day one (URL path is the pragmatic default).</li>
+<li>Paginate every list endpoint with cursor or offset plus total counts.</li>
+<li>Return errors in one consistent envelope with a machine-readable code.</li>
+<li>Make retries safe with idempotency keys on mutating endpoints.</li>
+<li>Require authentication on everything except explicit public routes;</li>
+<p>document the scheme.</p>
+<li>Document the whole API in OpenAPI 3.1 and keep the spec in version</li>
+<p>control.</p>
+<li>Review the design against the security checklist before shipping.</li>
+</ol>
+<h2>1. Resource naming</h2>
+<p>Nouns, plural, lowercase, hyphens for multi-word. No verbs in URIs (the method is the verb). No trailing slashes as distinct resources.</p>
+<pre><code class="language-text">GET    /v1/users                 list users
+POST   /v1/users                 create a user
+GET    /v1/users/42              get user 42
+PUT    /v1/users/42              replace user 42
+PATCH  /v1/users/42              update fields of user 42
+DELETE /v1/users/42              delete user 42
+
+GET    /v1/users/42/orders       orders of user 42 (one nesting level)
+POST   /v1/users/42/orders       create an order for user 42
+
+# Actions that are not CRUD go under a sub-resource or a verb-noun RPC
+POST   /v1/users/42/password-reset
+POST   /v1/orders/99/cancel</code></pre>
+<pre><code class="language-bash"># Smoke-test the naming with curl: predictable patterns should work
+curl -s https://api.example.com/v1/users | head -c 200
+curl -s -o /dev/null -w &#x27;%{http_code}\n&#x27; https://api.example.com/v1/users/42</code></pre>
+<h2>2. Method semantics</h2>
+<ul>
+<li>GET: read, safe (no side effects), idempotent, cacheable.</li>
+<li>POST: create, or trigger a non-idempotent action. Not safe, not</li>
+<p>idempotent by default.</p>
+<li>PUT: full replace of a resource at a known URI. Idempotent.</li>
+<li>PATCH: partial update. Idempotent if the patch document is.</li>
+<li>DELETE: remove. Idempotent (deleting twice has the same effect).</li>
+<li>HEAD/OPTIONS: metadata and CORS preflight.</li>
+</ul>
+<pre><code class="language-bash"># PUT is idempotent: sending it twice must not create two resources
+curl -s -X PUT https://api.example.com/v1/users/42 \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;name&quot;:&quot;Izaz&quot;,&quot;role&quot;:&quot;student&quot;}&#x27; | head -c 200
+
+# PATCH for a partial update
+curl -s -X PATCH https://api.example.com/v1/users/42 \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;role&quot;:&quot;admin&quot;}&#x27; | head -c 200</code></pre>
+<h2>3. Status codes that mean what they say</h2>
+<pre><code class="language-text">200 OK                    GET/PUT/PATCH/DELETE succeeded with a body
+201 Created               POST created a resource (return it + Location header)
+202 Accepted              async job queued (return a status URL)
+204 No Content            success with nothing to return
+400 Bad Request           client sent invalid data (validate first)
+401 Unauthorized          missing or bad credentials
+403 Forbidden             authenticated but not allowed
+404 Not Found             resource does not exist (or must look that way)
+405 Method Not Allowed    wrong method for this URI
+409 Conflict              state conflict (duplicate unique key, version clash)
+412 Precondition Failed   If-Match version check failed
+415 Unsupported Media Type wrong Content-Type
+422 Unprocessable Entity  valid JSON, failed business rules
+429 Too Many Requests     rate limited (include Retry-After)
+500 Internal Server Error server bug (log it, never leak internals)
+503 Service Unavailable   overloaded or down (include Retry-After)</code></pre>
+<p>Rules: 401 means &quot;who are you&quot;, 403 means &quot;I know who you are, and no&quot;. 404 vs 403 on private resources: return 404 to avoid confirming existence to attackers. Never return 200 with an error body; clients and monitors key on the code.</p>
+<h2>4. Versioning</h2>
+<p>URL path versioning is the most debuggable and cache-friendly:</p>
+<pre><code class="language-text">https://api.example.com/v1/users
+https://api.example.com/v2/users</code></pre>
+<p>Rules: never break v1 to fix v2; add fields freely (clients must ignore unknown fields); remove or rename only in a new major version; announce deprecation with a <code>Deprecation</code> header and a sunset date, and keep the old version running through it.</p>
+<pre><code class="language-bash">curl -sI https://api.example.com/v1/users | grep -i &#x27;^deprecation:&#x27;</code></pre>
+<h2>5. Pagination, filtering, sorting</h2>
+<p>Every list endpoint paginates. Cursor pagination for large or real-time datasets; offset for small admin lists.</p>
+<pre><code class="language-text"># Cursor pagination (stable under inserts)
+GET /v1/orders?limit=50&amp;cursor=eyJpZCI6OTl9
+
+# Response envelope
+{
+  &quot;data&quot;: [ ... ],
+  &quot;pagination&quot;: {
+    &quot;limit&quot;: 50,
+    &quot;next_cursor&quot;: &quot;eyJpZCI6NTB9&quot;,
+    &quot;has_more&quot;: true
+  }
+}
+
+# Offset pagination (simple, fine under ~10k rows)
+GET /v1/users?limit=20&amp;offset=40</code></pre>
+<p>Filtering and sorting use query params with a documented allowlist:</p>
+<pre><code class="language-text">GET /v1/orders?status=shipped&amp;status=paid&amp;sort=-created_at&amp;fields=id,total</code></pre>
+<p>Validate <code>sort</code> and <code>fields</code> against an allowlist; never interpolate them into SQL. Cap <code>limit</code> (for example max 100) and default it (for example 20).</p>
+<h2>6. Error envelope</h2>
+<p>One shape for every error, machine-readable code plus human message:</p>
+<pre><code class="language-json">{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;order_not_found&quot;,
+    &quot;message&quot;: &quot;No order with id 99.&quot;,
+    &quot;details&quot;: { &quot;order_id&quot;: 99 },
+    &quot;request_id&quot;: &quot;req_8f3a2c&quot;,
+    &quot;documentation&quot;: &quot;https://docs.example.com/errors#order_not_found&quot;
+  }
+}</code></pre>
+<pre><code class="language-bash"># Errors must carry the right status AND the envelope
+curl -s -w &#x27;\nHTTP %{http_code}\n&#x27; https://api.example.com/v1/orders/99</code></pre>
+<p>Validation errors return 422 with per-field details:</p>
+<pre><code class="language-json">{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;validation_failed&quot;,
+    &quot;message&quot;: &quot;2 fields are invalid.&quot;,
+    &quot;details&quot;: {
+      &quot;fields&quot;: {
+        &quot;email&quot;: [&quot;must be a valid email address&quot;],
+        &quot;age&quot;: [&quot;must be 13 or older&quot;]
+      }
+    }
+  }
+}</code></pre>
+<p>Never leak stack traces, SQL, or internal paths in production errors.</p>
+<h2>7. Idempotency</h2>
+<p>Network retries must not double-charge or double-create. Accept an <code>Idempotency-Key</code> header on POST/PUT/PATCH: store the key with the response for 24 hours and replay the stored response on repeats.</p>
+<pre><code class="language-bash">KEY=$(uuidgen)
+curl -s -X POST https://api.example.com/v1/orders \
+  -H &quot;Idempotency-Key: $KEY&quot; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;item&quot;:&quot;book&quot;,&quot;qty&quot;:1}&#x27;
+# Retry with the SAME key after a timeout: must return the original
+# order, not a second one
+curl -s -X POST https://api.example.com/v1/orders \
+  -H &quot;Idempotency-Key: $KEY&quot; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;item&quot;:&quot;book&quot;,&quot;qty&quot;:1}&#x27;</code></pre>
+<p>Also support conditional writes with ETags to prevent lost updates:</p>
+<pre><code class="language-bash"># Get the version tag
+curl -sI https://api.example.com/v1/users/42 | grep -i &#x27;^etag:&#x27;
+# Update only if unchanged
+curl -s -X PUT https://api.example.com/v1/users/42 \
+  -H &#x27;If-Match: &quot;v7&quot;&#x27; -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;name&quot;:&quot;Izaz&quot;}&#x27;
+# -&gt; 412 Precondition Failed if someone else changed it first</code></pre>
+<h2>8. Authentication and authorization</h2>
+<p>Default-deny: every endpoint requires auth unless explicitly public. Bearer tokens over HTTPS are the standard for APIs:</p>
+<pre><code class="language-bash">curl -s https://api.example.com/v1/users/me \
+  -H &quot;Authorization: Bearer $TOKEN&quot;</code></pre>
+<p>Design rules: short-lived access tokens plus refresh tokens (OAuth2) for user-facing APIs; scoped API keys for service-to-service; scopes like <code>orders:read</code> and <code>orders:write</code> so a leaked key has limited blast radius; never accept credentials in query strings (they land in logs); hash API keys at rest and show them only once at creation. Full auth testing methodology lives in api-security-testing.</p>
+<h2>9. Rate limiting and headers</h2>
+<pre><code class="language-text">HTTP/1.1 429 Too Many Requests
+Retry-After: 60
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1750000060</code></pre>
+<p>Limit by authenticated identity, not just IP, so one bad tenant cannot starve others. Document the limits; clients cannot back off correctly against undocumented 429s.</p>
+<h2>10. OpenAPI 3.1 documentation</h2>
+<p>Keep the spec next to the code and generate clients and mocks from it:</p>
+<pre><code class="language-yaml"># openapi.yaml (excerpt)
+openapi: 3.1.0
+info:
+  title: Example API
+  version: 1.4.0
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /users/{id}:
+    get:
+      operationId: getUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        &#x27;200&#x27;:
+          description: The user
+          content:
+            application/json:
+              schema: { $ref: &#x27;#/components/schemas/User&#x27; }
+        &#x27;404&#x27;:
+          description: Not found
+          content:
+            application/json:
+              schema: { $ref: &#x27;#/components/schemas/Error&#x27; }</code></pre>
+<pre><code class="language-bash"># Validate the spec loads and is the right OpenAPI major version
+python3 - &lt;&lt;&#x27;EOF&#x27;
+import json
+spec = json.load(open(&#x27;openapi.json&#x27;))
+assert spec[&#x27;openapi&#x27;].startswith(&#x27;3.1&#x27;), &#x27;must be OpenAPI 3.1&#x27;
+print(&#x27;paths:&#x27;, len(spec[&#x27;paths&#x27;]), &#x27;| version:&#x27;, spec[&#x27;info&#x27;][&#x27;version&#x27;])
+EOF</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>PATCH with JSON Merge Patch (<code>application/merge-patch+json</code>) vs JSON</li>
+<p>Patch (<code>application/json-patch+json</code>): pick one, document it, and set the right Content-Type; they behave differently on nulls and arrays.</p>
+<li><code>204 No Content</code> must have no body; some frameworks sneak one in and</li>
+<p>break strict clients.</p>
+<li>Trailing slashes: decide once (<code>/users</code> canonical, <code>/users/</code> redirects</li>
+<p>with 301) and enforce it; two URIs for one resource splits caches.</p>
+<li>Timezones: accept and return ISO 8601 UTC only</li>
+<p>(<code>2026-10-23T07:00:00Z</code>); never local times without offsets.</p>
+<li>Large file uploads do not belong in JSON bodies; use multipart upload</li>
+<p>or signed-URL direct-to-storage flows with a completion callback.</p>
+<li>Enum values: document the full set; adding a value is backward</li>
+<p>compatible, removing one is a breaking change.</p>
+<li>Boolean query params (<code>?active=true</code>): define the accepted spellings</li>
+<p>once and reject the rest with 400.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Clients report &quot;random&quot; 400s: log the raw request body on validation</li>
+<p>failure (server side, debug only) and compare against the documented schema; usually a Content-Type or charset mismatch.</p>
+<li>Pagination duplicates or skips rows: offset pagination on a table with</li>
+<p>concurrent inserts; switch to cursor pagination on a stable key.</p>
+<li>Version sprawl (v1 through v5 live): publish a sunset calendar, add</li>
+<p><code>Deprecation</code> headers, and migrate internal clients first to prove the new version.</p>
+<li>Idempotency keys colliding across tenants: scope stored keys by tenant</li>
+<p>id, not just the key string.</p>
+<li>Still inconsistent: generate a contract test suite from the OpenAPI</li>
+<p>spec and run it in CI so drift fails the build, not the customer.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>For API designers, the defender view is abuse detection: an API that is easy to enumerate or retry is easy to attack. Design in these signals:</p>
+<pre><code class="language-bash"># Enumeration probing: sequential IDs with high 404 rate from one client
+grep -oP &#x27;GET /v1/users/\d+.*?&quot; 404&#x27; /var/log/nginx/access.log | wc -l
+
+# Credential stuffing shape: bursts of 401/403 on auth endpoints
+awk &#x27;$9 ~ /^401$/ {print $1}&#x27; /var/log/nginx/access.log \
+  | sort | uniq -c | sort -rn | head
+
+# Clients ignoring rate limits: repeated 429s from the same key
+grep &#x27; 429 &#x27; /var/log/nginx/access.log | grep -oP &#x27;apikey=\K[^ ]+&#x27; \
+  | sort | uniq -c | sort -rn | head</code></pre>
+<p>Design defenses: per-key rate limits, request quotas per plan, anomaly alerts on 4xx spikes per client, audit logging of auth failures and privilege changes, and never expose internal IDs that are enumerable across tenants (use UUIDs or scoped IDs). Misuse signal: a client that pages to the end of every collection daily is probably scraping.</p>
+<h2>Key references</h2>
+<ul>
+<li>OpenAPI 3.1 specification: https://spec.openapis.org/oas/v3.1.0</li>
+<li>RFC 9110 (HTTP Semantics): https://www.rfc-editor.org/rfc/rfc9110.html</li>
+<li>RFC 6585 (429 status): https://www.rfc-editor.org/rfc/rfc6585.html</li>
+<li>IETF Idempotency-Key draft: https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/</li>
+<li>OWASP API Security Top 10: https://owasp.org/API-Security/</li>
+<li>CWE-200 (Exposure of Sensitive Information): verbose errors, IDOR.</li>
+<li>CWE-770 (Allocation of Resources Without Limits): unpaginated lists,</li>
+<p>missing rate limits.</p>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

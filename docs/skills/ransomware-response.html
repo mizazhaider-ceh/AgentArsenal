@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ransomware-response</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ransomware-response</h2><div class="meta"><span class="badge gray">defensive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when preparing for or responding to a ransomware incident</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="incident-playbooks.html">incident-playbooks</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Velociraptor</td><td>0.7</td></tr><tr><td>Sysmon</td><td>15.x</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>Ransomware combines encryption for impact with double extortion (data theft plus the threat to leak). Response speed and preparation decide the outcome more than any tool bought during the crisis. This skill covers the defensive playbook: readiness before it happens, the response sequence when it does, recovery, and the ransom decision. For your own organization or an authorized client, with legal involved from the first hour.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Declare SEV-1, name the incident commander, start the timeline,</li>
+<p>engage legal and the IR retainer.</p>
+<li>Identify the ransomware family from the note, extensions, and</li>
+<p>known IOCs; check for a free decryptor before anything else.</p>
+<li>Contain: isolate affected hosts, kill remote access paths, stop</li>
+<p>lateral movement, protect the backups.</p>
+<li>Preserve evidence: memory, disk images of patient zero, logs,</li>
+<p>the ransom note, and attacker communications.</p>
+<li>Scope: how many hosts, which data was accessed or exfiltrated,</li>
+<p>is encryption still spreading.</p>
+<li>Eradicate: remove persistence and access, close the initial</li>
+<p>vector, reset credentials enterprise-wide if needed.</p>
+<li>Recover: rebuild from known-clean backups or gold images,</li>
+<p>verify integrity, restore in priority order.</p>
+<li>Post-incident: blameless review, close the gaps the attackers</li>
+<p>used, monitor for re-entry for 90 days.</p>
+</ol>
+<h2>1. Readiness (do this now)</h2>
+<p>The response starts before the incident:</p>
+<ul>
+<li>Backups: 3-2-1 rule (3 copies, 2 media types, 1 offline or</li>
+<p>immutable). Test restores quarterly; an untested backup is a hope.</p>
+<li>Protect the backup infrastructure: separate credentials, MFA,</li>
+<p>immutable storage, and network segmentation from production.</p>
+<li>Segment the network: ransomware spreads over SMB and RDP. Limit</li>
+<p>lateral paths now, not during the fire.</p>
+<li>EDR in block mode with tamper protection on every host, plus</li>
+<p>behavioral rules for mass file modification.</p>
+<li>Keep an offline copy of this playbook, contact lists, and network</li>
+<p>diagrams. Ransomware takes the wiki down too.</p>
+<li>Know your cyber insurance and IR retainer numbers; call them in</li>
+<p>the first hour, not the third day.</p>
+</ul>
+<pre><code class="language-bash"># Readiness check: verify backup immutability and last successful restore test
+# (adapt to your backup platform; the point is a scheduled, evidenced test)
+echo &quot;last restore test: $(cat /var/log/backup-restore-test.log | tail -1)&quot;</code></pre>
+<h2>2. Identification</h2>
+<p>Confirm what you are dealing with fast:</p>
+<pre><code class="language-bash"># Collect the ransom note and file markers from one host (do not pay yet)
+ls ~/Desktop/*ransom* ~/Documents/*README* 2&gt;/dev/null
+cat ~/Desktop/*ransom*.txt 2&gt;/dev/null | head -30
+
+# Note the encrypted file extension and any new wallpaper text
+ls ~ | grep -iE &quot;locked|encrypted|crypt&quot; | head
+
+# Hash the note and the encryptor binary if present, check reputation
+sha256sum /tmp/suspicious-binary 2&gt;/dev/null</code></pre>
+<ul>
+<li>Identify the family: ransom note text, file extension, and IOCs</li>
+<p>matched against threat intel (many families have known notes).</p>
+<li>Check No More Ransom (nomoreransom.org) and vendor decryptor pages</li>
+<p>for a free decryptor for the exact variant. Some older or flawed families are decryptable.</p>
+<li>Determine the initial access: phishing, exposed RDP, VPN without</li>
+<p>MFA, unpatched edge device. This decides the eradication work.</p>
+</ul>
+<p>Do not delete the ransom note or reformat patient zero. They are evidence and may hold the decryption path.</p>
+<h2>3. Containment</h2>
+<p>Speed matters; encryption spreads in minutes over flat networks.</p>
+<pre><code class="language-text">[ ] Isolate affected hosts in EDR (network quarantine, power stays on)
+[ ] Disable VPN and remote access if the entry was remote; force MFA reset
+[ ] Block C2 domains and IPs at firewall, proxy, and DNS
+[ ] Disable the compromised accounts and service accounts used for spread
+[ ] PROTECT THE BACKUPS: verify backup servers are isolated and immutable
+     copies are intact before the attacker finds them
+[ ] If spreading fast and isolation is unavailable: power off affected
+     hosts (accept the memory evidence loss to stop the bleeding)</code></pre>
+<p>Verify containment: pick three affected hosts and confirm they cannot reach the C2 infrastructure or write to network shares. Containment you did not verify is a guess.</p>
+<p>Common ransomware behaviors to hunt while containing (T1486, T1490):</p>
+<pre><code class="language-bash"># Volume shadow copies deleted (vssadmin, wmic) across the fleet
+index=wineventlog EventCode=1 earliest=-7d@d latest=@d
+| eval cmd=lower(CommandLine)
+| where match(cmd,&quot;vssadmin.*delete.*shadows&quot;) OR match(cmd,&quot;wmic.*shadowcopy.*delete&quot;)
+| stats values(ComputerName) as hosts count
+
+# Mass file renames with new extensions in user folders (Sysmon ID 11 volume)
+index=wineventlog EventCode=11 earliest=-24h latest=@h TargetFilename=&quot;*.locked&quot;
+| stats dc(ComputerName) as hosts count | where hosts &gt; 0</code></pre>
+<h2>4. Evidence preservation</h2>
+<p>Collect before eradication changes the scene:</p>
+<ul>
+<li>Memory capture of patient zero and any host with the encryptor</li>
+<p>still resident.</p>
+<li>Disk image or at least the encryptor binary, ransom note, and</li>
+<p>persistence artifacts (scheduled tasks, services, registry run keys, startup folders).</p>
+<li>Central logs: EDR timeline, firewall, proxy, VPN, and identity</li>
+<p>logs for the intrusion window (go back 60 to 90 days; ransomware crews dwell for weeks).</p>
+<li>The attacker&#x27;s communications: ransom note, leak site post if</li>
+<p>any, negotiation chat logs if you engage.</p>
+</ul>
+<pre><code class="language-bash"># Timeline the intrusion window from EDR/Sysmon for patient zero
+index=wineventlog ComputerName=&quot;PATIENT-ZERO&quot; earliest=-90d@d latest=@d
+| eval proc=lower(mvindex(split(Image,&quot;\\&quot;),-1))
+| where proc IN (&quot;powershell.exe&quot;,&quot;cmd.exe&quot;,&quot;rundll32.exe&quot;,&quot;wmic.exe&quot;)
+| table _time, proc, CommandLine | sort _time | head -100</code></pre>
+<p>Chain of custody: hash everything, log who collected what and when, store on write-once or access-controlled media.</p>
+<h2>5. Scoping the blast radius</h2>
+<p>Answer five questions before recovery:</p>
+<ol>
+<li>How many hosts encrypted, and how many touched but not encrypted.</li>
+<li>Was data exfiltrated (proxy/DNS/EDR upload volumes, staging</li>
+<p>directories, archive tools like WinRAR or rclone in the timeline).</p>
+<li>Which accounts and credentials are burned (domain admin</li>
+<p>compromise means enterprise-wide reset).</p>
+<li>Is the attacker still present (active C2 in the last 24h).</li>
+<li>Are backups intact and clean (scan backup sets for the</li>
+<p>encryptor before trusting them).</p>
+</ol>
+<pre><code class="language-bash"># Look for staging and exfiltration tooling in the intrusion window
+index=wineventlog EventCode=1 earliest=-60d@d latest=@d
+| eval p=lower(Image), c=lower(CommandLine)
+| where match(p,&quot;rclone|winrar|7z|megacmd&quot;) OR match(c,&quot;rclone|mega\\.nz&quot;)
+| stats values(ComputerName) as hosts values(c) as cmds by p</code></pre>
+<p>Assume exfiltration until the evidence says otherwise. Double extortion is the norm; the leak-site post is the confirmation.</p>
+<h2>6. Eradication</h2>
+<p>Remove every foothold, not just the encryptor:</p>
+<ul>
+<li>Delete persistence: scheduled tasks, services, WMI consumers,</li>
+<p>registry run keys, startup folder items created in the intrusion window.</p>
+<li>Remove rogue accounts and reset credentials: if domain admin was</li>
+<p>compromised, reset KRBTGT twice and every privileged account.</p>
+<li>Close the initial vector: patch the exploited edge device,</li>
+<p>enforce MFA on VPN, disable exposed RDP.</p>
+<li>Reimage affected hosts from known-good media. Do not &quot;clean&quot;</li>
+<p>ransomware hosts.</p>
+</ul>
+<pre><code class="language-bash"># Hunt persistence created during the intrusion window (example: tasks)
+index=wineventlog EventCode=4698 earliest=-90d@d latest=@d
+| table _time, ComputerName, TaskName, SubjectUserName | sort _time</code></pre>
+<h2>7. Recovery</h2>
+<p>Recover in priority order, verifying each step:</p>
+<ol>
+<li>Restore the identity infrastructure first (domain controllers</li>
+<p>from clean backups), then network and security tooling.</p>
+<li>Rebuild servers from gold images or clean backups; verify hashes</li>
+<p>of restored system files against known-good.</p>
+<li>Scan restored data for encryptor remnants and for the</li>
+<p>exfiltrated data&#x27;s sensitivity (drives notification decisions).</p>
+<li>Bring systems online in isolated VLANs first, watch EDR for 48h,</li>
+<p>then reconnect.</p>
+<li>Enhanced monitoring for 90 days: the same crew often returns</li>
+<p>through the same hole.</p>
+</ol>
+<p>Test the restore before you need it at scale: restore one critical system to an isolated network and validate the application works. Recovery time estimates come from these tests, not from vendor claims.</p>
+<h2>8. The ransom decision</h2>
+<p>Factors, not advice; the decision belongs to leadership with legal counsel:</p>
+<ul>
+<li>Do you have clean, tested backups that meet the recovery</li>
+<p>objective. If yes, paying buys little.</p>
+<li>Was data exfiltrated. Paying does not guarantee deletion; leaked</li>
+<p>data has been published after payment.</p>
+<li>Sanctions: paying certain groups is illegal in some</li>
+<p>jurisdictions. Legal must clear the recipient.</p>
+<li>Decryptor quality: attacker tools are often buggy and slow;</li>
+<p>factor in the recovery risk.</p>
+<li>Cost of downtime vs cost of rebuild from backups.</li>
+</ul>
+<p>If negotiation happens, use the IR firm&#x27;s experienced negotiators, never the victim&#x27;s staff. Document everything; some jurisdictions require reporting of payments.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The decryptor exists but is for a different variant. Verify the</li>
+<p>exact version; wrong decryptors corrupt files further. Test on copies, never on originals.</p>
+<li>Backups are encrypted too. Fall back to immutable or offline</li>
+<p>copies; if none exist, recovery becomes rebuild-from-scratch plus data re-creation.</p>
+<li>The attacker threatens to leak data on a countdown. Do not let</li>
+<p>the timer rush containment; work the playbook, let legal handle the clock.</p>
+<li>Encryption is still spreading during recovery. Stop, re-verify</li>
+<p>containment and eradication before bringing more systems online.</p>
+<li>OT or medical devices are affected. Safety and care continuity</li>
+<p>outrank forensics; involve the right specialists immediately.</p>
+<li>Insurance requires their approved IR firm. Call the insurer</li>
+<p>before engaging anyone else, or coverage may be at risk.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Scope exceeds internal capacity: the IR retainer takes the lead;</li>
+<p>your team supports with access and knowledge.</p>
+<li>Data theft involves regulated personal data: legal owns the</li>
+<p>notification timeline (GDPR 72 hours from awareness).</p>
+<li>The attacker contacts executives directly: route all contact</li>
+<p>through the negotiator and legal; nobody freelances.</p>
+<li>Law enforcement: report through the proper channels (they will</li>
+<p>not decrypt your files, but reporting helps everyone and may be required).</p>
+<li>Re-infection after recovery: the initial vector is still open.</li>
+<p>Stop recovery, re-scope, and assume the attacker kept access somewhere you have not looked.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Ransomware defense is an arms race the defender can win with preparation:</p>
+<ul>
+<li>Attackers dwell for weeks, then encrypt in minutes. The detection</li>
+<p>window is the dwell period: hunt for their pre-encryption tooling (AD recon, credential dumping, backup discovery).</p>
+<li>Attackers kill backups first (T1490: shadow copies, backup</li>
+<p>agents). Alert on backup tampering as SEV-1; it is the clearest pre-ransomware signal.</p>
+<li>Attackers exfiltrate before encrypting. Egress anomaly detection</li>
+<p>and staging-directory hunts catch the quiet phase.</p>
+<li>Attackers re-enter through unpatched edge devices. Post-incident</li>
+<p>hardening must close the exact initial vector, verified by a retest.</p>
+<li>Your recovery capability is the deterrent. Tested, immutable</li>
+<p>backups turn ransomware from existential to expensive.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1486 (Data Encrypted for Impact), T1490 (Inhibit</li>
+<p>System Recovery), T1070.001 (Clear Windows Event Logs), T1021 (Remote Services), T1048 (Exfiltration Over Alternative Protocol).</p>
+<li>No More Ransom decryptor portal: https://www.nomoreransom.org/</li>
+<li>CISA ransomware guidance:</li>
+<p>https://www.cisa.gov/stopransomware/ransomware-guide</p>
+<li>NIST SP 800-61 Rev. 2 (incident handling) and SP 800-184 (recovery).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

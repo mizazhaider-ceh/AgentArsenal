@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: incident-playbooks</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>incident-playbooks</h2><div class="meta"><span class="badge gray">defensive</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when preparing for or running a security incident as a</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="incident-response.html">incident-response</a> <a href="forensics-fundamentals.html">forensics-fundamentals</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>TheHive</td><td>5.x</td></tr><tr><td>Python</td><td>3.12</td></tr></tbody></table><p>A playbook turns incident response from improvisation into procedure: who does what, in which order, with which tools, and who gets told. This skill covers building and running defensive playbooks for your organization: the master playbook structure, severity and SLA model, role assignments, communications, scenario playbooks, and tabletop exercises that prove they work.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Define severity levels (SEV-1 to SEV-4) with entry criteria and</li>
+<p>response SLAs, and get leadership sign-off.</p>
+<li>Assign standing roles: incident commander, comms lead, technical</li>
+<p>lead, scribe, legal liaison.</p>
+<li>Write the master playbook: declare, triage, contain, eradicate,</li>
+<p>recover, lessons learned.</p>
+<li>Write scenario playbooks for your top risks (malware, BEC, data</li>
+<p>theft, ransomware pointer, DoS).</p>
+<li>Put playbooks where analysts can reach them during an outage</li>
+<p>(printed copies and offline files, not only the wiki).</p>
+<li>Run a tabletop exercise per quarter and fix what breaks.</li>
+<li>On declaration, open the case, start the timeline, and work the</li>
+<p>playbook step by step.</p>
+<li>Close with a blameless postmortem and update the playbook with</li>
+<p>what you learned.</p>
+</ol>
+<h2>1. Severity model</h2>
+<p>| Level | Criteria | Response SLA | Who is paged | |---|---|---|---| | SEV-1 | Active breach, ransomware, major data theft | 15 min, war room now | IC, CISO, legal, exec | | SEV-2 | Confirmed malware, compromised account with access | 1 hour | IC, SOC lead, IT | | SEV-3 | Suspicious activity, likely false positive | 4 hours | SOC analyst | | SEV-4 | Informational, intel lead | Next business day | Intel analyst |</p>
+<p>Entry criteria must be observable facts (&quot;ransomware note on 10+ hosts&quot;), not feelings. Anyone can declare a SEV-2 or higher; the incident commander can downgrade with a written reason. False alarms are cheap; late declarations are expensive.</p>
+<h2>2. Roles</h2>
+<ul>
+<li>Incident commander (IC): owns the response, makes decisions,</li>
+<p>runs the war room. Does not do technical work.</p>
+<li>Technical lead: directs containment and forensics, owns the</li>
+<p>evidence chain.</p>
+<li>Comms lead: single voice to leadership, users, customers, and</li>
+<p>regulators. Nobody else talks externally.</p>
+<li>Scribe: keeps the timeline. Every action, decision, and timestamp</li>
+<p>goes in the log.</p>
+<li>Legal liaison: engages counsel early for privilege and breach</li>
+<p>notification obligations.</p>
+</ul>
+<p>One person, one role. The IC is named in advance with two backups. If the IC is on vacation, the backup is already the IC.</p>
+<h2>3. Master playbook</h2>
+<p>Phase 1, declare and triage (first hour):</p>
+<pre><code class="language-text">[ ] Open case in TheHive, set severity, assign IC and scribe
+[ ] Start timeline: detection time, declaration time, every action after
+[ ] Confirm scope: which hosts, users, data are involved (hypothesis first)
+[ ] Preserve evidence: snapshot logs, memory where needed, before containment changes state
+[ ] Notify per severity matrix (do not notify customers yet without legal)</code></pre>
+<p>Phase 2, contain (hours):</p>
+<pre><code class="language-text">[ ] Short-term containment: isolate hosts, disable accounts, block IOCs
+[ ] Verify containment worked (host cannot reach C2, account cannot log in)
+[ ] Decide: watch briefly to learn scope, or contain hard now (default: contain)</code></pre>
+<p>Phase 3, eradicate and recover (days):</p>
+<pre><code class="language-text">[ ] Remove attacker artifacts: malware, persistence, rogue accounts, mailbox rules
+[ ] Patch or close the initial access vector
+[ ] Restore from known-clean backups; verify integrity before reconnecting
+[ ] Enhanced monitoring on affected systems for 30 days</code></pre>
+<p>Phase 4, lessons learned (within 2 weeks):</p>
+<pre><code class="language-text">[ ] Blameless postmortem: timeline review, what worked, what failed
+[ ] Update playbooks and detections with findings
+[ ] Track action items to closure with owners and dates</code></pre>
+<h2>4. Scenario: malware on a workstation</h2>
+<pre><code class="language-text">Trigger: EDR alert for malicious process on WS-1042, user jdoe.
+1. Isolate the host in EDR (network quarantine, keep power on).
+2. Collect: process tree, file hashes, persistence locations, recent
+   USB and network history. Image memory if ransomware-like.
+3. Check: did it spread (same hash on other hosts), did it steal
+   credentials (LSASS access), did it exfiltrate (proxy logs).
+4. Contain: block hash and C2 domain, reset user credentials, revoke
+   sessions.
+5. Eradicate: reimage from known-good media (preferred over cleaning).
+6. Recover: return host after EDR shows clean for 24h, brief the user.
+7. Hunt: same TTPs across the fleet for the last 30 days.</code></pre>
+<p>Prefer reimaging over cleaning. Cleaning leaves doubt; reimaging removes it.</p>
+<h2>5. Scenario: business email compromise</h2>
+<pre><code class="language-text">Trigger: finance reports a payment to a new vendor account after email
+  instructions; or alert on external mail forwarding rule.
+1. Preserve the mailbox: litigation hold, export message headers.
+2. List attacker actions: forwarding rules, deleted mail, OAuth app
+   grants, password or MFA changes, sent messages.
+3. Contain: reset password, revoke all sessions and app tokens,
+   remove rogue rules and grants, block sender infrastructure.
+4. Scope: which mailboxes were accessed, which data was read (audit
+   log: MailItemsAccessed), were payments issued.
+5. Recover: verify with the real vendor over a known phone number
+   before reissuing any payment.
+6. Notify: finance leadership, legal; check wire recall options with
+   the bank immediately (time matters, hours not days).</code></pre>
+<p>BEC playbooks live or die on the finance verification procedure. Write it, test it, and make it usable at 2 AM.</p>
+<h2>6. Scenario: suspected data theft</h2>
+<pre><code class="language-text">Trigger: DLP alert for large upload, or intel that data is for sale.
+1. Identify the data: what left, from where, to where, when.
+2. Preserve: proxy and firewall logs, endpoint file access logs,
+   cloud audit logs. Extend retention now.
+3. Contain: disable the account or key used, block the destination,
+   rotate exposed credentials.
+4. Assess: classify the data (personal data triggers notification
+   law; check GDPR 72-hour clock with legal).
+5. Eradicate the access path: close the misconfigured bucket, revoke
+   the token, fix the overly broad permission.
+6. Notify per legal advice; prepare customer comms with comms lead.</code></pre>
+<p>Start the legal clock early. Notification deadlines run from awareness, and arguing about the start date later is painful.</p>
+<h2>7. Communications</h2>
+<p>Templates prepared in advance, filled during the incident:</p>
+<ul>
+<li>Internal status update (every 2 hours at SEV-1): what happened,</li>
+<p>what is affected, what we are doing, what we need, next update.</p>
+<li>Leadership brief: business impact, customer impact, ETA, decisions</li>
+<p>needed. No jargon.</p>
+<li>Customer notification: drafted with legal, factual, no speculation.</li>
+<li>Regulator notification: owned by legal, on the legal timeline.</li>
+</ul>
+<p>Rules: one spokesperson, written updates beat verbal ones, never speculate in writing, and assume every internal message may become public.</p>
+<h2>8. Tabletop exercises</h2>
+<p>A tabletop tests the playbook without a real incident. Quarterly, 90 minutes, one scenario.</p>
+<pre><code class="language-text">Facilitator brief: &quot;It is 09:00. The SOC sees ransomware notes on
+  30 hosts in the finance VLAN. The backup server is unreachable.
+  Go.&quot;
+Inject at 09:20: &quot;The CEO&#x27;s laptop shows the note too.&quot;
+Inject at 09:40: &quot;A journalist calls asking about the outage.&quot;
+Observe: who declares, who calls legal, when backups are checked,
+  what gets written down, what is forgotten.
+Debrief: three things that worked, three that did not, owners and
+  dates for fixes.</code></pre>
+<p>Invite IT, legal, comms, and one executive. The value is in finding the missing phone number and the unclear authority before the real thing.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The incident starts during a holiday or at night. The on-call</li>
+<p>rotation and the offline playbook copy exist for exactly this.</p>
+<li>Key systems are down, including the wiki with the playbooks. Keep</li>
+<p>printed copies and an offline file with the IC at all times.</p>
+<li>The attacker is still in the environment during recovery. Do not</li>
+<p>restore into a dirty network; verify eradication with hunts first.</p>
+<li>Legal privilege questions stall technical work. Engage counsel in</li>
+<p>the first hour at SEV-1 so the question is answered early.</p>
+<li>The scope keeps growing. Re-declare severity upward rather than</li>
+<p>running a SEV-1 response on a SEV-3 ticket.</p>
+<li>Third parties are involved (MSP, cloud provider). Know their</li>
+<p>incident contacts before you need them, and define who leads.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Containment fails (malware reappears after reimaging): the</li>
+<p>persistence or initial access vector is still open. Go back to scoping, assume a second foothold, and hunt wider.</p>
+<li>Evidence is being destroyed (logs cleared): prioritize</li>
+<p>preservation over cleverness; pull what exists now from central copies.</p>
+<li>The incident exceeds internal capability: engage the retainer IR</li>
+<p>firm. That is what the retainer is for; call early.</p>
+<li>Ransom demand arrives: follow the ransomware-response skill and</li>
+<p>involve legal and leadership before any decision.</p>
+<li>Media attention: all statements go through the comms lead and</li>
+<p>legal. Nobody else comments, posts, or speculates.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Playbooks are defensive operations, and attackers exploit slow or chaotic response:</p>
+<ul>
+<li>Attackers count on slow containment to finish encryption or</li>
+<p>exfiltration. Rehearsed playbooks shrink dwell time, which is the metric attackers fear.</p>
+<li>Attackers target backups and playbooks themselves (deleting wiki</li>
+<p>pages, corrupting backups). Keep offline copies and test restores.</p>
+<li>Attackers use your incident chaos for social engineering (&quot;IT</li>
+<p>needs your password to fix the outage&quot;). Brief users during incidents.</p>
+<li>After-action findings are attacker intelligence if leaked. Store</li>
+<p>postmortems with appropriate access controls.</p>
+<li>A playbook nobody has exercised is fiction. The tabletop is the</li>
+<p>detection control for your own process.</p>
+</ul>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK (scenario mapping): https://attack.mitre.org/</li>
+<li>CISA incident response playbooks and reporting:</li>
+<p>https://www.cisa.gov/</p>
+<li>NIST SP 800-61 Rev. 2, Computer Security Incident Handling Guide.</li>
+<li>SANS incident response process (PICERL: Preparation,</li>
+<p>Identification, Containment, Eradication, Recovery, Lessons).</p>
+<li>GDPR Article 33 (72-hour breach notification) for EU data.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

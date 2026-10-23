@@ -42,6 +42,10 @@ Rules:
 
 recon, network, web, auth, privesc, ad, c2, engineering, incident, forensics, linux, api, cloud, crypto, bugbounty
 
+## Domains added in wave 2
+
+mobile, binary, malware, soc, osint, defensive
+
 ## Wave 1 skills (24, all original content)
 
 Offensive (12): recon-passive, recon-active, nmap-methodology, web-sqli, web-xss, auth-attacks, password-attacks, privesc-linux, privesc-windows, ad-enumeration, network-pivoting, c2-fundamentals.

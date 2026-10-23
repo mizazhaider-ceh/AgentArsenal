@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentArsenal: bash-advanced</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+header.site .wrap { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+header.site h1 { font-size: 1.25rem; margin: 0; }
+header.site h1 a { color: var(--text); text-decoration: none; }
+nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+nav a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { border: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+th { background: var(--panel); }
+tbody tr:hover { background: rgba(88, 166, 255, 0.06); }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.badge {
+  display: inline-block;
+  padding: 0.12rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.green { background: rgba(63, 185, 80, 0.12); color: var(--green); border: 1px solid var(--green); }
+.badge.yellow { background: rgba(210, 153, 34, 0.12); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge.red { background: rgba(248, 81, 73, 0.12); color: var(--red); border: 1px solid var(--red); }
+.badge.gray { background: rgba(139, 148, 158, 0.12); color: var(--muted); border: 1px solid var(--muted); }
+#filter {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  margin-top: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+pre code { font-size: 0.85rem; }
+p code, li code, td code {
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.meta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0; align-items: center; }
+.deps { margin: 0.5rem 0; }
+.deps span.kind { color: var(--muted); font-size: 0.85rem; margin-right: 0.4rem; }
+.deps a { margin-right: 0.5rem; }
+h2 { border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+footer { border-top: 1px solid var(--border); margin-top: 2rem; padding: 1rem 0; color: var(--muted); font-size: 0.85rem; }
+.legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0; color: var(--muted); font-size: 0.9rem; }
+.legend svg { vertical-align: middle; margin-right: 0.4rem; }
+.graph-note { color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<header class="site">
+<div class="wrap">
+<h1><a href="../index.html">AgentArsenal</a></h1>
+<nav>
+<a href="../index.html">Skills</a>
+<a href="../graph.html">Dependency graph</a>
+</nav>
+</div>
+</header>
+<main class="wrap">
+<p><a href="../index.html">&larr; All skills</a></p><h2>bash-advanced</h2><div class="meta"><span class="badge gray">engineering</span><span class="muted">v1.0.0</span><span class="badge green">stable</span><span class="badge green">95/100</span><span class="muted">verified 2026-10-23</span></div><p>Use when writing production-grade Bash 5.2 scripts: strict mode</p><div class="deps"><span class="kind">requires:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">extends:</span> <span class="muted">none</span></div><div class="deps"><span class="kind">relates:</span> <a href="python-cli-tooling.html">python-cli-tooling</a> <a href="git-workflows.html">git-workflows</a></div><h2>Tools</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>Bash</td><td>5.2</td></tr><tr><td>ShellCheck</td><td>0.10</td></tr></tbody></table><p>Bash is the default automation language on Linux servers, but casual Bash fails silently: unset variables expand to empty strings, failed commands in pipelines go unnoticed, and unquoted variables split on spaces. This skill covers writing Bash 5.2 scripts that fail loudly and early: strict mode, quoting discipline, data structures, error handling, argument parsing, and debugging. Scope is scripting technique; interactive shell customization is out of scope.</p>
+<h2>Quick Workflow</h2>
+<ol>
+<li>Start every script with a shebang, <code>set -euo pipefail</code>, and a sane IFS.</li>
+<li>Quote every variable expansion; use arrays instead of space-separated</li>
+<p>strings.</p>
+<li>Validate inputs and required commands up front; fail with a clear usage</li>
+<p>message.</p>
+<li>Install a trap that cleans up temp files on any exit path.</li>
+<li>Write functions with <code>local</code> variables and explicit return codes.</li>
+<li>Parse arguments with getopts; never hand-roll <code>$1</code> shifting for more</li>
+<p>than one flag.</p>
+<li>Run ShellCheck on the script and fix every warning.</li>
+<li>Test the failure paths: missing args, missing files, failing commands.</li>
+</ol>
+<h2>1. The strict header</h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+IFS=$&#x27;\n\t&#x27;
+
+# -e: exit on any command failure
+# -u: exit on use of an unset variable
+# -o pipefail: a pipeline fails if ANY stage fails (not just the last)
+# IFS narrowed so word splitting only breaks on newline/tab
+
+readonly SCRIPT_DIR=&quot;$(cd &quot;$(dirname &quot;${BASH_SOURCE[0]}&quot;)&quot; &amp;&amp; pwd)&quot;
+readonly SCRIPT_NAME=&quot;$(basename &quot;${BASH_SOURCE[0]}&quot;)&quot;</code></pre>
+<p>Pipefail example of why it matters:</p>
+<pre><code class="language-bash"># Without pipefail this &quot;succeeds&quot; even if the download fails
+set -o pipefail
+curl -fsSL https://example.com/data.tar.gz | tar -xz -C /opt/data</code></pre>
+<h2>2. Quoting and word splitting</h2>
+<pre><code class="language-bash">name=&quot;backup dir&quot;
+# WRONG: splits into two arguments
+# rm -rf $name
+# RIGHT: one argument
+rm -rf &quot;$name&quot;
+
+# Arrays: the only safe way to build command lines dynamically
+args=(-name &quot;*.log&quot; -mtime +30)
+find /var/log &quot;${args[@]}&quot; -delete
+
+# &quot;$@&quot; preserves each argument exactly (use in wrappers)
+#!/usr/bin/env bash
+set -euo pipefail
+exec /usr/local/bin/real-tool &quot;$@&quot;</code></pre>
+<h2>3. Parameter expansion (the built-in string toolkit)</h2>
+<pre><code class="language-bash">file=&quot;/var/log/nginx/access.log&quot;
+echo &quot;${file##*/}&quot;      # basename: access.log
+echo &quot;${file%/*}&quot;       # dirname:  /var/log/nginx
+echo &quot;${file%.log}&quot;     # strip suffix: /var/log/nginx/access
+
+# Defaults and mandatory values
+: &quot;${PORT:=8080}&quot;                 # default if unset or empty
+: &quot;${API_KEY:?API_KEY must be set}&quot;  # fatal error if unset
+
+# String ops
+s=&quot;  Hello World  &quot;
+echo &quot;${s^^}&quot;           # HELLO WORLD (uppercase)
+echo &quot;${s,,}&quot;           # hello world (lowercase)
+echo &quot;${s// /_}&quot;        # replace all spaces: __Hello_World__
+echo &quot;${#s}&quot;            # length
+echo &quot;${s:2:5}&quot;         # substring: Hello</code></pre>
+<h2>4. Arrays and associative arrays</h2>
+<pre><code class="language-bash"># Indexed arrays
+hosts=(web1 web2 web3)
+hosts+=(db1)
+echo &quot;${hosts[0]}&quot;          # web1
+echo &quot;${#hosts[@]}&quot;         # 4 (count)
+for h in &quot;${hosts[@]}&quot;; do  # safe iteration
+  echo &quot;deploying to $h&quot;
+done
+
+# Associative arrays (Bash 4+)
+declare -A ports=([http]=80 [https]=443 [ssh]=22)
+ports[metrics]=9090
+echo &quot;${ports[https]}&quot;
+for svc in &quot;${!ports[@]}&quot;; do
+  echo &quot;$svc -&gt; ${ports[$svc]}&quot;
+done
+
+# Read lines into an array without word splitting issues
+mapfile -t lines &lt; /etc/hosts</code></pre>
+<h2>5. Error handling, traps, and cleanup</h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+
+tmpdir=&quot;$(mktemp -d)&quot;
+cleanup() {
+  rm -rf &quot;$tmpdir&quot;
+}
+trap cleanup EXIT            # always clean up
+trap &#x27;echo &quot;Interrupted&quot;; exit 130&#x27; INT TERM
+
+# Central error reporter with line number
+err() { echo &quot;ERROR: $*&quot; &gt;&amp;2; }
+trap &#x27;err &quot;failed at line $LINENO (exit $?)&quot;&#x27; ERR
+
+# Check prerequisites up front
+need() { command -v &quot;$1&quot; &gt;/dev/null 2&gt;&amp;1 || { err &quot;missing: $1&quot;; exit 1; }; }
+need curl
+need jq</code></pre>
+<p>Expected failures need explicit handling so <code>-e</code> does not kill the script:</p>
+<pre><code class="language-bash"># grep returns 1 when nothing matches: that is not an error here
+if grep -q &quot;pattern&quot; file.log; then
+  echo &quot;found&quot;
+fi
+
+# Or neutralize with || true when the status is intentionally ignored
+count=$(grep -c &quot;x&quot; file.log || true)</code></pre>
+<h2>6. Functions with local scope</h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+
+log()  { printf &#x27;[%s] %s\n&#x27; &quot;$(date +%H:%M:%S)&quot; &quot;$*&quot;; }
+die()  { log &quot;FATAL: $*&quot; &gt;&amp;2; exit 1; }
+
+fetch() {
+  local url=&quot;$1&quot;
+  local dest=&quot;$2&quot;
+  local retries=&quot;${3:-3}&quot;
+  local attempt=1
+  while (( attempt &lt;= retries )); do
+    if curl -fsSL --retry 2 -o &quot;$dest&quot; &quot;$url&quot;; then
+      return 0
+    fi
+    log &quot;attempt $attempt/$retries failed for $url&quot;
+    (( attempt++ ))
+    sleep 2
+  done
+  die &quot;could not fetch $url after $retries attempts&quot;
+}
+
+fetch &quot;https://example.com/app.tar.gz&quot; &quot;/tmp/app.tar.gz&quot;</code></pre>
+<h2>7. Argument parsing with getopts</h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+
+usage() { echo &quot;usage: $0 [-e env] [-v] [-n] &lt;target&gt;&quot;; exit 2; }
+
+env=&quot;prod&quot;; verbose=0; dry_run=0
+while getopts &quot;:e:vn&quot; opt; do
+  case &quot;$opt&quot; in
+    e) env=&quot;$OPTARG&quot; ;;
+    v) verbose=1 ;;
+    n) dry_run=1 ;;
+    :) echo &quot;option -$OPTARG needs a value&quot; &gt;&amp;2; usage ;;
+    \?) echo &quot;unknown option -$OPTARG&quot; &gt;&amp;2; usage ;;
+  esac
+done
+shift $((OPTIND - 1))
+[[ $# -eq 1 ]] || usage
+target=&quot;$1&quot;
+
+(( verbose )) &amp;&amp; echo &quot;env=$env target=$target dry_run=$dry_run&quot;</code></pre>
+<h2>8. Process substitution and redirection tricks</h2>
+<pre><code class="language-bash"># Diff command outputs without temp files
+diff &lt;(ls /backup/a) &lt;(ls /backup/b)
+
+# Feed a loop without a subshell (variables survive the loop)
+while IFS= read -r line; do
+  (( count++ ))
+done &lt; input.txt
+echo &quot;lines: $count&quot;
+
+# Never pipe INTO a while loop if you need the variables after:
+# cat file | while read ... (WRONG: loop runs in a subshell)
+
+# Timestamped logging of a whole script section
+{
+  echo &quot;starting deploy&quot;
+  ./deploy.sh
+} 2&gt;&amp;1 | ts &#x27;[%Y-%m-%d %H:%M:%S]&#x27; | tee /var/log/deploy.log
+
+# Here-doc for multi-line files (quoted delimiter = no expansion)
+cat &gt; /etc/myapp/config.yaml &lt;&lt;&#x27;EOF&#x27;
+server:
+  port: 8080
+EOF</code></pre>
+<h2>9. Debugging</h2>
+<pre><code class="language-bash"># Trace execution: shows each command before it runs
+bash -x script.sh
+# Or toggle inside the script
+set -x   # tracing on
+./risky-part.sh
+set +x   # tracing off
+
+# Richer trace prompt with line numbers (put in the script)
+export PS4=&#x27;+ ${BASH_SOURCE}:${LINENO}: &#x27;
+set -x</code></pre>
+<p>ShellCheck catches the bugs tracing cannot:</p>
+<pre><code class="language-bash">shellcheck -S warning deploy.sh
+# Fix everything it reports; aim for zero warnings</code></pre>
+<h2>Edge cases</h2>
+<ul>
+<li><code>set -e</code> is ignored in some contexts: commands in <code>if</code> conditions,</li>
+<p><code>while</code> conditions, <code>&amp;&amp;</code>/<code>||</code> lists, and the last command of a function called in a condition. Do not rely on <code>-e</code> inside those; check statuses explicitly.</p>
+<li><code>set -u</code> breaks <code>${arr[@]}</code> on empty arrays in Bash versions before</li>
+<p>4.4. Guard with <code>${arr[@]:-}</code> or check <code>${#arr[@]}</code> first.</p>
+<li>Command substitution strips trailing newlines: <code>x=$(cmd)</code> loses them.</li>
+<p>Append a sentinel character and strip it if trailing newlines matter.</p>
+<li><code>read</code> without <code>-r</code> mangles backslashes; always use <code>read -r</code>.</li>
+<li>Filenames starting with <code>-</code> are parsed as flags: use <code>--</code> before paths</li>
+<p>(<code>rm -- &quot;$file&quot;</code>) or prefix with <code>./</code>.</p>
+<li>Cron runs scripts with a minimal environment: always set PATH</li>
+<p>explicitly and use absolute paths in cron-called scripts.</p>
+<li><code>local</code> outside a function is a syntax error; keep declarations inside</li>
+<p>functions.</p>
+</ul>
+<h2>Escalation</h2>
+<ul>
+<li>Script dies silently under <code>-e</code>: rerun with <code>bash -x</code> and PS4 line</li>
+<p>numbers to find the exact failing command.</p>
+<li>Works interactively but fails from cron/systemd: environment issue;</li>
+<p>log <code>env | sort</code> at script start and compare, or source the needed profile explicitly.</p>
+<li>Intermittent failures: add retries with backoff (the fetch pattern</li>
+<p>above), log attempts, and make operations idempotent so reruns are safe.</p>
+<li>ShellCheck warning you do not understand: read its wiki page</li>
+<p>(<code>shellcheck -W 2086</code> prints the code); the wiki explains the exact failure mode.</p>
+<li>Logic too complex for Bash (nested JSON, date math, real data</li>
+<p>structures): that is the signal to rewrite in Python; see python-cli-tooling.</p>
+</ul>
+<h2>Detection and defender view</h2>
+<p>Bash is also the attacker&#x27;s favorite: malicious scripts use the same constructs (curl pipes, base64 decoding, traps for persistence). Detect misuse and risky scripting with:</p>
+<pre><code class="language-bash"># Suspicious one-liners in process lists and history
+ps aux | grep -E &#x27;curl.*\|\s*(ba)?sh|wget.*\|\s*(ba)?sh&#x27; | grep -v grep
+
+# Scripts with dangerous patterns in common drop zones
+sudo grep -rIlE &#x27;curl.*\|.*sh|base64 --?decode.*\|.*sh|/dev/tcp/&#x27; \
+  /tmp /var/tmp /dev/shm 2&gt;/dev/null
+
+# Recently modified scripts in system paths
+sudo find /usr/local/bin /opt -name &#x27;*.sh&#x27; -mtime -7 -ls
+
+# Cron and systemd timers calling shell scripts (persistence check)
+sudo grep -r &quot;sh$&quot; /etc/cron* /var/spool/cron/ 2&gt;/dev/null
+systemctl list-timers --all</code></pre>
+<p>Defensive scripting habits: never <code>curl | bash</code> from untrusted sources, pin checksums for downloaded scripts, run automation with least-privilege users, and keep scripts in version control so unexpected changes stand out. A script that phones home, decodes blobs, or touches <code>/etc/cron.d</code> deserves investigation.</p>
+<h2>Key references</h2>
+<ul>
+<li>Bash 5.2 manual: https://www.gnu.org/software/bash/manual/bash.html</li>
+<li>BashFAQ (common pitfalls): https://mywiki.wooledge.org/BashFAQ</li>
+<li>Bash Pitfalls list: https://mywiki.wooledge.org/BashPitfalls</li>
+<li>ShellCheck wiki: https://www.shellcheck.net/wiki/</li>
+<li>Google Shell Style Guide: https://google.github.io/styleguide/shellguide.html</li>
+<li>CWE-78 (OS Command Injection): unquoted variables passed to shells.</li>
+<li>CWE-88 (Argument Injection): filenames starting with dash.</li>
+</ul>
+</main>
+<footer class="wrap">
+<p>AgentArsenal docs. Generated 2026-10-23.</p>
+</footer>
+</body>
+</html>
