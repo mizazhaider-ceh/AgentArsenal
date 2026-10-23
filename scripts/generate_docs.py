@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
-"""Build a static docs site under docs/ from the skills/ tree.
+"""Build a static docs site under docs/site/ from the skills/ tree.
+
+The repo landing page lives at docs/index.html (built separately by hand);
+this generator owns only docs/site/ underneath it. The landing page links
+into the generated reference with relative site/... paths.
 
 Outputs:
-  docs/index.html          table of all skills (name, domain, version, lifecycle,
-                           score badge), client-side JS search filter, links to
-                           per-skill pages and the graph page
-  docs/skills/<name>.html  one page per skill, rendered from SKILL.md
-  docs/graph.html          dependency graph as inline SVG (radial layout)
+  docs/site/index.html          table of all skills (name, domain, version,
+                                lifecycle, score badge), client-side JS
+                                search filter, links to per-skill pages
+                                and the graph page
+  docs/site/skills/<name>.html  one page per skill, rendered from SKILL.md
+  docs/site/graph.html          dependency graph as inline SVG (radial layout)
 
 Reads scores.json at the repo root when present for quality badges.
 Stdlib only. No external assets, no CDN, works from file://.
@@ -1133,7 +1138,7 @@ def build_graph(skills: list[dict], agents: list[dict] | None = None,
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Build a static docs site under docs/ from the skills/ tree."
+        description="Build a static docs site under docs/site/ from the skills/ tree."
     )
     parser.add_argument("--root", help="Repo root (default: parent of the scripts dir).")
     args = parser.parse_args(argv)
@@ -1152,7 +1157,7 @@ def main(argv: list[str] | None = None) -> int:
     known = {s["name"] for s in skills}
     sub_skills = [s for s in skills if s["is_sub"]]
 
-    docs = root / "docs"
+    docs = root / "docs" / "site"
     skills_dir = docs / "skills"
     agents_dir = docs / "agents"
     brains_dir = docs / "brains"

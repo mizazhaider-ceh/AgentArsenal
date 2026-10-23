@@ -24,7 +24,7 @@ AgentArsenal is a unified agent-skills repo that goes deep on both software engi
 
 ## What is in the repo
 
-- **Skills (246 across 28 domains)**: one folder per skill with `SKILL.md`. See the catalog below and `docs/index.html`.
+- **Skills (246 across 28 domains)**: one folder per skill with `SKILL.md`. See the catalog below and `docs/site/index.html`.
 - **Sub-skills (110)**: drill-down modules under a parent skill in `skills/<domain>/<skill>/sub/` (for example nmap host discovery or xss variants).
 - **Agents (25)**: [agents/README.md](agents/README.md). Named operators that bind skills plus brains; each carries a role, an escalation policy, and constraints.
 - **Brains (16)**: [brains/README.md](brains/README.md). Reusable reasoning patterns (attacker-mindset, evidence-chain, threat-modeling) that agents compose.
@@ -172,7 +172,9 @@ regenerated from the manifest by Team I).
 
 ## Docs
 
-Open `docs/index.html` in a browser for the full browsable reference: all domains, skills, dependency graph, and quality scores.
+Open `docs/site/index.html` in a browser for the full browsable reference: all domains, skills, dependency graph, and quality scores.
+
+The reference is also published on GitHub Pages at https://mizazhaider-ceh.github.io/AgentArsenal/ (served from `/docs` on `main`; the landing page lives at `docs/index.html`).
 
 ## Contributing
 
